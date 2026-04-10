@@ -4,5 +4,6 @@ namespace Seed;
 
 enum Environments: string
 {
-    case Default_ = "https://api.example.a.com";
+    case EnvironmentA = "https://api.example.a.com";
+    case EnvironmentB = "https://api.example.b.com";
 }

@@ -3,19 +3,12 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Union\Requests\Request;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->union->call(
-    new Request([
-        'union' => [
-            'union' => [
-                'key' => "value",
-            ],
-        ],
-    ]),
+$client->union->duplicateTypesUnion(
+    'string',
 );

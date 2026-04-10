@@ -16,17 +16,12 @@ func do() {
         option.WithToken(
             "<token>",
         ),
-        option.WithAPIKey(
-            "<X-API-Key>",
-        ),
     )
-    request := &fern.AuthGetTokenRequest{
+    request := &fern.GetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
-        Audience: fern.AuthGetTokenRequestAudienceHttpsApiExampleCom,
-        GrantType: fern.AuthGetTokenRequestGrantTypeClientCredentials,
     }
-    client.Auth.Gettoken(
+    client.Auth.GetToken(
         context.TODO(),
         request,
     )

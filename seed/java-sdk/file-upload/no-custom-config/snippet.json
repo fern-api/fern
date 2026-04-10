@@ -4,130 +4,26 @@
             "example_identifier": "6d60be92",
             "id": {
                 "method": "POST",
-                "path": "/",
-                "identifier_override": "endpoint_service.post"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServicePostRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().post(\n            ServicePostRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServicePostRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().post(\n            ServicePostRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "6d60be92",
-            "id": {
-                "method": "POST",
                 "path": "/just-file",
-                "identifier_override": "endpoint_service.justfile"
+                "identifier_override": "endpoint_service.justFile"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceJustFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().justfile(\n            ServiceJustFileRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceJustFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().justfile(\n            ServiceJustFileRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\nimport com.seed.fileUpload.resources.service.requests.JustFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().justFile(\n            JustFileRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\nimport com.seed.fileUpload.resources.service.requests.JustFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().justFile(\n            JustFileRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "6d60be92",
-            "id": {
-                "method": "POST",
-                "path": "/just-file-with-optional-query-params",
-                "identifier_override": "endpoint_service.justfilewithoptionalqueryparams"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceJustFileWithOptionalQueryParamsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().justfilewithoptionalqueryparams(\n            ServiceJustFileWithOptionalQueryParamsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceJustFileWithOptionalQueryParamsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().justfilewithoptionalqueryparams(\n            ServiceJustFileWithOptionalQueryParamsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "6d60be92",
-            "id": {
-                "method": "POST",
-                "path": "/with-content-type",
-                "identifier_override": "endpoint_service.withcontenttype"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithContentTypeRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withcontenttype(\n            ServiceWithContentTypeRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithContentTypeRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withcontenttype(\n            ServiceWithContentTypeRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "6d60be92",
-            "id": {
-                "method": "POST",
-                "path": "/with-form-encoding",
-                "identifier_override": "endpoint_service.withformencoding"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithFormEncodingRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withformencoding(\n            ServiceWithFormEncodingRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithFormEncodingRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withformencoding(\n            ServiceWithFormEncodingRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "6d60be92",
-            "id": {
-                "method": "POST",
-                "path": "/form-encoded",
-                "identifier_override": "endpoint_service.withformencodedcontainers"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithFormEncodedContainersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withformencodedcontainers(\n            ServiceWithFormEncodedContainersRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithFormEncodedContainersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withformencodedcontainers(\n            ServiceWithFormEncodedContainersRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "be44c4be",
+            "example_identifier": "25dc561",
             "id": {
                 "method": "POST",
                 "path": "/optional-args",
-                "identifier_override": "endpoint_service.optionalargs"
+                "identifier_override": "endpoint_service.optionalArgs"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceOptionalArgsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().optionalargs(\n            ServiceOptionalArgsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceOptionalArgsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().optionalargs(\n            ServiceOptionalArgsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "be44c4be",
-            "id": {
-                "method": "POST",
-                "path": "/inline-type",
-                "identifier_override": "endpoint_service.withinlinetype"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithInlineTypeRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withinlinetype(\n            ServiceWithInlineTypeRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithInlineTypeRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withinlinetype(\n            ServiceWithInlineTypeRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "be44c4be",
-            "id": {
-                "method": "POST",
-                "path": "/with-json-property",
-                "identifier_override": "endpoint_service.withjsonproperty"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithJsonPropertyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withjsonproperty(\n            ServiceWithJsonPropertyRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithJsonPropertyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withjsonproperty(\n            ServiceWithJsonPropertyRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "5465b825",
-            "id": {
-                "method": "POST",
-                "path": "/snippet",
-                "identifier_override": "endpoint_service.simple"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().simple();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().simple();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\nimport com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().optionalArgs(\n            OptionalArgsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\nimport com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().optionalArgs(\n            OptionalArgsRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -139,21 +35,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().simple();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().simple();\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "be44c4be",
-            "id": {
-                "method": "POST",
-                "path": "/with-literal-enum",
-                "identifier_override": "endpoint_service.withliteralandenumtypes"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithLiteralAndEnumTypesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withliteralandenumtypes(\n            ServiceWithLiteralAndEnumTypesRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServiceWithLiteralAndEnumTypesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().withliteralandenumtypes(\n            ServiceWithLiteralAndEnumTypesRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().simple();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.fileUpload.SeedFileUploadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedFileUploadClient client = SeedFileUploadClient\n            .builder()\n            .build();\n\n        client.service().simple();\n    }\n}\n"
             }
         }
     ],

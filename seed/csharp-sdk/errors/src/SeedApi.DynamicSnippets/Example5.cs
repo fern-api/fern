@@ -1,11 +1,11 @@
-using SeedApi;
+using SeedErrors;
 
 namespace Usage;
 
 public class Example5
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedErrorsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }

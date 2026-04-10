@@ -2,12 +2,13 @@
 
 import datetime as dt
 import typing
+import uuid
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.nested_user import NestedUser
-from ..types.user import User
 from .raw_client import AsyncRawUserClient, RawUserClient
+from .types.nested_user import NestedUser
+from .types.user import User
 
 
 class UserClient:
@@ -25,23 +26,23 @@ class UserClient:
         """
         return self._raw_client
 
-    def getusername(
+    def get_username(
         self,
         *,
         limit: int,
-        id: str,
+        id: uuid.UUID,
         date: dt.date,
         deadline: dt.datetime,
         bytes: str,
         user: User,
+        user_list: typing.Sequence[User],
         key_value: typing.Dict[str, str],
         nested_user: NestedUser,
-        user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
+        exclude_user: typing.Union[User, typing.Sequence[User]],
+        filter: typing.Union[str, typing.Sequence[str]],
         optional_deadline: typing.Optional[dt.datetime] = None,
         optional_string: typing.Optional[str] = None,
         optional_user: typing.Optional[User] = None,
-        exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
-        filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
@@ -49,7 +50,7 @@ class UserClient:
         ----------
         limit : int
 
-        id : str
+        id : uuid.UUID
 
         date : dt.date
 
@@ -59,21 +60,21 @@ class UserClient:
 
         user : User
 
+        user_list : typing.Sequence[User]
+
         key_value : typing.Dict[str, str]
 
         nested_user : NestedUser
 
-        user_list : typing.Optional[typing.Union[User, typing.Sequence[User]]]
+        exclude_user : typing.Union[User, typing.Sequence[User]]
+
+        filter : typing.Union[str, typing.Sequence[str]]
 
         optional_deadline : typing.Optional[dt.datetime]
 
         optional_string : typing.Optional[str]
 
         optional_user : typing.Optional[User]
-
-        exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
-
-        filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -82,34 +83,43 @@ class UserClient:
         -------
         User
 
-
         Examples
         --------
         import datetime
+        import uuid
 
-        from seed import NestedUser, SeedApi, User
+        from seed import SeedQueryParameters
+        from seed.user import NestedUser, User
 
-        client = SeedApi(
+        client = SeedQueryParameters(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.getusername(
+        client.user.get_username(
             limit=1,
-            id="id",
+            id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
             date=datetime.date.fromisoformat(
                 "2023-01-15",
             ),
             deadline=datetime.datetime.fromisoformat(
                 "2024-01-15 09:30:00+00:00",
             ),
-            bytes="bytes",
+            bytes="SGVsbG8gd29ybGQh",
             user=User(
                 name="name",
                 tags=["tags", "tags"],
             ),
-            user_list=User(
-                name="name",
-                tags=["tags", "tags"],
-            ),
+            user_list=[
+                User(
+                    name="name",
+                    tags=["tags", "tags"],
+                ),
+                User(
+                    name="name",
+                    tags=["tags", "tags"],
+                ),
+            ],
             optional_deadline=datetime.datetime.fromisoformat(
                 "2024-01-15 09:30:00+00:00",
             ),
@@ -133,21 +143,21 @@ class UserClient:
             filter="filter",
         )
         """
-        _response = self._raw_client.getusername(
+        _response = self._raw_client.get_username(
             limit=limit,
             id=id,
             date=date,
             deadline=deadline,
             bytes=bytes,
             user=user,
+            user_list=user_list,
             key_value=key_value,
             nested_user=nested_user,
-            user_list=user_list,
+            exclude_user=exclude_user,
+            filter=filter,
             optional_deadline=optional_deadline,
             optional_string=optional_string,
             optional_user=optional_user,
-            exclude_user=exclude_user,
-            filter=filter,
             request_options=request_options,
         )
         return _response.data
@@ -168,23 +178,23 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def getusername(
+    async def get_username(
         self,
         *,
         limit: int,
-        id: str,
+        id: uuid.UUID,
         date: dt.date,
         deadline: dt.datetime,
         bytes: str,
         user: User,
+        user_list: typing.Sequence[User],
         key_value: typing.Dict[str, str],
         nested_user: NestedUser,
-        user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
+        exclude_user: typing.Union[User, typing.Sequence[User]],
+        filter: typing.Union[str, typing.Sequence[str]],
         optional_deadline: typing.Optional[dt.datetime] = None,
         optional_string: typing.Optional[str] = None,
         optional_user: typing.Optional[User] = None,
-        exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
-        filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
@@ -192,7 +202,7 @@ class AsyncUserClient:
         ----------
         limit : int
 
-        id : str
+        id : uuid.UUID
 
         date : dt.date
 
@@ -202,21 +212,21 @@ class AsyncUserClient:
 
         user : User
 
+        user_list : typing.Sequence[User]
+
         key_value : typing.Dict[str, str]
 
         nested_user : NestedUser
 
-        user_list : typing.Optional[typing.Union[User, typing.Sequence[User]]]
+        exclude_user : typing.Union[User, typing.Sequence[User]]
+
+        filter : typing.Union[str, typing.Sequence[str]]
 
         optional_deadline : typing.Optional[dt.datetime]
 
         optional_string : typing.Optional[str]
 
         optional_user : typing.Optional[User]
-
-        exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
-
-        filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -225,38 +235,47 @@ class AsyncUserClient:
         -------
         User
 
-
         Examples
         --------
         import asyncio
         import datetime
+        import uuid
 
-        from seed import AsyncSeedApi, NestedUser, User
+        from seed import AsyncSeedQueryParameters
+        from seed.user import NestedUser, User
 
-        client = AsyncSeedApi(
+        client = AsyncSeedQueryParameters(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.getusername(
+            await client.user.get_username(
                 limit=1,
-                id="id",
+                id=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
                 date=datetime.date.fromisoformat(
                     "2023-01-15",
                 ),
                 deadline=datetime.datetime.fromisoformat(
                     "2024-01-15 09:30:00+00:00",
                 ),
-                bytes="bytes",
+                bytes="SGVsbG8gd29ybGQh",
                 user=User(
                     name="name",
                     tags=["tags", "tags"],
                 ),
-                user_list=User(
-                    name="name",
-                    tags=["tags", "tags"],
-                ),
+                user_list=[
+                    User(
+                        name="name",
+                        tags=["tags", "tags"],
+                    ),
+                    User(
+                        name="name",
+                        tags=["tags", "tags"],
+                    ),
+                ],
                 optional_deadline=datetime.datetime.fromisoformat(
                     "2024-01-15 09:30:00+00:00",
                 ),
@@ -283,21 +302,21 @@ class AsyncUserClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getusername(
+        _response = await self._raw_client.get_username(
             limit=limit,
             id=id,
             date=date,
             deadline=deadline,
             bytes=bytes,
             user=user,
+            user_list=user_list,
             key_value=key_value,
             nested_user=nested_user,
-            user_list=user_list,
+            exclude_user=exclude_user,
+            filter=filter,
             optional_deadline=optional_deadline,
             optional_string=optional_string,
             optional_user=optional_user,
-            exclude_user=exclude_user,
-            filter=filter,
             request_options=request_options,
         )
         return _response.data

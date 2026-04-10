@@ -1,0 +1,68 @@
+using SeedOauthClientCredentials.Core;
+
+namespace SeedOauthClientCredentials;
+
+public partial class SimpleClient : ISimpleClient
+{
+    private readonly RawClient _client;
+
+    internal SimpleClient(RawClient client)
+    {
+        try
+        {
+            _client = client;
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
+    }
+
+    /// <example><code>
+    /// await client.Simple.GetSomethingAsync();
+    /// </code></example>
+    public async Task GetSomethingAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new SeedOauthClientCredentials.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            Method = HttpMethod.Get,
+                            Path = "/get-something",
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    return;
+                }
+                {
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
+                    throw new SeedOauthClientCredentialsApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+}

@@ -17,7 +17,7 @@ func do() {
             "<password>",
         ),
     )
-    client.Basicauth.Getwithbasicauth(
+    client.BasicAuth.GetWithBasicAuth(
         context.TODO(),
     )
 }

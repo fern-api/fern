@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getorganization</a>(tenant_id, organization_id, { ...params }) -> SeedApi.Organization</code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganization</a>(organization_id) -> SeedPathParameters.Organization</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.organizations.getorganization("tenant_id", "organization_id");
+await client.organizations.getOrganization("organization_id");
 
 ```
 </dd>
@@ -29,23 +29,7 @@ await client.organizations.getorganization("tenant_id", "organization_id");
 <dl>
 <dd>
 
-**tenant_id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **organization_id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.OrganizationsGetOrganizationRequest` 
     
 </dd>
 </dl>
@@ -65,7 +49,7 @@ await client.organizations.getorganization("tenant_id", "organization_id");
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getorganizationuser</a>(tenant_id, organization_id, user_id, { ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganizationUser</a>(organization_id, user_id, { ...params }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -78,7 +62,7 @@ await client.organizations.getorganization("tenant_id", "organization_id");
 <dd>
 
 ```typescript
-await client.organizations.getorganizationuser("tenant_id", "organization_id", "user_id");
+await client.organizations.getOrganizationUser("organization_id", "user_id");
 
 ```
 </dd>
@@ -90,14 +74,6 @@ await client.organizations.getorganizationuser("tenant_id", "organization_id", "
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**tenant_id:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -118,7 +94,7 @@ await client.organizations.getorganizationuser("tenant_id", "organization_id", "
 <dl>
 <dd>
 
-**request:** `SeedApi.OrganizationsGetOrganizationUserRequest` 
+**request:** `SeedPathParameters.GetOrganizationUserRequest` 
     
 </dd>
 </dl>
@@ -138,7 +114,7 @@ await client.organizations.getorganizationuser("tenant_id", "organization_id", "
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">searchorganizations</a>(tenant_id, organization_id, { ...params }) -> SeedApi.Organization[]</code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">searchOrganizations</a>(organization_id, { ...params }) -> SeedPathParameters.Organization[]</code></summary>
 <dl>
 <dd>
 
@@ -151,7 +127,9 @@ await client.organizations.getorganizationuser("tenant_id", "organization_id", "
 <dd>
 
 ```typescript
-await client.organizations.searchorganizations("tenant_id", "organization_id");
+await client.organizations.searchOrganizations("organization_id", {
+    limit: 1
+});
 
 ```
 </dd>
@@ -167,14 +145,6 @@ await client.organizations.searchorganizations("tenant_id", "organization_id");
 <dl>
 <dd>
 
-**tenant_id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **organization_id:** `string` 
     
 </dd>
@@ -183,7 +153,7 @@ await client.organizations.searchorganizations("tenant_id", "organization_id");
 <dl>
 <dd>
 
-**request:** `SeedApi.OrganizationsSearchOrganizationsRequest` 
+**request:** `SeedPathParameters.SearchOrganizationsRequest` 
     
 </dd>
 </dl>
@@ -204,7 +174,7 @@ await client.organizations.searchorganizations("tenant_id", "organization_id");
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getuser</a>(tenant_id, user_id, { ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUser</a>(user_id, { ...params }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -217,7 +187,7 @@ await client.organizations.searchorganizations("tenant_id", "organization_id");
 <dd>
 
 ```typescript
-await client.user.getuser("tenant_id", "user_id");
+await client.user.getUser("user_id");
 
 ```
 </dd>
@@ -233,14 +203,6 @@ await client.user.getuser("tenant_id", "user_id");
 <dl>
 <dd>
 
-**tenant_id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **user_id:** `string` 
     
 </dd>
@@ -249,7 +211,7 @@ await client.user.getuser("tenant_id", "user_id");
 <dl>
 <dd>
 
-**request:** `SeedApi.UserGetUserRequest` 
+**request:** `SeedPathParameters.GetUsersRequest` 
     
 </dd>
 </dl>
@@ -269,7 +231,7 @@ await client.user.getuser("tenant_id", "user_id");
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">updateuser</a>(tenant_id, user_id, { ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUser</a>({ ...params }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -282,10 +244,62 @@ await client.user.getuser("tenant_id", "user_id");
 <dd>
 
 ```typescript
-await client.user.updateuser("tenant_id", "user_id", {
+await client.user.createUser({
+    name: "name",
+    tags: ["tags", "tags"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPathParameters.User` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">updateUser</a>(user_id, { ...params }) -> SeedPathParameters.User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.user.updateUser("user_id", {
     body: {
         name: "name",
-        tags: ["tags"]
+        tags: ["tags", "tags"]
     }
 });
 
@@ -303,14 +317,6 @@ await client.user.updateuser("tenant_id", "user_id", {
 <dl>
 <dd>
 
-**tenant_id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **user_id:** `string` 
     
 </dd>
@@ -319,7 +325,7 @@ await client.user.updateuser("tenant_id", "user_id", {
 <dl>
 <dd>
 
-**request:** `SeedApi.UserUpdateUserRequest` 
+**request:** `SeedPathParameters.UpdateUserRequest` 
     
 </dd>
 </dl>
@@ -339,7 +345,7 @@ await client.user.updateuser("tenant_id", "user_id", {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createuser</a>(tenant_id, { ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">searchUsers</a>(user_id, { ...params }) -> SeedPathParameters.User[]</code></summary>
 <dl>
 <dd>
 
@@ -352,11 +358,8 @@ await client.user.updateuser("tenant_id", "user_id", {
 <dd>
 
 ```typescript
-await client.user.createuser("tenant_id", {
-    body: {
-        name: "name",
-        tags: ["tags"]
-    }
+await client.user.searchUsers("user_id", {
+    limit: 1
 });
 
 ```
@@ -373,71 +376,6 @@ await client.user.createuser("tenant_id", {
 <dl>
 <dd>
 
-**tenant_id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.UserCreateUserRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `UserClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">searchusers</a>(tenant_id, user_id, { ...params }) -> SeedApi.User[]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.user.searchusers("tenant_id", "user_id");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**tenant_id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **user_id:** `string` 
     
 </dd>
@@ -446,7 +384,7 @@ await client.user.searchusers("tenant_id", "user_id");
 <dl>
 <dd>
 
-**request:** `SeedApi.UserSearchUsersRequest` 
+**request:** `SeedPathParameters.SearchUsersRequest` 
     
 </dd>
 </dl>
@@ -466,7 +404,7 @@ await client.user.searchusers("tenant_id", "user_id");
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getusermetadata</a>(tenant_id, user_id, version, { ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUserMetadata</a>(user_id, version, { ...params }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -493,7 +431,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```typescript
-await client.user.getusermetadata("tenant_id", "user_id", 1);
+await client.user.getUserMetadata("user_id", 1);
 
 ```
 </dd>
@@ -505,14 +443,6 @@ await client.user.getusermetadata("tenant_id", "user_id", 1);
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**tenant_id:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -533,7 +463,7 @@ await client.user.getusermetadata("tenant_id", "user_id", 1);
 <dl>
 <dd>
 
-**request:** `SeedApi.UserGetUserMetadataRequest` 
+**request:** `SeedPathParameters.GetUserMetadataRequest` 
     
 </dd>
 </dl>
@@ -553,7 +483,7 @@ await client.user.getusermetadata("tenant_id", "user_id", 1);
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getuserspecifics</a>(tenant_id, user_id, version, thought, { ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUserSpecifics</a>(user_id, version, thought, { ...params }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -580,7 +510,7 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```typescript
-await client.user.getuserspecifics("tenant_id", "user_id", 1, "thought");
+await client.user.getUserSpecifics("user_id", 1, "thought");
 
 ```
 </dd>
@@ -592,14 +522,6 @@ await client.user.getuserspecifics("tenant_id", "user_id", 1, "thought");
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**tenant_id:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -628,7 +550,7 @@ await client.user.getuserspecifics("tenant_id", "user_id", 1, "thought");
 <dl>
 <dd>
 
-**request:** `SeedApi.UserGetUserSpecificsRequest` 
+**request:** `SeedPathParameters.GetUserSpecificsRequest` 
     
 </dd>
 </dl>

@@ -29,9 +29,9 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn uploadwithqueryparams(
+    pub async fn upload_with_query_params(
         &self,
-        request: &UploadwithqueryparamsRequest,
+        request: &UploadWithQueryParamsRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -41,7 +41,7 @@ impl ServiceClient {
                 Some(request.body.to_vec()),
                 QueryBuilder::new()
                     .string("model", request.model.clone())
-                    .serialize("language", request.language.clone())
+                    .string("language", request.language.clone())
                     .build(),
                 options,
             )

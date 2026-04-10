@@ -6,11 +6,11 @@
             "id": {
                 "path": "/user",
                 "method": "POST",
-                "identifier_override": "endpoint_user.createuser"
+                "identifier_override": "endpoint_user.createUser"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.User.CreateuserAsync(\n    new UserCreateUserRequest\n    {\n        Type = UserCreateUserRequestType.CreateUserRequest,\n        Version = UserCreateUserRequestVersion.V1,\n        Name = \"name\",\n    }\n);\n"
+                "client": "using SeedExtraProperties;\n\nvar client = new SeedExtraPropertiesClient();\nawait client.User.CreateUserAsync(\n    new CreateUserRequest\n    {\n        Name = \"Alice\",\n        Type = \"CreateUserRequest\",\n        Version = \"v1\",\n        AdditionalProperties = new AdditionalProperties\n        {\n            [\"age\"] = 30,\n            [\"location\"] = \"Wonderland\",\n        },\n    }\n);\n"
             }
         }
     ]

@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_audiences::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,15 +6,14 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = AudiencesClient::new(config).expect("Failed to build client");
     client
         .foo
         .find(
-            &FooFindRequest {
-                optional_string: Some(OptionalString(Some("optionalString".to_string()))),
+            &FindRequest {
+                optional_string: OptionalString(Some("optionalString".to_string())),
                 public_property: Some("publicProperty".to_string()),
                 private_property: Some(1),
-                ..Default::default()
             },
             None,
         )

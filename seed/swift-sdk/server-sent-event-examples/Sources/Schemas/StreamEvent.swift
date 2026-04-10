@@ -1,30 +1,40 @@
 import Foundation
 
 public enum StreamEvent: Codable, Hashable, Sendable {
-    case streamEventOne(StreamEventOne)
-    case streamEventZero(StreamEventZero)
+    case completion(CompletionEvent)
+    case error(ErrorEvent)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(StreamEventOne.self) {
-            self = .streamEventOne(value)
-        } else if let value = try? container.decode(StreamEventZero.self) {
-            self = .streamEventZero(value)
-        } else {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Unexpected value."
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let discriminant = try container.decode(String.self, forKey: .event)
+        switch discriminant {
+        case "completion":
+            self = .completion(try CompletionEvent(from: decoder))
+        case "error":
+            self = .error(try ErrorEvent(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.singleValueContainer()
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .streamEventOne(let value):
-            try container.encode(value)
-        case .streamEventZero(let value):
-            try container.encode(value)
+        case .completion(let data):
+            try container.encode("completion", forKey: .event)
+            try data.encode(to: encoder)
+        case .error(let data):
+            try container.encode("error", forKey: .event)
+            try data.encode(to: encoder)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case event
     }
 }

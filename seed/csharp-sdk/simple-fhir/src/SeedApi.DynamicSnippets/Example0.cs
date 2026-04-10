@@ -11,10 +11,8 @@ public class Example0
             }
         );
 
-        await client._.GetAccountAsync(
-            new GetAccountRequest {
-                AccountId = "account_id"
-            }
+        await client.GetAccountAsync(
+            "account_id"
         );
     }
 

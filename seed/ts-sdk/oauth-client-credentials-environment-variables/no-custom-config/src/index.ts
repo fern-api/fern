@@ -1,5 +1,8 @@
-export * as SeedApi from "./api/index.js";
+export * as SeedOauthClientCredentialsEnvironmentVariables from "./api/index.js";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-export { SeedApiClient } from "./Client.js";
-export { SeedApiError, SeedApiTimeoutError } from "./errors/index.js";
+export { SeedOauthClientCredentialsEnvironmentVariablesClient } from "./Client.js";
+export {
+    SeedOauthClientCredentialsEnvironmentVariablesError,
+    SeedOauthClientCredentialsEnvironmentVariablesTimeoutError,
+} from "./errors/index.js";
 export * from "./exports.js";

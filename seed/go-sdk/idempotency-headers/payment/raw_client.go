@@ -6,6 +6,7 @@ import (
 	context "context"
 	http "net/http"
 
+	uuid "github.com/google/uuid"
 	fern "github.com/idempotency-headers/fern"
 	core "github.com/idempotency-headers/fern/core"
 	internal "github.com/idempotency-headers/fern/internal"
@@ -33,10 +34,10 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Create(
 	ctx context.Context,
-	request *fern.PaymentCreateRequest,
-	opts ...option.RequestOption,
-) (*core.Response[string], error) {
-	options := core.NewRequestOptions(opts...)
+	request *fern.CreatePaymentRequest,
+	opts ...option.IdempotentRequestOption,
+) (*core.Response[uuid.UUID], error) {
+	options := core.NewIdempotentRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
@@ -47,8 +48,7 @@ func (r *RawClient) Create(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
-	var response string
+	var response uuid.UUID
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -66,7 +66,7 @@ func (r *RawClient) Create(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[string]{
+	return &core.Response[uuid.UUID]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -75,7 +75,7 @@ func (r *RawClient) Create(
 
 func (r *RawClient) Delete(
 	ctx context.Context,
-	request *fern.PaymentDeleteRequest,
+	paymentID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -86,7 +86,7 @@ func (r *RawClient) Delete(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/payment/%v",
-		request.PaymentID,
+		paymentID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

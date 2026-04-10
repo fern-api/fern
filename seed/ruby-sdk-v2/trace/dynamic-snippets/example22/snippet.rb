@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.migration.getattemptedmigrations(admin_key_header: "admin-key-header")
+client.problem.delete_problem(problem_id: "problemId")

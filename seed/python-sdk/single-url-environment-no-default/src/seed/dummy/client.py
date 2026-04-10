@@ -22,7 +22,7 @@ class DummyClient:
         """
         return self._raw_client
 
-    def getdummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def get_dummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -33,17 +33,18 @@ class DummyClient:
         -------
         str
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedSingleUrlEnvironmentNoDefault
+        from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
-        client = SeedApi(
+        client = SeedSingleUrlEnvironmentNoDefault(
             token="YOUR_TOKEN",
+            environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
         )
-        client.dummy.getdummy()
+        client.dummy.get_dummy()
         """
-        _response = self._raw_client.getdummy(request_options=request_options)
+        _response = self._raw_client.get_dummy(request_options=request_options)
         return _response.data
 
 
@@ -62,7 +63,7 @@ class AsyncDummyClient:
         """
         return self._raw_client
 
-    async def getdummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+    async def get_dummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -73,23 +74,24 @@ class AsyncDummyClient:
         -------
         str
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedSingleUrlEnvironmentNoDefault
+        from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
-        client = AsyncSeedApi(
+        client = AsyncSeedSingleUrlEnvironmentNoDefault(
             token="YOUR_TOKEN",
+            environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.dummy.getdummy()
+            await client.dummy.get_dummy()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getdummy(request_options=request_options)
+        _response = await self._raw_client.get_dummy(request_options=request_options)
         return _response.data

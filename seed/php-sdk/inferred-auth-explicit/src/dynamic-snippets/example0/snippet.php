@@ -3,21 +3,20 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Auth\Requests\AuthGetTokenWithClientCredentialsRequest;
-use Seed\Auth\Types\AuthGetTokenWithClientCredentialsRequestAudience;
-use Seed\Auth\Types\AuthGetTokenWithClientCredentialsRequestGrantType;
+use Seed\Auth\Requests\GetTokenRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->auth->gettokenwithclientcredentials(
-    new AuthGetTokenWithClientCredentialsRequest([
-        'apiKey' => 'X-Api-Key',
+$client->auth->getTokenWithClientCredentials(
+    new GetTokenRequest([
+        'xApiKey' => 'X-Api-Key',
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
-        'audience' => AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom->value,
-        'grantType' => AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials->value,
+        'audience' => 'https://api.example.com',
+        'grantType' => 'client_credentials',
+        'scope' => 'scope',
     ]),
 );

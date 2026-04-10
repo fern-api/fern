@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.Bigunion.<a href="/src/SeedApi/Bigunion/BigunionClient.cs">GetAsync</a>(BigunionGetRequest { ... }) -> WithRawResponseTask&lt;OneOf&lt;BigUnionZero, BigUnionOne, BigUnionTwo, BigUnionThree, BigUnionFour, BigUnionFive, BigUnionSix, BigUnionSeven, BigUnionEight, BigUnionNine, BigUnionTen, BigUnionEleven, BigUnionTwelve, BigUnionThirteen, BigUnionFourteen, BigUnionFifteen, BigUnionSixteen, BigUnionSeventeen, BigUnionEighteen, BigUnionNineteen, BigUnionTwenty, BigUnionTwentyOne, BigUnionTwentyTwo, BigUnionTwentyThree, BigUnionTwentyFour, BigUnionTwentyFive, BigUnionTwentySix, BigUnionTwentySeven, BigUnionTwentyEight&gt;&gt;</code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">GetAsync</a>(id) -> WithRawResponseTask&lt;BigUnion&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Bigunion.GetAsync(new BigunionGetRequest { Id = "id" });
+await client.Bigunion.GetAsync("id");
 ```
 </dd>
 </dl>
@@ -28,7 +28,7 @@ await client.Bigunion.GetAsync(new BigunionGetRequest { Id = "id" });
 <dl>
 <dd>
 
-**request:** `BigunionGetRequest` 
+**id:** `string` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ await client.Bigunion.GetAsync(new BigunionGetRequest { Id = "id" });
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.<a href="/src/SeedApi/Bigunion/BigunionClient.cs">UpdateAsync</a>(OneOf&lt;BigUnionZero, BigUnionOne, BigUnionTwo, BigUnionThree, BigUnionFour, BigUnionFive, BigUnionSix, BigUnionSeven, BigUnionEight, BigUnionNine, BigUnionTen, BigUnionEleven, BigUnionTwelve, BigUnionThirteen, BigUnionFourteen, BigUnionFifteen, BigUnionSixteen, BigUnionSeventeen, BigUnionEighteen, BigUnionNineteen, BigUnionTwenty, BigUnionTwentyOne, BigUnionTwentyTwo, BigUnionTwentyThree, BigUnionTwentyFour, BigUnionTwentyFive, BigUnionTwentySix, BigUnionTwentySeven, BigUnionTwentyEight&gt; { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateAsync</a>(BigUnion { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ await client.Bigunion.GetAsync(new BigunionGetRequest { Id = "id" });
 
 ```csharp
 await client.Bigunion.UpdateAsync(
-    new BigUnionZero { Value = "value", Type = BigUnionZeroType.NormalSweet }
+    new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" }))
 );
 ```
 </dd>
@@ -70,7 +70,7 @@ await client.Bigunion.UpdateAsync(
 <dl>
 <dd>
 
-**request:** `OneOf<BigUnionZero, BigUnionOne, BigUnionTwo, BigUnionThree, BigUnionFour, BigUnionFive, BigUnionSix, BigUnionSeven, BigUnionEight, BigUnionNine, BigUnionTen, BigUnionEleven, BigUnionTwelve, BigUnionThirteen, BigUnionFourteen, BigUnionFifteen, BigUnionSixteen, BigUnionSeventeen, BigUnionEighteen, BigUnionNineteen, BigUnionTwenty, BigUnionTwentyOne, BigUnionTwentyTwo, BigUnionTwentyThree, BigUnionTwentyFour, BigUnionTwentyFive, BigUnionTwentySix, BigUnionTwentySeven, BigUnionTwentyEight>` 
+**request:** `BigUnion` 
     
 </dd>
 </dl>
@@ -82,7 +82,7 @@ await client.Bigunion.UpdateAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.<a href="/src/SeedApi/Bigunion/BigunionClient.cs">UpdateManyAsync</a>(IEnumerable&lt;OneOf&lt;BigUnionZero, BigUnionOne, BigUnionTwo, BigUnionThree, BigUnionFour, BigUnionFive, BigUnionSix, BigUnionSeven, BigUnionEight, BigUnionNine, BigUnionTen, BigUnionEleven, BigUnionTwelve, BigUnionThirteen, BigUnionFourteen, BigUnionFifteen, BigUnionSixteen, BigUnionSeventeen, BigUnionEighteen, BigUnionNineteen, BigUnionTwenty, BigUnionTwentyOne, BigUnionTwentyTwo, BigUnionTwentyThree, BigUnionTwentyFour, BigUnionTwentyFive, BigUnionTwentySix, BigUnionTwentySeven, BigUnionTwentyEight&gt;&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;string, bool&gt;&gt;</code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateManyAsync</a>(IEnumerable&lt;BigUnion&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;string, bool&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -96,41 +96,10 @@ await client.Bigunion.UpdateAsync(
 
 ```csharp
 await client.Bigunion.UpdateManyAsync(
-    new List<
-        OneOf<
-            BigUnionZero,
-            BigUnionOne,
-            BigUnionTwo,
-            BigUnionThree,
-            BigUnionFour,
-            BigUnionFive,
-            BigUnionSix,
-            BigUnionSeven,
-            BigUnionEight,
-            BigUnionNine,
-            BigUnionTen,
-            BigUnionEleven,
-            BigUnionTwelve,
-            BigUnionThirteen,
-            BigUnionFourteen,
-            BigUnionFifteen,
-            BigUnionSixteen,
-            BigUnionSeventeen,
-            BigUnionEighteen,
-            BigUnionNineteen,
-            BigUnionTwenty,
-            BigUnionTwentyOne,
-            BigUnionTwentyTwo,
-            BigUnionTwentyThree,
-            BigUnionTwentyFour,
-            BigUnionTwentyFive,
-            BigUnionTwentySix,
-            BigUnionTwentySeven,
-            BigUnionTwentyEight
-        >
-    >()
+    new List<BigUnion>()
     {
-        new BigUnionZero { Value = "value", Type = BigUnionZeroType.NormalSweet },
+        new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" })),
+        new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = "value" })),
     }
 );
 ```
@@ -147,7 +116,7 @@ await client.Bigunion.UpdateManyAsync(
 <dl>
 <dd>
 
-**request:** `IEnumerable<OneOf<BigUnionZero, BigUnionOne, BigUnionTwo, BigUnionThree, BigUnionFour, BigUnionFive, BigUnionSix, BigUnionSeven, BigUnionEight, BigUnionNine, BigUnionTen, BigUnionEleven, BigUnionTwelve, BigUnionThirteen, BigUnionFourteen, BigUnionFifteen, BigUnionSixteen, BigUnionSeventeen, BigUnionEighteen, BigUnionNineteen, BigUnionTwenty, BigUnionTwentyOne, BigUnionTwentyTwo, BigUnionTwentyThree, BigUnionTwentyFour, BigUnionTwentyFive, BigUnionTwentySix, BigUnionTwentySeven, BigUnionTwentyEight>>` 
+**request:** `IEnumerable<BigUnion>` 
     
 </dd>
 </dl>
@@ -160,7 +129,7 @@ await client.Bigunion.UpdateManyAsync(
 </details>
 
 ## Union
-<details><summary><code>client.Union.<a href="/src/SeedApi/Union/UnionClient.cs">GetAsync</a>(UnionGetRequest { ... }) -> WithRawResponseTask&lt;OneOf&lt;ShapeZero, ShapeOne&gt;&gt;</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">GetAsync</a>(id) -> WithRawResponseTask&lt;Shape&gt;</code></summary>
 <dl>
 <dd>
 
@@ -173,7 +142,7 @@ await client.Bigunion.UpdateManyAsync(
 <dd>
 
 ```csharp
-await client.Union.GetAsync(new UnionGetRequest { Id = "id" });
+await client.Union.GetAsync("id");
 ```
 </dd>
 </dl>
@@ -188,7 +157,7 @@ await client.Union.GetAsync(new UnionGetRequest { Id = "id" });
 <dl>
 <dd>
 
-**request:** `UnionGetRequest` 
+**id:** `string` 
     
 </dd>
 </dl>
@@ -200,7 +169,7 @@ await client.Union.GetAsync(new UnionGetRequest { Id = "id" });
 </dl>
 </details>
 
-<details><summary><code>client.Union.<a href="/src/SeedApi/Union/UnionClient.cs">UpdateAsync</a>(OneOf&lt;ShapeZero, ShapeOne&gt; { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
+<details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">UpdateAsync</a>(Shape { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -213,7 +182,7 @@ await client.Union.GetAsync(new UnionGetRequest { Id = "id" });
 <dd>
 
 ```csharp
-await client.Union.UpdateAsync(new ShapeZero { Radius = 1.1, Type = ShapeZeroType.Circle });
+await client.Union.UpdateAsync(new Shape(new Shape.Circle(new Circle { Radius = 1.1 })));
 ```
 </dd>
 </dl>
@@ -228,7 +197,7 @@ await client.Union.UpdateAsync(new ShapeZero { Radius = 1.1, Type = ShapeZeroTyp
 <dl>
 <dd>
 
-**request:** `OneOf<ShapeZero, ShapeOne>` 
+**request:** `Shape` 
     
 </dd>
 </dl>

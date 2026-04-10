@@ -1,21 +1,17 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.types.TypesMixedType;
-import java.util.HashMap;
+import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.types.types.ObjectWithRequiredField;
 
 public class Example12 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpointsContainer()
-                .endpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(new HashMap<String, TypesMixedType>() {
-                    {
-                        put("key", TypesMixedType.of(1.1));
-                    }
-                });
+        client.endpoints()
+                .httpMethods()
+                .testPost(ObjectWithRequiredField.builder().string("string").build());
     }
 }

@@ -2,6 +2,7 @@
 
 export const AcmeApiEnvironment = {
     Production: "https://api.example.com",
+    Staging: "https://staging-api.example.com",
 } as const;
 
-export type AcmeApiEnvironment = typeof AcmeApiEnvironment.Production;
+export type AcmeApiEnvironment = typeof AcmeApiEnvironment.Production | typeof AcmeApiEnvironment.Staging;

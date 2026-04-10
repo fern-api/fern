@@ -13,7 +13,10 @@
 <dd>
 
 ```typescript
-await client.service.patch({});
+await client.service.patch({
+    application: "application",
+    require_auth: true
+});
 
 ```
 </dd>
@@ -29,7 +32,7 @@ await client.service.patch({});
 <dl>
 <dd>
 
-**request:** `SeedApi.ServicePatchRequest` 
+**request:** `SeedContentTypes.PatchProxyRequest` 
     
 </dd>
 </dl>
@@ -49,7 +52,7 @@ await client.service.patch({});
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">patchcomplex</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">patchComplex</a>(id, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -79,8 +82,25 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```typescript
-await client.service.patchcomplex({
-    id: "id"
+await client.service.patchComplex("id", {
+    name: "name",
+    age: 1,
+    active: true,
+    metadata: {
+        "metadata": {
+            "key": "value"
+        }
+    },
+    tags: ["tags", "tags"],
+    email: "email",
+    nickname: "nickname",
+    bio: "bio",
+    profileImageUrl: "profileImageUrl",
+    settings: {
+        "settings": {
+            "key": "value"
+        }
+    }
 });
 
 ```
@@ -97,7 +117,15 @@ await client.service.patchcomplex({
 <dl>
 <dd>
 
-**request:** `SeedApi.ServicePatchComplexRequest` 
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedContentTypes.PatchComplexRequest` 
     
 </dd>
 </dl>
@@ -117,7 +145,7 @@ await client.service.patchcomplex({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">namedpatchwithmixed</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">namedPatchWithMixed</a>(id, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -145,8 +173,10 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```typescript
-await client.service.namedpatchwithmixed({
-    id: "id"
+await client.service.namedPatchWithMixed("id", {
+    appId: "appId",
+    instructions: "instructions",
+    active: true
 });
 
 ```
@@ -163,7 +193,15 @@ await client.service.namedpatchwithmixed({
 <dl>
 <dd>
 
-**request:** `SeedApi.ServiceNamedPatchWithMixedRequest` 
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedContentTypes.NamedMixedPatchRequest` 
     
 </dd>
 </dl>
@@ -183,7 +221,7 @@ await client.service.namedpatchwithmixed({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">optionalmergepatchtest</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">optionalMergePatchTest</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -213,8 +251,12 @@ This endpoint should:
 <dd>
 
 ```typescript
-await client.service.optionalmergepatchtest({
-    requiredField: "requiredField"
+await client.service.optionalMergePatchTest({
+    requiredField: "requiredField",
+    optionalString: "optionalString",
+    optionalInteger: 1,
+    optionalBoolean: true,
+    nullableString: "nullableString"
 });
 
 ```
@@ -231,7 +273,7 @@ await client.service.optionalmergepatchtest({
 <dl>
 <dd>
 
-**request:** `SeedApi.ServiceOptionalMergePatchTestRequest` 
+**request:** `SeedContentTypes.OptionalMergePatchRequest` 
     
 </dd>
 </dl>
@@ -251,7 +293,7 @@ await client.service.optionalmergepatchtest({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">regularpatch</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">regularPatch</a>(id, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -278,8 +320,9 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```typescript
-await client.service.regularpatch({
-    id: "id"
+await client.service.regularPatch("id", {
+    field1: "field1",
+    field2: 1
 });
 
 ```
@@ -296,7 +339,15 @@ await client.service.regularpatch({
 <dl>
 <dd>
 
-**request:** `SeedApi.ServiceRegularPatchRequest` 
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedContentTypes.RegularPatchRequest` 
     
 </dd>
 </dl>

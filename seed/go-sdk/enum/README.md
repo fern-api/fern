@@ -38,8 +38,9 @@ import (
 
 func do() {
     client := client.NewClient()
-    request := &fern.HeadersSendRequest{
+    request := &fern.SendEnumAsHeaderRequest{
         Operand: fern.OperandGreaterThan,
+        MaybeOperand: fern.OperandGreaterThan.Ptr(),
         OperandOrColor: &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },

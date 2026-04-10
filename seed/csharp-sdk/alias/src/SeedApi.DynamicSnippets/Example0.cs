@@ -1,20 +1,18 @@
-using SeedApi;
+using SeedAlias;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedAliasClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client._.GetAsync(
-            new GetRequest {
-                TypeId = "typeId"
-            }
+        await client.GetAsync(
+            "typeId"
         );
     }
 

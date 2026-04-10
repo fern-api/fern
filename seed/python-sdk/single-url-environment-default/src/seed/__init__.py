@@ -8,15 +8,15 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import dummy
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
-    from .environment import SeedApiEnvironment
+    from .client import AsyncSeedSingleUrlEnvironmentDefault, SeedSingleUrlEnvironmentDefault
+    from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedSingleUrlEnvironmentDefault": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedApi": ".client",
-    "SeedApiEnvironment": ".environment",
+    "SeedSingleUrlEnvironmentDefault": ".client",
+    "SeedSingleUrlEnvironmentDefaultEnvironment": ".environment",
     "__version__": ".version",
     "dummy": ".dummy",
 }
@@ -44,11 +44,11 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedSingleUrlEnvironmentDefault",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedApi",
-    "SeedApiEnvironment",
+    "SeedSingleUrlEnvironmentDefault",
+    "SeedSingleUrlEnvironmentDefaultEnvironment",
     "__version__",
     "dummy",
 ]

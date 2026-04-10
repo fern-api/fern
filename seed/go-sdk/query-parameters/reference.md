@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.Getusername() -> *fern.User</code></summary>
+<details><summary><code>client.User.GetUsername() -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -13,16 +13,18 @@
 <dd>
 
 ```go
-request := &fern.UserGetUsernameRequest{
+request := &fern.GetUsersRequest{
         Limit: 1,
-        ID: "id",
+        ID: uuid.MustParse(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
         Date: fern.MustParseDate(
             "2023-01-15",
         ),
         Deadline: fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
-        Bytes: "bytes",
+        Bytes: []byte("SGVsbG8gd29ybGQh"),
         User: &fern.User{
             Name: "name",
             Tags: []string{
@@ -31,6 +33,13 @@ request := &fern.UserGetUsernameRequest{
             },
         },
         UserList: []*fern.User{
+            &fern.User{
+                Name: "name",
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
+            },
             &fern.User{
                 Name: "name",
                 Tags: []string{
@@ -76,13 +85,11 @@ request := &fern.UserGetUsernameRequest{
                 },
             },
         },
-        Filter: []*string{
-            fern.String(
-                "filter",
-            ),
+        Filter: []string{
+            "filter",
         },
     }
-client.User.Getusername(
+client.User.GetUsername(
         context.TODO(),
         request,
     )
@@ -109,7 +116,7 @@ client.User.Getusername(
 <dl>
 <dd>
 
-**id:** `string` 
+**id:** `uuid.UUID` 
     
 </dd>
 </dl>
@@ -133,7 +140,7 @@ client.User.Getusername(
 <dl>
 <dd>
 
-**bytes:** `string` 
+**bytes:** `[]byte` 
     
 </dd>
 </dl>
@@ -149,7 +156,7 @@ client.User.Getusername(
 <dl>
 <dd>
 
-**userList:** `*fern.User` 
+**userList:** `[]*fern.User` 
     
 </dd>
 </dl>
@@ -205,7 +212,7 @@ client.User.Getusername(
 <dl>
 <dd>
 
-**filter:** `*string` 
+**filter:** `string` 
     
 </dd>
 </dl>

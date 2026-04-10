@@ -1,11 +1,11 @@
-using SeedApi;
+using SeedSimpleApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedSimpleApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
@@ -13,9 +13,7 @@ public class Example0
         );
 
         await client.User.GetAsync(
-            new UserGetRequest {
-                Id = "id"
-            }
+            "id"
         );
     }
 

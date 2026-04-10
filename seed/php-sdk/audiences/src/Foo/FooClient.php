@@ -4,12 +4,11 @@ namespace Seed\Foo;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Foo\Requests\FooFindRequest;
-use Seed\Types\ImportingType;
+use Seed\Foo\Requests\FindRequest;
+use Seed\Foo\Types\ImportingType;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
-use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -51,7 +50,7 @@ class FooClient
     }
 
     /**
-     * @param FooFindRequest $request
+     * @param FindRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -64,7 +63,7 @@ class FooClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function find(FooFindRequest $request = new FooFindRequest(), ?array $options = null): ?ImportingType
+    public function find(FindRequest $request = new FindRequest(), ?array $options = null): ?ImportingType
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -74,7 +73,7 @@ class FooClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::POST,
                     query: $query,

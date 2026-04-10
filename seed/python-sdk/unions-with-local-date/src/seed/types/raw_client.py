@@ -11,7 +11,7 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from .union_with_time import UnionWithTime
+from .types.union_with_time import UnionWithTime
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -34,7 +34,6 @@ class RawTypesClient:
         Returns
         -------
         HttpResponse[UnionWithTime]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"time/{encode_path_param(id)}",
@@ -74,15 +73,11 @@ class RawTypesClient:
         Returns
         -------
         HttpResponse[bool]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "time",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=UnionWithTime, direction="write"),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -124,7 +119,6 @@ class AsyncRawTypesClient:
         Returns
         -------
         AsyncHttpResponse[UnionWithTime]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"time/{encode_path_param(id)}",
@@ -164,15 +158,11 @@ class AsyncRawTypesClient:
         Returns
         -------
         AsyncHttpResponse[bool]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "time",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=UnionWithTime, direction="write"),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )

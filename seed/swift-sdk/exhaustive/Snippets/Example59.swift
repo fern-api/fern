@@ -1,16 +1,13 @@
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExhaustiveClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpointsParams.endpointsParamsModifyWithPath(
-        param: "param",
-        request: .init(body: "string")
-    )
+    _ = try await client.endpoints.urls.withUnderscores()
 }
 
 try await main()

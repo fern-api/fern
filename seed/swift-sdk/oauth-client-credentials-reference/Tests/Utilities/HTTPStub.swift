@@ -1,4 +1,4 @@
-import Api
+import OauthClientCredentialsReference
 import Foundation
 
 final class HTTPStub {

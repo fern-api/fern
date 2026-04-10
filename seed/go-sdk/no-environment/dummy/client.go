@@ -32,11 +32,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Getdummy(
+func (c *Client) GetDummy(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Getdummy(
+	response, err := c.WithRawResponse.GetDummy(
 		ctx,
 		opts...,
 	)

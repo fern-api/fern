@@ -49,16 +49,22 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Api
+import RequestParameters
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = RequestParametersClient()
 
-    _ = try await client.user.createusername(request: .init(
-        username: "username",
-        password: "password",
-        name: "name"
-    ))
+    _ = try await client.user.createUsername(
+        tags: [
+            "tags",
+            "tags"
+        ],
+        request: .init(
+            username: "username",
+            password: "password",
+            name: "test"
+        )
+    )
 }
 
 try await main()
@@ -69,14 +75,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Api
+import RequestParameters
 
-let client = ApiClient(...)
+let client = RequestParametersClient(...)
 
 do {
-    let response = try await client.user.createusername(...)
+    let response = try await client.user.createUsername(...)
     // Handle successful response
-} catch let error as ApiError {
+} catch let error as RequestParametersError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -99,9 +105,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import Api
+import RequestParameters
 
-let request = Requests.UserCreateUsernameRequest(
+let request = Requests.CreateUsernameRequest(
     ...
 )
 ```
@@ -113,7 +119,7 @@ let request = Requests.UserCreateUsernameRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.user.createusername(..., requestOptions: .init(
+try await client.user.createUsername(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -125,7 +131,7 @@ try await client.user.createusername(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.user.createusername(..., requestOptions: .init(
+try await client.user.createUsername(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -137,7 +143,7 @@ try await client.user.createusername(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.user.createusername(..., requestOptions: .init(
+try await client.user.createUsername(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -148,9 +154,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Api
+import RequestParameters
 
-let client = ApiClient(
+let client = RequestParametersClient(
     ...,
     urlSession: // Provide your implementation here
 )

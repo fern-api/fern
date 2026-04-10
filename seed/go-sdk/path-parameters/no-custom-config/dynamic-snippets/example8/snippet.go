@@ -14,17 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.UserUpdateUserRequest{
+    request := &fern.GetUserSpecificsRequest{
         TenantID: "tenant_id",
         UserID: "user_id",
-        Body: &fern.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-            },
-        },
+        Version: 1,
+        Thought: "thought",
     }
-    client.User.Updateuser(
+    client.User.GetUserSpecifics(
         context.TODO(),
         request,
     )

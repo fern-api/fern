@@ -17,13 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.EndpointsHTTPMethodsTestPutRequest{
-        ID: "id",
-        Body: &fern.TypesObjectWithRequiredField{
-            FieldString: "string",
-        },
+    request := &fern.ModifyResourceAtInlinedPath{
+        Param: "param",
+        Body: "string",
     }
-    client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPut(
+    client.Endpoints.Params.ModifyWithInlinePath(
         context.TODO(),
         request,
     )

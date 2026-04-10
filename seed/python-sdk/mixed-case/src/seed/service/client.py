@@ -5,8 +5,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.resource import Resource
 from .raw_client import AsyncRawServiceClient, RawServiceClient
+from .types.resource import Resource
 
 
 class ServiceClient:
@@ -24,7 +24,7 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def getresource(self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Resource:
+    def get_resource(self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Resource:
         """
         Parameters
         ----------
@@ -37,22 +37,21 @@ class ServiceClient:
         -------
         Resource
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedMixedCase
 
-        client = SeedApi(
+        client = SeedMixedCase(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.getresource(
-            resource_id="ResourceID",
+        client.service.get_resource(
+            resource_id="rsc-xyz",
         )
         """
-        _response = self._raw_client.getresource(resource_id, request_options=request_options)
+        _response = self._raw_client.get_resource(resource_id, request_options=request_options)
         return _response.data
 
-    def listresources(
+    def list_resources(
         self, *, page_limit: int, before_date: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Resource]:
         """
@@ -69,24 +68,23 @@ class ServiceClient:
         -------
         typing.List[Resource]
 
-
         Examples
         --------
         import datetime
 
-        from seed import SeedApi
+        from seed import SeedMixedCase
 
-        client = SeedApi(
+        client = SeedMixedCase(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.listresources(
-            page_limit=1,
+        client.service.list_resources(
+            page_limit=10,
             before_date=datetime.date.fromisoformat(
-                "2023-01-15",
+                "2023-01-01",
             ),
         )
         """
-        _response = self._raw_client.listresources(
+        _response = self._raw_client.list_resources(
             page_limit=page_limit, before_date=before_date, request_options=request_options
         )
         return _response.data
@@ -107,7 +105,7 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def getresource(
+    async def get_resource(
         self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Resource:
         """
@@ -122,30 +120,29 @@ class AsyncServiceClient:
         -------
         Resource
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedMixedCase
 
-        client = AsyncSeedApi(
+        client = AsyncSeedMixedCase(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.getresource(
-                resource_id="ResourceID",
+            await client.service.get_resource(
+                resource_id="rsc-xyz",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getresource(resource_id, request_options=request_options)
+        _response = await self._raw_client.get_resource(resource_id, request_options=request_options)
         return _response.data
 
-    async def listresources(
+    async def list_resources(
         self, *, page_limit: int, before_date: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Resource]:
         """
@@ -162,31 +159,30 @@ class AsyncServiceClient:
         -------
         typing.List[Resource]
 
-
         Examples
         --------
         import asyncio
         import datetime
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedMixedCase
 
-        client = AsyncSeedApi(
+        client = AsyncSeedMixedCase(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.listresources(
-                page_limit=1,
+            await client.service.list_resources(
+                page_limit=10,
                 before_date=datetime.date.fromisoformat(
-                    "2023-01-15",
+                    "2023-01-01",
                 ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.listresources(
+        _response = await self._raw_client.list_resources(
             page_limit=page_limit, before_date=before_date, request_options=request_options
         )
         return _response.data

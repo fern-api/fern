@@ -15,9 +15,9 @@ func do() {
         ),
     )
     request := &fern.FooRequest{
-        Bar: "bar",
+        Bar: "hello",
     }
-    client.Simple.Foowithexamples(
+    client.Simple.FooWithExamples(
         context.TODO(),
         request,
     )

@@ -1,13 +1,13 @@
 import Foundation
-import Api
+import Validation
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = ValidationClient(baseURL: "https://api.fern.com")
 
-    _ = try await client..create(request: .init(
-        decimal: 1.1,
-        even: 1,
-        name: "name",
+    _ = try await client.create(request: .init(
+        decimal: 2.2,
+        even: 100,
+        name: "fern",
         shape: .square
     ))
 }

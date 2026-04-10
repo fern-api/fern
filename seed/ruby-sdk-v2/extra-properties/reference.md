@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">createuser</a>(request) -> Seed::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,10 @@
 <dd>
 
 ```ruby
-client.user.createuser(
+client.user.create_user(
+  name: "Alice",
   type: "CreateUserRequest",
-  version: "v1",
-  name: "name"
+  version: "v1"
 )
 ```
 </dd>
@@ -32,7 +32,7 @@ client.user.createuser(
 <dl>
 <dd>
 
-**type:** `Seed::User::Types::UserCreateUserRequestType` 
+**type:** `String` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.user.createuser(
 <dl>
 <dd>
 
-**version:** `Seed::User::Types::UserCreateUserRequestVersion` 
+**version:** `String` 
     
 </dd>
 </dl>

@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "UndiscriminatedUnions",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "UndiscriminatedUnions",
+            targets: ["UndiscriminatedUnions"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "UndiscriminatedUnions",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "UndiscriminatedUnionsTests",
+            dependencies: ["UndiscriminatedUnions"],
             path: "Tests"
         )
     ]

@@ -1,12 +1,12 @@
 import Foundation
 
 public struct GetDefaultStarterFilesResponse: Codable, Hashable, Sendable {
-    public let files: [String: ProblemFiles]
+    public let files: [Language: ProblemFiles]
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        files: [String: ProblemFiles],
+        files: [Language: ProblemFiles],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.files = files
@@ -15,7 +15,7 @@ public struct GetDefaultStarterFilesResponse: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.files = try container.decode([String: ProblemFiles].self, forKey: .files)
+        self.files = try container.decode([Language: ProblemFiles].self, forKey: .files)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

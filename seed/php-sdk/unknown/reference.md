@@ -44,7 +44,7 @@ $client->unknown->post(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;unknown-&gt;postobject($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;unknown-&gt;postObject($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ $client->unknown->post(
 <dd>
 
 ```php
-$client->unknown->postobject(
+$client->unknown->postObject(
     new MyObject([
         'unknown' => [
             'key' => "value",
@@ -78,7 +78,7 @@ $client->unknown->postobject(
 <dl>
 <dd>
 
-**$unknown:** `mixed` 
+**$request:** `MyObject` 
     
 </dd>
 </dl>

@@ -22,7 +22,7 @@ class SimpleClient:
         """
         return self._raw_client
 
-    def getsomething(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def get_something(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -35,14 +35,15 @@ class SimpleClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedInferredAuthImplicitApiKey
 
-        client = SeedApi(
+        client = SeedInferredAuthImplicitApiKey(
             base_url="https://yourhost.com/path/to/api",
+            api_key="YOUR_API_KEY",
         )
-        client.simple.getsomething()
+        client.simple.get_something()
         """
-        _response = self._raw_client.getsomething(request_options=request_options)
+        _response = self._raw_client.get_something(request_options=request_options)
         return _response.data
 
 
@@ -61,7 +62,7 @@ class AsyncSimpleClient:
         """
         return self._raw_client
 
-    async def getsomething(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def get_something(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -76,18 +77,19 @@ class AsyncSimpleClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedInferredAuthImplicitApiKey
 
-        client = AsyncSeedApi(
+        client = AsyncSeedInferredAuthImplicitApiKey(
             base_url="https://yourhost.com/path/to/api",
+            api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
-            await client.simple.getsomething()
+            await client.simple.get_something()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getsomething(request_options=request_options)
+        _response = await self._raw_client.get_something(request_options=request_options)
         return _response.data

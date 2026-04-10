@@ -1,4 +1,4 @@
-import Api
+import UndiscriminatedUnionWithResponseProperty
 import Foundation
 
 final class HTTPStub {

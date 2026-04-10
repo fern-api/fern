@@ -1,11 +1,11 @@
-//! # single-url-environment-no-default SDK
+//! # SingleUrlEnvironmentNoDefault SDK
 //!
-//! The official Rust SDK for the single-url-environment-no-default.
+//! The official Rust SDK for the SingleUrlEnvironmentNoDefault.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_single_url_environment_no_default::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,8 +13,8 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client.dummy.getdummy(None).await;
+//!     let client = SingleUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
+//!     client.dummy.get_dummy(None).await;
 //! }
 //! ```
 //!

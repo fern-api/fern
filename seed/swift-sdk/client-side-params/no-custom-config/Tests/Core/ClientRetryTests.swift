@@ -1,4 +1,4 @@
-import Api
+import ClientSideParams
 import Foundation
 import Testing
 
@@ -14,19 +14,21 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -46,19 +48,21 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -78,19 +82,21 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -109,19 +115,21 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -139,19 +147,21 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -170,19 +180,21 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -201,19 +213,21 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -236,7 +250,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -244,12 +258,14 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -282,7 +298,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -290,12 +306,14 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -324,7 +342,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -332,12 +350,14 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -378,19 +398,21 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
 
@@ -405,19 +427,21 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
 
@@ -436,19 +460,21 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ClientSideParamsClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

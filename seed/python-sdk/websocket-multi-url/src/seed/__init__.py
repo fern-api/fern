@@ -6,18 +6,22 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ReceiveEvent, SendEvent
+    from . import realtime
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedWebsocketMultiUrl, SeedWebsocketMultiUrl
+    from .environment import SeedWebsocketMultiUrlEnvironment
+    from .realtime import ReceiveEvent, SendEvent
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedWebsocketMultiUrl": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "ReceiveEvent": ".types",
-    "SeedApi": ".client",
-    "SendEvent": ".types",
+    "ReceiveEvent": ".realtime",
+    "SeedWebsocketMultiUrl": ".client",
+    "SeedWebsocketMultiUrlEnvironment": ".environment",
+    "SendEvent": ".realtime",
     "__version__": ".version",
+    "realtime": ".realtime",
 }
 
 
@@ -43,11 +47,13 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedWebsocketMultiUrl",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "ReceiveEvent",
-    "SeedApi",
+    "SeedWebsocketMultiUrl",
+    "SeedWebsocketMultiUrlEnvironment",
     "SendEvent",
     "__version__",
+    "realtime",
 ]

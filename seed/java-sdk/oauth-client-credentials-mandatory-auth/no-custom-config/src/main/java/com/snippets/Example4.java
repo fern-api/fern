@@ -1,14 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
+import com.seed.oauthClientCredentialsMandatoryAuth.SeedOauthClientCredentialsMandatoryAuthClient;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
-                .token("<token>")
-                .url("https://api.fern.com")
-                .build();
+        SeedOauthClientCredentialsMandatoryAuthClient client =
+                SeedOauthClientCredentialsMandatoryAuthClient.withCredentials("<clientId>", "<clientSecret>")
+                        .url("https://api.fern.com")
+                        .build();
 
-        client.nestedApi().nestedApiGetSomething();
+        client.nested().api().getSomething();
     }
 }

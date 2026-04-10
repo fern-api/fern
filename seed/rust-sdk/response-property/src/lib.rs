@@ -1,19 +1,19 @@
-//! # response-property SDK
+//! # ResponseProperty SDK
 //!
-//! The official Rust SDK for the response-property.
+//! The official Rust SDK for the ResponseProperty.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_response_property::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client.service.getmovie(&"string".to_string(), None).await;
+//!     let client = ResponsePropertyClient::new(config).expect("Failed to build client");
+//!     client.service.get_movie(&"string".to_string(), None).await;
 //! }
 //! ```
 //!

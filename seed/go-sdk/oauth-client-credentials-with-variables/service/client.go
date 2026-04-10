@@ -5,7 +5,6 @@ package service
 import (
 	context "context"
 
-	fern "github.com/oauth-client-credentials-with-variables/fern"
 	core "github.com/oauth-client-credentials-with-variables/fern/core"
 	internal "github.com/oauth-client-credentials-with-variables/fern/internal"
 	option "github.com/oauth-client-credentials-with-variables/fern/option"
@@ -35,12 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Post(
 	ctx context.Context,
-	request *fern.ServicePostRequest,
+	endpointParam string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Post(
 		ctx,
-		request,
+		endpointParam,
 		opts...,
 	)
 	if err != nil {

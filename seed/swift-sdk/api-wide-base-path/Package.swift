@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "ApiWideBasePath",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "ApiWideBasePath",
+            targets: ["ApiWideBasePath"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "ApiWideBasePath",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "ApiWideBasePathTests",
+            dependencies: ["ApiWideBasePath"],
             path: "Tests"
         )
     ]

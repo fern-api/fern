@@ -1,1 +1,1 @@
-export type { UserGetUsernameRequest } from "./UserGetUsernameRequest.js";
+export type { GetUsersRequest } from "./GetUsersRequest.js";

@@ -3,12 +3,13 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\Types\UnionWithTime;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->types->get(
-    'id',
+$client->types->update(
+    UnionWithTime::datetime(),
 );

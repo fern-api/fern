@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.Gettoken() -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.GetToken() -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,10 @@
 <dd>
 
 ```go
-request := &fern.AuthGetTokenRequest{
-        APIKey: "X-Api-Key",
+request := &fern.GetTokenRequest{
+        APIKey: "api_key",
     }
-client.Auth.Gettoken(
+client.Auth.GetToken(
         context.TODO(),
         request,
     )
@@ -47,8 +47,8 @@ client.Auth.Gettoken(
 </dl>
 </details>
 
-## NestedNoAuthAPI
-<details><summary><code>client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething() -> error</code></summary>
+## NestedNoAuth API
+<details><summary><code>client.NestedNoAuth.API.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.Auth.Gettoken(
 <dd>
 
 ```go
-client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething(
+client.NestedNoAuth.API.GetSomething(
         context.TODO(),
     )
 }
@@ -76,8 +76,8 @@ client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething(
 </dl>
 </details>
 
-## NestedAPI
-<details><summary><code>client.NestedAPI.NestedAPIGetSomething() -> error</code></summary>
+## Nested API
+<details><summary><code>client.Nested.API.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -90,7 +90,7 @@ client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething(
 <dd>
 
 ```go
-client.NestedAPI.NestedAPIGetSomething(
+client.Nested.API.GetSomething(
         context.TODO(),
     )
 }
@@ -106,7 +106,7 @@ client.NestedAPI.NestedAPIGetSomething(
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.Getsomething() -> error</code></summary>
+<details><summary><code>client.Simple.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -119,7 +119,7 @@ client.NestedAPI.NestedAPIGetSomething(
 <dd>
 
 ```go
-client.Simple.Getsomething(
+client.Simple.GetSomething(
         context.TODO(),
     )
 }

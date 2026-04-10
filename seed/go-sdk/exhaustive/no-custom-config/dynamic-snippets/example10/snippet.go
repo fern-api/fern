@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
-    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,12 +17,8 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]*fern.TypesObjectWithRequiredField{
-        "key": &fern.TypesObjectWithRequiredField{
-            FieldString: "string",
-        },
-    }
-    client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToObject(
+    request := types.WeatherReportSunny.Ptr()
+    client.Endpoints.Enum.GetAndReturnEnum(
         context.TODO(),
         request,
     )

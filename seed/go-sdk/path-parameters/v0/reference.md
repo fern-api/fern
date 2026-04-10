@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.Organizations.Getorganization(TenantID, OrganizationID) -> *fern.Organization</code></summary>
+<details><summary><code>client.Organizations.GetOrganization(TenantID, OrganizationID) -> *fern.Organization</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Organizations.Getorganization(
+client.Organizations.GetOrganization(
         context.TODO(),
         "tenant_id",
         "organization_id",
@@ -53,7 +53,7 @@ client.Organizations.Getorganization(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Getorganizationuser(TenantID, OrganizationID, UserID) -> *fern.User</code></summary>
+<details><summary><code>client.Organizations.GetOrganizationUser(TenantID, OrganizationID, UserID) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ client.Organizations.Getorganization(
 <dd>
 
 ```go
-client.Organizations.Getorganizationuser(
+client.Organizations.GetOrganizationUser(
         context.TODO(),
         "tenant_id",
         "organization_id",
@@ -115,7 +115,7 @@ client.Organizations.Getorganizationuser(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.Searchorganizations(TenantID, OrganizationID) -> []*fern.Organization</code></summary>
+<details><summary><code>client.Organizations.SearchOrganizations(TenantID, OrganizationID) -> []*fern.Organization</code></summary>
 <dl>
 <dd>
 
@@ -128,8 +128,12 @@ client.Organizations.Getorganizationuser(
 <dd>
 
 ```go
-request := &fern.OrganizationsSearchOrganizationsRequest{}
-client.Organizations.Searchorganizations(
+request := &fern.SearchOrganizationsRequest{
+        Limit: fern.Int(
+            1,
+        ),
+    }
+client.Organizations.SearchOrganizations(
         context.TODO(),
         "tenant_id",
         "organization_id",
@@ -179,7 +183,7 @@ client.Organizations.Searchorganizations(
 </details>
 
 ## User
-<details><summary><code>client.User.Getuser(TenantID, UserID) -> *fern.User</code></summary>
+<details><summary><code>client.User.GetUser(TenantID, UserID) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -192,7 +196,7 @@ client.Organizations.Searchorganizations(
 <dd>
 
 ```go
-client.User.Getuser(
+client.User.GetUser(
         context.TODO(),
         "tenant_id",
         "user_id",
@@ -232,7 +236,7 @@ client.User.Getuser(
 </dl>
 </details>
 
-<details><summary><code>client.User.Updateuser(TenantID, UserID, request) -> *fern.User</code></summary>
+<details><summary><code>client.User.CreateUser(TenantID, request) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -245,15 +249,76 @@ client.User.Getuser(
 <dd>
 
 ```go
-request := &fern.UserUpdateUserRequest{
+request := &fern.User{
+        Name: "name",
+        Tags: []string{
+            "tags",
+            "tags",
+        },
+    }
+client.User.CreateUser(
+        context.TODO(),
+        "tenant_id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantID:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*fern.User` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.User.UpdateUser(TenantID, UserID, request) -> *fern.User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.UpdateUserRequest{
         Body: &fern.User{
             Name: "name",
             Tags: []string{
                 "tags",
+                "tags",
             },
         },
     }
-client.User.Updateuser(
+client.User.UpdateUser(
         context.TODO(),
         "tenant_id",
         "user_id",
@@ -302,7 +367,7 @@ client.User.Updateuser(
 </dl>
 </details>
 
-<details><summary><code>client.User.Createuser(TenantID, request) -> *fern.User</code></summary>
+<details><summary><code>client.User.SearchUsers(TenantID, UserID) -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -315,69 +380,12 @@ client.User.Updateuser(
 <dd>
 
 ```go
-request := &fern.UserCreateUserRequest{
-        Body: &fern.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-            },
-        },
+request := &fern.SearchUsersRequest{
+        Limit: fern.Int(
+            1,
+        ),
     }
-client.User.Createuser(
-        context.TODO(),
-        "tenant_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**tenantID:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*fern.User` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.User.Searchusers(TenantID, UserID) -> []*fern.User</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.UserSearchUsersRequest{}
-client.User.Searchusers(
+client.User.SearchUsers(
         context.TODO(),
         "tenant_id",
         "user_id",
@@ -426,7 +434,7 @@ client.User.Searchusers(
 </dl>
 </details>
 
-<details><summary><code>client.User.Getusermetadata(TenantID, UserID, Version) -> *fern.User</code></summary>
+<details><summary><code>client.User.GetUserMetadata(TenantID, UserID, Version) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -453,7 +461,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```go
-client.User.Getusermetadata(
+client.User.GetUserMetadata(
         context.TODO(),
         "tenant_id",
         "user_id",
@@ -502,7 +510,7 @@ client.User.Getusermetadata(
 </dl>
 </details>
 
-<details><summary><code>client.User.Getuserspecifics(TenantID, UserID, Version, Thought) -> *fern.User</code></summary>
+<details><summary><code>client.User.GetUserSpecifics(TenantID, UserID, Version, Thought) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -529,7 +537,7 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```go
-client.User.Getuserspecifics(
+client.User.GetUserSpecifics(
         context.TODO(),
         "tenant_id",
         "user_id",

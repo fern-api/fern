@@ -1,4 +1,4 @@
-import Api
+import HeaderTokenEnvironmentVariable
 import Foundation
 
 final class HTTPStub {

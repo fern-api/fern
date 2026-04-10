@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\EndpointsParams\Requests\EndpointsParamsGetWithAllowMultipleQueryRequest;
+use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,13 +11,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsParams->endpointsParamsGetWithAllowMultipleQuery(
-    new EndpointsParamsGetWithAllowMultipleQueryRequest([
-        'query' => [
-            'query',
-        ],
-        'number' => [
-            1,
-        ],
+$client->reqWithHeaders->getWithCustomHeader(
+    new ReqWithHeaders([
+        'xTestServiceHeader' => 'X-TEST-SERVICE-HEADER',
+        'xTestEndpointHeader' => 'X-TEST-ENDPOINT-HEADER',
+        'body' => 'string',
     ]),
 );

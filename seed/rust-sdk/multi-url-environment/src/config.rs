@@ -1,3 +1,4 @@
+use crate::Environment;
 use std::collections::HashMap;
 use std::time::Duration;
 
@@ -14,11 +15,12 @@ pub struct ClientConfig {
     pub max_retries: u32,
     pub custom_headers: HashMap<String, String>,
     pub user_agent: String,
+    pub environment: Option<Environment>,
 }
 impl Default for ClientConfig {
     fn default() -> Self {
         Self {
-            base_url: String::new(),
+            base_url: Environment::default().url().to_string(),
             api_key: None,
             token: None,
             username: None,
@@ -29,10 +31,14 @@ impl Default for ClientConfig {
             max_retries: 3,
             custom_headers: HashMap::from([
                 ("X-Fern-Language".to_string(), "Rust".to_string()),
-                ("X-Fern-SDK-Name".to_string(), "seed_api".to_string()),
+                (
+                    "X-Fern-SDK-Name".to_string(),
+                    "seed_multi_url_environment".to_string(),
+                ),
                 ("X-Fern-SDK-Version".to_string(), "0.0.1".to_string()),
             ]),
-            user_agent: "Api Rust SDK".to_string(),
+            user_agent: "MultiUrlEnvironment Rust SDK".to_string(),
+            environment: Some(Environment::default()),
         }
     }
 }

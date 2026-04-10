@@ -14,10 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &undiscriminated.UnionWithDuplicateTypes{
-        String: "string",
+    request := &undiscriminated.PaymentRequest{
+        PaymentMethod: &undiscriminated.PaymentMethodUnion{
+            TokenizeCard: &undiscriminated.TokenizeCard{
+                Method: "card",
+                CardNumber: "1234567890123456",
+            },
+        },
     }
-    client.Union.Duplicatetypesunion(
+    client.Union.TestCamelCaseProperties(
         context.TODO(),
         request,
     )

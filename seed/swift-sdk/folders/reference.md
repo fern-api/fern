@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/Sources/Resources//Client.swift">foo</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">foo</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -19,7 +18,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client..foo()
+    _ = try await client.foo()
 }
 
 try await main()
@@ -49,8 +48,8 @@ try await main()
 </dl>
 </details>
 
-## Ab
-<details><summary><code>client.ab.<a href="/Sources/Resources/Ab/AbClient.swift">aBFoo</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+## A B
+<details><summary><code>client.a.b.<a href="/Sources/Resources/A/B/BClient.swift">foo</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -69,7 +68,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.ab.aBFoo()
+    _ = try await client.foo()
 }
 
 try await main()
@@ -99,8 +98,8 @@ try await main()
 </dl>
 </details>
 
-## Ac
-<details><summary><code>client.ac.<a href="/Sources/Resources/Ac/AcClient.swift">aCFoo</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+## A C
+<details><summary><code>client.a.c.<a href="/Sources/Resources/A/C/CClient.swift">foo</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -119,7 +118,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.ac.aCFoo()
+    _ = try await client.foo()
 }
 
 try await main()
@@ -169,7 +168,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.folder.foo()
+    _ = try await client.foo()
 }
 
 try await main()
@@ -199,8 +198,8 @@ try await main()
 </dl>
 </details>
 
-## FolderService
-<details><summary><code>client.folderService.<a href="/Sources/Resources/FolderService/FolderServiceClient.swift">folderServiceEndpoint</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+## Folder Service
+<details><summary><code>client.folder.service.<a href="/Sources/Resources/Folder/Service/ServiceClient.swift">endpoint</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -219,7 +218,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.folderService.folderServiceEndpoint()
+    _ = try await client.folder.service.endpoint()
 }
 
 try await main()
@@ -249,7 +248,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.folderService.<a href="/Sources/Resources/FolderService/FolderServiceClient.swift">folderServiceUnknownRequest</a>(request: JSONValue, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.folder.service.<a href="/Sources/Resources/Folder/Service/ServiceClient.swift">unknownRequest</a>(request: JSONValue, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -268,7 +267,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client.folderService.folderServiceUnknownRequest(request: .object([
+    _ = try await client.folder.service.unknownRequest(request: .object([
         "key": .string("value")
     ]))
 }

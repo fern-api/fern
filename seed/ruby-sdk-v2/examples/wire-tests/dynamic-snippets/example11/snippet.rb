@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.health_service.health_service_ping
+client.health.service.ping

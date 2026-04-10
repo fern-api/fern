@@ -14,13 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.PathParamSendRequest{
-        Operand: fern.OperandGreaterThan.Ptr(),
+    request := &fern.SendEnumAsQueryParamRequest{
+        Operand: fern.OperandGreaterThan,
         OperandOrColor: &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },
     }
-    client.Pathparam.Send(
+    client.QueryParam.Send(
         context.TODO(),
         request,
     )

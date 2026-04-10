@@ -1,20 +1,20 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.types.EndpointsParamsGetWithAllowMultipleQueryRequest;
-import java.util.Arrays;
+import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.types.ReqWithHeaders;
 
 public class Example66 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpointsParams()
-                .endpointsParamsGetWithAllowMultipleQuery(EndpointsParamsGetWithAllowMultipleQueryRequest.builder()
-                        .query(Arrays.asList("query"))
-                        .number(Arrays.asList(1))
+        client.reqWithHeaders()
+                .getWithCustomHeader(ReqWithHeaders.builder()
+                        .xTestServiceHeader("X-TEST-SERVICE-HEADER")
+                        .xTestEndpointHeader("X-TEST-ENDPOINT-HEADER")
+                        .body("string")
                         .build());
     }
 }

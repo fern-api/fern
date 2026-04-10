@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/lib/seed/client.rb">extended_inline_request_body</a>(request) -> </code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">extended_inline_request_body</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```ruby
-client..extended_inline_request_body(
+client.extended_inline_request_body(
   parent: "parent",
   child: "child"
 )
@@ -39,7 +38,7 @@ client..extended_inline_request_body(
 <dl>
 <dd>
 
-**request_options:** `Seed::::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

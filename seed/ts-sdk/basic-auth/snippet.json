@@ -4,22 +4,22 @@
             "id": {
                 "path": "/basic-auth",
                 "method": "GET",
-                "identifier_override": "endpoint_basicauth.getwithbasicauth"
+                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/basic-auth\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait client.basicauth.getwithbasicauth();\n"
+                "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst client = new SeedBasicAuthClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait client.basicAuth.getWithBasicAuth();\n"
             }
         },
         {
             "id": {
                 "path": "/basic-auth",
                 "method": "POST",
-                "identifier_override": "endpoint_basicauth.postwithbasicauth"
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/basic-auth\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait client.basicauth.postwithbasicauth({\n    \"key\": \"value\"\n});\n"
+                "client": "import { SeedBasicAuthClient } from \"@fern/basic-auth\";\n\nconst client = new SeedBasicAuthClient({ environment: \"YOUR_BASE_URL\", username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait client.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
             }
         }
     ],

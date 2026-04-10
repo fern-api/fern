@@ -10,7 +10,6 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
-from .types.headers_send_request_x_endpoint_version import HeadersSendRequestXEndpointVersion
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -22,20 +21,11 @@ class RawHeadersClient:
         self._client_wrapper = client_wrapper
 
     def send(
-        self,
-        *,
-        endpoint_version: HeadersSendRequestXEndpointVersion,
-        async_: bool,
-        query: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[SendResponse]:
         """
         Parameters
         ----------
-        endpoint_version : HeadersSendRequestXEndpointVersion
-
-        async_ : bool
-
         query : str
 
         request_options : typing.Optional[RequestOptions]
@@ -44,7 +34,6 @@ class RawHeadersClient:
         Returns
         -------
         HttpResponse[SendResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "headers",
@@ -53,9 +42,8 @@ class RawHeadersClient:
                 "query": query,
             },
             headers={
-                "content-type": "application/json",
-                "X-Endpoint-Version": str(endpoint_version) if endpoint_version is not None else None,
-                "X-Async": str(async_) if async_ is not None else None,
+                "X-Endpoint-Version": "02-12-2024",
+                "X-Async": "true",
             },
             request_options=request_options,
             omit=OMIT,
@@ -85,20 +73,11 @@ class AsyncRawHeadersClient:
         self._client_wrapper = client_wrapper
 
     async def send(
-        self,
-        *,
-        endpoint_version: HeadersSendRequestXEndpointVersion,
-        async_: bool,
-        query: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[SendResponse]:
         """
         Parameters
         ----------
-        endpoint_version : HeadersSendRequestXEndpointVersion
-
-        async_ : bool
-
         query : str
 
         request_options : typing.Optional[RequestOptions]
@@ -107,7 +86,6 @@ class AsyncRawHeadersClient:
         Returns
         -------
         AsyncHttpResponse[SendResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "headers",
@@ -116,9 +94,8 @@ class AsyncRawHeadersClient:
                 "query": query,
             },
             headers={
-                "content-type": "application/json",
-                "X-Endpoint-Version": str(endpoint_version) if endpoint_version is not None else None,
-                "X-Async": str(async_) if async_ is not None else None,
+                "X-Endpoint-Version": "02-12-2024",
+                "X-Async": "true",
             },
             request_options=request_options,
             omit=OMIT,

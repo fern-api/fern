@@ -1,5 +1,5 @@
-export * as SeedApi from "./api/index.js";
+export * as SeedMixedCase from "./api/index.js";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-export { SeedApiClient } from "./Client.js";
-export { SeedApiError, SeedApiTimeoutError } from "./errors/index.js";
+export { SeedMixedCaseClient } from "./Client.js";
+export { SeedMixedCaseError, SeedMixedCaseTimeoutError } from "./errors/index.js";
 export * from "./exports.js";

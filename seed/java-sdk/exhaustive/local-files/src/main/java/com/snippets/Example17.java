@@ -1,48 +1,20 @@
 package com.snippets;
 
-import com.fern.sdk.SeedApiClient;
-import com.fern.sdk.types.TypesObjectWithOptionalField;
-import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Optional;
+import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
 
 public class Example17 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpointsContentType().endpointsContentTypePostJsonPatchContentType(
-            TypesObjectWithOptionalField
+        client.endpoints().object().getAndReturnWithRequiredField(
+            ObjectWithRequiredField
                 .builder()
                 .string("string")
-                .integer(1)
-                .long_(1000000L)
-                .double_(1.1)
-                .bool(true)
-                .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                .date("2023-01-15")
-                .uuid("uuid")
-                .base64("base64")
-                .list(
-                    Optional.of(
-                        Arrays.asList("list", "list")
-                    )
-                )
-                .set(
-                    Optional.of(
-                        Arrays.asList("set", "set")
-                    )
-                )
-                .map(
-                    new HashMap<String, Optional<String>>() {{
-                        put("map", Optional.of("map"));
-                    }}
-                )
-                .bigint(1)
                 .build()
         );
     }

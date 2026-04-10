@@ -1,15 +1,13 @@
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExhaustiveClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpointsContainer.endpointsContainerGetAndReturnOptional(request: TypesObjectWithRequiredField(
-        string: "string"
-    ))
+    _ = try await client.endpoints.httpMethods.testDelete(id: "id")
 }
 
 try await main()

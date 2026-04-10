@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>client.organization.<a href="/src/api/resources/organization/client/Client.ts">create</a>({ ...params }) -> SeedApi.Organization</code></summary>
+<details><summary><code>client.organization.<a href="/src/api/resources/organization/client/Client.ts">create</a>({ ...params }) -> SeedMixedFileDirectory.Organization</code></summary>
 <dl>
 <dd>
 
@@ -45,7 +45,7 @@ await client.organization.create({
 <dl>
 <dd>
 
-**request:** `SeedApi.CreateOrganizationRequest` 
+**request:** `SeedMixedFileDirectory.CreateOrganizationRequest` 
     
 </dd>
 </dl>
@@ -66,7 +66,7 @@ await client.organization.create({
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">list</a>({ ...params }) -> SeedApi.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">list</a>({ ...params }) -> SeedMixedFileDirectory.User[]</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,9 @@ List all users.
 <dd>
 
 ```typescript
-await client.user.list();
+await client.user.list({
+    limit: 1
+});
 
 ```
 </dd>
@@ -109,7 +111,7 @@ await client.user.list();
 <dl>
 <dd>
 
-**request:** `SeedApi.UserListRequest` 
+**request:** `SeedMixedFileDirectory.ListUsersRequest` 
     
 </dd>
 </dl>
@@ -129,8 +131,8 @@ await client.user.list();
 </dl>
 </details>
 
-## UserEvents
-<details><summary><code>client.userEvents.<a href="/src/api/resources/userEvents/client/Client.ts">userEventsListEvents</a>({ ...params }) -> SeedApi.UserEvent[]</code></summary>
+## User Events
+<details><summary><code>client.user.events.<a href="/src/api/resources/user/resources/events/client/Client.ts">listEvents</a>({ ...params }) -> SeedMixedFileDirectory.Event[]</code></summary>
 <dl>
 <dd>
 
@@ -157,7 +159,9 @@ List all user events.
 <dd>
 
 ```typescript
-await client.userEvents.userEventsListEvents();
+await client.user.events.listEvents({
+    limit: 1
+});
 
 ```
 </dd>
@@ -173,7 +177,7 @@ await client.userEvents.userEventsListEvents();
 <dl>
 <dd>
 
-**request:** `SeedApi.UserEventsListEventsRequest` 
+**request:** `SeedMixedFileDirectory.user.ListUserEventsRequest` 
     
 </dd>
 </dl>
@@ -181,7 +185,7 @@ await client.userEvents.userEventsListEvents();
 <dl>
 <dd>
 
-**requestOptions:** `UserEventsClient.RequestOptions` 
+**requestOptions:** `EventsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -193,8 +197,8 @@ await client.userEvents.userEventsListEvents();
 </dl>
 </details>
 
-## UserEventsMetadata
-<details><summary><code>client.userEventsMetadata.<a href="/src/api/resources/userEventsMetadata/client/Client.ts">userEventsMetadataGetMetadata</a>({ ...params }) -> SeedApi.UsereventsMetadata</code></summary>
+## User Events Metadata
+<details><summary><code>client.user.events.metadata.<a href="/src/api/resources/user/resources/events/resources/metadata/client/Client.ts">getMetadata</a>({ ...params }) -> SeedMixedFileDirectory.Metadata</code></summary>
 <dl>
 <dd>
 
@@ -221,7 +225,7 @@ Get event metadata.
 <dd>
 
 ```typescript
-await client.userEventsMetadata.userEventsMetadataGetMetadata({
+await client.user.events.metadata.getMetadata({
     id: "id"
 });
 
@@ -239,7 +243,7 @@ await client.userEventsMetadata.userEventsMetadataGetMetadata({
 <dl>
 <dd>
 
-**request:** `SeedApi.UserEventsMetadataGetMetadataRequest` 
+**request:** `SeedMixedFileDirectory.user.events.GetEventMetadataRequest` 
     
 </dd>
 </dl>
@@ -247,7 +251,7 @@ await client.userEventsMetadata.userEventsMetadataGetMetadata({
 <dl>
 <dd>
 
-**requestOptions:** `UserEventsMetadataClient.RequestOptions` 
+**requestOptions:** `MetadataClient.RequestOptions` 
     
 </dd>
 </dl>

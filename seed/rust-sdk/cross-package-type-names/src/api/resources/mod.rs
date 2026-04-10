@@ -2,33 +2,42 @@
 //!
 //! This module contains client implementations for:
 //!
-//! - **FolderAService**
-//! - **FolderDService**
+//! - **Commons**
+//! - **FolderA**
+//! - **FolderB**
+//! - **FolderC**
+//! - **FolderD**
 //! - **Foo**
 
 use crate::{ApiError, ClientConfig};
 
-pub mod folder_a_service;
-pub mod folder_d_service;
+pub mod commons;
+pub mod folder_a;
+pub mod folder_b;
+pub mod folder_c;
+pub mod folder_d;
 pub mod foo;
-pub struct ApiClient {
+pub struct CrossPackageTypeNamesClient {
     pub config: ClientConfig,
-    pub folder_a_service: FolderAServiceClient,
-    pub folder_d_service: FolderDServiceClient,
+    pub folder_a: FolderAClient,
+    pub folder_d: FolderDClient,
     pub foo: FooClient,
 }
 
-impl ApiClient {
+impl CrossPackageTypeNamesClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            folder_a_service: FolderAServiceClient::new(config.clone())?,
-            folder_d_service: FolderDServiceClient::new(config.clone())?,
+            folder_a: FolderAClient::new(config.clone())?,
+            folder_d: FolderDClient::new(config.clone())?,
             foo: FooClient::new(config.clone())?,
         })
     }
 }
 
-pub use folder_a_service::FolderAServiceClient;
-pub use folder_d_service::FolderDServiceClient;
+pub use commons::CommonsClient;
+pub use folder_a::FolderAClient;
+pub use folder_b::FolderBClient;
+pub use folder_c::FolderCClient;
+pub use folder_d::FolderDClient;
 pub use foo::FooClient;

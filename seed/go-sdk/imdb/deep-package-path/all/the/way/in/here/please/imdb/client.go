@@ -34,12 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Add a movie to the database using the movies/* /... path.
-func (c *Client) Createmovie(
+func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *please.CreateMovieRequest,
 	opts ...option.RequestOption,
 ) (please.MovieID, error) {
-	response, err := c.WithRawResponse.Createmovie(
+	response, err := c.WithRawResponse.CreateMovie(
 		ctx,
 		request,
 		opts...,
@@ -50,14 +50,14 @@ func (c *Client) Createmovie(
 	return response.Body, nil
 }
 
-func (c *Client) Getmovie(
+func (c *Client) GetMovie(
 	ctx context.Context,
-	request *please.ImdbGetMovieRequest,
+	movieID please.MovieID,
 	opts ...option.RequestOption,
 ) (*please.Movie, error) {
-	response, err := c.WithRawResponse.Getmovie(
+	response, err := c.WithRawResponse.GetMovie(
 		ctx,
-		request,
+		movieID,
 		opts...,
 	)
 	if err != nil {

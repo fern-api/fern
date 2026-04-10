@@ -1,28 +1,15 @@
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = TraceClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.admin.storetracedworkspace(
-        submissionId: "submissionId",
-        request: .init(
-            workspaceRunDetails: WorkspaceRunDetails(
-                stdout: "stdout"
-            ),
-            traceResponses: [
-                TraceResponse(
-                    submissionId: "submissionId",
-                    lineNumber: 1,
-                    stack: StackInformation(
-                        numStackFrames: 1
-                    )
-                )
-            ]
-        )
+    _ = try await client.playlist.getPlaylist(
+        serviceParam: 1,
+        playlistId: "playlistId"
     )
 }
 

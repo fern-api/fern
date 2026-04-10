@@ -1,18 +1,19 @@
-using SeedApi;
+using SeedOauthClientCredentials;
 
 namespace Usage;
 
 public class Example4
 {
     public async Task Do() {
-        var client = new SeedApiClient(
-            token: "<token>",
+        var client = new SeedOauthClientCredentialsClient(
+            clientId: "<clientId>",
+            clientSecret: "<clientSecret>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.NestedNoAuthApi.NestedNoAuthApiGetSomethingAsync();
+        await client.Simple.GetSomethingAsync();
     }
 
 }

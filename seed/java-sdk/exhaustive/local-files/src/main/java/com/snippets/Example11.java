@@ -1,24 +1,15 @@
 package com.snippets;
 
-import com.fern.sdk.SeedApiClient;
-import com.fern.sdk.types.TypesObjectWithRequiredField;
-import java.util.HashMap;
+import com.fern.sdk.SeedExhaustiveClient;
 
 public class Example11 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpointsContainer().endpointsContainerGetAndReturnMapOfPrimToObject(
-            new HashMap<String, TypesObjectWithRequiredField>() {{
-                put("string", TypesObjectWithRequiredField
-                    .builder()
-                    .string("string")
-                    .build());
-            }}
-        );
+        client.endpoints().httpMethods().testGet("id");
     }
 }

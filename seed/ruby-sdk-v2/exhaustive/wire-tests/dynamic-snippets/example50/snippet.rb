@@ -5,10 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_object.endpoints_object_get_and_return_with_required_nested_object(
-  required_string: "requiredString",
-  required_object: {
-    string: "string",
-    nested_object: {}
-  }
-)
+client.endpoints.primitive.get_and_return_datetime(request: "2024-01-15T09:30:00Z")

@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import Api
+import ApiWideBasePath
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ApiWideBasePathClient()
 
     _ = try await client.service.post(
         pathParam: "pathParam",

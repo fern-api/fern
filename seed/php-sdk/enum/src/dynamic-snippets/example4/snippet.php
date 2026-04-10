@@ -3,13 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Multipartform\Requests\MultipartFormMultipartFormRequest;
+use Seed\Types\Operand;
+use Seed\Types\Color;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->multipartform->multipartform(
-    new MultipartFormMultipartFormRequest([]),
+$client->pathParam->send(
+    Operand::GreaterThan->value,
+    Color::Red->value,
 );

@@ -5,79 +5,11 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.admin.storetracedworkspacev2(
-  submission_id: "submissionId",
-  body: [{
-    submission_id: "submissionId",
-    line_number: 1,
-    file: {
-      filename: "filename",
-      directory: "directory"
-    },
-    return_value: {
-      type: "integerValue",
-      value: 1
-    },
-    expression_location: {
-      start: 1,
-      offset: 1
-    },
-    stack: {
-      num_stack_frames: 1,
-      top_stack_frame: {
-        method_name: "methodName",
-        line_number: 1,
-        scopes: [{
-          variables: {
-            variables: {
-              type: "integerValue"
-            }
-          }
-        }, {
-          variables: {
-            variables: {
-              type: "integerValue"
-            }
-          }
-        }]
-      }
-    },
-    stdout: "stdout"
-  }, {
-    submission_id: "submissionId",
-    line_number: 1,
-    file: {
-      filename: "filename",
-      directory: "directory"
-    },
-    return_value: {
-      type: "integerValue",
-      value: 1
-    },
-    expression_location: {
-      start: 1,
-      offset: 1
-    },
-    stack: {
-      num_stack_frames: 1,
-      top_stack_frame: {
-        method_name: "methodName",
-        line_number: 1,
-        scopes: [{
-          variables: {
-            variables: {
-              type: "integerValue"
-            }
-          }
-        }, {
-          variables: {
-            variables: {
-              type: "integerValue"
-            }
-          }
-        }]
-      }
-    },
-    stdout: "stdout"
-  }]
+client.playlist.update_playlist(
+  service_param: 1,
+  playlist_id: "playlistId",
+  request: {
+    name: "name",
+    problems: %w[problems problems]
+  }
 )

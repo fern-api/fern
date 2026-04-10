@@ -1,20 +1,20 @@
-using SeedApi;
+using SeedExtends;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedExtendsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client._.ExtendedInlineRequestBodyAsync(
-            new ExtendedInlineRequestBodyRequest {
-                Docs = "docs",
+        await client.ExtendedInlineRequestBodyAsync(
+            new Inlined {
                 Name = "name",
+                Docs = "docs",
                 Unique = "unique"
             }
         );

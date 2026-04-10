@@ -39,18 +39,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedApiWideBasePath;
 
-var client = new SeedApiClient();
-await client.Service.PostAsync(
-    new ServicePostRequest
-    {
-        PathParam = "pathParam",
-        ServiceParam = "serviceParam",
-        EndpointParam = 1,
-        ResourceParam = "resourceParam",
-    }
-);
+var client = new SeedApiWideBasePathClient();
+await client.Service.PostAsync("pathParam", "serviceParam", 1, "resourceParam");
 ```
 
 ## Exception Handling
@@ -59,11 +51,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedApiWideBasePath;
 
 try {
     var response = await client.Service.PostAsync(...);
-} catch (SeedApiApiException e) {
+} catch (SeedApiWideBasePathApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -112,7 +104,7 @@ var response = await client.Service.PostAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedApiWideBasePath;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Service.PostAsync(...).WithRawResponse();

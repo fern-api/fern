@@ -11,7 +11,7 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..types.shape import Shape
+from .types.shape import Shape
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -34,7 +34,6 @@ class RawUnionClient:
         Returns
         -------
         HttpResponse[Shape]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{encode_path_param(id)}",
@@ -72,14 +71,10 @@ class RawUnionClient:
         Returns
         -------
         HttpResponse[bool]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=Shape, direction="write"),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -121,7 +116,6 @@ class AsyncRawUnionClient:
         Returns
         -------
         AsyncHttpResponse[Shape]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{encode_path_param(id)}",
@@ -161,14 +155,10 @@ class AsyncRawUnionClient:
         Returns
         -------
         AsyncHttpResponse[bool]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=Shape, direction="write"),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )

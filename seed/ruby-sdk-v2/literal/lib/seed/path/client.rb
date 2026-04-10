@@ -17,7 +17,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Path::Types::PathSendRequestID] :id
+      # @option params [String] :id
       #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)

@@ -50,12 +50,12 @@ func (c *Client) Upload(
 	return nil
 }
 
-func (c *Client) Uploadwithqueryparams(
+func (c *Client) UploadWithQueryParams(
 	ctx context.Context,
-	request *fern.ServiceUploadWithQueryParamsRequest,
+	request *fern.UploadWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Uploadwithqueryparams(
+	_, err := c.WithRawResponse.UploadWithQueryParams(
 		ctx,
 		request,
 		opts...,

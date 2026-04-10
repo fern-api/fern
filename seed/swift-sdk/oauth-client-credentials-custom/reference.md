@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">gettokenwithclientcredentials</a>(request: Requests.AuthGetTokenWithClientCredentialsRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">getTokenWithClientCredentials</a>(request: Requests.GetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,18 +14,19 @@
 
 ```swift
 import Foundation
-import Api
+import OauthClientCredentials
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = OauthClientCredentialsClient()
 
-    _ = try await client.auth.gettokenwithclientcredentials(request: .init(
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         cid: "cid",
         csr: "csr",
         scp: "scp",
         entityId: "entity_id",
         audience: .httpsApiExampleCom,
-        grantType: .clientCredentials
+        grantType: .clientCredentials,
+        scope: "scope"
     ))
 }
 
@@ -44,7 +45,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.AuthGetTokenWithClientCredentialsRequest` 
+**request:** `Requests.GetTokenRequest` 
     
 </dd>
 </dl>
@@ -64,7 +65,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">refreshtoken</a>(request: Requests.AuthRefreshTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">refreshToken</a>(request: Requests.RefreshTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -78,17 +79,15 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import OauthClientCredentials
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = OauthClientCredentialsClient()
 
-    _ = try await client.auth.refreshtoken(request: .init(
-        clientId: "client_id",
-        clientSecret: "client_secret",
-        refreshToken: "refresh_token",
+    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
         audience: .httpsApiExampleCom,
-        grantType: .refreshToken
+        grantType: .clientCredentials,
+        scope: "scope"
     ))
 }
 
@@ -107,7 +106,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.AuthRefreshTokenRequest` 
+**request:** `Requests.RefreshTokenRequest` 
     
 </dd>
 </dl>
@@ -127,8 +126,8 @@ try await main()
 </dl>
 </details>
 
-## NestedNoAuthApi
-<details><summary><code>client.nestedNoAuthApi.<a href="/Sources/Resources/NestedNoAuthApi/NestedNoAuthApiClient.swift">nestedNoAuthApiGetSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+## NestedNoAuth Api
+<details><summary><code>client.nestedNoAuth.api.<a href="/Sources/Resources/NestedNoAuth/Api/ApiClient.swift">getSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -142,12 +141,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import OauthClientCredentials
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = OauthClientCredentialsClient()
 
-    _ = try await client.nestedNoAuthApi.nestedNoAuthApiGetSomething()
+    _ = try await client.nestedNoAuth.api.getSomething()
 }
 
 try await main()
@@ -177,8 +176,8 @@ try await main()
 </dl>
 </details>
 
-## NestedApi
-<details><summary><code>client.nestedApi.<a href="/Sources/Resources/NestedApi/NestedApiClient.swift">nestedApiGetSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+## Nested Api
+<details><summary><code>client.nested.api.<a href="/Sources/Resources/Nested/Api/NestedApiClient.swift">getSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -192,12 +191,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import OauthClientCredentials
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = OauthClientCredentialsClient()
 
-    _ = try await client.nestedApi.nestedApiGetSomething()
+    _ = try await client.nested.api.getSomething()
 }
 
 try await main()
@@ -228,7 +227,7 @@ try await main()
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">getsomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">getSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -242,12 +241,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import OauthClientCredentials
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = OauthClientCredentialsClient()
 
-    _ = try await client.simple.getsomething()
+    _ = try await client.simple.getSomething()
 }
 
 try await main()

@@ -62,7 +62,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestSimpleGetsomethingWithWireMock(
+func TestSimpleGetSomethingWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -72,13 +72,13 @@ func TestSimpleGetsomethingWithWireMock(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	invocationErr := client.Simple.Getsomething(
+	invocationErr := client.Simple.GetSomething(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestSimpleGetsomethingWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestSimpleGetSomethingWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestSimpleGetsomethingWithWireMock", "GET", "/get-something", nil, 1)
+	VerifyRequestCount(t, "TestSimpleGetSomethingWithWireMock", "GET", "/get-something", nil, 1)
 }

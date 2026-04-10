@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/mixed-case/fern"
     client "github.com/mixed-case/fern/client"
     option "github.com/mixed-case/fern/option"
 )
@@ -14,11 +13,8 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.ServiceGetResourceRequest{
-        ResourceID: "ResourceID",
-    }
-    client.Service.Getresource(
+    client.Service.GetResource(
         context.TODO(),
-        request,
+        "rsc-xyz",
     )
 }

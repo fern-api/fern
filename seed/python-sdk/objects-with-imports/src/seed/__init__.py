@@ -6,22 +6,24 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import CommonsMetadata, File, FileDirectory, FileInfo, Node, Tree
+    from .types import Node, Tree
+    from . import commons, file
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedObjectsWithImports, SeedObjectsWithImports
+    from .file import File, FileInfo
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
-    "CommonsMetadata": ".types",
+    "AsyncSeedObjectsWithImports": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "File": ".types",
-    "FileDirectory": ".types",
-    "FileInfo": ".types",
+    "File": ".file",
+    "FileInfo": ".file",
     "Node": ".types",
-    "SeedApi": ".client",
+    "SeedObjectsWithImports": ".client",
     "Tree": ".types",
     "__version__": ".version",
+    "commons": ".commons",
+    "file": ".file",
 }
 
 
@@ -47,15 +49,15 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
-    "CommonsMetadata",
+    "AsyncSeedObjectsWithImports",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "File",
-    "FileDirectory",
     "FileInfo",
     "Node",
-    "SeedApi",
+    "SeedObjectsWithImports",
     "Tree",
     "__version__",
+    "commons",
+    "file",
 ]

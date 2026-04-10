@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "ResponseProperty",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "ResponseProperty",
+            targets: ["ResponseProperty"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "ResponseProperty",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "ResponsePropertyTests",
+            dependencies: ["ResponseProperty"],
             path: "Tests"
         )
     ]

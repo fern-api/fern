@@ -5,7 +5,7 @@ info:
 paths:
   /create:
     post:
-      operationId: _create
+      operationId: create
       tags:
         - ''
       parameters: []
@@ -16,13 +16,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Type'
-              examples:
-                Example1:
-                  value:
-                    decimal: 1.1
-                    even: 1
-                    name: name
-                    shape: SQUARE
       requestBody:
         required: true
         content:
@@ -33,14 +26,22 @@ paths:
                 decimal:
                   type: number
                   format: double
-                  example: 1.1
+                  minimum: 1.1
+                  maximum: 2.2
+                  exclusiveMinimum: true
+                  multipleOf: 1.1
                 even:
                   type: integer
-                  example: 1
+                  minimum: 0
+                  maximum: 100
+                  exclusiveMaximum: true
+                  multipleOf: 2
                 name:
                   type: string
+                  format: custom
                   pattern: ^[a-z]+$
-                  example: name
+                  minLength: 3
+                  maxLength: 10
                 shape:
                   $ref: '#/components/schemas/Shape'
               required:
@@ -48,16 +49,9 @@ paths:
                 - even
                 - name
                 - shape
-            examples:
-              Example1:
-                value:
-                  decimal: 1.1
-                  even: 1
-                  name: name
-                  shape: SQUARE
   /:
     get:
-      operationId: _get
+      operationId: get
       tags:
         - ''
       parameters:
@@ -67,29 +61,28 @@ paths:
           schema:
             type: number
             format: double
-          example: 1.1
-          examples:
-            Example1:
-              value: 1.1
+            minimum: 1.1
+            maximum: 2.2
+            exclusiveMinimum: true
+            multipleOf: 1.1
         - name: even
           in: query
           required: true
           schema:
             type: integer
-          example: 1
-          examples:
-            Example1:
-              value: 1
+            minimum: 0
+            maximum: 100
+            exclusiveMaximum: true
+            multipleOf: 2
         - name: name
           in: query
           required: true
           schema:
             type: string
+            format: custom
             pattern: ^[a-z]+$
-          example: name
-          examples:
-            Example1:
-              value: name
+            minLength: 3
+            maxLength: 10
       responses:
         '200':
           description: ''
@@ -97,31 +90,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Type'
-              examples:
-                Example1:
-                  value:
-                    decimal: 1.1
-                    even: 1
-                    name: name
-                    shape: SQUARE
 components:
   schemas:
     SmallInteger:
       title: SmallInteger
       type: integer
+      minimum: 0
+      maximum: 10
+      exclusiveMinimum: true
+      exclusiveMaximum: true
+      multipleOf: 1
     LargeInteger:
       title: LargeInteger
       type: integer
+      minimum: 10000
+      maximum: 100000
     Double:
       title: Double
       type: number
       format: double
+      minimum: 256.42
+      maximum: 512.84
     Word:
       title: Word
       type: string
+      minLength: 2
+      maxLength: 26
     Sentence:
       title: Sentence
       type: string
+      minLength: 4
+      maxLength: 256
     Shape:
       title: Shape
       type: string
@@ -137,14 +136,25 @@ components:
         decimal:
           type: number
           format: double
+          minimum: 1.1
+          maximum: 2.2
+          exclusiveMinimum: true
+          multipleOf: 1.1
           example: 1.1
         even:
           type: integer
-          example: 1
+          minimum: 0
+          maximum: 100
+          exclusiveMaximum: true
+          multipleOf: 2
+          example: 2
         name:
           type: string
+          format: custom
           pattern: ^[a-z]+$
-          example: name
+          minLength: 3
+          maxLength: 10
+          example: rules
         shape:
           $ref: '#/components/schemas/Shape'
       required:

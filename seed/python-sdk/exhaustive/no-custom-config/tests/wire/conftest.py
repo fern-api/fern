@@ -15,11 +15,11 @@ from typing import Any, Dict, Optional
 
 import httpx
 
-from seed.client import SeedApi
+from seed.client import SeedExhaustive
 
 # Check once at import time whether the client constructor accepts a headers kwarg.
 try:
-    _CLIENT_SUPPORTS_HEADERS: bool = "headers" in inspect.signature(SeedApi).parameters
+    _CLIENT_SUPPORTS_HEADERS: bool = "headers" in inspect.signature(SeedExhaustive).parameters
 except (TypeError, ValueError):
     _CLIENT_SUPPORTS_HEADERS = False
 
@@ -29,7 +29,7 @@ def _get_wiremock_base_url() -> str:
     return os.environ.get("WIREMOCK_URL", "http://localhost:8080")
 
 
-def get_client(test_id: str) -> SeedApi:
+def get_client(test_id: str) -> SeedExhaustive:
     """
     Creates a configured client instance for wire tests.
 
@@ -43,13 +43,13 @@ def get_client(test_id: str) -> SeedApi:
     base_url = _get_wiremock_base_url()
 
     if _CLIENT_SUPPORTS_HEADERS:
-        return SeedApi(
+        return SeedExhaustive(
             base_url=base_url,
             headers=test_headers,
             token="test_token",
         )
 
-    return SeedApi(
+    return SeedExhaustive(
         base_url=base_url,
         httpx_client=httpx.Client(headers=test_headers),
         token="test_token",

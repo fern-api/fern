@@ -4,8 +4,8 @@ namespace Seed\Auth;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Auth\Requests\AuthGetTokenRequest;
-use Seed\Types\AuthTokenResponse;
+use Seed\Auth\Requests\GetTokenRequest;
+use Seed\Auth\Types\TokenResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -50,7 +50,7 @@ class AuthClient
     }
 
     /**
-     * @param AuthGetTokenRequest $request
+     * @param GetTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -59,18 +59,18 @@ class AuthClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?AuthTokenResponse
+     * @return ?TokenResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function gettoken(AuthGetTokenRequest $request, ?array $options = null): ?AuthTokenResponse
+    public function getToken(GetTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "token",
+                    path: "/token",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -82,7 +82,7 @@ class AuthClient
                 if (empty($json)) {
                     return null;
                 }
-                return AuthTokenResponse::fromJson($json);
+                return TokenResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

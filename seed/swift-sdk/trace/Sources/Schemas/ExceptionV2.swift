@@ -1,30 +1,39 @@
 import Foundation
 
 public enum ExceptionV2: Codable, Hashable, Sendable {
-    case exceptionV2Type(ExceptionV2Type)
-    case exceptionV2Zero(ExceptionV2Zero)
+    case generic(ExceptionInfo)
+    case timeout
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(ExceptionV2Type.self) {
-            self = .exceptionV2Type(value)
-        } else if let value = try? container.decode(ExceptionV2Zero.self) {
-            self = .exceptionV2Zero(value)
-        } else {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Unexpected value."
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "generic":
+            self = .generic(try ExceptionInfo(from: decoder))
+        case "timeout":
+            self = .timeout
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.singleValueContainer()
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .exceptionV2Type(let value):
-            try container.encode(value)
-        case .exceptionV2Zero(let value):
-            try container.encode(value)
+        case .generic(let data):
+            try container.encode("generic", forKey: .type)
+            try data.encode(to: encoder)
+        case .timeout:
+            try container.encode("timeout", forKey: .type)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

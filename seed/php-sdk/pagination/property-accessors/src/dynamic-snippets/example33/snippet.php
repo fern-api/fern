@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Users\Requests\UsersListWithTopLevelBodyCursorPaginationRequest;
+use Seed\Users\Requests\ListUsersAliasedDataRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +11,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->users->listwithtoplevelbodycursorpagination(
-    new UsersListWithTopLevelBodyCursorPaginationRequest([
-        'cursor' => 'cursor',
-        'filter' => 'filter',
+$client->users->listWithAliasedData(
+    new ListUsersAliasedDataRequest([
+        'page' => 1,
+        'perPage' => 1,
+        'startingAfter' => 'starting_after',
     ]),
 );

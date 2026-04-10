@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>client.organization.<a href="/lib/seed/organization/client.rb">create</a>(request) -> Seed::Types::Organization</code></summary>
+<details><summary><code>client.organization.<a href="/lib/seed/organization/client.rb">create</a>(request) -> Seed::Organization::Types::Organization</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ client.organization.create(name: "name")
 <dl>
 <dd>
 
-**name:** `String` 
+**request:** `Seed::Organization::Types::CreateOrganizationRequest` 
     
 </dd>
 </dl>
@@ -63,7 +63,7 @@ client.organization.create(name: "name")
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">list</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">list</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -90,7 +90,7 @@ List all users.
 <dd>
 
 ```ruby
-client.user.list
+client.user.list(limit: 1)
 ```
 </dd>
 </dl>
@@ -125,8 +125,8 @@ client.user.list
 </dl>
 </details>
 
-## UserEvents
-<details><summary><code>client.user_events.<a href="/lib/seed/user_events/client.rb">user_events_list_events</a>() -> Internal::Types::Array[Seed::Types::UserEvent]</code></summary>
+## User Events
+<details><summary><code>client.user.events.<a href="/lib/seed/user/events/client.rb">list_events</a>() -> Internal::Types::Array[Seed::User::Events::Types::Event]</code></summary>
 <dl>
 <dd>
 
@@ -153,7 +153,7 @@ List all user events.
 <dd>
 
 ```ruby
-client.user_events.user_events_list_events
+client.user.events.list_events(limit: 1)
 ```
 </dd>
 </dl>
@@ -176,7 +176,7 @@ client.user_events.user_events_list_events
 <dl>
 <dd>
 
-**request_options:** `Seed::UserEvents::RequestOptions` 
+**request_options:** `Seed::User::Events::RequestOptions` 
     
 </dd>
 </dl>
@@ -188,8 +188,8 @@ client.user_events.user_events_list_events
 </dl>
 </details>
 
-## UserEventsMetadata
-<details><summary><code>client.user_events_metadata.<a href="/lib/seed/user_events_metadata/client.rb">user_events_metadata_get_metadata</a>() -> Seed::Types::UsereventsMetadata</code></summary>
+## User Events Metadata
+<details><summary><code>client.user.events.metadata.<a href="/lib/seed/user/events/metadata/client.rb">get_metadata</a>() -> Seed::User::Events::Metadata::Types::Metadata</code></summary>
 <dl>
 <dd>
 
@@ -216,7 +216,7 @@ Get event metadata.
 <dd>
 
 ```ruby
-client.user_events_metadata.user_events_metadata_get_metadata(id: "id")
+client.user.events.metadata.get_metadata(id: "id")
 ```
 </dd>
 </dl>
@@ -239,7 +239,7 @@ client.user_events_metadata.user_events_metadata_get_metadata(id: "id")
 <dl>
 <dd>
 
-**request_options:** `Seed::UserEventsMetadata::RequestOptions` 
+**request_options:** `Seed::User::Events::Metadata::RequestOptions` 
     
 </dd>
 </dl>

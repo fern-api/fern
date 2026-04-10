@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">getdummy</a>() -> str</code></summary>
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">get_dummy</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,15 @@
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedSingleUrlEnvironmentNoDefault
+from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
-client = SeedApi(
+client = SeedSingleUrlEnvironmentNoDefault(
     token="<token>",
-    environment=SeedApiEnvironment.PRODUCTION,
+    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
 )
 
-client.dummy.getdummy()
+client.dummy.get_dummy()
 
 ```
 </dd>

@@ -3,8 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Movie;
-use Seed\Types\MovieType;
+use Seed\Types\Types\Movie;
 
 $client = new SeedClient(
     token: '<token>',
@@ -12,14 +11,14 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->createmovie(
+$client->service->createMovie(
     new Movie([
         'id' => 'id',
         'prequel' => 'prequel',
         'title' => 'title',
         'from' => 'from',
         'rating' => 1.1,
-        'type' => MovieType::Movie->value,
+        'type' => 'movie',
         'tag' => 'tag',
         'book' => 'book',
         'metadata' => [

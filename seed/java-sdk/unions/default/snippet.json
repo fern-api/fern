@@ -1,85 +1,46 @@
 {
     "endpoints": [
         {
-            "example_identifier": "df8143f7",
+            "example_identifier": "612e2c19",
             "id": {
                 "method": "GET",
-                "path": "/bigunion/{id}",
+                "path": "/{id}",
                 "identifier_override": "endpoint_bigunion.get"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.bigunion.requests.BigunionGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().get(\n            \"id\",\n            BigunionGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.bigunion.requests.BigunionGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().get(\n            \"id\",\n            BigunionGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().get(\"id\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().get(\"id\");\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "f9010271",
-            "id": {
-                "method": "GET",
-                "path": "/bigunion/{id}",
-                "identifier_override": "endpoint_bigunion.get"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.bigunion.requests.BigunionGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().get(\n            \"id\",\n            BigunionGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.bigunion.requests.BigunionGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().get(\n            \"id\",\n            BigunionGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "7a302a28",
+            "example_identifier": "a8b3f22c",
             "id": {
                 "method": "PATCH",
-                "path": "/bigunion",
+                "path": "/",
                 "identifier_override": "endpoint_bigunion.update"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.BigUnion;\nimport com.seed.api.types.BigUnionZero;\nimport com.seed.api.types.BigUnionZeroType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().update(\n            BigUnion.of(\n                BigUnionZero\n                    .builder()\n                    .value(\"value\")\n                    .type(BigUnionZeroType.NORMAL_SWEET)\n                    .build()\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.BigUnion;\nimport com.seed.api.types.BigUnionZero;\nimport com.seed.api.types.BigUnionZeroType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().update(\n            BigUnion.of(\n                BigUnionZero\n                    .builder()\n                    .value(\"value\")\n                    .type(BigUnionZeroType.NORMAL_SWEET)\n                    .build()\n            )\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.bigunion.types.BigUnion;\nimport com.seed.unions.resources.bigunion.types.NormalSweet;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().update(\n            BigUnion.normalSweet(\n                NormalSweet\n                    .builder()\n                    .value(\"value\")\n                    .additionalProperty(\"id\", \"id\")\n                    .additionalProperty(\"created-at\", \"2024-01-15T09:30:00Z\")\n                    .additionalProperty(\"archived-at\", \"2024-01-15T09:30:00Z\")\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.bigunion.types.BigUnion;\nimport com.seed.unions.resources.bigunion.types.NormalSweet;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().update(\n            BigUnion.normalSweet(\n                NormalSweet\n                    .builder()\n                    .value(\"value\")\n                    .additionalProperty(\"id\", \"id\")\n                    .additionalProperty(\"created-at\", \"2024-01-15T09:30:00Z\")\n                    .additionalProperty(\"archived-at\", \"2024-01-15T09:30:00Z\")\n                    .build()\n            )\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "a6e911ec",
+            "example_identifier": "27b5bc61",
             "id": {
                 "method": "PATCH",
-                "path": "/bigunion",
-                "identifier_override": "endpoint_bigunion.update"
+                "path": "/many",
+                "identifier_override": "endpoint_bigunion.update-many"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.BigUnion;\nimport com.seed.api.types.BigUnionZero;\nimport com.seed.api.types.BigUnionZeroType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().update(\n            BigUnion.of(\n                BigUnionZero\n                    .builder()\n                    .value(\"value\")\n                    .type(BigUnionZeroType.NORMAL_SWEET)\n                    .build()\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.BigUnion;\nimport com.seed.api.types.BigUnionZero;\nimport com.seed.api.types.BigUnionZeroType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().update(\n            BigUnion.of(\n                BigUnionZero\n                    .builder()\n                    .value(\"value\")\n                    .type(BigUnionZeroType.NORMAL_SWEET)\n                    .build()\n            )\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.bigunion.types.BigUnion;\nimport com.seed.unions.resources.bigunion.types.NormalSweet;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().updateMany(\n            Arrays.asList(\n                BigUnion.normalSweet(\n                    NormalSweet\n                        .builder()\n                        .value(\"value\")\n                        .additionalProperty(\"id\", \"id\")\n                        .additionalProperty(\"created-at\", \"2024-01-15T09:30:00Z\")\n                        .additionalProperty(\"archived-at\", \"2024-01-15T09:30:00Z\")\n                        .build()\n                ),\n                BigUnion.normalSweet(\n                    NormalSweet\n                        .builder()\n                        .value(\"value\")\n                        .additionalProperty(\"id\", \"id\")\n                        .additionalProperty(\"created-at\", \"2024-01-15T09:30:00Z\")\n                        .additionalProperty(\"archived-at\", \"2024-01-15T09:30:00Z\")\n                        .build()\n                )\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.bigunion.types.BigUnion;\nimport com.seed.unions.resources.bigunion.types.NormalSweet;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().updateMany(\n            Arrays.asList(\n                BigUnion.normalSweet(\n                    NormalSweet\n                        .builder()\n                        .value(\"value\")\n                        .additionalProperty(\"id\", \"id\")\n                        .additionalProperty(\"created-at\", \"2024-01-15T09:30:00Z\")\n                        .additionalProperty(\"archived-at\", \"2024-01-15T09:30:00Z\")\n                        .build()\n                ),\n                BigUnion.normalSweet(\n                    NormalSweet\n                        .builder()\n                        .value(\"value\")\n                        .additionalProperty(\"id\", \"id\")\n                        .additionalProperty(\"created-at\", \"2024-01-15T09:30:00Z\")\n                        .additionalProperty(\"archived-at\", \"2024-01-15T09:30:00Z\")\n                        .build()\n                )\n            )\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "6fd03c57",
-            "id": {
-                "method": "PATCH",
-                "path": "/bigunion/many",
-                "identifier_override": "endpoint_bigunion.updateMany"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.BigUnion;\nimport com.seed.api.types.BigUnionZero;\nimport com.seed.api.types.BigUnionZeroType;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().updateMany(\n            Arrays.asList(\n                BigUnion.of(\n                    BigUnionZero\n                        .builder()\n                        .value(\"value\")\n                        .type(BigUnionZeroType.NORMAL_SWEET)\n                        .build()\n                )\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.BigUnion;\nimport com.seed.api.types.BigUnionZero;\nimport com.seed.api.types.BigUnionZeroType;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().updateMany(\n            Arrays.asList(\n                BigUnion.of(\n                    BigUnionZero\n                        .builder()\n                        .value(\"value\")\n                        .type(BigUnionZeroType.NORMAL_SWEET)\n                        .build()\n                )\n            )\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "83a2eca",
-            "id": {
-                "method": "PATCH",
-                "path": "/bigunion/many",
-                "identifier_override": "endpoint_bigunion.updateMany"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.BigUnion;\nimport com.seed.api.types.BigUnionZero;\nimport com.seed.api.types.BigUnionZeroType;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().updateMany(\n            Arrays.asList(\n                BigUnion.of(\n                    BigUnionZero\n                        .builder()\n                        .value(\"value\")\n                        .type(BigUnionZeroType.NORMAL_SWEET)\n                        .build()\n                ),\n                BigUnion.of(\n                    BigUnionZero\n                        .builder()\n                        .value(\"value\")\n                        .type(BigUnionZeroType.NORMAL_SWEET)\n                        .build()\n                )\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.BigUnion;\nimport com.seed.api.types.BigUnionZero;\nimport com.seed.api.types.BigUnionZeroType;\nimport java.util.Arrays;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.bigunion().updateMany(\n            Arrays.asList(\n                BigUnion.of(\n                    BigUnionZero\n                        .builder()\n                        .value(\"value\")\n                        .type(BigUnionZeroType.NORMAL_SWEET)\n                        .build()\n                ),\n                BigUnion.of(\n                    BigUnionZero\n                        .builder()\n                        .value(\"value\")\n                        .type(BigUnionZeroType.NORMAL_SWEET)\n                        .build()\n                )\n            )\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "1bd8d93c",
+            "example_identifier": "f11647a",
             "id": {
                 "method": "GET",
                 "path": "/{id}",
@@ -87,25 +48,12 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.union.requests.UnionGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.union().get(\n            \"id\",\n            UnionGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.union.requests.UnionGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.union().get(\n            \"id\",\n            UnionGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().get(\"id\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.bigunion().get(\"id\");\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "86a82d99",
-            "id": {
-                "method": "GET",
-                "path": "/{id}",
-                "identifier_override": "endpoint_union.get"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.union.requests.UnionGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.union().get(\n            \"id\",\n            UnionGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.union.requests.UnionGetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.union().get(\n            \"id\",\n            UnionGetRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "c340fac7",
+            "example_identifier": "68950139",
             "id": {
                 "method": "PATCH",
                 "path": "/",
@@ -113,21 +61,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.Shape;\nimport com.seed.api.types.ShapeZero;\nimport com.seed.api.types.ShapeZeroType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.union().update(\n            Shape.of(\n                ShapeZero\n                    .builder()\n                    .radius(1.1)\n                    .type(ShapeZeroType.CIRCLE)\n                    .build()\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.Shape;\nimport com.seed.api.types.ShapeZero;\nimport com.seed.api.types.ShapeZeroType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.union().update(\n            Shape.of(\n                ShapeZero\n                    .builder()\n                    .radius(1.1)\n                    .type(ShapeZeroType.CIRCLE)\n                    .build()\n            )\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "1e3c76d0",
-            "id": {
-                "method": "PATCH",
-                "path": "/",
-                "identifier_override": "endpoint_union.update"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.Shape;\nimport com.seed.api.types.ShapeZero;\nimport com.seed.api.types.ShapeZeroType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.union().update(\n            Shape.of(\n                ShapeZero\n                    .builder()\n                    .radius(1.1)\n                    .type(ShapeZeroType.CIRCLE)\n                    .build()\n            )\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.Shape;\nimport com.seed.api.types.ShapeZero;\nimport com.seed.api.types.ShapeZeroType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.union().update(\n            Shape.of(\n                ShapeZero\n                    .builder()\n                    .radius(1.1)\n                    .type(ShapeZeroType.CIRCLE)\n                    .build()\n            )\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.union.types.Circle;\nimport com.seed.unions.resources.union.types.Shape;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.union().update(\n            Shape.circle(\n                Circle\n                    .builder()\n                    .radius(1.1)\n                    .additionalProperty(\"id\", \"id\")\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.union.types.Circle;\nimport com.seed.unions.resources.union.types.Shape;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.union().update(\n            Shape.circle(\n                Circle\n                    .builder()\n                    .radius(1.1)\n                    .additionalProperty(\"id\", \"id\")\n                    .build()\n            )\n        );\n    }\n}\n"
             }
         }
     ],

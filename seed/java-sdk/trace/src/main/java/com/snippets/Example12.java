@@ -1,35 +1,28 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.admin.requests.AdminStoreTracedTestCaseV2Request;
-import com.seed.api.types.StackInformation;
-import com.seed.api.types.TraceResponseV2;
-import com.seed.api.types.TracedFile;
+import com.seed.trace.SeedTraceClient;
+import com.seed.trace.resources.playlist.requests.CreatePlaylistRequest;
+import com.seed.trace.resources.playlist.types.PlaylistCreateRequest;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 
 public class Example12 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedTraceClient client = SeedTraceClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.admin()
-                .storetracedtestcasev2(
-                        "submissionId",
-                        "testCaseId",
-                        AdminStoreTracedTestCaseV2Request.builder()
-                                .body(Arrays.asList(TraceResponseV2.builder()
-                                        .submissionId("submissionId")
-                                        .lineNumber(1)
-                                        .file(TracedFile.builder()
-                                                .filename("filename")
-                                                .directory("directory")
-                                                .build())
-                                        .stack(StackInformation.builder()
-                                                .numStackFrames(1)
-                                                .build())
-                                        .build()))
+        client.playlist()
+                .createPlaylist(
+                        1,
+                        CreatePlaylistRequest.builder()
+                                .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                                .body(PlaylistCreateRequest.builder()
+                                        .name("name")
+                                        .problems(Arrays.asList("problems", "problems"))
+                                        .build())
+                                .optionalDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                                 .build());
     }
 }

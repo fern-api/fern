@@ -30,7 +30,11 @@ require "seed"
 
 client = Seed::Client.new
 
-client.foo.find
+client.foo.find(
+  optional_string: "optionalString",
+  public_property: "publicProperty",
+  private_property: 1
+)
 ```
 
 ## Environments

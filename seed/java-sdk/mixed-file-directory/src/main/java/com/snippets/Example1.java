@@ -1,14 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.organization.requests.CreateOrganizationRequest;
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.mixedFileDirectory.resources.user.requests.ListUsersRequest;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
-        client.organization()
-                .create(CreateOrganizationRequest.builder().name("name").build());
+        client.user().list(ListUsersRequest.builder().limit(1).build());
     }
 }

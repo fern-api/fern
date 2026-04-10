@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">UploadJsonDocumentAsync</a>(UploadJsonDocumentRequest { ... }) -> WithRawResponseTask&lt;OneOf&lt;DocumentMetadata, DocumentUploadResult&gt;&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">UploadJsonDocumentAsync</a>(UploadDocumentRequest { ... }) -> WithRawResponseTask&lt;OneOf&lt;DocumentMetadata, DocumentUploadResult&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```csharp
-await client._.UploadJsonDocumentAsync(new UploadJsonDocumentRequest());
+await client.UploadJsonDocumentAsync(new UploadDocumentRequest());
 ```
 </dd>
 </dl>
@@ -28,7 +27,7 @@ await client._.UploadJsonDocumentAsync(new UploadJsonDocumentRequest());
 <dl>
 <dd>
 
-**request:** `UploadJsonDocumentRequest` 
+**request:** `UploadDocumentRequest` 
     
 </dd>
 </dl>

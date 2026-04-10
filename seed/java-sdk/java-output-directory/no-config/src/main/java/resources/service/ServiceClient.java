@@ -6,8 +6,7 @@ package com.test.sdk.resources.service;
 
 import com.test.sdk.core.ClientOptions;
 import com.test.sdk.core.RequestOptions;
-import com.test.sdk.resources.service.requests.ServiceGetUserRequest;
-import com.test.sdk.types.User;
+import com.test.sdk.resources.service.types.User;
 import java.lang.String;
 
 public class ServiceClient {
@@ -27,19 +26,11 @@ public class ServiceClient {
     return this.rawClient;
   }
 
-  public User getuser(String userId) {
-    return this.rawClient.getuser(userId).body();
+  public User getUser(String userId) {
+    return this.rawClient.getUser(userId).body();
   }
 
-  public User getuser(String userId, RequestOptions requestOptions) {
-    return this.rawClient.getuser(userId, requestOptions).body();
-  }
-
-  public User getuser(String userId, ServiceGetUserRequest request) {
-    return this.rawClient.getuser(userId, request).body();
-  }
-
-  public User getuser(String userId, ServiceGetUserRequest request, RequestOptions requestOptions) {
-    return this.rawClient.getuser(userId, request, requestOptions).body();
+  public User getUser(String userId, RequestOptions requestOptions) {
+    return this.rawClient.getUser(userId, requestOptions).body();
   }
 }

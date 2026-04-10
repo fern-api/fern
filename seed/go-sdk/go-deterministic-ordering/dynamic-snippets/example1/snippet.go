@@ -5,6 +5,7 @@ import (
 
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
+    types "github.com/go-deterministic-ordering/fern/types"
 )
 
 func do() {
@@ -16,11 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := []string{
-        "string",
-        "string",
+    request := []*types.ObjectWithRequiredField{
+        &types.ObjectWithRequiredField{
+            FieldString: "string",
+        },
+        &types.ObjectWithRequiredField{
+            FieldString: "string",
+        },
     }
-    client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitives(
+    client.Endpoints.Container.GetAndReturnListOfObjects(
         context.TODO(),
         request,
     )

@@ -13,7 +13,7 @@ impl AdminClient {
         })
     }
 
-    pub async fn updatetestsubmissionstatus(
+    pub async fn update_test_submission_status(
         &self,
         submission_id: &SubmissionId,
         request: &TestSubmissionStatus,
@@ -22,7 +22,7 @@ impl AdminClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                &format!("admin/store-test-submission-status/{}", submission_id.0),
+                &format!("/admin/store-test-submission-status/{}", submission_id.0),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -30,7 +30,7 @@ impl AdminClient {
             .await
     }
 
-    pub async fn sendtestsubmissionupdate(
+    pub async fn send_test_submission_update(
         &self,
         submission_id: &SubmissionId,
         request: &TestSubmissionUpdate,
@@ -39,7 +39,7 @@ impl AdminClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                &format!("admin/store-test-submission-status-v2/{}", submission_id.0),
+                &format!("/admin/store-test-submission-status-v2/{}", submission_id.0),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -47,7 +47,7 @@ impl AdminClient {
             .await
     }
 
-    pub async fn updateworkspacesubmissionstatus(
+    pub async fn update_workspace_submission_status(
         &self,
         submission_id: &SubmissionId,
         request: &WorkspaceSubmissionStatus,
@@ -57,7 +57,7 @@ impl AdminClient {
             .execute_request(
                 Method::POST,
                 &format!(
-                    "admin/store-workspace-submission-status/{}",
+                    "/admin/store-workspace-submission-status/{}",
                     submission_id.0
                 ),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -67,7 +67,7 @@ impl AdminClient {
             .await
     }
 
-    pub async fn sendworkspacesubmissionupdate(
+    pub async fn send_workspace_submission_update(
         &self,
         submission_id: &SubmissionId,
         request: &WorkspaceSubmissionUpdate,
@@ -77,7 +77,7 @@ impl AdminClient {
             .execute_request(
                 Method::POST,
                 &format!(
-                    "admin/store-workspace-submission-status-v2/{}",
+                    "/admin/store-workspace-submission-status-v2/{}",
                     submission_id.0
                 ),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -87,18 +87,18 @@ impl AdminClient {
             .await
     }
 
-    pub async fn storetracedtestcase(
+    pub async fn store_traced_test_case(
         &self,
         submission_id: &SubmissionId,
         test_case_id: &str,
-        request: &AdminStoreTracedTestCaseRequest,
+        request: &StoreTracedTestCaseRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
                 &format!(
-                    "admin/store-test-trace/submission/{}/testCase/{}",
+                    "/admin/store-test-trace/submission/{}/testCase/{}",
                     submission_id.0, test_case_id
                 ),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -108,10 +108,10 @@ impl AdminClient {
             .await
     }
 
-    pub async fn storetracedtestcasev2(
+    pub async fn store_traced_test_case_v2(
         &self,
         submission_id: &SubmissionId,
-        test_case_id: &V2TestCaseId,
+        test_case_id: &TestCaseId,
         request: &Vec<TraceResponseV2>,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -119,7 +119,7 @@ impl AdminClient {
             .execute_request(
                 Method::POST,
                 &format!(
-                    "admin/store-test-trace-v2/submission/{}/testCase/{}",
+                    "/admin/store-test-trace-v2/submission/{}/testCase/{}",
                     submission_id.0, test_case_id.0
                 ),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -129,16 +129,19 @@ impl AdminClient {
             .await
     }
 
-    pub async fn storetracedworkspace(
+    pub async fn store_traced_workspace(
         &self,
         submission_id: &SubmissionId,
-        request: &AdminStoreTracedWorkspaceRequest,
+        request: &StoreTracedWorkspaceRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                &format!("admin/store-workspace-trace/submission/{}", submission_id.0),
+                &format!(
+                    "/admin/store-workspace-trace/submission/{}",
+                    submission_id.0
+                ),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -146,7 +149,7 @@ impl AdminClient {
             .await
     }
 
-    pub async fn storetracedworkspacev2(
+    pub async fn store_traced_workspace_v2(
         &self,
         submission_id: &SubmissionId,
         request: &Vec<TraceResponseV2>,
@@ -156,7 +159,7 @@ impl AdminClient {
             .execute_request(
                 Method::POST,
                 &format!(
-                    "admin/store-workspace-trace-v2/submission/{}",
+                    "/admin/store-workspace-trace-v2/submission/{}",
                     submission_id.0
                 ),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),

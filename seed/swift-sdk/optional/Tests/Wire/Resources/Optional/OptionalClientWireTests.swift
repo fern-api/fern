@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import Api
+import ObjectsWithImports
 
 @Suite("OptionalClient Wire Tests") struct OptionalClientWireTests {
-    @Test func sendoptionalbody1() async throws -> Void {
+    @Test func sendOptionalBody1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -12,46 +12,23 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.optional.sendoptionalbody(
-            request: .value([
-                "key": .string("value")
-            ]),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func sendoptionalbody2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                string
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = "string"
-        let response = try await client.optional.sendoptionalbody(
-            request: .value([
+        let response = try await client.optional.sendOptionalBody(
+            request: [
                 "string": .object([
                     "key": .string("value")
                 ])
-            ]),
+            ],
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func sendoptionaltypedbody1() async throws -> Void {
+    @Test func sendOptionalTypedBody1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -60,40 +37,21 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.optional.sendoptionaltypedbody(
-            request: .init(message: "message"),
+        let response = try await client.optional.sendOptionalTypedBody(
+            request: SendOptionalBodyRequest(
+                message: "message"
+            ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func sendoptionaltypedbody2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                string
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = "string"
-        let response = try await client.optional.sendoptionaltypedbody(
-            request: .init(message: "message"),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func sendoptionalnullablewithalloptionalproperties1() async throws -> Void {
+    @Test func sendOptionalNullableWithAllOptionalProperties1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -104,44 +62,19 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = DeployResponse(
             success: true
         )
-        let response = try await client.optional.sendoptionalnullablewithalloptionalproperties(
+        let response = try await client.optional.sendOptionalNullableWithAllOptionalProperties(
             actionId: "actionId",
             id: "id",
-            request: .init(),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func sendoptionalnullablewithalloptionalproperties2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "success": true
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = DeployResponse(
-            success: true
-        )
-        let response = try await client.optional.sendoptionalnullablewithalloptionalproperties(
-            actionId: "actionId",
-            id: "id",
-            request: .init(updateDraft: .value(true)),
+            request: .value(DeployParams(
+                updateDraft: true
+            )),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

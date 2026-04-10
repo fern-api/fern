@@ -4,11 +4,11 @@
 
 use crate::{ApiError, ClientConfig};
 
-pub struct ApiClient {
+pub struct DollarStringExamplesClient {
     pub config: ClientConfig,
 }
 
-impl ApiClient {
+impl DollarStringExamplesClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch</a>(request: ServicePatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch</a>(request: PatchProxyRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,18 +13,20 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_content_types::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ContentTypesClient::new(config).expect("Failed to build client");
     client
         .service
         .patch(
-            &ServicePatchRequest {
+            &PatchProxyRequest {
+                application: Some("application".to_string()),
+                require_auth: Some(true),
                 ..Default::default()
             },
             None,
@@ -65,7 +67,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patchcomplex</a>(id: String, request: ServicePatchComplexRequest) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">patch_complex</a>(id: String, request: PatchComplexRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -95,19 +97,35 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_content_types::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ContentTypesClient::new(config).expect("Failed to build client");
     client
         .service
-        .patchcomplex(
+        .patch_complex(
             &"id".to_string(),
-            &ServicePatchComplexRequest {
+            &PatchComplexRequest {
+                name: Some("name".to_string()),
+                age: Some(1),
+                active: Some(true),
+                metadata: Some(HashMap::from([(
+                    "metadata".to_string(),
+                    serde_json::json!({"key":"value"}),
+                )])),
+                tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                email: Some("email".to_string()),
+                nickname: Some("nickname".to_string()),
+                bio: Some("bio".to_string()),
+                profile_image_url: Some("profileImageUrl".to_string()),
+                settings: Some(HashMap::from([(
+                    "settings".to_string(),
+                    serde_json::json!({"key":"value"}),
+                )])),
                 ..Default::default()
             },
             None,
@@ -136,7 +154,7 @@ async fn main() {
 <dl>
 <dd>
 
-**name:** `Option<Option<String>>` 
+**name:** `Option<String>` 
     
 </dd>
 </dl>
@@ -144,7 +162,7 @@ async fn main() {
 <dl>
 <dd>
 
-**age:** `Option<Option<i64>>` 
+**age:** `Option<i64>` 
     
 </dd>
 </dl>
@@ -152,7 +170,7 @@ async fn main() {
 <dl>
 <dd>
 
-**active:** `Option<Option<bool>>` 
+**active:** `Option<bool>` 
     
 </dd>
 </dl>
@@ -160,7 +178,7 @@ async fn main() {
 <dl>
 <dd>
 
-**metadata:** `Option<Option<std::collections::HashMap<String, serde_json::Value>>>` 
+**metadata:** `Option<std::collections::HashMap<String, serde_json::Value>>` 
     
 </dd>
 </dl>
@@ -168,7 +186,7 @@ async fn main() {
 <dl>
 <dd>
 
-**tags:** `Option<Option<Vec<String>>>` 
+**tags:** `Option<Vec<String>>` 
     
 </dd>
 </dl>
@@ -220,7 +238,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">namedpatchwithmixed</a>(id: String, request: ServiceNamedPatchWithMixedRequest) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">named_patch_with_mixed</a>(id: String, request: NamedMixedPatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -248,19 +266,22 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_content_types::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ContentTypesClient::new(config).expect("Failed to build client");
     client
         .service
-        .namedpatchwithmixed(
+        .named_patch_with_mixed(
             &"id".to_string(),
-            &ServiceNamedPatchWithMixedRequest {
+            &NamedMixedPatchRequest {
+                app_id: Some("appId".to_string()),
+                instructions: Some("instructions".to_string()),
+                active: Some(true),
                 ..Default::default()
             },
             None,
@@ -289,7 +310,7 @@ async fn main() {
 <dl>
 <dd>
 
-**app_id:** `Option<Option<String>>` 
+**app_id:** `Option<String>` 
     
 </dd>
 </dl>
@@ -317,7 +338,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">optionalmergepatchtest</a>(request: ServiceOptionalMergePatchTestRequest) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">optional_merge_patch_test</a>(request: OptionalMergePatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -347,23 +368,23 @@ This endpoint should:
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_content_types::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ContentTypesClient::new(config).expect("Failed to build client");
     client
         .service
-        .optionalmergepatchtest(
-            &ServiceOptionalMergePatchTestRequest {
+        .optional_merge_patch_test(
+            &OptionalMergePatchRequest {
                 required_field: "requiredField".to_string(),
-                optional_string: None,
-                optional_integer: None,
-                optional_boolean: None,
-                nullable_string: None,
+                optional_string: Some("optionalString".to_string()),
+                optional_integer: Some(1),
+                optional_boolean: Some(true),
+                nullable_string: Some("nullableString".to_string()),
             },
             None,
         )
@@ -391,7 +412,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_string:** `Option<Option<String>>` 
+**optional_string:** `Option<String>` 
     
 </dd>
 </dl>
@@ -399,7 +420,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_integer:** `Option<Option<i64>>` 
+**optional_integer:** `Option<i64>` 
     
 </dd>
 </dl>
@@ -407,7 +428,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_boolean:** `Option<Option<bool>>` 
+**optional_boolean:** `Option<bool>` 
     
 </dd>
 </dl>
@@ -427,7 +448,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">regularpatch</a>(id: String, request: ServiceRegularPatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">regular_patch</a>(id: String, request: RegularPatchRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -454,19 +475,21 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_content_types::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ContentTypesClient::new(config).expect("Failed to build client");
     client
         .service
-        .regularpatch(
+        .regular_patch(
             &"id".to_string(),
-            &ServiceRegularPatchRequest {
+            &RegularPatchRequest {
+                field1: Some("field1".to_string()),
+                field2: Some(1),
                 ..Default::default()
             },
             None,
@@ -495,7 +518,7 @@ async fn main() {
 <dl>
 <dd>
 
-**field1:** `Option<Option<String>>` 
+**field1:** `Option<String>` 
     
 </dd>
 </dl>
@@ -503,7 +526,7 @@ async fn main() {
 <dl>
 <dd>
 
-**field2:** `Option<Option<i64>>` 
+**field2:** `Option<i64>` 
     
 </dd>
 </dl>

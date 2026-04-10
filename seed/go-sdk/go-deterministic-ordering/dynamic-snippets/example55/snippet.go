@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
-    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
+    types "github.com/go-deterministic-ordering/fern/types"
 )
 
 func do() {
@@ -17,14 +17,13 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.TypesObjectWithMapOfMap{
-        Map: map[string]map[string]string{
-            "map": map[string]string{
-                "map": "map",
-            },
+    request := &types.Animal{
+        Dog: &types.Dog{
+            Name: "name",
+            LikesToWoof: true,
         },
     }
-    client.EndpointsObject.EndpointsObjectGetAndReturnWithMapOfMap(
+    client.Endpoints.Union.GetAndReturnUnion(
         context.TODO(),
         request,
     )

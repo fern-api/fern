@@ -13,27 +13,27 @@ impl UserClient {
         })
     }
 
-    pub async fn getusername(
+    pub async fn get_username(
         &self,
-        request: &GetusernameQueryRequest,
+        request: &GetUsernameQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "user",
+                "/user",
                 None,
                 QueryBuilder::new()
                     .int("limit", request.limit.clone())
-                    .string("id", request.id.clone())
+                    .uuid("id", request.id.clone())
                     .date("date", request.date.clone())
                     .datetime("deadline", request.deadline.clone())
-                    .string("bytes", request.bytes.clone())
+                    .serialize("bytes", Some(request.bytes.clone()))
                     .serialize("user", Some(request.user.clone()))
-                    .serialize_array("userList", request.user_list.clone())
-                    .serialize("optionalDeadline", request.optional_deadline.clone())
+                    .serialize("userList", Some(request.user_list.clone()))
+                    .datetime("optionalDeadline", request.optional_deadline.clone())
                     .serialize("keyValue", Some(request.key_value.clone()))
-                    .serialize("optionalString", request.optional_string.clone())
+                    .string("optionalString", request.optional_string.clone())
                     .serialize("nestedUser", Some(request.nested_user.clone()))
                     .serialize("optionalUser", request.optional_user.clone())
                     .serialize_array("excludeUser", request.exclude_user.clone())

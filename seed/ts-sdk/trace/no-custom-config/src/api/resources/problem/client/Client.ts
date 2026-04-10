@@ -2,12 +2,12 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedTrace from "../../../index.js";
 
 export declare namespace ProblemClient {
     export type Options = BaseClientOptions;
@@ -25,19 +25,23 @@ export class ProblemClient {
     /**
      * Creates a problem
      *
-     * @param {SeedApi.CreateProblemRequest} request
+     * @param {SeedTrace.CreateProblemRequest} request
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.problem.createproblem({
+     *     await client.problem.createProblem({
      *         problemName: "problemName",
      *         problemDescription: {
      *             boards: [{
-     *                     type: "html"
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }, {
+     *                     type: "html",
+     *                     value: "boards"
      *                 }]
      *         },
      *         files: {
-     *             "key": {
+     *             ["JAVA"]: {
      *                 solutionFile: {
      *                     filename: "filename",
      *                     contents: "contents"
@@ -45,10 +49,18 @@ export class ProblemClient {
      *                 readOnlyFiles: [{
      *                         filename: "filename",
      *                         contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
      *                     }]
      *             }
      *         },
      *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }, {
      *                 variableType: {
      *                     type: "integerType"
      *                 },
@@ -61,34 +73,60 @@ export class ProblemClient {
      *                 testCase: {
      *                     id: "id",
      *                     params: [{
-     *                             type: "integerValue"
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
      *                         }]
      *                 },
      *                 expectedResult: {
-     *                     type: "integerValue"
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
      *                 }
      *             }],
      *         methodName: "methodName"
      *     })
      */
-    public createproblem(
-        request: SeedApi.CreateProblemRequest,
+    public createProblem(
+        request: SeedTrace.CreateProblemRequest,
         requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.CreateProblemResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__createproblem(request, requestOptions));
+    ): core.HttpResponsePromise<SeedTrace.CreateProblemResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createProblem(request, requestOptions));
     }
 
-    private async __createproblem(
-        request: SeedApi.CreateProblemRequest,
+    private async __createProblem(
+        request: SeedTrace.CreateProblemRequest,
         requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.CreateProblemResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<SeedTrace.CreateProblemResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                "problem-crud/create",
+                    environments.SeedTraceEnvironment.Prod,
+                "/problem-crud/create",
             ),
             method: "POST",
             headers: _headers,
@@ -103,11 +141,11 @@ export class ProblemClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.CreateProblemResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedTrace.CreateProblemResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -120,81 +158,118 @@ export class ProblemClient {
     /**
      * Updates a problem
      *
-     * @param {SeedApi.ProblemUpdateProblemRequest} request
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {SeedTrace.CreateProblemRequest} request
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.problem.updateproblem({
-     *         problemId: "problemId",
-     *         body: {
-     *             problemName: "problemName",
-     *             problemDescription: {
-     *                 boards: [{
-     *                         type: "html"
-     *                     }]
-     *             },
-     *             files: {
-     *                 "key": {
-     *                     solutionFile: {
+     *     await client.problem.updateProblem("problemId", {
+     *         problemName: "problemName",
+     *         problemDescription: {
+     *             boards: [{
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }, {
+     *                     type: "html",
+     *                     value: "boards"
+     *                 }]
+     *         },
+     *         files: {
+     *             ["JAVA"]: {
+     *                 solutionFile: {
+     *                     filename: "filename",
+     *                     contents: "contents"
+     *                 },
+     *                 readOnlyFiles: [{
      *                         filename: "filename",
      *                         contents: "contents"
-     *                     },
-     *                     readOnlyFiles: [{
-     *                             filename: "filename",
-     *                             contents: "contents"
+     *                     }, {
+     *                         filename: "filename",
+     *                         contents: "contents"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }, {
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }],
+     *         outputType: {
+     *             type: "integerType"
+     *         },
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
      *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
      *                 }
-     *             },
-     *             inputParams: [{
-     *                     variableType: {
-     *                         type: "integerType"
-     *                     },
-     *                     name: "name"
-     *                 }],
-     *             outputType: {
-     *                 type: "integerType"
-     *             },
-     *             testcases: [{
-     *                     testCase: {
-     *                         id: "id",
-     *                         params: [{
-     *                                 type: "integerValue"
-     *                             }]
-     *                     },
-     *                     expectedResult: {
-     *                         type: "integerValue"
-     *                     }
-     *                 }],
-     *             methodName: "methodName"
-     *         }
+     *             }, {
+     *                 testCase: {
+     *                     id: "id",
+     *                     params: [{
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }, {
+     *                             type: "integerValue",
+     *                             value: 1
+     *                         }]
+     *                 },
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 }
+     *             }],
+     *         methodName: "methodName"
      *     })
      */
-    public updateproblem(
-        request: SeedApi.ProblemUpdateProblemRequest,
+    public updateProblem(
+        problemId: SeedTrace.ProblemId,
+        request: SeedTrace.CreateProblemRequest,
         requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.UpdateProblemResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__updateproblem(request, requestOptions));
+    ): core.HttpResponsePromise<SeedTrace.UpdateProblemResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__updateProblem(problemId, request, requestOptions));
     }
 
-    private async __updateproblem(
-        request: SeedApi.ProblemUpdateProblemRequest,
+    private async __updateProblem(
+        problemId: SeedTrace.ProblemId,
+        request: SeedTrace.CreateProblemRequest,
         requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.UpdateProblemResponse>> {
-        const { problemId, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<SeedTrace.UpdateProblemResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `problem-crud/update/${core.url.encodePathParam(problemId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/problem-crud/update/${core.url.encodePathParam(problemId)}`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -202,11 +277,11 @@ export class ProblemClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.UpdateProblemResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedTrace.UpdateProblemResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -224,33 +299,36 @@ export class ProblemClient {
     /**
      * Soft deletes a problem
      *
-     * @param {SeedApi.ProblemDeleteProblemRequest} request
+     * @param {SeedTrace.ProblemId} problemId
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.problem.deleteproblem({
-     *         problemId: "problemId"
-     *     })
+     *     await client.problem.deleteProblem("problemId")
      */
-    public deleteproblem(
-        request: SeedApi.ProblemDeleteProblemRequest,
+    public deleteProblem(
+        problemId: SeedTrace.ProblemId,
         requestOptions?: ProblemClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteproblem(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__deleteProblem(problemId, requestOptions));
     }
 
-    private async __deleteproblem(
-        request: SeedApi.ProblemDeleteProblemRequest,
+    private async __deleteProblem(
+        problemId: SeedTrace.ProblemId,
         requestOptions?: ProblemClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { problemId } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `problem-crud/delete/${core.url.encodePathParam(problemId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/problem-crud/delete/${core.url.encodePathParam(problemId)}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -266,7 +344,7 @@ export class ProblemClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -284,12 +362,17 @@ export class ProblemClient {
     /**
      * Returns default starter files for problem
      *
-     * @param {SeedApi.ProblemGetDefaultStarterFilesRequest} request
+     * @param {SeedTrace.GetDefaultStarterFilesRequest} request
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.problem.getdefaultstarterfiles({
+     *     await client.problem.getDefaultStarterFiles({
      *         inputParams: [{
+     *                 variableType: {
+     *                     type: "integerType"
+     *                 },
+     *                 name: "name"
+     *             }, {
      *                 variableType: {
      *                     type: "integerType"
      *                 },
@@ -301,24 +384,30 @@ export class ProblemClient {
      *         methodName: "methodName"
      *     })
      */
-    public getdefaultstarterfiles(
-        request: SeedApi.ProblemGetDefaultStarterFilesRequest,
+    public getDefaultStarterFiles(
+        request: SeedTrace.GetDefaultStarterFilesRequest,
         requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.GetDefaultStarterFilesResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getdefaultstarterfiles(request, requestOptions));
+    ): core.HttpResponsePromise<SeedTrace.GetDefaultStarterFilesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getDefaultStarterFiles(request, requestOptions));
     }
 
-    private async __getdefaultstarterfiles(
-        request: SeedApi.ProblemGetDefaultStarterFilesRequest,
+    private async __getDefaultStarterFiles(
+        request: SeedTrace.GetDefaultStarterFilesRequest,
         requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.GetDefaultStarterFilesResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<SeedTrace.GetDefaultStarterFilesResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                "problem-crud/default-starter-files",
+                    environments.SeedTraceEnvironment.Prod,
+                "/problem-crud/default-starter-files",
             ),
             method: "POST",
             headers: _headers,
@@ -334,13 +423,13 @@ export class ProblemClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedApi.GetDefaultStarterFilesResponse,
+                data: _response.body as SeedTrace.GetDefaultStarterFilesResponse,
                 rawResponse: _response.rawResponse,
             };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

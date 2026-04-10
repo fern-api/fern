@@ -1,11 +1,11 @@
-//! # header-auth SDK
+//! # HeaderToken SDK
 //!
-//! The official Rust SDK for the header-auth.
+//! The official Rust SDK for the HeaderToken.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_header_token::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,8 +13,8 @@
 //!         api_key: Some("<value>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client.service.getwithbearertoken(None).await;
+//!     let client = HeaderTokenClient::new(config).expect("Failed to build client");
+//!     client.service.get_with_bearer_token(None).await;
 //! }
 //! ```
 //!

@@ -19,13 +19,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :resource_id
       #
-      # @return [Seed::Types::Resource]
-      def getresource(request_options: {}, **params)
+      # @return [Seed::Service::Types::Resource]
+      def get_resource(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "resource/#{URI.encode_uri_component(params[:resource_id].to_s)}",
+          path: "/resource/#{URI.encode_uri_component(params[:resource_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -35,7 +35,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Resource.load(response.body)
+          Seed::Service::Types::Resource.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -52,8 +52,8 @@ module Seed
       # @option params [Integer] :page_limit
       # @option params [String] :before_date
       #
-      # @return [Array[Seed::Types::Resource]]
-      def listresources(request_options: {}, **params)
+      # @return [Array[Seed::Service::Types::Resource]]
+      def list_resources(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[page_limit before_date]
         query_params = {}
@@ -64,7 +64,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "resource",
+          path: "/resource",
           query: query_params,
           request_options: request_options
         )

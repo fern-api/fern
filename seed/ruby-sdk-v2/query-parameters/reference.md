@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getusername</a>() -> Seed::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_username</a>() -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -13,16 +13,23 @@
 <dd>
 
 ```ruby
-client.user.getusername(
+client.user.get_username(
   limit: 1,
-  id: "id",
+  id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   date: "2023-01-15",
   deadline: "2024-01-15T09:30:00Z",
-  bytes: "bytes",
+  bytes: "SGVsbG8gd29ybGQh",
   user: {
     name: "name",
     tags: %w[tags tags]
   },
+  user_list: [{
+    name: "name",
+    tags: %w[tags tags]
+  }, {
+    name: "name",
+    tags: %w[tags tags]
+  }],
   optional_deadline: "2024-01-15T09:30:00Z",
   key_value: {
     keyValue: "keyValue"
@@ -94,7 +101,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**user:** `Seed::Types::User` 
+**user:** `Seed::User::Types::User` 
     
 </dd>
 </dl>
@@ -102,7 +109,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**user_list:** `Seed::Types::User` 
+**user_list:** `Internal::Types::Array[Seed::User::Types::User]` 
     
 </dd>
 </dl>
@@ -134,7 +141,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**nested_user:** `Seed::Types::NestedUser` 
+**nested_user:** `Seed::User::Types::NestedUser` 
     
 </dd>
 </dl>
@@ -142,7 +149,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**optional_user:** `Seed::Types::User` 
+**optional_user:** `Seed::User::Types::User` 
     
 </dd>
 </dl>
@@ -150,7 +157,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**exclude_user:** `Seed::Types::User` 
+**exclude_user:** `Seed::User::Types::User` 
     
 </dd>
 </dl>

@@ -5,10 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.playlist.createplaylist(
-  service_param: 1,
-  datetime: "2024-01-15T09:30:00Z",
-  optional_datetime: "2024-01-15T09:30:00Z",
-  name: "name",
-  problems: %w[problems problems]
-)
+client.submission.get_execution_session(session_id: "sessionId")

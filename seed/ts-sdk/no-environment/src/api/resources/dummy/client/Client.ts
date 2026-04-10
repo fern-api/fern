@@ -24,13 +24,13 @@ export class DummyClient {
      * @param {DummyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.dummy.getdummy()
+     *     await client.dummy.getDummy()
      */
-    public getdummy(requestOptions?: DummyClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__getdummy(requestOptions));
+    public getDummy(requestOptions?: DummyClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getDummy(requestOptions));
     }
 
-    private async __getdummy(requestOptions?: DummyClient.RequestOptions): Promise<core.WithRawResponse<string>> {
+    private async __getDummy(requestOptions?: DummyClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -57,7 +57,7 @@ export class DummyClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedNoEnvironmentError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

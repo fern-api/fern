@@ -1,6 +1,6 @@
-//! # dollar-string-examples SDK
+//! # DollarStringExamples SDK
 //!
-//! The official Rust SDK for the dollar-string-examples.
+//! The official Rust SDK for the DollarStringExamples.
 //!
 //! ## Getting Started
 //!

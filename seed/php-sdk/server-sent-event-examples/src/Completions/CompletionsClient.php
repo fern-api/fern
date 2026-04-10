@@ -4,14 +4,14 @@ namespace Seed\Completions;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Completions\Requests\CompletionsStreamRequest;
+use Seed\Completions\Requests\StreamCompletionRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Completions\Requests\CompletionsStreamEventsRequest;
-use Seed\Completions\Requests\CompletionsStreamEventsContextProtocolRequest;
+use Seed\Completions\Requests\StreamEventsRequest;
+use Seed\Completions\Requests\StreamEventsContextProtocolRequest;
 
 class CompletionsClient
 {
@@ -50,7 +50,7 @@ class CompletionsClient
     }
 
     /**
-     * @param CompletionsStreamRequest $request
+     * @param StreamCompletionRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -59,11 +59,10 @@ class CompletionsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function stream(CompletionsStreamRequest $request, ?array $options = null): string
+    public function stream(StreamCompletionRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -77,9 +76,6 @@ class CompletionsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                return $response->getBody()->getContents();
-            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -91,7 +87,7 @@ class CompletionsClient
     }
 
     /**
-     * @param CompletionsStreamEventsRequest $request
+     * @param StreamEventsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -100,11 +96,10 @@ class CompletionsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamevents(CompletionsStreamEventsRequest $request, ?array $options = null): string
+    public function streamEvents(StreamEventsRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -118,9 +113,6 @@ class CompletionsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                return $response->getBody()->getContents();
-            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -132,7 +124,7 @@ class CompletionsClient
     }
 
     /**
-     * @param CompletionsStreamEventsContextProtocolRequest $request
+     * @param StreamEventsContextProtocolRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -141,11 +133,10 @@ class CompletionsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streameventscontextprotocol(CompletionsStreamEventsContextProtocolRequest $request, ?array $options = null): string
+    public function streamEventsContextProtocol(StreamEventsContextProtocolRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -159,9 +150,6 @@ class CompletionsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                return $response->getBody()->getContents();
-            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

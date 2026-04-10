@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .completions.client import AsyncCompletionsClient, CompletionsClient
 
 
-class SeedApi:
+class SeedServerSentEvents:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedServerSentEvents
 
-    client = SeedApi(
+    client = SeedServerSentEvents(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -98,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedServerSentEvents:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -124,9 +124,9 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedServerSentEvents
 
-    client = AsyncSeedApi(
+    client = AsyncSeedServerSentEvents(
         base_url="https://yourhost.com/path/to/api",
     )
     """

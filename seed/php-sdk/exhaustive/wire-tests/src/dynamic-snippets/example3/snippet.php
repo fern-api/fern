@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\TypesObjectWithRequiredField;
+use Seed\Types\Object\Types\ObjectWithRequiredField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,12 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsContainer->endpointsContainerGetAndReturnListOfObjects(
+$client->endpoints->container->getAndReturnSetOfObjects(
     [
-        new TypesObjectWithRequiredField([
-            'string' => 'string',
-        ]),
-        new TypesObjectWithRequiredField([
+        new ObjectWithRequiredField([
             'string' => 'string',
         ]),
     ],

@@ -49,12 +49,12 @@ func (c *Client) Post(
 	return response.Body, nil
 }
 
-func (c *Client) Postobject(
+func (c *Client) PostObject(
 	ctx context.Context,
 	request *fern.MyObject,
 	opts ...option.RequestOption,
 ) ([]any, error) {
-	response, err := c.WithRawResponse.Postobject(
+	response, err := c.WithRawResponse.PostObject(
 		ctx,
 		request,
 		opts...,

@@ -7,7 +7,7 @@ public final class OrganizationsClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getorganization(tenantId: String, organizationId: String, requestOptions: RequestOptions? = nil) async throws -> Organization {
+    public func getOrganization(tenantId: String, organizationId: String, requestOptions: RequestOptions? = nil) async throws -> Organization {
         return try await httpClient.performRequest(
             method: .get,
             path: "/\(tenantId)/organizations/\(organizationId)",
@@ -16,7 +16,7 @@ public final class OrganizationsClient: Sendable {
         )
     }
 
-    public func getorganizationuser(tenantId: String, organizationId: String, userId: String, requestOptions: RequestOptions? = nil) async throws -> User {
+    public func getOrganizationUser(tenantId: String, organizationId: String, userId: String, requestOptions: RequestOptions? = nil) async throws -> User {
         return try await httpClient.performRequest(
             method: .get,
             path: "/\(tenantId)/organizations/\(organizationId)/users/\(userId)",
@@ -25,12 +25,12 @@ public final class OrganizationsClient: Sendable {
         )
     }
 
-    public func searchorganizations(tenantId: String, organizationId: String, limit: Nullable<Int>? = nil, requestOptions: RequestOptions? = nil) async throws -> [Organization] {
+    public func searchOrganizations(tenantId: String, organizationId: String, limit: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> [Organization] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/\(tenantId)/organizations/\(organizationId)/search",
             queryParams: [
-                "limit": limit?.wrappedValue.map { .int($0) }
+                "limit": limit.map { .int($0) }
             ],
             requestOptions: requestOptions,
             responseType: [Organization].self

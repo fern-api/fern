@@ -1,18 +1,31 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.migration.requests.MigrationGetAttemptedMigrationsRequest;
+import com.seed.trace.SeedTraceClient;
+import com.seed.trace.resources.commons.types.VariableType;
+import com.seed.trace.resources.problem.requests.GetDefaultStarterFilesRequest;
+import com.seed.trace.resources.problem.types.VariableTypeAndName;
+import java.util.Arrays;
 
 public class Example23 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedTraceClient client = SeedTraceClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.migration()
-                .getattemptedmigrations(MigrationGetAttemptedMigrationsRequest.builder()
-                        .adminKeyHeader("adminKeyHeader")
+        client.problem()
+                .getDefaultStarterFiles(GetDefaultStarterFilesRequest.builder()
+                        .outputType(VariableType.integerType())
+                        .methodName("methodName")
+                        .inputParams(Arrays.asList(
+                                VariableTypeAndName.builder()
+                                        .variableType(VariableType.integerType())
+                                        .name("name")
+                                        .build(),
+                                VariableTypeAndName.builder()
+                                        .variableType(VariableType.integerType())
+                                        .name("name")
+                                        .build()))
                         .build());
     }
 }

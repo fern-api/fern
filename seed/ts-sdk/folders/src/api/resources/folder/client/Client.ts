@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
+import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace FolderClient {
     export type Options = BaseClientOptions;
@@ -15,9 +16,14 @@ export declare namespace FolderClient {
 
 export class FolderClient {
     protected readonly _options: NormalizedClientOptions<FolderClient.Options>;
+    protected _service: ServiceClient | undefined;
 
     constructor(options: FolderClient.Options) {
         this._options = normalizeClientOptions(options);
+    }
+
+    public get service(): ServiceClient {
+        return (this._service ??= new ServiceClient(this._options));
     }
 
     /**
@@ -33,11 +39,9 @@ export class FolderClient {
     private async __foo(requestOptions?: FolderClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
+            url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "folder",
-            ),
+                (await core.Supplier.get(this._options.environment)),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -59,6 +63,6 @@ export class FolderClient {
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/folder");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
     }
 }

@@ -30,7 +30,10 @@ require "seed"
 
 client = Seed::Client.new(token: "<token>")
 
-client.admin.updatetestsubmissionstatus(submission_id: "submissionId")
+client.admin.update_test_submission_status(
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  request: {}
+)
 ```
 
 ## Environments
@@ -41,7 +44,7 @@ This SDK allows you to configure different environments or custom URLs for API r
 require "seed"
 
 seed = Seed::Client.new(
-    base_url: Seed::Environment::DEFAULT
+    base_url: Seed::Environment::PROD
 )
 ```
 
@@ -66,7 +69,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client.admin.updatetestsubmissionstatus
+    result = client.admin.update_test_submission_status
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -111,7 +114,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.admin.updatetestsubmissionstatus(
+response = client.admin.update_test_submission_status(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -124,7 +127,7 @@ If you would like to send additional headers as part of the request, use the `ad
 ```ruby
 require "seed"
 
-response = client.admin.updatetestsubmissionstatus(
+response = client.admin.update_test_submission_status(
     ...,
     request_options: {
         additional_headers: {
@@ -141,7 +144,7 @@ If you would like to send additional query parameters as part of the request, us
 ```ruby
 require "seed"
 
-response = client.admin.updatetestsubmissionstatus(
+response = client.admin.update_test_submission_status(
     ...,
     request_options: {
         additional_query_parameters: {

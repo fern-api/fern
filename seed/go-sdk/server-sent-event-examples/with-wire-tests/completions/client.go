@@ -4,7 +4,7 @@ package completions
 
 import (
 	context "context"
-	io "io"
+	http "net/http"
 
 	sse "github.com/fern-api/sse-examples-go"
 	core "github.com/fern-api/sse-examples-go/core"
@@ -36,48 +36,115 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Stream(
 	ctx context.Context,
-	request *sse.CompletionsStreamRequest,
+	request *sse.StreamCompletionRequest,
 	opts ...option.RequestOption,
-) (io.Reader, error) {
-	response, err := c.WithRawResponse.Stream(
-		ctx,
-		request,
-		opts...,
+) (*core.Stream[sse.StreamedCompletion], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
 	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
+	endpointURL := baseURL + "/stream"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Accept", "text/event-stream")
+	streamer := internal.NewStreamer[sse.StreamedCompletion](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
+			Prefix:          internal.DefaultSSEDataPrefix,
+			Terminator:      "[[DONE]]",
+			Format:          core.StreamFormatSSE,
+			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
+		},
+	)
 }
 
-func (c *Client) Streamevents(
+func (c *Client) StreamEvents(
 	ctx context.Context,
-	request *sse.CompletionsStreamEventsRequest,
+	request *sse.StreamEventsRequest,
 	opts ...option.RequestOption,
-) (io.Reader, error) {
-	response, err := c.WithRawResponse.Streamevents(
-		ctx,
-		request,
-		opts...,
+) (*core.Stream[sse.StreamEvent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
 	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
+	endpointURL := baseURL + "/stream-events"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Accept", "text/event-stream")
+	streamer := internal.NewStreamer[sse.StreamEvent](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
+			Prefix:          internal.DefaultSSEDataPrefix,
+			Terminator:      "[DONE]",
+			Format:          core.StreamFormatSSE,
+			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
+		},
+	)
 }
 
-func (c *Client) Streameventscontextprotocol(
+func (c *Client) StreamEventsContextProtocol(
 	ctx context.Context,
-	request *sse.CompletionsStreamEventsContextProtocolRequest,
+	request *sse.StreamEventsContextProtocolRequest,
 	opts ...option.RequestOption,
-) (io.Reader, error) {
-	response, err := c.WithRawResponse.Streameventscontextprotocol(
-		ctx,
-		request,
-		opts...,
+) (*core.Stream[sse.StreamEventContextProtocol], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
 	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
+	endpointURL := baseURL + "/stream-events-context-protocol"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Accept", "text/event-stream")
+	streamer := internal.NewStreamer[sse.StreamEventContextProtocol](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:                endpointURL,
+			Method:             http.MethodPost,
+			Headers:            headers,
+			MaxAttempts:        options.MaxAttempts,
+			BodyProperties:     options.BodyProperties,
+			QueryParameters:    options.QueryParameters,
+			Client:             options.HTTPClient,
+			MaxBufSize:         options.MaxBufSize,
+			Prefix:             internal.DefaultSSEDataPrefix,
+			Terminator:         "[DONE]",
+			Format:             core.StreamFormatSSE,
+			EventDiscriminator: "event",
+			Request:            request,
+			ErrorDecoder:       internal.NewErrorDecoder(sse.ErrorCodes),
+		},
+	)
 }

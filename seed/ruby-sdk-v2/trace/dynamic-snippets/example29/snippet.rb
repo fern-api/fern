@@ -5,7 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.playlist.getplaylist(
-  service_param: 1,
-  playlist_id: "playlistId"
-)
+client.sysprop.get_num_warm_instances

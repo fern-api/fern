@@ -11,7 +11,7 @@ public class Example1
             }
         );
 
-        await client._.FooAsync();
+        await client.A.B.FooAsync();
     }
 
 }

@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Getorganization(
+func (r *RawClient) GetOrganization(
 	ctx context.Context,
 	tenantID string,
 	organizationID string,
@@ -76,7 +76,7 @@ func (r *RawClient) Getorganization(
 	}, nil
 }
 
-func (r *RawClient) Getorganizationuser(
+func (r *RawClient) GetOrganizationUser(
 	ctx context.Context,
 	tenantID string,
 	organizationID string,
@@ -123,11 +123,11 @@ func (r *RawClient) Getorganizationuser(
 	}, nil
 }
 
-func (r *RawClient) Searchorganizations(
+func (r *RawClient) SearchOrganizations(
 	ctx context.Context,
 	tenantID string,
 	organizationID string,
-	request *fern.OrganizationsSearchOrganizationsRequest,
+	request *fern.SearchOrganizationsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.Organization], error) {
 	options := core.NewRequestOptions(opts...)

@@ -1,6 +1,6 @@
 # Reference
-## FolderAService
-<details><summary><code>client.folder_a_service.<a href="/lib/seed/folder_a_service/client.rb">folder_a_service_get_direct_thread</a>() -> Seed::Types::FolderAResponse</code></summary>
+## FolderA Service
+<details><summary><code>client.folder_a.service.<a href="/lib/seed/folder_a/service/client.rb">get_direct_thread</a>() -> Seed::FolderA::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.folder_a_service.folder_a_service_get_direct_thread
+client.folder_a.service.get_direct_thread
 ```
 </dd>
 </dl>
@@ -28,7 +28,7 @@ client.folder_a_service.folder_a_service_get_direct_thread
 <dl>
 <dd>
 
-**request_options:** `Seed::FolderAService::RequestOptions` 
+**request_options:** `Seed::FolderA::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -40,8 +40,8 @@ client.folder_a_service.folder_a_service_get_direct_thread
 </dl>
 </details>
 
-## FolderDService
-<details><summary><code>client.folder_d_service.<a href="/lib/seed/folder_d_service/client.rb">folder_d_service_get_direct_thread</a>() -> Seed::Types::FolderDResponse</code></summary>
+## FolderD Service
+<details><summary><code>client.folder_d.service.<a href="/lib/seed/folder_d/service/client.rb">get_direct_thread</a>() -> Seed::FolderD::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ client.folder_a_service.folder_a_service_get_direct_thread
 <dd>
 
 ```ruby
-client.folder_d_service.folder_d_service_get_direct_thread
+client.folder_a.service.get_direct_thread
 ```
 </dd>
 </dl>
@@ -69,7 +69,7 @@ client.folder_d_service.folder_d_service_get_direct_thread
 <dl>
 <dd>
 
-**request_options:** `Seed::FolderDService::RequestOptions` 
+**request_options:** `Seed::FolderD::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -82,7 +82,7 @@ client.folder_d_service.folder_d_service_get_direct_thread
 </details>
 
 ## Foo
-<details><summary><code>client.foo.<a href="/lib/seed/foo/client.rb">find</a>(request) -> Seed::Types::ImportingType</code></summary>
+<details><summary><code>client.foo.<a href="/lib/seed/foo/client.rb">find</a>(request) -> Seed::Foo::Types::ImportingType</code></summary>
 <dl>
 <dd>
 
@@ -95,7 +95,11 @@ client.folder_d_service.folder_d_service_get_direct_thread
 <dd>
 
 ```ruby
-client.foo.find
+client.foo.find(
+  optional_string: "optionalString",
+  public_property: "publicProperty",
+  private_property: 1
+)
 ```
 </dd>
 </dl>

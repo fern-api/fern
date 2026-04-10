@@ -14,11 +14,20 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.ServicePatchComplexRequest{
-        ID: "id",
+    request := &fern.NamedMixedPatchRequest{
+        AppID: fern.String(
+            "appId",
+        ),
+        Instructions: fern.String(
+            "instructions",
+        ),
+        Active: fern.Bool(
+            true,
+        ),
     }
-    client.Service.Patchcomplex(
+    client.Service.NamedPatchWithMixed(
         context.TODO(),
+        "id",
         request,
     )
 }

@@ -5,7 +5,7 @@ info:
 paths:
   /{id}/:
     post:
-      operationId: _echo
+      operationId: echo
       tags:
         - ''
       parameters:
@@ -14,10 +14,10 @@ paths:
           required: true
           schema:
             type: string
-          example: id
+          example: id-ksfd9c1
           examples:
             Example1:
-              value: id
+              value: id-ksfd9c1
       responses:
         '200':
           description: ''
@@ -27,28 +27,18 @@ paths:
                 type: string
               examples:
                 Example1:
-                  value: string
+                  value: Hello world!
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: name
-                size:
-                  type: integer
-                  example: 1
-              required:
-                - name
-                - size
+              $ref: '#/components/schemas/EchoRequest'
             examples:
               Example1:
                 value:
-                  name: name
-                  size: 1
+                  name: Hello world!
+                  size: 20
   /{id}//{nestedId}:
     get:
       operationId: service_nop
@@ -60,22 +50,35 @@ paths:
           required: true
           schema:
             type: string
-          example: id
+          example: id-a2ijs82
           examples:
             Example1:
-              value: id
+              value: id-a2ijs82
         - name: nestedId
           in: path
           required: true
           schema:
             type: string
-          example: nestedId
+          example: id-219xca8
           examples:
             Example1:
-              value: nestedId
+              value: id-219xca8
       responses:
         '204':
           description: ''
 components:
-  schemas: {}
+  schemas:
+    EchoRequest:
+      title: EchoRequest
+      type: object
+      properties:
+        name:
+          type: string
+          example: Hello world!
+        size:
+          type: integer
+          example: 20
+      required:
+        - name
+        - size
   securitySchemes: {}

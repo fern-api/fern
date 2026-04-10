@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithuripagination</a>() -> ListUsersUriPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_uri_pagination</a>() -> ListUsersUriPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,14 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedPaginationUriPath
 
-client = SeedApi(
+client = SeedPaginationUriPath(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.listwithuripagination()
+client.users.list_with_uri_pagination()
 
 ```
 </dd>
@@ -48,7 +48,7 @@ client.users.listwithuripagination()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithpathpagination</a>() -> ListUsersPathPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_path_pagination</a>() -> ListUsersPathPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -61,14 +61,14 @@ client.users.listwithuripagination()
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedPaginationUriPath
 
-client = SeedApi(
+client = SeedPaginationUriPath(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.listwithpathpagination()
+client.users.list_with_path_pagination()
 
 ```
 </dd>

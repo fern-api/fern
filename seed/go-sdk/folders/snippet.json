@@ -4,17 +4,6 @@
             "id": {
                 "path": "/",
                 "method": "POST",
-                "identifier_override": "endpoint_.foo"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Foo(\n\tcontext.TODO(),\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/a/b",
-                "method": "POST",
                 "identifier_override": "endpoint_a/b.foo"
             },
             "snippet": {
@@ -24,7 +13,7 @@
         },
         {
             "id": {
-                "path": "/a/c",
+                "path": "/",
                 "method": "POST",
                 "identifier_override": "endpoint_a/c.foo"
             },
@@ -35,13 +24,24 @@
         },
         {
             "id": {
-                "path": "/folder",
+                "path": "/",
                 "method": "POST",
                 "identifier_override": "endpoint_folder.foo"
             },
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Folder.Foo(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.foo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Foo(\n\tcontext.TODO(),\n)\n"
             }
         },
         {

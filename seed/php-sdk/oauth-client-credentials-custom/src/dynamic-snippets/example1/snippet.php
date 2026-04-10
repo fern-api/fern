@@ -3,24 +3,22 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Auth\Requests\AuthGetTokenWithClientCredentialsRequest;
-use Seed\Auth\Types\AuthGetTokenWithClientCredentialsRequestAudience;
-use Seed\Auth\Types\AuthGetTokenWithClientCredentialsRequestGrantType;
+use Seed\Auth\Requests\RefreshTokenRequest;
 
 $client = new SeedClient(
-    token: '<token>',
+    clientId: '<clientId>',
+    clientSecret: '<clientSecret>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->auth->gettokenwithclientcredentials(
-    new AuthGetTokenWithClientCredentialsRequest([
-        'cid' => 'cid',
-        'csr' => 'csr',
-        'scp' => 'scp',
-        'entityId' => 'entity_id',
-        'audience' => AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom->value,
-        'grantType' => AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials->value,
+$client->auth->refreshToken(
+    new RefreshTokenRequest([
+        'clientId' => 'client_id',
+        'clientSecret' => 'client_secret',
+        'refreshToken' => 'refresh_token',
+        'audience' => 'https://api.example.com',
+        'grantType' => 'refresh_token',
         'scope' => 'scope',
     ]),
 );

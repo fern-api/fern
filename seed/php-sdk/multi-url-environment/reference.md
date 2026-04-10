@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>$client-&gt;ec2-&gt;bootinstance($request)</code></summary>
+<details><summary><code>$client-&gt;ec2-&gt;bootInstance($request)</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 <dd>
 
 ```php
-$client->ec2->bootinstance(
-    new Ec2BootInstanceRequest([
+$client->ec2->bootInstance(
+    new BootInstanceRequest([
         'size' => 'size',
     ]),
 );
@@ -45,7 +45,7 @@ $client->ec2->bootinstance(
 </details>
 
 ## S3
-<details><summary><code>$client-&gt;s3-&gt;getpresignedurl($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;s3-&gt;getPresignedUrl($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -58,8 +58,8 @@ $client->ec2->bootinstance(
 <dd>
 
 ```php
-$client->s3->getpresignedurl(
-    new S3GetPresignedUrlRequest([
+$client->s3->getPresignedUrl(
+    new GetPresignedUrlRequest([
         's3Key' => 's3Key',
     ]),
 );

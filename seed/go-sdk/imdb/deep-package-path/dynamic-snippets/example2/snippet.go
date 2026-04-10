@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    please "github.com/imdb/fern/all/the/way/in/here/please"
     client "github.com/imdb/fern/all/the/way/in/here/please/client"
     option "github.com/imdb/fern/all/the/way/in/here/please/option"
 )
@@ -17,11 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &please.ImdbGetMovieRequest{
-        MovieID: "movieId",
-    }
-    client.Imdb.Getmovie(
+    client.Imdb.GetMovie(
         context.TODO(),
-        request,
+        "movieId",
     )
 }

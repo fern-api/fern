@@ -8,7 +8,7 @@ paths:
       description: |-
         Retrieve a user.
         This endpoint is used to retrieve a user.
-      operationId: user_getuser
+      operationId: user_getUser
       tags:
         - User
       parameters:
@@ -20,10 +20,6 @@ paths:
           required: true
           schema:
             type: string
-          example: userId
-          examples:
-            Example1:
-              value: userId
       responses:
         '204':
           description: ''
@@ -32,7 +28,7 @@ paths:
       description: |-
         Create a new user.
         This endpoint is used to create a new user.
-      operationId: user_createuser
+      operationId: user_createUser
       tags:
         - User
       parameters: []
@@ -43,12 +39,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-              examples:
-                Example1:
-                  value:
-                    id: id
-                    name: name
-                    age: 1
       requestBody:
         required: true
         content:
@@ -61,7 +51,6 @@ paths:
                   description: |-
                     The name of the user to create.
                     This name is unique to each user.
-                  example: name
                 age:
                   type: integer
                   nullable: true
@@ -70,10 +59,6 @@ paths:
                     This property is not required.
               required:
                 - name
-            examples:
-              Example1:
-                value:
-                  name: name
 components:
   schemas:
     Operand:
@@ -96,7 +81,6 @@ components:
       properties:
         id:
           type: string
-          example: id
         name:
           type: string
           description: >-
@@ -105,7 +89,6 @@ components:
              - Alice
              - Bob
              - Charlie
-          example: name
         age:
           type: integer
           nullable: true

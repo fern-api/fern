@@ -1,6 +1,6 @@
-//! # simple-fhir SDK
+//! # Api SDK
 //!
-//! The official Rust SDK for the simple-fhir.
+//! The official Rust SDK for the Api.
 //!
 //! ## Getting Started
 //!
@@ -13,7 +13,7 @@
 //!         ..Default::default()
 //!     };
 //!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client..get_account(&"account_id".to_string(), None).await;
+//!     client.get_account(&"account_id".to_string(), None).await;
 //! }
 //! ```
 //!
@@ -27,15 +27,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
 pub use error::{ApiError, BuildError};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-

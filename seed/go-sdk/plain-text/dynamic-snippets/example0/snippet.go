@@ -13,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Service.Gettext(
+    client.Service.GetText(
         context.TODO(),
     )
 }

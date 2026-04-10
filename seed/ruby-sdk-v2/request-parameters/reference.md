@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">createusername</a>(request) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_username</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,11 @@
 <dd>
 
 ```ruby
-client.user.createusername(
+client.user.create_username(
+  tags: %w[tags tags],
   username: "username",
   password: "password",
-  name: "name"
+  name: "test"
 )
 ```
 </dd>
@@ -32,7 +33,7 @@ client.user.createusername(
 <dl>
 <dd>
 
-**tags:** `String` 
+**tags:** `Internal::Types::Array[String]` 
     
 </dd>
 </dl>
@@ -76,7 +77,7 @@ client.user.createusername(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">createusernamewithreferencedtype</a>(request) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_username_with_referenced_type</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -89,10 +90,11 @@ client.user.createusername(
 <dd>
 
 ```ruby
-client.user.createusernamewithreferencedtype(
+client.user.create_username_with_referenced_type(
+  tags: %w[tags tags],
   username: "username",
   password: "password",
-  name: "name"
+  name: "test"
 )
 ```
 </dd>
@@ -108,7 +110,7 @@ client.user.createusernamewithreferencedtype(
 <dl>
 <dd>
 
-**tags:** `String` 
+**tags:** `Internal::Types::Array[String]` 
     
 </dd>
 </dl>
@@ -116,23 +118,7 @@ client.user.createusernamewithreferencedtype(
 <dl>
 <dd>
 
-**username:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `String` 
+**request:** `Seed::User::Types::CreateUsernameBody` 
     
 </dd>
 </dl>
@@ -152,7 +138,7 @@ client.user.createusernamewithreferencedtype(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">createusernameoptional</a>(request) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_username_optional</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -165,7 +151,7 @@ client.user.createusernamewithreferencedtype(
 <dd>
 
 ```ruby
-client.user.createusernameoptional
+client.user.create_username_optional(request: {})
 ```
 </dd>
 </dl>
@@ -180,23 +166,7 @@ client.user.createusernameoptional
 <dl>
 <dd>
 
-**username:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `String` 
+**request:** `Seed::User::Types::CreateUsernameBodyOptionalProperties` 
     
 </dd>
 </dl>
@@ -216,7 +186,7 @@ client.user.createusernameoptional
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getusername</a>() -> Seed::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_username</a>() -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -229,16 +199,23 @@ client.user.createusernameoptional
 <dd>
 
 ```ruby
-client.user.getusername(
+client.user.get_username(
   limit: 1,
-  id: "id",
+  id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   date: "2023-01-15",
   deadline: "2024-01-15T09:30:00Z",
-  bytes: "bytes",
+  bytes: "SGVsbG8gd29ybGQh",
   user: {
     name: "name",
     tags: %w[tags tags]
   },
+  user_list: [{
+    name: "name",
+    tags: %w[tags tags]
+  }, {
+    name: "name",
+    tags: %w[tags tags]
+  }],
   optional_deadline: "2024-01-15T09:30:00Z",
   key_value: {
     keyValue: "keyValue"
@@ -256,7 +233,7 @@ client.user.getusername(
     tags: %w[tags tags]
   },
   long_param: 1000000,
-  big_int_param: 1
+  big_int_param: "1000000"
 )
 ```
 </dd>
@@ -312,7 +289,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**user:** `Seed::Types::User` 
+**user:** `Seed::User::Types::User` 
     
 </dd>
 </dl>
@@ -320,7 +297,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**user_list:** `Seed::Types::User` 
+**user_list:** `Internal::Types::Array[Seed::User::Types::User]` 
     
 </dd>
 </dl>
@@ -352,7 +329,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**nested_user:** `Seed::Types::NestedUser` 
+**nested_user:** `Seed::User::Types::NestedUser` 
     
 </dd>
 </dl>
@@ -360,7 +337,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**optional_user:** `Seed::Types::User` 
+**optional_user:** `Seed::User::Types::User` 
     
 </dd>
 </dl>
@@ -368,7 +345,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**exclude_user:** `Seed::Types::User` 
+**exclude_user:** `Seed::User::Types::User` 
     
 </dd>
 </dl>
@@ -392,7 +369,7 @@ client.user.getusername(
 <dl>
 <dd>
 
-**big_int_param:** `Integer` 
+**big_int_param:** `String` 
     
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">gettokenwithclientcredentials</a>(request) -> Seed::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token_with_client_credentials</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,13 @@
 <dd>
 
 ```ruby
-client.auth.gettokenwithclientcredentials(
+client.auth.get_token_with_client_credentials(
+  x_api_key: "X-Api-Key",
   client_id: "client_id",
   client_secret: "client_secret",
   audience: "https://api.example.com",
-  grant_type: "client_credentials"
+  grant_type: "client_credentials",
+  scope: "scope"
 )
 ```
 </dd>
@@ -29,6 +31,14 @@ client.auth.gettokenwithclientcredentials(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**x_api_key:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -49,7 +59,7 @@ client.auth.gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**audience:** `Seed::Auth::Types::AuthGetTokenWithClientCredentialsRequestAudience` 
+**audience:** `String` 
     
 </dd>
 </dl>
@@ -57,7 +67,7 @@ client.auth.gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**grant_type:** `Seed::Auth::Types::AuthGetTokenWithClientCredentialsRequestGrantType` 
+**grant_type:** `String` 
     
 </dd>
 </dl>
@@ -85,7 +95,7 @@ client.auth.gettokenwithclientcredentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">refreshtoken</a>(request) -> Seed::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">refresh_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -98,12 +108,14 @@ client.auth.gettokenwithclientcredentials(
 <dd>
 
 ```ruby
-client.auth.refreshtoken(
+client.auth.refresh_token(
+  x_api_key: "X-Api-Key",
   client_id: "client_id",
   client_secret: "client_secret",
   refresh_token: "refresh_token",
   audience: "https://api.example.com",
-  grant_type: "refresh_token"
+  grant_type: "refresh_token",
+  scope: "scope"
 )
 ```
 </dd>
@@ -115,6 +127,14 @@ client.auth.refreshtoken(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**x_api_key:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -143,7 +163,7 @@ client.auth.refreshtoken(
 <dl>
 <dd>
 
-**audience:** `Seed::Auth::Types::AuthRefreshTokenRequestAudience` 
+**audience:** `String` 
     
 </dd>
 </dl>
@@ -151,7 +171,7 @@ client.auth.refreshtoken(
 <dl>
 <dd>
 
-**grant_type:** `Seed::Auth::Types::AuthRefreshTokenRequestGrantType` 
+**grant_type:** `String` 
     
 </dd>
 </dl>

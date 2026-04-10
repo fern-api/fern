@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedNurseryApi from "../../../index.js";
 
 export declare namespace PackageClient {
     export type Options = BaseClientOptions;
@@ -22,7 +22,7 @@ export class PackageClient {
     }
 
     /**
-     * @param {SeedApi.PackageTestRequest} request
+     * @param {SeedNurseryApi.TestRequest} request
      * @param {PackageClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -31,14 +31,14 @@ export class PackageClient {
      *     })
      */
     public test(
-        request: SeedApi.PackageTestRequest,
+        request: SeedNurseryApi.TestRequest,
         requestOptions?: PackageClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__test(request, requestOptions));
     }
 
     private async __test(
-        request: SeedApi.PackageTestRequest,
+        request: SeedNurseryApi.TestRequest,
         requestOptions?: PackageClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { for: for_ } = request;
@@ -64,7 +64,7 @@ export class PackageClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedNurseryApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

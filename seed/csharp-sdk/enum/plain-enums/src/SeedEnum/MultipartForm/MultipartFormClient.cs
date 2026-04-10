@@ -1,0 +1,55 @@
+using SeedEnum.Core;
+
+namespace SeedEnum;
+
+public partial class MultipartFormClient : IMultipartFormClient
+{
+    private readonly RawClient _client;
+
+    internal MultipartFormClient(RawClient client)
+    {
+        _client = client;
+    }
+
+    public async Task MultipartFormAsync(
+        MultipartFormRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedEnum.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var multipartFormRequest_ = new SeedEnum.Core.MultipartFormRequest
+        {
+            Method = HttpMethod.Post,
+            Path = "multipart",
+            Headers = _headers,
+            Options = options,
+        };
+        multipartFormRequest_.AddJsonPart("color", request.Color);
+        multipartFormRequest_.AddJsonPart("maybeColor", request.MaybeColor);
+        multipartFormRequest_.AddJsonParts("colorList", request.ColorList);
+        multipartFormRequest_.AddJsonParts("maybeColorList", request.MaybeColorList);
+        var response = await _client
+            .SendRequestAsync(multipartFormRequest_, cancellationToken)
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedEnumApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+}

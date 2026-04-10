@@ -16,21 +16,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MyUnion'
-              examples:
-                Example1:
-                  value: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/MyUnion'
-            examples:
-              Example1:
-                value: string
   /metadata:
     get:
-      operationId: union_getmetadata
+      operationId: union_getMetadata
       tags:
         - Union
       parameters: []
@@ -44,9 +38,11 @@ paths:
               examples:
                 Example1:
                   value:
-                    key: value
+                    name: exampleName
+                    value: exampleValue
+                    default: exampleDefault
     put:
-      operationId: union_updatemetadata
+      operationId: union_updateMetadata
       tags:
         - Union
       parameters: []
@@ -69,7 +65,8 @@ paths:
             examples:
               Example1:
                 value:
-                  key: value
+                  string:
+                    key: value
   /call:
     post:
       operationId: union_call
@@ -91,17 +88,16 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                union:
-                  $ref: '#/components/schemas/MetadataUnion'
-                  nullable: true
+              $ref: '#/components/schemas/Request'
             examples:
               Example1:
-                value: {}
+                value:
+                  union:
+                    string:
+                      key: value
   /duplicate:
     post:
-      operationId: union_duplicatetypesunion
+      operationId: union_duplicateTypesUnion
       tags:
         - Union
       parameters: []
@@ -112,21 +108,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnionWithDuplicateTypes'
-              examples:
-                Example1:
-                  value: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UnionWithDuplicateTypes'
-            examples:
-              Example1:
-                value: string
   /nested:
     post:
-      operationId: union_nestedunions
+      operationId: union_nestedUnions
       tags:
         - Union
       parameters: []
@@ -137,21 +127,15 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Example1:
-                  value: string
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/NestedUnionRoot'
-            examples:
-              Example1:
-                value: string
   /camel-case:
     post:
-      operationId: union_testcamelcaseproperties
+      operationId: union_testCamelCaseProperties
       tags:
         - Union
       parameters: []
@@ -164,7 +148,7 @@ paths:
                 type: string
               examples:
                 Example1:
-                  value: string
+                  value: success
       requestBody:
         required: true
         content:
@@ -180,10 +164,17 @@ paths:
               Example1:
                 value:
                   paymentMethod:
-                    method: method
-                    cardNumber: cardNumber
+                    method: card
+                    cardNumber: '1234567890123456'
 components:
   schemas:
+    Request:
+      title: Request
+      type: object
+      properties:
+        union:
+          $ref: '#/components/schemas/MetadataUnion'
+          nullable: true
     TypeWithOptionalUnion:
       title: TypeWithOptionalUnion
       type: object
@@ -195,6 +186,9 @@ components:
       title: MyUnion
       oneOf:
         - type: string
+        - type: array
+          items:
+            type: string
         - type: integer
         - type: array
           items:
@@ -215,11 +209,17 @@ components:
         - type: array
           items:
             type: string
+        - type: array
+          items:
+            type: string
       description: Nested layer 2.
     NestedUnionL1:
       title: NestedUnionL1
       oneOf:
         - type: integer
+        - type: array
+          items:
+            type: string
         - type: array
           items:
             type: string
@@ -238,6 +238,9 @@ components:
       title: UnionWithDuplicateTypes
       oneOf:
         - type: string
+        - type: array
+          items:
+            type: string
         - type: integer
         - type: array
           items:
@@ -247,7 +250,6 @@ components:
       title: MetadataUnion
       oneOf:
         - $ref: '#/components/schemas/OptionalMetadata'
-          nullable: true
         - $ref: '#/components/schemas/NamedMetadata'
     NamedMetadata:
       title: NamedMetadata
@@ -275,16 +277,12 @@ components:
         Undiscriminated unions can act as a map key
         as long as all of their values are valid keys
         (i.e. do they have a valid string representation).
-    KeyOne:
-      title: KeyOne
-      type: string
-      enum:
-        - default
     Key:
       title: Key
       oneOf:
         - $ref: '#/components/schemas/KeyType'
-        - $ref: '#/components/schemas/KeyOne'
+        - type: string
+          const: default
     KeyType:
       title: KeyType
       type: string
@@ -293,7 +291,8 @@ components:
         - value
     UnionWithIdenticalStrings:
       title: UnionWithIdenticalStrings
-      type: string
+      oneOf:
+        - type: string
       description: |-
         Multiple string types that all resolve to String in Java.
         This tests the fix for duplicate method signatures.
@@ -335,21 +334,13 @@ components:
       required:
         - method
         - tokenId
-    UnionWithReservedNamesZero:
-      title: UnionWithReservedNamesZero
-      type: string
-      enum:
-        - type
-    UnionWithReservedNamesOne:
-      title: UnionWithReservedNamesOne
-      type: string
-      enum:
-        - value
     UnionWithReservedNames:
       title: UnionWithReservedNames
       oneOf:
-        - $ref: '#/components/schemas/UnionWithReservedNamesZero'
-        - $ref: '#/components/schemas/UnionWithReservedNamesOne'
+        - type: string
+          const: type
+        - type: string
+          const: value
         - type: string
       description: >-
         Tests that union members named 'Type' or 'Value' don't collide with

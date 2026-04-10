@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>$client-&gt;nullable-&gt;getusers($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;nullable-&gt;getUsers($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,20 @@
 <dd>
 
 ```php
-$client->nullable->getusers(
-    new NullableGetUsersRequest([]),
+$client->nullable->getUsers(
+    new GetUsersRequest([
+        'usernames' => [
+            'usernames',
+        ],
+        'avatar' => 'avatar',
+        'activated' => [
+            true,
+        ],
+        'tags' => [
+            'tags',
+        ],
+        'extra' => true,
+    ]),
 );
 ```
 </dd>
@@ -74,7 +86,7 @@ $client->nullable->getusers(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullable-&gt;createuser($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;nullable-&gt;createUser($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -87,9 +99,24 @@ $client->nullable->getusers(
 <dd>
 
 ```php
-$client->nullable->createuser(
-    new NullableCreateUserRequest([
+$client->nullable->createUser(
+    new CreateUserRequest([
         'username' => 'username',
+        'tags' => [
+            'tags',
+            'tags',
+        ],
+        'metadata' => new Metadata([
+            'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
+            'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
+            'avatar' => 'avatar',
+            'activated' => true,
+            'status' => Status::active(),
+            'values' => [
+                'values' => 'values',
+            ],
+        ]),
+        'avatar' => 'avatar',
     ]),
 );
 ```
@@ -142,7 +169,7 @@ $client->nullable->createuser(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;nullable-&gt;deleteuser($request) -> ?bool</code></summary>
+<details><summary><code>$client-&gt;nullable-&gt;deleteUser($request) -> ?bool</code></summary>
 <dl>
 <dd>
 
@@ -155,8 +182,10 @@ $client->nullable->createuser(
 <dd>
 
 ```php
-$client->nullable->deleteuser(
-    new NullableDeleteUserRequest([]),
+$client->nullable->deleteUser(
+    new DeleteUserRequest([
+        'username' => 'xy',
+    ]),
 );
 ```
 </dd>

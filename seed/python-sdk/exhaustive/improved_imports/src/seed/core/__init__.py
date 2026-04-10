@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import encode_path_param, jsonable_encoder
     from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
+    from .pagination import AsyncPager, SyncPager
     from .parse_error import ParsingError
     from .pydantic_utilities import (
         IS_PYDANTIC_V2,
@@ -33,6 +34,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncClientWrapper": ".client_wrapper",
     "AsyncHttpClient": ".http_client",
     "AsyncHttpResponse": ".http_response",
+    "AsyncPager": ".pagination",
     "BaseClientWrapper": ".client_wrapper",
     "ConsoleLogger": ".logging",
     "FieldMetadata": ".serialization",
@@ -48,6 +50,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RequestOptions": ".request_options",
     "Rfc2822DateTime": ".datetime_utils",
     "SyncClientWrapper": ".client_wrapper",
+    "SyncPager": ".pagination",
     "UniversalBaseModel": ".pydantic_utilities",
     "UniversalRootModel": ".pydantic_utilities",
     "convert_and_respect_annotation_metadata": ".serialization",
@@ -93,6 +96,7 @@ __all__ = [
     "AsyncClientWrapper",
     "AsyncHttpClient",
     "AsyncHttpResponse",
+    "AsyncPager",
     "BaseClientWrapper",
     "ConsoleLogger",
     "FieldMetadata",
@@ -108,6 +112,7 @@ __all__ = [
     "RequestOptions",
     "Rfc2822DateTime",
     "SyncClientWrapper",
+    "SyncPager",
     "UniversalBaseModel",
     "UniversalRootModel",
     "convert_and_respect_annotation_metadata",

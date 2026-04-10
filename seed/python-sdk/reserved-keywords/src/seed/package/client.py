@@ -37,9 +37,9 @@ class PackageClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedNurseryApi
 
-        client = SeedApi(
+        client = SeedNurseryApi(
             base_url="https://yourhost.com/path/to/api",
         )
         client.package.test(
@@ -82,9 +82,9 @@ class AsyncPackageClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedNurseryApi
 
-        client = AsyncSeedApi(
+        client = AsyncSeedNurseryApi(
             base_url="https://yourhost.com/path/to/api",
         )
 

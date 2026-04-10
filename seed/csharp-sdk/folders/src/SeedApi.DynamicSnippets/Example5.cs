@@ -11,7 +11,12 @@ public class Example5
             }
         );
 
-        await client.Ac.ACFooAsync();
+        await client.Folder.Service.UnknownRequestAsync(
+            new Dictionary<string, object>()
+            {
+                ["key"] = "value",
+            }
+        );
     }
 
 }

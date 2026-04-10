@@ -1,18 +1,13 @@
 package com.snippets;
 
-import com.seed.api.Best;
-import com.seed.api.types.TypesObjectWithDatetimeLikeString;
-import java.time.OffsetDateTime;
+import com.seed.exhaustive.Best;
+import java.util.UUID;
 
 public class Example52 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpointsObject()
-                .endpointsObjectGetAndReturnWithDatetimeLikeString(TypesObjectWithDatetimeLikeString.builder()
-                        .datetimeLikeString("datetimeLikeString")
-                        .actualDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .build());
+        client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"));
     }
 }

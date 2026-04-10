@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_multi_url_environment_no_default::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,12 +7,12 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = MultiUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
     client
-        .ec2
-        .bootinstance(
-            &Ec2BootInstanceRequest {
-                size: "size".to_string(),
+        .s3
+        .get_presigned_url(
+            &GetPresignedUrlRequest {
+                s3key: "s3Key".to_string(),
             },
             None,
         )

@@ -48,7 +48,7 @@ client.unknown.post
 </dl>
 </details>
 
-<details><summary><code>client.unknown.<a href="/lib/seed/unknown/client.rb">postobject</a>(request) -> Internal::Types::Array[Object]</code></summary>
+<details><summary><code>client.unknown.<a href="/lib/seed/unknown/client.rb">post_object</a>(request) -> Internal::Types::Array[Object]</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.unknown.post
 <dd>
 
 ```ruby
-client.unknown.postobject
+client.unknown.post_object
 ```
 </dd>
 </dl>
@@ -76,7 +76,7 @@ client.unknown.postobject
 <dl>
 <dd>
 
-**unknown:** `Object` 
+**request:** `Seed::Unknown::Types::MyObject` 
     
 </dd>
 </dl>

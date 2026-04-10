@@ -5,24 +5,14 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
-from .endpoints_container.client import AsyncEndpointsContainerClient, EndpointsContainerClient
-from .endpoints_content_type.client import AsyncEndpointsContentTypeClient, EndpointsContentTypeClient
-from .endpoints_enum.client import AsyncEndpointsEnumClient, EndpointsEnumClient
-from .endpoints_http_methods.client import AsyncEndpointsHttpMethodsClient, EndpointsHttpMethodsClient
-from .endpoints_object.client import AsyncEndpointsObjectClient, EndpointsObjectClient
-from .endpoints_pagination.client import AsyncEndpointsPaginationClient, EndpointsPaginationClient
-from .endpoints_params.client import AsyncEndpointsParamsClient, EndpointsParamsClient
-from .endpoints_primitive.client import AsyncEndpointsPrimitiveClient, EndpointsPrimitiveClient
-from .endpoints_put.client import AsyncEndpointsPutClient, EndpointsPutClient
-from .endpoints_union.client import AsyncEndpointsUnionClient, EndpointsUnionClient
-from .endpoints_ur_ls.client import AsyncEndpointsUrLsClient, EndpointsUrLsClient
-from .inlinedrequests.client import AsyncInlinedrequestsClient, InlinedrequestsClient
-from .noauth.client import AsyncNoauthClient, NoauthClient
-from .noreqbody.client import AsyncNoreqbodyClient, NoreqbodyClient
-from .reqwithheaders.client import AsyncReqwithheadersClient, ReqwithheadersClient
+from .endpoints.client import AsyncEndpointsClient, EndpointsClient
+from .inlined_requests.client import AsyncInlinedRequestsClient, InlinedRequestsClient
+from .no_auth.client import AsyncNoAuthClient, NoAuthClient
+from .no_req_body.client import AsyncNoReqBodyClient, NoReqBodyClient
+from .req_with_headers.client import AsyncReqWithHeadersClient, ReqWithHeadersClient
 
 
-class SeedApi:
+class SeedExhaustive:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -49,9 +39,9 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedExhaustive
 
-    client = SeedApi(
+    client = SeedExhaustive(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -83,21 +73,11 @@ class SeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self.endpoints_container = EndpointsContainerClient(client_wrapper=self._client_wrapper)
-        self.endpoints_content_type = EndpointsContentTypeClient(client_wrapper=self._client_wrapper)
-        self.endpoints_enum = EndpointsEnumClient(client_wrapper=self._client_wrapper)
-        self.endpoints_http_methods = EndpointsHttpMethodsClient(client_wrapper=self._client_wrapper)
-        self.endpoints_object = EndpointsObjectClient(client_wrapper=self._client_wrapper)
-        self.endpoints_pagination = EndpointsPaginationClient(client_wrapper=self._client_wrapper)
-        self.endpoints_params = EndpointsParamsClient(client_wrapper=self._client_wrapper)
-        self.endpoints_primitive = EndpointsPrimitiveClient(client_wrapper=self._client_wrapper)
-        self.endpoints_put = EndpointsPutClient(client_wrapper=self._client_wrapper)
-        self.endpoints_union = EndpointsUnionClient(client_wrapper=self._client_wrapper)
-        self.endpoints_ur_ls = EndpointsUrLsClient(client_wrapper=self._client_wrapper)
-        self.inlinedrequests = InlinedrequestsClient(client_wrapper=self._client_wrapper)
-        self.noauth = NoauthClient(client_wrapper=self._client_wrapper)
-        self.noreqbody = NoreqbodyClient(client_wrapper=self._client_wrapper)
-        self.reqwithheaders = ReqwithheadersClient(client_wrapper=self._client_wrapper)
+        self.endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
+        self.inlined_requests = InlinedRequestsClient(client_wrapper=self._client_wrapper)
+        self.no_auth = NoAuthClient(client_wrapper=self._client_wrapper)
+        self.no_req_body = NoReqBodyClient(client_wrapper=self._client_wrapper)
+        self.req_with_headers = ReqWithHeadersClient(client_wrapper=self._client_wrapper)
 
 
 def _make_default_async_client(
@@ -118,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedExhaustive:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -148,9 +128,9 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedExhaustive
 
-    client = AsyncSeedApi(
+    client = AsyncSeedExhaustive(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -182,18 +162,8 @@ class AsyncSeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self.endpoints_container = AsyncEndpointsContainerClient(client_wrapper=self._client_wrapper)
-        self.endpoints_content_type = AsyncEndpointsContentTypeClient(client_wrapper=self._client_wrapper)
-        self.endpoints_enum = AsyncEndpointsEnumClient(client_wrapper=self._client_wrapper)
-        self.endpoints_http_methods = AsyncEndpointsHttpMethodsClient(client_wrapper=self._client_wrapper)
-        self.endpoints_object = AsyncEndpointsObjectClient(client_wrapper=self._client_wrapper)
-        self.endpoints_pagination = AsyncEndpointsPaginationClient(client_wrapper=self._client_wrapper)
-        self.endpoints_params = AsyncEndpointsParamsClient(client_wrapper=self._client_wrapper)
-        self.endpoints_primitive = AsyncEndpointsPrimitiveClient(client_wrapper=self._client_wrapper)
-        self.endpoints_put = AsyncEndpointsPutClient(client_wrapper=self._client_wrapper)
-        self.endpoints_union = AsyncEndpointsUnionClient(client_wrapper=self._client_wrapper)
-        self.endpoints_ur_ls = AsyncEndpointsUrLsClient(client_wrapper=self._client_wrapper)
-        self.inlinedrequests = AsyncInlinedrequestsClient(client_wrapper=self._client_wrapper)
-        self.noauth = AsyncNoauthClient(client_wrapper=self._client_wrapper)
-        self.noreqbody = AsyncNoreqbodyClient(client_wrapper=self._client_wrapper)
-        self.reqwithheaders = AsyncReqwithheadersClient(client_wrapper=self._client_wrapper)
+        self.endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)
+        self.inlined_requests = AsyncInlinedRequestsClient(client_wrapper=self._client_wrapper)
+        self.no_auth = AsyncNoAuthClient(client_wrapper=self._client_wrapper)
+        self.no_req_body = AsyncNoReqBodyClient(client_wrapper=self._client_wrapper)
+        self.req_with_headers = AsyncReqWithHeadersClient(client_wrapper=self._client_wrapper)

@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Createuser(
+func (r *RawClient) CreateUser(
 	ctx context.Context,
-	request *fern.UserCreateUserRequest,
+	request *fern.CreateUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,7 +47,6 @@ func (r *RawClient) Createuser(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response *fern.User
 	raw, err := r.caller.Call(
 		ctx,

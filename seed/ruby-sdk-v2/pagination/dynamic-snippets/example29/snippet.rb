@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.users.listwithmixedtypecursorpagination(cursor: "cursor")
+client.users.list_with_global_config(offset: 1)

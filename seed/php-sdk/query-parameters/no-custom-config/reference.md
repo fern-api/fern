@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client-&gt;user-&gt;getusername($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUsername($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```php
-$client->user->getusername(
-    new UserGetUsernameRequest([
+$client->user->getUsername(
+    new GetUsersRequest([
         'limit' => 1,
-        'id' => 'id',
+        'id' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
         'date' => new DateTime('2023-01-15'),
         'deadline' => new DateTime('2024-01-15T09:30:00Z'),
-        'bytes' => 'bytes',
+        'bytes' => 'SGVsbG8gd29ybGQh',
         'user' => new User([
             'name' => 'name',
             'tags' => [
@@ -28,6 +28,13 @@ $client->user->getusername(
             ],
         ]),
         'userList' => [
+            new User([
+                'name' => 'name',
+                'tags' => [
+                    'tags',
+                    'tags',
+                ],
+            ]),
             new User([
                 'name' => 'name',
                 'tags' => [
@@ -134,7 +141,7 @@ $client->user->getusername(
 <dl>
 <dd>
 
-**$userList:** `?User` 
+**$userList:** `array` 
     
 </dd>
 </dl>
@@ -182,7 +189,7 @@ $client->user->getusername(
 <dl>
 <dd>
 
-**$excludeUser:** `?User` 
+**$excludeUser:** `User` 
     
 </dd>
 </dl>
@@ -190,7 +197,7 @@ $client->user->getusername(
 <dl>
 <dd>
 
-**$filter:** `?string` 
+**$filter:** `string` 
     
 </dd>
 </dl>

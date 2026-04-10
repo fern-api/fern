@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get</a>() -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get</a>() -> Seed::Service::Types::Foo</code></summary>
 <dl>
 <dd>
 

@@ -4,7 +4,7 @@ namespace Seed\Tests;
 
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
-use Seed\EndpointsPagination\Requests\EndpointsPaginationListItemsRequest;
+use Seed\Endpoints\Pagination\Requests\ListItemsRequest;
 
 class EndpointsPaginationWireTest extends WireMockTestCase
 {
@@ -15,21 +15,27 @@ class EndpointsPaginationWireTest extends WireMockTestCase
 
     /**
      */
-    public function testEndpointsPaginationListItems(): void {
-        $testId = 'endpoints_pagination.endpoints_pagination_list_items.0';
-        $this->client->endpointsPagination->endpointsPaginationListItems(
-            new EndpointsPaginationListItemsRequest([]),
+    public function testListItems(): void {
+        $testId = 'endpoints.pagination.list_items.0';
+        $response = $this->client->endpoints->pagination->listItems(
+            new ListItemsRequest([
+                'cursor' => 'cursor',
+                'limit' => 1,
+            ]),
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints_pagination.endpoints_pagination_list_items.0',
+                    'X-Test-Id' => 'endpoints.pagination.list_items.0',
                 ],
             ],
         );
+        foreach ($response as $item) {
+            break;
+        }
         $this->verifyRequestCount(
             $testId,
             "GET",
             "/pagination",
-            null,
+            ['cursor' => 'cursor', 'limit' => '1'],
             1
         );
     }

@@ -4,8 +4,8 @@ namespace Seed\Auth;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Auth\Requests\AuthGetTokenRequest;
-use Seed\Types\TokenResponse;
+use Seed\Auth\Requests\GetTokenRequest;
+use Seed\Auth\Types\TokenResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -50,7 +50,7 @@ class AuthClient
     }
 
     /**
-     * @param AuthGetTokenRequest $request
+     * @param GetTokenRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,14 +63,14 @@ class AuthClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function gettoken(AuthGetTokenRequest $request, ?array $options = null): ?TokenResponse
+    public function getToken(GetTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "token",
+                    path: "/token",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

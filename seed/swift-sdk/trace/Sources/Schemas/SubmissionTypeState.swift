@@ -1,30 +1,40 @@
 import Foundation
 
 public enum SubmissionTypeState: Codable, Hashable, Sendable {
-    case submissionTypeStateOne(SubmissionTypeStateOne)
-    case submissionTypeStateZero(SubmissionTypeStateZero)
+    case test(TestSubmissionState)
+    case workspace(WorkspaceSubmissionState)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(SubmissionTypeStateOne.self) {
-            self = .submissionTypeStateOne(value)
-        } else if let value = try? container.decode(SubmissionTypeStateZero.self) {
-            self = .submissionTypeStateZero(value)
-        } else {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Unexpected value."
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "test":
+            self = .test(try TestSubmissionState(from: decoder))
+        case "workspace":
+            self = .workspace(try WorkspaceSubmissionState(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.singleValueContainer()
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .submissionTypeStateOne(let value):
-            try container.encode(value)
-        case .submissionTypeStateZero(let value):
-            try container.encode(value)
+        case .test(let data):
+            try container.encode("test", forKey: .type)
+            try data.encode(to: encoder)
+        case .workspace(let data):
+            try container.encode("workspace", forKey: .type)
+            try data.encode(to: encoder)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

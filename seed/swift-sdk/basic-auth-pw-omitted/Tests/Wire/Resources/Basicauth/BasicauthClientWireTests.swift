@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import Api
+import BasicAuthPwOmitted
 
-@Suite("BasicauthClient Wire Tests") struct BasicauthClientWireTests {
-    @Test func getwithbasicauth1() async throws -> Void {
+@Suite("BasicAuthClient Wire Tests") struct BasicAuthClientWireTests {
+    @Test func getWithBasicAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -12,18 +12,18 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
-    @Test func getwithbasicauth2() async throws -> Void {
+    @Test func getWithBasicAuth2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -32,18 +32,18 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
-    @Test func postwithbasicauth1() async throws -> Void {
+    @Test func postWithBasicAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -52,14 +52,39 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.basicauth.postwithbasicauth(
+        let response = try await client.basicAuth.postWithBasicAuth(
+            request: .object([
+                "key": .string("value")
+            ]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func postWithBasicAuth2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                true
+                """.utf8
+            )
+        )
+        let client = BasicAuthPwOmittedClient(
+            baseURL: "https://api.fern.com",
+            username: "<username>",
+            password: "<password>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = true
+        let response = try await client.basicAuth.postWithBasicAuth(
             request: .object([
                 "key": .string("value")
             ]),

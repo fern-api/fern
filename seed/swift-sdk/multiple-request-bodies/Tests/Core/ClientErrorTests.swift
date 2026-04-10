@@ -20,7 +20,7 @@ import Testing
         )
 
         do {
-            _ = try await client..uploadJsonDocument(
+            _ = try await client.uploadJsonDocument(
                 request: .init(),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -54,7 +54,7 @@ import Testing
         )
 
         do {
-            _ = try await client..uploadJsonDocument(
+            _ = try await client.uploadJsonDocument(
                 request: .init(),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -88,7 +88,7 @@ import Testing
         )
 
         do {
-            _ = try await client..uploadJsonDocument(
+            _ = try await client.uploadJsonDocument(
                 request: .init(),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -124,7 +124,7 @@ import Testing
         )
 
         do {
-            _ = try await client..uploadJsonDocument(
+            _ = try await client.uploadJsonDocument(
                 request: .init(),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -158,7 +158,7 @@ import Testing
         )
 
         do {
-            _ = try await client..uploadJsonDocument(
+            _ = try await client.uploadJsonDocument(
                 request: .init(),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -194,7 +194,7 @@ import Testing
         )
 
         do {
-            _ = try await client..uploadJsonDocument(
+            _ = try await client.uploadJsonDocument(
                 request: .init(),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -228,7 +228,7 @@ import Testing
         )
 
         do {
-            _ = try await client..uploadJsonDocument(
+            _ = try await client.uploadJsonDocument(
                 request: .init(),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

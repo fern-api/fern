@@ -1,30 +1,19 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.nullableoptional.requests.UpdateUserRequest;
-import com.seed.api.types.Address;
+import com.seed.nullableOptional.SeedNullableOptionalClient;
+import com.seed.nullableOptional.resources.nullableoptional.requests.ListUsersRequest;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedNullableOptionalClient client =
+                SeedNullableOptionalClient.builder().url("https://api.fern.com").build();
 
-        client.nullableoptional()
-                .updateuser(
-                        "userId",
-                        UpdateUserRequest.builder()
-                                .username("username")
-                                .email("email")
-                                .phone("phone")
-                                .address(Address.builder()
-                                        .street("street")
-                                        .zipCode("zipCode")
-                                        .city("city")
-                                        .state("state")
-                                        .country("country")
-                                        .buildingId("buildingId")
-                                        .tenantId("tenantId")
-                                        .build())
-                                .build());
+        client.nullableOptional()
+                .listUsers(ListUsersRequest.builder()
+                        .limit(1)
+                        .offset(1)
+                        .includeDeleted(true)
+                        .sortBy("sortBy")
+                        .build());
     }
 }

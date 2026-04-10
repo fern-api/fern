@@ -14,7 +14,78 @@
 
 ```php
 $client->headers->send(
-    new HeadersSendRequest([
+    new SendEnumAsHeaderRequest([
+        'operand' => Operand::GreaterThan->value,
+        'maybeOperand' => Operand::GreaterThan->value,
+        'operandOrColor' => Color::Red->value,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$operand:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$maybeOperand:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$operandOrColor:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$maybeOperandOrColor:** `string|null` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## InlinedRequest
+<details><summary><code>$client-&gt;inlinedRequest-&gt;send($request)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->inlinedRequest->send(
+    new SendEnumInlinedRequest([
         'operand' => Operand::GreaterThan->value,
         'operandOrColor' => Color::Red->value,
     ]),
@@ -69,8 +140,8 @@ $client->headers->send(
 </dl>
 </details>
 
-## Inlinedrequest
-<details><summary><code>$client-&gt;inlinedrequest-&gt;send($request)</code></summary>
+## MultipartForm
+<details><summary><code>$client-&gt;multipartForm-&gt;multipartForm($request)</code></summary>
 <dl>
 <dd>
 
@@ -83,79 +154,7 @@ $client->headers->send(
 <dd>
 
 ```php
-$client->inlinedrequest->send(
-    new InlinedRequestSendRequest([
-        'operand' => Operand::GreaterThan->value,
-        'operandOrColor' => Color::Red->value,
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$operand:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$maybeOperand:** `?string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$operandOrColor:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$maybeOperandOrColor:** `string|null` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Multipartform
-<details><summary><code>$client-&gt;multipartform-&gt;multipartform($request)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->multipartform->multipartform(
-    new MultipartFormMultipartFormRequest([]),
-);
+$client->multipartForm->multipartForm($request);
 ```
 </dd>
 </dl>
@@ -167,8 +166,8 @@ $client->multipartform->multipartform(
 </dl>
 </details>
 
-## Pathparam
-<details><summary><code>$client-&gt;pathparam-&gt;send($operand, $operandOrColor)</code></summary>
+## PathParam
+<details><summary><code>$client-&gt;pathParam-&gt;send($operand, $operandOrColor)</code></summary>
 <dl>
 <dd>
 
@@ -181,7 +180,7 @@ $client->multipartform->multipartform(
 <dd>
 
 ```php
-$client->pathparam->send(
+$client->pathParam->send(
     Operand::GreaterThan->value,
     Color::Red->value,
 );
@@ -219,8 +218,8 @@ $client->pathparam->send(
 </dl>
 </details>
 
-## Queryparam
-<details><summary><code>$client-&gt;queryparam-&gt;send($request)</code></summary>
+## QueryParam
+<details><summary><code>$client-&gt;queryParam-&gt;send($request)</code></summary>
 <dl>
 <dd>
 
@@ -233,8 +232,8 @@ $client->pathparam->send(
 <dd>
 
 ```php
-$client->queryparam->send(
-    new QueryParamSendRequest([
+$client->queryParam->send(
+    new SendEnumAsQueryParamRequest([
         'operand' => Operand::GreaterThan->value,
         'operandOrColor' => Color::Red->value,
     ]),
@@ -289,7 +288,7 @@ $client->queryparam->send(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;queryparam-&gt;sendlist($request)</code></summary>
+<details><summary><code>$client-&gt;queryParam-&gt;sendList($request)</code></summary>
 <dl>
 <dd>
 
@@ -302,8 +301,8 @@ $client->queryparam->send(
 <dd>
 
 ```php
-$client->queryparam->sendlist(
-    new QueryParamSendListRequest([
+$client->queryParam->sendList(
+    new SendEnumListAsQueryParamRequest([
         'operand' => [
             Operand::GreaterThan->value,
         ],
@@ -332,7 +331,7 @@ $client->queryparam->sendlist(
 <dl>
 <dd>
 
-**$operand:** `?string` 
+**$operand:** `string` 
     
 </dd>
 </dl>
@@ -348,7 +347,7 @@ $client->queryparam->sendlist(
 <dl>
 <dd>
 
-**$operandOrColor:** `string|null` 
+**$operandOrColor:** `string` 
     
 </dd>
 </dl>

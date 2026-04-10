@@ -10,34 +10,34 @@ import java.lang.Boolean;
 import java.lang.Object;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncNoauthClient {
+public class AsyncNoAuthClient {
   protected final ClientOptions clientOptions;
 
-  private final AsyncRawNoauthClient rawClient;
+  private final AsyncRawNoAuthClient rawClient;
 
-  public AsyncNoauthClient(ClientOptions clientOptions) {
+  public AsyncNoAuthClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new AsyncRawNoauthClient(clientOptions);
+    this.rawClient = new AsyncRawNoAuthClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public AsyncRawNoauthClient withRawResponse() {
+  public AsyncRawNoAuthClient withRawResponse() {
     return this.rawClient;
   }
 
   /**
    * POST request with no auth
    */
-  public CompletableFuture<Boolean> postwithnoauth(Object request) {
-    return this.rawClient.postwithnoauth(request).thenApply(response -> response.body());
+  public CompletableFuture<Boolean> postWithNoAuth(Object request) {
+    return this.rawClient.postWithNoAuth(request).thenApply(response -> response.body());
   }
 
   /**
    * POST request with no auth
    */
-  public CompletableFuture<Boolean> postwithnoauth(Object request, RequestOptions requestOptions) {
-    return this.rawClient.postwithnoauth(request, requestOptions).thenApply(response -> response.body());
+  public CompletableFuture<Boolean> postWithNoAuth(Object request, RequestOptions requestOptions) {
+    return this.rawClient.postWithNoAuth(request, requestOptions).thenApply(response -> response.body());
   }
 }

@@ -5,24 +5,24 @@
             "example_identifier": null,
             "id": {
                 "path": "/users",
-                "method": "GET",
-                "identifier_override": "endpoint_user.list"
+                "method": "HEAD",
+                "identifier_override": "endpoint_user.head"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.User.ListAsync(new UserListRequest { Limit = 1 });\n"
+                "client": "using SeedHttpHead;\n\nvar client = new SeedHttpHeadClient();\nawait client.User.HeadAsync();\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
                 "path": "/users",
-                "method": "HEAD",
-                "identifier_override": "endpoint_user.head"
+                "method": "GET",
+                "identifier_override": "endpoint_user.list"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.User.HeadAsync();\n"
+                "client": "using SeedHttpHead;\n\nvar client = new SeedHttpHeadClient();\nawait client.User.ListAsync(new ListUsersRequest { Limit = 1 });\n"
             }
         }
     ]

@@ -1,18 +1,18 @@
-//! # unions SDK
+//! # Unions SDK
 //!
-//! The official Rust SDK for the unions.
+//! The official Rust SDK for the Unions.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_unions::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = UnionsClient::new(config).expect("Failed to build client");
 //!     client.bigunion.get(&"id".to_string(), None).await;
 //! }
 //! ```

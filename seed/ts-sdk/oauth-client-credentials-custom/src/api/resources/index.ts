@@ -1,5 +1,6 @@
 export * from "./auth/client/requests/index.js";
 export * as auth from "./auth/index.js";
-export * as nestedApi from "./nestedApi/index.js";
-export * as nestedNoAuthApi from "./nestedNoAuthApi/index.js";
+export * from "./auth/types/index.js";
+export * as nested from "./nested/index.js";
+export * as nestedNoAuth from "./nestedNoAuth/index.js";
 export * as simple from "./simple/index.js";

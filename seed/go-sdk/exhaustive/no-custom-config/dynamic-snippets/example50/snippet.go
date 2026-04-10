@@ -17,14 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.TypesObjectWithRequiredNestedObject{
-        RequiredString: "requiredString",
-        RequiredObject: &fern.TypesNestedObjectWithRequiredField{
-            FieldString: "string",
-            NestedObject: &fern.TypesObjectWithOptionalField{},
-        },
-    }
-    client.EndpointsObject.EndpointsObjectGetAndReturnWithRequiredNestedObject(
+    request := fern.MustParseDateTime(
+        "2024-01-15T09:30:00Z",
+    )
+    client.Endpoints.Primitive.GetAndReturnDatetime(
         context.TODO(),
         request,
     )

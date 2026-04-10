@@ -11,21 +11,21 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Auth::Types::AuthGetTokenRequest]
+      # @param params [Seed::Auth::Types::GetTokenRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Types::TokenResponse]
-      def gettoken(request_options: {}, **params)
+      # @return [Seed::Auth::Types::TokenResponse]
+      def get_token(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "token",
-          body: Seed::Auth::Types::AuthGetTokenRequest.new(params).to_h,
+          path: "/token",
+          body: Seed::Auth::Types::GetTokenRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -35,7 +35,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::TokenResponse.load(response.body)
+          Seed::Auth::Types::TokenResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

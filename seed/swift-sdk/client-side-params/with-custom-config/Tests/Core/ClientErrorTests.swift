@@ -20,12 +20,14 @@ import Testing
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -58,12 +60,14 @@ import Testing
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -96,12 +100,14 @@ import Testing
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -136,12 +142,14 @@ import Testing
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -174,12 +182,14 @@ import Testing
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -214,12 +224,14 @@ import Testing
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -252,12 +264,14 @@ import Testing
         )
 
         do {
-            _ = try await client.service.listresources(
+            _ = try await client.service.listResources(
                 page: 1,
                 perPage: 1,
-                sort: "sort",
-                order: "order",
+                sort: "created_at",
+                order: "desc",
                 includeTotals: true,
+                fields: "fields",
+                search: "search",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

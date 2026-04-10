@@ -6,50 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .a import A
-    from .container_value import ContainerValue, ContainerValue_List, ContainerValue_Optional
-    from .container_value_list import ContainerValueList
-    from .container_value_optional import ContainerValueOptional
-    from .field_value import FieldValue
-    from .field_value_one import FieldValueOne
-    from .field_value_one_type import FieldValueOneType
-    from .field_value_two import FieldValueTwo
-    from .field_value_two_type import FieldValueTwoType
-    from .field_value_zero import FieldValueZero
-    from .field_value_zero_type import FieldValueZeroType
     from .importing_a import ImportingA
-    from .json_like import JsonLike
-    from .json_like_with_null_and_undefined import JsonLikeWithNullAndUndefined
-    from .object_value import ObjectValue
-    from .primitive_value import PrimitiveValue
     from .root_type import RootType
-    from .t import T
-    from .tor_u import TorU
-    from .u import U
-_dynamic_imports: typing.Dict[str, str] = {
-    "A": ".a",
-    "ContainerValue": ".container_value",
-    "ContainerValueList": ".container_value_list",
-    "ContainerValueOptional": ".container_value_optional",
-    "ContainerValue_List": ".container_value",
-    "ContainerValue_Optional": ".container_value",
-    "FieldValue": ".field_value",
-    "FieldValueOne": ".field_value_one",
-    "FieldValueOneType": ".field_value_one_type",
-    "FieldValueTwo": ".field_value_two",
-    "FieldValueTwoType": ".field_value_two_type",
-    "FieldValueZero": ".field_value_zero",
-    "FieldValueZeroType": ".field_value_zero_type",
-    "ImportingA": ".importing_a",
-    "JsonLike": ".json_like",
-    "JsonLikeWithNullAndUndefined": ".json_like_with_null_and_undefined",
-    "ObjectValue": ".object_value",
-    "PrimitiveValue": ".primitive_value",
-    "RootType": ".root_type",
-    "T": ".t",
-    "TorU": ".tor_u",
-    "U": ".u",
-}
+_dynamic_imports: typing.Dict[str, str] = {"ImportingA": ".importing_a", "RootType": ".root_type"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -73,27 +32,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "A",
-    "ContainerValue",
-    "ContainerValueList",
-    "ContainerValueOptional",
-    "ContainerValue_List",
-    "ContainerValue_Optional",
-    "FieldValue",
-    "FieldValueOne",
-    "FieldValueOneType",
-    "FieldValueTwo",
-    "FieldValueTwoType",
-    "FieldValueZero",
-    "FieldValueZeroType",
-    "ImportingA",
-    "JsonLike",
-    "JsonLikeWithNullAndUndefined",
-    "ObjectValue",
-    "PrimitiveValue",
-    "RootType",
-    "T",
-    "TorU",
-    "U",
-]
+__all__ = ["ImportingA", "RootType"]

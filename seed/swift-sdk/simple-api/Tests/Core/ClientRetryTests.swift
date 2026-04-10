@@ -1,4 +1,4 @@
-import Api
+import SimpleApi
 import Foundation
 import Testing
 
@@ -14,7 +14,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -42,7 +42,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -70,7 +70,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -97,7 +97,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -123,7 +123,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -150,7 +150,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -177,7 +177,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -208,7 +208,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -250,7 +250,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -288,7 +288,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -338,7 +338,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -361,7 +361,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -388,7 +388,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = SimpleApiClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession

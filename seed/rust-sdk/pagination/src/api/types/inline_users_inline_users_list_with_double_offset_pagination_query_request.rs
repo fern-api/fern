@@ -1,16 +1,20 @@
 pub use crate::prelude::*;
 
-/// Query parameters for inlineUsers_inlineUsers_listWithDoubleOffsetPagination
+/// Query parameters for listWithDoubleOffsetPagination
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 pub struct InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest {
     /// Defaults to first page
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
     pub page: Option<f64>,
     /// Defaults to per page
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::number_serializers::option")]
     pub per_page: Option<f64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub order: Option<InlineUsersOrder>,
+    pub order: Option<Order>,
     /// The cursor used for pagination in order to fetch
     /// the next page of results.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,7 +32,7 @@ impl InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest {
 pub struct InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequestBuilder {
     page: Option<f64>,
     per_page: Option<f64>,
-    order: Option<InlineUsersOrder>,
+    order: Option<Order>,
     starting_after: Option<String>,
 }
 
@@ -43,7 +47,7 @@ impl InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequestBuilder {
         self
     }
 
-    pub fn order(mut self, value: InlineUsersOrder) -> Self {
+    pub fn order(mut self, value: Order) -> Self {
         self.order = Some(value);
         self
     }
@@ -54,13 +58,16 @@ impl InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequestBuilder {
     }
 
     /// Consumes the builder and constructs a [`InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest`].
-    pub fn build(self) -> Result<InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest, BuildError> {
-        Ok(InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest {
-            page: self.page,
-            per_page: self.per_page,
-            order: self.order,
-            starting_after: self.starting_after,
-        })
+    pub fn build(
+        self,
+    ) -> Result<InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest, BuildError> {
+        Ok(
+            InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest {
+                page: self.page,
+                per_page: self.per_page,
+                order: self.order,
+                starting_after: self.starting_after,
+            },
+        )
     }
 }
-

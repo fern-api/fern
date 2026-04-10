@@ -1,0 +1,630 @@
+using global::System.Text.Json;
+using SeedExamples.Core;
+
+namespace SeedExamples;
+
+public partial class ServiceClient : IServiceClient
+{
+    private readonly RawClient _client;
+
+    internal ServiceClient(RawClient client)
+    {
+        _client = client;
+    }
+
+    private async Task<WithRawResponse<Movie>> GetMovieAsyncCore(
+        string movieId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Get,
+                    Path = string.Format("/movie/{0}", ValueConvert.ToPathParameterString(movieId)),
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<Movie>(responseBody)!;
+                return new WithRawResponse<Movie>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<WithRawResponse<string>> CreateMovieAsyncCore(
+        Movie request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/movie",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<string>(responseBody)!;
+                return new WithRawResponse<string>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<WithRawResponse<Metadata>> GetMetadataAsyncCore(
+        GetMetadataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _queryString = new SeedExamples.Core.QueryStringBuilder.Builder(capacity: 2)
+            .Add("shallow", request.Shallow)
+            .Add("tag", request.Tag)
+            .MergeAdditional(options?.AdditionalQueryParameters)
+            .Build();
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add("X-API-Version", request.XApiVersion)
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Get,
+                    Path = "/metadata",
+                    QueryString = _queryString,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<Metadata>(responseBody)!;
+                return new WithRawResponse<Metadata>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<WithRawResponse<Response>> CreateBigEntityAsyncCore(
+        BigEntity request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/big-entity",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<Response>(responseBody)!;
+                return new WithRawResponse<Response>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExamplesApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <example><code>
+    /// await client.Service.GetMovieAsync("movie-c06a4ad7");
+    /// </code></example>
+    public WithRawResponseTask<Movie> GetMovieAsync(
+        string movieId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Movie>(
+            GetMovieAsyncCore(movieId, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Service.CreateMovieAsync(
+    ///     new Movie
+    ///     {
+    ///         Id = "movie-c06a4ad7",
+    ///         Prequel = "movie-cv9b914f",
+    ///         Title = "The Boy and the Heron",
+    ///         From = "Hayao Miyazaki",
+    ///         Rating = 8,
+    ///         Type = "movie",
+    ///         Tag = "tag-wf9as23d",
+    ///         Metadata = new Dictionary&lt;string, object?&gt;()
+    ///         {
+    ///             {
+    ///                 "actors",
+    ///                 new List&lt;object?&gt;() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
+    ///             },
+    ///             { "releaseDate", "2023-12-08" },
+    ///             {
+    ///                 "ratings",
+    ///                 new Dictionary&lt;object, object?&gt;() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
+    ///             },
+    ///         },
+    ///         Revenue = 1000000,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<string> CreateMovieAsync(
+        Movie request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<string>(
+            CreateMovieAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Service.GetMetadataAsync(
+    ///     new GetMetadataRequest
+    ///     {
+    ///         Shallow = false,
+    ///         Tag = ["development"],
+    ///         XApiVersion = "0.0.1",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Metadata> GetMetadataAsync(
+        GetMetadataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Metadata>(
+            GetMetadataAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Service.CreateBigEntityAsync(
+    ///     new BigEntity
+    ///     {
+    ///         CastMember = new Actor { Name = "name", Id = "id" },
+    ///         ExtendedMovie = new ExtendedMovie
+    ///         {
+    ///             Cast = new List&lt;string&gt;() { "cast", "cast" },
+    ///             Id = "id",
+    ///             Prequel = "prequel",
+    ///             Title = "title",
+    ///             From = "from",
+    ///             Rating = 1.1,
+    ///             Type = "movie",
+    ///             Tag = "tag",
+    ///             Book = "book",
+    ///             Metadata = new Dictionary&lt;string, object?&gt;()
+    ///             {
+    ///                 {
+    ///                     "metadata",
+    ///                     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+    ///                 },
+    ///             },
+    ///             Revenue = 1000000,
+    ///         },
+    ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
+    ///         Metadata = new SeedExamples.Metadata(new SeedExamples.Metadata.Html("metadata")),
+    ///         CommonMetadata = new SeedExamples.Commons.Metadata
+    ///         {
+    ///             Id = "id",
+    ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
+    ///             JsonString = "jsonString",
+    ///         },
+    ///         EventInfo = new EventInfo(
+    ///             new SeedExamples.Commons.EventInfo.Metadata(
+    ///                 new SeedExamples.Commons.Metadata
+    ///                 {
+    ///                     Id = "id",
+    ///                     Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
+    ///                     JsonString = "jsonString",
+    ///                 }
+    ///             )
+    ///         ),
+    ///         Data = new Data(new Data.String("data")),
+    ///         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
+    ///         Exception = new SeedExamples.Exception(
+    ///             new SeedExamples.Exception.Generic(
+    ///                 new ExceptionInfo
+    ///                 {
+    ///                     ExceptionType = "exceptionType",
+    ///                     ExceptionMessage = "exceptionMessage",
+    ///                     ExceptionStacktrace = "exceptionStacktrace",
+    ///                 }
+    ///             )
+    ///         ),
+    ///         Test = new Test(new Test.And(true)),
+    ///         Node = new Node
+    ///         {
+    ///             Name = "name",
+    ///             Nodes = new List&lt;Node&gt;()
+    ///             {
+    ///                 new Node
+    ///                 {
+    ///                     Name = "name",
+    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     {
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = null,
+    ///                             Trees = null,
+    ///                         },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = null,
+    ///                             Trees = null,
+    ///                         },
+    ///                     },
+    ///                     Trees = new List&lt;Tree&gt;()
+    ///                     {
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                     },
+    ///                 },
+    ///                 new Node
+    ///                 {
+    ///                     Name = "name",
+    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     {
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = null,
+    ///                             Trees = null,
+    ///                         },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = null,
+    ///                             Trees = null,
+    ///                         },
+    ///                     },
+    ///                     Trees = new List&lt;Tree&gt;()
+    ///                     {
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                         new Tree { Nodes = new List&lt;Node&gt;() { } },
+    ///                     },
+    ///                 },
+    ///             },
+    ///             Trees = new List&lt;Tree&gt;()
+    ///             {
+    ///                 new Tree
+    ///                 {
+    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     {
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///                 new Tree
+    ///                 {
+    ///                     Nodes = new List&lt;Node&gt;()
+    ///                     {
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                         new Node
+    ///                         {
+    ///                             Name = "name",
+    ///                             Nodes = new List&lt;Node&gt;() { },
+    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                         },
+    ///                     },
+    ///                 },
+    ///             },
+    ///         },
+    ///         Directory = new SeedExamples.Directory
+    ///         {
+    ///             Name = "name",
+    ///             Files = new List&lt;SeedExamples.File&gt;()
+    ///             {
+    ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///             },
+    ///             Directories = new List&lt;SeedExamples.Directory&gt;()
+    ///             {
+    ///                 new SeedExamples.Directory
+    ///                 {
+    ///                     Name = "name",
+    ///                     Files = new List&lt;SeedExamples.File&gt;()
+    ///                     {
+    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                     },
+    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
+    ///                     {
+    ///                         new SeedExamples.Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = null,
+    ///                             Directories = null,
+    ///                         },
+    ///                         new SeedExamples.Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = null,
+    ///                             Directories = null,
+    ///                         },
+    ///                     },
+    ///                 },
+    ///                 new SeedExamples.Directory
+    ///                 {
+    ///                     Name = "name",
+    ///                     Files = new List&lt;SeedExamples.File&gt;()
+    ///                     {
+    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                     },
+    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
+    ///                     {
+    ///                         new SeedExamples.Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = null,
+    ///                             Directories = null,
+    ///                         },
+    ///                         new SeedExamples.Directory
+    ///                         {
+    ///                             Name = "name",
+    ///                             Files = null,
+    ///                             Directories = null,
+    ///                         },
+    ///                     },
+    ///                 },
+    ///             },
+    ///         },
+    ///         Moment = new Moment
+    ///         {
+    ///             Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             Date = new DateOnly(2023, 1, 15),
+    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<Response> CreateBigEntityAsync(
+        BigEntity request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Response>(
+            CreateBigEntityAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Service.RefreshTokenAsync(null);
+    /// </code></example>
+    public async Task RefreshTokenAsync(
+        RefreshTokenRequest? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExamples.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/refresh-token",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExamplesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+}

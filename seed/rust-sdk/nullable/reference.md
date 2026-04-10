@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">getusers</a>(avatar: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, extra: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;) -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">get_users</a>(avatar: Option&lt;Option&lt;String&gt;&gt;, extra: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;) -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,23 +13,23 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableClient::new(config).expect("Failed to build client");
     client
         .nullable
-        .getusers(
-            &GetusersQueryRequest {
-                usernames: vec![],
-                avatar: None,
-                activated: vec![],
-                tags: vec![],
-                extra: None,
+        .get_users(
+            &GetUsersQueryRequest {
+                usernames: vec![Some("usernames".to_string())],
+                avatar: Some("avatar".to_string()),
+                activated: vec![Some(true)],
+                tags: vec![Some("tags".to_string())],
+                extra: Some(true),
             },
             None,
         )
@@ -49,7 +49,7 @@ async fn main() {
 <dl>
 <dd>
 
-**usernames:** `Option<Option<String>>` 
+**usernames:** `Option<String>` 
     
 </dd>
 </dl>
@@ -57,7 +57,7 @@ async fn main() {
 <dl>
 <dd>
 
-**avatar:** `Option<Option<String>>` 
+**avatar:** `Option<String>` 
     
 </dd>
 </dl>
@@ -65,7 +65,7 @@ async fn main() {
 <dl>
 <dd>
 
-**activated:** `Option<Option<bool>>` 
+**activated:** `Option<bool>` 
     
 </dd>
 </dl>
@@ -93,7 +93,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">createuser</a>(request: NullableCreateUserRequest) -> Result&lt;User, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">create_user</a>(request: CreateUserRequest) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -106,22 +106,32 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableClient::new(config).expect("Failed to build client");
     client
         .nullable
-        .createuser(
-            &NullableCreateUserRequest {
+        .create_user(
+            &CreateUserRequest {
                 username: "username".to_string(),
-                tags: None,
-                metadata: None,
-                avatar: None,
+                tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                metadata: Some(Metadata {
+                    created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                    updated_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                    avatar: Some("avatar".to_string()),
+                    activated: Some(true),
+                    status: Status::Active,
+                    values: Some(HashMap::from([(
+                        "values".to_string(),
+                        Some("values".to_string()),
+                    )])),
+                }),
+                avatar: Some("avatar".to_string()),
             },
             None,
         )
@@ -149,7 +159,7 @@ async fn main() {
 <dl>
 <dd>
 
-**tags:** `Option<Option<Vec<String>>>` 
+**tags:** `Option<Vec<String>>` 
     
 </dd>
 </dl>
@@ -177,7 +187,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">deleteuser</a>(request: NullableDeleteUserRequest) -> Result&lt;bool, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">delete_user</a>(request: DeleteUserRequest) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -190,18 +200,19 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableClient::new(config).expect("Failed to build client");
     client
         .nullable
-        .deleteuser(
-            &NullableDeleteUserRequest {
+        .delete_user(
+            &DeleteUserRequest {
+                username: Some("xy".to_string()),
                 ..Default::default()
             },
             None,

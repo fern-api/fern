@@ -65,7 +65,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "snippet",
+                    path: "/snippet",
                     method: HttpMethod::POST,
                 ),
                 $options,
@@ -97,7 +97,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function downloadfile(?array $options = null): string
+    public function downloadFile(?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         try {

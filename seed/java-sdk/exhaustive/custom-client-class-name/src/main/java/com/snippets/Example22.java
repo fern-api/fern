@@ -1,15 +1,22 @@
 package com.snippets;
 
-import com.seed.api.Best;
-import com.seed.api.resources.endpointshttpmethods.requests.EndpointsHttpMethodsTestGetRequest;
+import com.seed.exhaustive.Best;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;
+import java.util.HashMap;
 
 public class Example22 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpointsHttpMethods()
-                .endpointsHttpMethodsTestGet(
-                        EndpointsHttpMethodsTestGetRequest.builder().id("id").build());
+        client.endpoints()
+                .object()
+                .getAndReturnWithUnknownField(ObjectWithUnknownField.builder()
+                        .unknown(new HashMap<String, Object>() {
+                            {
+                                put("$ref", "https://example.com/schema");
+                            }
+                        })
+                        .build());
     }
 }

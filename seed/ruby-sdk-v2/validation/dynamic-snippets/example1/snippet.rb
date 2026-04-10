@@ -2,9 +2,8 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client..create(
-  decimal: 1.1,
-  even: 1,
-  name: "name",
-  shape: "SQUARE"
+client.get(
+  decimal: 2.2,
+  even: 100,
+  name: "fern"
 )

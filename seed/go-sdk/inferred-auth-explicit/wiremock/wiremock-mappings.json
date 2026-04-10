@@ -1,8 +1,8 @@
 {
   "mappings": [
     {
-      "id": "14e17595-b72a-4266-8d3d-f6beb8f70d7a",
-      "name": "gettokenwithclientcredentials - default",
+      "id": "f559340c-badf-4147-a5e3-753e957b6d3c",
+      "name": "getTokenWithClientCredentials - default",
       "request": {
         "urlPathTemplate": "/token",
         "method": "POST"
@@ -14,7 +14,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "14e17595-b72a-4266-8d3d-f6beb8f70d7a",
+      "uuid": "f559340c-badf-4147-a5e3-753e957b6d3c",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -27,8 +27,8 @@
       }
     },
     {
-      "id": "341f26ad-d78d-4acb-b0b4-80d9ee77a905",
-      "name": "refreshtoken - default",
+      "id": "f9c99fe3-6745-4170-96e3-47d0f3df0476",
+      "name": "refreshToken - default",
       "request": {
         "urlPathTemplate": "/token/refresh",
         "method": "POST"
@@ -40,7 +40,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "341f26ad-d78d-4acb-b0b4-80d9ee77a905",
+      "uuid": "f9c99fe3-6745-4170-96e3-47d0f3df0476",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -53,8 +53,8 @@
       }
     },
     {
-      "id": "afe65e22-e042-4f84-a2b6-020b80e6fee4",
-      "name": "nestedNoAuth_api_getSomething - default",
+      "id": "741b2725-af64-481d-93e7-f94c045bd88e",
+      "name": "getSomething - default",
       "request": {
         "urlPathTemplate": "/nested-no-auth/get-something",
         "method": "GET"
@@ -66,7 +66,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "afe65e22-e042-4f84-a2b6-020b80e6fee4",
+      "uuid": "741b2725-af64-481d-93e7-f94c045bd88e",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -80,8 +80,8 @@
       "postServeActions": []
     },
     {
-      "id": "46003d0d-e77c-4019-bb17-5e89b4bc3c9f",
-      "name": "nested_api_getSomething - default",
+      "id": "a5c25db6-caf3-403e-abf1-82391213dd64",
+      "name": "getSomething - default",
       "request": {
         "urlPathTemplate": "/nested/get-something",
         "method": "GET"
@@ -93,7 +93,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "46003d0d-e77c-4019-bb17-5e89b4bc3c9f",
+      "uuid": "a5c25db6-caf3-403e-abf1-82391213dd64",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -107,8 +107,8 @@
       "postServeActions": []
     },
     {
-      "id": "42968258-7723-48e7-a7dd-5a875011016c",
-      "name": "getsomething - default",
+      "id": "48bcf2a9-f263-4bb1-abc6-528079e16f35",
+      "name": "getSomething - default",
       "request": {
         "urlPathTemplate": "/get-something",
         "method": "GET"
@@ -120,7 +120,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "42968258-7723-48e7-a7dd-5a875011016c",
+      "uuid": "48bcf2a9-f263-4bb1-abc6-528079e16f35",
       "persistent": true,
       "priority": 3,
       "metadata": {

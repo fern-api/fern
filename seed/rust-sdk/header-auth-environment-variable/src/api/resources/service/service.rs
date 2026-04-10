@@ -21,7 +21,7 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn getwithbearertoken(
+    pub async fn get_with_bearer_token(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {

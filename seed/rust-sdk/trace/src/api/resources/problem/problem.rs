@@ -22,7 +22,7 @@ impl ProblemClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn createproblem(
+    pub async fn create_problem(
         &self,
         request: &CreateProblemRequest,
         options: Option<RequestOptions>,
@@ -30,7 +30,7 @@ impl ProblemClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "problem-crud/create",
+                "/problem-crud/create",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -47,7 +47,7 @@ impl ProblemClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn updateproblem(
+    pub async fn update_problem(
         &self,
         problem_id: &ProblemId,
         request: &CreateProblemRequest,
@@ -56,7 +56,7 @@ impl ProblemClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                &format!("problem-crud/update/{}", problem_id.0),
+                &format!("/problem-crud/update/{}", problem_id.0),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -73,7 +73,7 @@ impl ProblemClient {
     /// # Returns
     ///
     /// Empty response
-    pub async fn deleteproblem(
+    pub async fn delete_problem(
         &self,
         problem_id: &ProblemId,
         options: Option<RequestOptions>,
@@ -81,7 +81,7 @@ impl ProblemClient {
         self.http_client
             .execute_request(
                 Method::DELETE,
-                &format!("problem-crud/delete/{}", problem_id.0),
+                &format!("/problem-crud/delete/{}", problem_id.0),
                 None,
                 None,
                 options,
@@ -98,15 +98,15 @@ impl ProblemClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn getdefaultstarterfiles(
+    pub async fn get_default_starter_files(
         &self,
-        request: &ProblemGetDefaultStarterFilesRequest,
+        request: &GetDefaultStarterFilesRequest,
         options: Option<RequestOptions>,
     ) -> Result<GetDefaultStarterFilesResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "problem-crud/default-starter-files",
+                "/problem-crud/default-starter-files",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

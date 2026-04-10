@@ -21,8 +21,8 @@ import Testing
         )
 
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -52,8 +52,8 @@ import Testing
         )
 
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -83,8 +83,8 @@ import Testing
         )
 
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -113,8 +113,8 @@ import Testing
         )
 
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -142,8 +142,8 @@ import Testing
         )
 
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -172,8 +172,8 @@ import Testing
         )
 
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -202,8 +202,8 @@ import Testing
         )
 
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -237,8 +237,8 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -282,8 +282,8 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -323,8 +323,8 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -375,8 +375,8 @@ import Testing
         )
 
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -401,8 +401,8 @@ import Testing
         )
 
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),
@@ -431,8 +431,8 @@ import Testing
         )
 
         do {
-            _ = try await client.imdb.createmovie(
-                request: .init(
+            _ = try await client.imdb.createMovie(
+                request: CreateMovieRequest(
                     title: "title",
                     rating: 1.1
                 ),

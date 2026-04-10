@@ -1,30 +1,26 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.admin.requests.AdminSendTestSubmissionUpdateRequest;
-import com.seed.api.types.TestSubmissionUpdate;
-import com.seed.api.types.TestSubmissionUpdateInfo;
-import com.seed.api.types.TestSubmissionUpdateInfoZero;
-import com.seed.api.types.TestSubmissionUpdateInfoZeroType;
+import com.seed.trace.SeedTraceClient;
+import com.seed.trace.resources.submission.types.RunningSubmissionState;
+import com.seed.trace.resources.submission.types.WorkspaceSubmissionUpdate;
+import com.seed.trace.resources.submission.types.WorkspaceSubmissionUpdateInfo;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedTraceClient client = SeedTraceClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.admin()
-                .sendtestsubmissionupdate(
-                        "submissionId",
-                        AdminSendTestSubmissionUpdateRequest.builder()
-                                .body(TestSubmissionUpdate.builder()
-                                        .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                                        .updateInfo(TestSubmissionUpdateInfo.of(TestSubmissionUpdateInfoZero.builder()
-                                                .type(TestSubmissionUpdateInfoZeroType.RUNNING)
-                                                .build()))
-                                        .build())
+                .sendWorkspaceSubmissionUpdate(
+                        UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                        WorkspaceSubmissionUpdate.builder()
+                                .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                                .updateInfo(WorkspaceSubmissionUpdateInfo.running(
+                                        RunningSubmissionState.QUEUEING_SUBMISSION))
                                 .build());
     }
 }

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-/// Query parameters for inlineUsers_inlineUsers_listWithOffsetPagination
+/// Query parameters for listWithOffsetPagination
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct InlineUsersInlineUsersListWithOffsetPaginationQueryRequest {
     /// Defaults to first page
@@ -10,7 +10,7 @@ pub struct InlineUsersInlineUsersListWithOffsetPaginationQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub per_page: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub order: Option<InlineUsersOrder>,
+    pub order: Option<Order>,
     /// The cursor used for pagination in order to fetch
     /// the next page of results.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,7 +28,7 @@ impl InlineUsersInlineUsersListWithOffsetPaginationQueryRequest {
 pub struct InlineUsersInlineUsersListWithOffsetPaginationQueryRequestBuilder {
     page: Option<i64>,
     per_page: Option<i64>,
-    order: Option<InlineUsersOrder>,
+    order: Option<Order>,
     starting_after: Option<String>,
 }
 
@@ -43,7 +43,7 @@ impl InlineUsersInlineUsersListWithOffsetPaginationQueryRequestBuilder {
         self
     }
 
-    pub fn order(mut self, value: InlineUsersOrder) -> Self {
+    pub fn order(mut self, value: Order) -> Self {
         self.order = Some(value);
         self
     }
@@ -54,7 +54,9 @@ impl InlineUsersInlineUsersListWithOffsetPaginationQueryRequestBuilder {
     }
 
     /// Consumes the builder and constructs a [`InlineUsersInlineUsersListWithOffsetPaginationQueryRequest`].
-    pub fn build(self) -> Result<InlineUsersInlineUsersListWithOffsetPaginationQueryRequest, BuildError> {
+    pub fn build(
+        self,
+    ) -> Result<InlineUsersInlineUsersListWithOffsetPaginationQueryRequest, BuildError> {
         Ok(InlineUsersInlineUsersListWithOffsetPaginationQueryRequest {
             page: self.page,
             per_page: self.per_page,
@@ -63,4 +65,3 @@ impl InlineUsersInlineUsersListWithOffsetPaginationQueryRequestBuilder {
         })
     }
 }
-

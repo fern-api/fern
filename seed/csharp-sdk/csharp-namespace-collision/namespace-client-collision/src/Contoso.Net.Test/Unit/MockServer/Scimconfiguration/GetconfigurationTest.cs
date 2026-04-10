@@ -2,14 +2,14 @@ using global::Contoso.Net.Test.Unit.MockServer;
 using global::Contoso.Net.Test.Utils;
 using NUnit.Framework;
 
-namespace Contoso.Net.Test.Unit.MockServer.Scimconfiguration;
+namespace Contoso.Net.Test.Unit.MockServer.ScimConfiguration;
 
 [TestFixture]
 [Parallelizable(ParallelScope.Self)]
-public class GetconfigurationTest : BaseMockServerTest
+public class GetConfigurationTest : BaseMockServerTest
 {
     [global::NUnit.Framework.Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_1()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
@@ -31,34 +31,7 @@ public class GetconfigurationTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Scimconfiguration.GetconfigurationAsync();
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [global::NUnit.Framework.Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_2()
-    {
-        const string mockResponse = """
-            {
-              "connectionId": "connectionId",
-              "connectionName": "connectionName",
-              "strategy": "strategy",
-              "tenant": "tenant"
-            }
-            """;
-
-        Server
-            .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("/scim-configuration").UsingGet()
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
-
-        var response = await Client.Scimconfiguration.GetconfigurationAsync();
+        var response = await Client.ScimConfiguration.GetConfigurationAsync();
         JsonAssert.AreEqual(response, mockResponse);
     }
 }

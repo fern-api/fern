@@ -13,7 +13,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
-  - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
   - [Retries](#retries)
@@ -40,12 +39,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/alias-extends";
+import { SeedAliasExtendsClient } from "@fern/alias-extends";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client..extendedInlineRequestBody({
-    parent: "parent",
-    child: "child"
+const client = new SeedAliasExtendsClient({ environment: "YOUR_BASE_URL" });
+await client.extendedInlineRequestBody({
+    child: "child",
+    parent: "parent"
 });
 ```
 
@@ -55,9 +54,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedApi } from "@fern/alias-extends";
+import { SeedAliasExtends } from "@fern/alias-extends";
 
-const request: SeedApi.ExtendedInlineRequestBodyRequest = {
+const request: SeedAliasExtends.InlinedChildRequest = {
     ...
 };
 ```
@@ -68,12 +67,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/alias-extends";
+import { SeedAliasExtendsError } from "@fern/alias-extends";
 
 try {
-    await client..extendedInlineRequestBody(...);
+    await client.extendedInlineRequestBody(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedAliasExtendsError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -84,31 +83,21 @@ try {
 
 ## Advanced
 
-### Subpackage Exports
-
-This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
-
-```typescript
-import { Client } from '@fern/alias-extends/';
-
-const client = new Client({...});
-```
-
 ### Additional Headers
 
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/alias-extends";
+import { SeedAliasExtendsClient } from "@fern/alias-extends";
 
-const client = new SeedApiClient({
+const client = new SeedAliasExtendsClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client..extendedInlineRequestBody(..., {
+const response = await client.extendedInlineRequestBody(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -120,7 +109,7 @@ const response = await client..extendedInlineRequestBody(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client..extendedInlineRequestBody(..., {
+const response = await client.extendedInlineRequestBody(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -142,7 +131,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client..extendedInlineRequestBody(..., {
+const response = await client.extendedInlineRequestBody(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -152,7 +141,7 @@ const response = await client..extendedInlineRequestBody(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client..extendedInlineRequestBody(..., {
+const response = await client.extendedInlineRequestBody(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -163,7 +152,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client..extendedInlineRequestBody(..., {
+const response = await client.extendedInlineRequestBody(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -175,7 +164,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client..extendedInlineRequestBody(...).withRawResponse();
+const { data, rawResponse } = await client.extendedInlineRequestBody(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -186,9 +175,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/alias-extends";
+import { SeedAliasExtendsClient, logging } from "@fern/alias-extends";
 
-const client = new SeedApiClient({
+const client = new SeedAliasExtendsClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

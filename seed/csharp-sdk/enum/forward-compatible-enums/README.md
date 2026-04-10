@@ -40,11 +40,17 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedEnum;
 
-var client = new SeedApiClient();
+var client = new SeedEnumClient();
 await client.Headers.SendAsync(
-    new HeadersSendRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+    new SendEnumAsHeaderRequest
+    {
+        Operand = Operand.GreaterThan,
+        MaybeOperand = Operand.GreaterThan,
+        OperandOrColor = Color.Red,
+        MaybeOperandOrColor = null,
+    }
 );
 ```
 
@@ -54,11 +60,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedEnum;
 
 try {
     var response = await client.Headers.SendAsync(...);
-} catch (SeedApiApiException e) {
+} catch (SeedEnumApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -107,7 +113,7 @@ var response = await client.Headers.SendAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedEnum;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Headers.SendAsync(...).WithRawResponse();
@@ -167,7 +173,7 @@ var response = await client.Headers.SendAsync(
 This SDK uses forward-compatible enums that can handle unknown values gracefully.
 
 ```csharp
-using SeedApi;
+using SeedEnum;
 
 // Using a built-in value
 var operand = Operand.GreaterThan;

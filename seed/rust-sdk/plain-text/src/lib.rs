@@ -1,19 +1,19 @@
-//! # plain-text SDK
+//! # PlainText SDK
 //!
-//! The official Rust SDK for the plain-text.
+//! The official Rust SDK for the PlainText.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_plain_text::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client.service.gettext(None).await;
+//!     let client = PlainTextClient::new(config).expect("Failed to build client");
+//!     client.service.get_text(None).await;
 //! }
 //! ```
 //!

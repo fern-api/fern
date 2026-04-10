@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">getusers</a>({ ...params }) -> SeedApi.User[]</code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">getUsers</a>({ ...params }) -> SeedNullable.User[]</code></summary>
 <dl>
 <dd>
 
@@ -13,57 +13,12 @@
 <dd>
 
 ```typescript
-await client.nullable.getusers();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.NullableGetUsersRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `NullableClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">createuser</a>({ ...params }) -> SeedApi.User</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.nullable.createuser({
-    username: "username"
+await client.nullable.getUsers({
+    usernames: "usernames",
+    avatar: "avatar",
+    activated: true,
+    tags: "tags",
+    extra: true
 });
 
 ```
@@ -80,7 +35,7 @@ await client.nullable.createuser({
 <dl>
 <dd>
 
-**request:** `SeedApi.NullableCreateUserRequest` 
+**request:** `SeedNullable.GetUsersRequest` 
     
 </dd>
 </dl>
@@ -100,7 +55,7 @@ await client.nullable.createuser({
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">deleteuser</a>({ ...params }) -> boolean</code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">createUser</a>({ ...params }) -> SeedNullable.User</code></summary>
 <dl>
 <dd>
 
@@ -113,7 +68,23 @@ await client.nullable.createuser({
 <dd>
 
 ```typescript
-await client.nullable.deleteuser();
+await client.nullable.createUser({
+    username: "username",
+    tags: ["tags", "tags"],
+    metadata: {
+        createdAt: "2024-01-15T09:30:00Z",
+        updatedAt: "2024-01-15T09:30:00Z",
+        avatar: "avatar",
+        activated: true,
+        status: {
+            type: "active"
+        },
+        values: {
+            "values": "values"
+        }
+    },
+    avatar: "avatar"
+});
 
 ```
 </dd>
@@ -129,7 +100,58 @@ await client.nullable.deleteuser();
 <dl>
 <dd>
 
-**request:** `SeedApi.NullableDeleteUserRequest` 
+**request:** `SeedNullable.CreateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">deleteUser</a>({ ...params }) -> boolean</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullable.deleteUser({
+    username: "xy"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedNullable.DeleteUserRequest` 
     
 </dd>
 </dl>

@@ -14,10 +14,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.UnionGetRequest{
+    request := &fern.Shape{
+        Circle: &fern.Circle{
+            Radius: 1.1,
+        },
         ID: "id",
     }
-    client.Union.Get(
+    client.Union.Update(
         context.TODO(),
         request,
     )

@@ -77,7 +77,7 @@ final class HTTPClient: Swift.Sendable {
             if let data = data as? T {
                 return data
             } else {
-                throw ApiError.invalidResponse
+                throw ExhaustiveError.invalidResponse
             }
         }
 
@@ -85,14 +85,14 @@ final class HTTPClient: Swift.Sendable {
             if let string = Swift.String(data: data, encoding: .utf8) as? T {
                 return string
             } else {
-                throw ApiError.invalidResponse
+                throw ExhaustiveError.invalidResponse
             }
         }
 
         do {
             return try jsonDecoder.decode(responseType, from: data)
         } catch {
-            throw ApiError.decodingError(error)
+            throw ExhaustiveError.decodingError(error)
         }
     }
 
@@ -275,7 +275,7 @@ final class HTTPClient: Swift.Sendable {
                 let (data, response) = try await clientConfig.urlSession.data(for: request)
 
                 guard let httpResponse = response as? Networking.HTTPURLResponse else {
-                    throw ApiError.invalidResponse
+                    throw ExhaustiveError.invalidResponse
                 }
 
                 // Handle successful responses
@@ -298,12 +298,12 @@ final class HTTPClient: Swift.Sendable {
                     data: data
                 )
             } catch {
-                let clientError: ApiError?
+                let clientError: ExhaustiveError?
 
                 // Treat timeouts as a first-class, non-retryable error
                 if let urlError = error as? Foundation.URLError, urlError.code == .timedOut {
                     clientError = .timeout(error)
-                } else if let existingClientError = error as? ApiError {
+                } else if let existingClientError = error as? ExhaustiveError {
                     clientError = existingClientError
                 } else {
                     clientError = nil
@@ -313,7 +313,7 @@ final class HTTPClient: Swift.Sendable {
                     if let clientError {
                         throw clientError
                     } else {
-                        throw ApiError.networkError(error)
+                        throw ExhaustiveError.networkError(error)
                     }
                 }
                 let delay = Self.initialRetryDelay * pow(2.0, Swift.Double(attempt))
@@ -327,7 +327,7 @@ final class HTTPClient: Swift.Sendable {
         if let (data, httpResponse) = lastResponse {
             throw makeErrorFromResponse(statusCode: httpResponse.statusCode, data: data)
         }
-        throw ApiError.invalidResponse
+        throw ExhaustiveError.invalidResponse
     }
 
     private func shouldRetry(statusCode: Swift.Int) -> Swift.Bool {
@@ -385,13 +385,13 @@ final class HTTPClient: Swift.Sendable {
         return delay * jitterMultiplier
     }
 
-    private func makeErrorFromResponse(statusCode: Swift.Int, data: Foundation.Data) -> ApiError
+    private func makeErrorFromResponse(statusCode: Swift.Int, data: Foundation.Data) -> ExhaustiveError
     {
         let httpError = HTTPError.from(
             statusCode: statusCode,
             data: data,
             jsonDecoder: jsonDecoder
         )
-        return ApiError.httpError(httpError)
+        return ExhaustiveError.httpError(httpError)
     }
 }

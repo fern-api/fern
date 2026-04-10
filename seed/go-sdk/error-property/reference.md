@@ -1,6 +1,6 @@
 # Reference
-## Propertybasederror
-<details><summary><code>client.Propertybasederror.Throwerror() -> string</code></summary>
+## PropertyBasedError
+<details><summary><code>client.PropertyBasedError.ThrowError() -> string</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```go
-client.Propertybasederror.Throwerror(
+client.PropertyBasedError.ThrowError(
         context.TODO(),
     )
 }

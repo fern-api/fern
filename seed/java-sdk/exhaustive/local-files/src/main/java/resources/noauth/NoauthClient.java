@@ -8,34 +8,34 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
 import java.lang.Object;
 
-public class NoauthClient {
+public class NoAuthClient {
   protected final ClientOptions clientOptions;
 
-  private final RawNoauthClient rawClient;
+  private final RawNoAuthClient rawClient;
 
-  public NoauthClient(ClientOptions clientOptions) {
+  public NoAuthClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new RawNoauthClient(clientOptions);
+    this.rawClient = new RawNoAuthClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawNoauthClient withRawResponse() {
+  public RawNoAuthClient withRawResponse() {
     return this.rawClient;
   }
 
   /**
    * POST request with no auth
    */
-  public boolean postwithnoauth(Object request) {
-    return this.rawClient.postwithnoauth(request).body();
+  public boolean postWithNoAuth(Object request) {
+    return this.rawClient.postWithNoAuth(request).body();
   }
 
   /**
    * POST request with no auth
    */
-  public boolean postwithnoauth(Object request, RequestOptions requestOptions) {
-    return this.rawClient.postwithnoauth(request, requestOptions).body();
+  public boolean postWithNoAuth(Object request, RequestOptions requestOptions) {
+    return this.rawClient.postWithNoAuth(request, requestOptions).body();
   }
 }

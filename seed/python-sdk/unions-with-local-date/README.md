@@ -34,9 +34,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedUnions
 
-client = SeedApi(
+client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -52,9 +52,9 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedUnions
 
-client = AsyncSeedApi(
+client = AsyncSeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -91,9 +91,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedUnions
 
-client = SeedApi(...)
+client = SeedUnions(...)
 response = client.bigunion.with_raw_response.get(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -125,9 +125,9 @@ client.bigunion.get(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedUnions
 
-client = SeedApi(..., timeout=20.0)
+client = SeedUnions(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.bigunion.get(..., request_options={
@@ -142,9 +142,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedUnions
 
-client = SeedApi(
+client = SeedUnions(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

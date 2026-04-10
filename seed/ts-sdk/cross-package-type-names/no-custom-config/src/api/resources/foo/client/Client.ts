@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedCrossPackageTypeNames from "../../../index.js";
 
 export declare namespace FooClient {
     export type Options = BaseClientOptions;
@@ -22,23 +22,27 @@ export class FooClient {
     }
 
     /**
-     * @param {SeedApi.FooFindRequest} request
+     * @param {SeedCrossPackageTypeNames.FindRequest} request
      * @param {FooClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.foo.find()
+     *     await client.foo.find({
+     *         optionalString: "optionalString",
+     *         publicProperty: "publicProperty",
+     *         privateProperty: 1
+     *     })
      */
     public find(
-        request: SeedApi.FooFindRequest = {},
+        request: SeedCrossPackageTypeNames.FindRequest = {},
         requestOptions?: FooClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.ImportingType> {
+    ): core.HttpResponsePromise<SeedCrossPackageTypeNames.ImportingType> {
         return core.HttpResponsePromise.fromPromise(this.__find(request, requestOptions));
     }
 
     private async __find(
-        request: SeedApi.FooFindRequest = {},
+        request: SeedCrossPackageTypeNames.FindRequest = {},
         requestOptions?: FooClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.ImportingType>> {
+    ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.ImportingType>> {
         const { optionalString, ..._body } = request;
         const _queryParams: Record<string, unknown> = {
             optionalString,
@@ -61,11 +65,14 @@ export class FooClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.ImportingType, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedCrossPackageTypeNames.ImportingType,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedCrossPackageTypeNamesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

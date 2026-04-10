@@ -12,6 +12,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Usage](#usage)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -34,16 +35,25 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi, SingleFilterSearchRequest
+from seed import SeedPagination
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
-client = SeedApi(
+client = SeedPagination(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.complex_.search(
     index="index",
-    query=SingleFilterSearchRequest(),
+    pagination=StartingAfterPaging(
+        per_page=1,
+        starting_after="starting_after",
+    ),
+    query=SingleFilterSearchRequest(
+        field="field",
+        operator="=",
+        value="value",
+    ),
 )
 ```
 
@@ -53,10 +63,11 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedPagination
 
-client = AsyncSeedApi(
+client = AsyncSeedPagination(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
@@ -65,7 +76,15 @@ client = AsyncSeedApi(
 async def main() -> None:
     await client.complex_.search(
         index="index",
-        query=SingleFilterSearchRequest(),
+        pagination=StartingAfterPaging(
+            per_page=1,
+            starting_after="starting_after",
+        ),
+        query=SingleFilterSearchRequest(
+            field="field",
+            operator="=",
+            value="value",
+        ),
     )
 
 
@@ -87,6 +106,42 @@ except ApiError as e:
     print(e.body)
 ```
 
+## Pagination
+
+Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
+
+```python
+from seed import SeedPagination
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
+
+client = SeedPagination(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.complex_.search(
+    index="index",
+    pagination=StartingAfterPaging(
+        per_page=1,
+        starting_after="starting_after",
+    ),
+    query=SingleFilterSearchRequest(
+        field="field",
+        operator="=",
+        value="value",
+    ),
+)
+```
+
+```python
+# You can also iterate through pages and access the typed response per page
+pager = client.complex_.search(...)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)
+```
+
 ## Advanced
 
 ### Access Raw Response Data
@@ -95,13 +150,19 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedPagination
 
-client = SeedApi(...)
-response = client.complex_.with_raw_response.search(...)
-print(response.headers)  # access the response headers
-print(response.status_code)  # access the response status code
-print(response.data)  # access the underlying object
+client = SeedPagination(
+    ...,
+)
+pager = client.complex_.search(...)
+print(pager.response)  # access the typed response for the first page
+for item in pager:
+    print(item)  # access the underlying object(s)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)  # access the underlying object(s)
 ```
 
 ### Retries
@@ -129,9 +190,9 @@ client.complex_.search(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedPagination
 
-client = SeedApi(..., timeout=20.0)
+client = SeedPagination(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.complex_.search(..., request_options={
@@ -146,9 +207,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedPagination
 
-client = SeedApi(
+client = SeedPagination(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

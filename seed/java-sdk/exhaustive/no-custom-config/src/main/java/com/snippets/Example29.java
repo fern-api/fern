@@ -1,25 +1,31 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.endpointshttpmethods.requests.EndpointsHttpMethodsTestPatchRequest;
-import com.seed.api.types.TypesObjectWithOptionalField;
+import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.resources.types.object.types.NestedObjectWithRequiredField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredNestedObject;
+import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.UUID;
 
 public class Example29 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpointsHttpMethods()
-                .endpointsHttpMethodsTestPatch(
-                        "id",
-                        EndpointsHttpMethodsTestPatchRequest.builder()
-                                .body(TypesObjectWithOptionalField.builder()
+        client.endpoints()
+                .object()
+                .getAndReturnWithRequiredNestedObject(ObjectWithRequiredNestedObject.builder()
+                        .requiredString("requiredString")
+                        .requiredObject(NestedObjectWithRequiredField.builder()
+                                .string("string")
+                                .nestedObject(ObjectWithOptionalField.builder()
                                         .string("string")
                                         .integer(1)
                                         .long_(1000000L)
@@ -27,17 +33,18 @@ public class Example29 {
                                         .bool(true)
                                         .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                                         .date("2023-01-15")
-                                        .uuid("uuid")
-                                        .base64("base64")
+                                        .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                                        .base64("SGVsbG8gd29ybGQh".getBytes())
                                         .list(Optional.of(Arrays.asList("list", "list")))
-                                        .set(Optional.of(Arrays.asList("set", "set")))
-                                        .map(new HashMap<String, Optional<String>>() {
+                                        .set(new HashSet<String>(Arrays.asList("set")))
+                                        .map(new HashMap<Integer, String>() {
                                             {
-                                                put("map", Optional.of("map"));
+                                                put(1, "map");
                                             }
                                         })
-                                        .bigint(1)
+                                        .bigint(new BigInteger("1000000"))
                                         .build())
-                                .build());
+                                .build())
+                        .build());
     }
 }

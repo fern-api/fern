@@ -1,24 +1,13 @@
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = TraceClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.admin.sendworkspacesubmissionupdate(
-        submissionId: "submissionId",
-        request: .init(body: WorkspaceSubmissionUpdate(
-            updateTime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            updateInfo: WorkspaceSubmissionUpdateInfo.workspaceSubmissionUpdateInfoZero(
-                WorkspaceSubmissionUpdateInfoZero(
-                    type: .running,
-                    value: .queueingSubmission
-                )
-            )
-        ))
-    )
+    _ = try await client.homepage.getHomepageProblems()
 }
 
 try await main()

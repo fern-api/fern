@@ -1,4 +1,4 @@
-package api
+package undiscriminatedunions
 
 import (
 	"io"

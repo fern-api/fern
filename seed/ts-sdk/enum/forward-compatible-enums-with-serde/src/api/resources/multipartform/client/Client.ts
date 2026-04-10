@@ -7,48 +7,41 @@ import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedEnum from "../../../index.js";
 
-export declare namespace MultipartformClient {
+export declare namespace MultipartFormClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class MultipartformClient {
-    protected readonly _options: NormalizedClientOptions<MultipartformClient.Options>;
+export class MultipartFormClient {
+    protected readonly _options: NormalizedClientOptions<MultipartFormClient.Options>;
 
-    constructor(options: MultipartformClient.Options) {
+    constructor(options: MultipartFormClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
-     * @param {SeedApi.MultipartFormMultipartFormRequest} request
-     * @param {MultipartformClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     import { createReadStream } from "fs";
-     *     await client.multipartform.multipartform({})
+     * @param {SeedEnum.MultipartFormRequest} request
+     * @param {MultipartFormClient.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public multipartform(
-        request: SeedApi.MultipartFormMultipartFormRequest,
-        requestOptions?: MultipartformClient.RequestOptions,
+    public multipartForm(
+        request: SeedEnum.MultipartFormRequest,
+        requestOptions?: MultipartFormClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__multipartform(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__multipartForm(request, requestOptions));
     }
 
-    private async __multipartform(
-        request: SeedApi.MultipartFormMultipartFormRequest,
-        requestOptions?: MultipartformClient.RequestOptions,
+    private async __multipartForm(
+        request: SeedEnum.MultipartFormRequest,
+        requestOptions?: MultipartFormClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _body = await core.newFormData();
-        if (request.color != null) {
-            _body.append(
-                "color",
-                serializers.Color.jsonOrThrow(request.color, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-            );
-        }
-
+        _body.append(
+            "color",
+            serializers.Color.jsonOrThrow(request.color, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+        );
         if (request.maybeColor != null) {
             _body.append(
                 "maybeColor",
@@ -59,13 +52,11 @@ export class MultipartformClient {
             );
         }
 
-        if (request.colorList != null) {
-            for (const _item of request.colorList) {
-                _body.append(
-                    "colorList",
-                    serializers.Color.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-                );
-            }
+        for (const _item of request.colorList) {
+            _body.append(
+                "colorList",
+                serializers.Color.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            );
         }
 
         if (request.maybeColorList != null) {
@@ -106,7 +97,7 @@ export class MultipartformClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

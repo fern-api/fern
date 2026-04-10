@@ -1,5 +1,5 @@
 # Reference
-## Complex
+## Conversations
 <details><summary><code>client.complex.<a href="/src/api/resources/complex/client.rs">search</a>(index: String, request: SearchRequest) -> Result&lt;PaginatedConversationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -21,16 +21,23 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .complex
         .search(
             &"index".to_string(),
             &SearchRequest {
-                query: SearchRequestQuery::SingleFilterSearchRequest(SingleFilterSearchRequest {
+                pagination: Some(StartingAfterPaging {
+                    per_page: 1,
+                    starting_after: Some("starting_after".to_string()),
                     ..Default::default()
                 }),
-                pagination: None,
+                query: SearchRequestQuery::SingleFilterSearchRequest(SingleFilterSearchRequest {
+                    field: Some("field".to_string()),
+                    operator: Some(SingleFilterSearchRequestOperator::Equals),
+                    value: Some("value".to_string()),
+                    ..Default::default()
+                }),
             },
             None,
         )
@@ -54,22 +61,6 @@ async fn main() {
     
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**pagination:** `Option<StartingAfterPaging>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**query:** `SearchRequestQuery` 
-    
-</dd>
-</dl>
 </dd>
 </dl>
 
@@ -78,8 +69,8 @@ async fn main() {
 </dl>
 </details>
 
-## InlineUsersInlineUsers
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_cursor_pagination</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, per_page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order: Option&lt;Option&lt;InlineUsersOrder&gt;&gt;, starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;InlineUsersListUsersPaginationResponse, ApiError&gt;</code></summary>
+## InlineUsers InlineUsers
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_cursor_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -92,7 +83,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -100,11 +91,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_cursor_pagination(
+        .inline_users
+        .inline_users
+        .list_with_cursor_pagination(
             &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
+                page: Some(1),
+                per_page: Some(1),
+                order: Some(Order::Asc),
+                starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
             None,
@@ -125,7 +121,7 @@ async fn main() {
 <dl>
 <dd>
 
-**page:** `Option<Option<i64>>` — Defaults to first page
+**page:** `Option<i64>` — Defaults to first page
     
 </dd>
 </dl>
@@ -133,834 +129,7 @@ async fn main() {
 <dl>
 <dd>
 
-**per_page:** `Option<Option<i64>>` — Defaults to per page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**order:** `Option<InlineUsersOrder>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**starting_after:** `Option<Option<String>>` 
-
-The cursor used for pagination in order to fetch
-the next page of results.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_mixed_type_cursor_pagination</a>(cursor: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;InlineUsersListUsersMixedTypePaginationResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_mixed_type_cursor_pagination(
-            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**cursor:** `Option<Option<String>>` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_body_cursor_pagination</a>(request: InlineUsersInlineUsersListWithBodyCursorPaginationRequest) -> Result&lt;InlineUsersListUsersPaginationResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_body_cursor_pagination(
-            &InlineUsersInlineUsersListWithBodyCursorPaginationRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**pagination:** `Option<InlineUsersWithCursor>` 
-
-The object that contains the cursor used for pagination
-in order to fetch the next page of results.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_offset_pagination</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, per_page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order: Option&lt;Option&lt;InlineUsersOrder&gt;&gt;, starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;InlineUsersListUsersPaginationResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_offset_pagination(
-            &InlineUsersInlineUsersListWithOffsetPaginationQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `Option<Option<i64>>` — Defaults to first page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**per_page:** `Option<Option<i64>>` — Defaults to per page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**order:** `Option<InlineUsersOrder>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**starting_after:** `Option<Option<String>>` 
-
-The cursor used for pagination in order to fetch
-the next page of results.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_double_offset_pagination</a>(page: Option&lt;Option&lt;Option&lt;f64&gt;&gt;&gt;, per_page: Option&lt;Option&lt;Option&lt;f64&gt;&gt;&gt;, order: Option&lt;Option&lt;InlineUsersOrder&gt;&gt;, starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;InlineUsersListUsersPaginationResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_double_offset_pagination(
-            &InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `Option<Option<f64>>` — Defaults to first page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**per_page:** `Option<Option<f64>>` — Defaults to per page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**order:** `Option<InlineUsersOrder>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**starting_after:** `Option<Option<String>>` 
-
-The cursor used for pagination in order to fetch
-the next page of results.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_body_offset_pagination</a>(request: InlineUsersInlineUsersListWithBodyOffsetPaginationRequest) -> Result&lt;InlineUsersListUsersPaginationResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_body_offset_pagination(
-            &InlineUsersInlineUsersListWithBodyOffsetPaginationRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**pagination:** `Option<InlineUsersWithPage>` 
-
-The object that contains the offset used for pagination
-in order to fetch the next page of results.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_offset_step_pagination</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order: Option&lt;Option&lt;InlineUsersOrder&gt;&gt;) -> Result&lt;InlineUsersListUsersPaginationResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_offset_step_pagination(
-            &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `Option<Option<i64>>` — Defaults to first page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `Option<Option<i64>>` 
-
-The maximum number of elements to return.
-This is also used as the step size in this
-paginated endpoint.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**order:** `Option<InlineUsersOrder>` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_offset_pagination_has_next_page</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order: Option&lt;Option&lt;InlineUsersOrder&gt;&gt;) -> Result&lt;InlineUsersListUsersPaginationResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_offset_pagination_has_next_page(
-            &InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `Option<Option<i64>>` — Defaults to first page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `Option<Option<i64>>` 
-
-The maximum number of elements to return.
-This is also used as the step size in this
-paginated endpoint.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**order:** `Option<InlineUsersOrder>` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_extended_results</a>(cursor: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;InlineUsersListUsersExtendedResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_extended_results(
-            &InlineUsersInlineUsersListWithExtendedResultsQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**cursor:** `Option<Option<String>>` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_extended_results_and_optional_data</a>(cursor: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;InlineUsersListUsersExtendedOptionalListResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_extended_results_and_optional_data(
-            &InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**cursor:** `Option<Option<String>>` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_usernames</a>(starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;UsernameCursor, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_usernames(
-            &InlineUsersInlineUsersListUsernamesQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**starting_after:** `Option<Option<String>>` 
-
-The cursor used for pagination in order to fetch
-the next page of results.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inline_users_inline_users.<a href="/src/api/resources/inline_users_inline_users/client.rs">inline_users_inline_users_list_with_global_config</a>(offset: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;InlineUsersUsernameContainer, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .inline_users_inline_users
-        .inline_users_inline_users_list_with_global_config(
-            &InlineUsersInlineUsersListWithGlobalConfigQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**offset:** `Option<Option<i64>>` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithcursorpagination</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, per_page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .users
-        .listwithcursorpagination(
-            &ListwithcursorpaginationQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `Option<Option<i64>>` — Defaults to first page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**per_page:** `Option<Option<i64>>` — Defaults to per page
+**per_page:** `Option<i64>` — Defaults to per page
     
 </dd>
 </dl>
@@ -976,7 +145,7 @@ async fn main() {
 <dl>
 <dd>
 
-**starting_after:** `Option<Option<String>>` 
+**starting_after:** `Option<String>` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -991,7 +160,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithmixedtypecursorpagination</a>(cursor: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;ListUsersMixedTypePaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_mixed_type_cursor_pagination</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersMixedTypePaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1004,7 +173,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1012,11 +181,13 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listwithmixedtypecursorpagination(
-            &ListwithmixedtypecursorpaginationQueryRequest {
+        .inline_users
+        .inline_users
+        .list_with_mixed_type_cursor_pagination(
+            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
+                cursor: Some("cursor".to_string()),
                 ..Default::default()
             },
             None,
@@ -1037,7 +208,7 @@ async fn main() {
 <dl>
 <dd>
 
-**cursor:** `Option<Option<String>>` 
+**cursor:** `Option<String>` 
     
 </dd>
 </dl>
@@ -1049,7 +220,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithbodycursorpagination</a>(request: UsersListWithBodyCursorPaginationRequest) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_body_cursor_pagination</a>(request: ListUsersBodyCursorPaginationRequest) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1062,7 +233,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1070,11 +241,12 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listwithbodycursorpagination(
-            &UsersListWithBodyCursorPaginationRequest {
+        .inline_users
+        .inline_users
+        .list_with_mixed_type_cursor_pagination(
+            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
                 ..Default::default()
             },
             None,
@@ -1110,25 +282,9 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithtoplevelbodycursorpagination</a>(request: UsersListWithTopLevelBodyCursorPaginationRequest) -> Result&lt;ListUsersTopLevelCursorPaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_offset_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Pagination endpoint with a top-level cursor field in the request body.
-This tests that the mock server correctly ignores cursor mismatches
-when getNextPage() is called with a different cursor value.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1139,7 +295,7 @@ when getNextPage() is called with a different cursor value.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1147,11 +303,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listwithtoplevelbodycursorpagination(
-            &UsersListWithTopLevelBodyCursorPaginationRequest {
+        .inline_users
+        .inline_users
+        .list_with_cursor_pagination(
+            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
+                page: Some(1),
+                per_page: Some(1),
+                order: Some(Order::Asc),
+                starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
             None,
@@ -1172,10 +333,7 @@ async fn main() {
 <dl>
 <dd>
 
-**cursor:** `Option<Option<String>>` 
-
-The cursor used for pagination in order to fetch
-the next page of results.
+**page:** `Option<i64>` — Defaults to first page
     
 </dd>
 </dl>
@@ -1183,73 +341,7 @@ the next page of results.
 <dl>
 <dd>
 
-**filter:** `Option<Option<String>>` — An optional filter to apply to the results.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithoffsetpagination</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, per_page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .users
-        .listwithoffsetpagination(
-            &ListwithoffsetpaginationQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `Option<Option<i64>>` — Defaults to first page
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**per_page:** `Option<Option<i64>>` — Defaults to per page
+**per_page:** `Option<i64>` — Defaults to per page
     
 </dd>
 </dl>
@@ -1265,7 +357,7 @@ async fn main() {
 <dl>
 <dd>
 
-**starting_after:** `Option<Option<String>>` 
+**starting_after:** `Option<String>` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -1280,7 +372,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithdoubleoffsetpagination</a>(page: Option&lt;Option&lt;Option&lt;f64&gt;&gt;&gt;, per_page: Option&lt;Option&lt;Option&lt;f64&gt;&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_double_offset_pagination</a>(page: Option&lt;Option&lt;f64&gt;&gt;, per_page: Option&lt;Option&lt;f64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1293,7 +385,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1301,11 +393,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listwithdoubleoffsetpagination(
-            &ListwithdoubleoffsetpaginationQueryRequest {
+        .inline_users
+        .inline_users
+        .list_with_double_offset_pagination(
+            &InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest {
+                page: Some(1.1),
+                per_page: Some(1.1),
+                order: Some(Order::Asc),
+                starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
             None,
@@ -1326,7 +423,7 @@ async fn main() {
 <dl>
 <dd>
 
-**page:** `Option<Option<f64>>` — Defaults to first page
+**page:** `Option<f64>` — Defaults to first page
     
 </dd>
 </dl>
@@ -1334,7 +431,7 @@ async fn main() {
 <dl>
 <dd>
 
-**per_page:** `Option<Option<f64>>` — Defaults to per page
+**per_page:** `Option<f64>` — Defaults to per page
     
 </dd>
 </dl>
@@ -1350,7 +447,7 @@ async fn main() {
 <dl>
 <dd>
 
-**starting_after:** `Option<Option<String>>` 
+**starting_after:** `Option<String>` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -1365,7 +462,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithbodyoffsetpagination</a>(request: UsersListWithBodyOffsetPaginationRequest) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_body_offset_pagination</a>(request: ListUsersBodyOffsetPaginationRequest) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1378,7 +475,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1386,11 +483,12 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listwithbodyoffsetpagination(
-            &UsersListWithBodyOffsetPaginationRequest {
+        .inline_users
+        .inline_users
+        .list_with_mixed_type_cursor_pagination(
+            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
                 ..Default::default()
             },
             None,
@@ -1426,7 +524,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithoffsetsteppagination</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_offset_step_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, limit: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1439,7 +537,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1447,11 +545,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listwithoffsetsteppagination(
-            &ListwithoffsetsteppaginationQueryRequest {
+        .inline_users
+        .inline_users
+        .list_with_offset_step_pagination(
+            &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
+                page: Some(1),
+                limit: Some(1),
+                order: Some(Order::Asc),
                 ..Default::default()
             },
             None,
@@ -1472,7 +574,7 @@ async fn main() {
 <dl>
 <dd>
 
-**page:** `Option<Option<i64>>` — Defaults to first page
+**page:** `Option<i64>` — Defaults to first page
     
 </dd>
 </dl>
@@ -1480,7 +582,7 @@ async fn main() {
 <dl>
 <dd>
 
-**limit:** `Option<Option<i64>>` 
+**limit:** `Option<i64>` 
 
 The maximum number of elements to return.
 This is also used as the step size in this
@@ -1504,7 +606,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithoffsetpaginationhasnextpage</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_offset_pagination_has_next_page</a>(page: Option&lt;Option&lt;i64&gt;&gt;, limit: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1517,7 +619,7 @@ paginated endpoint.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1525,11 +627,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listwithoffsetpaginationhasnextpage(
-            &ListwithoffsetpaginationhasnextpageQueryRequest {
+        .inline_users
+        .inline_users
+        .list_with_offset_step_pagination(
+            &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
+                page: Some(1),
+                limit: Some(1),
+                order: Some(Order::Asc),
                 ..Default::default()
             },
             None,
@@ -1550,7 +656,7 @@ async fn main() {
 <dl>
 <dd>
 
-**page:** `Option<Option<i64>>` — Defaults to first page
+**page:** `Option<i64>` — Defaults to first page
     
 </dd>
 </dl>
@@ -1558,7 +664,7 @@ async fn main() {
 <dl>
 <dd>
 
-**limit:** `Option<Option<i64>>` 
+**limit:** `Option<i64>` 
 
 The maximum number of elements to return.
 This is also used as the step size in this
@@ -1582,7 +688,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithextendedresults</a>(cursor: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;ListUsersExtendedResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_extended_results</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersExtendedResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1595,7 +701,7 @@ paginated endpoint.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1603,11 +709,13 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listwithextendedresults(
-            &ListwithextendedresultsQueryRequest {
+        .inline_users
+        .inline_users
+        .list_with_extended_results(
+            &InlineUsersInlineUsersListWithExtendedResultsQueryRequest {
+                cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                 ..Default::default()
             },
             None,
@@ -1628,7 +736,7 @@ async fn main() {
 <dl>
 <dd>
 
-**cursor:** `Option<Option<String>>` 
+**cursor:** `Option<String>` 
     
 </dd>
 </dl>
@@ -1640,7 +748,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithextendedresultsandoptionaldata</a>(cursor: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;ListUsersExtendedOptionalListResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_extended_results_and_optional_data</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersExtendedOptionalListResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1653,7 +761,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1661,11 +769,13 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listwithextendedresultsandoptionaldata(
-            &ListwithextendedresultsandoptionaldataQueryRequest {
+        .inline_users
+        .inline_users
+        .list_with_extended_results(
+            &InlineUsersInlineUsersListWithExtendedResultsQueryRequest {
+                cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                 ..Default::default()
             },
             None,
@@ -1686,7 +796,7 @@ async fn main() {
 <dl>
 <dd>
 
-**cursor:** `Option<Option<String>>` 
+**cursor:** `Option<String>` 
     
 </dd>
 </dl>
@@ -1698,7 +808,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listusernames</a>(starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;UsernameCursor, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_usernames</a>(starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;UsernameCursor, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1711,7 +821,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1719,11 +829,13 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listusernames(
-            &ListusernamesQueryRequest {
+        .inline_users
+        .inline_users
+        .list_with_cursor_pagination(
+            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
+                starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
             None,
@@ -1744,7 +856,7 @@ async fn main() {
 <dl>
 <dd>
 
-**starting_after:** `Option<Option<String>>` 
+**starting_after:** `Option<String>` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -1759,7 +871,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listusernameswithoptionalresponse</a>(starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;UsernameCursor, ApiError&gt;</code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_global_config</a>(offset: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;UsernameContainer, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1772,7 +884,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1780,11 +892,13 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users
-        .listusernameswithoptionalresponse(
-            &ListusernameswithoptionalresponseQueryRequest {
+        .inline_users
+        .inline_users
+        .list_with_global_config(
+            &InlineUsersInlineUsersListWithGlobalConfigQueryRequest {
+                offset: Some(1),
                 ..Default::default()
             },
             None,
@@ -1805,7 +919,94 @@ async fn main() {
 <dl>
 <dd>
 
-**starting_after:** `Option<Option<String>>` 
+**offset:** `Option<i64>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Users
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_cursor_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_cursor_pagination(
+            &UsersListWithCursorPaginationQueryRequest {
+                page: Some(1),
+                per_page: Some(1),
+                order: Some(Order::Asc),
+                starting_after: Some("starting_after".to_string()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_page:** `Option<i64>` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order:** `Option<Order>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**starting_after:** `Option<String>` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -1820,7 +1021,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithglobalconfig</a>(offset: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;UsernameContainer, ApiError&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_mixed_type_cursor_pagination</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersMixedTypePaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1833,7 +1034,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1841,11 +1042,12 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .listwithglobalconfig(
-            &ListwithglobalconfigQueryRequest {
+        .list_with_mixed_type_cursor_pagination(
+            &UsersListWithMixedTypeCursorPaginationQueryRequest {
+                cursor: Some("cursor".to_string()),
                 ..Default::default()
             },
             None,
@@ -1866,7 +1068,7 @@ async fn main() {
 <dl>
 <dd>
 
-**offset:** `Option<Option<i64>>` 
+**cursor:** `Option<String>` 
     
 </dd>
 </dl>
@@ -1878,7 +1080,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithoptionaldata</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;ListUsersOptionalDataPaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_body_cursor_pagination</a>(request: ListUsersBodyCursorPaginationRequest) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1891,7 +1093,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1899,11 +1101,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .listwithoptionaldata(
-            &ListwithoptionaldataQueryRequest {
+        .list_with_mixed_type_cursor_pagination(
+            &UsersListWithMixedTypeCursorPaginationQueryRequest {
                 ..Default::default()
             },
             None,
@@ -1924,7 +1126,10 @@ async fn main() {
 <dl>
 <dd>
 
-**page:** `Option<Option<i64>>` — Defaults to first page
+**pagination:** `Option<WithCursor>` 
+
+The object that contains the cursor used for pagination
+in order to fetch the next page of results.
     
 </dd>
 </dl>
@@ -1936,9 +1141,25 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithaliaseddata</a>(page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, per_page: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;ListUsersAliasedDataPaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_top_level_body_cursor_pagination</a>(request: ListUsersTopLevelBodyCursorPaginationRequest) -> Result&lt;ListUsersTopLevelCursorPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a top-level cursor field in the request body.
+This tests that the mock server correctly ignores cursor mismatches
+when getNextPage() is called with a different cursor value.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1949,7 +1170,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1957,11 +1178,13 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .listwithaliaseddata(
-            &ListwithaliaseddataQueryRequest {
+        .list_with_top_level_body_cursor_pagination(
+            &ListUsersTopLevelBodyCursorPaginationRequest {
+                cursor: Some("initial_cursor".to_string()),
+                filter: Some("active".to_string()),
                 ..Default::default()
             },
             None,
@@ -1982,7 +1205,10 @@ async fn main() {
 <dl>
 <dd>
 
-**page:** `Option<Option<i64>>` — Defaults to first page
+**cursor:** `Option<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
     
 </dd>
 </dl>
@@ -1990,7 +1216,69 @@ async fn main() {
 <dl>
 <dd>
 
-**per_page:** `Option<Option<i64>>` — Defaults to per page
+**filter:** `Option<String>` — An optional filter to apply to the results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_offset_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_cursor_pagination(
+            &UsersListWithCursorPaginationQueryRequest {
+                page: Some(1),
+                per_page: Some(1),
+                order: Some(Order::Asc),
+                starting_after: Some("starting_after".to_string()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` — Defaults to first page
     
 </dd>
 </dl>
@@ -1998,7 +1286,775 @@ async fn main() {
 <dl>
 <dd>
 
-**starting_after:** `Option<Option<String>>` 
+**per_page:** `Option<i64>` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order:** `Option<Order>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**starting_after:** `Option<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_double_offset_pagination</a>(page: Option&lt;Option&lt;f64&gt;&gt;, per_page: Option&lt;Option&lt;f64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_double_offset_pagination(
+            &UsersListWithDoubleOffsetPaginationQueryRequest {
+                page: Some(1.1),
+                per_page: Some(1.1),
+                order: Some(Order::Asc),
+                starting_after: Some("starting_after".to_string()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<f64>` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_page:** `Option<f64>` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order:** `Option<Order>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**starting_after:** `Option<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_body_offset_pagination</a>(request: ListUsersBodyOffsetPaginationRequest) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_mixed_type_cursor_pagination(
+            &UsersListWithMixedTypeCursorPaginationQueryRequest {
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pagination:** `Option<WithPage>` 
+
+The object that contains the offset used for pagination
+in order to fetch the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_offset_step_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, limit: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_offset_step_pagination(
+            &UsersListWithOffsetStepPaginationQueryRequest {
+                page: Some(1),
+                limit: Some(1),
+                order: Some(Order::Asc),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Option<i64>` 
+
+The maximum number of elements to return.
+This is also used as the step size in this
+paginated endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order:** `Option<Order>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_offset_pagination_has_next_page</a>(page: Option&lt;Option&lt;i64&gt;&gt;, limit: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_offset_step_pagination(
+            &UsersListWithOffsetStepPaginationQueryRequest {
+                page: Some(1),
+                limit: Some(3),
+                order: Some(Order::Asc),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Option<i64>` 
+
+The maximum number of elements to return.
+This is also used as the step size in this
+paginated endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order:** `Option<Order>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_extended_results</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersExtendedResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_extended_results(
+            &UsersListWithExtendedResultsQueryRequest {
+                cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `Option<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_extended_results_and_optional_data</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersExtendedOptionalListResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_extended_results(
+            &UsersListWithExtendedResultsQueryRequest {
+                cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `Option<String>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_usernames</a>(starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;UsernameCursor, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_cursor_pagination(
+            &UsersListWithCursorPaginationQueryRequest {
+                starting_after: Some("starting_after".to_string()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**starting_after:** `Option<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_usernames_with_optional_response</a>(starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;Option&lt;UsernameCursor&gt;, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_cursor_pagination(
+            &UsersListWithCursorPaginationQueryRequest {
+                starting_after: Some("starting_after".to_string()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**starting_after:** `Option<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_global_config</a>(offset: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;UsernameContainer, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_global_config(
+            &UsersListWithGlobalConfigQueryRequest {
+                offset: Some(1),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**offset:** `Option<i64>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_optional_data</a>(page: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;ListUsersOptionalDataPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_optional_data(
+            &ListWithOptionalDataQueryRequest {
+                page: Some(1),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` — Defaults to first page
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_aliased_data</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersAliasedDataPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_aliased_data(
+            &ListWithAliasedDataQueryRequest {
+                page: Some(1),
+                per_page: Some(1),
+                starting_after: Some("starting_after".to_string()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_page:** `Option<i64>` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**starting_after:** `Option<String>` 
 
 The cursor used for pagination in order to fetch
 the next page of results.

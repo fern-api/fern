@@ -2,4 +2,10 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.nullableoptional.getcomplexprofile(profile_id: "profileId")
+client.nullable_optional.get_search_results(
+  query: "query",
+  filters: {
+    filters: "filters"
+  },
+  include_types: %w[includeTypes includeTypes]
+)

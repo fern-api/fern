@@ -27,19 +27,20 @@ Create a new organization.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_mixed_file_directory::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
     client
         .organization
         .create(
             &CreateOrganizationRequest {
                 name: "name".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -51,28 +52,13 @@ async fn main() {
 </dd>
 </dl>
 
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `String` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
 
 </dd>
 </dl>
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">list</a>(limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">list</a>(limit: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -99,18 +85,19 @@ List all users.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_mixed_file_directory::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
     client
         .user
         .list(
             &ListQueryRequest {
+                limit: Some(1),
                 ..Default::default()
             },
             None,
@@ -131,7 +118,7 @@ async fn main() {
 <dl>
 <dd>
 
-**limit:** `Option<Option<i64>>` — The maximum number of results to return.
+**limit:** `Option<i64>` — The maximum number of results to return.
     
 </dd>
 </dl>
@@ -143,8 +130,8 @@ async fn main() {
 </dl>
 </details>
 
-## UserEvents
-<details><summary><code>client.user_events.<a href="/src/api/resources/user_events/client.rs">user_events_list_events</a>(limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserEvent&gt;, ApiError&gt;</code></summary>
+## User Events
+<details><summary><code>client.user().events.<a href="/src/api/resources/user/events/client.rs">list_events</a>(limit: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;Vec&lt;Event&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -171,18 +158,20 @@ List all user events.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_mixed_file_directory::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
     client
-        .user_events
-        .user_events_list_events(
-            &UserEventsListEventsQueryRequest {
+        .user
+        .events
+        .list_events(
+            &ListEventsQueryRequest {
+                limit: Some(1),
                 ..Default::default()
             },
             None,
@@ -203,7 +192,7 @@ async fn main() {
 <dl>
 <dd>
 
-**limit:** `Option<Option<i64>>` — The maximum number of results to return.
+**limit:** `Option<i64>` — The maximum number of results to return.
     
 </dd>
 </dl>
@@ -215,8 +204,8 @@ async fn main() {
 </dl>
 </details>
 
-## UserEventsMetadata
-<details><summary><code>client.user_events_metadata.<a href="/src/api/resources/user_events_metadata/client.rs">user_events_metadata_get_metadata</a>(id: Option&lt;Id&gt;) -> Result&lt;UsereventsMetadata, ApiError&gt;</code></summary>
+## User Events Metadata
+<details><summary><code>client.user().events().metadata.<a href="/src/api/resources/user/events/metadata/client.rs">get_metadata</a>(id: Option&lt;Id&gt;) -> Result&lt;Metadata, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -243,18 +232,20 @@ Get event metadata.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_mixed_file_directory::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
     client
-        .user_events_metadata
-        .user_events_metadata_get_metadata(
-            &UserEventsMetadataGetMetadataQueryRequest {
+        .user
+        .events
+        .metadata
+        .get_metadata(
+            &GetMetadataQueryRequest {
                 id: Id("id".to_string()),
             },
             None,

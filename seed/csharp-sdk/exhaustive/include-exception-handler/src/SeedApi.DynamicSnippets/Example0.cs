@@ -1,19 +1,20 @@
-using SeedApi;
+using SeedExhaustive;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitivesAsync(
+        await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
             new List<string>(){
+                "string",
                 "string",
             }
         );

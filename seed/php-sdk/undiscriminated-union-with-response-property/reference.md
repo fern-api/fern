@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>$client-&gt;-&gt;getUnion() -> ?UnionResponse</code></summary>
+<details><summary><code>$client-&gt;getUnion() -> ?UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```php
-$client->_->getUnion();
+$client->getUnion();
 ```
 </dd>
 </dl>
@@ -25,7 +24,7 @@ $client->_->getUnion();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;-&gt;listUnions() -> ?UnionListResponse</code></summary>
+<details><summary><code>$client-&gt;listUnions() -> ?UnionListResponse</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +37,7 @@ $client->_->getUnion();
 <dd>
 
 ```php
-$client->_->listUnions();
+$client->listUnions();
 ```
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">getdummy</a>() -> String</code></summary>
+<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">get_dummy</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.dummy.getdummy
+client.dummy.get_dummy
 ```
 </dd>
 </dl>

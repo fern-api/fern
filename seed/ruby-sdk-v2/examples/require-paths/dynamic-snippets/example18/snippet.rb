@@ -5,7 +5,7 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.service.getmetadata(
+client.service.get_metadata(
   shallow: true,
-  api_version: "apiVersion"
+  x_api_version: "X-API-Version"
 )

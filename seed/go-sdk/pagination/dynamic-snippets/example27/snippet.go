@@ -17,19 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.UsersListWithCursorPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        PerPage: fern.Int(
-            1,
-        ),
-        Order: fern.OrderAsc.Ptr(),
+    request := &fern.ListUsernamesRequest{
         StartingAfter: fern.String(
             "starting_after",
         ),
     }
-    client.Users.Listwithcursorpagination(
+    client.Users.ListUsernames(
         context.TODO(),
         request,
     )

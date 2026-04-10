@@ -1,4 +1,4 @@
-import Api
+import Trace
 import Foundation
 
 final class HTTPStub {

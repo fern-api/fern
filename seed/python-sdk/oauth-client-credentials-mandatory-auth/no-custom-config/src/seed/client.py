@@ -5,27 +5,32 @@ from __future__ import annotations
 import typing
 
 import httpx
+from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
+from .core.oauth_token_provider import AsyncOAuthTokenProvider, OAuthTokenProvider
 
 if typing.TYPE_CHECKING:
     from .auth.client import AsyncAuthClient, AuthClient
-    from .nested_api.client import AsyncNestedApiClient, NestedApiClient
+    from .nested.client import AsyncNestedClient, NestedClient
     from .simple.client import AsyncSimpleClient, SimpleClient
 
 
-class SeedApi:
+class SeedOauthClientCredentialsMandatoryAuth:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
+
     base_url : str
         The base url to use for requests from the client.
 
-    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
-    headers : typing.Optional[typing.Dict[str, str]]
-        Additional headers to send with every request.
+    client_id : str
+        The client identifier used for authentication.
+
+    client_secret : str
+        The client secret used for authentication.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -36,25 +41,77 @@ class SeedApi:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
-    logging : typing.Optional[typing.Union[LogConfig, Logger]]
-        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+    # or ...
+
+    base_url : str
+        The base url to use for requests from the client.
+
+    token : typing.Callable[[], str]
+        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
+
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
+
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+
+    httpx_client : typing.Optional[httpx.Client]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedOauthClientCredentialsMandatoryAuth
 
-    client = SeedApi(
-        token="YOUR_TOKEN",
+    client = SeedOauthClientCredentialsMandatoryAuth(
+        base_url="YOUR_BASE_URL",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
+    )
+
+    # or ...
+
+    from seed import SeedOauthClientCredentialsMandatoryAuth
+
+    client = SeedOauthClientCredentialsMandatoryAuth(
         base_url="https://yourhost.com/path/to/api",
+        token="YOUR_BEARER_TOKEN",
     )
     """
 
+    @typing.overload
     def __init__(
         self,
         *,
         base_url: str,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        client_id: str,
+        client_secret: str,
+    ): ...
+    @typing.overload
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        token: typing.Callable[[], str],
+    ): ...
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        client_id: typing.Optional[str] = None,
+        client_secret: typing.Optional[str] = None,
+        token: typing.Optional[typing.Callable[[], str]] = None,
+        _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -63,20 +120,53 @@ class SeedApi:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        self._client_wrapper = SyncClientWrapper(
-            base_url=base_url,
-            token=token,
-            headers=headers,
-            httpx_client=httpx_client
-            if httpx_client is not None
-            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-            if follow_redirects is not None
-            else httpx.Client(timeout=_defaulted_timeout),
-            timeout=_defaulted_timeout,
-            logging=logging,
-        )
+        if token is not None:
+            self._client_wrapper = SyncClientWrapper(
+                base_url=base_url,
+                headers=headers,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.Client(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+                logging=logging,
+                token=_token_getter_override if _token_getter_override is not None else token,
+            )
+        elif client_id is not None and client_secret is not None:
+            oauth_token_provider = OAuthTokenProvider(
+                client_id=client_id,
+                client_secret=client_secret,
+                client_wrapper=SyncClientWrapper(
+                    base_url=base_url,
+                    headers=headers,
+                    httpx_client=httpx_client
+                    if httpx_client is not None
+                    else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                    if follow_redirects is not None
+                    else httpx.Client(timeout=_defaulted_timeout),
+                    timeout=_defaulted_timeout,
+                    logging=logging,
+                ),
+            )
+            self._client_wrapper = SyncClientWrapper(
+                base_url=base_url,
+                headers=headers,
+                token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.Client(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+                logging=logging,
+            )
+        else:
+            raise ApiError(
+                body="The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'"
+            )
         self._auth: typing.Optional[AuthClient] = None
-        self._nested_api: typing.Optional[NestedApiClient] = None
+        self._nested: typing.Optional[NestedClient] = None
         self._simple: typing.Optional[SimpleClient] = None
 
     @property
@@ -88,12 +178,12 @@ class SeedApi:
         return self._auth
 
     @property
-    def nested_api(self):
-        if self._nested_api is None:
-            from .nested_api.client import NestedApiClient  # noqa: E402
+    def nested(self):
+        if self._nested is None:
+            from .nested.client import NestedClient  # noqa: E402
 
-            self._nested_api = NestedApiClient(client_wrapper=self._client_wrapper)
-        return self._nested_api
+            self._nested = NestedClient(client_wrapper=self._client_wrapper)
+        return self._nested
 
     @property
     def simple(self):
@@ -122,21 +212,21 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedOauthClientCredentialsMandatoryAuth:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
+
     base_url : str
         The base url to use for requests from the client.
 
-    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
-    headers : typing.Optional[typing.Dict[str, str]]
-        Additional headers to send with every request.
+    client_id : str
+        The client identifier used for authentication.
 
-    async_token : typing.Optional[typing.Callable[[], typing.Awaitable[str]]]
-        An async callable that returns a bearer token. Use this when token acquisition involves async I/O (e.g., refreshing tokens via an async HTTP client). When provided, this is used instead of the synchronous token for async requests.
+    client_secret : str
+        The client secret used for authentication.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -147,26 +237,77 @@ class AsyncSeedApi:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
-    logging : typing.Optional[typing.Union[LogConfig, Logger]]
-        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+    # or ...
+
+    base_url : str
+        The base url to use for requests from the client.
+
+    token : typing.Callable[[], str]
+        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
+
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
+
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+
+    httpx_client : typing.Optional[httpx.AsyncClient]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedOauthClientCredentialsMandatoryAuth
 
-    client = AsyncSeedApi(
-        token="YOUR_TOKEN",
+    client = AsyncSeedOauthClientCredentialsMandatoryAuth(
+        base_url="YOUR_BASE_URL",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
+    )
+
+    # or ...
+
+    from seed import AsyncSeedOauthClientCredentialsMandatoryAuth
+
+    client = AsyncSeedOauthClientCredentialsMandatoryAuth(
         base_url="https://yourhost.com/path/to/api",
+        token="YOUR_BEARER_TOKEN",
     )
     """
 
+    @typing.overload
     def __init__(
         self,
         *,
         base_url: str,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
-        async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        client_id: str,
+        client_secret: str,
+    ): ...
+    @typing.overload
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        token: typing.Callable[[], str],
+    ): ...
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        client_id: typing.Optional[str] = None,
+        client_secret: typing.Optional[str] = None,
+        token: typing.Optional[typing.Callable[[], str]] = None,
+        _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -175,19 +316,50 @@ class AsyncSeedApi:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url,
-            token=token,
-            headers=headers,
-            async_token=async_token,
-            httpx_client=httpx_client
-            if httpx_client is not None
-            else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
-            timeout=_defaulted_timeout,
-            logging=logging,
-        )
+        if token is not None:
+            self._client_wrapper = AsyncClientWrapper(
+                base_url=base_url,
+                headers=headers,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
+                timeout=_defaulted_timeout,
+                logging=logging,
+                token=_token_getter_override if _token_getter_override is not None else token,
+            )
+        elif client_id is not None and client_secret is not None:
+            oauth_token_provider = AsyncOAuthTokenProvider(
+                client_id=client_id,
+                client_secret=client_secret,
+                client_wrapper=AsyncClientWrapper(
+                    base_url=base_url,
+                    headers=headers,
+                    httpx_client=httpx_client
+                    if httpx_client is not None
+                    else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                    if follow_redirects is not None
+                    else httpx.AsyncClient(timeout=_defaulted_timeout),
+                    timeout=_defaulted_timeout,
+                    logging=logging,
+                ),
+            )
+            self._client_wrapper = AsyncClientWrapper(
+                base_url=base_url,
+                headers=headers,
+                token=_token_getter_override,
+                async_token=oauth_token_provider.get_token,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
+                timeout=_defaulted_timeout,
+                logging=logging,
+            )
+        else:
+            raise ApiError(
+                body="The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'"
+            )
         self._auth: typing.Optional[AsyncAuthClient] = None
-        self._nested_api: typing.Optional[AsyncNestedApiClient] = None
+        self._nested: typing.Optional[AsyncNestedClient] = None
         self._simple: typing.Optional[AsyncSimpleClient] = None
 
     @property
@@ -199,12 +371,12 @@ class AsyncSeedApi:
         return self._auth
 
     @property
-    def nested_api(self):
-        if self._nested_api is None:
-            from .nested_api.client import AsyncNestedApiClient  # noqa: E402
+    def nested(self):
+        if self._nested is None:
+            from .nested.client import AsyncNestedClient  # noqa: E402
 
-            self._nested_api = AsyncNestedApiClient(client_wrapper=self._client_wrapper)
-        return self._nested_api
+            self._nested = AsyncNestedClient(client_wrapper=self._client_wrapper)
+        return self._nested
 
     @property
     def simple(self):

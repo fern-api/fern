@@ -1,9 +1,9 @@
-pub mod organization;
-pub mod searchorganizations_query_request;
-pub mod searchusers_query_request;
-pub mod user;
+pub mod organizations_organization;
+pub mod search_organizations_query_request;
+pub mod search_users_query_request;
+pub mod user_user;
 
-pub use organization::Organization;
-pub use searchorganizations_query_request::SearchorganizationsQueryRequest;
-pub use searchusers_query_request::SearchusersQueryRequest;
-pub use user::User;
+pub use organizations_organization::Organization;
+pub use search_organizations_query_request::SearchOrganizationsQueryRequest;
+pub use search_users_query_request::SearchUsersQueryRequest;
+pub use user_user::User;

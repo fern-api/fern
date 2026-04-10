@@ -1,21 +1,25 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.types.EndpointsHttpMethodsTestPatchRequest;
-import com.seed.api.types.TypesObjectWithOptionalField;
+import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.types.types.NestedObjectWithRequiredField;
+import com.seed.exhaustive.types.types.ObjectWithOptionalField;
+import com.seed.exhaustive.types.types.ObjectWithRequiredNestedObject;
 
 public class Example28 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpointsHttpMethods()
-                .endpointsHttpMethodsTestPatch(
-                        "id",
-                        EndpointsHttpMethodsTestPatchRequest.builder()
-                                .body(TypesObjectWithOptionalField.builder().build())
-                                .build());
+        client.endpoints()
+                .object()
+                .getAndReturnWithRequiredNestedObject(ObjectWithRequiredNestedObject.builder()
+                        .requiredString("hello")
+                        .requiredObject(NestedObjectWithRequiredField.builder()
+                                .string("nested")
+                                .nestedObject(ObjectWithOptionalField.builder().build())
+                                .build())
+                        .build());
     }
 }

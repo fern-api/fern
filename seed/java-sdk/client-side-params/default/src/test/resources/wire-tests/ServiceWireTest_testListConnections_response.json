@@ -1,0 +1,52 @@
+[
+  {
+    "id": "id",
+    "name": "name",
+    "display_name": "display_name",
+    "strategy": "strategy",
+    "options": {
+      "options": {
+        "key": "value"
+      }
+    },
+    "enabled_clients": [
+      "enabled_clients",
+      "enabled_clients"
+    ],
+    "realms": [
+      "realms",
+      "realms"
+    ],
+    "is_domain_connection": true,
+    "metadata": {
+      "metadata": {
+        "key": "value"
+      }
+    }
+  },
+  {
+    "id": "id",
+    "name": "name",
+    "display_name": "display_name",
+    "strategy": "strategy",
+    "options": {
+      "options": {
+        "key": "value"
+      }
+    },
+    "enabled_clients": [
+      "enabled_clients",
+      "enabled_clients"
+    ],
+    "realms": [
+      "realms",
+      "realms"
+    ],
+    "is_domain_connection": true,
+    "metadata": {
+      "metadata": {
+        "key": "value"
+      }
+    }
+  }
+]

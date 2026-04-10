@@ -1,8 +1,8 @@
 import Foundation
-import Api
+import SimpleApi
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = SimpleApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )

@@ -1,4 +1,4 @@
-import Api
+import Errors
 import Foundation
 import Testing
 
@@ -14,13 +14,13 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -43,13 +43,13 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -72,13 +72,13 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -100,13 +100,13 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -127,13 +127,13 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -155,13 +155,13 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -183,13 +183,13 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -215,14 +215,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -258,14 +258,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -297,14 +297,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -348,13 +348,13 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -372,13 +372,13 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),
@@ -400,13 +400,13 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.simple.foowithoutendpointerror(
+            _ = try await client.simple.fooWithoutEndpointError(
                 request: FooRequest(
                     bar: "bar"
                 ),

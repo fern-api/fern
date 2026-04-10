@@ -14,8 +14,19 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.NullableOptionalListUsersRequest{}
-    client.Nullableoptional.Listusers(
+    request := &fern.SearchUsersRequest{
+        Query: "query",
+        Department: fern.String(
+            "department",
+        ),
+        Role: fern.String(
+            "role",
+        ),
+        IsActive: fern.Bool(
+            true,
+        ),
+    }
+    client.NullableOptional.SearchUsers(
         context.TODO(),
         request,
     )

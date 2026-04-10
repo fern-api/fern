@@ -55,15 +55,15 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.api.SeedApiClient;
+import com.seed.plainText.SeedPlainTextClient;
 
 public class Example {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedPlainTextClient client = SeedPlainTextClient
             .builder()
             .build();
 
-        client.service().gettext();
+        client.service().getText();
     }
 }
 ```
@@ -73,9 +73,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.plainText.SeedPlainTextClient;
 
-SeedApiClient client = SeedApiClient
+SeedPlainTextClient client = SeedPlainTextClient
     .builder()
     .url("https://example.com")
     .build();
@@ -86,11 +86,11 @@ SeedApiClient client = SeedApiClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.api.core.SeedApiApiException;
+import com.seed.plainText.core.SeedPlainTextApiException;
 
 try{
-    client.service().gettext(...);
-} catch (SeedApiApiException e){
+    client.service().getText(...);
+} catch (SeedPlainTextApiException e){
     // Do something with the API exception...
 }
 ```
@@ -103,12 +103,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.plainText.SeedPlainTextClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient
+SeedPlainTextClient client = SeedPlainTextClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -131,9 +131,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.plainText.SeedPlainTextClient;
 
-SeedApiClient client = SeedApiClient
+SeedPlainTextClient client = SeedPlainTextClient
     .builder()
     .maxRetries(1)
     .build();
@@ -143,17 +143,17 @@ SeedApiClient client = SeedApiClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.plainText.SeedPlainTextClient;
+import com.seed.plainText.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedPlainTextClient client = SeedPlainTextClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.service().gettext(
+client.service().getText(
     ...,
     RequestOptions
         .builder()
@@ -167,11 +167,11 @@ client.service().gettext(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.plainText.SeedPlainTextClient;
+import com.seed.plainText.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedPlainTextClient client = SeedPlainTextClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -179,7 +179,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.service().gettext(
+client.service().getText(
     ...,
     RequestOptions
         .builder()
@@ -195,7 +195,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.service().withRawResponse().gettext(...);
+SeedPlainTextHttpResponse response = client.service().withRawResponse().getText(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

@@ -13,12 +13,9 @@
 <dd>
 
 ```go
-request := &unions.BigunionGetRequest{
-        ID: "id",
-    }
 client.Bigunion.Get(
         context.TODO(),
-        request,
+        "id",
     )
 }
 ```
@@ -61,10 +58,18 @@ client.Bigunion.Get(
 
 ```go
 request := &unions.BigUnion{
-        BigUnionZero: &unions.BigUnionZero{
+        NormalSweet: &unions.NormalSweet{
             Value: "value",
-            Type: unions.BigUnionZeroTypeNormalSweet,
         },
+        ID: "id",
+        CreatedAt: unions.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+        ArchivedAt: unions.Time(
+            unions.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+        ),
     }
 client.Bigunion.Update(
         context.TODO(),
@@ -112,10 +117,32 @@ client.Bigunion.Update(
 ```go
 request := []*unions.BigUnion{
         &unions.BigUnion{
-            BigUnionZero: &unions.BigUnionZero{
+            NormalSweet: &unions.NormalSweet{
                 Value: "value",
-                Type: unions.BigUnionZeroTypeNormalSweet,
             },
+            ID: "id",
+            CreatedAt: unions.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            ArchivedAt: unions.Time(
+                unions.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
+        },
+        &unions.BigUnion{
+            NormalSweet: &unions.NormalSweet{
+                Value: "value",
+            },
+            ID: "id",
+            CreatedAt: unions.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            ArchivedAt: unions.Time(
+                unions.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
         },
     }
 client.Bigunion.UpdateMany(
@@ -163,12 +190,9 @@ client.Bigunion.UpdateMany(
 <dd>
 
 ```go
-request := &unions.UnionGetRequest{
-        ID: "id",
-    }
-client.Union.Get(
+client.Bigunion.Get(
         context.TODO(),
-        request,
+        "id",
     )
 }
 ```
@@ -211,10 +235,10 @@ client.Union.Get(
 
 ```go
 request := &unions.Shape{
-        ShapeZero: &unions.ShapeZero{
+        Circle: &unions.Circle{
             Radius: 1.1,
-            Type: unions.ShapeZeroTypeCircle,
         },
+        ID: "id",
     }
 client.Union.Update(
         context.TODO(),

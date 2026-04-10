@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    uuid "github.com/google/uuid"
     fern "github.com/pagination/fern"
     client "github.com/pagination/fern/client"
     option "github.com/pagination/fern/option"
@@ -17,12 +18,14 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.InlineUsersInlineUsersListWithGlobalConfigRequest{
-        Offset: fern.Int(
-            1,
+    request := &fern.ListUsersExtendedRequest{
+        Cursor: fern.UUID(
+            uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
         ),
     }
-    client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithGlobalConfig(
+    client.Users.ListWithExtendedResults(
         context.TODO(),
         request,
     )

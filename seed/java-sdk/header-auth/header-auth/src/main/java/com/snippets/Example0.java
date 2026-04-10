@@ -1,14 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
+import com.seed.headerToken.SeedHeaderTokenClient;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
-                .apiKey("<value>")
+        SeedHeaderTokenClient client = SeedHeaderTokenClient.builder()
+                .headerTokenAuth("<value>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.service().getwithbearertoken();
+        client.service().getWithBearerToken();
     }
 }

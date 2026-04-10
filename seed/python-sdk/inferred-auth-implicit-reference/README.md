@@ -34,17 +34,19 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthImplicit
 
-client = SeedApi(
+client = SeedInferredAuthImplicit(
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.gettokenwithclientcredentials(
+client.auth.get_token_with_client_credentials(
     client_id="client_id",
     client_secret="client_secret",
-    audience="https://api.example.com",
-    grant_type="client_credentials",
+    scope="scope",
 )
 ```
 
@@ -55,19 +57,21 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedInferredAuthImplicit
 
-client = AsyncSeedApi(
+client = AsyncSeedInferredAuthImplicit(
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.auth.gettokenwithclientcredentials(
+    await client.auth.get_token_with_client_credentials(
         client_id="client_id",
         client_secret="client_secret",
-        audience="https://api.example.com",
-        grant_type="client_credentials",
+        scope="scope",
     )
 
 
@@ -83,7 +87,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.auth.gettokenwithclientcredentials(...)
+    client.auth.get_token_with_client_credentials(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -97,10 +101,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthImplicit
 
-client = SeedApi(...)
-response = client.auth.with_raw_response.gettokenwithclientcredentials(...)
+client = SeedInferredAuthImplicit(...)
+response = client.auth.with_raw_response.get_token_with_client_credentials(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -121,7 +125,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.auth.gettokenwithclientcredentials(..., request_options={
+client.auth.get_token_with_client_credentials(..., request_options={
     "max_retries": 1
 })
 ```
@@ -131,12 +135,12 @@ client.auth.gettokenwithclientcredentials(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthImplicit
 
-client = SeedApi(..., timeout=20.0)
+client = SeedInferredAuthImplicit(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.auth.gettokenwithclientcredentials(..., request_options={
+client.auth.get_token_with_client_credentials(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -148,9 +152,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedInferredAuthImplicit
 
-client = SeedApi(
+client = SeedInferredAuthImplicit(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

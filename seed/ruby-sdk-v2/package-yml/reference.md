@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/lib/seed/client.rb">echo</a>(id, request) -> String</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">echo</a>(id, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +12,9 @@
 <dd>
 
 ```ruby
-client..echo(
-  id: "id",
-  name: "name",
-  size: 1
+client.echo(
+  name: "Hello world!",
+  size: 20
 )
 ```
 </dd>
@@ -40,7 +38,7 @@ client..echo(
 <dl>
 <dd>
 
-**name:** `String` 
+**request:** `Seed::Types::EchoRequest` 
     
 </dd>
 </dl>
@@ -48,15 +46,7 @@ client..echo(
 <dl>
 <dd>
 
-**size:** `Integer` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `Seed::::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>
@@ -82,10 +72,7 @@ client..echo(
 <dd>
 
 ```ruby
-client.service.nop(
-  id: "id",
-  nested_id: "nestedId"
-)
+client.service.nop(nested_id: "id-219xca8")
 ```
 </dd>
 </dl>

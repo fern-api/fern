@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.createusername(request)</code></summary>
+<details><summary><code>client.user.createUsername(request)</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,14 @@
 <dd>
 
 ```java
-client.user().createusername(
-    UserCreateUsernameRequest
+client.user().createUsername(
+    CreateUsernameRequest
         .builder()
         .username("username")
         .password("password")
-        .name("name")
+        .name("test")
         .tags(
-            Arrays.asList("tags")
+            Arrays.asList("tags", "tags")
         )
         .build()
 );
@@ -38,7 +38,7 @@ client.user().createusername(
 <dl>
 <dd>
 
-**tags:** `Optional<String>` 
+**tags:** `List<String>` 
     
 </dd>
 </dl>
@@ -74,7 +74,7 @@ client.user().createusername(
 </dl>
 </details>
 
-<details><summary><code>client.user.createusernamewithreferencedtype(request)</code></summary>
+<details><summary><code>client.user.createUsernameWithReferencedType(request)</code></summary>
 <dl>
 <dd>
 
@@ -87,14 +87,19 @@ client.user().createusername(
 <dd>
 
 ```java
-client.user().createusernamewithreferencedtype(
-    CreateUsernameBody
+client.user().createUsernameWithReferencedType(
+    CreateUsernameReferencedRequest
         .builder()
-        .username("username")
-        .password("password")
-        .name("name")
+        .body(
+            CreateUsernameBody
+                .builder()
+                .username("username")
+                .password("password")
+                .name("test")
+                .build()
+        )
         .tags(
-            Arrays.asList("tags")
+            Arrays.asList("tags", "tags")
         )
         .build()
 );
@@ -112,7 +117,7 @@ client.user().createusernamewithreferencedtype(
 <dl>
 <dd>
 
-**tags:** `Optional<String>` 
+**tags:** `List<String>` 
     
 </dd>
 </dl>
@@ -120,23 +125,7 @@ client.user().createusernamewithreferencedtype(
 <dl>
 <dd>
 
-**username:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `String` 
+**request:** `CreateUsernameBody` 
     
 </dd>
 </dl>
@@ -148,7 +137,7 @@ client.user().createusernamewithreferencedtype(
 </dl>
 </details>
 
-<details><summary><code>client.user.createusernameoptional(request)</code></summary>
+<details><summary><code>client.user.createUsernameOptional(request)</code></summary>
 <dl>
 <dd>
 
@@ -161,10 +150,8 @@ client.user().createusernamewithreferencedtype(
 <dd>
 
 ```java
-client.user().createusernameoptional(
-    CreateUsernameBodyOptionalProperties
-        .builder()
-        .build()
+client.user().createUsernameOptional(
+    Optional.empty()
 );
 ```
 </dd>
@@ -180,23 +167,7 @@ client.user().createusernameoptional(
 <dl>
 <dd>
 
-**username:** `Optional<String>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `Optional<String>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `Optional<String>` 
+**request:** `Optional<CreateUsernameBodyOptionalProperties>` 
     
 </dd>
 </dl>
@@ -208,7 +179,7 @@ client.user().createusernameoptional(
 </dl>
 </details>
 
-<details><summary><code>client.user.getusername() -> User</code></summary>
+<details><summary><code>client.user.getUsername() -> User</code></summary>
 <dl>
 <dd>
 
@@ -221,14 +192,14 @@ client.user().createusernameoptional(
 <dd>
 
 ```java
-client.user().getusername(
-    UserGetUsernameRequest
+client.user().getUsername(
+    GetUsersRequest
         .builder()
         .limit(1)
-        .id("id")
+        .id(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .date("2023-01-15")
         .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-        .bytes("bytes")
+        .bytes("SGVsbG8gd29ybGQh".getBytes())
         .user(
             User
                 .builder()
@@ -254,9 +225,16 @@ client.user().getusername(
                 .build()
         )
         .longParam(1000000L)
-        .bigIntParam(1)
+        .bigIntParam(new BigInteger("1000000"))
         .userList(
             Arrays.asList(
+                User
+                    .builder()
+                    .name("name")
+                    .tags(
+                        Arrays.asList("tags", "tags")
+                    )
+                    .build(),
                 User
                     .builder()
                     .name("name")
@@ -320,7 +298,7 @@ client.user().getusername(
 <dl>
 <dd>
 
-**id:** `String` 
+**id:** `UUID` 
     
 </dd>
 </dl>
@@ -344,7 +322,7 @@ client.user().getusername(
 <dl>
 <dd>
 
-**bytes:** `String` 
+**bytes:** `byte[]` 
     
 </dd>
 </dl>
@@ -360,7 +338,7 @@ client.user().getusername(
 <dl>
 <dd>
 
-**userList:** `Optional<User>` 
+**userList:** `List<User>` 
     
 </dd>
 </dl>
@@ -408,7 +386,7 @@ client.user().getusername(
 <dl>
 <dd>
 
-**excludeUser:** `Optional<User>` 
+**excludeUser:** `User` 
     
 </dd>
 </dl>
@@ -416,7 +394,7 @@ client.user().getusername(
 <dl>
 <dd>
 
-**filter:** `Optional<String>` 
+**filter:** `String` 
     
 </dd>
 </dl>
@@ -432,7 +410,7 @@ client.user().getusername(
 <dl>
 <dd>
 
-**bigIntParam:** `Integer` 
+**bigIntParam:** `String` 
     
 </dd>
 </dl>

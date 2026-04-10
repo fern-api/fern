@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "WebsocketAuth",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "WebsocketAuth",
+            targets: ["WebsocketAuth"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "WebsocketAuth",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "WebsocketAuthTests",
+            dependencies: ["WebsocketAuth"],
             path: "Tests"
         )
     ]

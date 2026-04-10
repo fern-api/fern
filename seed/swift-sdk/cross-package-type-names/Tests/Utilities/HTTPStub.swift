@@ -1,4 +1,4 @@
-import Api
+import CrossPackageTypeNames
 import Foundation
 
 final class HTTPStub {

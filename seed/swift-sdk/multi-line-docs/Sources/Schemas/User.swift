@@ -11,14 +11,14 @@ public struct User: Codable, Hashable, Sendable {
     ///  - Charlie
     public let name: String
     /// The user's age.
-    public let age: Nullable<Int>?
+    public let age: Int?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: String,
         name: String,
-        age: Nullable<Int>? = nil,
+        age: Int? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -31,7 +31,7 @@ public struct User: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
-        self.age = try container.decodeNullableIfPresent(Int.self, forKey: .age)
+        self.age = try container.decodeIfPresent(Int.self, forKey: .age)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -40,7 +40,7 @@ public struct User: Codable, Hashable, Sendable {
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.name, forKey: .name)
-        try container.encodeNullableIfPresent(self.age, forKey: .age)
+        try container.encodeIfPresent(self.age, forKey: .age)
     }
 
     /// Keys for encoding/decoding struct properties.

@@ -33,18 +33,18 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Get(
 	ctx context.Context,
-	request *fern.UserGetRequest,
+	id string,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://api.example.com",
+		"",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v",
-		request.ID,
+		id,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

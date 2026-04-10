@@ -20,24 +20,24 @@ module Seed
       @headers ||= Seed::Headers::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Inlinedrequest::Client]
-    def inlinedrequest
-      @inlinedrequest ||= Seed::Inlinedrequest::Client.new(client: @raw_client)
+    # @return [Seed::InlinedRequest::Client]
+    def inlined_request
+      @inlined_request ||= Seed::InlinedRequest::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Multipartform::Client]
-    def multipartform
-      @multipartform ||= Seed::Multipartform::Client.new(client: @raw_client)
+    # @return [Seed::MultipartForm::Client]
+    def multipart_form
+      @multipart_form ||= Seed::MultipartForm::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Pathparam::Client]
-    def pathparam
-      @pathparam ||= Seed::Pathparam::Client.new(client: @raw_client)
+    # @return [Seed::PathParam::Client]
+    def path_param
+      @path_param ||= Seed::PathParam::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Queryparam::Client]
-    def queryparam
-      @queryparam ||= Seed::Queryparam::Client.new(client: @raw_client)
+    # @return [Seed::QueryParam::Client]
+    def query_param
+      @query_param ||= Seed::QueryParam::Client.new(client: @raw_client)
     end
   end
 end

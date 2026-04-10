@@ -37,7 +37,9 @@ impl MemoBuilder {
     /// - [`description`](MemoBuilder::description)
     pub fn build(self) -> Result<Memo, BuildError> {
         Ok(Memo {
-            description: self.description.ok_or_else(|| BuildError::missing_field("description"))?,
+            description: self
+                .description
+                .ok_or_else(|| BuildError::missing_field("description"))?,
             account: self.account,
         })
     }

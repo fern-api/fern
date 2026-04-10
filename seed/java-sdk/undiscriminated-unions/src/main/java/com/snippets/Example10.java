@@ -1,13 +1,22 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.types.NestedUnionRoot;
+import com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;
+import com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;
+import com.seed.undiscriminatedUnions.resources.union.types.PaymentMethodUnion;
+import com.seed.undiscriminatedUnions.resources.union.types.TokenizeCard;
 
 public class Example10 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
-        client.union().nestedunions(NestedUnionRoot.of("string"));
+        client.union()
+                .testCamelCaseProperties(PaymentRequest.builder()
+                        .paymentMethod(PaymentMethodUnion.of(TokenizeCard.builder()
+                                .method("method")
+                                .cardNumber("cardNumber")
+                                .build()))
+                        .build());
     }
 }

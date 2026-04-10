@@ -1,10 +1,16 @@
 import Foundation
-import Api
+import CrossPackageTypeNames
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = CrossPackageTypeNamesClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.folderDService.folderDServiceGetDirectThread()
+    _ = try await client.foo.find(
+        optionalString: "optionalString",
+        request: .init(
+            publicProperty: "publicProperty",
+            privateProperty: 1
+        )
+    )
 }
 
 try await main()

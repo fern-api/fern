@@ -1,4 +1,4 @@
-import Api
+import AnyAuth
 import Foundation
 
 final class HTTPStub {

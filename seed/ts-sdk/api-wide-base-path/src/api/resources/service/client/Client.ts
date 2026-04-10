@@ -6,7 +6,6 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -22,35 +21,37 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedApi.ServicePostRequest} request
+     * @param {string} serviceParam
+     * @param {number} endpointParam
+     * @param {string} resourceParam
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.post({
-     *         pathParam: "pathParam",
-     *         serviceParam: "serviceParam",
-     *         endpointParam: 1,
-     *         resourceParam: "resourceParam"
-     *     })
+     *     await client.service.post("serviceParam", 1, "resourceParam")
      */
     public post(
-        request: SeedApi.ServicePostRequest,
+        serviceParam: string,
+        endpointParam: number,
+        resourceParam: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__post(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(
+            this.__post(serviceParam, endpointParam, resourceParam, requestOptions),
+        );
     }
 
     private async __post(
-        request: SeedApi.ServicePostRequest,
+        serviceParam: string,
+        endpointParam: number,
+        resourceParam: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { pathParam, serviceParam, endpointParam, resourceParam } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `test/${core.url.encodePathParam(pathParam)}/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(endpointParam)}/${core.url.encodePathParam(resourceParam)}`,
+                `/test/${core.url.encodePathParam(this._options.pathParam)}/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(endpointParam)}/${core.url.encodePathParam(resourceParam)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -66,7 +67,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedApiWideBasePathError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

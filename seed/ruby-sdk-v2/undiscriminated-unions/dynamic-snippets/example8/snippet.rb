@@ -2,4 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.union.duplicatetypesunion(request: "string")
+client.union.nested_unions(request: "string")

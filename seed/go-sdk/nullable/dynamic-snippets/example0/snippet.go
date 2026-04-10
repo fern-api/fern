@@ -14,8 +14,30 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.NullableGetUsersRequest{}
-    client.Nullable.Getusers(
+    request := &fern.GetUsersRequest{
+        Usernames: []*string{
+            fern.String(
+                "usernames",
+            ),
+        },
+        Avatar: fern.String(
+            "avatar",
+        ),
+        Activated: []*bool{
+            fern.Bool(
+                true,
+            ),
+        },
+        Tags: []*string{
+            fern.String(
+                "tags",
+            ),
+        },
+        Extra: fern.Bool(
+            true,
+        ),
+    }
+    client.Nullable.GetUsers(
         context.TODO(),
         request,
     )

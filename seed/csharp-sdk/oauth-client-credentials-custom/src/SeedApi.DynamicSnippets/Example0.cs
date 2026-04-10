@@ -1,25 +1,27 @@
-using SeedApi;
+using SeedOauthClientCredentials;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
-            token: "<token>",
+        var client = new SeedOauthClientCredentialsClient(
+            clientId: "<clientId>",
+            clientSecret: "<clientSecret>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Auth.GettokenwithclientcredentialsAsync(
-            new AuthGetTokenWithClientCredentialsRequest {
+        await client.Auth.GetTokenWithClientCredentialsAsync(
+            new GetTokenRequest {
                 Cid = "cid",
                 Csr = "csr",
                 Scp = "scp",
                 EntityId = "entity_id",
-                Audience = AuthGetTokenWithClientCredentialsRequestAudience.HttpsApiExampleCom,
-                GrantType = AuthGetTokenWithClientCredentialsRequestGrantType.ClientCredentials
+                Audience = "https://api.example.com",
+                GrantType = "client_credentials",
+                Scope = "scope"
             }
         );
     }

@@ -9,8 +9,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->optional->sendoptionalbody(
+$client->optional->sendOptionalBody(
     [
-        'key' => "value",
+        'string' => [
+            'key' => "value",
+        ],
     ],
 );

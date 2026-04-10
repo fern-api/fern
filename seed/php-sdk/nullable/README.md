@@ -37,12 +37,30 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Nullable\Requests\NullableCreateUserRequest;
+use Seed\Nullable\Requests\CreateUserRequest;
+use Seed\Nullable\Types\Metadata;
+use DateTime;
+use Seed\Nullable\Types\Status;
 
 $client = new SeedClient();
-$client->nullable->createuser(
-    new NullableCreateUserRequest([
+$client->nullable->createUser(
+    new CreateUserRequest([
         'username' => 'username',
+        'tags' => [
+            'tags',
+            'tags',
+        ],
+        'metadata' => new Metadata([
+            'createdAt' => new DateTime('2024-01-15T09:30:00Z'),
+            'updatedAt' => new DateTime('2024-01-15T09:30:00Z'),
+            'avatar' => 'avatar',
+            'activated' => true,
+            'status' => Status::active(),
+            'values' => [
+                'values' => 'values',
+            ],
+        ]),
+        'avatar' => 'avatar',
     ]),
 );
 
@@ -57,7 +75,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->nullable->createuser(...);
+    $response = $client->nullable->createUser(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -111,7 +129,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->nullable->createuser(
+$response = $client->nullable->createUser(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -124,7 +142,7 @@ $response = $client->nullable->createuser(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->nullable->createuser(
+$response = $client->nullable->createUser(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

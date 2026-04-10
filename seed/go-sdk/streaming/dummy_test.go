@@ -9,17 +9,9 @@ import (
 	testing "testing"
 )
 
-func TestSettersDummyGenerateRequest(t *testing.T) {
-	t.Run("SetStream", func(t *testing.T) {
-		obj := &DummyGenerateRequest{}
-		var fernTestValueStream bool
-		obj.SetStream(fernTestValueStream)
-		assert.Equal(t, fernTestValueStream, obj.Stream)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
+func TestSettersGenerateequest(t *testing.T) {
 	t.Run("SetNumEvents", func(t *testing.T) {
-		obj := &DummyGenerateRequest{}
+		obj := &Generateequest{}
 		var fernTestValueNumEvents int
 		obj.SetNumEvents(fernTestValueNumEvents)
 		assert.Equal(t, fernTestValueNumEvents, obj.NumEvents)
@@ -28,42 +20,11 @@ func TestSettersDummyGenerateRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitDummyGenerateRequest(t *testing.T) {
-	t.Run("SetStream_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &DummyGenerateRequest{}
-		var fernTestValueStream bool
-
-		// Act
-		obj.SetStream(fernTestValueStream)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
+func TestSettersMarkExplicitGenerateequest(t *testing.T) {
 	t.Run("SetNumEvents_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &DummyGenerateRequest{}
+		obj := &Generateequest{}
 		var fernTestValueNumEvents int
 
 		// Act
@@ -93,17 +54,9 @@ func TestSettersMarkExplicitDummyGenerateRequest(t *testing.T) {
 
 }
 
-func TestSettersDummyGenerateStreamRequest(t *testing.T) {
-	t.Run("SetStream", func(t *testing.T) {
-		obj := &DummyGenerateStreamRequest{}
-		var fernTestValueStream bool
-		obj.SetStream(fernTestValueStream)
-		assert.Equal(t, fernTestValueStream, obj.Stream)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
+func TestSettersGenerateStreamRequest(t *testing.T) {
 	t.Run("SetNumEvents", func(t *testing.T) {
-		obj := &DummyGenerateStreamRequest{}
+		obj := &GenerateStreamRequest{}
 		var fernTestValueNumEvents int
 		obj.SetNumEvents(fernTestValueNumEvents)
 		assert.Equal(t, fernTestValueNumEvents, obj.NumEvents)
@@ -112,42 +65,11 @@ func TestSettersDummyGenerateStreamRequest(t *testing.T) {
 
 }
 
-func TestSettersMarkExplicitDummyGenerateStreamRequest(t *testing.T) {
-	t.Run("SetStream_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &DummyGenerateStreamRequest{}
-		var fernTestValueStream bool
-
-		// Act
-		obj.SetStream(fernTestValueStream)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
+func TestSettersMarkExplicitGenerateStreamRequest(t *testing.T) {
 	t.Run("SetNumEvents_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &DummyGenerateStreamRequest{}
+		obj := &GenerateStreamRequest{}
 		var fernTestValueNumEvents int
 
 		// Act

@@ -3,19 +3,16 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\BigUnionZero;
-use Seed\Types\BigUnionZeroType;
+use Seed\Union\Types\Shape;
+use Seed\Union\Types\Circle;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->bigunion->updateMany(
-    [
-        new BigUnionZero([
-            'value' => 'value',
-            'type' => BigUnionZeroType::NormalSweet->value,
-        ]),
-    ],
+$client->union->update(
+    Shape::circle('id', new Circle([
+        'radius' => 1.1,
+    ])),
 );

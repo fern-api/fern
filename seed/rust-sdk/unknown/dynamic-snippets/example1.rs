@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_unknown_as_any::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,12 +6,13 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = UnknownAsAnyClient::new(config).expect("Failed to build client");
     client
         .unknown
-        .postobject(
+        .post_object(
             &MyObject {
                 unknown: serde_json::json!({"key":"value"}),
+                ..Default::default()
             },
             None,
         )

@@ -2,7 +2,6 @@ import Foundation
 
 /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 public final class ApiClient: Sendable {
-    public let : Client
     private let httpClient: HTTPClient
 
     /// Initialize the client with the specified configuration.
@@ -51,7 +50,34 @@ public final class ApiClient: Sendable {
             maxRetries: maxRetries,
             urlSession: urlSession
         )
-        self. = Client(config: config)
         self.httpClient = HTTPClient(config: config)
+    }
+
+    public func getFoo(optionalBaz: String? = nil, optionalNullableBaz: Nullable<String>? = nil, requiredBaz: String, requiredNullableBaz: Nullable<String>, requestOptions: RequestOptions? = nil) async throws -> Foo {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/foo",
+            queryParams: [
+                "optional_baz": optionalBaz.map { .string($0) }, 
+                "optional_nullable_baz": optionalNullableBaz?.wrappedValue.map { .string($0) }, 
+                "required_baz": .string(requiredBaz), 
+                "required_nullable_baz": requiredNullableBaz.wrappedValue.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: Foo.self
+        )
+    }
+
+    public func updateFoo(id: String, xIdempotencyKey: String, request: Requests.UpdateFooRequest, requestOptions: RequestOptions? = nil) async throws -> Foo {
+        return try await httpClient.performRequest(
+            method: .patch,
+            path: "/foo/\(id)",
+            headers: [
+                "X-Idempotency-Key": xIdempotencyKey
+            ],
+            body: request,
+            requestOptions: requestOptions,
+            responseType: Foo.self
+        )
     }
 }

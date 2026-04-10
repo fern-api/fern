@@ -63,14 +63,14 @@ class HomepageClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function gethomepageproblems(?array $options = null): ?array
+    public function getHomepageProblems(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "homepage-problems",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/homepage-problems",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -108,14 +108,14 @@ class HomepageClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sethomepageproblems(array $request, ?array $options = null): void
+    public function setHomepageProblems(array $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "homepage-problems",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/homepage-problems",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeArray($request, ['string']),
                 ),

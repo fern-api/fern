@@ -5,4 +5,3 @@ export * from "./EnumWithSpecialCharacters.js";
 export * from "./ForwardCompatibleEnum.js";
 export * from "./Operand.js";
 export * from "./SpecialEnum.js";
-export * from "./Status.js";

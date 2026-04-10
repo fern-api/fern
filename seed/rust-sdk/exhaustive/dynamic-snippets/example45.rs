@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,17 +7,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_documented_unknown_type(
-            &TypesObjectWithDocumentedUnknownType {
-                documented_unknown_type: TypesDocumentedUnknownType(
-                    serde_json::json!({"key":"value"}),
-                ),
-                ..Default::default()
-            },
-            None,
-        )
+        .endpoints
+        .primitive
+        .get_and_return_string(&"string".to_string(), None)
         .await;
 }

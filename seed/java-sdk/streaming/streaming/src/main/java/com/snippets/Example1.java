@@ -1,15 +1,13 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.dummy.requests.DummyGenerateRequest;
+import com.seed.streaming.SeedStreamingClient;
+import com.seed.streaming.resources.dummy.requests.Generateequest;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedStreamingClient client =
+                SeedStreamingClient.builder().url("https://api.fern.com").build();
 
-        client.dummy()
-                .generate(
-                        DummyGenerateRequest.builder().stream(true).numEvents(1).build());
+        client.dummy().generate(Generateequest.builder().numEvents(5).build());
     }
 }

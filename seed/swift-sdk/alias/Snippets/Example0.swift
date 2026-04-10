@@ -1,10 +1,10 @@
 import Foundation
-import Api
+import Alias
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = AliasClient(baseURL: "https://api.fern.com")
 
-    _ = try await client..get(typeId: "typeId")
+    _ = try await client.get(typeId: "typeId")
 }
 
 try await main()

@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.shape import Shape
 from .raw_client import AsyncRawUnionClient, RawUnionClient
+from .types.shape import Shape
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -39,12 +39,11 @@ class UnionClient:
         -------
         Shape
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUnions
 
-        client = SeedApi(
+        client = SeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.union.get(
@@ -67,18 +66,17 @@ class UnionClient:
         -------
         bool
 
-
         Examples
         --------
-        from seed import SeedApi, ShapeZero
+        from seed import SeedUnions
+        from seed.union import CircleShape
 
-        client = SeedApi(
+        client = SeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.union.update(
-            request=ShapeZero(
+            request=CircleShape(
                 radius=1.1,
-                type="circle",
             ),
         )
         """
@@ -114,14 +112,13 @@ class AsyncUnionClient:
         -------
         Shape
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUnions
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -150,23 +147,22 @@ class AsyncUnionClient:
         -------
         bool
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi, ShapeZero
+        from seed import AsyncSeedUnions
+        from seed.union import CircleShape
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.union.update(
-                request=ShapeZero(
+                request=CircleShape(
                     radius=1.1,
-                    type="circle",
                 ),
             )
 

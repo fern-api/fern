@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\ServicePatchRequest;
+use Seed\Service\Requests\PatchProxyRequest;
 
 $client = new SeedClient(
     options: [
@@ -11,5 +11,8 @@ $client = new SeedClient(
     ],
 );
 $client->service->patch(
-    new ServicePatchRequest([]),
+    new PatchProxyRequest([
+        'application' => 'application',
+        'requireAuth' => true,
+    ]),
 );

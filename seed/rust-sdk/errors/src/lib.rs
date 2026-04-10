@@ -1,21 +1,21 @@
-//! # errors SDK
+//! # Errors SDK
 //!
-//! The official Rust SDK for the errors.
+//! The official Rust SDK for the Errors.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_errors::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = ErrorsClient::new(config).expect("Failed to build client");
 //!     client
 //!         .simple
-//!         .foowithoutendpointerror(
+//!         .foo_without_endpoint_error(
 //!             &FooRequest {
 //!                 bar: "bar".to_string(),
 //!                 ..Default::default()

@@ -1,4 +1,4 @@
-import Api
+import Alias
 import Foundation
 
 final class HTTPStub {

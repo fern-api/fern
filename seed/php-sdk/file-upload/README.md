@@ -37,16 +37,13 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\ServicePostRequest;
+use Seed\Service\Requests\JustFileRequest;
 use Seed\Utils\File;
 
 $client = new SeedClient();
-$client->service->post(
-    new ServicePostRequest([
+$client->service->justFile(
+    new JustFileRequest([
         'file' => File::createFromString("example_file", "example_file"),
-        'fileList' => File::createFromString("example_file_list", "example_file_list"),
-        'maybeFile' => File::createFromString("example_maybe_file", "example_maybe_file"),
-        'maybeFileList' => File::createFromString("example_maybe_file_list", "example_maybe_file_list"),
     ]),
 );
 
@@ -61,7 +58,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->service->post(...);
+    $response = $client->service->justFile(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -115,7 +112,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->service->post(
+$response = $client->service->justFile(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -128,7 +125,7 @@ $response = $client->service->post(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->service->post(
+$response = $client->service->justFile(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

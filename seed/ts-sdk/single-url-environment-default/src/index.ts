@@ -1,6 +1,6 @@
-export * as SeedApi from "./api/index.js";
+export * as SeedSingleUrlEnvironmentDefault from "./api/index.js";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-export { SeedApiClient } from "./Client.js";
-export { SeedApiEnvironment } from "./environments.js";
-export { SeedApiError, SeedApiTimeoutError } from "./errors/index.js";
+export { SeedSingleUrlEnvironmentDefaultClient } from "./Client.js";
+export { SeedSingleUrlEnvironmentDefaultEnvironment } from "./environments.js";
+export { SeedSingleUrlEnvironmentDefaultError, SeedSingleUrlEnvironmentDefaultTimeoutError } from "./errors/index.js";
 export * from "./exports.js";

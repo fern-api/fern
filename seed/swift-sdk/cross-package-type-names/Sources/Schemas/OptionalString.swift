@@ -1,3 +1,3 @@
 import Foundation
 
-public typealias OptionalString = Nullable<String>
+public typealias OptionalString = String?

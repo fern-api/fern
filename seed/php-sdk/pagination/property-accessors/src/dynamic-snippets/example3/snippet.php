@@ -3,8 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\InlineUsersInlineUsers\Requests\InlineUsersInlineUsersListWithCursorPaginationRequest;
-use Seed\Types\InlineUsersOrder;
+use Seed\InlineUsers\InlineUsers\Requests\ListUsersBodyCursorPaginationRequest;
+use Seed\InlineUsers\InlineUsers\Types\WithCursor;
 
 $client = new SeedClient(
     token: '<token>',
@@ -12,11 +12,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithCursorPagination(
-    new InlineUsersInlineUsersListWithCursorPaginationRequest([
-        'page' => 1,
-        'perPage' => 1,
-        'order' => InlineUsersOrder::Asc->value,
-        'startingAfter' => 'starting_after',
+$client->inlineUsers->inlineUsers->listWithBodyCursorPagination(
+    new ListUsersBodyCursorPaginationRequest([
+        'pagination' => new WithCursor([
+            'cursor' => 'cursor',
+        ]),
     ]),
 );

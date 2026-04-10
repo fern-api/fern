@@ -3,15 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Auth\Requests\AuthGetTokenRequest;
+use Seed\Auth\Requests\GetTokenRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->auth->gettoken(
-    new AuthGetTokenRequest([
-        'apiKey' => 'X-Api-Key',
+$client->auth->getToken(
+    new GetTokenRequest([
+        'apiKey' => 'api_key',
     ]),
 );

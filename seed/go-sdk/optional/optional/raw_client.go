@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Sendoptionalbody(
+func (r *RawClient) SendOptionalBody(
 	ctx context.Context,
 	request map[string]any,
 	opts ...option.RequestOption,
@@ -72,7 +72,7 @@ func (r *RawClient) Sendoptionalbody(
 	}, nil
 }
 
-func (r *RawClient) Sendoptionaltypedbody(
+func (r *RawClient) SendOptionalTypedBody(
 	ctx context.Context,
 	request *fern.SendOptionalBodyRequest,
 	opts ...option.RequestOption,
@@ -88,7 +88,6 @@ func (r *RawClient) Sendoptionaltypedbody(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
@@ -114,8 +113,10 @@ func (r *RawClient) Sendoptionaltypedbody(
 	}, nil
 }
 
-func (r *RawClient) Sendoptionalnullablewithalloptionalproperties(
+func (r *RawClient) SendOptionalNullableWithAllOptionalProperties(
 	ctx context.Context,
+	actionID string,
+	id string,
 	request *fern.DeployParams,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.DeployResponse], error) {
@@ -127,14 +128,13 @@ func (r *RawClient) Sendoptionalnullablewithalloptionalproperties(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/deploy/%v/versions/%v",
-		request.ActionID,
-		request.ID,
+		actionID,
+		id,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response *fern.DeployResponse
 	raw, err := r.caller.Call(
 		ctx,

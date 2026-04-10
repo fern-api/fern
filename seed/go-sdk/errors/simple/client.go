@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Foowithoutendpointerror(
+func (c *Client) FooWithoutEndpointError(
 	ctx context.Context,
 	request *fern.FooRequest,
 	opts ...option.RequestOption,
 ) (*fern.FooResponse, error) {
-	response, err := c.WithRawResponse.Foowithoutendpointerror(
+	response, err := c.WithRawResponse.FooWithoutEndpointError(
 		ctx,
 		request,
 		opts...,
@@ -65,12 +65,12 @@ func (c *Client) Foo(
 	return response.Body, nil
 }
 
-func (c *Client) Foowithexamples(
+func (c *Client) FooWithExamples(
 	ctx context.Context,
 	request *fern.FooRequest,
 	opts ...option.RequestOption,
 ) (*fern.FooResponse, error) {
-	response, err := c.WithRawResponse.Foowithexamples(
+	response, err := c.WithRawResponse.FooWithExamples(
 		ctx,
 		request,
 		opts...,

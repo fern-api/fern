@@ -11,7 +11,7 @@ public class Example0 {
                 .build();
 
         client.imdb()
-                .createmovie(
+                .createMovie(
                         CreateMovieRequest.builder().title("title").rating(1.1).build());
     }
 }

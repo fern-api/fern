@@ -11,11 +11,13 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
+        root_variable: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
+        self._root_variable = root_variable
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
@@ -49,13 +51,16 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        root_variable: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(headers=headers, base_url=base_url, timeout=timeout, logging=logging)
+        super().__init__(
+            root_variable=root_variable, headers=headers, base_url=base_url, timeout=timeout, logging=logging
+        )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -69,6 +74,7 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        root_variable: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -76,7 +82,9 @@ class AsyncClientWrapper(BaseClientWrapper):
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(headers=headers, base_url=base_url, timeout=timeout, logging=logging)
+        super().__init__(
+            root_variable=root_variable, headers=headers, base_url=base_url, timeout=timeout, logging=logging
+        )
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,

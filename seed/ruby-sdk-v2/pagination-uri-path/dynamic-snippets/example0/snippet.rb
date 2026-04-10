@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.users.listwithuripagination
+client.users.list_with_uri_pagination

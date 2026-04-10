@@ -4,16 +4,16 @@ namespace Seed\User;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\User\Requests\UserCreateUsernameRequest;
+use Seed\User\Requests\CreateUsernameRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\User\Requests\CreateUsernameBody;
-use Seed\User\Requests\CreateUsernameBodyOptionalProperties;
-use Seed\User\Requests\UserGetUsernameRequest;
-use Seed\Types\User;
+use Seed\User\Requests\CreateUsernameReferencedRequest;
+use Seed\User\Types\CreateUsernameBodyOptionalProperties;
+use Seed\User\Requests\GetUsersRequest;
+use Seed\User\Types\User;
 use Seed\Core\Json\JsonSerializer;
 use JsonException;
 
@@ -54,7 +54,7 @@ class UserClient
     }
 
     /**
-     * @param UserCreateUsernameRequest $request
+     * @param CreateUsernameRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -66,18 +66,16 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createusername(UserCreateUsernameRequest $request, ?array $options = null): void
+    public function createUsername(CreateUsernameRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->tags != null) {
-            $query['tags'] = $request->tags;
-        }
+        $query['tags'] = $request->tags;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "user/username",
+                    path: "/user/username",
                     method: HttpMethod::POST,
                     query: $query,
                     body: $request,
@@ -99,7 +97,7 @@ class UserClient
     }
 
     /**
-     * @param CreateUsernameBody $request
+     * @param CreateUsernameReferencedRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -111,21 +109,19 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createusernamewithreferencedtype(CreateUsernameBody $request, ?array $options = null): void
+    public function createUsernameWithReferencedType(CreateUsernameReferencedRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->tags != null) {
-            $query['tags'] = $request->tags;
-        }
+        $query['tags'] = $request->tags;
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "user/username-referenced",
+                    path: "/user/username-referenced",
                     method: HttpMethod::POST,
                     query: $query,
-                    body: $request,
+                    body: $request->body,
                 ),
                 $options,
             );
@@ -144,7 +140,7 @@ class UserClient
     }
 
     /**
-     * @param CreateUsernameBodyOptionalProperties $request
+     * @param ?CreateUsernameBodyOptionalProperties $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -156,14 +152,14 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createusernameoptional(CreateUsernameBodyOptionalProperties $request = new CreateUsernameBodyOptionalProperties(), ?array $options = null): void
+    public function createUsernameOptional(?CreateUsernameBodyOptionalProperties $request = null, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "user/username-optional",
+                    path: "/user/username-optional",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -184,7 +180,7 @@ class UserClient
     }
 
     /**
-     * @param UserGetUsernameRequest $request
+     * @param GetUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -197,7 +193,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getusername(UserGetUsernameRequest $request, ?array $options = null): ?User
+    public function getUsername(GetUsersRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -207,13 +203,13 @@ class UserClient
         $query['deadline'] = JsonSerializer::serializeDateTime($request->deadline);
         $query['bytes'] = $request->bytes;
         $query['user'] = $request->user;
+        $query['userList'] = $request->userList;
         $query['keyValue'] = $request->keyValue;
         $query['nestedUser'] = $request->nestedUser;
+        $query['excludeUser'] = $request->excludeUser;
+        $query['filter'] = $request->filter;
         $query['longParam'] = $request->longParam;
         $query['bigIntParam'] = $request->bigIntParam;
-        if ($request->userList != null) {
-            $query['userList'] = $request->userList;
-        }
         if ($request->optionalDeadline != null) {
             $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->optionalDeadline);
         }
@@ -223,17 +219,11 @@ class UserClient
         if ($request->optionalUser != null) {
             $query['optionalUser'] = $request->optionalUser;
         }
-        if ($request->excludeUser != null) {
-            $query['excludeUser'] = $request->excludeUser;
-        }
-        if ($request->filter != null) {
-            $query['filter'] = $request->filter;
-        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "user",
+                    path: "/user",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

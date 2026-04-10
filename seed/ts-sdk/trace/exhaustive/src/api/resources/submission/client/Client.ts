@@ -2,10 +2,10 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedTrace from "../../../index.js";
 
 export declare namespace SubmissionClient {
     export type Options = BaseClientOptions;
@@ -13,6 +13,9 @@ export declare namespace SubmissionClient {
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
+/**
+ * Responsible for spinning up and spinning down execution.
+ */
 export class SubmissionClient {
     protected readonly _options: NormalizedClientOptions<SubmissionClient.Options>;
 
@@ -23,39 +26,42 @@ export class SubmissionClient {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      *
-     * @param {SeedApi.SubmissionCreateExecutionSessionRequest} request
+     * @param {SeedTrace.Language} language
      * @param {SubmissionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.submission.createexecutionsession({
-     *         language: "JAVA"
-     *     })
+     *     await client.submission.createExecutionSession("JAVA")
      */
-    public createexecutionsession(
-        request: SeedApi.SubmissionCreateExecutionSessionRequest,
+    public createExecutionSession(
+        language: SeedTrace.Language,
         requestOptions?: SubmissionClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<SeedApi.ExecutionSessionResponse, SeedApi.submission.createexecutionsession.Error>
+        core.APIResponse<SeedTrace.ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error>
     > {
-        return core.HttpResponsePromise.fromPromise(this.__createexecutionsession(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__createExecutionSession(language, requestOptions));
     }
 
-    private async __createexecutionsession(
-        request: SeedApi.SubmissionCreateExecutionSessionRequest,
+    private async __createExecutionSession(
+        language: SeedTrace.Language,
         requestOptions?: SubmissionClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<SeedApi.ExecutionSessionResponse, SeedApi.submission.createexecutionsession.Error>
+            core.APIResponse<SeedTrace.ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error>
         >
     > {
-        const { language } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `sessions/create-session/${core.url.encodePathParam(language)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/sessions/create-session/${core.url.encodePathParam(language)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -76,7 +82,7 @@ export class SubmissionClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedApi.ExecutionSessionResponse,
+                    body: _response.body as SeedTrace.ExecutionSessionResponse,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -87,7 +93,7 @@ export class SubmissionClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.submission.createexecutionsession.Error._unknown(_response.error),
+                error: SeedTrace.submission.createExecutionSession.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -97,39 +103,45 @@ export class SubmissionClient {
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
      *
-     * @param {SeedApi.SubmissionGetExecutionSessionRequest} request
+     * @param {string} sessionId
      * @param {SubmissionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.submission.getexecutionsession({
-     *         sessionId: "sessionId"
-     *     })
+     *     await client.submission.getExecutionSession("sessionId")
      */
-    public getexecutionsession(
-        request: SeedApi.SubmissionGetExecutionSessionRequest,
+    public getExecutionSession(
+        sessionId: string,
         requestOptions?: SubmissionClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<SeedApi.ExecutionSessionResponse, SeedApi.submission.getexecutionsession.Error>
+        core.APIResponse<SeedTrace.ExecutionSessionResponse | undefined, SeedTrace.submission.getExecutionSession.Error>
     > {
-        return core.HttpResponsePromise.fromPromise(this.__getexecutionsession(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionSession(sessionId, requestOptions));
     }
 
-    private async __getexecutionsession(
-        request: SeedApi.SubmissionGetExecutionSessionRequest,
+    private async __getExecutionSession(
+        sessionId: string,
         requestOptions?: SubmissionClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<SeedApi.ExecutionSessionResponse, SeedApi.submission.getexecutionsession.Error>
+            core.APIResponse<
+                SeedTrace.ExecutionSessionResponse | undefined,
+                SeedTrace.submission.getExecutionSession.Error
+            >
         >
     > {
-        const { sessionId } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `sessions/${core.url.encodePathParam(sessionId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/sessions/${core.url.encodePathParam(sessionId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -150,7 +162,7 @@ export class SubmissionClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedApi.ExecutionSessionResponse,
+                    body: _response.body as SeedTrace.ExecutionSessionResponse | undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -161,7 +173,7 @@ export class SubmissionClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.submission.getexecutionsession.Error._unknown(_response.error),
+                error: SeedTrace.submission.getExecutionSession.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -171,33 +183,36 @@ export class SubmissionClient {
     /**
      * Stops execution session.
      *
-     * @param {SeedApi.SubmissionStopExecutionSessionRequest} request
+     * @param {string} sessionId
      * @param {SubmissionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.submission.stopexecutionsession({
-     *         sessionId: "sessionId"
-     *     })
+     *     await client.submission.stopExecutionSession("sessionId")
      */
-    public stopexecutionsession(
-        request: SeedApi.SubmissionStopExecutionSessionRequest,
+    public stopExecutionSession(
+        sessionId: string,
         requestOptions?: SubmissionClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.submission.stopexecutionsession.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__stopexecutionsession(request, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.submission.stopExecutionSession.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__stopExecutionSession(sessionId, requestOptions));
     }
 
-    private async __stopexecutionsession(
-        request: SeedApi.SubmissionStopExecutionSessionRequest,
+    private async __stopExecutionSession(
+        sessionId: string,
         requestOptions?: SubmissionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.submission.stopexecutionsession.Error>>> {
-        const { sessionId } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.submission.stopExecutionSession.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `sessions/stop/${core.url.encodePathParam(sessionId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/sessions/stop/${core.url.encodePathParam(sessionId)}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -229,7 +244,7 @@ export class SubmissionClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.submission.stopexecutionsession.Error._unknown(_response.error),
+                error: SeedTrace.submission.stopExecutionSession.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -240,33 +255,42 @@ export class SubmissionClient {
      * @param {SubmissionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.submission.getexecutionsessionsstate()
+     *     await client.submission.getExecutionSessionsState()
      */
-    public getexecutionsessionsstate(
+    public getExecutionSessionsState(
         requestOptions?: SubmissionClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<SeedApi.GetExecutionSessionStateResponse, SeedApi.submission.getexecutionsessionsstate.Error>
+        core.APIResponse<
+            SeedTrace.GetExecutionSessionStateResponse,
+            SeedTrace.submission.getExecutionSessionsState.Error
+        >
     > {
-        return core.HttpResponsePromise.fromPromise(this.__getexecutionsessionsstate(requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getExecutionSessionsState(requestOptions));
     }
 
-    private async __getexecutionsessionsstate(
+    private async __getExecutionSessionsState(
         requestOptions?: SubmissionClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedApi.GetExecutionSessionStateResponse,
-                SeedApi.submission.getexecutionsessionsstate.Error
+                SeedTrace.GetExecutionSessionStateResponse,
+                SeedTrace.submission.getExecutionSessionsState.Error
             >
         >
     > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                "sessions/execution-sessions-state",
+                    environments.SeedTraceEnvironment.Prod,
+                "/sessions/execution-sessions-state",
             ),
             method: "GET",
             headers: _headers,
@@ -287,7 +311,7 @@ export class SubmissionClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedApi.GetExecutionSessionStateResponse,
+                    body: _response.body as SeedTrace.GetExecutionSessionStateResponse,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -298,7 +322,7 @@ export class SubmissionClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.submission.getexecutionsessionsstate.Error._unknown(_response.error),
+                error: SeedTrace.submission.getExecutionSessionsState.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

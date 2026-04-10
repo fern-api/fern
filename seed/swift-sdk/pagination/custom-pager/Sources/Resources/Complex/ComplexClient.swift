@@ -7,7 +7,7 @@ public final class ComplexClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func search(index: String, request: Requests.SearchRequest, requestOptions: RequestOptions? = nil) async throws -> PaginatedConversationResponse {
+    public func search(index: String, request: SearchRequest, requestOptions: RequestOptions? = nil) async throws -> PaginatedConversationResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/\(index)/conversations/search",

@@ -10,6 +10,6 @@ $client = new FernClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->imdb->getmovie(
+$client->imdb->getMovie(
     'movieId',
 );

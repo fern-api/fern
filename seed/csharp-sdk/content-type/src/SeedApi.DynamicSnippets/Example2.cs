@@ -1,19 +1,22 @@
-using SeedApi;
+using SeedContentTypes;
 
 namespace Usage;
 
 public class Example2
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedContentTypesClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Service.PatchcomplexAsync(
-            new ServicePatchComplexRequest {
-                Id = "id"
+        await client.Service.NamedPatchWithMixedAsync(
+            "id",
+            new NamedMixedPatchRequest {
+                AppId = "appId",
+                Instructions = "instructions",
+                Active = true
             }
         );
     }

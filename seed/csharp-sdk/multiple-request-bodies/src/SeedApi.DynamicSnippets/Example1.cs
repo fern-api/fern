@@ -12,8 +12,8 @@ public class Example1
             }
         );
 
-        await client._.UploadJsonDocumentAsync(
-            new UploadJsonDocumentRequest {
+        await client.UploadJsonDocumentAsync(
+            new UploadDocumentRequest {
                 Author = "author",
                 Tags = new List<string>(){
                     "tags",

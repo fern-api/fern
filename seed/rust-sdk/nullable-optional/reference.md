@@ -1,6 +1,6 @@
 # Reference
-## Nullableoptional
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">getuser</a>(user_id: String) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
+## NullableOptional
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_user</a>(user_id: String) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,17 +27,17 @@ Get a user by ID
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .getuser(&"userId".to_string(), None)
+        .nullable_optional
+        .get_user(&"userId".to_string(), None)
         .await;
 }
 ```
@@ -66,206 +66,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">updateuser</a>(user_id: String, request: UpdateUserRequest) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a user (partial update)
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .nullableoptional
-        .updateuser(
-            &"userId".to_string(),
-            &UpdateUserRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**user_id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**username:** `Option<Option<String>>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `Option<Option<String>>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone:** `Option<Option<String>>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**address:** `Option<Address>` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">listusers</a>(limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, offset: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, include_deleted: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;, sort_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List all users
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .nullableoptional
-        .listusers(
-            &ListusersQueryRequest {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `Option<Option<i64>>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `Option<Option<i64>>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**include_deleted:** `Option<Option<bool>>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort_by:** `Option<Option<String>>` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">createuser</a>(request: CreateUserRequest) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">create_user</a>(request: CreateUserRequest) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -292,22 +93,102 @@ Create a new user
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .createuser(
+        .nullable_optional
+        .create_user(
             &CreateUserRequest {
                 username: "username".to_string(),
-                email: None,
-                phone: None,
-                address: None,
+                email: Some("email".to_string()),
+                phone: Some("phone".to_string()),
+                address: Some(Address {
+                    street: "street".to_string(),
+                    city: Some("city".to_string()),
+                    state: Some("state".to_string()),
+                    zip_code: "zipCode".to_string(),
+                    country: Some("country".to_string()),
+                    building_id: NullableUserId(Some("buildingId".to_string())),
+                    tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                    ..Default::default()
+                }),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_user</a>(user_id: String, request: UpdateUserRequest) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user (partial update)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_nullable_optional::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
+    client
+        .nullable_optional
+        .update_user(
+            &"userId".to_string(),
+            &UpdateUserRequest {
+                username: Some("username".to_string()),
+                email: Some("email".to_string()),
+                phone: Some("phone".to_string()),
+                address: Some(Address {
+                    street: "street".to_string(),
+                    city: Some("city".to_string()),
+                    state: Some("state".to_string()),
+                    zip_code: "zipCode".to_string(),
+                    country: Some("country".to_string()),
+                    building_id: NullableUserId(Some("buildingId".to_string())),
+                    tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                    ..Default::default()
+                }),
+                ..Default::default()
             },
             None,
         )
@@ -327,31 +208,7 @@ async fn main() {
 <dl>
 <dd>
 
-**username:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `Option<String>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone:** `Option<Option<String>>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**address:** `Option<Address>` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -363,7 +220,106 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">searchusers</a>(query: Option&lt;String&gt;, department: Option&lt;Option&lt;String&gt;&gt;, role: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, is_active: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">list_users</a>(limit: Option&lt;Option&lt;i64&gt;&gt;, offset: Option&lt;Option&lt;i64&gt;&gt;, include_deleted: Option&lt;Option&lt;bool&gt;&gt;, sort_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all users
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_nullable_optional::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
+    client
+        .nullable_optional
+        .list_users(
+            &ListUsersQueryRequest {
+                limit: Some(1),
+                offset: Some(1),
+                include_deleted: Some(true),
+                sort_by: Some("sortBy".to_string()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `Option<i64>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `Option<i64>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_deleted:** `Option<bool>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">search_users</a>(query: Option&lt;String&gt;, department: Option&lt;Option&lt;String&gt;&gt;, role: Option&lt;Option&lt;String&gt;&gt;, is_active: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -390,22 +346,22 @@ Search users
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .searchusers(
-            &SearchusersQueryRequest {
+        .nullable_optional
+        .search_users(
+            &SearchUsersQueryRequest {
                 query: "query".to_string(),
                 department: Some("department".to_string()),
-                role: None,
-                is_active: None,
+                role: Some("role".to_string()),
+                is_active: Some(true),
             },
             None,
         )
@@ -441,7 +397,7 @@ async fn main() {
 <dl>
 <dd>
 
-**role:** `Option<Option<String>>` 
+**role:** `Option<String>` 
     
 </dd>
 </dl>
@@ -461,7 +417,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">createcomplexprofile</a>(request: ComplexProfile) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">create_complex_profile</a>(request: ComplexProfile) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -488,54 +444,147 @@ Create a complex profile to test nullable enums and unions
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .createcomplexprofile(
+        .nullable_optional
+        .create_complex_profile(
             &ComplexProfile {
                 id: "id".to_string(),
-                nullable_role: UserRole::Admin,
-                optional_role: None,
-                optional_nullable_role: None,
-                nullable_status: UserStatus::Active,
-                optional_status: None,
-                optional_nullable_status: None,
-                nullable_notification: NotificationMethod::NotificationMethodZero(
-                    NotificationMethodZero {
-                        email_notification_fields: EmailNotification {
-                            email_address: "emailAddress".to_string(),
-                            subject: "subject".to_string(),
-                            ..Default::default()
-                        },
-                        r#type: NotificationMethodZeroType::Email,
-                    },
-                ),
-                optional_notification: None,
-                optional_nullable_notification: None,
-                nullable_search_result: SearchResult::SearchResultZero(SearchResultZero {
-                    user_response_fields: UserResponse {
-                        id: "id".to_string(),
-                        username: "username".to_string(),
-                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                nullable_role: Some(UserRole::Admin),
+                optional_role: Some(UserRole::Admin),
+                optional_nullable_role: Some(UserRole::Admin),
+                nullable_status: Some(UserStatus::Active),
+                optional_status: Some(UserStatus::Active),
+                optional_nullable_status: Some(UserStatus::Active),
+                nullable_notification: Some(NotificationMethod::Email {
+                    data: EmailNotification {
+                        email_address: "emailAddress".to_string(),
+                        subject: "subject".to_string(),
+                        html_content: Some("htmlContent".to_string()),
                         ..Default::default()
                     },
-                    r#type: SearchResultZeroType::User,
                 }),
-                optional_search_result: None,
-                nullable_array: None,
-                optional_array: None,
-                optional_nullable_array: None,
-                nullable_list_of_nullables: None,
-                nullable_map_of_nullables: None,
-                nullable_list_of_unions: None,
-                optional_map_of_enums: None,
+                optional_notification: Some(NotificationMethod::Email {
+                    data: EmailNotification {
+                        email_address: "emailAddress".to_string(),
+                        subject: "subject".to_string(),
+                        html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
+                    },
+                }),
+                optional_nullable_notification: Some(NotificationMethod::Email {
+                    data: EmailNotification {
+                        email_address: "emailAddress".to_string(),
+                        subject: "subject".to_string(),
+                        html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
+                    },
+                }),
+                nullable_search_result: Some(SearchResult::User {
+                    data: UserResponse {
+                        id: "id".to_string(),
+                        username: "username".to_string(),
+                        email: Some("email".to_string()),
+                        phone: Some("phone".to_string()),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                        updated_at: Some(
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                        ),
+                        address: Some(Address {
+                            street: "street".to_string(),
+                            city: Some("city".to_string()),
+                            state: Some("state".to_string()),
+                            zip_code: "zipCode".to_string(),
+                            country: Some("country".to_string()),
+                            building_id: NullableUserId(Some("buildingId".to_string())),
+                            tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
+                        }),
+                        ..Default::default()
+                    },
+                }),
+                optional_search_result: Some(SearchResult::User {
+                    data: UserResponse {
+                        id: "id".to_string(),
+                        username: "username".to_string(),
+                        email: Some("email".to_string()),
+                        phone: Some("phone".to_string()),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                        updated_at: Some(
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                        ),
+                        address: Some(Address {
+                            street: "street".to_string(),
+                            city: Some("city".to_string()),
+                            state: Some("state".to_string()),
+                            zip_code: "zipCode".to_string(),
+                            country: Some("country".to_string()),
+                            building_id: NullableUserId(Some("buildingId".to_string())),
+                            tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
+                        }),
+                        ..Default::default()
+                    },
+                }),
+                nullable_array: Some(vec![
+                    "nullableArray".to_string(),
+                    "nullableArray".to_string(),
+                ]),
+                optional_array: Some(vec![
+                    "optionalArray".to_string(),
+                    "optionalArray".to_string(),
+                ]),
+                optional_nullable_array: Some(vec![
+                    "optionalNullableArray".to_string(),
+                    "optionalNullableArray".to_string(),
+                ]),
+                nullable_list_of_nullables: Some(vec![
+                    Some("nullableListOfNullables".to_string()),
+                    Some("nullableListOfNullables".to_string()),
+                ]),
+                nullable_map_of_nullables: Some(HashMap::from([(
+                    "nullableMapOfNullables".to_string(),
+                    Some(Address {
+                        street: "street".to_string(),
+                        city: Some("city".to_string()),
+                        state: Some("state".to_string()),
+                        zip_code: "zipCode".to_string(),
+                        country: Some("country".to_string()),
+                        building_id: NullableUserId(Some("buildingId".to_string())),
+                        tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                        ..Default::default()
+                    }),
+                )])),
+                nullable_list_of_unions: Some(vec![
+                    NotificationMethod::Email {
+                        data: EmailNotification {
+                            email_address: "emailAddress".to_string(),
+                            subject: "subject".to_string(),
+                            html_content: Some("htmlContent".to_string()),
+                            ..Default::default()
+                        },
+                    },
+                    NotificationMethod::Email {
+                        data: EmailNotification {
+                            email_address: "emailAddress".to_string(),
+                            subject: "subject".to_string(),
+                            html_content: Some("htmlContent".to_string()),
+                            ..Default::default()
+                        },
+                    },
+                ]),
+                optional_map_of_enums: Some(HashMap::from([(
+                    "optionalMapOfEnums".to_string(),
+                    UserRole::Admin,
+                )])),
+                ..Default::default()
             },
             None,
         )
@@ -552,7 +601,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">getcomplexprofile</a>(profile_id: String) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_complex_profile</a>(profile_id: String) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -579,17 +628,17 @@ Get a complex profile by ID
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .getcomplexprofile(&"profileId".to_string(), None)
+        .nullable_optional
+        .get_complex_profile(&"profileId".to_string(), None)
         .await;
 }
 ```
@@ -618,7 +667,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">updatecomplexprofile</a>(profile_id: String, request: NullableOptionalUpdateComplexProfileRequest) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_complex_profile</a>(profile_id: String, request: UpdateComplexProfileRequest) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -645,19 +694,56 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .updatecomplexprofile(
+        .nullable_optional
+        .update_complex_profile(
             &"profileId".to_string(),
-            &NullableOptionalUpdateComplexProfileRequest {
+            &UpdateComplexProfileRequest {
+                nullable_role: Some(UserRole::Admin),
+                nullable_status: Some(UserStatus::Active),
+                nullable_notification: Some(NotificationMethod::Email {
+                    data: EmailNotification {
+                        email_address: "emailAddress".to_string(),
+                        subject: "subject".to_string(),
+                        html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
+                    },
+                }),
+                nullable_search_result: Some(SearchResult::User {
+                    data: UserResponse {
+                        id: "id".to_string(),
+                        username: "username".to_string(),
+                        email: Some("email".to_string()),
+                        phone: Some("phone".to_string()),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                        updated_at: Some(
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                        ),
+                        address: Some(Address {
+                            street: "street".to_string(),
+                            city: Some("city".to_string()),
+                            state: Some("state".to_string()),
+                            zip_code: "zipCode".to_string(),
+                            country: Some("country".to_string()),
+                            building_id: NullableUserId(Some("buildingId".to_string())),
+                            tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
+                        }),
+                        ..Default::default()
+                    },
+                }),
+                nullable_array: Some(vec![
+                    "nullableArray".to_string(),
+                    "nullableArray".to_string(),
+                ]),
                 ..Default::default()
             },
             None,
@@ -686,7 +772,7 @@ async fn main() {
 <dl>
 <dd>
 
-**nullable_role:** `Option<UserRole>` 
+**nullable_role:** `Option<Option<UserRole>>` 
     
 </dd>
 </dl>
@@ -694,7 +780,7 @@ async fn main() {
 <dl>
 <dd>
 
-**nullable_status:** `Option<UserStatus>` 
+**nullable_status:** `Option<Option<UserStatus>>` 
     
 </dd>
 </dl>
@@ -702,7 +788,7 @@ async fn main() {
 <dl>
 <dd>
 
-**nullable_notification:** `Option<NotificationMethod>` 
+**nullable_notification:** `Option<Option<NotificationMethod>>` 
     
 </dd>
 </dl>
@@ -710,7 +796,7 @@ async fn main() {
 <dl>
 <dd>
 
-**nullable_search_result:** `Option<SearchResult>` 
+**nullable_search_result:** `Option<Option<SearchResult>>` 
     
 </dd>
 </dl>
@@ -730,7 +816,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">testdeserialization</a>(request: DeserializationTestRequest) -> Result&lt;DeserializationTestResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">test_deserialization</a>(request: DeserializationTestRequest) -> Result&lt;DeserializationTestResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -757,43 +843,75 @@ Test endpoint for validating null deserialization
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .testdeserialization(
+        .nullable_optional
+        .test_deserialization(
             &DeserializationTestRequest {
                 required_string: "requiredString".to_string(),
-                nullable_string: None,
-                optional_string: None,
-                optional_nullable_string: None,
-                nullable_enum: UserRole::Admin,
-                optional_enum: None,
-                nullable_union: NotificationMethod::NotificationMethodZero(
-                    NotificationMethodZero {
-                        email_notification_fields: EmailNotification {
-                            email_address: "emailAddress".to_string(),
-                            subject: "subject".to_string(),
-                            ..Default::default()
-                        },
-                        r#type: NotificationMethodZeroType::Email,
+                nullable_string: Some("nullableString".to_string()),
+                optional_string: Some("optionalString".to_string()),
+                optional_nullable_string: Some("optionalNullableString".to_string()),
+                nullable_enum: Some(UserRole::Admin),
+                optional_enum: Some(UserStatus::Active),
+                nullable_union: Some(NotificationMethod::Email {
+                    data: EmailNotification {
+                        email_address: "emailAddress".to_string(),
+                        subject: "subject".to_string(),
+                        html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
-                ),
-                optional_union: None,
-                nullable_list: None,
-                nullable_map: None,
-                nullable_object: Address {
+                }),
+                optional_union: Some(SearchResult::User {
+                    data: UserResponse {
+                        id: "id".to_string(),
+                        username: "username".to_string(),
+                        email: Some("email".to_string()),
+                        phone: Some("phone".to_string()),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                        updated_at: Some(
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                        ),
+                        address: Some(Address {
+                            street: "street".to_string(),
+                            city: Some("city".to_string()),
+                            state: Some("state".to_string()),
+                            zip_code: "zipCode".to_string(),
+                            country: Some("country".to_string()),
+                            building_id: NullableUserId(Some("buildingId".to_string())),
+                            tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
+                        }),
+                        ..Default::default()
+                    },
+                }),
+                nullable_list: Some(vec!["nullableList".to_string(), "nullableList".to_string()]),
+                nullable_map: Some(HashMap::from([("nullableMap".to_string(), 1)])),
+                nullable_object: Some(Address {
                     street: "street".to_string(),
+                    city: Some("city".to_string()),
+                    state: Some("state".to_string()),
                     zip_code: "zipCode".to_string(),
+                    country: Some("country".to_string()),
+                    building_id: NullableUserId(Some("buildingId".to_string())),
+                    tenant_id: OptionalUserId(Some("tenantId".to_string())),
                     ..Default::default()
-                },
-                optional_object: None,
+                }),
+                optional_object: Some(Organization {
+                    id: "id".to_string(),
+                    name: "name".to_string(),
+                    domain: Some("domain".to_string()),
+                    employee_count: Some(1),
+                    ..Default::default()
+                }),
+                ..Default::default()
             },
             None,
         )
@@ -810,7 +928,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">filterbyrole</a>(role: Option&lt;UserRole&gt;, status: Option&lt;Option&lt;UserStatus&gt;&gt;, secondary_role: Option&lt;Option&lt;UserRole&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">filter_by_role</a>(role: Option&lt;Option&lt;UserRole&gt;&gt;, status: Option&lt;Option&lt;UserStatus&gt;&gt;, secondary_role: Option&lt;Option&lt;Option&lt;UserRole&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -837,21 +955,22 @@ Filter users by role with nullable enum
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .filterbyrole(
-            &FilterbyroleQueryRequest {
-                role: UserRole::Admin,
-                status: None,
-                secondary_role: None,
+        .nullable_optional
+        .filter_by_role(
+            &FilterByRoleQueryRequest {
+                role: Some(UserRole::Admin),
+                status: Some(UserStatus::Active),
+                secondary_role: Some(UserRole::Admin),
+                ..Default::default()
             },
             None,
         )
@@ -871,7 +990,7 @@ async fn main() {
 <dl>
 <dd>
 
-**role:** `UserRole` 
+**role:** `Option<UserRole>` 
     
 </dd>
 </dl>
@@ -887,7 +1006,7 @@ async fn main() {
 <dl>
 <dd>
 
-**secondary_role:** `Option<UserRole>` 
+**secondary_role:** `Option<Option<UserRole>>` 
     
 </dd>
 </dl>
@@ -899,7 +1018,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">getnotificationsettings</a>(user_id: String) -> Result&lt;NotificationMethod, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_notification_settings</a>(user_id: String) -> Result&lt;Option&lt;NotificationMethod&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -926,17 +1045,17 @@ Get notification settings which may be null
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .getnotificationsettings(&"userId".to_string(), None)
+        .nullable_optional
+        .get_notification_settings(&"userId".to_string(), None)
         .await;
 }
 ```
@@ -965,7 +1084,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">updatetags</a>(user_id: String, request: NullableOptionalUpdateTagsRequest) -> Result&lt;Vec&lt;String&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_tags</a>(user_id: String, request: UpdateTagsRequest) -> Result&lt;Vec&lt;String&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -992,19 +1111,22 @@ Update tags to test array handling
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .updatetags(
+        .nullable_optional
+        .update_tags(
             &"userId".to_string(),
-            &NullableOptionalUpdateTagsRequest {
+            &UpdateTagsRequest {
+                tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+                categories: Some(vec!["categories".to_string(), "categories".to_string()]),
+                labels: Some(vec!["labels".to_string(), "labels".to_string()]),
                 ..Default::default()
             },
             None,
@@ -1041,7 +1163,7 @@ async fn main() {
 <dl>
 <dd>
 
-**categories:** `Option<Option<Vec<String>>>` 
+**categories:** `Option<Vec<String>>` 
     
 </dd>
 </dl>
@@ -1061,7 +1183,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client.rs">getsearchresults</a>(request: NullableOptionalGetSearchResultsRequest) -> Result&lt;Option&lt;Vec&lt;SearchResult&gt;&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_search_results</a>(request: SearchRequest) -> Result&lt;Option&lt;Vec&lt;SearchResult&gt;&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1088,21 +1210,24 @@ Get search results with nullable unions
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .getsearchresults(
-            &NullableOptionalGetSearchResultsRequest {
+        .nullable_optional
+        .get_search_results(
+            &SearchRequest {
                 query: "query".to_string(),
-                filters: None,
-                include_types: None,
+                filters: Some(HashMap::from([(
+                    "filters".to_string(),
+                    Some("filters".to_string()),
+                )])),
+                include_types: Some(vec!["includeTypes".to_string(), "includeTypes".to_string()]),
             },
             None,
         )
@@ -1130,7 +1255,7 @@ async fn main() {
 <dl>
 <dd>
 
-**filters:** `Option<Option<std::collections::HashMap<String, Option<String>>>>` 
+**filters:** `Option<std::collections::HashMap<String, Option<String>>>` 
     
 </dd>
 </dl>

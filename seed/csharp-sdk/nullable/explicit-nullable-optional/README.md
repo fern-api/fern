@@ -39,10 +39,26 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedNullable;
 
-var client = new SeedApiClient();
-await client.Nullable.CreateuserAsync(new NullableCreateUserRequest { Username = "username" });
+var client = new SeedNullableClient();
+await client.Nullable.CreateUserAsync(
+    new CreateUserRequest
+    {
+        Username = "username",
+        Tags = new List<string>() { "tags", "tags" },
+        Metadata = new Metadata
+        {
+            CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+            UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+            Avatar = "avatar",
+            Activated = true,
+            Status = new Status(new Status.Active()),
+            Values = new Dictionary<string, string?>() { { "values", "values" } },
+        },
+        Avatar = "avatar",
+    }
+);
 ```
 
 ## Exception Handling
@@ -51,11 +67,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedNullable;
 
 try {
-    var response = await client.Nullable.CreateuserAsync(...);
-} catch (SeedApiApiException e) {
+    var response = await client.Nullable.CreateUserAsync(...);
+} catch (SeedNullableApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -78,7 +94,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Nullable.CreateuserAsync(
+var response = await client.Nullable.CreateUserAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -91,7 +107,7 @@ var response = await client.Nullable.CreateuserAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Nullable.CreateuserAsync(
+var response = await client.Nullable.CreateUserAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -104,10 +120,10 @@ var response = await client.Nullable.CreateuserAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedNullable;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Nullable.CreateuserAsync(...).WithRawResponse();
+var result = await client.Nullable.CreateUserAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -124,7 +140,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Nullable.CreateuserAsync(...);
+var data = await client.Nullable.CreateUserAsync(...);
 ```
 
 ### Additional Headers
@@ -132,7 +148,7 @@ var data = await client.Nullable.CreateuserAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Nullable.CreateuserAsync(
+var response = await client.Nullable.CreateUserAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -148,7 +164,7 @@ var response = await client.Nullable.CreateuserAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.Nullable.CreateuserAsync(
+var response = await client.Nullable.CreateUserAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

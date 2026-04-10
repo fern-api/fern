@@ -4,22 +4,22 @@
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.gettokenwithclientcredentials"
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/websocket-inferred-auth\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\nawait client.auth.gettokenwithclientcredentials({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    audience: \"https://api.example.com\",\n    grant_type: \"client_credentials\"\n});\n"
+                "client": "import { SeedWebsocketAuthClient } from \"@fern/websocket-inferred-auth\";\n\nconst client = new SeedWebsocketAuthClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.getTokenWithClientCredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/token/refresh",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.refreshtoken"
+                "identifier_override": "endpoint_auth.refreshToken"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/websocket-inferred-auth\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\nawait client.auth.refreshtoken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    audience: \"https://api.example.com\",\n    grant_type: \"refresh_token\"\n});\n"
+                "client": "import { SeedWebsocketAuthClient } from \"@fern/websocket-inferred-auth\";\n\nconst client = new SeedWebsocketAuthClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.refreshToken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
             }
         }
     ],

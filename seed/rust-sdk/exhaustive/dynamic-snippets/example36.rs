@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,16 +7,14 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_map_of_map(
-            &TypesObjectWithMapOfMap {
-                map: HashMap::from([(
-                    "key".to_string(),
-                    HashMap::from([("key".to_string(), "value".to_string())]),
-                )]),
-                ..Default::default()
+        .endpoints
+        .params
+        .get_with_allow_multiple_query(
+            &GetWithAllowMultipleQueryQueryRequest {
+                query: vec!["query".to_string()],
+                number: vec![1],
             },
             None,
         )

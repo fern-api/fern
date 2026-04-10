@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">getuser</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -28,13 +28,13 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedMultiLineDocs
 
-client = SeedApi(
+client = SeedMultiLineDocs(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.getuser(
+client.user.get_user(
     user_id="userId",
 )
 
@@ -75,7 +75,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">createuser</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -103,14 +103,15 @@ This endpoint is used to create a new user.
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedMultiLineDocs
 
-client = SeedApi(
+client = SeedMultiLineDocs(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.createuser(
+client.user.create_user(
     name="name",
+    age=1,
 )
 
 ```

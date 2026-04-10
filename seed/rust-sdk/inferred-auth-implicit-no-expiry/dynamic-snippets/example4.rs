@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_inferred_auth_implicit_no_expiry::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,9 +6,6 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .nested_no_auth_api
-        .nested_no_auth_api_get_something(None)
-        .await;
+    let client = InferredAuthImplicitNoExpiryClient::new(config).expect("Failed to build client");
+    client.simple.get_something(None).await;
 }

@@ -1,4 +1,4 @@
-import Api
+import Unions
 import Foundation
 
 final class HTTPStub {

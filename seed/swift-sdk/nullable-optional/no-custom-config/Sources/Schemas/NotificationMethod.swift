@@ -2,35 +2,46 @@ import Foundation
 
 /// Discriminated union for testing nullable unions
 public enum NotificationMethod: Codable, Hashable, Sendable {
-    case notificationMethodOne(NotificationMethodOne)
-    case notificationMethodTwo(NotificationMethodTwo)
-    case notificationMethodZero(NotificationMethodZero)
+    case email(EmailNotification)
+    case push(PushNotification)
+    case sms(SmsNotification)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(NotificationMethodOne.self) {
-            self = .notificationMethodOne(value)
-        } else if let value = try? container.decode(NotificationMethodTwo.self) {
-            self = .notificationMethodTwo(value)
-        } else if let value = try? container.decode(NotificationMethodZero.self) {
-            self = .notificationMethodZero(value)
-        } else {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Unexpected value."
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "email":
+            self = .email(try EmailNotification(from: decoder))
+        case "push":
+            self = .push(try PushNotification(from: decoder))
+        case "sms":
+            self = .sms(try SmsNotification(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.singleValueContainer()
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .notificationMethodOne(let value):
-            try container.encode(value)
-        case .notificationMethodTwo(let value):
-            try container.encode(value)
-        case .notificationMethodZero(let value):
-            try container.encode(value)
+        case .email(let data):
+            try container.encode("email", forKey: .type)
+            try data.encode(to: encoder)
+        case .push(let data):
+            try container.encode("push", forKey: .type)
+            try data.encode(to: encoder)
+        case .sms(let data):
+            try container.encode("sms", forKey: .type)
+            try data.encode(to: encoder)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

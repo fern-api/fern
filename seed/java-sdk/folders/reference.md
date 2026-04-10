@@ -38,7 +38,7 @@ client.foo();
 <dd>
 
 ```java
-client.a().b().foo();
+client.foo();
 ```
 </dd>
 </dl>
@@ -64,7 +64,7 @@ client.a().b().foo();
 <dd>
 
 ```java
-client.a().c().foo();
+client.foo();
 ```
 </dd>
 </dl>
@@ -90,7 +90,7 @@ client.a().c().foo();
 <dd>
 
 ```java
-client.folder().foo();
+client.foo();
 ```
 </dd>
 </dl>

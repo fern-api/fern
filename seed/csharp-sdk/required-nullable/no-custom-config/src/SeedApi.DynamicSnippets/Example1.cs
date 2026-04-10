@@ -11,7 +11,7 @@ public class Example1
             }
         );
 
-        await client._.GetFooAsync(
+        await client.GetFooAsync(
             new GetFooRequest {
                 OptionalBaz = "optional_baz",
                 OptionalNullableBaz = "optional_nullable_baz",

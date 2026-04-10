@@ -1,7 +1,7 @@
 # Seed Rust Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
-[![crates.io shield](https://img.shields.io/crates/v/seed_api)](https://crates.io/crates/seed_api)
+[![crates.io shield](https://img.shields.io/crates/v/seed_no_environment)](https://crates.io/crates/seed_no_environment)
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
@@ -24,13 +24,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_api = "0.0.1"
+seed_no_environment = "0.0.1"
 ```
 
 Or install via cargo:
 
 ```sh
-cargo add seed_api
+cargo add seed_no_environment
 ```
 
 ## Reference
@@ -42,7 +42,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use seed_api::prelude::*;
+use seed_no_environment::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -50,8 +50,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.dummy.getdummy(None).await;
+    let client = NoEnvironmentClient::new(config).expect("Failed to build client");
+    client.dummy.get_dummy(None).await;
 }
 ```
 
@@ -60,7 +60,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.dummy.getdummy(None)?.await {
+match client.dummy.get_dummy(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -90,7 +90,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.dummy.getdummy(
+let response = client.dummy.get_dummy(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -100,7 +100,7 @@ let response = client.dummy.getdummy(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.dummy.getdummy(
+let response = client.dummy.get_dummy(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -110,7 +110,7 @@ let response = client.dummy.getdummy(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.dummy.getdummy(
+let response = client.dummy.get_dummy(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -125,7 +125,7 @@ let response = client.dummy.getdummy(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.dummy.getdummy(
+let response = client.dummy.get_dummy(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

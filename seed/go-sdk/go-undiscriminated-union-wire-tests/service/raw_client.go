@@ -47,7 +47,6 @@ func (r *RawClient) Rerank(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response *fern.RerankResponse
 	raw, err := r.caller.Call(
 		ctx,

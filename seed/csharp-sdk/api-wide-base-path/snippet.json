@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.PostAsync(\n    new ServicePostRequest\n    {\n        PathParam = \"pathParam\",\n        ServiceParam = \"serviceParam\",\n        EndpointParam = 1,\n        ResourceParam = \"resourceParam\",\n    }\n);\n"
+                "client": "using SeedApiWideBasePath;\n\nvar client = new SeedApiWideBasePathClient();\nawait client.Service.PostAsync(\"pathParam\", \"serviceParam\", 1, \"resourceParam\");\n"
             }
         }
     ]

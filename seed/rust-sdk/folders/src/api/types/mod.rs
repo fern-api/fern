@@ -1,4 +1,3 @@
-pub mod ad_foo;
+pub mod a_d_types_foo;
 
-pub use ad_foo::{AdFoo};
-
+pub use a_d_types_foo::Foo;

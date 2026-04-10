@@ -7,7 +7,7 @@ public final class AdminClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func updatetestsubmissionstatus(submissionId: String, request: TestSubmissionStatus, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func updateTestSubmissionStatus(submissionId: String, request: TestSubmissionStatus, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/admin/store-test-submission-status/\(submissionId)",
@@ -16,7 +16,7 @@ public final class AdminClient: Sendable {
         )
     }
 
-    public func sendtestsubmissionupdate(submissionId: String, request: TestSubmissionUpdate, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func sendTestSubmissionUpdate(submissionId: String, request: TestSubmissionUpdate, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/admin/store-test-submission-status-v2/\(submissionId)",
@@ -25,7 +25,7 @@ public final class AdminClient: Sendable {
         )
     }
 
-    public func updateworkspacesubmissionstatus(submissionId: String, request: WorkspaceSubmissionStatus, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func updateWorkspaceSubmissionStatus(submissionId: String, request: WorkspaceSubmissionStatus, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/admin/store-workspace-submission-status/\(submissionId)",
@@ -34,7 +34,7 @@ public final class AdminClient: Sendable {
         )
     }
 
-    public func sendworkspacesubmissionupdate(submissionId: String, request: WorkspaceSubmissionUpdate, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func sendWorkspaceSubmissionUpdate(submissionId: String, request: WorkspaceSubmissionUpdate, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/admin/store-workspace-submission-status-v2/\(submissionId)",
@@ -43,7 +43,7 @@ public final class AdminClient: Sendable {
         )
     }
 
-    public func storetracedtestcase(submissionId: String, testCaseId: String, request: Requests.AdminStoreTracedTestCaseRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func storeTracedTestCase(submissionId: String, testCaseId: String, request: Requests.StoreTracedTestCaseRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/admin/store-test-trace/submission/\(submissionId)/testCase/\(testCaseId)",
@@ -52,7 +52,7 @@ public final class AdminClient: Sendable {
         )
     }
 
-    public func storetracedtestcasev2(submissionId: String, testCaseId: String, request: [TraceResponseV2], requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func storeTracedTestCaseV2(submissionId: String, testCaseId: String, request: [TraceResponseV2], requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/admin/store-test-trace-v2/submission/\(submissionId)/testCase/\(testCaseId)",
@@ -61,7 +61,7 @@ public final class AdminClient: Sendable {
         )
     }
 
-    public func storetracedworkspace(submissionId: String, request: Requests.AdminStoreTracedWorkspaceRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func storeTracedWorkspace(submissionId: String, request: Requests.StoreTracedWorkspaceRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/admin/store-workspace-trace/submission/\(submissionId)",
@@ -70,7 +70,7 @@ public final class AdminClient: Sendable {
         )
     }
 
-    public func storetracedworkspacev2(submissionId: String, request: [TraceResponseV2], requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func storeTracedWorkspaceV2(submissionId: String, request: [TraceResponseV2], requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/admin/store-workspace-trace-v2/submission/\(submissionId)",

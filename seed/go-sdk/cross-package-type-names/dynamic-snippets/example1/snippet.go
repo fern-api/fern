@@ -13,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.FolderAService.FolderAServiceGetDirectThread(
+    client.FolderD.Service.GetDirectThread(
         context.TODO(),
     )
 }

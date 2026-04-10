@@ -1,3 +1,3 @@
-export type { NullableCreateUserRequest } from "./NullableCreateUserRequest.js";
-export type { NullableDeleteUserRequest } from "./NullableDeleteUserRequest.js";
-export type { NullableGetUsersRequest } from "./NullableGetUsersRequest.js";
+export type { CreateUserRequest } from "./CreateUserRequest.js";
+export type { DeleteUserRequest } from "./DeleteUserRequest.js";
+export type { GetUsersRequest } from "./GetUsersRequest.js";

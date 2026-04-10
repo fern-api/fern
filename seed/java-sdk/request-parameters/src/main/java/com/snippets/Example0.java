@@ -1,20 +1,21 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.user.requests.UserCreateUsernameRequest;
+import com.seed.requestParameters.SeedRequestParametersClient;
+import com.seed.requestParameters.resources.user.requests.CreateUsernameRequest;
 import java.util.Arrays;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedRequestParametersClient client = SeedRequestParametersClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
         client.user()
-                .createusername(UserCreateUsernameRequest.builder()
+                .createUsername(CreateUsernameRequest.builder()
                         .username("username")
                         .password("password")
-                        .name("name")
-                        .tags(Arrays.asList("tags"))
+                        .name("test")
+                        .tags(Arrays.asList("tags", "tags"))
                         .build());
     }
 }

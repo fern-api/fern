@@ -1,2 +1,2 @@
 export * as user from "./user";
-export * from "./user/client/requests";
+export * from "./user/types";

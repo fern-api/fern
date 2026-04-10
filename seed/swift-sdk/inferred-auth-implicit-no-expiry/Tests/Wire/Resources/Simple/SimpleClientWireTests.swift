@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import InferredAuthImplicitNoExpiry
 
 @Suite("SimpleClient Wire Tests") struct SimpleClientWireTests {
 }

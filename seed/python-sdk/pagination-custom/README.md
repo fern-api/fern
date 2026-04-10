@@ -12,6 +12,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Usage](#usage)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -34,14 +35,17 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedPagination
 
-client = SeedApi(
+client = SeedPagination(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.listwithcustompager()
+client.users.list_with_custom_pager(
+    limit=1,
+    starting_after="starting_after",
+)
 ```
 
 ## Async Client
@@ -51,16 +55,19 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedPagination
 
-client = AsyncSeedApi(
+client = AsyncSeedPagination(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.users.listwithcustompager()
+    await client.users.list_with_custom_pager(
+        limit=1,
+        starting_after="starting_after",
+    )
 
 
 asyncio.run(main())
@@ -75,10 +82,37 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.users.listwithcustompager(...)
+    client.users.list_with_custom_pager(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
+```
+
+## Pagination
+
+Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
+
+```python
+from seed import SeedPagination
+
+client = SeedPagination(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.users.list_with_custom_pager(
+    limit=1,
+    starting_after="starting_after",
+)
+```
+
+```python
+# You can also iterate through pages and access the typed response per page
+pager = client.users.list_with_custom_pager(...)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)
 ```
 
 ## Advanced
@@ -89,13 +123,19 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedPagination
 
-client = SeedApi(...)
-response = client.users.with_raw_response.listwithcustompager(...)
-print(response.headers)  # access the response headers
-print(response.status_code)  # access the response status code
-print(response.data)  # access the underlying object
+client = SeedPagination(
+    ...,
+)
+pager = client.users.list_with_custom_pager(...)
+print(pager.response)  # access the typed response for the first page
+for item in pager:
+    print(item)  # access the underlying object(s)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)  # access the underlying object(s)
 ```
 
 ### Retries
@@ -113,7 +153,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.listwithcustompager(..., request_options={
+client.users.list_with_custom_pager(..., request_options={
     "max_retries": 1
 })
 ```
@@ -123,12 +163,12 @@ client.users.listwithcustompager(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedPagination
 
-client = SeedApi(..., timeout=20.0)
+client = SeedPagination(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.users.listwithcustompager(..., request_options={
+client.users.list_with_custom_pager(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -140,9 +180,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedPagination
 
-client = SeedApi(
+client = SeedPagination(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

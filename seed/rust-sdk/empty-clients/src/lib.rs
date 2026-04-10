@@ -1,6 +1,6 @@
-//! # empty-clients SDK
+//! # EmptyClients SDK
 //!
-//! The official Rust SDK for the empty-clients.
+//! The official Rust SDK for the EmptyClients.
 //!
 //! ## Getting Started
 //!

@@ -5,10 +5,10 @@ package noreqbody
 import (
 	context "context"
 
-	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
+	types "github.com/exhaustive/fern/types"
 )
 
 type Client struct {
@@ -33,11 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Getwithnorequestbody(
+func (c *Client) GetWithNoRequestBody(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*fern.TypesObjectWithOptionalField, error) {
-	response, err := c.WithRawResponse.Getwithnorequestbody(
+) (*types.ObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.GetWithNoRequestBody(
 		ctx,
 		opts...,
 	)
@@ -47,11 +47,11 @@ func (c *Client) Getwithnorequestbody(
 	return response.Body, nil
 }
 
-func (c *Client) Postwithnorequestbody(
+func (c *Client) PostWithNoRequestBody(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Postwithnorequestbody(
+	response, err := c.WithRawResponse.PostWithNoRequestBody(
 		ctx,
 		opts...,
 	)

@@ -7,19 +7,17 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import AliasType, Child, Parent
-    from . import _
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedAliasExtends, SeedAliasExtends
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AliasType": ".types",
-    "AsyncSeedApi": ".client",
+    "AsyncSeedAliasExtends": ".client",
     "Child": ".types",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "Parent": ".types",
-    "SeedApi": ".client",
-    "_": "._",
+    "SeedAliasExtends": ".client",
     "__version__": ".version",
 }
 
@@ -47,12 +45,11 @@ def __dir__():
 
 __all__ = [
     "AliasType",
-    "AsyncSeedApi",
+    "AsyncSeedAliasExtends",
     "Child",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Parent",
-    "SeedApi",
-    "_",
+    "SeedAliasExtends",
     "__version__",
 ]

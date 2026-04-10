@@ -1,4 +1,4 @@
-package api
+package paginationuripath
 
 import (
 	"io"

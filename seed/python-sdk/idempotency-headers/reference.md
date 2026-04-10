@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.<a href="src/seed/payment/client.py">create</a>(...) -> str</code></summary>
+<details><summary><code>client.payment.<a href="src/seed/payment/client.py">create</a>(...) -> uuid.UUID</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,9 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedIdempotencyHeaders
 
-client = SeedApi(
+client = SeedIdempotencyHeaders(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
@@ -80,9 +80,9 @@ client.payment.create(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedIdempotencyHeaders
 
-client = SeedApi(
+client = SeedIdempotencyHeaders(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )

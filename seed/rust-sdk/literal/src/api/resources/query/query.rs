@@ -24,8 +24,8 @@ impl QueryClient {
                 "query",
                 None,
                 QueryBuilder::new()
-                    .serialize("prompt", Some(request.prompt.clone()))
-                    .serialize("optional_prompt", request.optional_prompt.clone())
+                    .string("prompt", request.prompt.clone())
+                    .string("optional_prompt", request.optional_prompt.clone())
                     .serialize("alias_prompt", Some(request.alias_prompt.clone()))
                     .serialize(
                         "alias_optional_prompt",
@@ -33,7 +33,7 @@ impl QueryClient {
                     )
                     .structured_query("query", request.query.clone())
                     .bool("stream", request.stream.clone())
-                    .serialize("optional_stream", request.optional_stream.clone())
+                    .bool("optional_stream", request.optional_stream.clone())
                     .serialize("alias_stream", Some(request.alias_stream.clone()))
                     .serialize(
                         "alias_optional_stream",

@@ -55,19 +55,19 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.service.requests.ServiceSearchResourcesRequest;
+import com.seed.clientSideParams.SeedClientSideParamsClient;
+import com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;
 import java.util.HashMap;
 
 public class Example {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedClientSideParamsClient client = SeedClientSideParamsClient
             .builder()
             .token("<token>")
             .build();
 
-        client.service().searchresources(
-            ServiceSearchResourcesRequest
+        client.service().searchResources(
+            SearchResourcesRequest
                 .builder()
                 .limit(1)
                 .offset(1)
@@ -90,9 +90,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.clientSideParams.SeedClientSideParamsClient;
 
-SeedApiClient client = SeedApiClient
+SeedClientSideParamsClient client = SeedClientSideParamsClient
     .builder()
     .url("https://example.com")
     .build();
@@ -103,11 +103,11 @@ SeedApiClient client = SeedApiClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.api.core.SeedApiApiException;
+import com.seed.clientSideParams.core.SeedClientSideParamsApiException;
 
 try{
-    client.service().searchresources(...);
-} catch (SeedApiApiException e){
+    client.service().searchResources(...);
+} catch (SeedClientSideParamsApiException e){
     // Do something with the API exception...
 }
 ```
@@ -120,12 +120,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.clientSideParams.SeedClientSideParamsClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient
+SeedClientSideParamsClient client = SeedClientSideParamsClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -148,9 +148,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.clientSideParams.SeedClientSideParamsClient;
 
-SeedApiClient client = SeedApiClient
+SeedClientSideParamsClient client = SeedClientSideParamsClient
     .builder()
     .maxRetries(1)
     .build();
@@ -160,17 +160,17 @@ SeedApiClient client = SeedApiClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.clientSideParams.SeedClientSideParamsClient;
+import com.seed.clientSideParams.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedClientSideParamsClient client = SeedClientSideParamsClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.service().searchresources(
+client.service().searchResources(
     ...,
     RequestOptions
         .builder()
@@ -184,11 +184,11 @@ client.service().searchresources(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.clientSideParams.SeedClientSideParamsClient;
+import com.seed.clientSideParams.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedClientSideParamsClient client = SeedClientSideParamsClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -196,7 +196,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.service().searchresources(
+client.service().searchResources(
     ...,
     RequestOptions
         .builder()
@@ -212,7 +212,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.service().withRawResponse().searchresources(...);
+SeedClientSideParamsHttpResponse response = client.service().withRawResponse().searchResources(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

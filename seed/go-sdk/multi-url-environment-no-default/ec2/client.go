@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Bootinstance(
+func (c *Client) BootInstance(
 	ctx context.Context,
-	request *fern.Ec2BootInstanceRequest,
+	request *fern.BootInstanceRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Bootinstance(
+	_, err := c.WithRawResponse.BootInstance(
 		ctx,
 		request,
 		opts...,

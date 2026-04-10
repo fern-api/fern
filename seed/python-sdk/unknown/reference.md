@@ -13,9 +13,9 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedUnknownAsAny
 
-client = SeedApi(
+client = SeedUnknownAsAny(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -57,7 +57,7 @@ client.unknown.post(
 </dl>
 </details>
 
-<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">postobject</a>(...) -> typing.List[typing.Any]</code></summary>
+<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post_object</a>(...) -> typing.List[typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -70,13 +70,13 @@ client.unknown.post(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedUnknownAsAny
 
-client = SeedApi(
+client = SeedUnknownAsAny(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.unknown.postobject(
+client.unknown.post_object(
     unknown={"key": "value"},
 )
 
@@ -94,7 +94,7 @@ client.unknown.postobject(
 <dl>
 <dd>
 
-**unknown:** `typing.Any` 
+**request:** `MyObject` 
     
 </dd>
 </dl>

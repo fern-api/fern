@@ -1,18 +1,19 @@
-using SeedApi;
+using SeedEnum;
 
 namespace Usage;
 
 public class Example4
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedEnumClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Multipartform.MultipartformAsync(
-            new MultipartFormMultipartFormRequest()
+        await client.PathParam.SendAsync(
+            Operand.GreaterThan,
+            Color.Red
         );
     }
 

@@ -1,14 +1,14 @@
 import Foundation
-import Api
+import Audiences
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = AudiencesClient(baseURL: "https://api.fern.com")
 
     _ = try await client.foo.find(
-        optionalString: .value(.value("optionalString")),
+        optionalString: "optionalString",
         request: .init(
-            publicProperty: .value("publicProperty"),
-            privateProperty: .value(1)
+            publicProperty: "publicProperty",
+            privateProperty: 1
         )
     )
 }

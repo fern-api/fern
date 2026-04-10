@@ -37,15 +37,21 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\ServiceSearchResourcesRequest;
+use Seed\Service\Requests\SearchResourcesRequest;
 
 $client = new SeedClient(
     token: '<token>',
 );
-$client->service->searchresources(
-    new ServiceSearchResourcesRequest([
+$client->service->searchResources(
+    new SearchResourcesRequest([
         'limit' => 1,
         'offset' => 1,
+        'query' => 'query',
+        'filters' => [
+            'filters' => [
+                'key' => "value",
+            ],
+        ],
     ]),
 );
 
@@ -60,7 +66,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->service->searchresources(...);
+    $response = $client->service->searchResources(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -114,7 +120,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->service->searchresources(
+$response = $client->service->searchResources(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -127,7 +133,7 @@ $response = $client->service->searchresources(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->service->searchresources(
+$response = $client->service->searchResources(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

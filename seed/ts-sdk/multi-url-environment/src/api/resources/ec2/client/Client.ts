@@ -4,9 +4,10 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedMultiUrlEnvironment from "../../../index.js";
 
 export declare namespace Ec2Client {
     export type Options = BaseClientOptions;
@@ -22,23 +23,23 @@ export class Ec2Client {
     }
 
     /**
-     * @param {SeedApi.Ec2BootInstanceRequest} request
+     * @param {SeedMultiUrlEnvironment.BootInstanceRequest} request
      * @param {Ec2Client.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.ec2.bootinstance({
+     *     await client.ec2.bootInstance({
      *         size: "size"
      *     })
      */
-    public bootinstance(
-        request: SeedApi.Ec2BootInstanceRequest,
+    public bootInstance(
+        request: SeedMultiUrlEnvironment.BootInstanceRequest,
         requestOptions?: Ec2Client.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__bootinstance(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__bootInstance(request, requestOptions));
     }
 
-    private async __bootinstance(
-        request: SeedApi.Ec2BootInstanceRequest,
+    private async __bootInstance(
+        request: SeedMultiUrlEnvironment.BootInstanceRequest,
         requestOptions?: Ec2Client.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -50,8 +51,11 @@ export class Ec2Client {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "ec2/boot",
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedMultiUrlEnvironmentEnvironment.Production
+                    ).ec2,
+                "/ec2/boot",
             ),
             method: "POST",
             headers: _headers,
@@ -70,7 +74,7 @@ export class Ec2Client {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedMultiUrlEnvironmentError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

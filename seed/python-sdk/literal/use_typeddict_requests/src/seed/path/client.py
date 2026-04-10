@@ -6,7 +6,6 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
 from .raw_client import AsyncRawPathClient, RawPathClient
-from .types.path_send_request_id import PathSendRequestId
 
 
 class PathClient:
@@ -24,12 +23,10 @@ class PathClient:
         """
         return self._raw_client
 
-    def send(self, id: PathSendRequestId, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+    def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
         Parameters
         ----------
-        id : PathSendRequestId
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -37,19 +34,16 @@ class PathClient:
         -------
         SendResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedLiteral
 
-        client = SeedApi(
+        client = SeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.path.send(
-            id="123",
-        )
+        client.path.send()
         """
-        _response = self._raw_client.send(id, request_options=request_options)
+        _response = self._raw_client.send(request_options=request_options)
         return _response.data
 
 
@@ -68,14 +62,10 @@ class AsyncPathClient:
         """
         return self._raw_client
 
-    async def send(
-        self, id: PathSendRequestId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> SendResponse:
+    async def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
         Parameters
         ----------
-        id : PathSendRequestId
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -83,25 +73,22 @@ class AsyncPathClient:
         -------
         SendResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedLiteral
 
-        client = AsyncSeedApi(
+        client = AsyncSeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.path.send(
-                id="123",
-            )
+            await client.path.send()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.send(id, request_options=request_options)
+        _response = await self._raw_client.send(request_options=request_options)
         return _response.data

@@ -1,23 +1,23 @@
-//! # literal SDK
+//! # Literal SDK
 //!
-//! The official Rust SDK for the literal.
+//! Test definition for literal schemas.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_literal::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = LiteralClient::new(config).expect("Failed to build client");
 //!     client
 //!         .headers
 //!         .send(
-//!             &HeadersSendRequest {
-//!                 query: "query".to_string(),
+//!             &SendLiteralsInHeadersRequest {
+//!                 query: "What is the weather today".to_string(),
 //!             },
 //!             Some(
 //!                 RequestOptions::new()

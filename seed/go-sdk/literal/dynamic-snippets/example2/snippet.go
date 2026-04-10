@@ -14,16 +14,20 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.InlinedSendRequest{
-        Prompt: fern.InlinedSendRequestPromptYouAreAHelpfulAssistant,
-        Query: "query",
-        Stream: true,
-        AliasedContext: fern.SomeAliasedLiteralYoureSuperWise,
+    request := &fern.SendLiteralsInlinedRequest{
+        Temperature: fern.Float64(
+            10.1,
+        ),
+        AliasedContext: fern.SomeAliasedLiteral(
+            "You're super wise",
+        ),
+        MaybeContext: fern.String(
+            "You're super wise",
+        ),
         ObjectWithLiteral: &fern.ATopLevelLiteral{
-            NestedLiteral: &fern.ANestedLiteral{
-                MyLiteral: fern.ANestedLiteralMyLiteralHowSuperCool,
-            },
+            NestedLiteral: &fern.ANestedLiteral{},
         },
+        Query: "What is the weather today",
     }
     client.Inlined.Send(
         context.TODO(),

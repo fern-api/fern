@@ -2,31 +2,31 @@ use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
-pub struct NullableClient {
+pub struct NullableClient2 {
     pub http_client: HttpClient,
 }
 
-impl NullableClient {
+impl NullableClient2 {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             http_client: HttpClient::new(config.clone())?,
         })
     }
 
-    pub async fn getusers(
+    pub async fn get_users(
         &self,
-        request: &GetusersQueryRequest,
+        request: &GetUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "users",
+                "/users",
                 None,
                 QueryBuilder::new()
-                    .serialize_array("usernames", request.usernames.clone())
-                    .serialize("avatar", request.avatar.clone())
-                    .serialize_array("activated", request.activated.clone())
+                    .string_array("usernames", request.usernames.clone())
+                    .string("avatar", request.avatar.clone())
+                    .bool_array("activated", request.activated.clone())
                     .serialize_array("tags", request.tags.clone())
                     .serialize("extra", request.extra.clone())
                     .build(),
@@ -35,15 +35,15 @@ impl NullableClient {
             .await
     }
 
-    pub async fn createuser(
+    pub async fn create_user(
         &self,
-        request: &NullableCreateUserRequest,
+        request: &CreateUserRequest,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "users",
+                "/users",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -51,15 +51,15 @@ impl NullableClient {
             .await
     }
 
-    pub async fn deleteuser(
+    pub async fn delete_user(
         &self,
-        request: &NullableDeleteUserRequest,
+        request: &DeleteUserRequest,
         options: Option<RequestOptions>,
     ) -> Result<bool, ApiError> {
         self.http_client
             .execute_request(
                 Method::DELETE,
-                "users",
+                "/users",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

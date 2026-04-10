@@ -4,7 +4,7 @@ public enum WeirdNumber: Codable, Hashable, Sendable {
     case double(Double)
     case int(Int)
     case nullableFloat(Nullable<Float>)
-    case nullableString(Nullable<String>)
+    case optionalNullableString(Nullable<String>?)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -14,8 +14,8 @@ public enum WeirdNumber: Codable, Hashable, Sendable {
             self = .int(value)
         } else if let value = try? container.decode(Nullable<Float>.self) {
             self = .nullableFloat(value)
-        } else if let value = try? container.decode(Nullable<String>.self) {
-            self = .nullableString(value)
+        } else if let value = try? container.decode(Nullable<String>?.self) {
+            self = .optionalNullableString(value)
         } else {
             throw DecodingError.dataCorruptedError(
                 in: container,
@@ -33,7 +33,7 @@ public enum WeirdNumber: Codable, Hashable, Sendable {
             try container.encode(value)
         case .nullableFloat(let value):
             try container.encode(value)
-        case .nullableString(let value):
+        case .optionalNullableString(let value):
             try container.encode(value)
         }
     }

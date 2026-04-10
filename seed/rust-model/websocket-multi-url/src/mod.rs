@@ -1,4 +1,4 @@
-//! Request and response types for the websocket-multi-url
+//! Request and response types for the WebsocketMultiUrl
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -7,9 +7,9 @@
 //!
 //! - **Model Types**: 2 types for data representation
 
-pub mod send_event;
-pub mod receive_event;
+pub mod realtime_send_event;
+pub mod realtime_receive_event;
 
-pub use send_event::SendEvent;
-pub use receive_event::ReceiveEvent;
+pub use realtime_send_event::SendEvent;
+pub use realtime_receive_event::ReceiveEvent;
 

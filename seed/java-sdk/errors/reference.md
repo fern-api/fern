@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.foowithoutendpointerror(request) -> FooResponse</code></summary>
+<details><summary><code>client.simple.fooWithoutEndpointError(request) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.simple().foowithoutendpointerror(
+client.simple().fooWithoutEndpointError(
     FooRequest
         .builder()
         .bar("bar")
@@ -90,7 +90,7 @@ client.simple().foo(
 </dl>
 </details>
 
-<details><summary><code>client.simple.foowithexamples(request) -> FooResponse</code></summary>
+<details><summary><code>client.simple.fooWithExamples(request) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -103,10 +103,10 @@ client.simple().foo(
 <dd>
 
 ```java
-client.simple().foowithexamples(
+client.simple().fooWithExamples(
     FooRequest
         .builder()
-        .bar("bar")
+        .bar("hello")
         .build()
 );
 ```

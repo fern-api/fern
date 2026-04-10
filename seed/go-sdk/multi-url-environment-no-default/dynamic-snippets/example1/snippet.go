@@ -17,10 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.Ec2BootInstanceRequest{
-        Size: "size",
+    request := &fern.GetPresignedURLRequest{
+        S3Key: "s3Key",
     }
-    client.Ec2.Bootinstance(
+    client.S3.GetPresignedURL(
         context.TODO(),
         request,
     )

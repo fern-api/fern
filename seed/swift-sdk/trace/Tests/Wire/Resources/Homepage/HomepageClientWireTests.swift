@@ -1,32 +1,9 @@
 import Foundation
 import Testing
-import Api
+import Trace
 
 @Suite("HomepageClient Wire Tests") struct HomepageClientWireTests {
-    @Test func gethomepageproblems1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  "string"
-                ]
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            "string"
-        ]
-        let response = try await client.homepage.gethomepageproblems(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func gethomepageproblems2() async throws -> Void {
+    @Test func getHomepageProblems1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -38,7 +15,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = TraceClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -47,7 +24,7 @@ import Api
             "string",
             "string"
         ]
-        let response = try await client.homepage.gethomepageproblems(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.homepage.getHomepageProblems(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

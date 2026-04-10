@@ -4,6 +4,7 @@ namespace Seed;
 
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
+use Seed\Commons\Metadata\Metadata;
 
 class Node extends JsonSerializableType
 {
@@ -20,16 +21,16 @@ class Node extends JsonSerializableType
     public ?string $label;
 
     /**
-     * @var ?CommonsMetadata $metadata
+     * @var ?Metadata $metadata
      */
     #[JsonProperty('metadata')]
-    public ?CommonsMetadata $metadata;
+    public ?Metadata $metadata;
 
     /**
      * @param array{
      *   id: string,
      *   label?: ?string,
-     *   metadata?: ?CommonsMetadata,
+     *   metadata?: ?Metadata,
      * } $values
      */
     public function __construct(

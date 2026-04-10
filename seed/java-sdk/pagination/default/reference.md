@@ -204,15 +204,9 @@ client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithBodyCursorPagination(
-    ListUsersBodyCursorPaginationRequest
+client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
+    ListUsersMixedTypeCursorPaginationRequest
         .builder()
-        .pagination(
-            WithCursor
-                .builder()
-                .cursor("cursor")
-                .build()
-        )
         .build()
 );
 ```
@@ -257,8 +251,8 @@ in order to fetch the next page of results.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithOffsetPagination(
-    ListUsersOffsetPaginationRequest
+client.inlineUsers().inlineUsers().listWithCursorPagination(
+    ListUsersCursorPaginationRequest
         .builder()
         .page(1)
         .perPage(1)
@@ -332,11 +326,11 @@ the next page of results.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithDoubleOffsetPagination(
-    ListUsersDoubleOffsetPaginationRequest
+client.inlineUsers().inlineUsers().listWithCursorPagination(
+    ListUsersCursorPaginationRequest
         .builder()
-        .page(1.1)
-        .perPage(1.1)
+        .page(1)
+        .perPage(1)
         .order(Order.ASC)
         .startingAfter("starting_after")
         .build()
@@ -407,15 +401,9 @@ the next page of results.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithBodyOffsetPagination(
-    ListUsersBodyOffsetPaginationRequest
+client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
+    ListUsersMixedTypeCursorPaginationRequest
         .builder()
-        .pagination(
-            WithPage
-                .builder()
-                .page(1)
-                .build()
-        )
         .build()
 );
 ```
@@ -527,8 +515,8 @@ paginated endpoint.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithOffsetPaginationHasNextPage(
-    ListWithOffsetPaginationHasNextPageRequest
+client.inlineUsers().inlineUsers().listWithOffsetStepPagination(
+    ListUsersOffsetStepPaginationRequest
         .builder()
         .page(1)
         .limit(1)
@@ -639,8 +627,8 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithExtendedResultsAndOptionalData(
-    ListUsersExtendedRequestForOptionalData
+client.inlineUsers().inlineUsers().listWithExtendedResults(
+    ListUsersExtendedRequest
         .builder()
         .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .build()
@@ -684,8 +672,8 @@ client.inlineUsers().inlineUsers().listWithExtendedResultsAndOptionalData(
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listUsernames(
-    ListUsernamesRequest
+client.inlineUsers().inlineUsers().listWithCursorPagination(
+    ListUsersCursorPaginationRequest
         .builder()
         .startingAfter("starting_after")
         .build()
@@ -898,15 +886,9 @@ client.users().listWithMixedTypeCursorPagination(
 <dd>
 
 ```java
-client.users().listWithBodyCursorPagination(
-    ListUsersBodyCursorPaginationRequest
+client.users().listWithMixedTypeCursorPagination(
+    ListUsersMixedTypeCursorPaginationRequest
         .builder()
-        .pagination(
-            WithCursor
-                .builder()
-                .cursor("cursor")
-                .build()
-        )
         .build()
 );
 ```
@@ -1024,8 +1006,8 @@ the next page of results.
 <dd>
 
 ```java
-client.users().listWithOffsetPagination(
-    ListUsersOffsetPaginationRequest
+client.users().listWithCursorPagination(
+    ListUsersCursorPaginationRequest
         .builder()
         .page(1)
         .perPage(1)
@@ -1099,11 +1081,11 @@ the next page of results.
 <dd>
 
 ```java
-client.users().listWithDoubleOffsetPagination(
-    ListUsersDoubleOffsetPaginationRequest
+client.users().listWithCursorPagination(
+    ListUsersCursorPaginationRequest
         .builder()
-        .page(1.1)
-        .perPage(1.1)
+        .page(1)
+        .perPage(1)
         .order(Order.ASC)
         .startingAfter("starting_after")
         .build()
@@ -1174,15 +1156,9 @@ the next page of results.
 <dd>
 
 ```java
-client.users().listWithBodyOffsetPagination(
-    ListUsersBodyOffsetPaginationRequest
+client.users().listWithMixedTypeCursorPagination(
+    ListUsersMixedTypeCursorPaginationRequest
         .builder()
-        .pagination(
-            WithPage
-                .builder()
-                .page(1)
-                .build()
-        )
         .build()
 );
 ```
@@ -1294,8 +1270,8 @@ paginated endpoint.
 <dd>
 
 ```java
-client.users().listWithOffsetPaginationHasNextPage(
-    ListWithOffsetPaginationHasNextPageRequest
+client.users().listWithOffsetStepPagination(
+    ListUsersOffsetStepPaginationRequest
         .builder()
         .page(1)
         .limit(3)
@@ -1406,8 +1382,8 @@ client.users().listWithExtendedResults(
 <dd>
 
 ```java
-client.users().listWithExtendedResultsAndOptionalData(
-    ListUsersExtendedRequestForOptionalData
+client.users().listWithExtendedResults(
+    ListUsersExtendedRequest
         .builder()
         .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .build()
@@ -1451,8 +1427,8 @@ client.users().listWithExtendedResultsAndOptionalData(
 <dd>
 
 ```java
-client.users().listUsernames(
-    ListUsernamesRequest
+client.users().listWithCursorPagination(
+    ListUsersCursorPaginationRequest
         .builder()
         .startingAfter("starting_after")
         .build()
@@ -1499,8 +1475,8 @@ the next page of results.
 <dd>
 
 ```java
-client.users().listUsernamesWithOptionalResponse(
-    ListUsernamesWithOptionalResponseRequest
+client.users().listWithCursorPagination(
+    ListUsersCursorPaginationRequest
         .builder()
         .startingAfter("starting_after")
         .build()

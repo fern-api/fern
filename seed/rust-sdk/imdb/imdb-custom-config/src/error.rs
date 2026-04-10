@@ -2,8 +2,8 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("NotFoundError: Resource not found - {{message}}")]
-    NotFoundError {
+    #[error("MovieDoesNotExistError: Resource not found - {{message}}")]
+    MovieDoesNotExistError {
         message: String,
         resource_id: Option<String>,
         resource_type: Option<String>,
@@ -32,10 +32,10 @@ impl ApiError {
     pub fn from_response(status_code: u16, body: Option<&str>) -> Self {
         match status_code {
             404 => {
-                // Parse error body for NotFoundError;
+                // Parse error body for MovieDoesNotExistError;
                 if let Some(body_str) = body {
                     if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::NotFoundError {
+                        return Self::MovieDoesNotExistError {
                             message: parsed
                                 .get("message")
                                 .and_then(|v| v.as_str())
@@ -50,7 +50,7 @@ impl ApiError {
                         };
                     }
                 }
-                return Self::NotFoundError {
+                return Self::MovieDoesNotExistError {
                     message: body.unwrap_or("Unknown error").to_string(),
                     resource_id: None,
                     resource_type: None,

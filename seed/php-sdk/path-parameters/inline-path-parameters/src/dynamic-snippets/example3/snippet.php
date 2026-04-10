@@ -3,17 +3,16 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Organizations\Requests\OrganizationsGetOrganizationUserRequest;
+use Seed\User\Requests\GetUsersRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->organizations->getorganizationuser(
-    new OrganizationsGetOrganizationUserRequest([
+$client->user->getUser(
+    new GetUsersRequest([
         'tenantId' => 'tenant_id',
-        'organizationId' => 'organization_id',
         'userId' => 'user_id',
     ]),
 );

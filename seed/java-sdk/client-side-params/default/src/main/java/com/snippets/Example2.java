@@ -1,21 +1,30 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.service.requests.ServiceGetResourceRequest;
+import com.seed.clientSideParams.SeedClientSideParamsClient;
+import com.seed.clientSideParams.resources.service.requests.SearchResourcesRequest;
+import java.util.HashMap;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedClientSideParamsClient client = SeedClientSideParamsClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.service()
-                .getresource(
-                        "resourceId",
-                        ServiceGetResourceRequest.builder()
-                                .includeMetadata(true)
-                                .format("format")
-                                .build());
+                .searchResources(SearchResourcesRequest.builder()
+                        .limit(1)
+                        .offset(1)
+                        .query("query")
+                        .filters(new HashMap<String, Object>() {
+                            {
+                                put("filters", new HashMap<String, Object>() {
+                                    {
+                                        put("key", "value");
+                                    }
+                                });
+                            }
+                        })
+                        .build());
     }
 }

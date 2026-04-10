@@ -1,4 +1,4 @@
-package api
+package oauthclientcredentialsmandatoryauth
 
 import (
 	"time"

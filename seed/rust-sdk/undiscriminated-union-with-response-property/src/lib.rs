@@ -1,19 +1,20 @@
-//! # undiscriminated-union-with-response-property SDK
+//! # UndiscriminatedUnionWithResponseProperty SDK
 //!
-//! The official Rust SDK for the undiscriminated-union-with-response-property.
+//! The official Rust SDK for the UndiscriminatedUnionWithResponseProperty.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_undiscriminated_union_with_response_property::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client..get_union(None).await;
+//!     let client = UndiscriminatedUnionWithResponsePropertyClient::new(config)
+//!         .expect("Failed to build client");
+//!     client.get_union(None).await;
 //! }
 //! ```
 //!
@@ -27,15 +28,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
 pub use error::{ApiError, BuildError};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-

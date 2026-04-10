@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_validation::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,14 +6,13 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ValidationClient::new(config).expect("Failed to build client");
     client
-        ..create(
-            &CreateRequest {
-                decimal: 1.1,
-                even: 1,
-                name: "name".to_string(),
-                shape: Shape::Square,
+        .get(
+            &GetQueryRequest {
+                decimal: 2.2,
+                even: 100,
+                name: "fern".to_string(),
             },
             None,
         )

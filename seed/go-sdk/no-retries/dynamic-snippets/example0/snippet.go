@@ -13,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Retries.Getusers(
+    client.Retries.GetUsers(
         context.TODO(),
     )
 }

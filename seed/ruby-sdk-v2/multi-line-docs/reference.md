@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getuser</a>(user_id) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user</a>(user_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```ruby
-client.user.getuser(user_id: "userId")
+client.user.get_user(user_id: "userId")
 ```
 </dd>
 </dl>
@@ -66,7 +66,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">createuser</a>(request) -> Seed::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -94,7 +94,10 @@ This endpoint is used to create a new user.
 <dd>
 
 ```ruby
-client.user.createuser(name: "name")
+client.user.create_user(
+  name: "name",
+  age: 1
+)
 ```
 </dd>
 </dl>

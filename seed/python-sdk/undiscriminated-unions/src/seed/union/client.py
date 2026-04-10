@@ -4,13 +4,13 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.metadata import Metadata
-from ..types.metadata_union import MetadataUnion
-from ..types.my_union import MyUnion
-from ..types.nested_union_root import NestedUnionRoot
-from ..types.payment_method_union import PaymentMethodUnion
-from ..types.union_with_duplicate_types import UnionWithDuplicateTypes
 from .raw_client import AsyncRawUnionClient, RawUnionClient
+from .types.metadata import Metadata
+from .types.metadata_union import MetadataUnion
+from .types.my_union import MyUnion
+from .types.nested_union_root import NestedUnionRoot
+from .types.payment_method_union import PaymentMethodUnion
+from .types.union_with_duplicate_types import UnionWithDuplicateTypes
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -44,12 +44,11 @@ class UnionClient:
         -------
         MyUnion
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUndiscriminatedUnions
 
-        client = SeedApi(
+        client = SeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.union.get(
@@ -59,7 +58,7 @@ class UnionClient:
         _response = self._raw_client.get(request=request, request_options=request_options)
         return _response.data
 
-    def getmetadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
+    def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
         """
         Parameters
         ----------
@@ -70,20 +69,19 @@ class UnionClient:
         -------
         Metadata
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUndiscriminatedUnions
 
-        client = SeedApi(
+        client = SeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.union.getmetadata()
+        client.union.get_metadata()
         """
-        _response = self._raw_client.getmetadata(request_options=request_options)
+        _response = self._raw_client.get_metadata(request_options=request_options)
         return _response.data
 
-    def updatemetadata(
+    def update_metadata(
         self, *, request: MetadataUnion, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
@@ -98,19 +96,18 @@ class UnionClient:
         -------
         bool
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUndiscriminatedUnions
 
-        client = SeedApi(
+        client = SeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.union.updatemetadata(
-            request={"key": "value"},
+        client.union.update_metadata(
+            request={"string": {"key": "value"}},
         )
         """
-        _response = self._raw_client.updatemetadata(request=request, request_options=request_options)
+        _response = self._raw_client.update_metadata(request=request, request_options=request_options)
         return _response.data
 
     def call(
@@ -128,20 +125,21 @@ class UnionClient:
         -------
         bool
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUndiscriminatedUnions
 
-        client = SeedApi(
+        client = SeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.union.call()
+        client.union.call(
+            union={"string": {"key": "value"}},
+        )
         """
         _response = self._raw_client.call(union=union, request_options=request_options)
         return _response.data
 
-    def duplicatetypesunion(
+    def duplicate_types_union(
         self, *, request: UnionWithDuplicateTypes, request_options: typing.Optional[RequestOptions] = None
     ) -> UnionWithDuplicateTypes:
         """
@@ -156,22 +154,23 @@ class UnionClient:
         -------
         UnionWithDuplicateTypes
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUndiscriminatedUnions
 
-        client = SeedApi(
+        client = SeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.union.duplicatetypesunion(
+        client.union.duplicate_types_union(
             request="string",
         )
         """
-        _response = self._raw_client.duplicatetypesunion(request=request, request_options=request_options)
+        _response = self._raw_client.duplicate_types_union(request=request, request_options=request_options)
         return _response.data
 
-    def nestedunions(self, *, request: NestedUnionRoot, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def nested_unions(
+        self, *, request: NestedUnionRoot, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
         """
         Parameters
         ----------
@@ -184,22 +183,21 @@ class UnionClient:
         -------
         str
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUndiscriminatedUnions
 
-        client = SeedApi(
+        client = SeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.union.nestedunions(
+        client.union.nested_unions(
             request="string",
         )
         """
-        _response = self._raw_client.nestedunions(request=request, request_options=request_options)
+        _response = self._raw_client.nested_unions(request=request, request_options=request_options)
         return _response.data
 
-    def testcamelcaseproperties(
+    def test_camel_case_properties(
         self, *, payment_method: PaymentMethodUnion, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
@@ -214,22 +212,22 @@ class UnionClient:
         -------
         str
 
-
         Examples
         --------
-        from seed import SeedApi, TokenizeCard
+        from seed import SeedUndiscriminatedUnions
+        from seed.union import TokenizeCard
 
-        client = SeedApi(
+        client = SeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.union.testcamelcaseproperties(
+        client.union.test_camel_case_properties(
             payment_method=TokenizeCard(
-                method="method",
-                card_number="cardNumber",
+                method="card",
+                card_number="1234567890123456",
             ),
         )
         """
-        _response = self._raw_client.testcamelcaseproperties(
+        _response = self._raw_client.test_camel_case_properties(
             payment_method=payment_method, request_options=request_options
         )
         return _response.data
@@ -263,14 +261,13 @@ class AsyncUnionClient:
         -------
         MyUnion
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUndiscriminatedUnions
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -286,7 +283,7 @@ class AsyncUnionClient:
         _response = await self._raw_client.get(request=request, request_options=request_options)
         return _response.data
 
-    async def getmetadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
+    async def get_metadata(self, *, request_options: typing.Optional[RequestOptions] = None) -> Metadata:
         """
         Parameters
         ----------
@@ -297,28 +294,27 @@ class AsyncUnionClient:
         -------
         Metadata
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUndiscriminatedUnions
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.union.getmetadata()
+            await client.union.get_metadata()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getmetadata(request_options=request_options)
+        _response = await self._raw_client.get_metadata(request_options=request_options)
         return _response.data
 
-    async def updatemetadata(
+    async def update_metadata(
         self, *, request: MetadataUnion, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
@@ -333,27 +329,26 @@ class AsyncUnionClient:
         -------
         bool
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUndiscriminatedUnions
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.union.updatemetadata(
-                request={"key": "value"},
+            await client.union.update_metadata(
+                request={"string": {"key": "value"}},
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.updatemetadata(request=request, request_options=request_options)
+        _response = await self._raw_client.update_metadata(request=request, request_options=request_options)
         return _response.data
 
     async def call(
@@ -371,20 +366,21 @@ class AsyncUnionClient:
         -------
         bool
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUndiscriminatedUnions
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.union.call()
+            await client.union.call(
+                union={"string": {"key": "value"}},
+            )
 
 
         asyncio.run(main())
@@ -392,7 +388,7 @@ class AsyncUnionClient:
         _response = await self._raw_client.call(union=union, request_options=request_options)
         return _response.data
 
-    async def duplicatetypesunion(
+    async def duplicate_types_union(
         self, *, request: UnionWithDuplicateTypes, request_options: typing.Optional[RequestOptions] = None
     ) -> UnionWithDuplicateTypes:
         """
@@ -407,30 +403,29 @@ class AsyncUnionClient:
         -------
         UnionWithDuplicateTypes
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUndiscriminatedUnions
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.union.duplicatetypesunion(
+            await client.union.duplicate_types_union(
                 request="string",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.duplicatetypesunion(request=request, request_options=request_options)
+        _response = await self._raw_client.duplicate_types_union(request=request, request_options=request_options)
         return _response.data
 
-    async def nestedunions(
+    async def nested_unions(
         self, *, request: NestedUnionRoot, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
@@ -445,30 +440,29 @@ class AsyncUnionClient:
         -------
         str
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUndiscriminatedUnions
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.union.nestedunions(
+            await client.union.nested_unions(
                 request="string",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.nestedunions(request=request, request_options=request_options)
+        _response = await self._raw_client.nested_unions(request=request, request_options=request_options)
         return _response.data
 
-    async def testcamelcaseproperties(
+    async def test_camel_case_properties(
         self, *, payment_method: PaymentMethodUnion, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
@@ -483,30 +477,30 @@ class AsyncUnionClient:
         -------
         str
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi, TokenizeCard
+        from seed import AsyncSeedUndiscriminatedUnions
+        from seed.union import TokenizeCard
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUndiscriminatedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.union.testcamelcaseproperties(
+            await client.union.test_camel_case_properties(
                 payment_method=TokenizeCard(
-                    method="method",
-                    card_number="cardNumber",
+                    method="card",
+                    card_number="1234567890123456",
                 ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.testcamelcaseproperties(
+        _response = await self._raw_client.test_camel_case_properties(
             payment_method=payment_method, request_options=request_options
         )
         return _response.data

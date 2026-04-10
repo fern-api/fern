@@ -5,16 +5,16 @@ import typing
 from .. import core
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..requests.my_alias_object import MyAliasObjectParams
-from ..requests.my_collection_alias_object import MyCollectionAliasObjectParams
-from ..requests.my_inline_type import MyInlineTypeParams
-from ..requests.my_object import MyObjectParams
-from ..requests.my_object_with_optional import MyObjectWithOptionalParams
-from ..types.id import Id
-from ..types.model_type import ModelType
-from ..types.object_type import ObjectType
-from ..types.open_enum_type import OpenEnumType
 from .raw_client import AsyncRawServiceClient, RawServiceClient
+from .requests.my_alias_object import MyAliasObjectParams
+from .requests.my_collection_alias_object import MyCollectionAliasObjectParams
+from .requests.my_inline_type import MyInlineTypeParams
+from .requests.my_object import MyObjectParams
+from .requests.my_object_with_optional import MyObjectWithOptionalParams
+from .types.id import Id
+from .types.model_type import ModelType
+from .types.object_type import ObjectType
+from .types.open_enum_type import OpenEnumType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -38,133 +38,21 @@ class ServiceClient:
     def post(
         self,
         *,
+        integer: int,
+        file: core.File,
+        file_list: typing.List[core.File],
+        list_of_objects: typing.Sequence[MyObjectParams],
+        alias_object: MyAliasObjectParams,
+        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
+        alias_list_of_object: MyCollectionAliasObjectParams,
         maybe_string: typing.Optional[str] = OMIT,
-        integer: typing.Optional[int] = OMIT,
-        file: typing.Optional[core.File] = OMIT,
-        file_list: typing.Optional[core.File] = OMIT,
         maybe_file: typing.Optional[core.File] = OMIT,
-        maybe_file_list: typing.Optional[core.File] = OMIT,
+        maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        list_of_objects: typing.Optional[typing.Sequence[MyObjectParams]] = OMIT,
         optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
-        alias_object: typing.Optional[MyAliasObjectParams] = OMIT,
-        list_of_alias_object: typing.Optional[typing.Sequence[MyAliasObjectParams]] = OMIT,
-        alias_list_of_object: typing.Optional[MyCollectionAliasObjectParams] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Parameters
-        ----------
-        maybe_string : typing.Optional[str]
-
-        integer : typing.Optional[int]
-
-        file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        file_list : typing.Optional[core.File]
-            See core.File for more documentation
-
-        maybe_file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        maybe_file_list : typing.Optional[core.File]
-            See core.File for more documentation
-
-        maybe_integer : typing.Optional[int]
-
-        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
-
-        list_of_objects : typing.Optional[typing.Sequence[MyObjectParams]]
-
-        optional_metadata : typing.Optional[typing.Any]
-
-        optional_object_type : typing.Optional[ObjectType]
-
-        optional_id : typing.Optional[Id]
-
-        alias_object : typing.Optional[MyAliasObjectParams]
-
-        list_of_alias_object : typing.Optional[typing.Sequence[MyAliasObjectParams]]
-
-        alias_list_of_object : typing.Optional[MyCollectionAliasObjectParams]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.post()
-        """
-        _response = self._raw_client.post(
-            maybe_string=maybe_string,
-            integer=integer,
-            file=file,
-            file_list=file_list,
-            maybe_file=maybe_file,
-            maybe_file_list=maybe_file_list,
-            maybe_integer=maybe_integer,
-            optional_list_of_strings=optional_list_of_strings,
-            list_of_objects=list_of_objects,
-            optional_metadata=optional_metadata,
-            optional_object_type=optional_object_type,
-            optional_id=optional_id,
-            alias_object=alias_object,
-            list_of_alias_object=list_of_alias_object,
-            alias_list_of_object=alias_list_of_object,
-            request_options=request_options,
-        )
-        return _response.data
-
-    def justfile(
-        self, *, file: typing.Optional[core.File] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Parameters
-        ----------
-        file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.justfile()
-        """
-        _response = self._raw_client.justfile(file=file, request_options=request_options)
-        return _response.data
-
-    def justfilewithqueryparams(
-        self,
-        *,
-        integer: int,
-        maybe_string: typing.Optional[str] = None,
-        maybe_integer: typing.Optional[int] = None,
-        list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        file: typing.Optional[core.File] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -172,16 +60,37 @@ class ServiceClient:
         ----------
         integer : int
 
+        file : core.File
+            See core.File for more documentation
+
+        file_list : typing.List[core.File]
+            See core.File for more documentation
+
+        list_of_objects : typing.Sequence[MyObjectParams]
+
+        alias_object : MyAliasObjectParams
+
+        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+
+        alias_list_of_object : MyCollectionAliasObjectParams
+
         maybe_string : typing.Optional[str]
+
+        maybe_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        maybe_file_list : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
         maybe_integer : typing.Optional[int]
 
-        list_of_strings : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        optional_list_of_strings : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        optional_metadata : typing.Optional[typing.Any]
 
-        file : typing.Optional[core.File]
-            See core.File for more documentation
+        optional_object_type : typing.Optional[ObjectType]
+
+        optional_id : typing.Optional[Id]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -190,33 +99,31 @@ class ServiceClient:
         -------
         None
         """
-        _response = self._raw_client.justfilewithqueryparams(
+        _response = self._raw_client.post(
             integer=integer,
-            maybe_string=maybe_string,
-            maybe_integer=maybe_integer,
-            list_of_strings=list_of_strings,
-            optional_list_of_strings=optional_list_of_strings,
             file=file,
+            file_list=file_list,
+            list_of_objects=list_of_objects,
+            alias_object=alias_object,
+            list_of_alias_object=list_of_alias_object,
+            alias_list_of_object=alias_list_of_object,
+            maybe_string=maybe_string,
+            maybe_file=maybe_file,
+            maybe_file_list=maybe_file_list,
+            maybe_integer=maybe_integer,
+            optional_list_of_strings=optional_list_of_strings,
+            optional_metadata=optional_metadata,
+            optional_object_type=optional_object_type,
+            optional_id=optional_id,
             request_options=request_options,
         )
         return _response.data
 
-    def justfilewithoptionalqueryparams(
-        self,
-        *,
-        maybe_string: typing.Optional[str] = None,
-        maybe_integer: typing.Optional[int] = None,
-        file: typing.Optional[core.File] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        maybe_string : typing.Optional[str]
-
-        maybe_integer : typing.Optional[int]
-
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
@@ -228,36 +135,109 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedFileUpload
 
-        client = SeedApi(
+        client = SeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.justfilewithoptionalqueryparams()
+        client.service.just_file()
         """
-        _response = self._raw_client.justfilewithoptionalqueryparams(
-            maybe_string=maybe_string, maybe_integer=maybe_integer, file=file, request_options=request_options
+        _response = self._raw_client.just_file(file=file, request_options=request_options)
+        return _response.data
+
+    def just_file_with_query_params(
+        self,
+        *,
+        integer: int,
+        list_of_strings: typing.Union[str, typing.Sequence[str]],
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        integer : int
+
+        list_of_strings : typing.Union[str, typing.Sequence[str]]
+
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        optional_list_of_strings : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+        """
+        _response = self._raw_client.just_file_with_query_params(
+            integer=integer,
+            list_of_strings=list_of_strings,
+            file=file,
+            maybe_string=maybe_string,
+            maybe_integer=maybe_integer,
+            optional_list_of_strings=optional_list_of_strings,
+            request_options=request_options,
         )
         return _response.data
 
-    def withcontenttype(
+    def just_file_with_optional_query_params(
         self,
         *,
-        file: typing.Optional[core.File] = OMIT,
-        foo: typing.Optional[str] = OMIT,
-        bar: typing.Optional[MyObjectParams] = OMIT,
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+        """
+        _response = self._raw_client.just_file_with_optional_query_params(
+            file=file, maybe_string=maybe_string, maybe_integer=maybe_integer, request_options=request_options
+        )
+        return _response.data
+
+    def with_content_type(
+        self,
+        *,
+        file: core.File,
+        foo: str,
+        bar: MyObjectParams,
         foo_bar: typing.Optional[MyObjectParams] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
-        foo : typing.Optional[str]
+        foo : str
 
-        bar : typing.Optional[MyObjectParams]
+        bar : MyObjectParams
 
         foo_bar : typing.Optional[MyObjectParams]
 
@@ -267,38 +247,24 @@ class ServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.withcontenttype()
         """
-        _response = self._raw_client.withcontenttype(
+        _response = self._raw_client.with_content_type(
             file=file, foo=foo, bar=bar, foo_bar=foo_bar, request_options=request_options
         )
         return _response.data
 
-    def withformencoding(
-        self,
-        *,
-        file: typing.Optional[core.File] = OMIT,
-        foo: typing.Optional[str] = OMIT,
-        bar: typing.Optional[MyObjectParams] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+    def with_form_encoding(
+        self, *, file: core.File, foo: str, bar: MyObjectParams, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
-        foo : typing.Optional[str]
+        foo : str
 
-        bar : typing.Optional[MyObjectParams]
+        bar : MyObjectParams
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -306,64 +272,63 @@ class ServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.withformencoding()
         """
-        _response = self._raw_client.withformencoding(file=file, foo=foo, bar=bar, request_options=request_options)
+        _response = self._raw_client.with_form_encoding(file=file, foo=foo, bar=bar, request_options=request_options)
         return _response.data
 
-    def withformencodedcontainers(
+    def with_form_encoded_containers(
         self,
         *,
+        integer: int,
+        file: core.File,
+        file_list: typing.List[core.File],
+        list_of_objects: typing.Sequence[MyObjectParams],
+        list_of_objects_with_optionals: typing.Sequence[MyObjectWithOptionalParams],
+        alias_object: MyAliasObjectParams,
+        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
+        alias_list_of_object: MyCollectionAliasObjectParams,
         maybe_string: typing.Optional[str] = OMIT,
-        integer: typing.Optional[int] = OMIT,
-        file: typing.Optional[core.File] = OMIT,
-        file_list: typing.Optional[core.File] = OMIT,
         maybe_file: typing.Optional[core.File] = OMIT,
-        maybe_file_list: typing.Optional[core.File] = OMIT,
+        maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        list_of_objects: typing.Optional[typing.Sequence[MyObjectParams]] = OMIT,
         optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
-        list_of_objects_with_optionals: typing.Optional[typing.Sequence[MyObjectWithOptionalParams]] = OMIT,
-        alias_object: typing.Optional[MyAliasObjectParams] = OMIT,
-        list_of_alias_object: typing.Optional[typing.Sequence[MyAliasObjectParams]] = OMIT,
-        alias_list_of_object: typing.Optional[MyCollectionAliasObjectParams] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
+        integer : int
+
+        file : core.File
+            See core.File for more documentation
+
+        file_list : typing.List[core.File]
+            See core.File for more documentation
+
+        list_of_objects : typing.Sequence[MyObjectParams]
+
+        list_of_objects_with_optionals : typing.Sequence[MyObjectWithOptionalParams]
+
+        alias_object : MyAliasObjectParams
+
+        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+
+        alias_list_of_object : MyCollectionAliasObjectParams
+
         maybe_string : typing.Optional[str]
-
-        integer : typing.Optional[int]
-
-        file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        file_list : typing.Optional[core.File]
-            See core.File for more documentation
 
         maybe_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        maybe_file_list : typing.Optional[core.File]
+        maybe_file_list : typing.Optional[typing.List[core.File]]
             See core.File for more documentation
 
         maybe_integer : typing.Optional[int]
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
-
-        list_of_objects : typing.Optional[typing.Sequence[MyObjectParams]]
 
         optional_metadata : typing.Optional[typing.Any]
 
@@ -371,52 +336,35 @@ class ServiceClient:
 
         optional_id : typing.Optional[Id]
 
-        list_of_objects_with_optionals : typing.Optional[typing.Sequence[MyObjectWithOptionalParams]]
-
-        alias_object : typing.Optional[MyAliasObjectParams]
-
-        list_of_alias_object : typing.Optional[typing.Sequence[MyAliasObjectParams]]
-
-        alias_list_of_object : typing.Optional[MyCollectionAliasObjectParams]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         None
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.withformencodedcontainers()
         """
-        _response = self._raw_client.withformencodedcontainers(
-            maybe_string=maybe_string,
+        _response = self._raw_client.with_form_encoded_containers(
             integer=integer,
             file=file,
             file_list=file_list,
-            maybe_file=maybe_file,
-            maybe_file_list=maybe_file_list,
-            maybe_integer=maybe_integer,
-            optional_list_of_strings=optional_list_of_strings,
             list_of_objects=list_of_objects,
-            optional_metadata=optional_metadata,
-            optional_object_type=optional_object_type,
-            optional_id=optional_id,
             list_of_objects_with_optionals=list_of_objects_with_optionals,
             alias_object=alias_object,
             list_of_alias_object=list_of_alias_object,
             alias_list_of_object=alias_list_of_object,
+            maybe_string=maybe_string,
+            maybe_file=maybe_file,
+            maybe_file_list=maybe_file_list,
+            maybe_integer=maybe_integer,
+            optional_list_of_strings=optional_list_of_strings,
+            optional_metadata=optional_metadata,
+            optional_object_type=optional_object_type,
+            optional_id=optional_id,
             request_options=request_options,
         )
         return _response.data
 
-    def optionalargs(
+    def optional_args(
         self,
         *,
         image_file: typing.Optional[core.File] = OMIT,
@@ -438,35 +386,30 @@ class ServiceClient:
         -------
         str
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedFileUpload
 
-        client = SeedApi(
+        client = SeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.optionalargs()
+        client.service.optional_args()
         """
-        _response = self._raw_client.optionalargs(
+        _response = self._raw_client.optional_args(
             image_file=image_file, request=request, request_options=request_options
         )
         return _response.data
 
-    def withinlinetype(
-        self,
-        *,
-        file: typing.Optional[core.File] = OMIT,
-        request: typing.Optional[MyInlineTypeParams] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+    def with_inline_type(
+        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
-        request : typing.Optional[MyInlineTypeParams]
+        request : MyInlineTypeParams
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -474,31 +417,21 @@ class ServiceClient:
         Returns
         -------
         str
-
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.withinlinetype()
         """
-        _response = self._raw_client.withinlinetype(file=file, request=request, request_options=request_options)
+        _response = self._raw_client.with_inline_type(file=file, request=request, request_options=request_options)
         return _response.data
 
-    def withjsonproperty(
+    def with_json_property(
         self,
         *,
-        file: typing.Optional[core.File] = OMIT,
+        file: core.File,
         json: typing.Optional[MyObjectParams] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         json : typing.Optional[MyObjectParams]
@@ -509,18 +442,8 @@ class ServiceClient:
         Returns
         -------
         str
-
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.withjsonproperty()
         """
-        _response = self._raw_client.withjsonproperty(file=file, json=json, request_options=request_options)
+        _response = self._raw_client.with_json_property(file=file, json=json, request_options=request_options)
         return _response.data
 
     def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -536,9 +459,9 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedFileUpload
 
-        client = SeedApi(
+        client = SeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
         )
         client.service.simple()
@@ -546,10 +469,10 @@ class ServiceClient:
         _response = self._raw_client.simple(request_options=request_options)
         return _response.data
 
-    def withliteralandenumtypes(
+    def with_literal_and_enum_types(
         self,
         *,
-        file: typing.Optional[core.File] = OMIT,
+        file: core.File,
         model_type: typing.Optional[ModelType] = OMIT,
         open_enum: typing.Optional[OpenEnumType] = OMIT,
         maybe_name: typing.Optional[str] = OMIT,
@@ -558,7 +481,7 @@ class ServiceClient:
         """
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         model_type : typing.Optional[ModelType]
@@ -573,18 +496,8 @@ class ServiceClient:
         Returns
         -------
         str
-
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.withliteralandenumtypes()
         """
-        _response = self._raw_client.withliteralandenumtypes(
+        _response = self._raw_client.with_literal_and_enum_types(
             file=file,
             model_type=model_type,
             open_enum=open_enum,
@@ -612,149 +525,21 @@ class AsyncServiceClient:
     async def post(
         self,
         *,
+        integer: int,
+        file: core.File,
+        file_list: typing.List[core.File],
+        list_of_objects: typing.Sequence[MyObjectParams],
+        alias_object: MyAliasObjectParams,
+        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
+        alias_list_of_object: MyCollectionAliasObjectParams,
         maybe_string: typing.Optional[str] = OMIT,
-        integer: typing.Optional[int] = OMIT,
-        file: typing.Optional[core.File] = OMIT,
-        file_list: typing.Optional[core.File] = OMIT,
         maybe_file: typing.Optional[core.File] = OMIT,
-        maybe_file_list: typing.Optional[core.File] = OMIT,
+        maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        list_of_objects: typing.Optional[typing.Sequence[MyObjectParams]] = OMIT,
         optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
-        alias_object: typing.Optional[MyAliasObjectParams] = OMIT,
-        list_of_alias_object: typing.Optional[typing.Sequence[MyAliasObjectParams]] = OMIT,
-        alias_list_of_object: typing.Optional[MyCollectionAliasObjectParams] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Parameters
-        ----------
-        maybe_string : typing.Optional[str]
-
-        integer : typing.Optional[int]
-
-        file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        file_list : typing.Optional[core.File]
-            See core.File for more documentation
-
-        maybe_file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        maybe_file_list : typing.Optional[core.File]
-            See core.File for more documentation
-
-        maybe_integer : typing.Optional[int]
-
-        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
-
-        list_of_objects : typing.Optional[typing.Sequence[MyObjectParams]]
-
-        optional_metadata : typing.Optional[typing.Any]
-
-        optional_object_type : typing.Optional[ObjectType]
-
-        optional_id : typing.Optional[Id]
-
-        alias_object : typing.Optional[MyAliasObjectParams]
-
-        list_of_alias_object : typing.Optional[typing.Sequence[MyAliasObjectParams]]
-
-        alias_list_of_object : typing.Optional[MyCollectionAliasObjectParams]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.post()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.post(
-            maybe_string=maybe_string,
-            integer=integer,
-            file=file,
-            file_list=file_list,
-            maybe_file=maybe_file,
-            maybe_file_list=maybe_file_list,
-            maybe_integer=maybe_integer,
-            optional_list_of_strings=optional_list_of_strings,
-            list_of_objects=list_of_objects,
-            optional_metadata=optional_metadata,
-            optional_object_type=optional_object_type,
-            optional_id=optional_id,
-            alias_object=alias_object,
-            list_of_alias_object=list_of_alias_object,
-            alias_list_of_object=alias_list_of_object,
-            request_options=request_options,
-        )
-        return _response.data
-
-    async def justfile(
-        self, *, file: typing.Optional[core.File] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Parameters
-        ----------
-        file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.justfile()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.justfile(file=file, request_options=request_options)
-        return _response.data
-
-    async def justfilewithqueryparams(
-        self,
-        *,
-        integer: int,
-        maybe_string: typing.Optional[str] = None,
-        maybe_integer: typing.Optional[int] = None,
-        list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        file: typing.Optional[core.File] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -762,16 +547,37 @@ class AsyncServiceClient:
         ----------
         integer : int
 
+        file : core.File
+            See core.File for more documentation
+
+        file_list : typing.List[core.File]
+            See core.File for more documentation
+
+        list_of_objects : typing.Sequence[MyObjectParams]
+
+        alias_object : MyAliasObjectParams
+
+        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+
+        alias_list_of_object : MyCollectionAliasObjectParams
+
         maybe_string : typing.Optional[str]
+
+        maybe_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        maybe_file_list : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
         maybe_integer : typing.Optional[int]
 
-        list_of_strings : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        optional_list_of_strings : typing.Optional[typing.Sequence[str]]
 
-        optional_list_of_strings : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+        optional_metadata : typing.Optional[typing.Any]
 
-        file : typing.Optional[core.File]
-            See core.File for more documentation
+        optional_object_type : typing.Optional[ObjectType]
+
+        optional_id : typing.Optional[Id]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -780,33 +586,31 @@ class AsyncServiceClient:
         -------
         None
         """
-        _response = await self._raw_client.justfilewithqueryparams(
+        _response = await self._raw_client.post(
             integer=integer,
-            maybe_string=maybe_string,
-            maybe_integer=maybe_integer,
-            list_of_strings=list_of_strings,
-            optional_list_of_strings=optional_list_of_strings,
             file=file,
+            file_list=file_list,
+            list_of_objects=list_of_objects,
+            alias_object=alias_object,
+            list_of_alias_object=list_of_alias_object,
+            alias_list_of_object=alias_list_of_object,
+            maybe_string=maybe_string,
+            maybe_file=maybe_file,
+            maybe_file_list=maybe_file_list,
+            maybe_integer=maybe_integer,
+            optional_list_of_strings=optional_list_of_strings,
+            optional_metadata=optional_metadata,
+            optional_object_type=optional_object_type,
+            optional_id=optional_id,
             request_options=request_options,
         )
         return _response.data
 
-    async def justfilewithoptionalqueryparams(
-        self,
-        *,
-        maybe_string: typing.Optional[str] = None,
-        maybe_integer: typing.Optional[int] = None,
-        file: typing.Optional[core.File] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        maybe_string : typing.Optional[str]
-
-        maybe_integer : typing.Optional[int]
-
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
@@ -820,42 +624,115 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedFileUpload
 
-        client = AsyncSeedApi(
+        client = AsyncSeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.justfilewithoptionalqueryparams()
+            await client.service.just_file()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.justfilewithoptionalqueryparams(
-            maybe_string=maybe_string, maybe_integer=maybe_integer, file=file, request_options=request_options
+        _response = await self._raw_client.just_file(file=file, request_options=request_options)
+        return _response.data
+
+    async def just_file_with_query_params(
+        self,
+        *,
+        integer: int,
+        list_of_strings: typing.Union[str, typing.Sequence[str]],
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        integer : int
+
+        list_of_strings : typing.Union[str, typing.Sequence[str]]
+
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        optional_list_of_strings : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+        """
+        _response = await self._raw_client.just_file_with_query_params(
+            integer=integer,
+            list_of_strings=list_of_strings,
+            file=file,
+            maybe_string=maybe_string,
+            maybe_integer=maybe_integer,
+            optional_list_of_strings=optional_list_of_strings,
+            request_options=request_options,
         )
         return _response.data
 
-    async def withcontenttype(
+    async def just_file_with_optional_query_params(
         self,
         *,
-        file: typing.Optional[core.File] = OMIT,
-        foo: typing.Optional[str] = OMIT,
-        bar: typing.Optional[MyObjectParams] = OMIT,
+        file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
+
+        maybe_string : typing.Optional[str]
+
+        maybe_integer : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+        """
+        _response = await self._raw_client.just_file_with_optional_query_params(
+            file=file, maybe_string=maybe_string, maybe_integer=maybe_integer, request_options=request_options
+        )
+        return _response.data
+
+    async def with_content_type(
+        self,
+        *,
+        file: core.File,
+        foo: str,
+        bar: MyObjectParams,
         foo_bar: typing.Optional[MyObjectParams] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
-        foo : typing.Optional[str]
+        foo : str
 
-        bar : typing.Optional[MyObjectParams]
+        bar : MyObjectParams
 
         foo_bar : typing.Optional[MyObjectParams]
 
@@ -865,46 +742,24 @@ class AsyncServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.withcontenttype()
-
-
-        asyncio.run(main())
         """
-        _response = await self._raw_client.withcontenttype(
+        _response = await self._raw_client.with_content_type(
             file=file, foo=foo, bar=bar, foo_bar=foo_bar, request_options=request_options
         )
         return _response.data
 
-    async def withformencoding(
-        self,
-        *,
-        file: typing.Optional[core.File] = OMIT,
-        foo: typing.Optional[str] = OMIT,
-        bar: typing.Optional[MyObjectParams] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+    async def with_form_encoding(
+        self, *, file: core.File, foo: str, bar: MyObjectParams, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
-        foo : typing.Optional[str]
+        foo : str
 
-        bar : typing.Optional[MyObjectParams]
+        bar : MyObjectParams
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -912,74 +767,65 @@ class AsyncServiceClient:
         Returns
         -------
         None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.withformencoding()
-
-
-        asyncio.run(main())
         """
-        _response = await self._raw_client.withformencoding(
+        _response = await self._raw_client.with_form_encoding(
             file=file, foo=foo, bar=bar, request_options=request_options
         )
         return _response.data
 
-    async def withformencodedcontainers(
+    async def with_form_encoded_containers(
         self,
         *,
+        integer: int,
+        file: core.File,
+        file_list: typing.List[core.File],
+        list_of_objects: typing.Sequence[MyObjectParams],
+        list_of_objects_with_optionals: typing.Sequence[MyObjectWithOptionalParams],
+        alias_object: MyAliasObjectParams,
+        list_of_alias_object: typing.Sequence[MyAliasObjectParams],
+        alias_list_of_object: MyCollectionAliasObjectParams,
         maybe_string: typing.Optional[str] = OMIT,
-        integer: typing.Optional[int] = OMIT,
-        file: typing.Optional[core.File] = OMIT,
-        file_list: typing.Optional[core.File] = OMIT,
         maybe_file: typing.Optional[core.File] = OMIT,
-        maybe_file_list: typing.Optional[core.File] = OMIT,
+        maybe_file_list: typing.Optional[typing.List[core.File]] = OMIT,
         maybe_integer: typing.Optional[int] = OMIT,
         optional_list_of_strings: typing.Optional[typing.Sequence[str]] = OMIT,
-        list_of_objects: typing.Optional[typing.Sequence[MyObjectParams]] = OMIT,
         optional_metadata: typing.Optional[typing.Any] = OMIT,
         optional_object_type: typing.Optional[ObjectType] = OMIT,
         optional_id: typing.Optional[Id] = OMIT,
-        list_of_objects_with_optionals: typing.Optional[typing.Sequence[MyObjectWithOptionalParams]] = OMIT,
-        alias_object: typing.Optional[MyAliasObjectParams] = OMIT,
-        list_of_alias_object: typing.Optional[typing.Sequence[MyAliasObjectParams]] = OMIT,
-        alias_list_of_object: typing.Optional[MyCollectionAliasObjectParams] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
+        integer : int
+
+        file : core.File
+            See core.File for more documentation
+
+        file_list : typing.List[core.File]
+            See core.File for more documentation
+
+        list_of_objects : typing.Sequence[MyObjectParams]
+
+        list_of_objects_with_optionals : typing.Sequence[MyObjectWithOptionalParams]
+
+        alias_object : MyAliasObjectParams
+
+        list_of_alias_object : typing.Sequence[MyAliasObjectParams]
+
+        alias_list_of_object : MyCollectionAliasObjectParams
+
         maybe_string : typing.Optional[str]
-
-        integer : typing.Optional[int]
-
-        file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        file_list : typing.Optional[core.File]
-            See core.File for more documentation
 
         maybe_file : typing.Optional[core.File]
             See core.File for more documentation
 
-        maybe_file_list : typing.Optional[core.File]
+        maybe_file_list : typing.Optional[typing.List[core.File]]
             See core.File for more documentation
 
         maybe_integer : typing.Optional[int]
 
         optional_list_of_strings : typing.Optional[typing.Sequence[str]]
-
-        list_of_objects : typing.Optional[typing.Sequence[MyObjectParams]]
 
         optional_metadata : typing.Optional[typing.Any]
 
@@ -987,60 +833,35 @@ class AsyncServiceClient:
 
         optional_id : typing.Optional[Id]
 
-        list_of_objects_with_optionals : typing.Optional[typing.Sequence[MyObjectWithOptionalParams]]
-
-        alias_object : typing.Optional[MyAliasObjectParams]
-
-        list_of_alias_object : typing.Optional[typing.Sequence[MyAliasObjectParams]]
-
-        alias_list_of_object : typing.Optional[MyCollectionAliasObjectParams]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.withformencodedcontainers()
-
-
-        asyncio.run(main())
         """
-        _response = await self._raw_client.withformencodedcontainers(
-            maybe_string=maybe_string,
+        _response = await self._raw_client.with_form_encoded_containers(
             integer=integer,
             file=file,
             file_list=file_list,
-            maybe_file=maybe_file,
-            maybe_file_list=maybe_file_list,
-            maybe_integer=maybe_integer,
-            optional_list_of_strings=optional_list_of_strings,
             list_of_objects=list_of_objects,
-            optional_metadata=optional_metadata,
-            optional_object_type=optional_object_type,
-            optional_id=optional_id,
             list_of_objects_with_optionals=list_of_objects_with_optionals,
             alias_object=alias_object,
             list_of_alias_object=list_of_alias_object,
             alias_list_of_object=alias_list_of_object,
+            maybe_string=maybe_string,
+            maybe_file=maybe_file,
+            maybe_file_list=maybe_file_list,
+            maybe_integer=maybe_integer,
+            optional_list_of_strings=optional_list_of_strings,
+            optional_metadata=optional_metadata,
+            optional_object_type=optional_object_type,
+            optional_id=optional_id,
             request_options=request_options,
         )
         return _response.data
 
-    async def optionalargs(
+    async def optional_args(
         self,
         *,
         image_file: typing.Optional[core.File] = OMIT,
@@ -1062,43 +883,38 @@ class AsyncServiceClient:
         -------
         str
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedFileUpload
 
-        client = AsyncSeedApi(
+        client = AsyncSeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.optionalargs()
+            await client.service.optional_args()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.optionalargs(
+        _response = await self._raw_client.optional_args(
             image_file=image_file, request=request, request_options=request_options
         )
         return _response.data
 
-    async def withinlinetype(
-        self,
-        *,
-        file: typing.Optional[core.File] = OMIT,
-        request: typing.Optional[MyInlineTypeParams] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+    async def with_inline_type(
+        self, *, file: core.File, request: MyInlineTypeParams, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
-        request : typing.Optional[MyInlineTypeParams]
+        request : MyInlineTypeParams
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1106,39 +922,21 @@ class AsyncServiceClient:
         Returns
         -------
         str
-
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.withinlinetype()
-
-
-        asyncio.run(main())
         """
-        _response = await self._raw_client.withinlinetype(file=file, request=request, request_options=request_options)
+        _response = await self._raw_client.with_inline_type(file=file, request=request, request_options=request_options)
         return _response.data
 
-    async def withjsonproperty(
+    async def with_json_property(
         self,
         *,
-        file: typing.Optional[core.File] = OMIT,
+        file: core.File,
         json: typing.Optional[MyObjectParams] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         json : typing.Optional[MyObjectParams]
@@ -1149,26 +947,8 @@ class AsyncServiceClient:
         Returns
         -------
         str
-
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.withjsonproperty()
-
-
-        asyncio.run(main())
         """
-        _response = await self._raw_client.withjsonproperty(file=file, json=json, request_options=request_options)
+        _response = await self._raw_client.with_json_property(file=file, json=json, request_options=request_options)
         return _response.data
 
     async def simple(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -1186,9 +966,9 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedFileUpload
 
-        client = AsyncSeedApi(
+        client = AsyncSeedFileUpload(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -1202,10 +982,10 @@ class AsyncServiceClient:
         _response = await self._raw_client.simple(request_options=request_options)
         return _response.data
 
-    async def withliteralandenumtypes(
+    async def with_literal_and_enum_types(
         self,
         *,
-        file: typing.Optional[core.File] = OMIT,
+        file: core.File,
         model_type: typing.Optional[ModelType] = OMIT,
         open_enum: typing.Optional[OpenEnumType] = OMIT,
         maybe_name: typing.Optional[str] = OMIT,
@@ -1214,7 +994,7 @@ class AsyncServiceClient:
         """
         Parameters
         ----------
-        file : typing.Optional[core.File]
+        file : core.File
             See core.File for more documentation
 
         model_type : typing.Optional[ModelType]
@@ -1229,26 +1009,8 @@ class AsyncServiceClient:
         Returns
         -------
         str
-
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.withliteralandenumtypes()
-
-
-        asyncio.run(main())
         """
-        _response = await self._raw_client.withliteralandenumtypes(
+        _response = await self._raw_client.with_literal_and_enum_types(
             file=file,
             model_type=model_type,
             open_enum=open_enum,

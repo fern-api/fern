@@ -14,38 +14,21 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.UpdateUserRequest{
-        UserID: "userId",
-        Username: fern.String(
-            "username",
+    request := &fern.ListUsersRequest{
+        Limit: fern.Int(
+            1,
         ),
-        Email: fern.String(
-            "email",
+        Offset: fern.Int(
+            1,
         ),
-        Phone: fern.String(
-            "phone",
+        IncludeDeleted: fern.Bool(
+            true,
         ),
-        Address: &fern.Address{
-            Street: "street",
-            City: fern.String(
-                "city",
-            ),
-            State: fern.String(
-                "state",
-            ),
-            ZipCode: "zipCode",
-            Country: fern.String(
-                "country",
-            ),
-            BuildingID: fern.String(
-                "buildingId",
-            ),
-            TenantID: fern.String(
-                "tenantId",
-            ),
-        },
+        SortBy: fern.String(
+            "sortBy",
+        ),
     }
-    client.Nullableoptional.Updateuser(
+    client.NullableOptional.ListUsers(
         context.TODO(),
         request,
     )

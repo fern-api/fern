@@ -1,4 +1,4 @@
-import Api
+import NoRetries
 import Foundation
 
 final class HTTPStub {

@@ -4,8 +4,12 @@ namespace Seed\Complex;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Complex\Requests\SearchRequest;
-use Seed\Types\PaginatedConversationResponse;
+use Seed\Complex\Types\SearchRequest;
+use Seed\Core\Pagination\Pager;
+use Seed\Complex\Types\Conversation;
+use Seed\Core\Pagination\CursorPager;
+use Seed\Core\Pagination\PaginationHelper;
+use Seed\Complex\Types\PaginatedConversationResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -60,11 +64,39 @@ class ComplexClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return Pager<Conversation>
+     */
+    public function search(string $index, SearchRequest $request, ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (SearchRequest $request) => $this->_search($index, $request, $options),
+            setCursor: function (SearchRequest $request, ?string $cursor) {
+                PaginationHelper::setDeep($request, ["pagination", "startingAfter"], $cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?PaginatedConversationResponse $response) => $response?->getPages()?->getNext()?->getStartingAfter() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?PaginatedConversationResponse $response) => $response?->getConversations() ?? [],
+        );
+    }
+
+    /**
+     * @param string $index
+     * @param SearchRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
      * @return ?PaginatedConversationResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function search(string $index, SearchRequest $request, ?array $options = null): ?PaginatedConversationResponse
+    private function _search(string $index, SearchRequest $request, ?array $options = null): ?PaginatedConversationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

@@ -2,12 +2,12 @@
 
 import typing
 
+from ..commons.types.language import Language
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.execution_session_response import ExecutionSessionResponse
-from ..types.get_execution_session_state_response import GetExecutionSessionStateResponse
-from ..types.language import Language
 from .raw_client import AsyncRawSubmissionClient, RawSubmissionClient
+from .types.execution_session_response import ExecutionSessionResponse
+from .types.get_execution_session_state_response import GetExecutionSessionStateResponse
 
 
 class SubmissionClient:
@@ -25,7 +25,7 @@ class SubmissionClient:
         """
         return self._raw_client
 
-    def createexecutionsession(
+    def create_execution_session(
         self, language: Language, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ExecutionSessionResponse:
         """
@@ -42,24 +42,24 @@ class SubmissionClient:
         -------
         ExecutionSessionResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.submission.createexecutionsession(
+        client.submission.create_execution_session(
             language="JAVA",
         )
         """
-        _response = self._raw_client.createexecutionsession(language, request_options=request_options)
+        _response = self._raw_client.create_execution_session(language, request_options=request_options)
         return _response.data
 
-    def getexecutionsession(
+    def get_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ExecutionSessionResponse:
+    ) -> typing.Optional[ExecutionSessionResponse]:
         """
         Returns execution server URL for session. Returns empty if session isn't registered.
 
@@ -72,24 +72,26 @@ class SubmissionClient:
 
         Returns
         -------
-        ExecutionSessionResponse
-
+        typing.Optional[ExecutionSessionResponse]
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.submission.getexecutionsession(
+        client.submission.get_execution_session(
             session_id="sessionId",
         )
         """
-        _response = self._raw_client.getexecutionsession(session_id, request_options=request_options)
+        _response = self._raw_client.get_execution_session(session_id, request_options=request_options)
         return _response.data
 
-    def stopexecutionsession(self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def stop_execution_session(
+        self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Stops execution session.
 
@@ -106,19 +108,20 @@ class SubmissionClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.submission.stopexecutionsession(
+        client.submission.stop_execution_session(
             session_id="sessionId",
         )
         """
-        _response = self._raw_client.stopexecutionsession(session_id, request_options=request_options)
+        _response = self._raw_client.stop_execution_session(session_id, request_options=request_options)
         return _response.data
 
-    def getexecutionsessionsstate(
+    def get_execution_sessions_state(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetExecutionSessionStateResponse:
         """
@@ -131,17 +134,17 @@ class SubmissionClient:
         -------
         GetExecutionSessionStateResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.submission.getexecutionsessionsstate()
+        client.submission.get_execution_sessions_state()
         """
-        _response = self._raw_client.getexecutionsessionsstate(request_options=request_options)
+        _response = self._raw_client.get_execution_sessions_state(request_options=request_options)
         return _response.data
 
 
@@ -160,7 +163,7 @@ class AsyncSubmissionClient:
         """
         return self._raw_client
 
-    async def createexecutionsession(
+    async def create_execution_session(
         self, language: Language, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ExecutionSessionResponse:
         """
@@ -177,32 +180,32 @@ class AsyncSubmissionClient:
         -------
         ExecutionSessionResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.submission.createexecutionsession(
+            await client.submission.create_execution_session(
                 language="JAVA",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.createexecutionsession(language, request_options=request_options)
+        _response = await self._raw_client.create_execution_session(language, request_options=request_options)
         return _response.data
 
-    async def getexecutionsession(
+    async def get_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ExecutionSessionResponse:
+    ) -> typing.Optional[ExecutionSessionResponse]:
         """
         Returns execution server URL for session. Returns empty if session isn't registered.
 
@@ -215,32 +218,32 @@ class AsyncSubmissionClient:
 
         Returns
         -------
-        ExecutionSessionResponse
-
+        typing.Optional[ExecutionSessionResponse]
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.submission.getexecutionsession(
+            await client.submission.get_execution_session(
                 session_id="sessionId",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getexecutionsession(session_id, request_options=request_options)
+        _response = await self._raw_client.get_execution_session(session_id, request_options=request_options)
         return _response.data
 
-    async def stopexecutionsession(
+    async def stop_execution_session(
         self, session_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -261,25 +264,26 @@ class AsyncSubmissionClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.submission.stopexecutionsession(
+            await client.submission.stop_execution_session(
                 session_id="sessionId",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.stopexecutionsession(session_id, request_options=request_options)
+        _response = await self._raw_client.stop_execution_session(session_id, request_options=request_options)
         return _response.data
 
-    async def getexecutionsessionsstate(
+    async def get_execution_sessions_state(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetExecutionSessionStateResponse:
         """
@@ -292,23 +296,23 @@ class AsyncSubmissionClient:
         -------
         GetExecutionSessionStateResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.submission.getexecutionsessionsstate()
+            await client.submission.get_execution_sessions_state()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getexecutionsessionsstate(request_options=request_options)
+        _response = await self._raw_client.get_execution_sessions_state(request_options=request_options)
         return _response.data

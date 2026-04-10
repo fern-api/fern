@@ -2,36 +2,30 @@
 
 namespace Seed;
 
-use Seed\\ClientInterface;
-use Seed\Ab\AbClientInterface;
-use Seed\Ac\AcClientInterface;
+use Seed\A\AClientInterface;
 use Seed\Folder\FolderClientInterface;
-use Seed\FolderService\FolderServiceClientInterface;
 
-interface SeedClientInterface 
+interface SeedClientInterface
 {
     /**
-     * @return ClientInterface
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
      */
-    public function get(): ClientInterface;
+    public function foo(?array $options = null): void;
 
     /**
-     * @return AbClientInterface
+     * @return AClientInterface
      */
-    public function getAb(): AbClientInterface;
-
-    /**
-     * @return AcClientInterface
-     */
-    public function getAc(): AcClientInterface;
+    public function getA(): AClientInterface;
 
     /**
      * @return FolderClientInterface
      */
     public function getFolder(): FolderClientInterface;
-
-    /**
-     * @return FolderServiceClientInterface
-     */
-    public function getFolderService(): FolderServiceClientInterface;
 }

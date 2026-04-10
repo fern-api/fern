@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "PathParameters",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "PathParameters",
+            targets: ["PathParameters"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "PathParameters",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "PathParametersTests",
+            dependencies: ["PathParameters"],
             path: "Tests"
         )
     ]

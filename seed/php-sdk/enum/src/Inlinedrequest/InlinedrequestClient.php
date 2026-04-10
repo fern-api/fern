@@ -1,17 +1,17 @@
 <?php
 
-namespace Seed\Inlinedrequest;
+namespace Seed\InlinedRequest;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Inlinedrequest\Requests\InlinedRequestSendRequest;
+use Seed\InlinedRequest\Requests\SendEnumInlinedRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class InlinedrequestClient
+class InlinedRequestClient
 {
     /**
      * @var array{
@@ -48,7 +48,7 @@ class InlinedrequestClient
     }
 
     /**
-     * @param InlinedRequestSendRequest $request
+     * @param SendEnumInlinedRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -60,7 +60,7 @@ class InlinedrequestClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(InlinedRequestSendRequest $request, ?array $options = null): void
+    public function send(SendEnumInlinedRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {

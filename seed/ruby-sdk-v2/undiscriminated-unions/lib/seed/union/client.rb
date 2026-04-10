@@ -11,21 +11,21 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Types::MyUnion]
+      # @param params [Seed::Union::Types::MyUnion]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Types::MyUnion]
+      # @return [Seed::Union::Types::MyUnion]
       def get(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "",
-          body: Seed::Types::MyUnion.new(params).to_h,
+          body: Seed::Union::Types::MyUnion.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -35,7 +35,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::MyUnion.load(response.body)
+          Seed::Union::Types::MyUnion.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -50,13 +50,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Hash[String, String]]
-      def getmetadata(request_options: {}, **params)
+      # @return [Hash[Seed::Union::Types::Key, String]]
+      def get_metadata(request_options: {}, **params)
         Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "metadata",
+          path: "/metadata",
           request_options: request_options
         )
         begin
@@ -66,7 +66,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Metadata.load(response.body)
+          Seed::Union::Types::Metadata.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -74,7 +74,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Types::MetadataUnion]
+      # @param params [Seed::Union::Types::MetadataUnion]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -82,13 +82,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Boolean]
-      def updatemetadata(request_options: {}, **params)
+      def update_metadata(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
-          path: "metadata",
-          body: Seed::Types::MetadataUnion.new(params).to_h,
+          path: "/metadata",
+          body: Seed::Union::Types::MetadataUnion.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -117,7 +117,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "call",
+          path: "/call",
           body: Seed::Union::Types::Request.new(params).to_h,
           request_options: request_options
         )
@@ -134,21 +134,21 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Types::UnionWithDuplicateTypes]
+      # @param params [Seed::Union::Types::UnionWithDuplicateTypes]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Types::UnionWithDuplicateTypes]
-      def duplicatetypesunion(request_options: {}, **params)
+      # @return [Seed::Union::Types::UnionWithDuplicateTypes]
+      def duplicate_types_union(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "duplicate",
-          body: Seed::Types::UnionWithDuplicateTypes.new(params).to_h,
+          path: "/duplicate",
+          body: Seed::Union::Types::UnionWithDuplicateTypes.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -158,7 +158,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::UnionWithDuplicateTypes.load(response.body)
+          Seed::Union::Types::UnionWithDuplicateTypes.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -166,7 +166,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Types::NestedUnionRoot]
+      # @param params [Seed::Union::Types::NestedUnionRoot]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -174,13 +174,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def nestedunions(request_options: {}, **params)
+      def nested_unions(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "nested",
-          body: Seed::Types::NestedUnionRoot.new(params).to_h,
+          path: "/nested",
+          body: Seed::Union::Types::NestedUnionRoot.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -196,7 +196,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Union::Types::UnionTestCamelCasePropertiesRequest]
+      # @param params [Seed::Union::Types::PaymentRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -204,13 +204,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def testcamelcaseproperties(request_options: {}, **params)
+      def test_camel_case_properties(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "camel-case",
-          body: Seed::Union::Types::UnionTestCamelCasePropertiesRequest.new(params).to_h,
+          path: "/camel-case",
+          body: Seed::Union::Types::PaymentRequest.new(params).to_h,
           request_options: request_options
         )
         begin

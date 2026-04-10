@@ -1,6 +1,6 @@
-//! # websocket-bearer-auth SDK
+//! # WebsocketBearerAuth SDK
 //!
-//! The official Rust SDK for the websocket-bearer-auth.
+//! The official Rust SDK for the WebsocketBearerAuth.
 //!
 //! ## Getting Started
 //!

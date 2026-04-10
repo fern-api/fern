@@ -20,13 +20,14 @@ pub struct Type {
     #[serde(default)]
     pub seven: NaiveDate,
     #[serde(default)]
-    pub eight: String,
+    pub eight: Uuid,
     #[serde(default)]
-    pub nine: String,
+    #[serde(with = "crate::core::base64_bytes")]
+    pub nine: Vec<u8>,
     #[serde(default)]
     pub ten: Vec<i64>,
     #[serde(default)]
-    pub eleven: Vec<f64>,
+    pub eleven: HashSet<ordered_float::OrderedFloat<f64>>,
     #[serde(default)]
     pub twelve: HashMap<String, bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -37,8 +38,8 @@ pub struct Type {
     #[serde(default)]
     pub sixteen: Vec<HashMap<String, i64>>,
     #[serde(default)]
-    pub seventeen: Vec<Option<String>>,
-    pub eighteen: TypeEighteen,
+    pub seventeen: Vec<Option<Uuid>>,
+    pub eighteen: String,
     #[serde(default)]
     pub nineteen: Name,
     #[serde(default)]
@@ -49,8 +50,11 @@ pub struct Type {
     #[serde(with = "crate::core::number_serializers")]
     pub twentytwo: f64,
     #[serde(default)]
-    pub twentythree: i64,
+    #[serde(with = "crate::core::bigint_string")]
+    pub twentythree: num_bigint::BigInt,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset::option")]
     pub twentyfour: Option<DateTime<FixedOffset>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub twentyfive: Option<NaiveDate>,
@@ -72,22 +76,22 @@ pub struct TypeBuilder {
     five: Option<i64>,
     six: Option<DateTime<FixedOffset>>,
     seven: Option<NaiveDate>,
-    eight: Option<String>,
-    nine: Option<String>,
+    eight: Option<Uuid>,
+    nine: Option<Vec<u8>>,
     ten: Option<Vec<i64>>,
-    eleven: Option<Vec<f64>>,
+    eleven: Option<HashSet<ordered_float::OrderedFloat<f64>>>,
     twelve: Option<HashMap<String, bool>>,
     thirteen: Option<i64>,
     fourteen: Option<serde_json::Value>,
     fifteen: Option<Vec<Vec<i64>>>,
     sixteen: Option<Vec<HashMap<String, i64>>>,
-    seventeen: Option<Vec<Option<String>>>,
-    eighteen: Option<TypeEighteen>,
+    seventeen: Option<Vec<Option<Uuid>>>,
+    eighteen: Option<String>,
     nineteen: Option<Name>,
     twenty: Option<i64>,
     twentyone: Option<i64>,
     twentytwo: Option<f64>,
-    twentythree: Option<i64>,
+    twentythree: Option<num_bigint::BigInt>,
     twentyfour: Option<DateTime<FixedOffset>>,
     twentyfive: Option<NaiveDate>,
 }
@@ -128,13 +132,13 @@ impl TypeBuilder {
         self
     }
 
-    pub fn eight(mut self, value: impl Into<String>) -> Self {
-        self.eight = Some(value.into());
+    pub fn eight(mut self, value: Uuid) -> Self {
+        self.eight = Some(value);
         self
     }
 
-    pub fn nine(mut self, value: impl Into<String>) -> Self {
-        self.nine = Some(value.into());
+    pub fn nine(mut self, value: Vec<u8>) -> Self {
+        self.nine = Some(value);
         self
     }
 
@@ -143,7 +147,7 @@ impl TypeBuilder {
         self
     }
 
-    pub fn eleven(mut self, value: Vec<f64>) -> Self {
+    pub fn eleven(mut self, value: HashSet<ordered_float::OrderedFloat<f64>>) -> Self {
         self.eleven = Some(value);
         self
     }
@@ -173,13 +177,13 @@ impl TypeBuilder {
         self
     }
 
-    pub fn seventeen(mut self, value: Vec<Option<String>>) -> Self {
+    pub fn seventeen(mut self, value: Vec<Option<Uuid>>) -> Self {
         self.seventeen = Some(value);
         self
     }
 
-    pub fn eighteen(mut self, value: TypeEighteen) -> Self {
-        self.eighteen = Some(value);
+    pub fn eighteen(mut self, value: impl Into<String>) -> Self {
+        self.eighteen = Some(value.into());
         self
     }
 
@@ -203,7 +207,7 @@ impl TypeBuilder {
         self
     }
 
-    pub fn twentythree(mut self, value: i64) -> Self {
+    pub fn twentythree(mut self, value: num_bigint::BigInt) -> Self {
         self.twentythree = Some(value);
         self
     }

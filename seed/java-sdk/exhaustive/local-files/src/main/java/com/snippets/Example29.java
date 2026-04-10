@@ -1,53 +1,63 @@
 package com.snippets;
 
-import com.fern.sdk.SeedApiClient;
-import com.fern.sdk.resources.endpointshttpmethods.requests.EndpointsHttpMethodsTestPatchRequest;
-import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
+import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
+import com.fern.sdk.resources.types.object.types.ObjectWithRequiredNestedObject;
+import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.UUID;
 
 public class Example29 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpointsHttpMethods().endpointsHttpMethodsTestPatch(
-            EndpointsHttpMethodsTestPatchRequest
+        client.endpoints().object().getAndReturnWithRequiredNestedObject(
+            ObjectWithRequiredNestedObject
                 .builder()
-                .id("id")
-                .body(
-                    TypesObjectWithOptionalField
+                .requiredString("requiredString")
+                .requiredObject(
+                    NestedObjectWithRequiredField
                         .builder()
                         .string("string")
-                        .integer(1)
-                        .long_(1000000L)
-                        .double_(1.1)
-                        .bool(true)
-                        .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .date("2023-01-15")
-                        .uuid("uuid")
-                        .base64("base64")
-                        .list(
-                            Optional.of(
-                                Arrays.asList("list", "list")
-                            )
+                        .nestedObject(
+                            ObjectWithOptionalField
+                                .builder()
+                                .string("string")
+                                .integer(1)
+                                .long_(1000000L)
+                                .double_(1.1)
+                                .bool(true)
+                                .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                                .date("2023-01-15")
+                                .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                                .base64("SGVsbG8gd29ybGQh".getBytes())
+                                .list(
+                                    Optional.of(
+                                        Arrays.asList("list", "list")
+                                    )
+                                )
+                                .set(
+                                    new HashSet<String>(
+                                        Arrays.asList("set")
+                                    )
+                                )
+                                .map(
+                                    new HashMap<Integer, String>() {{
+                                        put(1, "map");
+                                    }}
+                                )
+                                .bigint(new BigInteger("1000000"))
+                                .build()
                         )
-                        .set(
-                            Optional.of(
-                                Arrays.asList("set", "set")
-                            )
-                        )
-                        .map(
-                            new HashMap<String, Optional<String>>() {{
-                                put("map", Optional.of("map"));
-                            }}
-                        )
-                        .bigint(1)
                         .build()
                 )
                 .build()

@@ -7,47 +7,47 @@ import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedEnum from "../../../index.js";
 
-export declare namespace QueryparamClient {
+export declare namespace QueryParamClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class QueryparamClient {
-    protected readonly _options: NormalizedClientOptions<QueryparamClient.Options>;
+export class QueryParamClient {
+    protected readonly _options: NormalizedClientOptions<QueryParamClient.Options>;
 
-    constructor(options: QueryparamClient.Options) {
+    constructor(options: QueryParamClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
-     * @param {SeedApi.QueryParamSendRequest} request
-     * @param {QueryparamClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedEnum.SendEnumAsQueryParamRequest} request
+     * @param {QueryParamClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.queryparam.send({
+     *     await client.queryParam.send({
      *         operand: ">",
      *         operandOrColor: "red"
      *     })
      */
     public send(
-        request: SeedApi.QueryParamSendRequest,
-        requestOptions?: QueryparamClient.RequestOptions,
+        request: SeedEnum.SendEnumAsQueryParamRequest,
+        requestOptions?: QueryParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedApi.QueryParamSendRequest,
-        requestOptions?: QueryparamClient.RequestOptions,
+        request: SeedEnum.SendEnumAsQueryParamRequest,
+        requestOptions?: QueryParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {
             operand,
             maybeOperand: maybeOperand != null ? maybeOperand : undefined,
-            operandOrColor,
+            operandOrColor: typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor),
             maybeOperandOrColor:
                 maybeOperandOrColor != null
                     ? typeof maybeOperandOrColor === "string"
@@ -76,7 +76,7 @@ export class QueryparamClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -87,31 +87,31 @@ export class QueryparamClient {
     }
 
     /**
-     * @param {SeedApi.QueryParamSendListRequest} request
-     * @param {QueryparamClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedEnum.SendEnumListAsQueryParamRequest} request
+     * @param {QueryParamClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.queryparam.sendlist({
+     *     await client.queryParam.sendList({
      *         operand: ">",
      *         maybeOperand: ">",
      *         operandOrColor: "red",
      *         maybeOperandOrColor: "red"
      *     })
      */
-    public sendlist(
-        request: SeedApi.QueryParamSendListRequest = {},
-        requestOptions?: QueryparamClient.RequestOptions,
+    public sendList(
+        request: SeedEnum.SendEnumListAsQueryParamRequest,
+        requestOptions?: QueryParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__sendlist(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__sendList(request, requestOptions));
     }
 
-    private async __sendlist(
-        request: SeedApi.QueryParamSendListRequest = {},
-        requestOptions?: QueryparamClient.RequestOptions,
+    private async __sendList(
+        request: SeedEnum.SendEnumListAsQueryParamRequest,
+        requestOptions?: QueryParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {
-            operand: Array.isArray(operand) ? operand.map((item) => item) : operand != null ? operand : undefined,
+            operand: Array.isArray(operand) ? operand.map((item) => item) : operand,
             maybeOperand: Array.isArray(maybeOperand)
                 ? maybeOperand.map((item) => item)
                 : maybeOperand != null
@@ -119,11 +119,9 @@ export class QueryparamClient {
                   : undefined,
             operandOrColor: Array.isArray(operandOrColor)
                 ? operandOrColor.map((item) => (typeof item === "string" ? item : toJson(item)))
-                : operandOrColor != null
-                  ? typeof operandOrColor === "string"
-                      ? operandOrColor
-                      : toJson(operandOrColor)
-                  : undefined,
+                : typeof operandOrColor === "string"
+                  ? operandOrColor
+                  : toJson(operandOrColor),
             maybeOperandOrColor: Array.isArray(maybeOperandOrColor)
                 ? maybeOperandOrColor.map((item) => (typeof item === "string" ? item : toJson(item)))
                 : maybeOperandOrColor != null
@@ -153,7 +151,7 @@ export class QueryparamClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

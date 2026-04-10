@@ -1,13 +1,13 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.package_.requests.PackageTestRequest;
+import com.seed.nurseryApi.SeedNurseryApiClient;
+import com.seed.nurseryApi.resources.package_.requests.TestRequest;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedNurseryApiClient client =
+                SeedNurseryApiClient.builder().url("https://api.fern.com").build();
 
-        client.package_().test(PackageTestRequest.builder().for_("for").build());
+        client.package_().test(TestRequest.builder().for_("for").build());
     }
 }

@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client.<a href="/src/api/resources//client.rs">get</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.<a href="/src/client.rs">get</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +12,15 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_license::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client..get(None).await;
+    let client = LicenseClient::new(config).expect("Failed to build client");
+    client.get(None).await;
 }
 ```
 </dd>

@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/oauth-client-credentials-custom/fern"
     client "github.com/oauth-client-credentials-custom/fern/client"
     option "github.com/oauth-client-credentials-custom/fern/option"
 )
@@ -13,22 +12,12 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithToken(
-            "<token>",
+        option.WithClientCredentials(
+            "<clientId>",
+            "<clientSecret>",
         ),
     )
-    request := &fern.AuthRefreshTokenRequest{
-        ClientID: "client_id",
-        ClientSecret: "client_secret",
-        RefreshToken: "refresh_token",
-        Audience: fern.AuthRefreshTokenRequestAudienceHttpsApiExampleCom,
-        GrantType: fern.AuthRefreshTokenRequestGrantTypeRefreshToken,
-        Scope: fern.String(
-            "scope",
-        ),
-    }
-    client.Auth.Refreshtoken(
+    client.Nested.API.GetSomething(
         context.TODO(),
-        request,
     )
 }

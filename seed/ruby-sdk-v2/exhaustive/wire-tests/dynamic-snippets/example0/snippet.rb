@@ -5,4 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_container.endpoints_container_get_and_return_list_of_primitives(request: ["string"])
+client.endpoints.container.get_and_return_list_of_primitives(request: %w[string string])

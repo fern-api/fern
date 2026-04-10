@@ -1,6 +1,6 @@
 # Reference
-## Nullableoptional
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">getuser</a>(userId: String, requestOptions: RequestOptions?) -> UserResponse</code></summary>
+## NullableOptional
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">getUser</a>(userId: String, requestOptions: RequestOptions?) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -28,12 +28,12 @@ Get a user by ID
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.getuser(userId: "userId")
+    _ = try await client.nullableOptional.getUser(userId: "userId")
 }
 
 try await main()
@@ -71,184 +71,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">updateuser</a>(userId: String, request: Requests.UpdateUserRequest, requestOptions: RequestOptions?) -> UserResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a user (partial update)
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient()
-
-    _ = try await client.nullableoptional.updateuser(
-        userId: "userId",
-        request: .init()
-    )
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userId:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `Requests.UpdateUserRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">listusers</a>(limit: Nullable&lt;Int&gt;?, offset: Nullable&lt;Int&gt;?, includeDeleted: Nullable&lt;Bool&gt;?, sortBy: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List all users
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient()
-
-    _ = try await client.nullableoptional.listusers()
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `Nullable<Int>?` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**offset:** `Nullable<Int>?` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**includeDeleted:** `Nullable<Bool>?` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sortBy:** `Nullable<String>?` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">createuser</a>(request: Requests.CreateUserRequest, requestOptions: RequestOptions?) -> UserResponse</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">createUser</a>(request: CreateUserRequest, requestOptions: RequestOptions?) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -276,14 +99,24 @@ Create a new user
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.createuser(request: .init(
+    _ = try await client.nullableOptional.createUser(request: CreateUserRequest(
         username: "username",
-        email: .null
+        email: .value("email"),
+        phone: "phone",
+        address: .value(Address(
+            street: "street",
+            city: .value("city"),
+            state: "state",
+            zipCode: "zipCode",
+            country: .value("country"),
+            buildingId: .value("buildingId"),
+            tenantId: "tenantId"
+        ))
     ))
 }
 
@@ -302,7 +135,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.CreateUserRequest` 
+**request:** `CreateUserRequest` 
     
 </dd>
 </dl>
@@ -322,7 +155,202 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">searchusers</a>(query: String, department: Nullable&lt;String&gt;, role: Nullable&lt;String&gt;?, isActive: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">updateUser</a>(userId: String, request: UpdateUserRequest, requestOptions: RequestOptions?) -> UserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user (partial update)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import NullableOptional
+
+private func main() async throws {
+    let client = NullableOptionalClient()
+
+    _ = try await client.nullableOptional.updateUser(
+        userId: "userId",
+        request: UpdateUserRequest(
+            username: "username",
+            email: .value("email"),
+            phone: "phone",
+            address: .value(Address(
+                street: "street",
+                city: .value("city"),
+                state: "state",
+                zipCode: "zipCode",
+                country: .value("country"),
+                buildingId: .value("buildingId"),
+                tenantId: "tenantId"
+            ))
+        )
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">listUsers</a>(limit: Int?, offset: Int?, includeDeleted: Bool?, sortBy: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all users
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import NullableOptional
+
+private func main() async throws {
+    let client = NullableOptionalClient()
+
+    _ = try await client.nullableOptional.listUsers(
+        limit: 1,
+        offset: 1,
+        includeDeleted: true,
+        sortBy: .value("sortBy")
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `Int?` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**offset:** `Int?` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeDeleted:** `Bool?` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sortBy:** `Nullable<String>?` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">searchUsers</a>(query: String, department: Nullable&lt;String&gt;, role: String?, isActive: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -350,14 +378,16 @@ Search users
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.searchusers(
+    _ = try await client.nullableOptional.searchUsers(
         query: "query",
-        department: .value("department")
+        department: .value("department"),
+        role: "role",
+        isActive: .value(true)
     )
 }
 
@@ -392,7 +422,7 @@ try await main()
 <dl>
 <dd>
 
-**role:** `Nullable<String>?` 
+**role:** `String?` 
     
 </dd>
 </dl>
@@ -420,7 +450,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">createcomplexprofile</a>(request: ComplexProfile, requestOptions: RequestOptions?) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">createComplexProfile</a>(request: ComplexProfile, requestOptions: RequestOptions?) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -448,36 +478,124 @@ Create a complex profile to test nullable enums and unions
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.createcomplexprofile(request: ComplexProfile(
+    _ = try await client.nullableOptional.createComplexProfile(request: ComplexProfile(
         id: "id",
-        nullableRole: .admin,
-        nullableStatus: .active,
-        nullableNotification: NotificationMethod.notificationMethodZero(
-            NotificationMethodZero(
+        nullableRole: .value(.admin),
+        optionalRole: .admin,
+        optionalNullableRole: .value(.admin),
+        nullableStatus: .value(.active),
+        optionalStatus: .active,
+        optionalNullableStatus: .value(.active),
+        nullableNotification: .value(NotificationMethod.email(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
-                type: .email
+                htmlContent: "htmlContent"
+            )
+        )),
+        optionalNotification: NotificationMethod.email(
+            EmailNotification(
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent"
             )
         ),
-        nullableSearchResult: SearchResult.searchResultZero(
-            SearchResultZero(
+        optionalNullableNotification: .value(NotificationMethod.email(
+            EmailNotification(
+                emailAddress: "emailAddress",
+                subject: "subject",
+                htmlContent: "htmlContent"
+            )
+        )),
+        nullableSearchResult: .value(SearchResult.user(
+            UserResponse(
                 id: "id",
                 username: "username",
-                email: .null,
+                email: .value("email"),
+                phone: "phone",
                 createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                updatedAt: .null,
-                type: .user
+                updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                address: Address(
+                    street: "street",
+                    city: .value("city"),
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
+                    tenantId: "tenantId"
+                )
+            )
+        )),
+        optionalSearchResult: SearchResult.user(
+            UserResponse(
+                id: "id",
+                username: "username",
+                email: .value("email"),
+                phone: "phone",
+                createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                address: Address(
+                    street: "street",
+                    city: .value("city"),
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
+                    tenantId: "tenantId"
+                )
             )
         ),
-        nullableArray: .null,
-        nullableListOfNullables: .null,
-        nullableMapOfNullables: .null,
-        nullableListOfUnions: .null
+        nullableArray: .value([
+            "nullableArray",
+            "nullableArray"
+        ]),
+        optionalArray: [
+            "optionalArray",
+            "optionalArray"
+        ],
+        optionalNullableArray: .value([
+            "optionalNullableArray",
+            "optionalNullableArray"
+        ]),
+        nullableListOfNullables: .value([
+            .value("nullableListOfNullables"),
+            .value("nullableListOfNullables")
+        ]),
+        nullableMapOfNullables: .value([
+            "nullableMapOfNullables": .value(Address(
+                street: "street",
+                city: .value("city"),
+                state: "state",
+                zipCode: "zipCode",
+                country: .value("country"),
+                buildingId: .value("buildingId"),
+                tenantId: "tenantId"
+            ))
+        ]),
+        nullableListOfUnions: .value([
+            NotificationMethod.email(
+                EmailNotification(
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent"
+                )
+            ),
+            NotificationMethod.email(
+                EmailNotification(
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent"
+                )
+            )
+        ]),
+        optionalMapOfEnums: [
+            "optionalMapOfEnums": .admin
+        ]
     ))
 }
 
@@ -516,7 +634,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">getcomplexprofile</a>(profileId: String, requestOptions: RequestOptions?) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">getComplexProfile</a>(profileId: String, requestOptions: RequestOptions?) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -544,12 +662,12 @@ Get a complex profile by ID
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.getcomplexprofile(profileId: "profileId")
+    _ = try await client.nullableOptional.getComplexProfile(profileId: "profileId")
 }
 
 try await main()
@@ -587,7 +705,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">updatecomplexprofile</a>(profileId: String, request: Requests.NullableOptionalUpdateComplexProfileRequest, requestOptions: RequestOptions?) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">updateComplexProfile</a>(profileId: String, request: Requests.UpdateComplexProfileRequest, requestOptions: RequestOptions?) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -615,14 +733,47 @@ Update complex profile to test nullable field updates
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.updatecomplexprofile(
+    _ = try await client.nullableOptional.updateComplexProfile(
         profileId: "profileId",
-        request: .init()
+        request: .init(
+            nullableRole: .value(.admin),
+            nullableStatus: .value(.active),
+            nullableNotification: .value(NotificationMethod.email(
+                EmailNotification(
+                    emailAddress: "emailAddress",
+                    subject: "subject",
+                    htmlContent: "htmlContent"
+                )
+            )),
+            nullableSearchResult: .value(SearchResult.user(
+                UserResponse(
+                    id: "id",
+                    username: "username",
+                    email: .value("email"),
+                    phone: "phone",
+                    createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                    updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                    address: Address(
+                        street: "street",
+                        city: .value("city"),
+                        state: "state",
+                        zipCode: "zipCode",
+                        country: .value("country"),
+                        buildingId: .value("buildingId"),
+                        tenantId: "tenantId"
+                    )
+                )
+            )),
+            nullableArray: .value([
+                "nullableArray",
+                "nullableArray"
+            ])
+        )
     )
 }
 
@@ -649,7 +800,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.NullableOptionalUpdateComplexProfileRequest` 
+**request:** `Requests.UpdateComplexProfileRequest` 
     
 </dd>
 </dl>
@@ -669,7 +820,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">testdeserialization</a>(request: DeserializationTestRequest, requestOptions: RequestOptions?) -> DeserializationTestResponse</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">testDeserialization</a>(request: DeserializationTestRequest, requestOptions: RequestOptions?) -> DeserializationTestResponse</code></summary>
 <dl>
 <dd>
 
@@ -697,30 +848,65 @@ Test endpoint for validating null deserialization
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.testdeserialization(request: DeserializationTestRequest(
+    _ = try await client.nullableOptional.testDeserialization(request: DeserializationTestRequest(
         requiredString: "requiredString",
-        nullableString: .null,
-        nullableEnum: .admin,
-        nullableUnion: NotificationMethod.notificationMethodZero(
-            NotificationMethodZero(
+        nullableString: .value("nullableString"),
+        optionalString: "optionalString",
+        optionalNullableString: .value("optionalNullableString"),
+        nullableEnum: .value(.admin),
+        optionalEnum: .active,
+        nullableUnion: .value(NotificationMethod.email(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
-                type: .email
+                htmlContent: "htmlContent"
+            )
+        )),
+        optionalUnion: SearchResult.user(
+            UserResponse(
+                id: "id",
+                username: "username",
+                email: .value("email"),
+                phone: "phone",
+                createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                updatedAt: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+                address: Address(
+                    street: "street",
+                    city: .value("city"),
+                    state: "state",
+                    zipCode: "zipCode",
+                    country: .value("country"),
+                    buildingId: .value("buildingId"),
+                    tenantId: "tenantId"
+                )
             )
         ),
-        nullableList: .null,
-        nullableMap: .null,
-        nullableObject: Address(
+        nullableList: .value([
+            "nullableList",
+            "nullableList"
+        ]),
+        nullableMap: .value([
+            "nullableMap": 1
+        ]),
+        nullableObject: .value(Address(
             street: "street",
-            city: .null,
+            city: .value("city"),
+            state: "state",
             zipCode: "zipCode",
-            buildingId: .null,
-            tenantId: .null
+            country: .value("country"),
+            buildingId: .value("buildingId"),
+            tenantId: "tenantId"
+        )),
+        optionalObject: Organization(
+            id: "id",
+            name: "name",
+            domain: .value("domain"),
+            employeeCount: 1
         )
     ))
 }
@@ -760,7 +946,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">filterbyrole</a>(role: UserRole, status: UserStatus?, secondaryRole: UserRole?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">filterByRole</a>(role: Nullable&lt;UserRole&gt;, status: UserStatus?, secondaryRole: Nullable&lt;UserRole&gt;?, requestOptions: RequestOptions?) -> [UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -788,12 +974,16 @@ Filter users by role with nullable enum
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.filterbyrole(role: .admin)
+    _ = try await client.nullableOptional.filterByRole(
+        role: .value(.admin),
+        status: .active,
+        secondaryRole: .value(.admin)
+    )
 }
 
 try await main()
@@ -811,7 +1001,7 @@ try await main()
 <dl>
 <dd>
 
-**role:** `UserRole` 
+**role:** `Nullable<UserRole>` 
     
 </dd>
 </dl>
@@ -827,7 +1017,7 @@ try await main()
 <dl>
 <dd>
 
-**secondaryRole:** `UserRole?` 
+**secondaryRole:** `Nullable<UserRole>?` 
     
 </dd>
 </dl>
@@ -847,7 +1037,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">getnotificationsettings</a>(userId: String, requestOptions: RequestOptions?) -> NotificationMethod</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">getNotificationSettings</a>(userId: String, requestOptions: RequestOptions?) -> Nullable&lt;NotificationMethod&gt;</code></summary>
 <dl>
 <dd>
 
@@ -875,12 +1065,12 @@ Get notification settings which may be null
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.getnotificationsettings(userId: "userId")
+    _ = try await client.nullableOptional.getNotificationSettings(userId: "userId")
 }
 
 try await main()
@@ -918,7 +1108,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">updatetags</a>(userId: String, request: Requests.NullableOptionalUpdateTagsRequest, requestOptions: RequestOptions?) -> [String]</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">updateTags</a>(userId: String, request: Requests.UpdateTagsRequest, requestOptions: RequestOptions?) -> [String]</code></summary>
 <dl>
 <dd>
 
@@ -946,14 +1136,27 @@ Update tags to test array handling
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.updatetags(
+    _ = try await client.nullableOptional.updateTags(
         userId: "userId",
-        request: .init(tags: .null)
+        request: .init(
+            tags: .value([
+                "tags",
+                "tags"
+            ]),
+            categories: [
+                "categories",
+                "categories"
+            ],
+            labels: .value([
+                "labels",
+                "labels"
+            ])
+        )
     )
 }
 
@@ -980,7 +1183,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.NullableOptionalUpdateTagsRequest` 
+**request:** `Requests.UpdateTagsRequest` 
     
 </dd>
 </dl>
@@ -1000,7 +1203,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/Sources/Resources/Nullableoptional/NullableoptionalClient.swift">getsearchresults</a>(request: Requests.NullableOptionalGetSearchResultsRequest, requestOptions: RequestOptions?) -> Nullable&lt;[SearchResult]&gt;</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/Sources/Resources/NullableOptional/NullableOptionalClient_.swift">getSearchResults</a>(request: Requests.SearchRequest, requestOptions: RequestOptions?) -> Nullable&lt;[SearchResult]&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1028,14 +1231,20 @@ Get search results with nullable unions
 
 ```swift
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableOptionalClient()
 
-    _ = try await client.nullableoptional.getsearchresults(request: .init(
+    _ = try await client.nullableOptional.getSearchResults(request: .init(
         query: "query",
-        includeTypes: .null
+        filters: [
+            "filters": .value("filters")
+        ],
+        includeTypes: .value([
+            "includeTypes",
+            "includeTypes"
+        ])
     ))
 }
 
@@ -1054,7 +1263,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.NullableOptionalGetSearchResultsRequest` 
+**request:** `Requests.SearchRequest` 
     
 </dd>
 </dl>

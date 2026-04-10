@@ -9,6 +9,7 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Environments](#environments)
+- [Pagination](#pagination)
 - [Errors](#errors)
 - [Advanced](#advanced)
   - [Retries](#retries)
@@ -32,7 +33,15 @@ client = Seed::Client.new(token: "<token>")
 
 client.complex.search(
   index: "index",
-  query: {}
+  pagination: {
+    per_page: 1,
+    starting_after: "starting_after"
+  },
+  query: {
+    field: "field",
+    operator: "=",
+    value: "value"
+  }
 )
 ```
 
@@ -47,6 +56,32 @@ require "seed"
 client = Seed::Client.new(
     base_url: "https://example.com"
 )
+```
+
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
+
+```ruby
+require "seed"
+
+# Loop over the items using the provided iterator.
+    page = Seed.client.complex.search(
+    ...
+)
+page.each do |item|
+    puts "Got item: #{item}"
+end
+
+# Alternatively, iterate page-by-page.
+current_page = page
+while current_page
+    current_page.results.each do |item|
+        puts "Got item: #{item}"
+    end
+    current_page = current_page.next_page
+    break if current_page.nil?
+end
 ```
 
 ## Errors

@@ -1,19 +1,19 @@
-//! # no-retries SDK
+//! # NoRetries SDK
 //!
-//! The official Rust SDK for the no-retries.
+//! The official Rust SDK for the NoRetries.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_no_retries::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client.retries.getusers(None).await;
+//!     let client = NoRetriesClient::new(config).expect("Failed to build client");
+//!     client.retries.get_users(None).await;
 //! }
 //! ```
 //!

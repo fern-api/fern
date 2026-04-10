@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Users\Requests\UsersListWithMixedTypeCursorPaginationRequest;
+use Seed\Users\Requests\ListUsernamesWithOptionalResponseRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,6 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->users->listwithmixedtypecursorpagination(
-    new UsersListWithMixedTypeCursorPaginationRequest([]),
+$client->users->listUsernamesWithOptionalResponse(
+    new ListUsernamesWithOptionalResponseRequest([
+        'startingAfter' => 'starting_after',
+    ]),
 );

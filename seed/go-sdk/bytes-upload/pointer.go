@@ -1,4 +1,4 @@
-package api
+package bytesupload
 
 import (
 	"time"

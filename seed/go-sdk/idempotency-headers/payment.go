@@ -10,11 +10,11 @@ import (
 )
 
 var (
-	paymentCreateRequestFieldAmount   = big.NewInt(1 << 0)
-	paymentCreateRequestFieldCurrency = big.NewInt(1 << 1)
+	createPaymentRequestFieldAmount   = big.NewInt(1 << 0)
+	createPaymentRequestFieldCurrency = big.NewInt(1 << 1)
 )
 
-type PaymentCreateRequest struct {
+type CreatePaymentRequest struct {
 	Amount   int      `json:"amount" url:"-"`
 	Currency Currency `json:"currency" url:"-"`
 
@@ -22,71 +22,46 @@ type PaymentCreateRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (p *PaymentCreateRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+func (c *CreatePaymentRequest) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAmount sets the Amount field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PaymentCreateRequest) SetAmount(amount int) {
-	p.Amount = amount
-	p.require(paymentCreateRequestFieldAmount)
+func (c *CreatePaymentRequest) SetAmount(amount int) {
+	c.Amount = amount
+	c.require(createPaymentRequestFieldAmount)
 }
 
 // SetCurrency sets the Currency field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PaymentCreateRequest) SetCurrency(currency Currency) {
-	p.Currency = currency
-	p.require(paymentCreateRequestFieldCurrency)
+func (c *CreatePaymentRequest) SetCurrency(currency Currency) {
+	c.Currency = currency
+	c.require(createPaymentRequestFieldCurrency)
 }
 
-func (p *PaymentCreateRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler PaymentCreateRequest
+func (c *CreatePaymentRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreatePaymentRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*p = PaymentCreateRequest(body)
+	*c = CreatePaymentRequest(body)
 	return nil
 }
 
-func (p *PaymentCreateRequest) MarshalJSON() ([]byte, error) {
-	type embed PaymentCreateRequest
+func (c *CreatePaymentRequest) MarshalJSON() ([]byte, error) {
+	type embed CreatePaymentRequest
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*p),
+		embed: embed(*c),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	paymentDeleteRequestFieldPaymentID = big.NewInt(1 << 0)
-)
-
-type PaymentDeleteRequest struct {
-	PaymentID string `json:"-" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (p *PaymentDeleteRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
-	}
-	p.explicitFields.Or(p.explicitFields, field)
-}
-
-// SetPaymentID sets the PaymentID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PaymentDeleteRequest) SetPaymentID(paymentID string) {
-	p.PaymentID = paymentID
-	p.require(paymentDeleteRequestFieldPaymentID)
 }
 
 type Currency string

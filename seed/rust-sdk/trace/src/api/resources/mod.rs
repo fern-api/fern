@@ -4,28 +4,28 @@
 //!
 //! - **V2**
 //! - **Admin**
+//! - **Commons**
 //! - **Homepage**
+//! - **LangServer**
 //! - **Migration**
 //! - **Playlist**
 //! - **Problem**
 //! - **Submission**
 //! - **Sysprop**
-//! - **V2Problem**
-//! - **V2V3Problem**
 
 use crate::{ApiError, ClientConfig};
 
 pub mod admin;
+pub mod commons;
 pub mod homepage;
+pub mod lang_server;
 pub mod migration;
 pub mod playlist;
 pub mod problem;
 pub mod submission;
 pub mod sysprop;
 pub mod v2;
-pub mod v2problem;
-pub mod v2v3problem;
-pub struct ApiClient {
+pub struct TraceClient {
     pub config: ClientConfig,
     pub v2: V2Client,
     pub admin: AdminClient,
@@ -35,11 +35,9 @@ pub struct ApiClient {
     pub problem: ProblemClient,
     pub submission: SubmissionClient,
     pub sysprop: SyspropClient,
-    pub v2problem: V2ProblemClient,
-    pub v2v3problem: V2V3ProblemClient,
 }
 
-impl ApiClient {
+impl TraceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
@@ -51,19 +49,17 @@ impl ApiClient {
             problem: ProblemClient::new(config.clone())?,
             submission: SubmissionClient::new(config.clone())?,
             sysprop: SyspropClient::new(config.clone())?,
-            v2problem: V2ProblemClient::new(config.clone())?,
-            v2v3problem: V2V3ProblemClient::new(config.clone())?,
         })
     }
 }
 
 pub use admin::AdminClient;
+pub use commons::CommonsClient;
 pub use homepage::HomepageClient;
+pub use lang_server::LangServerClient;
 pub use migration::MigrationClient;
 pub use playlist::PlaylistClient;
 pub use problem::ProblemClient;
 pub use submission::SubmissionClient;
 pub use sysprop::SyspropClient;
 pub use v2::V2Client;
-pub use v2problem::V2ProblemClient;
-pub use v2v3problem::V2V3ProblemClient;

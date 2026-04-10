@@ -1,21 +1,21 @@
-//! # extends SDK
+//! # Extends SDK
 //!
-//! The official Rust SDK for the extends.
+//! The official Rust SDK for the Extends.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_extends::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = ExtendsClient::new(config).expect("Failed to build client");
 //!     client
-//!         ..extended_inline_request_body(
-//!             &ExtendedInlineRequestBodyRequest {
+//!         .extended_inline_request_body(
+//!             &Inlined {
 //!                 name: "name".to_string(),
 //!                 docs: "docs".to_string(),
 //!                 unique: "unique".to_string(),
@@ -36,15 +36,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
 pub use error::{ApiError, BuildError};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-

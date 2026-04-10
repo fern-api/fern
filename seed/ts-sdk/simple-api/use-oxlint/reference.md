@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">get</a>({ ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">get</a>(id) -> SeedSimpleApi.User</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,7 @@
 <dd>
 
 ```typescript
-await client.user.get({
-    id: "id"
-});
+await client.user.get("id");
 
 ```
 </dd>
@@ -31,7 +29,7 @@ await client.user.get({
 <dl>
 <dd>
 
-**request:** `SeedApi.UserGetRequest` 
+**id:** `string` 
     
 </dd>
 </dl>

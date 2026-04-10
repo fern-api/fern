@@ -1,37 +1,46 @@
-//! # query-parameters SDK
+//! # QueryParameters SDK
 //!
-//! The official Rust SDK for the query-parameters.
+//! The official Rust SDK for the QueryParameters.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_query_parameters::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = QueryParametersClient::new(config).expect("Failed to build client");
 //!     client
 //!         .user
-//!         .getusername(
-//!             &GetusernameQueryRequest {
+//!         .get_username(
+//!             &GetUsernameQueryRequest {
 //!                 limit: 1,
-//!                 id: "id".to_string(),
+//!                 id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
 //!                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
 //!                 deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-//!                 bytes: "bytes".to_string(),
+//!                 bytes: base64::engine::general_purpose::STANDARD
+//!                     .decode("SGVsbG8gd29ybGQh")
+//!                     .unwrap(),
 //!                 user: User {
 //!                     name: "name".to_string(),
 //!                     tags: vec!["tags".to_string(), "tags".to_string()],
 //!                     ..Default::default()
 //!                 },
-//!                 user_list: vec![Some(User {
-//!                     name: "name".to_string(),
-//!                     tags: vec!["tags".to_string(), "tags".to_string()],
-//!                     ..Default::default()
-//!                 })],
+//!                 user_list: vec![
+//!                     User {
+//!                         name: "name".to_string(),
+//!                         tags: vec!["tags".to_string(), "tags".to_string()],
+//!                         ..Default::default()
+//!                     },
+//!                     User {
+//!                         name: "name".to_string(),
+//!                         tags: vec!["tags".to_string(), "tags".to_string()],
+//!                         ..Default::default()
+//!                     },
+//!                 ],
 //!                 optional_deadline: Some(
 //!                     DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
 //!                 ),
@@ -51,12 +60,12 @@
 //!                     tags: vec!["tags".to_string(), "tags".to_string()],
 //!                     ..Default::default()
 //!                 }),
-//!                 exclude_user: vec![Some(User {
+//!                 exclude_user: vec![User {
 //!                     name: "name".to_string(),
 //!                     tags: vec!["tags".to_string(), "tags".to_string()],
 //!                     ..Default::default()
-//!                 })],
-//!                 filter: vec![Some("filter".to_string())],
+//!                 }],
+//!                 filter: vec!["filter".to_string()],
 //!             },
 //!             None,
 //!         )

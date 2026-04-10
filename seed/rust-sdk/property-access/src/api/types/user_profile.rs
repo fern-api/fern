@@ -52,7 +52,9 @@ impl UserProfileBuilder {
     pub fn build(self) -> Result<UserProfile, BuildError> {
         Ok(UserProfile {
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
-            verification: self.verification.ok_or_else(|| BuildError::missing_field("verification"))?,
+            verification: self
+                .verification
+                .ok_or_else(|| BuildError::missing_field("verification"))?,
             ssn: self.ssn.ok_or_else(|| BuildError::missing_field("ssn"))?,
         })
     }

@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import Api
+import BytesDownload
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = BytesDownloadClient()
 
     _ = try await client.service.simple()
 }

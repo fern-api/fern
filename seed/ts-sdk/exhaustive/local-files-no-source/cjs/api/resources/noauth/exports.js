@@ -15,7 +15,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NoauthClient = void 0;
+exports.NoAuthClient = void 0;
 var Client_js_1 = require("./client/Client.js");
-Object.defineProperty(exports, "NoauthClient", { enumerable: true, get: function () { return Client_js_1.NoauthClient; } });
+Object.defineProperty(exports, "NoAuthClient", { enumerable: true, get: function () { return Client_js_1.NoAuthClient; } });
 __exportStar(require("./client/index.js"), exports);

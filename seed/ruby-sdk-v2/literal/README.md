@@ -33,7 +33,7 @@ client = Seed::Client.new
 client.headers.send_(
   endpoint_version: "02-12-2024",
   async: true,
-  query: "query"
+  query: "What is the weather today"
 )
 ```
 

@@ -1,19 +1,20 @@
 package com.snippets;
 
-import com.fern.sdk.SeedApiClient;
-import com.fern.sdk.resources.endpointspagination.requests.EndpointsPaginationListItemsRequest;
+import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
 
 public class Example54 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpointsPagination().endpointsPaginationListItems(
-            EndpointsPaginationListItemsRequest
+        client.endpoints().put().add(
+            PutRequest
                 .builder()
+                .id("id")
                 .build()
         );
     }

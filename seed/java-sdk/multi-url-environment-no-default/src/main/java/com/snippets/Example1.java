@@ -1,15 +1,15 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.ec2.requests.Ec2BootInstanceRequest;
+import com.seed.multiUrlEnvironmentNoDefault.SeedMultiUrlEnvironmentNoDefaultClient;
+import com.seed.multiUrlEnvironmentNoDefault.resources.s3.requests.GetPresignedUrlRequest;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient.builder()
                 .token("<token>")
-                .url("https://api.fern.com")
                 .build();
 
-        client.ec2().bootinstance(Ec2BootInstanceRequest.builder().size("size").build());
+        client.s3()
+                .getPresignedUrl(GetPresignedUrlRequest.builder().s3Key("s3Key").build());
     }
 }

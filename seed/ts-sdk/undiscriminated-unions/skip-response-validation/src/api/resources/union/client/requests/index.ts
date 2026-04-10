@@ -1,2 +1,1 @@
-export type { Request } from "./Request.js";
-export type { UnionTestCamelCasePropertiesRequest } from "./UnionTestCamelCasePropertiesRequest.js";
+export type { PaymentRequest } from "./PaymentRequest.js";

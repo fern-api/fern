@@ -5,3 +5,4 @@ import enum
 
 class SeedExhaustiveEnvironment(enum.Enum):
     PRODUCTION = "https://production.com/api"
+    STAGING = "https://staging.com/api"

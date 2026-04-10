@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetuserAsync</a>(UserGetUserRequest { ... })</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedMultiLineDocs/User/UserClient.cs">GetUserAsync</a>(userId)</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```csharp
-await client.User.GetuserAsync(new UserGetUserRequest { UserId = "userId" });
+await client.User.GetUserAsync("userId");
 ```
 </dd>
 </dl>
@@ -43,7 +43,10 @@ await client.User.GetuserAsync(new UserGetUserRequest { UserId = "userId" });
 <dl>
 <dd>
 
-**request:** `UserGetUserRequest` 
+**userId:** `string` 
+
+The ID of the user to retrieve.
+This ID is unique to each user.
     
 </dd>
 </dl>
@@ -55,7 +58,7 @@ await client.User.GetuserAsync(new UserGetUserRequest { UserId = "userId" });
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">CreateuserAsync</a>(UserCreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedMultiLineDocs/User/UserClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -83,7 +86,7 @@ This endpoint is used to create a new user.
 <dd>
 
 ```csharp
-await client.User.CreateuserAsync(new UserCreateUserRequest { Name = "name" });
+await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = 1 });
 ```
 </dd>
 </dl>
@@ -98,7 +101,7 @@ await client.User.CreateuserAsync(new UserCreateUserRequest { Name = "name" });
 <dl>
 <dd>
 
-**request:** `UserCreateUserRequest` 
+**request:** `CreateUserRequest` 
     
 </dd>
 </dl>

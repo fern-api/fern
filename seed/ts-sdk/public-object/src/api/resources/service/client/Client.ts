@@ -32,7 +32,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "helloworld.txt",
+                "/helloworld.txt",
             ),
             method: "GET",
             headers: _headers,
@@ -49,7 +49,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedPublicObjectError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

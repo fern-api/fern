@@ -1,4 +1,4 @@
-import Api
+import InferredAuthImplicit
 import Foundation
 
 final class HTTPStub {

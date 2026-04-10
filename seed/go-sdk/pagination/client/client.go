@@ -5,16 +5,16 @@ package client
 import (
 	complex "github.com/pagination/fern/complex"
 	core "github.com/pagination/fern/core"
-	inlineusersinlineusers "github.com/pagination/fern/inlineusersinlineusers"
+	client "github.com/pagination/fern/inlineusers/client"
 	internal "github.com/pagination/fern/internal"
 	option "github.com/pagination/fern/option"
 	users "github.com/pagination/fern/users"
 )
 
 type Client struct {
-	Complex                *complex.Client
-	InlineUsersInlineUsers *inlineusersinlineusers.Client
-	Users                  *users.Client
+	Complex     *complex.Client
+	InlineUsers *client.Client
+	Users       *users.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -24,11 +24,11 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Complex:                complex.NewClient(options),
-		InlineUsersInlineUsers: inlineusersinlineusers.NewClient(options),
-		Users:                  users.NewClient(options),
-		options:                options,
-		baseURL:                options.BaseURL,
+		Complex:     complex.NewClient(options),
+		InlineUsers: client.NewClient(options),
+		Users:       users.NewClient(options),
+		options:     options,
+		baseURL:     options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

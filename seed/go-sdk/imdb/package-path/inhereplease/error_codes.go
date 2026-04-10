@@ -9,7 +9,7 @@ import (
 
 var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 	404: func(apiError *core.APIError) error {
-		return &NotFoundError{
+		return &MovieDoesNotExistError{
 			APIError: apiError,
 		}
 	},

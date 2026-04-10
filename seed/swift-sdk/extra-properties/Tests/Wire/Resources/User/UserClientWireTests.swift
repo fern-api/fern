@@ -1,38 +1,40 @@
 import Foundation
 import Testing
-import Api
+import ExtraProperties
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
-    @Test func createuser1() async throws -> Void {
+    @Test func createUser1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
                 {
-                  "name": "name"
+                  "name": "Alice",
+                  "age": 30,
+                  "location": "Wonderland"
                 }
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ExtraPropertiesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = User(
-            name: "name"
+            name: "Alice"
         )
-        let response = try await client.user.createuser(
+        let response = try await client.user.createUser(
             request: .init(
                 type: .createUserRequest,
                 version: .v1,
-                name: "name"
+                name: "Alice"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func createuser2() async throws -> Void {
+    @Test func createUser2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -43,14 +45,14 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ExtraPropertiesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = User(
             name: "name"
         )
-        let response = try await client.user.createuser(
+        let response = try await client.user.createUser(
             request: .init(
                 type: .createUserRequest,
                 version: .v1,

@@ -1,4 +1,4 @@
-import Api
+import Pagination
 import Foundation
 import Testing
 
@@ -14,14 +14,18 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -39,14 +43,18 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -64,14 +72,18 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -88,14 +100,18 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -111,14 +127,18 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -135,14 +155,18 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -159,14 +183,18 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -187,7 +215,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -195,7 +223,11 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -226,7 +258,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -234,7 +266,11 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -261,7 +297,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -269,7 +305,11 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -308,14 +348,18 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
+            )
 
         } catch {
         }
@@ -328,14 +372,18 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
+            )
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -352,14 +400,18 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.users.listwithcustompager(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.users.listWithCustomPager(
+                limit: 1,
+                startingAfter: "starting_after",
+                requestOptions: RequestOptions(additionalHeaders: stub.headers)
+            )
 
         } catch {
         }

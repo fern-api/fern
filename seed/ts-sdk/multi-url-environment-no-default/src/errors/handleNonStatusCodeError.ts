@@ -11,28 +11,31 @@ export function handleNonStatusCodeError(
 ): never {
     switch (error.reason) {
         case "non-json":
-            throw new errors.SeedApiError({
+            throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                 statusCode: error.statusCode,
                 body: error.rawBody,
                 rawResponse: rawResponse,
             });
         case "body-is-null":
-            throw new errors.SeedApiError({
+            throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                 statusCode: error.statusCode,
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedApiTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
-                cause: error.cause,
-            });
+            throw new errors.SeedMultiUrlEnvironmentNoDefaultTimeoutError(
+                `Timeout exceeded when calling ${method} ${path}.`,
+                {
+                    cause: error.cause,
+                },
+            );
         case "unknown":
-            throw new errors.SeedApiError({
+            throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
                 cause: error.cause,
             });
         default:
-            throw new errors.SeedApiError({
+            throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                 message: "Unknown error",
                 rawResponse: rawResponse,
             });

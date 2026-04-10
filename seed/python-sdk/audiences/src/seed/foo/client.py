@@ -4,9 +4,9 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.importing_type import ImportingType
-from ..types.optional_string import OptionalString
 from .raw_client import AsyncRawFooClient, RawFooClient
+from .types.importing_type import ImportingType
+from .types.optional_string import OptionalString
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -30,7 +30,7 @@ class FooClient:
     def find(
         self,
         *,
-        optional_string: typing.Optional[OptionalString] = None,
+        optional_string: OptionalString,
         public_property: typing.Optional[str] = OMIT,
         private_property: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -38,7 +38,7 @@ class FooClient:
         """
         Parameters
         ----------
-        optional_string : typing.Optional[OptionalString]
+        optional_string : OptionalString
 
         public_property : typing.Optional[str]
 
@@ -51,13 +51,19 @@ class FooClient:
         -------
         ImportingType
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedAudiences
+        from seed.environment import SeedAudiencesEnvironment
 
-        client = SeedApi()
-        client.foo.find()
+        client = SeedAudiences(
+            environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
+        )
+        client.foo.find(
+            optional_string="optionalString",
+            public_property="publicProperty",
+            private_property=1,
+        )
         """
         _response = self._raw_client.find(
             optional_string=optional_string,
@@ -86,7 +92,7 @@ class AsyncFooClient:
     async def find(
         self,
         *,
-        optional_string: typing.Optional[OptionalString] = None,
+        optional_string: OptionalString,
         public_property: typing.Optional[str] = OMIT,
         private_property: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -94,7 +100,7 @@ class AsyncFooClient:
         """
         Parameters
         ----------
-        optional_string : typing.Optional[OptionalString]
+        optional_string : OptionalString
 
         public_property : typing.Optional[str]
 
@@ -107,18 +113,24 @@ class AsyncFooClient:
         -------
         ImportingType
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedAudiences
+        from seed.environment import SeedAudiencesEnvironment
 
-        client = AsyncSeedApi()
+        client = AsyncSeedAudiences(
+            environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
+        )
 
 
         async def main() -> None:
-            await client.foo.find()
+            await client.foo.find(
+                optional_string="optionalString",
+                public_property="publicProperty",
+                private_property=1,
+            )
 
 
         asyncio.run(main())

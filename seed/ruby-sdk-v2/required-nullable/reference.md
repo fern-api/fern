@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/lib/seed/client.rb">get_foo</a>() -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_foo</a>() -> Seed::Types::Foo</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```ruby
-client..get_foo(
+client.get_foo(
   required_baz: "required_baz",
   required_nullable_baz: "required_nullable_baz"
 )
@@ -63,7 +62,7 @@ client..get_foo(
 <dl>
 <dd>
 
-**request_options:** `Seed::::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>
@@ -75,7 +74,7 @@ client..get_foo(
 </dl>
 </details>
 
-<details><summary><code>client..<a href="/lib/seed/client.rb">update_foo</a>(id, request) -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">update_foo</a>(id, request) -> Seed::Types::Foo</code></summary>
 <dl>
 <dd>
 
@@ -88,9 +87,12 @@ client..get_foo(
 <dd>
 
 ```ruby
-client..update_foo(
+client.update_foo(
   id: "id",
-  idempotency_key: "X-Idempotency-Key"
+  x_idempotency_key: "X-Idempotency-Key",
+  nullable_text: "nullable_text",
+  nullable_number: 1.1,
+  non_nullable_text: "non_nullable_text"
 )
 ```
 </dd>
@@ -114,7 +116,7 @@ client..update_foo(
 <dl>
 <dd>
 
-**idempotency_key:** `String` 
+**x_idempotency_key:** `String` 
     
 </dd>
 </dl>
@@ -146,7 +148,7 @@ client..update_foo(
 <dl>
 <dd>
 
-**request_options:** `Seed::::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

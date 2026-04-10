@@ -1,10 +1,11 @@
+using SeedApi.A;
+using SeedApi.Folder;
+
 namespace SeedApi;
 
 public partial interface ISeedApiClient
 {
-    public IClient _ { get; }
-    public IAbClient Ab { get; }
-    public IAcClient Ac { get; }
+    public IAClient A { get; }
     public IFolderClient Folder { get; }
-    public IFolderServiceClient FolderService { get; }
+    Task FooAsync(RequestOptions? options = null, CancellationToken cancellationToken = default);
 }

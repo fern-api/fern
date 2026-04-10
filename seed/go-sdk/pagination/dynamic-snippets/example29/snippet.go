@@ -17,12 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.UsersListWithMixedTypeCursorPaginationRequest{
-        Cursor: fern.String(
-            "cursor",
+    request := &fern.ListWithGlobalConfigRequest{
+        Offset: fern.Int(
+            1,
         ),
     }
-    client.Users.Listwithmixedtypecursorpagination(
+    client.Users.ListWithGlobalConfig(
         context.TODO(),
         request,
     )

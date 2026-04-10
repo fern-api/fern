@@ -1,13 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.service.requests.ServicePostRequest;
+import com.seed.variables.SeedVariablesClient;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedVariablesClient client = SeedVariablesClient.builder()
+                .url("https://api.fern.com")
+                .rootVariable("YOUR_ROOT_VARIABLE")
+                .build();
 
-        client.service().post("endpointParam", ServicePostRequest.builder().build());
+        client.service().post();
     }
 }

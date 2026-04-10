@@ -1,0 +1,7 @@
+{
+    "types": {
+        "type_:Type": "import datetime\nimport uuid\n\nfrom seed import Name, Type\n\nType(\n    one=1,\n    two=2.0,\n    three=\"three\",\n    four=True,\n    five=5,\n    six=datetime.datetime.fromisoformat(\n        \"1994-01-01 01:01:01+00:00\",\n    ),\n    seven=datetime.date.fromisoformat(\n        \"1994-01-01\",\n    ),\n    eight=uuid.UUID(\n        \"7f71f677-e138-4a5c-bb01-e4453a19bfef\",\n    ),\n    nine=\"TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu\",\n    ten=[10, 10],\n    eleven={11.0},\n    twelve={\"invalid\": False, \"exists\": True},\n    thirteen=13,\n    fourteen={},\n    fifteen=[[15, 15], [15, 15]],\n    sixteen=[{\"foo\": 16, \"bar\": 16}],\n    seventeen=[\n        uuid.UUID(\n            \"244c6643-f99d-4bfc-b20d-a6518f3a4cf4\",\n        ),\n        uuid.UUID(\n            \"07791987-dec3-43b5-8dc4-250ab5dc0478\",\n        ),\n    ],\n    nineteen=Name(\n        id=\"name-129fsdj9\",\n        value=\"nineteen\",\n    ),\n    twenty=20,\n    twentyone=21,\n    twentytwo=22.22,\n    twentythree=\"23\",\n    twentyfour=datetime.datetime.fromisoformat(\n        \"1994-01-01 01:01:01+00:00\",\n    ),\n    twentyfive=datetime.date.fromisoformat(\n        \"1994-01-01\",\n    ),\n)\n",
+        "type_:Name": "from seed import Name\n\nName(\n    id=\"name-sdfg8ajk\",\n    value=\"name\",\n)\n"
+    },
+    "endpoints": []
+}

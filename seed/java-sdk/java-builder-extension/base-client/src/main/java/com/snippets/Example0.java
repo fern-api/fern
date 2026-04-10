@@ -1,6 +1,6 @@
 package com.snippets;
 
-import com.seed.api.BaseClient;
+import com.seed.builderExtension.BaseClient;
 
 public class Example0 {
     public static void main(String[] args) {

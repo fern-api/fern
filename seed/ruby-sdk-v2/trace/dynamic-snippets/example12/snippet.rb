@@ -5,18 +5,10 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.admin.storetracedtestcasev2(
-  submission_id: "submissionId",
-  test_case_id: "testCaseId",
-  body: [{
-    submission_id: "submissionId",
-    line_number: 1,
-    file: {
-      filename: "filename",
-      directory: "directory"
-    },
-    stack: {
-      num_stack_frames: 1
-    }
-  }]
+client.playlist.create_playlist(
+  service_param: 1,
+  datetime: "2024-01-15T09:30:00Z",
+  optional_datetime: "2024-01-15T09:30:00Z",
+  name: "name",
+  problems: %w[problems problems]
 )

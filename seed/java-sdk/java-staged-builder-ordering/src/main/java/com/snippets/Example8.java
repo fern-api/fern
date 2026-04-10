@@ -1,19 +1,24 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.service.requests.Parent;
-import com.seed.api.types.Child;
+import com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;
+import com.seed.stagedBuilderOrdering.resources.types.types.ComplexStaged;
 
 public class Example8 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
         client.service()
-                .createparent(Parent.builder()
-                        .parentId("parentId")
-                        .child(Child.builder().childId("childId").childValue(1).build())
-                        .parentName("parentName")
+                .createComplex(ComplexStaged.builder()
+                        .fieldA("a")
+                        .fieldB(1)
+                        .fieldC(true)
+                        .fieldD("d")
+                        .fieldE(1.5)
+                        .optionalX("x")
+                        .optionalY(2)
+                        .optionalZ(false)
                         .build());
     }
 }

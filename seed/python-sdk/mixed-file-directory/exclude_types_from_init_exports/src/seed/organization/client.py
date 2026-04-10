@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.organization import Organization
 from .raw_client import AsyncRawOrganizationClient, RawOrganizationClient
+from .types.organization import Organization
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -41,12 +41,11 @@ class OrganizationClient:
         -------
         Organization
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedMixedFileDirectory
 
-        client = SeedApi(
+        client = SeedMixedFileDirectory(
             base_url="https://yourhost.com/path/to/api",
         )
         client.organization.create(
@@ -87,14 +86,13 @@ class AsyncOrganizationClient:
         -------
         Organization
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedMixedFileDirectory
 
-        client = AsyncSeedApi(
+        client = AsyncSeedMixedFileDirectory(
             base_url="https://yourhost.com/path/to/api",
         )
 

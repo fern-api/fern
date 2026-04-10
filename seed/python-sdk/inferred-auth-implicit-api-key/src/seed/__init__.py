@@ -6,21 +6,21 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import TokenResponse
-    from . import auth, nested_api, nested_no_auth_api, simple
+    from . import auth, nested, nested_no_auth, simple
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .auth import TokenResponse
+    from .client import AsyncSeedInferredAuthImplicitApiKey, SeedInferredAuthImplicitApiKey
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedInferredAuthImplicitApiKey": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedApi": ".client",
-    "TokenResponse": ".types",
+    "SeedInferredAuthImplicitApiKey": ".client",
+    "TokenResponse": ".auth",
     "__version__": ".version",
     "auth": ".auth",
-    "nested_api": ".nested_api",
-    "nested_no_auth_api": ".nested_no_auth_api",
+    "nested": ".nested",
+    "nested_no_auth": ".nested_no_auth",
     "simple": ".simple",
 }
 
@@ -47,14 +47,14 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedInferredAuthImplicitApiKey",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedApi",
+    "SeedInferredAuthImplicitApiKey",
     "TokenResponse",
     "__version__",
     "auth",
-    "nested_api",
-    "nested_no_auth_api",
+    "nested",
+    "nested_no_auth",
     "simple",
 ]

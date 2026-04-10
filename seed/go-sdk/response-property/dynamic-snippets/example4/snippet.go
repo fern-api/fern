@@ -14,7 +14,7 @@ func do() {
         ),
     )
     request := "string"
-    client.Service.Getmoviename(
+    client.Service.GetOptionalMovie(
         context.TODO(),
         request,
     )

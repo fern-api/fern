@@ -20,7 +20,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                &format!("service/{}", endpoint_param),
+                &format!("/service/{}", endpoint_param),
                 None,
                 None,
                 options,

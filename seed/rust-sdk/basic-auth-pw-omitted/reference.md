@@ -1,6 +1,6 @@
 # Reference
-## Basicauth
-<details><summary><code>client.basicauth.<a href="/src/api/resources/basicauth/client.rs">getwithbasicauth</a>() -> Result&lt;bool, ApiError&gt;</code></summary>
+## BasicAuth
+<details><summary><code>client.basic_auth.<a href="/src/api/resources/basic_auth/client.rs">get_with_basic_auth</a>() -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_basic_auth_pw_omitted::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -36,8 +36,8 @@ async fn main() {
         password: Some("<password>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.basicauth.getwithbasicauth(None).await;
+    let client = BasicAuthPwOmittedClient::new(config).expect("Failed to build client");
+    client.basic_auth.get_with_basic_auth(None).await;
 }
 ```
 </dd>
@@ -50,7 +50,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.basicauth.<a href="/src/api/resources/basicauth/client.rs">postwithbasicauth</a>(request: serde_json::Value) -> Result&lt;bool, ApiError&gt;</code></summary>
+<details><summary><code>client.basic_auth.<a href="/src/api/resources/basic_auth/client.rs">post_with_basic_auth</a>(request: serde_json::Value) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -77,7 +77,7 @@ POST request with basic auth scheme
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_basic_auth_pw_omitted::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -86,10 +86,10 @@ async fn main() {
         password: Some("<password>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = BasicAuthPwOmittedClient::new(config).expect("Failed to build client");
     client
-        .basicauth
-        .postwithbasicauth(&serde_json::json!({"key":"value"}), None)
+        .basic_auth
+        .post_with_basic_auth(&serde_json::json!({"key":"value"}), None)
         .await;
 }
 ```

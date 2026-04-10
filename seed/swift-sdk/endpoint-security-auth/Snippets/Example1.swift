@@ -1,19 +1,13 @@
 import Foundation
-import Api
+import EndpointSecurityAuth
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = EndpointSecurityAuthClient(
         baseURL: "https://api.fern.com",
-        token: "<token>",
-        apiKey: "<X-API-Key>"
+        token: "<token>"
     )
 
-    _ = try await client.auth.gettoken(request: .init(
-        clientId: "client_id",
-        clientSecret: "client_secret",
-        audience: .httpsApiExampleCom,
-        grantType: .clientCredentials
-    ))
+    _ = try await client.user.getWithBearer()
 }
 
 try await main()

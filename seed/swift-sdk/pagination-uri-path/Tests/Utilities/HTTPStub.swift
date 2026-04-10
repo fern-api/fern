@@ -1,4 +1,4 @@
-import Api
+import PaginationUriPath
 import Foundation
 
 final class HTTPStub {

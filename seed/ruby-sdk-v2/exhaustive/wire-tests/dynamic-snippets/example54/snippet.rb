@@ -5,4 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_pagination.endpoints_pagination_list_items
+client.endpoints.put.add(id: "id")

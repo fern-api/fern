@@ -1,34 +1,25 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.inlined.requests.InlinedSendRequest;
-import com.seed.api.resources.inlined.types.InlinedSendRequestContext;
-import com.seed.api.resources.inlined.types.InlinedSendRequestPrompt;
-import com.seed.api.types.ANestedLiteral;
-import com.seed.api.types.ANestedLiteralMyLiteral;
-import com.seed.api.types.ATopLevelLiteral;
-import com.seed.api.types.SomeAliasedLiteral;
+import com.seed.literal.SeedLiteralClient;
+import com.seed.literal.resources.inlined.requests.SendLiteralsInlinedRequest;
+import com.seed.literal.resources.inlined.types.ANestedLiteral;
+import com.seed.literal.resources.inlined.types.ATopLevelLiteral;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedLiteralClient client =
+                SeedLiteralClient.builder().url("https://api.fern.com").build();
 
         client.inlined()
-                .send(
-                        InlinedSendRequest.builder()
-                                .prompt(InlinedSendRequestPrompt.YOU_ARE_A_HELPFUL_ASSISTANT)
-                                .query("query")
-                                .stream(true)
-                                .aliasedContext(SomeAliasedLiteral.YOURE_SUPER_WISE)
-                                .objectWithLiteral(ATopLevelLiteral.builder()
-                                        .nestedLiteral(ANestedLiteral.builder()
-                                                .myLiteral(ANestedLiteralMyLiteral.HOW_SUPER_COOL)
-                                                .build())
-                                        .build())
-                                .context(InlinedSendRequestContext.YOURE_SUPER_WISE)
-                                .temperature(1.1)
-                                .maybeContext(SomeAliasedLiteral.YOURE_SUPER_WISE)
-                                .build());
+                .send(SendLiteralsInlinedRequest.builder()
+                        .query("query")
+                        .aliasedContext("You're super wise")
+                        .objectWithLiteral(ATopLevelLiteral.builder()
+                                .nestedLiteral(ANestedLiteral.builder().build())
+                                .build())
+                        .context("You're super wise")
+                        .temperature(1.1)
+                        .maybeContext("You're super wise")
+                        .build());
     }
 }

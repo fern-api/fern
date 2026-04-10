@@ -19,7 +19,7 @@ import Testing
         )
 
         do {
-            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApiError {
@@ -49,7 +49,7 @@ import Testing
         )
 
         do {
-            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApiError {
@@ -79,7 +79,7 @@ import Testing
         )
 
         do {
-            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApiError {
@@ -111,7 +111,7 @@ import Testing
         )
 
         do {
-            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApiError {
@@ -141,7 +141,7 @@ import Testing
         )
 
         do {
-            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApiError {
@@ -173,7 +173,7 @@ import Testing
         )
 
         do {
-            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApiError {
@@ -203,7 +203,7 @@ import Testing
         )
 
         do {
-            _ = try await client..foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.foo(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch let error as ApiError {

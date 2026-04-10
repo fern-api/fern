@@ -7,7 +7,7 @@ public final class UsersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func listwithuripagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersUriPaginationResponse {
+    public func listWithUriPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersUriPaginationResponse {
         return try await httpClient.performRequest(
             method: .get,
             path: "/users/uri",
@@ -16,7 +16,7 @@ public final class UsersClient: Sendable {
         )
     }
 
-    public func listwithpathpagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPathPaginationResponse {
+    public func listWithPathPagination(requestOptions: RequestOptions? = nil) async throws -> ListUsersPathPaginationResponse {
         return try await httpClient.performRequest(
             method: .get,
             path: "/users/path",

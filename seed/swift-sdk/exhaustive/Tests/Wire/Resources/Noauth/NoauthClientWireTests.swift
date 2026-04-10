@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import Api
+import Exhaustive
 
-@Suite("NoauthClient Wire Tests") struct NoauthClientWireTests {
-    @Test func postwithnoauth1() async throws -> Void {
+@Suite("NoAuthClient Wire Tests") struct NoAuthClientWireTests {
+    @Test func postWithNoAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -12,13 +12,13 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ExhaustiveClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.noauth.postwithnoauth(
+        let response = try await client.noAuth.postWithNoAuth(
             request: .object([
                 "key": .string("value")
             ]),

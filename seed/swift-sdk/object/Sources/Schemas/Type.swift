@@ -9,24 +9,24 @@ public struct Type: Codable, Hashable, Sendable {
     public let five: Int64
     public let six: Date
     public let seven: CalendarDate
-    public let eight: String
+    public let eight: UUID
     public let nine: String
     public let ten: [Int]
-    public let eleven: [Double]
+    public let eleven: JSONValue
     public let twelve: [String: Bool]
-    public let thirteen: Nullable<Int64>?
+    public let thirteen: Int64?
     public let fourteen: JSONValue
     public let fifteen: [[Int]]
     public let sixteen: [[String: Int]]
-    public let seventeen: [Nullable<String>]
-    public let eighteen: TypeEighteen
+    public let seventeen: [UUID?]
+    public let eighteen: Eighteen
     public let nineteen: Name
-    public let twenty: Int64
-    public let twentyone: Int64
+    public let twenty: UInt
+    public let twentyone: UInt64
     public let twentytwo: Float
-    public let twentythree: Int
-    public let twentyfour: Nullable<Date>?
-    public let twentyfive: Nullable<CalendarDate>?
+    public let twentythree: String
+    public let twentyfour: Date?
+    public let twentyfive: CalendarDate?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -38,24 +38,24 @@ public struct Type: Codable, Hashable, Sendable {
         five: Int64,
         six: Date,
         seven: CalendarDate,
-        eight: String,
+        eight: UUID,
         nine: String,
         ten: [Int],
-        eleven: [Double],
+        eleven: JSONValue,
         twelve: [String: Bool],
-        thirteen: Nullable<Int64>? = nil,
+        thirteen: Int64? = nil,
         fourteen: JSONValue,
         fifteen: [[Int]],
         sixteen: [[String: Int]],
-        seventeen: [Nullable<String>],
-        eighteen: TypeEighteen,
+        seventeen: [UUID?],
+        eighteen: Eighteen,
         nineteen: Name,
-        twenty: Int64,
-        twentyone: Int64,
+        twenty: UInt,
+        twentyone: UInt64,
         twentytwo: Float,
-        twentythree: Int,
-        twentyfour: Nullable<Date>? = nil,
-        twentyfive: Nullable<CalendarDate>? = nil,
+        twentythree: String,
+        twentyfour: Date? = nil,
+        twentyfive: CalendarDate? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.one = one
@@ -95,24 +95,24 @@ public struct Type: Codable, Hashable, Sendable {
         self.five = try container.decode(Int64.self, forKey: .five)
         self.six = try container.decode(Date.self, forKey: .six)
         self.seven = try container.decode(CalendarDate.self, forKey: .seven)
-        self.eight = try container.decode(String.self, forKey: .eight)
+        self.eight = try container.decode(UUID.self, forKey: .eight)
         self.nine = try container.decode(String.self, forKey: .nine)
         self.ten = try container.decode([Int].self, forKey: .ten)
-        self.eleven = try container.decode([Double].self, forKey: .eleven)
+        self.eleven = try container.decode(JSONValue.self, forKey: .eleven)
         self.twelve = try container.decode([String: Bool].self, forKey: .twelve)
-        self.thirteen = try container.decodeNullableIfPresent(Int64.self, forKey: .thirteen)
+        self.thirteen = try container.decodeIfPresent(Int64.self, forKey: .thirteen)
         self.fourteen = try container.decode(JSONValue.self, forKey: .fourteen)
         self.fifteen = try container.decode([[Int]].self, forKey: .fifteen)
         self.sixteen = try container.decode([[String: Int]].self, forKey: .sixteen)
-        self.seventeen = try container.decode([Nullable<String>].self, forKey: .seventeen)
-        self.eighteen = try container.decode(TypeEighteen.self, forKey: .eighteen)
+        self.seventeen = try container.decode([UUID?].self, forKey: .seventeen)
+        self.eighteen = try container.decode(Eighteen.self, forKey: .eighteen)
         self.nineteen = try container.decode(Name.self, forKey: .nineteen)
-        self.twenty = try container.decode(Int64.self, forKey: .twenty)
-        self.twentyone = try container.decode(Int64.self, forKey: .twentyone)
+        self.twenty = try container.decode(UInt.self, forKey: .twenty)
+        self.twentyone = try container.decode(UInt64.self, forKey: .twentyone)
         self.twentytwo = try container.decode(Float.self, forKey: .twentytwo)
-        self.twentythree = try container.decode(Int.self, forKey: .twentythree)
-        self.twentyfour = try container.decodeNullableIfPresent(Date.self, forKey: .twentyfour)
-        self.twentyfive = try container.decodeNullableIfPresent(CalendarDate.self, forKey: .twentyfive)
+        self.twentythree = try container.decode(String.self, forKey: .twentythree)
+        self.twentyfour = try container.decodeIfPresent(Date.self, forKey: .twentyfour)
+        self.twentyfive = try container.decodeIfPresent(CalendarDate.self, forKey: .twentyfive)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -131,7 +131,7 @@ public struct Type: Codable, Hashable, Sendable {
         try container.encode(self.ten, forKey: .ten)
         try container.encode(self.eleven, forKey: .eleven)
         try container.encode(self.twelve, forKey: .twelve)
-        try container.encodeNullableIfPresent(self.thirteen, forKey: .thirteen)
+        try container.encodeIfPresent(self.thirteen, forKey: .thirteen)
         try container.encode(self.fourteen, forKey: .fourteen)
         try container.encode(self.fifteen, forKey: .fifteen)
         try container.encode(self.sixteen, forKey: .sixteen)
@@ -142,8 +142,12 @@ public struct Type: Codable, Hashable, Sendable {
         try container.encode(self.twentyone, forKey: .twentyone)
         try container.encode(self.twentytwo, forKey: .twentytwo)
         try container.encode(self.twentythree, forKey: .twentythree)
-        try container.encodeNullableIfPresent(self.twentyfour, forKey: .twentyfour)
-        try container.encodeNullableIfPresent(self.twentyfive, forKey: .twentyfive)
+        try container.encodeIfPresent(self.twentyfour, forKey: .twentyfour)
+        try container.encodeIfPresent(self.twentyfive, forKey: .twentyfive)
+    }
+
+    public enum Eighteen: String, Codable, Hashable, CaseIterable, Sendable {
+        case eighteen
     }
 
     /// Keys for encoding/decoding struct properties.

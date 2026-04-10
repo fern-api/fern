@@ -4,6 +4,7 @@ namespace Seed\Types;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Types\Types\UnionWithTime;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -69,7 +70,7 @@ class TypesClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "time/{$id}",
+                    path: "/time/{$id}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -115,7 +116,7 @@ class TypesClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "time",
+                    path: "/time",
                     method: HttpMethod::PATCH,
                     body: $request,
                 ),

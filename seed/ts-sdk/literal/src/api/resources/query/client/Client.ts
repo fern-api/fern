@@ -2,11 +2,11 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedLiteral from "../../../index.js";
 
 export declare namespace QueryClient {
     export type Options = BaseClientOptions;
@@ -22,29 +22,33 @@ export class QueryClient {
     }
 
     /**
-     * @param {SeedApi.QuerySendRequest} request
+     * @param {SeedLiteral.SendLiteralsInQueryRequest} request
      * @param {QueryClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.query.send({
      *         prompt: "You are a helpful assistant",
+     *         optional_prompt: "You are a helpful assistant",
      *         alias_prompt: "You are a helpful assistant",
-     *         query: "query",
-     *         stream: true,
-     *         alias_stream: true
+     *         alias_optional_prompt: "You are a helpful assistant",
+     *         stream: false,
+     *         optional_stream: false,
+     *         alias_stream: false,
+     *         alias_optional_stream: false,
+     *         query: "What is the weather today"
      *     })
      */
     public send(
-        request: SeedApi.QuerySendRequest,
+        request: SeedLiteral.SendLiteralsInQueryRequest,
         requestOptions?: QueryClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.SendResponse> {
+    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedApi.QuerySendRequest,
+        request: SeedLiteral.SendLiteralsInQueryRequest,
         requestOptions?: QueryClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.SendResponse>> {
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
         const {
             prompt,
             optional_prompt: optionalPrompt,
@@ -58,16 +62,23 @@ export class QueryClient {
         } = request;
         const _queryParams: Record<string, unknown> = {
             prompt,
-            optional_prompt: optionalPrompt !== undefined ? optionalPrompt : undefined,
+            optional_prompt: optionalPrompt != null ? optionalPrompt : undefined,
             alias_prompt: aliasPrompt,
             alias_optional_prompt: aliasOptionalPrompt != null ? aliasOptionalPrompt : undefined,
             query,
-            stream,
-            optional_stream: optionalStream,
-            alias_stream: aliasStream,
-            alias_optional_stream: aliasOptionalStream,
+            stream: stream.toString(),
+            optional_stream: optionalStream != null ? optionalStream?.toString() : undefined,
+            alias_stream: aliasStream.toString(),
+            alias_optional_stream: aliasOptionalStream != null ? aliasOptionalStream?.toString() : undefined,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-API-Version": requestOptions?.version ?? "02-02-2024",
+                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -84,11 +95,11 @@ export class QueryClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.SendResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedLiteralError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

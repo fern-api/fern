@@ -35,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Send(
 	ctx context.Context,
-	request *fern.PathSendRequest,
+	id string,
 	opts ...option.RequestOption,
 ) (*fern.SendResponse, error) {
 	response, err := c.WithRawResponse.Send(
 		ctx,
-		request,
+		id,
 		opts...,
 	)
 	if err != nil {

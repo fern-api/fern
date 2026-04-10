@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\ServiceJustFileRequest;
+use Seed\Service\Requests\OptionalArgsRequest;
 use Seed\Utils\File;
 
 $client = new SeedClient(
@@ -11,8 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->justfile(
-    new ServiceJustFileRequest([
-        'file' => File::createFromString("example_file", "example_file"),
+$client->service->optionalArgs(
+    new OptionalArgsRequest([
+        'imageFile' => File::createFromString("example_image_file", "example_image_file"),
     ]),
 );

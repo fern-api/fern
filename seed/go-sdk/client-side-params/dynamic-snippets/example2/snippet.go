@@ -17,12 +17,19 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ServiceGetResourceRequest{
-        ResourceID: "resourceId",
-        IncludeMetadata: true,
-        Format: "format",
+    request := &fern.SearchResourcesRequest{
+        Limit: 1,
+        Offset: 1,
+        Query: fern.String(
+            "query",
+        ),
+        Filters: map[string]any{
+            "filters": map[string]any{
+                "key": "value",
+            },
+        },
     }
-    client.Service.Getresource(
+    client.Service.SearchResources(
         context.TODO(),
         request,
     )

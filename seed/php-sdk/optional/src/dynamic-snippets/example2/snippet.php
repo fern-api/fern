@@ -3,15 +3,17 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Optional\Requests\SendOptionalBodyRequest;
+use Seed\Optional\Types\DeployParams;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->optional->sendoptionaltypedbody(
-    new SendOptionalBodyRequest([
-        'message' => 'message',
+$client->optional->sendOptionalNullableWithAllOptionalProperties(
+    'actionId',
+    'id',
+    new DeployParams([
+        'updateDraft' => true,
     ]),
 );

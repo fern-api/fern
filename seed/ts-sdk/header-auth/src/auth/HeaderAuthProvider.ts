@@ -3,7 +3,7 @@
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
-const PARAM_KEY = "apiKey" as const;
+const PARAM_KEY = "headerTokenAuth" as const;
 const HEADER_NAME = "x-api-key" as const;
 
 export class HeaderAuthProvider implements core.AuthProvider {
@@ -24,7 +24,7 @@ export class HeaderAuthProvider implements core.AuthProvider {
     } = {}): Promise<core.AuthRequest> {
         const headerValue = await core.Supplier.get(this.options[PARAM_KEY]);
         if (headerValue == null) {
-            throw new errors.SeedApiError({
+            throw new errors.SeedHeaderTokenError({
                 message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
@@ -36,7 +36,7 @@ export class HeaderAuthProvider implements core.AuthProvider {
 }
 
 export namespace HeaderAuthProvider {
-    export const AUTH_SCHEME = "HeaderTokenAuthAuth" as const;
+    export const AUTH_SCHEME = "Header" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
         `Please provide '${PARAM_KEY}' when initializing the client` as const;
     export type Options = AuthOptions;

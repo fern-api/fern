@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>$client-&gt;simple-&gt;foowithoutendpointerror($request) -> ?FooResponse</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;fooWithoutEndpointError($request) -> ?FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->simple->foowithoutendpointerror(
+$client->simple->fooWithoutEndpointError(
     new FooRequest([
         'bar' => 'bar',
     ]),
@@ -88,7 +88,7 @@ $client->simple->foo(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;simple-&gt;foowithexamples($request) -> ?FooResponse</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;fooWithExamples($request) -> ?FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -101,9 +101,9 @@ $client->simple->foo(
 <dd>
 
 ```php
-$client->simple->foowithexamples(
+$client->simple->fooWithExamples(
     new FooRequest([
-        'bar' => 'bar',
+        'bar' => 'hello',
     ]),
 );
 ```

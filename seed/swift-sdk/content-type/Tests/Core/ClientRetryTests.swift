@@ -1,4 +1,4 @@
-import Api
+import ContentTypes
 import Foundation
 import Testing
 
@@ -14,7 +14,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -22,8 +22,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -44,7 +44,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -52,8 +52,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -74,7 +74,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -82,8 +82,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -103,7 +103,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -111,8 +111,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -131,7 +131,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -139,8 +139,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -160,7 +160,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -168,8 +168,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -189,7 +189,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -197,8 +197,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -222,7 +222,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -231,8 +231,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -266,7 +266,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -275,8 +275,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -306,7 +306,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -315,8 +315,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -358,7 +358,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -366,8 +366,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
@@ -383,7 +383,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -391,8 +391,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
@@ -412,7 +412,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ContentTypesClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -420,8 +420,8 @@ import Testing
         do {
             _ = try await client.service.patch(
                 request: .init(
-                    application: .null,
-                    requireAuth: .null
+                    application: .value("application"),
+                    requireAuth: .value(true)
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

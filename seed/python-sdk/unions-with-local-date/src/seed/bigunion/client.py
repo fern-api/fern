@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.big_union import BigUnion
 from .raw_client import AsyncRawBigunionClient, RawBigunionClient
+from .types.big_union import BigUnion
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -39,12 +39,11 @@ class BigunionClient:
         -------
         BigUnion
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUnions
 
-        client = SeedApi(
+        client = SeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.bigunion.get(
@@ -67,18 +66,17 @@ class BigunionClient:
         -------
         bool
 
-
         Examples
         --------
-        from seed import BigUnionZero, SeedApi
+        from seed import SeedUnions
+        from seed.bigunion import BigUnion_NormalSweet
 
-        client = SeedApi(
+        client = SeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.bigunion.update(
-            request=BigUnionZero(
+            request=BigUnion_NormalSweet(
                 value="value",
-                type="normalSweet",
             ),
         )
         """
@@ -100,20 +98,22 @@ class BigunionClient:
         -------
         typing.Dict[str, bool]
 
-
         Examples
         --------
-        from seed import BigUnionZero, SeedApi
+        from seed import SeedUnions
+        from seed.bigunion import BigUnion_NormalSweet
 
-        client = SeedApi(
+        client = SeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.bigunion.update_many(
             request=[
-                BigUnionZero(
+                BigUnion_NormalSweet(
                     value="value",
-                    type="normalSweet",
-                )
+                ),
+                BigUnion_NormalSweet(
+                    value="value",
+                ),
             ],
         )
         """
@@ -149,14 +149,13 @@ class AsyncBigunionClient:
         -------
         BigUnion
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUnions
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -185,23 +184,22 @@ class AsyncBigunionClient:
         -------
         bool
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi, BigUnionZero
+        from seed import AsyncSeedUnions
+        from seed.bigunion import BigUnion_NormalSweet
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.bigunion.update(
-                request=BigUnionZero(
+                request=BigUnion_NormalSweet(
                     value="value",
-                    type="normalSweet",
                 ),
             )
 
@@ -226,14 +224,14 @@ class AsyncBigunionClient:
         -------
         typing.Dict[str, bool]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi, BigUnionZero
+        from seed import AsyncSeedUnions
+        from seed.bigunion import BigUnion_NormalSweet
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -241,10 +239,12 @@ class AsyncBigunionClient:
         async def main() -> None:
             await client.bigunion.update_many(
                 request=[
-                    BigUnionZero(
+                    BigUnion_NormalSweet(
                         value="value",
-                        type="normalSweet",
-                    )
+                    ),
+                    BigUnion_NormalSweet(
+                        value="value",
+                    ),
                 ],
             )
 

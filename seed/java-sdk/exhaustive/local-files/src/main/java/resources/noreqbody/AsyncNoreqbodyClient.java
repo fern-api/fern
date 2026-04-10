@@ -6,41 +6,41 @@ package com.fern.sdk.resources.noreqbody;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.lang.String;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncNoreqbodyClient {
+public class AsyncNoReqBodyClient {
   protected final ClientOptions clientOptions;
 
-  private final AsyncRawNoreqbodyClient rawClient;
+  private final AsyncRawNoReqBodyClient rawClient;
 
-  public AsyncNoreqbodyClient(ClientOptions clientOptions) {
+  public AsyncNoReqBodyClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new AsyncRawNoreqbodyClient(clientOptions);
+    this.rawClient = new AsyncRawNoReqBodyClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public AsyncRawNoreqbodyClient withRawResponse() {
+  public AsyncRawNoReqBodyClient withRawResponse() {
     return this.rawClient;
   }
 
-  public CompletableFuture<TypesObjectWithOptionalField> getwithnorequestbody() {
-    return this.rawClient.getwithnorequestbody().thenApply(response -> response.body());
+  public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody() {
+    return this.rawClient.getWithNoRequestBody().thenApply(response -> response.body());
   }
 
-  public CompletableFuture<TypesObjectWithOptionalField> getwithnorequestbody(
+  public CompletableFuture<ObjectWithOptionalField> getWithNoRequestBody(
       RequestOptions requestOptions) {
-    return this.rawClient.getwithnorequestbody(requestOptions).thenApply(response -> response.body());
+    return this.rawClient.getWithNoRequestBody(requestOptions).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<String> postwithnorequestbody() {
-    return this.rawClient.postwithnorequestbody().thenApply(response -> response.body());
+  public CompletableFuture<String> postWithNoRequestBody() {
+    return this.rawClient.postWithNoRequestBody().thenApply(response -> response.body());
   }
 
-  public CompletableFuture<String> postwithnorequestbody(RequestOptions requestOptions) {
-    return this.rawClient.postwithnorequestbody(requestOptions).thenApply(response -> response.body());
+  public CompletableFuture<String> postWithNoRequestBody(RequestOptions requestOptions) {
+    return this.rawClient.postWithNoRequestBody(requestOptions).thenApply(response -> response.body());
   }
 }

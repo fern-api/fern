@@ -13,15 +13,15 @@ impl AuthClient {
         })
     }
 
-    pub async fn gettokenwithclientcredentials(
+    pub async fn get_token_with_client_credentials(
         &self,
-        request: &AuthGetTokenWithClientCredentialsRequest,
+        request: &GetTokenRequest,
         options: Option<RequestOptions>,
     ) -> Result<TokenResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "token",
+                "/token",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -29,15 +29,15 @@ impl AuthClient {
             .await
     }
 
-    pub async fn refreshtoken(
+    pub async fn refresh_token(
         &self,
-        request: &AuthRefreshTokenRequest,
+        request: &RefreshTokenRequest,
         options: Option<RequestOptions>,
     ) -> Result<TokenResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "token/refresh",
+                "/token",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

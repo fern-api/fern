@@ -1,30 +1,39 @@
 import Foundation
 
 public enum UnionWithNoProperties: Codable, Hashable, Sendable {
-    case unionWithNoPropertiesType(UnionWithNoPropertiesType)
-    case unionWithNoPropertiesZero(UnionWithNoPropertiesZero)
+    case empty
+    case foo(Foo)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(UnionWithNoPropertiesType.self) {
-            self = .unionWithNoPropertiesType(value)
-        } else if let value = try? container.decode(UnionWithNoPropertiesZero.self) {
-            self = .unionWithNoPropertiesZero(value)
-        } else {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Unexpected value."
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "empty":
+            self = .empty
+        case "foo":
+            self = .foo(try Foo(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.singleValueContainer()
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .unionWithNoPropertiesType(let value):
-            try container.encode(value)
-        case .unionWithNoPropertiesZero(let value):
-            try container.encode(value)
+        case .empty:
+            try container.encode("empty", forKey: .type)
+        case .foo(let data):
+            try container.encode("foo", forKey: .type)
+            try data.encode(to: encoder)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

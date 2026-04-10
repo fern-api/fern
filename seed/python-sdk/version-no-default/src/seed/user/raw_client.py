@@ -10,8 +10,8 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.user import User
-from ..types.user_id import UserId
+from .types.user import User
+from .types.user_id import UserId
 from pydantic import ValidationError
 
 
@@ -19,7 +19,7 @@ class RawUserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def getuser(
+    def get_user(
         self, user_id: UserId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[User]:
         """
@@ -33,7 +33,6 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"users/{encode_path_param(user_id)}",
@@ -64,7 +63,7 @@ class AsyncRawUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def getuser(
+    async def get_user(
         self, user_id: UserId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[User]:
         """
@@ -78,7 +77,6 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"users/{encode_path_param(user_id)}",

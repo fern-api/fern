@@ -1,19 +1,19 @@
-using SeedApi;
+using SeedBasicAuthEnvironmentVariables;
 
 namespace Usage;
 
 public class Example3
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedBasicAuthEnvironmentVariablesClient(
             username: "<username>",
-            password: "<password>",
+            accessToken: "<password>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Basicauth.PostwithbasicauthAsync(
+        await client.BasicAuth.PostWithBasicAuthAsync(
             new Dictionary<string, object>()
             {
                 ["key"] = "value",

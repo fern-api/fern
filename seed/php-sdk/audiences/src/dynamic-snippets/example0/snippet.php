@@ -3,15 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\FolderAService\Requests\FolderAServiceGetDirectThreadRequest;
+use Seed\FolderA\Service\Requests\GetDirectThreadRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->folderAService->folderAServiceGetDirectThread(
-    new FolderAServiceGetDirectThreadRequest([
+$client->folderA->service->getDirectThread(
+    new GetDirectThreadRequest([
         'ids' => [
             'ids',
         ],

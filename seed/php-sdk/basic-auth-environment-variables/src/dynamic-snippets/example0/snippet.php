@@ -6,9 +6,9 @@ use Seed\SeedClient;
 
 $client = new SeedClient(
     username: '<username>',
-    password: '<password>',
+    accessToken: '<password>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->basicauth->getwithbasicauth();
+$client->basicAuth->getWithBasicAuth();

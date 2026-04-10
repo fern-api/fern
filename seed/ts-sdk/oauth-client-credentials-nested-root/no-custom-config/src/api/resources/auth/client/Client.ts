@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedOauthClientCredentials from "../../../index.js";
 
 export declare namespace AuthClient {
     export type Options = BaseClientOptions;
@@ -22,41 +22,40 @@ export class AuthClient {
     }
 
     /**
-     * @param {SeedApi.AuthGetTokenRequest} request
+     * @param {SeedOauthClientCredentials.auth.GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.auth.gettoken({
+     *     await client.auth.getToken({
      *         client_id: "client_id",
      *         client_secret: "client_secret",
-     *         audience: "https://api.example.com",
-     *         grant_type: "client_credentials"
+     *         scope: "scope"
      *     })
      */
-    public gettoken(
-        request: SeedApi.AuthGetTokenRequest,
+    public getToken(
+        request: SeedOauthClientCredentials.auth.GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.AuthTokenResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__gettoken(request, requestOptions));
+    ): core.HttpResponsePromise<SeedOauthClientCredentials.auth.TokenResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
     }
 
-    private async __gettoken(
-        request: SeedApi.AuthGetTokenRequest,
+    private async __getToken(
+        request: SeedOauthClientCredentials.auth.GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.AuthTokenResponse>> {
+    ): Promise<core.WithRawResponse<SeedOauthClientCredentials.auth.TokenResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "token",
+                "/token",
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: { ...request, audience: "https://api.example.com", grant_type: "client_credentials" },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -64,11 +63,14 @@ export class AuthClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.AuthTokenResponse, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedOauthClientCredentials.auth.TokenResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedOauthClientCredentialsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

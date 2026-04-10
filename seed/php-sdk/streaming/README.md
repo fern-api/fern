@@ -37,11 +37,11 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Dummy\Requests\DummyGenerateRequest;
+use Seed\Dummy\Requests\GenerateStreamRequest;
 
 $client = new SeedClient();
-$client->dummy->generate(
-    new DummyGenerateRequest([
+$client->dummy->generateStream(
+    new GenerateStreamRequest([
         'stream' => true,
         'numEvents' => 1,
     ]),
@@ -58,7 +58,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->dummy->generate(...);
+    $response = $client->dummy->generateStream(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -112,7 +112,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->dummy->generate(
+$response = $client->dummy->generateStream(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -125,7 +125,7 @@ $response = $client->dummy->generate(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->dummy->generate(
+$response = $client->dummy->generateStream(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

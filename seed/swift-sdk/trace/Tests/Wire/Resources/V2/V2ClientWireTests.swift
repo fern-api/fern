@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import Trace
 
 @Suite("V2Client Wire Tests") struct V2ClientWireTests {
 }

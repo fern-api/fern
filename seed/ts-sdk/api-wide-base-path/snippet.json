@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/api-wide-base-path\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.post({\n    pathParam: \"pathParam\",\n    serviceParam: \"serviceParam\",\n    endpointParam: 1,\n    resourceParam: \"resourceParam\"\n});\n"
+                "client": "import { SeedApiWideBasePathClient } from \"@fern/api-wide-base-path\";\n\nconst client = new SeedApiWideBasePathClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.post(\"serviceParam\", 1, \"resourceParam\");\n"
             }
         }
     ],

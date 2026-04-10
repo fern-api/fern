@@ -37,19 +37,19 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Auth\Requests\AuthGetTokenWithClientCredentialsRequest;
-use Seed\Auth\Types\AuthGetTokenWithClientCredentialsRequestAudience;
-use Seed\Auth\Types\AuthGetTokenWithClientCredentialsRequestGrantType;
+use Seed\Auth\Requests\GetTokenRequest;
 
 $client = new SeedClient(
-    token: '<token>',
+    clientId: '<clientId>',
+    clientSecret: '<clientSecret>',
 );
-$client->auth->gettokenwithclientcredentials(
-    new AuthGetTokenWithClientCredentialsRequest([
-        'clientId' => 'client_id',
-        'clientSecret' => 'client_secret',
-        'audience' => AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom->value,
-        'grantType' => AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials->value,
+$client->auth->getTokenWithClientCredentials(
+    new GetTokenRequest([
+        'clientId' => 'my_oauth_app_123',
+        'clientSecret' => 'sk_live_abcdef123456789',
+        'audience' => 'https://api.example.com',
+        'grantType' => 'client_credentials',
+        'scope' => 'read:users',
     ]),
 );
 
@@ -64,7 +64,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->auth->gettokenwithclientcredentials(...);
+    $response = $client->auth->getTokenWithClientCredentials(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -118,7 +118,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->auth->gettokenwithclientcredentials(
+$response = $client->auth->getTokenWithClientCredentials(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -131,7 +131,7 @@ $response = $client->auth->gettokenwithclientcredentials(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->auth->gettokenwithclientcredentials(
+$response = $client->auth->getTokenWithClientCredentials(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

@@ -1,14 +1,19 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
+import com.seed.basicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesClient;
+import java.util.HashMap;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient.builder()
                 .credentials("<username>", "<password>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.basicauth().getwithbasicauth();
+        client.basicAuth().postWithBasicAuth(new HashMap<String, Object>() {
+            {
+                put("key", "value");
+            }
+        });
     }
 }

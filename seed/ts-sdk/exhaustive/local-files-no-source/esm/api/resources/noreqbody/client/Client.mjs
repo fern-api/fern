@@ -13,26 +13,26 @@ import { mergeHeaders } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../errors/index.mjs";
-export class NoreqbodyClient {
+export class NoReqBodyClient {
     constructor(options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
     /**
-     * @param {NoreqbodyClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.noreqbody.getwithnorequestbody()
+     *     await client.noReqBody.getWithNoRequestBody()
      */
-    getwithnorequestbody(requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getwithnorequestbody(requestOptions));
+    getWithNoRequestBody(requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
     }
-    __getwithnorequestbody(requestOptions) {
+    __getWithNoRequestBody(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "no-req-body"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/no-req-body"),
                 method: "GET",
                 headers: _headers,
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -43,10 +43,13 @@ export class NoreqbodyClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
+                return {
+                    data: _response.body,
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
-                throw new errors.SeedApiError({
+                throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.body,
                     rawResponse: _response.rawResponse,
@@ -56,21 +59,21 @@ export class NoreqbodyClient {
         });
     }
     /**
-     * @param {NoreqbodyClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.noreqbody.postwithnorequestbody()
+     *     await client.noReqBody.postWithNoRequestBody()
      */
-    postwithnorequestbody(requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__postwithnorequestbody(requestOptions));
+    postWithNoRequestBody(requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__postWithNoRequestBody(requestOptions));
     }
-    __postwithnorequestbody(requestOptions) {
+    __postWithNoRequestBody(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "no-req-body"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/no-req-body"),
                 method: "POST",
                 headers: _headers,
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -84,7 +87,7 @@ export class NoreqbodyClient {
                 return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
-                throw new errors.SeedApiError({
+                throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.body,
                     rawResponse: _response.rawResponse,

@@ -1,48 +1,9 @@
 import Foundation
 import Testing
-import Api
+import ResponseProperty
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
-    @Test func getmovie1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "docs": "docs",
-                  "metadata": {
-                    "key": "value"
-                  },
-                  "data": {
-                    "id": "id",
-                    "name": "name"
-                  }
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Response(
-            docs: "docs",
-            metadata: [
-                "key": "value"
-            ],
-            data: Movie(
-                id: "id",
-                name: "name"
-            )
-        )
-        let response = try await client.service.getmovie(
-            request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getmovie2() async throws -> Void {
+    @Test func getMovie1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -60,7 +21,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ResponsePropertyClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -74,53 +35,14 @@ import Api
             ],
             docs: "docs"
         )
-        let response = try await client.service.getmovie(
+        let response = try await client.service.getMovie(
             request: "string",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func getmoviedocs1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "docs": "docs",
-                  "metadata": {
-                    "key": "value"
-                  },
-                  "data": {
-                    "id": "id",
-                    "name": "name"
-                  }
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Response(
-            docs: "docs",
-            metadata: [
-                "key": "value"
-            ],
-            data: Movie(
-                id: "id",
-                name: "name"
-            )
-        )
-        let response = try await client.service.getmoviedocs(
-            request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getmoviedocs2() async throws -> Void {
+    @Test func getMovieDocs1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -138,7 +60,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ResponsePropertyClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -152,14 +74,14 @@ import Api
             ],
             docs: "docs"
         )
-        let response = try await client.service.getmoviedocs(
+        let response = try await client.service.getMovieDocs(
             request: "string",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func getmoviename1() async throws -> Void {
+    @Test func getMovieName1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -170,85 +92,21 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ResponsePropertyClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = StringResponse(
             data: "data"
         )
-        let response = try await client.service.getmoviename(
+        let response = try await client.service.getMovieName(
             request: "string",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func getmoviename2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "data": "data"
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = StringResponse(
-            data: "data"
-        )
-        let response = try await client.service.getmoviename(
-            request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getmoviemetadata1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "docs": "docs",
-                  "metadata": {
-                    "key": "value"
-                  },
-                  "data": {
-                    "id": "id",
-                    "name": "name"
-                  }
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Response(
-            docs: "docs",
-            metadata: [
-                "key": "value"
-            ],
-            data: Movie(
-                id: "id",
-                name: "name"
-            )
-        )
-        let response = try await client.service.getmoviemetadata(
-            request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getmoviemetadata2() async throws -> Void {
+    @Test func getMovieMetadata1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -266,7 +124,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ResponsePropertyClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -280,53 +138,14 @@ import Api
             ],
             docs: "docs"
         )
-        let response = try await client.service.getmoviemetadata(
+        let response = try await client.service.getMovieMetadata(
             request: "string",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func getoptionalmovie1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "docs": "docs",
-                  "metadata": {
-                    "key": "value"
-                  },
-                  "data": {
-                    "id": "id",
-                    "name": "name"
-                  }
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Response(
-            docs: "docs",
-            metadata: [
-                "key": "value"
-            ],
-            data: Movie(
-                id: "id",
-                name: "name"
-            )
-        )
-        let response = try await client.service.getoptionalmovie(
-            request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getoptionalmovie2() async throws -> Void {
+    @Test func getOptionalMovie1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -344,11 +163,11 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ResponsePropertyClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = Response(
+        let expectedResponse = Optional(Response(
             data: Movie(
                 id: "id",
                 name: "name"
@@ -357,15 +176,15 @@ import Api
                 "metadata": "metadata"
             ],
             docs: "docs"
-        )
-        let response = try await client.service.getoptionalmovie(
+        ))
+        let response = try await client.service.getOptionalMovie(
             request: "string",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func getoptionalmoviedocs1() async throws -> Void {
+    @Test func getOptionalMovieDocs1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -376,46 +195,21 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ResponsePropertyClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = WithDocs(
+        let expectedResponse = Optional(WithDocs(
             docs: "docs"
-        )
-        let response = try await client.service.getoptionalmoviedocs(
+        ))
+        let response = try await client.service.getOptionalMovieDocs(
             request: "string",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func getoptionalmoviedocs2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "docs": "docs"
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = WithDocs(
-            docs: "docs"
-        )
-        let response = try await client.service.getoptionalmoviedocs(
-            request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getoptionalmoviename1() async throws -> Void {
+    @Test func getOptionalMovieName1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -426,39 +220,14 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ResponsePropertyClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = StringResponse(
+        let expectedResponse = Optional(StringResponse(
             data: "data"
-        )
-        let response = try await client.service.getoptionalmoviename(
-            request: "string",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getoptionalmoviename2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "data": "data"
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = StringResponse(
-            data: "data"
-        )
-        let response = try await client.service.getoptionalmoviename(
+        ))
+        let response = try await client.service.getOptionalMovieName(
             request: "string",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

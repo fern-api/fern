@@ -1,4 +1,4 @@
-import Api
+import ExtraProperties
 import Foundation
 
 final class HTTPStub {

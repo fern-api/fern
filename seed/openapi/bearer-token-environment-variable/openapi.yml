@@ -6,7 +6,7 @@ paths:
   /apiKey:
     get:
       description: GET request with custom api key
-      operationId: service_getwithbearertoken
+      operationId: service_getWithBearerToken
       tags:
         - Service
       parameters: []
@@ -17,14 +17,11 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Example1:
-                  value: string
       security:
-        - BearerAuth: []
+        - Bearer: []
 components:
   schemas: {}
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

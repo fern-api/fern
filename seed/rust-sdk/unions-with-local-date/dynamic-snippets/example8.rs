@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,16 +6,9 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = UnionsClient::new(config).expect("Failed to build client");
     client
         .types
-        .update(
-            &UnionWithTime::Value {
-                data: UnionWithTimeValue {
-                    ..Default::default()
-                },
-            },
-            None,
-        )
+        .update(&UnionWithTime::Value { value: 1 }, None)
         .await;
 }

@@ -1,2 +1,2 @@
-export { SeedApiError } from "./SeedApiError.js";
-export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";
+export { SeedNullableOptionalError } from "./SeedNullableOptionalError.js";
+export { SeedNullableOptionalTimeoutError } from "./SeedNullableOptionalTimeoutError.js";

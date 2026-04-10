@@ -8,6 +8,12 @@ use Seed\Core\Json\JsonProperty;
 class VariantA extends JsonSerializableType
 {
     /**
+     * @var 'A' $type
+     */
+    #[JsonProperty('type')]
+    public string $type;
+
+    /**
      * @var string $valueA
      */
     #[JsonProperty('valueA')]
@@ -15,12 +21,14 @@ class VariantA extends JsonSerializableType
 
     /**
      * @param array{
+     *   type: 'A',
      *   valueA: string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
+        $this->type = $values['type'];
         $this->valueA = $values['valueA'];
     }
 

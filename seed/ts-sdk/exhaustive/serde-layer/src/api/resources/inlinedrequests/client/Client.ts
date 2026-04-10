@@ -7,60 +7,76 @@ import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedExhaustive from "../../../index.js";
 
-export declare namespace InlinedrequestsClient {
+export declare namespace InlinedRequestsClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class InlinedrequestsClient {
-    protected readonly _options: NormalizedClientOptions<InlinedrequestsClient.Options>;
+export class InlinedRequestsClient {
+    protected readonly _options: NormalizedClientOptions<InlinedRequestsClient.Options>;
 
-    constructor(options: InlinedrequestsClient.Options) {
+    constructor(options: InlinedRequestsClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
      * POST with custom object in request body, response is an object
      *
-     * @param {SeedApi.InlinedRequestsPostWithObjectBodyandResponseRequest} request
-     * @param {InlinedrequestsClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.BadRequestError}
+     * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
-     *     await client.inlinedrequests.postwithobjectbodyandresponse({
+     *     await client.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",
      *         integer: 1,
-     *         nestedObject: {}
+     *         nestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["list", "list"],
+     *             set: new Set(["set"]),
+     *             map: {
+     *                 1: "map"
+     *             },
+     *             bigint: "1000000"
+     *         }
      *     })
      */
-    public postwithobjectbodyandresponse(
-        request: SeedApi.InlinedRequestsPostWithObjectBodyandResponseRequest,
-        requestOptions?: InlinedrequestsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromPromise(this.__postwithobjectbodyandresponse(request, requestOptions));
+    public postWithObjectBodyandResponse(
+        request: SeedExhaustive.PostWithObjectBody,
+        requestOptions?: InlinedRequestsClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
     }
 
-    private async __postwithobjectbodyandresponse(
-        request: SeedApi.InlinedRequestsPostWithObjectBodyandResponseRequest,
-        requestOptions?: InlinedrequestsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.TypesObjectWithOptionalField>> {
+    private async __postWithObjectBodyandResponse(
+        request: SeedExhaustive.PostWithObjectBody,
+        requestOptions?: InlinedRequestsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "req-bodies/object",
+                "/req-bodies/object",
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.InlinedRequestsPostWithObjectBodyandResponseRequest.jsonOrThrow(request, {
+            body: serializers.PostWithObjectBody.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
@@ -72,7 +88,7 @@ export class InlinedrequestsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.TypesObjectWithOptionalField.parseOrThrow(_response.body, {
+                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -86,7 +102,7 @@ export class InlinedrequestsClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new SeedApi.BadRequestError(
+                    throw new SeedExhaustive.BadRequestBody(
                         serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -97,7 +113,7 @@ export class InlinedrequestsClient {
                         _response.rawResponse,
                     );
                 default:
-                    throw new errors.SeedApiError({
+                    throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,

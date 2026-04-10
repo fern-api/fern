@@ -3,6 +3,7 @@
 import typing
 from json.decoder import JSONDecodeError
 
+from ..commons.types.language import Language
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
@@ -10,7 +11,6 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.language import Language
 from pydantic import ValidationError
 
 
@@ -18,7 +18,7 @@ class RawSyspropClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def setnumwarminstances(
+    def set_num_warm_instances(
         self, language: Language, num_warm_instances: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
@@ -40,9 +40,9 @@ class RawSyspropClient:
             method="PUT",
             request_options=request_options,
         )
+        if 200 <= _response.status_code < 300:
+            return HttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -52,9 +52,9 @@ class RawSyspropClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getnumwarminstances(
+    def get_num_warm_instances(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[typing.Dict[str, int]]:
+    ) -> HttpResponse[typing.Dict[Language, int]]:
         """
         Parameters
         ----------
@@ -63,8 +63,7 @@ class RawSyspropClient:
 
         Returns
         -------
-        HttpResponse[typing.Dict[str, int]]
-
+        HttpResponse[typing.Dict[Language, int]]
         """
         _response = self._client_wrapper.httpx_client.request(
             "sysprop/num-warm-instances",
@@ -72,15 +71,6 @@ class RawSyspropClient:
             request_options=request_options,
         )
         try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.Dict[str, int],
-                    parse_obj_as(
-                        type_=typing.Dict[str, int],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -88,6 +78,20 @@ class RawSyspropClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    typing.Dict[Language, int],
+                    parse_obj_as(
+                        type_=typing.Dict[Language, int],  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -95,7 +99,7 @@ class AsyncRawSyspropClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def setnumwarminstances(
+    async def set_num_warm_instances(
         self, language: Language, num_warm_instances: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
@@ -117,9 +121,9 @@ class AsyncRawSyspropClient:
             method="PUT",
             request_options=request_options,
         )
+        if 200 <= _response.status_code < 300:
+            return AsyncHttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -129,9 +133,9 @@ class AsyncRawSyspropClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getnumwarminstances(
+    async def get_num_warm_instances(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[typing.Dict[str, int]]:
+    ) -> AsyncHttpResponse[typing.Dict[Language, int]]:
         """
         Parameters
         ----------
@@ -140,8 +144,7 @@ class AsyncRawSyspropClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.Dict[str, int]]
-
+        AsyncHttpResponse[typing.Dict[Language, int]]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "sysprop/num-warm-instances",
@@ -149,15 +152,6 @@ class AsyncRawSyspropClient:
             request_options=request_options,
         )
         try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.Dict[str, int],
-                    parse_obj_as(
-                        type_=typing.Dict[str, int],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -165,4 +159,18 @@ class AsyncRawSyspropClient:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    typing.Dict[Language, int],
+                    parse_obj_as(
+                        type_=typing.Dict[Language, int],  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

@@ -1,12 +1,12 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.types.FooRequest;
+import com.seed.errors.SeedErrorsClient;
+import com.seed.errors.resources.simple.types.FooRequest;
 
 public class Example8 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedErrorsClient client =
+                SeedErrorsClient.builder().url("https://api.fern.com").build();
 
         client.simple().foo(FooRequest.builder().bar("bar").build());
     }

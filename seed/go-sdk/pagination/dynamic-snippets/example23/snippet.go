@@ -17,12 +17,16 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.InlineUsersInlineUsersListUsernamesRequest{
-        StartingAfter: fern.String(
-            "starting_after",
+    request := &fern.ListWithOffsetPaginationHasNextPageRequest{
+        Page: fern.Int(
+            1,
         ),
+        Limit: fern.Int(
+            10,
+        ),
+        Order: fern.OrderAsc.Ptr(),
     }
-    client.InlineUsersInlineUsers.InlineUsersInlineUsersListUsernames(
+    client.Users.ListWithOffsetPaginationHasNextPage(
         context.TODO(),
         request,
     )

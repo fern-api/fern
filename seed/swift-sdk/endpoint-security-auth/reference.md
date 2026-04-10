@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">gettoken</a>(request: Requests.AuthGetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">getToken</a>(request: Requests.GetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,15 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import EndpointSecurityAuth
 
 private func main() async throws {
-    let client = ApiClient(
-        token: "<token>",
-        apiKey: "<X-API-Key>"
-    )
+    let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.auth.gettoken(request: .init(
+    _ = try await client.auth.getToken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
@@ -45,7 +42,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.AuthGetTokenRequest` 
+**request:** `Requests.GetTokenRequest` 
     
 </dd>
 </dl>
@@ -66,7 +63,7 @@ try await main()
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getwithbearer</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getWithBearer</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -80,15 +77,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import EndpointSecurityAuth
 
 private func main() async throws {
-    let client = ApiClient(
-        token: "<token>",
-        apiKey: "<X-API-Key>"
-    )
+    let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getwithbearer()
+    _ = try await client.user.getWithBearer()
 }
 
 try await main()
@@ -118,7 +112,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getwithapikey</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getWithApiKey</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -132,15 +126,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import EndpointSecurityAuth
 
 private func main() async throws {
-    let client = ApiClient(
-        token: "<token>",
-        apiKey: "<X-API-Key>"
-    )
+    let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getwithapikey()
+    _ = try await client.user.getWithBearer()
 }
 
 try await main()
@@ -170,7 +161,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getwithoauth</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getWithOAuth</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -184,15 +175,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import EndpointSecurityAuth
 
 private func main() async throws {
-    let client = ApiClient(
-        token: "<token>",
-        apiKey: "<X-API-Key>"
-    )
+    let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getwithoauth()
+    _ = try await client.user.getWithBearer()
 }
 
 try await main()
@@ -222,7 +210,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getwithbasic</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getWithBasic</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -236,15 +224,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import EndpointSecurityAuth
 
 private func main() async throws {
-    let client = ApiClient(
-        token: "<token>",
-        apiKey: "<X-API-Key>"
-    )
+    let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getwithbasic()
+    _ = try await client.user.getWithBearer()
 }
 
 try await main()
@@ -274,7 +259,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getwithinferredauth</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getWithInferredAuth</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -288,15 +273,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import EndpointSecurityAuth
 
 private func main() async throws {
-    let client = ApiClient(
-        token: "<token>",
-        apiKey: "<X-API-Key>"
-    )
+    let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getwithinferredauth()
+    _ = try await client.user.getWithBearer()
 }
 
 try await main()
@@ -326,7 +308,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getwithanyauth</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getWithAnyAuth</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -340,15 +322,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import EndpointSecurityAuth
 
 private func main() async throws {
-    let client = ApiClient(
-        token: "<token>",
-        apiKey: "<X-API-Key>"
-    )
+    let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getwithanyauth()
+    _ = try await client.user.getWithBearer()
 }
 
 try await main()
@@ -378,7 +357,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getwithallauth</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getWithAllAuth</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -392,15 +371,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import EndpointSecurityAuth
 
 private func main() async throws {
-    let client = ApiClient(
-        token: "<token>",
-        apiKey: "<X-API-Key>"
-    )
+    let client = EndpointSecurityAuthClient(token: "<token>")
 
-    _ = try await client.user.getwithallauth()
+    _ = try await client.user.getWithBearer()
 }
 
 try await main()

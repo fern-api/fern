@@ -40,10 +40,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/cross-package-type-names";
+import { SeedCrossPackageTypeNamesClient } from "@fern/cross-package-type-names";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client.foo.find();
+const client = new SeedCrossPackageTypeNamesClient({ environment: "YOUR_BASE_URL" });
+await client.foo.find({
+    optionalString: "optionalString",
+    publicProperty: "publicProperty",
+    privateProperty: 1
+});
 ```
 
 ## Request and Response Types
@@ -52,9 +56,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedApi } from "@fern/cross-package-type-names";
+import { SeedCrossPackageTypeNames } from "@fern/cross-package-type-names";
 
-const request: SeedApi.FooFindRequest = {
+const request: SeedCrossPackageTypeNames.FindRequest = {
     ...
 };
 ```
@@ -65,12 +69,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/cross-package-type-names";
+import { SeedCrossPackageTypeNamesError } from "@fern/cross-package-type-names";
 
 try {
     await client.foo.find(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedCrossPackageTypeNamesError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -86,9 +90,9 @@ try {
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { FolderAServiceClient } from '@fern/cross-package-type-names/folderAService';
+import { FolderAClient } from '@fern/cross-package-type-names/folderA';
 
-const client = new FolderAServiceClient({...});
+const client = new FolderAClient({...});
 ```
 
 ### Additional Headers
@@ -96,9 +100,9 @@ const client = new FolderAServiceClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/cross-package-type-names";
+import { SeedCrossPackageTypeNamesClient } from "@fern/cross-package-type-names";
 
-const client = new SeedApiClient({
+const client = new SeedCrossPackageTypeNamesClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -183,9 +187,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/cross-package-type-names";
+import { SeedCrossPackageTypeNamesClient, logging } from "@fern/cross-package-type-names";
 
-const client = new SeedApiClient({
+const client = new SeedCrossPackageTypeNamesClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

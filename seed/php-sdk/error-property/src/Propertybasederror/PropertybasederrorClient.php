@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\Propertybasederror;
+namespace Seed\PropertyBasedError;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
@@ -12,7 +12,7 @@ use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class PropertybasederrorClient
+class PropertyBasedErrorClient
 {
     /**
      * @var array{
@@ -63,7 +63,7 @@ class PropertybasederrorClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function throwerror(?array $options = null): ?string
+    public function throwError(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {

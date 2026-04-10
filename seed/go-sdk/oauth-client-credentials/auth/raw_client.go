@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Gettokenwithclientcredentials(
+func (r *RawClient) GetTokenWithClientCredentials(
 	ctx context.Context,
-	request *fern.AuthGetTokenWithClientCredentialsRequest,
+	request *fern.GetTokenRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.TokenResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,7 +47,7 @@ func (r *RawClient) Gettokenwithclientcredentials(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
+	headers.Add("Content-Type", "application/x-www-form-urlencoded")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,
@@ -73,9 +73,9 @@ func (r *RawClient) Gettokenwithclientcredentials(
 	}, nil
 }
 
-func (r *RawClient) Refreshtoken(
+func (r *RawClient) RefreshToken(
 	ctx context.Context,
-	request *fern.AuthRefreshTokenRequest,
+	request *fern.RefreshTokenRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.TokenResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -84,12 +84,12 @@ func (r *RawClient) Refreshtoken(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/token/refresh"
+	endpointURL := baseURL + "/token"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
+	headers.Add("Content-Type", "application/x-www-form-urlencoded")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

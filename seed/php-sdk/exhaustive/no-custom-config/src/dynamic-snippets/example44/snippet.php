@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\TypesObjectWithUnknownField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,10 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsObject->endpointsObjectGetAndReturnWithUnknownField(
-    new TypesObjectWithUnknownField([
-        'unknown' => [
-            'key' => "value",
-        ],
-    ]),
+$client->endpoints->params->getWithPathAndErrors(
+    'param',
 );

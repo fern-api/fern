@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/Sources/Resources//Client.swift">extendedInlineRequestBody</a>(request: Requests.ExtendedInlineRequestBodyRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.<a href="/Sources/AliasExtendsClient.swift">extendedInlineRequestBody</a>(request: Requests.InlinedChildRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +13,12 @@
 
 ```swift
 import Foundation
-import Api
+import AliasExtends
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = AliasExtendsClient()
 
-    _ = try await client..extendedInlineRequestBody(request: .init(
+    _ = try await client.extendedInlineRequestBody(request: .init(
         parent: "parent",
         child: "child"
     ))
@@ -40,7 +39,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ExtendedInlineRequestBodyRequest` 
+**request:** `Requests.InlinedChildRequest` 
     
 </dd>
 </dl>

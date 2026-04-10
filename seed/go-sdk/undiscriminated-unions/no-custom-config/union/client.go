@@ -49,11 +49,11 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-func (c *Client) Getmetadata(
+func (c *Client) GetMetadata(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (undiscriminated.Metadata, error) {
-	response, err := c.WithRawResponse.Getmetadata(
+	response, err := c.WithRawResponse.GetMetadata(
 		ctx,
 		opts...,
 	)
@@ -63,12 +63,12 @@ func (c *Client) Getmetadata(
 	return response.Body, nil
 }
 
-func (c *Client) Updatemetadata(
+func (c *Client) UpdateMetadata(
 	ctx context.Context,
 	request *undiscriminated.MetadataUnion,
 	opts ...option.RequestOption,
 ) (bool, error) {
-	response, err := c.WithRawResponse.Updatemetadata(
+	response, err := c.WithRawResponse.UpdateMetadata(
 		ctx,
 		request,
 		opts...,
@@ -95,12 +95,12 @@ func (c *Client) Call(
 	return response.Body, nil
 }
 
-func (c *Client) Duplicatetypesunion(
+func (c *Client) DuplicateTypesUnion(
 	ctx context.Context,
 	request *undiscriminated.UnionWithDuplicateTypes,
 	opts ...option.RequestOption,
 ) (*undiscriminated.UnionWithDuplicateTypes, error) {
-	response, err := c.WithRawResponse.Duplicatetypesunion(
+	response, err := c.WithRawResponse.DuplicateTypesUnion(
 		ctx,
 		request,
 		opts...,
@@ -111,12 +111,12 @@ func (c *Client) Duplicatetypesunion(
 	return response.Body, nil
 }
 
-func (c *Client) Nestedunions(
+func (c *Client) NestedUnions(
 	ctx context.Context,
 	request *undiscriminated.NestedUnionRoot,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Nestedunions(
+	response, err := c.WithRawResponse.NestedUnions(
 		ctx,
 		request,
 		opts...,
@@ -127,12 +127,12 @@ func (c *Client) Nestedunions(
 	return response.Body, nil
 }
 
-func (c *Client) Testcamelcaseproperties(
+func (c *Client) TestCamelCaseProperties(
 	ctx context.Context,
-	request *undiscriminated.UnionTestCamelCasePropertiesRequest,
+	request *undiscriminated.PaymentRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Testcamelcaseproperties(
+	response, err := c.WithRawResponse.TestCamelCaseProperties(
 		ctx,
 		request,
 		opts...,

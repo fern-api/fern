@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
-    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
+    types "github.com/go-deterministic-ordering/fern/types"
 )
 
 func do() {
@@ -17,13 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.EndpointsDuplicateNamesBGetRequest{
-        ID: "id",
-        Expand: fern.Bool(
-            true,
-        ),
+    request := &types.ObjectWithUnknownField{
+        Unknown: map[string]any{
+            "$ref": "https://example.com/schema",
+        },
     }
-    client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBGet(
+    client.Endpoints.Object.GetAndReturnWithUnknownField(
         context.TODO(),
         request,
     )

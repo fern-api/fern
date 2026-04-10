@@ -7,64 +7,64 @@ public final class UserClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getwithbearer(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func getWithBearer(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/users/bearer",
+            path: "/users",
             requestOptions: requestOptions,
             responseType: [User].self
         )
     }
 
-    public func getwithapikey(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func getWithApiKey(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/users/api-key",
+            path: "/users",
             requestOptions: requestOptions,
             responseType: [User].self
         )
     }
 
-    public func getwithoauth(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func getWithOAuth(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/users/oauth",
+            path: "/users",
             requestOptions: requestOptions,
             responseType: [User].self
         )
     }
 
-    public func getwithbasic(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func getWithBasic(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/users/basic",
+            path: "/users",
             requestOptions: requestOptions,
             responseType: [User].self
         )
     }
 
-    public func getwithinferredauth(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func getWithInferredAuth(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/users/inferred",
+            path: "/users",
             requestOptions: requestOptions,
             responseType: [User].self
         )
     }
 
-    public func getwithanyauth(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func getWithAnyAuth(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/users/any",
+            path: "/users",
             requestOptions: requestOptions,
             responseType: [User].self
         )
     }
 
-    public func getwithallauth(requestOptions: RequestOptions? = nil) async throws -> [User] {
+    public func getWithAllAuth(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
-            path: "/users/all",
+            path: "/users",
             requestOptions: requestOptions,
             responseType: [User].self
         )

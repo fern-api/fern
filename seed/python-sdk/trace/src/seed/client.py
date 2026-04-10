@@ -7,7 +7,7 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
-from .environment import SeedApiEnvironment
+from .environment import SeedTraceEnvironment
 
 if typing.TYPE_CHECKING:
     from .admin.client import AdminClient, AsyncAdminClient
@@ -18,11 +18,9 @@ if typing.TYPE_CHECKING:
     from .submission.client import AsyncSubmissionClient, SubmissionClient
     from .sysprop.client import AsyncSyspropClient, SyspropClient
     from .v2.client import AsyncV2Client, V2Client
-    from .v2problem.client import AsyncV2ProblemClient, V2ProblemClient
-    from .v2v3problem.client import AsyncV2V3ProblemClient, V2V3ProblemClient
 
 
-class SeedApi:
+class SeedTrace:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -31,15 +29,16 @@ class SeedApi:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : SeedApiEnvironment
-        The environment to use for requests from the client. from .environment import SeedApiEnvironment
+    environment : SeedTraceEnvironment
+        The environment to use for requests from the client. from .environment import SeedTraceEnvironment
 
 
 
-        Defaults to SeedApiEnvironment.DEFAULT
+        Defaults to SeedTraceEnvironment.PROD
 
 
 
+    x_random_header : typing.Optional[str]
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
@@ -58,9 +57,10 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedTrace
 
-    client = SeedApi(
+    client = SeedTrace(
+        x_random_header="YOUR_X_RANDOM_HEADER",
         token="YOUR_TOKEN",
     )
     """
@@ -69,7 +69,8 @@ class SeedApi:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: SeedApiEnvironment = SeedApiEnvironment.DEFAULT,
+        environment: SeedTraceEnvironment = SeedTraceEnvironment.PROD,
+        x_random_header: typing.Optional[str] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
@@ -82,6 +83,7 @@ class SeedApi:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
+            x_random_header=x_random_header,
             token=token,
             headers=headers,
             httpx_client=httpx_client
@@ -100,8 +102,6 @@ class SeedApi:
         self._problem: typing.Optional[ProblemClient] = None
         self._submission: typing.Optional[SubmissionClient] = None
         self._sysprop: typing.Optional[SyspropClient] = None
-        self._v2problem: typing.Optional[V2ProblemClient] = None
-        self._v2v3problem: typing.Optional[V2V3ProblemClient] = None
 
     @property
     def v2(self):
@@ -167,22 +167,6 @@ class SeedApi:
             self._sysprop = SyspropClient(client_wrapper=self._client_wrapper)
         return self._sysprop
 
-    @property
-    def v2problem(self):
-        if self._v2problem is None:
-            from .v2problem.client import V2ProblemClient  # noqa: E402
-
-            self._v2problem = V2ProblemClient(client_wrapper=self._client_wrapper)
-        return self._v2problem
-
-    @property
-    def v2v3problem(self):
-        if self._v2v3problem is None:
-            from .v2v3problem.client import V2V3ProblemClient  # noqa: E402
-
-            self._v2v3problem = V2V3ProblemClient(client_wrapper=self._client_wrapper)
-        return self._v2v3problem
-
 
 def _make_default_async_client(
     timeout: typing.Optional[float],
@@ -202,7 +186,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedTrace:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -211,15 +195,16 @@ class AsyncSeedApi:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : SeedApiEnvironment
-        The environment to use for requests from the client. from .environment import SeedApiEnvironment
+    environment : SeedTraceEnvironment
+        The environment to use for requests from the client. from .environment import SeedTraceEnvironment
 
 
 
-        Defaults to SeedApiEnvironment.DEFAULT
+        Defaults to SeedTraceEnvironment.PROD
 
 
 
+    x_random_header : typing.Optional[str]
     token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
@@ -241,9 +226,10 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedTrace
 
-    client = AsyncSeedApi(
+    client = AsyncSeedTrace(
+        x_random_header="YOUR_X_RANDOM_HEADER",
         token="YOUR_TOKEN",
     )
     """
@@ -252,7 +238,8 @@ class AsyncSeedApi:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: SeedApiEnvironment = SeedApiEnvironment.DEFAULT,
+        environment: SeedTraceEnvironment = SeedTraceEnvironment.PROD,
+        x_random_header: typing.Optional[str] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
@@ -266,6 +253,7 @@ class AsyncSeedApi:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
+            x_random_header=x_random_header,
             token=token,
             headers=headers,
             async_token=async_token,
@@ -283,8 +271,6 @@ class AsyncSeedApi:
         self._problem: typing.Optional[AsyncProblemClient] = None
         self._submission: typing.Optional[AsyncSubmissionClient] = None
         self._sysprop: typing.Optional[AsyncSyspropClient] = None
-        self._v2problem: typing.Optional[AsyncV2ProblemClient] = None
-        self._v2v3problem: typing.Optional[AsyncV2V3ProblemClient] = None
 
     @property
     def v2(self):
@@ -350,24 +336,8 @@ class AsyncSeedApi:
             self._sysprop = AsyncSyspropClient(client_wrapper=self._client_wrapper)
         return self._sysprop
 
-    @property
-    def v2problem(self):
-        if self._v2problem is None:
-            from .v2problem.client import AsyncV2ProblemClient  # noqa: E402
 
-            self._v2problem = AsyncV2ProblemClient(client_wrapper=self._client_wrapper)
-        return self._v2problem
-
-    @property
-    def v2v3problem(self):
-        if self._v2v3problem is None:
-            from .v2v3problem.client import AsyncV2V3ProblemClient  # noqa: E402
-
-            self._v2v3problem = AsyncV2V3ProblemClient(client_wrapper=self._client_wrapper)
-        return self._v2v3problem
-
-
-def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SeedApiEnvironment) -> str:
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SeedTraceEnvironment) -> str:
     if base_url is not None:
         return base_url
     elif environment is not None:

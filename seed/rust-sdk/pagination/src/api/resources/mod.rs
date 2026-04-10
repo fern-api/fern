@@ -2,34 +2,33 @@
 //!
 //! This module contains client implementations for:
 //!
-//! - **Complex**
-//! - **InlineUsersInlineUsers**
+//! - **Conversations**
+//! - **InlineUsers**
 //! - **Users**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod complex;
-pub mod inline_users_inline_users;
+pub mod inline_users;
 pub mod users;
-pub struct ApiClient {
+pub struct PaginationClient {
     pub config: ClientConfig,
     pub complex: ComplexClient,
-    pub inline_users_inline_users: InlineUsersInlineUsersClient,
+    pub inline_users: InlineUsersClient,
     pub users: UsersClient,
 }
 
-impl ApiClient {
+impl PaginationClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
             complex: ComplexClient::new(config.clone())?,
-            inline_users_inline_users: InlineUsersInlineUsersClient::new(config.clone())?,
-            users: UsersClient::new(config.clone())?
+            inline_users: InlineUsersClient::new(config.clone())?,
+            users: UsersClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use complex::ComplexClient;
-pub use inline_users_inline_users::InlineUsersInlineUsersClient;
+pub use inline_users::InlineUsersClient;
 pub use users::UsersClient;

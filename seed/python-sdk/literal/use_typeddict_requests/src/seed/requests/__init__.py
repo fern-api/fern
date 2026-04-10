@@ -6,40 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .a_nested_literal import ANestedLiteralParams
-    from .a_top_level_literal import ATopLevelLiteralParams
-    from .container_object import ContainerObjectParams
-    from .discriminated_literal import (
-        DiscriminatedLiteralParams,
-        DiscriminatedLiteral_CustomNameParams,
-        DiscriminatedLiteral_DefaultNameParams,
-        DiscriminatedLiteral_GeorgeParams,
-        DiscriminatedLiteral_LiteralGeorgeParams,
-    )
-    from .discriminated_literal_custom_name import DiscriminatedLiteralCustomNameParams
-    from .discriminated_literal_default_name import DiscriminatedLiteralDefaultNameParams
-    from .discriminated_literal_george import DiscriminatedLiteralGeorgeParams
-    from .discriminated_literal_literal_george import DiscriminatedLiteralLiteralGeorgeParams
-    from .nested_object_with_literals import NestedObjectWithLiteralsParams
     from .send_response import SendResponseParams
-    from .undiscriminated_literal import UndiscriminatedLiteralParams
-_dynamic_imports: typing.Dict[str, str] = {
-    "ANestedLiteralParams": ".a_nested_literal",
-    "ATopLevelLiteralParams": ".a_top_level_literal",
-    "ContainerObjectParams": ".container_object",
-    "DiscriminatedLiteralCustomNameParams": ".discriminated_literal_custom_name",
-    "DiscriminatedLiteralDefaultNameParams": ".discriminated_literal_default_name",
-    "DiscriminatedLiteralGeorgeParams": ".discriminated_literal_george",
-    "DiscriminatedLiteralLiteralGeorgeParams": ".discriminated_literal_literal_george",
-    "DiscriminatedLiteralParams": ".discriminated_literal",
-    "DiscriminatedLiteral_CustomNameParams": ".discriminated_literal",
-    "DiscriminatedLiteral_DefaultNameParams": ".discriminated_literal",
-    "DiscriminatedLiteral_GeorgeParams": ".discriminated_literal",
-    "DiscriminatedLiteral_LiteralGeorgeParams": ".discriminated_literal",
-    "NestedObjectWithLiteralsParams": ".nested_object_with_literals",
-    "SendResponseParams": ".send_response",
-    "UndiscriminatedLiteralParams": ".undiscriminated_literal",
-}
+_dynamic_imports: typing.Dict[str, str] = {"SendResponseParams": ".send_response"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -63,20 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "ANestedLiteralParams",
-    "ATopLevelLiteralParams",
-    "ContainerObjectParams",
-    "DiscriminatedLiteralCustomNameParams",
-    "DiscriminatedLiteralDefaultNameParams",
-    "DiscriminatedLiteralGeorgeParams",
-    "DiscriminatedLiteralLiteralGeorgeParams",
-    "DiscriminatedLiteralParams",
-    "DiscriminatedLiteral_CustomNameParams",
-    "DiscriminatedLiteral_DefaultNameParams",
-    "DiscriminatedLiteral_GeorgeParams",
-    "DiscriminatedLiteral_LiteralGeorgeParams",
-    "NestedObjectWithLiteralsParams",
-    "SendResponseParams",
-    "UndiscriminatedLiteralParams",
-]
+__all__ = ["SendResponseParams"]

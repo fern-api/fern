@@ -1,4 +1,4 @@
-import Api
+import ErrorProperty
 import Foundation
 
 final class HTTPStub {

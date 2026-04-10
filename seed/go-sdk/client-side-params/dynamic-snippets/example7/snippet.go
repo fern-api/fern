@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/client-side-params/fern"
     client "github.com/client-side-params/fern/client"
     option "github.com/client-side-params/fern/option"
 )
@@ -17,34 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ServiceListUsersRequest{
-        Page: fern.Int(
-            1,
-        ),
-        PerPage: fern.Int(
-            1,
-        ),
-        IncludeTotals: fern.Bool(
-            true,
-        ),
-        Sort: fern.String(
-            "sort",
-        ),
-        Connection: fern.String(
-            "connection",
-        ),
-        Q: fern.String(
-            "q",
-        ),
-        SearchEngine: fern.String(
-            "search_engine",
-        ),
-        Fields: fern.String(
-            "fields",
-        ),
-    }
-    client.Service.Listusers(
+    client.Service.DeleteUser(
         context.TODO(),
-        request,
+        "userId",
     )
 }

@@ -1,5 +1,5 @@
-export * as createproblem from "./createproblem.js";
-export * as deleteproblem from "./deleteproblem.js";
-export * as getdefaultstarterfiles from "./getdefaultstarterfiles.js";
+export * as createProblem from "./createProblem.js";
+export * as deleteProblem from "./deleteProblem.js";
+export * as getDefaultStarterFiles from "./getDefaultStarterFiles.js";
 export * from "./requests/index.js";
-export * as updateproblem from "./updateproblem.js";
+export * as updateProblem from "./updateProblem.js";

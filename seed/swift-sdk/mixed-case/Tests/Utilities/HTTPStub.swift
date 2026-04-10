@@ -1,4 +1,4 @@
-import Api
+import MixedCase
 import Foundation
 
 final class HTTPStub {

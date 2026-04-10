@@ -1,14 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
+import com.seed.paginationUriPath.SeedPaginationUriPathClient;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedPaginationUriPathClient client = SeedPaginationUriPathClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.users().listwithuripagination();
+        client.users().listWithPathPagination();
     }
 }

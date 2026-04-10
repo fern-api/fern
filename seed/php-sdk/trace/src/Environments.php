@@ -4,5 +4,5 @@ namespace Seed;
 
 enum Environments: string
 {
-    case Default_ = "https://api.trace.come";
+    case Prod = "https://api.trace.come";
 }

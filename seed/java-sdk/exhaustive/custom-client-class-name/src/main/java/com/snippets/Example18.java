@@ -1,15 +1,27 @@
 package com.snippets;
 
-import com.seed.api.Best;
-import com.seed.api.types.TypesObjectWithOptionalField;
+import com.seed.exhaustive.Best;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithMapOfMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Example18 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpointsContentType()
-                .endpointsContentTypePostJsonPatchContentWithCharsetType(
-                        TypesObjectWithOptionalField.builder().build());
+        client.endpoints()
+                .object()
+                .getAndReturnWithMapOfMap(ObjectWithMapOfMap.builder()
+                        .map(new HashMap<String, Map<String, String>>() {
+                            {
+                                put("map", new HashMap<String, String>() {
+                                    {
+                                        put("map", "map");
+                                    }
+                                });
+                            }
+                        })
+                        .build());
     }
 }

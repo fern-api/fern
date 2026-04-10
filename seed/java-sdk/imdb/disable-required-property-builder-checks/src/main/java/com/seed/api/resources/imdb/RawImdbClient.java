@@ -11,10 +11,9 @@ import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
 import com.seed.api.core.SeedApiException;
 import com.seed.api.core.SeedApiHttpResponse;
-import com.seed.api.errors.NotFoundError;
-import com.seed.api.resources.imdb.requests.CreateMovieRequest;
-import com.seed.api.resources.imdb.requests.ImdbGetMovieRequest;
-import com.seed.api.types.Movie;
+import com.seed.api.resources.imdb.errors.MovieDoesNotExistError;
+import com.seed.api.resources.imdb.types.CreateMovieRequest;
+import com.seed.api.resources.imdb.types.Movie;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -34,17 +33,18 @@ public class RawImdbClient {
     /**
      * Add a movie to the database using the movies/* /... path.
      */
-    public SeedApiHttpResponse<String> createmovie(CreateMovieRequest request) {
-        return createmovie(request, null);
+    public SeedApiHttpResponse<String> createMovie(CreateMovieRequest request) {
+        return createMovie(request, null);
     }
 
     /**
      * Add a movie to the database using the movies/* /... path.
      */
-    public SeedApiHttpResponse<String> createmovie(CreateMovieRequest request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<String> createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("movies/create-movie");
+                .addPathSegments("movies")
+                .addPathSegments("create-movie");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -83,20 +83,11 @@ public class RawImdbClient {
         }
     }
 
-    public SeedApiHttpResponse<Movie> getmovie(String movieId) {
-        return getmovie(movieId, ImdbGetMovieRequest.builder().build());
+    public SeedApiHttpResponse<Movie> getMovie(String movieId) {
+        return getMovie(movieId, null);
     }
 
-    public SeedApiHttpResponse<Movie> getmovie(String movieId, RequestOptions requestOptions) {
-        return getmovie(movieId, ImdbGetMovieRequest.builder().build(), requestOptions);
-    }
-
-    public SeedApiHttpResponse<Movie> getmovie(String movieId, ImdbGetMovieRequest request) {
-        return getmovie(movieId, request, null);
-    }
-
-    public SeedApiHttpResponse<Movie> getmovie(
-            String movieId, ImdbGetMovieRequest request, RequestOptions requestOptions) {
+    public SeedApiHttpResponse<Movie> getMovie(String movieId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("movies")
@@ -106,12 +97,12 @@ public class RawImdbClient {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -125,7 +116,7 @@ public class RawImdbClient {
             }
             try {
                 if (response.code() == 404) {
-                    throw new NotFoundError(
+                    throw new MovieDoesNotExistError(
                             ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
                 }
             } catch (JsonProcessingException ignored) {

@@ -3,17 +3,24 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Organizations\Requests\OrganizationsSearchOrganizationsRequest;
+use Seed\User\Requests\UpdateUserRequest;
+use Seed\User\Types\User;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->organizations->searchorganizations(
+$client->user->updateUser(
     'tenant_id',
-    'organization_id',
-    new OrganizationsSearchOrganizationsRequest([
-        'limit' => 1,
+    'user_id',
+    new UpdateUserRequest([
+        'body' => new User([
+            'name' => 'name',
+            'tags' => [
+                'tags',
+                'tags',
+            ],
+        ]),
     ]),
 );

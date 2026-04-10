@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import Api
+import BearerTokenEnvironmentVariable
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
-    @Test func getwithbearertoken1() async throws -> Void {
+    @Test func getWithBearerToken1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -12,32 +12,13 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = BearerTokenEnvironmentVariableClient(
             baseURL: "https://api.fern.com",
-            token: "<token>",
+            apiKey: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.service.getwithbearertoken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getwithbearertoken2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                string
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = "string"
-        let response = try await client.service.getwithbearertoken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.service.getWithBearerToken(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

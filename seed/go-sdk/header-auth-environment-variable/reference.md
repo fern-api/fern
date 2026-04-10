@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.Getwithbearertoken() -> string</code></summary>
+<details><summary><code>client.Service.GetWithBearerToken() -> string</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```go
-client.Service.Getwithbearertoken(
+client.Service.GetWithBearerToken(
         context.TODO(),
     )
 }

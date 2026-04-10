@@ -1,4 +1,4 @@
-//! Request and response types for the webhooks
+//! Request and response types for the Webhooks
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.

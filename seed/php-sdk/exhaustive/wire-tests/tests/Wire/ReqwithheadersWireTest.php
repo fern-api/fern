@@ -4,9 +4,9 @@ namespace Seed\Tests;
 
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
-use Seed\Reqwithheaders\Requests\ReqWithHeadersGetWithCustomHeaderRequest;
+use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
 
-class ReqwithheadersWireTest extends WireMockTestCase
+class ReqWithHeadersWireTest extends WireMockTestCase
 {
     /**
      * @var SeedClient $client
@@ -15,16 +15,17 @@ class ReqwithheadersWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetwithcustomheader(): void {
-        $testId = 'reqwithheaders.getwithcustomheader.0';
-        $this->client->reqwithheaders->getwithcustomheader(
-            new ReqWithHeadersGetWithCustomHeaderRequest([
-                'testEndpointHeader' => 'X-TEST-ENDPOINT-HEADER',
+    public function testGetWithCustomHeader(): void {
+        $testId = 'req_with_headers.get_with_custom_header.0';
+        $this->client->reqWithHeaders->getWithCustomHeader(
+            new ReqWithHeaders([
+                'xTestServiceHeader' => 'X-TEST-SERVICE-HEADER',
+                'xTestEndpointHeader' => 'X-TEST-ENDPOINT-HEADER',
                 'body' => 'string',
             ]),
             [
                 'headers' => [
-                    'X-Test-Id' => 'reqwithheaders.getwithcustomheader.0',
+                    'X-Test-Id' => 'req_with_headers.get_with_custom_header.0',
                 ],
             ],
         );

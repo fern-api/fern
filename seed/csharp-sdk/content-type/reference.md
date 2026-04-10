@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">PatchAsync</a>(ServicePatchRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchAsync</a>(PatchProxyRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,9 @@
 <dd>
 
 ```csharp
-await client.Service.PatchAsync(new ServicePatchRequest());
+await client.Service.PatchAsync(
+    new PatchProxyRequest { Application = "application", RequireAuth = true }
+);
 ```
 </dd>
 </dl>
@@ -28,7 +30,7 @@ await client.Service.PatchAsync(new ServicePatchRequest());
 <dl>
 <dd>
 
-**request:** `ServicePatchRequest` 
+**request:** `PatchProxyRequest` 
     
 </dd>
 </dl>
@@ -40,7 +42,7 @@ await client.Service.PatchAsync(new ServicePatchRequest());
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">PatchcomplexAsync</a>(ServicePatchComplexRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">PatchComplexAsync</a>(id, PatchComplexRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -70,7 +72,34 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```csharp
-await client.Service.PatchcomplexAsync(new ServicePatchComplexRequest { Id = "id" });
+await client.Service.PatchComplexAsync(
+    "id",
+    new PatchComplexRequest
+    {
+        Name = "name",
+        Age = 1,
+        Active = true,
+        Metadata = new Dictionary<string, object?>()
+        {
+            {
+                "metadata",
+                new Dictionary<object, object?>() { { "key", "value" } }
+            },
+        },
+        Tags = new List<string>() { "tags", "tags" },
+        Email = "email",
+        Nickname = "nickname",
+        Bio = "bio",
+        ProfileImageUrl = "profileImageUrl",
+        Settings = new Dictionary<string, object?>()
+        {
+            {
+                "settings",
+                new Dictionary<object, object?>() { { "key", "value" } }
+            },
+        },
+    }
+);
 ```
 </dd>
 </dl>
@@ -85,7 +114,15 @@ await client.Service.PatchcomplexAsync(new ServicePatchComplexRequest { Id = "id
 <dl>
 <dd>
 
-**request:** `ServicePatchComplexRequest` 
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `PatchComplexRequest` 
     
 </dd>
 </dl>
@@ -97,7 +134,7 @@ await client.Service.PatchcomplexAsync(new ServicePatchComplexRequest { Id = "id
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">NamedpatchwithmixedAsync</a>(ServiceNamedPatchWithMixedRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">NamedPatchWithMixedAsync</a>(id, NamedMixedPatchRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -125,7 +162,15 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```csharp
-await client.Service.NamedpatchwithmixedAsync(new ServiceNamedPatchWithMixedRequest { Id = "id" });
+await client.Service.NamedPatchWithMixedAsync(
+    "id",
+    new NamedMixedPatchRequest
+    {
+        AppId = "appId",
+        Instructions = "instructions",
+        Active = true,
+    }
+);
 ```
 </dd>
 </dl>
@@ -140,7 +185,15 @@ await client.Service.NamedpatchwithmixedAsync(new ServiceNamedPatchWithMixedRequ
 <dl>
 <dd>
 
-**request:** `ServiceNamedPatchWithMixedRequest` 
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `NamedMixedPatchRequest` 
     
 </dd>
 </dl>
@@ -152,7 +205,7 @@ await client.Service.NamedpatchwithmixedAsync(new ServiceNamedPatchWithMixedRequ
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">OptionalmergepatchtestAsync</a>(ServiceOptionalMergePatchTestRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">OptionalMergePatchTestAsync</a>(OptionalMergePatchRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -182,8 +235,15 @@ This endpoint should:
 <dd>
 
 ```csharp
-await client.Service.OptionalmergepatchtestAsync(
-    new ServiceOptionalMergePatchTestRequest { RequiredField = "requiredField" }
+await client.Service.OptionalMergePatchTestAsync(
+    new OptionalMergePatchRequest
+    {
+        RequiredField = "requiredField",
+        OptionalString = "optionalString",
+        OptionalInteger = 1,
+        OptionalBoolean = true,
+        NullableString = "nullableString",
+    }
 );
 ```
 </dd>
@@ -199,7 +259,7 @@ await client.Service.OptionalmergepatchtestAsync(
 <dl>
 <dd>
 
-**request:** `ServiceOptionalMergePatchTestRequest` 
+**request:** `OptionalMergePatchRequest` 
     
 </dd>
 </dl>
@@ -211,7 +271,7 @@ await client.Service.OptionalmergepatchtestAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">RegularpatchAsync</a>(ServiceRegularPatchRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedContentTypes/Service/ServiceClient.cs">RegularPatchAsync</a>(id, RegularPatchRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -238,7 +298,10 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```csharp
-await client.Service.RegularpatchAsync(new ServiceRegularPatchRequest { Id = "id" });
+await client.Service.RegularPatchAsync(
+    "id",
+    new RegularPatchRequest { Field1 = "field1", Field2 = 1 }
+);
 ```
 </dd>
 </dl>
@@ -253,7 +316,15 @@ await client.Service.RegularpatchAsync(new ServiceRegularPatchRequest { Id = "id
 <dl>
 <dd>
 
-**request:** `ServiceRegularPatchRequest` 
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `RegularPatchRequest` 
     
 </dd>
 </dl>

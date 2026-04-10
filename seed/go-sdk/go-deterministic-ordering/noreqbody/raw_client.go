@@ -6,10 +6,10 @@ import (
 	context "context"
 	http "net/http"
 
-	fern "github.com/go-deterministic-ordering/fern"
 	core "github.com/go-deterministic-ordering/fern/core"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	option "github.com/go-deterministic-ordering/fern/option"
+	types "github.com/go-deterministic-ordering/fern/types"
 )
 
 type RawClient struct {
@@ -31,10 +31,10 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Getwithnorequestbody(
+func (r *RawClient) GetWithNoRequestBody(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.TypesObjectWithOptionalField], error) {
+) (*core.Response[*types.ObjectWithOptionalField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -46,7 +46,7 @@ func (r *RawClient) Getwithnorequestbody(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *fern.TypesObjectWithOptionalField
+	var response *types.ObjectWithOptionalField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -63,14 +63,14 @@ func (r *RawClient) Getwithnorequestbody(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.TypesObjectWithOptionalField]{
+	return &core.Response[*types.ObjectWithOptionalField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
 	}, nil
 }
 
-func (r *RawClient) Postwithnorequestbody(
+func (r *RawClient) PostWithNoRequestBody(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {

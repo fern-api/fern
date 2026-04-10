@@ -4,77 +4,77 @@
             "id": {
                 "path": "/movie",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getmovie"
+                "identifier_override": "endpoint_service.getMovie"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Getmovie(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetMovie(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
             }
         },
         {
             "id": {
-                "path": "/movie/docs",
+                "path": "/movie",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getmoviedocs"
+                "identifier_override": "endpoint_service.getMovieDocs"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Getmoviedocs(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetMovieDocs(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
             }
         },
         {
             "id": {
-                "path": "/movie/metadata",
+                "path": "/movie",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getmoviemetadata"
+                "identifier_override": "endpoint_service.getMovieMetadata"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Getmoviemetadata(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetMovieMetadata(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
             }
         },
         {
             "id": {
-                "path": "/movie/name",
+                "path": "/movie",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getmoviename"
+                "identifier_override": "endpoint_service.getMovieName"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Getmoviename(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetMovieName(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
             }
         },
         {
             "id": {
-                "path": "/movie/optional",
+                "path": "/movie",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getoptionalmovie"
+                "identifier_override": "endpoint_service.getOptionalMovie"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Getoptionalmovie(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetOptionalMovie(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
             }
         },
         {
             "id": {
-                "path": "/movie/optional/docs",
+                "path": "/movie",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getoptionalmoviedocs"
+                "identifier_override": "endpoint_service.getOptionalMovieDocs"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Getoptionalmoviedocs(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetOptionalMovieDocs(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
             }
         },
         {
             "id": {
-                "path": "/movie/optional/name",
+                "path": "/movie",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getoptionalmoviename"
+                "identifier_override": "endpoint_service.getOptionalMovieName"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Getoptionalmoviename(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/response-property/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetOptionalMovieName(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
             }
         }
     ]

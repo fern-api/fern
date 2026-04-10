@@ -7,12 +7,12 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod union_;
-pub struct ApiClient {
+pub struct UndiscriminatedUnionsClient {
     pub config: ClientConfig,
     pub union_: UnionClient,
 }
 
-impl ApiClient {
+impl UndiscriminatedUnionsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

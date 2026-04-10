@@ -6,35 +6,23 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        NestedUser,
-        Organization,
-        Resource,
-        ResourceOne,
-        ResourceOneResourceType,
-        ResourceStatus,
-        ResourceZero,
-        ResourceZeroResourceType,
-        User,
-    )
     from . import service
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedMixedCase, SeedMixedCase
+    from .service import NestedUser, Organization, Resource, ResourceStatus, Resource_Organization, Resource_User, User
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedMixedCase": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "NestedUser": ".types",
-    "Organization": ".types",
-    "Resource": ".types",
-    "ResourceOne": ".types",
-    "ResourceOneResourceType": ".types",
-    "ResourceStatus": ".types",
-    "ResourceZero": ".types",
-    "ResourceZeroResourceType": ".types",
-    "SeedApi": ".client",
-    "User": ".types",
+    "NestedUser": ".service",
+    "Organization": ".service",
+    "Resource": ".service",
+    "ResourceStatus": ".service",
+    "Resource_Organization": ".service",
+    "Resource_User": ".service",
+    "SeedMixedCase": ".client",
+    "User": ".service",
     "__version__": ".version",
     "service": ".service",
 }
@@ -62,18 +50,16 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedMixedCase",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "NestedUser",
     "Organization",
     "Resource",
-    "ResourceOne",
-    "ResourceOneResourceType",
     "ResourceStatus",
-    "ResourceZero",
-    "ResourceZeroResourceType",
-    "SeedApi",
+    "Resource_Organization",
+    "Resource_User",
+    "SeedMixedCase",
     "User",
     "__version__",
     "service",

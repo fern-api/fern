@@ -5,18 +5,17 @@ info:
 paths:
   /user/username:
     post:
-      operationId: user_createusername
+      operationId: user_createUsername
       tags:
         - User
       parameters:
         - name: tags
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
               type: string
-              nullable: true
       responses:
         '204':
           description: ''
@@ -39,18 +38,17 @@ paths:
                 - name
   /user/username-referenced:
     post:
-      operationId: user_createusernamewithreferencedtype
+      operationId: user_createUsernameWithReferencedType
       tags:
         - User
       parameters:
         - name: tags
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
               type: string
-              nullable: true
       responses:
         '204':
           description: ''
@@ -59,21 +57,10 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                password:
-                  type: string
-                name:
-                  type: string
-              required:
-                - username
-                - password
-                - name
+              $ref: '#/components/schemas/CreateUsernameBody'
   /user/username-optional:
     post:
-      operationId: user_createusernameoptional
+      operationId: user_createUsernameOptional
       tags:
         - User
       parameters: []
@@ -81,27 +68,18 @@ paths:
         '204':
           description: ''
       requestBody:
-        required: true
+        required: false
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                  nullable: true
-                password:
-                  type: string
-                  nullable: true
-                name:
-                  type: string
-                  nullable: true
+              $ref: '#/components/schemas/CreateUsernameBodyOptionalProperties'
+              nullable: true
             examples:
-              Example1:
+              empty-object:
                 value: {}
   /user:
     get:
-      operationId: user_getusername
+      operationId: user_getUsername
       tags:
         - User
       parameters:
@@ -141,12 +119,11 @@ paths:
             $ref: '#/components/schemas/User'
         - name: userList
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
               $ref: '#/components/schemas/User'
-              nullable: true
         - name: optionalDeadline
           in: query
           required: false
@@ -180,20 +157,18 @@ paths:
             nullable: true
         - name: excludeUser
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
               $ref: '#/components/schemas/User'
-              nullable: true
         - name: filter
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
               type: string
-              nullable: true
         - name: longParam
           in: query
           required: true
@@ -205,6 +180,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: bigint
       responses:
         '200':
           description: ''
@@ -238,4 +214,31 @@ components:
       required:
         - name
         - user
+    CreateUsernameBody:
+      title: CreateUsernameBody
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+      required:
+        - username
+        - password
+        - name
+    CreateUsernameBodyOptionalProperties:
+      title: CreateUsernameBodyOptionalProperties
+      type: object
+      properties:
+        username:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
   securitySchemes: {}

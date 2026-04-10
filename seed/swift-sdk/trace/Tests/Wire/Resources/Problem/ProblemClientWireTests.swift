@@ -1,144 +1,41 @@
 import Foundation
 import Testing
-import Api
+import Trace
 
 @Suite("ProblemClient Wire Tests") struct ProblemClientWireTests {
-    @Test func createproblem1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "value": "value",
-                  "type": "success"
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = CreateProblemResponse.success(
-            .init(
-                value: Optional("value"),
-                additionalProperties: [
-                    "type": JSONValue.string("success")
-                ]
-            )
-        )
-        let response = try await client.problem.createproblem(
-            request: CreateProblemRequest(
-                problemName: "problemName",
-                problemDescription: ProblemDescription(
-                    boards: [
-                        ProblemDescriptionBoard.html(
-                            ProblemDescriptionBoardHtml(
-
-                            )
-                        )
-                    ]
-                ),
-                files: [
-                    "key": ProblemFiles(
-                        solutionFile: FileInfo(
-                            filename: "filename",
-                            contents: "contents"
-                        ),
-                        readOnlyFiles: [
-                            FileInfo(
-                                filename: "filename",
-                                contents: "contents"
-                            )
-                        ]
-                    )
-                ],
-                inputParams: [
-                    VariableTypeAndName(
-                        variableType: VariableType.variableTypeZero(
-                            VariableTypeZero(
-                                type: .integerType
-                            )
-                        ),
-                        name: "name"
-                    )
-                ],
-                outputType: VariableType.variableTypeZero(
-                    VariableTypeZero(
-                        type: .integerType
-                    )
-                ),
-                testcases: [
-                    TestCaseWithExpectedResult(
-                        testCase: TestCase(
-                            id: "id",
-                            params: [
-                                VariableValue.variableValueZero(
-                                    VariableValueZero(
-                                        type: .integerValue
-                                    )
-                                )
-                            ]
-                        ),
-                        expectedResult: VariableValue.variableValueZero(
-                            VariableValueZero(
-                                type: .integerValue
-                            )
-                        )
-                    )
-                ],
-                methodName: "methodName"
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func createproblem2() async throws -> Void {
+    @Test func createProblem1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
                 {
                   "type": "success",
-                  "value": "value"
+                  "value": "string"
                 }
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = TraceClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = CreateProblemResponse.success(
-            .init(
-                value: Optional("value"),
-                additionalProperties: [
-                    "type": JSONValue.string("success")
-                ]
-            )
-        )
-        let response = try await client.problem.createproblem(
+        let expectedResponse = CreateProblemResponse.success("string")
+        let response = try await client.problem.createProblem(
             request: CreateProblemRequest(
                 problemName: "problemName",
                 problemDescription: ProblemDescription(
                     boards: [
                         ProblemDescriptionBoard.html(
-                            ProblemDescriptionBoardHtml(
-                                value: "value"
-                            )
+
                         ),
                         ProblemDescriptionBoard.html(
-                            ProblemDescriptionBoardHtml(
-                                value: "value"
-                            )
+
                         )
                     ]
                 ),
                 files: [
-                    "files": ProblemFiles(
+                    .java: ProblemFiles(
                         solutionFile: FileInfo(
                             filename: "filename",
                             contents: "contents"
@@ -157,76 +54,46 @@ import Api
                 ],
                 inputParams: [
                     VariableTypeAndName(
-                        variableType: VariableType.variableTypeZero(
-                            VariableTypeZero(
-                                type: .integerType
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     ),
                     VariableTypeAndName(
-                        variableType: VariableType.variableTypeZero(
-                            VariableTypeZero(
-                                type: .integerType
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     )
                 ],
-                outputType: VariableType.variableTypeZero(
-                    VariableTypeZero(
-                        type: .integerType
-                    )
-                ),
+                outputType: VariableType.integerType,
                 testcases: [
                     TestCaseWithExpectedResult(
                         testCase: TestCase(
                             id: "id",
                             params: [
-                                VariableValue.variableValueZero(
-                                    VariableValueZero(
-                                        type: .integerValue,
-                                        value: 1
-                                    )
+                                VariableValue.integerValue(
+
                                 ),
-                                VariableValue.variableValueZero(
-                                    VariableValueZero(
-                                        type: .integerValue,
-                                        value: 1
-                                    )
+                                VariableValue.integerValue(
+
                                 )
                             ]
                         ),
-                        expectedResult: VariableValue.variableValueZero(
-                            VariableValueZero(
-                                type: .integerValue,
-                                value: 1
-                            )
+                        expectedResult: VariableValue.integerValue(
+
                         )
                     ),
                     TestCaseWithExpectedResult(
                         testCase: TestCase(
                             id: "id",
                             params: [
-                                VariableValue.variableValueZero(
-                                    VariableValueZero(
-                                        type: .integerValue,
-                                        value: 1
-                                    )
+                                VariableValue.integerValue(
+
                                 ),
-                                VariableValue.variableValueZero(
-                                    VariableValueZero(
-                                        type: .integerValue,
-                                        value: 1
-                                    )
+                                VariableValue.integerValue(
+
                                 )
                             ]
                         ),
-                        expectedResult: VariableValue.variableValueZero(
-                            VariableValueZero(
-                                type: .integerValue,
-                                value: 1
-                            )
+                        expectedResult: VariableValue.integerValue(
+
                         )
                     )
                 ],
@@ -237,7 +104,7 @@ import Api
         try #require(response == expectedResponse)
     }
 
-    @Test func updateproblem1() async throws -> Void {
+    @Test func updateProblem1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -248,7 +115,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = TraceClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -256,113 +123,22 @@ import Api
         let expectedResponse = UpdateProblemResponse(
             problemVersion: 1
         )
-        let response = try await client.problem.updateproblem(
+        let response = try await client.problem.updateProblem(
             problemId: "problemId",
-            request: .init(body: CreateProblemRequest(
+            request: CreateProblemRequest(
                 problemName: "problemName",
                 problemDescription: ProblemDescription(
                     boards: [
                         ProblemDescriptionBoard.html(
-                            ProblemDescriptionBoardHtml(
 
-                            )
+                        ),
+                        ProblemDescriptionBoard.html(
+
                         )
                     ]
                 ),
                 files: [
-                    "key": ProblemFiles(
-                        solutionFile: FileInfo(
-                            filename: "filename",
-                            contents: "contents"
-                        ),
-                        readOnlyFiles: [
-                            FileInfo(
-                                filename: "filename",
-                                contents: "contents"
-                            )
-                        ]
-                    )
-                ],
-                inputParams: [
-                    VariableTypeAndName(
-                        variableType: VariableType.variableTypeZero(
-                            VariableTypeZero(
-                                type: .integerType
-                            )
-                        ),
-                        name: "name"
-                    )
-                ],
-                outputType: VariableType.variableTypeZero(
-                    VariableTypeZero(
-                        type: .integerType
-                    )
-                ),
-                testcases: [
-                    TestCaseWithExpectedResult(
-                        testCase: TestCase(
-                            id: "id",
-                            params: [
-                                VariableValue.variableValueZero(
-                                    VariableValueZero(
-                                        type: .integerValue
-                                    )
-                                )
-                            ]
-                        ),
-                        expectedResult: VariableValue.variableValueZero(
-                            VariableValueZero(
-                                type: .integerValue
-                            )
-                        )
-                    )
-                ],
-                methodName: "methodName"
-            )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func updateproblem2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "problemVersion": 1
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = UpdateProblemResponse(
-            problemVersion: 1
-        )
-        let response = try await client.problem.updateproblem(
-            problemId: "problemId",
-            request: .init(body: CreateProblemRequest(
-                problemName: "problemName",
-                problemDescription: ProblemDescription(
-                    boards: [
-                        ProblemDescriptionBoard.html(
-                            ProblemDescriptionBoardHtml(
-                                value: "value"
-                            )
-                        ),
-                        ProblemDescriptionBoard.html(
-                            ProblemDescriptionBoardHtml(
-                                value: "value"
-                            )
-                        )
-                    ]
-                ),
-                files: [
-                    "files": ProblemFiles(
+                    .java: ProblemFiles(
                         solutionFile: FileInfo(
                             filename: "filename",
                             contents: "contents"
@@ -381,148 +157,49 @@ import Api
                 ],
                 inputParams: [
                     VariableTypeAndName(
-                        variableType: VariableType.variableTypeZero(
-                            VariableTypeZero(
-                                type: .integerType
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     ),
                     VariableTypeAndName(
-                        variableType: VariableType.variableTypeZero(
-                            VariableTypeZero(
-                                type: .integerType
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     )
                 ],
-                outputType: VariableType.variableTypeZero(
-                    VariableTypeZero(
-                        type: .integerType
-                    )
-                ),
+                outputType: VariableType.integerType,
                 testcases: [
                     TestCaseWithExpectedResult(
                         testCase: TestCase(
                             id: "id",
                             params: [
-                                VariableValue.variableValueZero(
-                                    VariableValueZero(
-                                        type: .integerValue,
-                                        value: 1
-                                    )
+                                VariableValue.integerValue(
+
                                 ),
-                                VariableValue.variableValueZero(
-                                    VariableValueZero(
-                                        type: .integerValue,
-                                        value: 1
-                                    )
+                                VariableValue.integerValue(
+
                                 )
                             ]
                         ),
-                        expectedResult: VariableValue.variableValueZero(
-                            VariableValueZero(
-                                type: .integerValue,
-                                value: 1
-                            )
+                        expectedResult: VariableValue.integerValue(
+
                         )
                     ),
                     TestCaseWithExpectedResult(
                         testCase: TestCase(
                             id: "id",
                             params: [
-                                VariableValue.variableValueZero(
-                                    VariableValueZero(
-                                        type: .integerValue,
-                                        value: 1
-                                    )
+                                VariableValue.integerValue(
+
                                 ),
-                                VariableValue.variableValueZero(
-                                    VariableValueZero(
-                                        type: .integerValue,
-                                        value: 1
-                                    )
+                                VariableValue.integerValue(
+
                                 )
                             ]
                         ),
-                        expectedResult: VariableValue.variableValueZero(
-                            VariableValueZero(
-                                type: .integerValue,
-                                value: 1
-                            )
-                        )
-                    )
-                ],
-                methodName: "methodName"
-            )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
+                        expectedResult: VariableValue.integerValue(
 
-    @Test func getdefaultstarterfiles1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "files": {
-                    "key": {
-                      "solutionFile": {
-                        "filename": "filename",
-                        "contents": "contents"
-                      },
-                      "readOnlyFiles": [
-                        {
-                          "filename": "filename",
-                          "contents": "contents"
-                        }
-                      ]
-                    }
-                  }
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = GetDefaultStarterFilesResponse(
-            files: [
-                "key": ProblemFiles(
-                    solutionFile: FileInfo(
-                        filename: "filename",
-                        contents: "contents"
-                    ),
-                    readOnlyFiles: [
-                        FileInfo(
-                            filename: "filename",
-                            contents: "contents"
                         )
-                    ]
-                )
-            ]
-        )
-        let response = try await client.problem.getdefaultstarterfiles(
-            request: .init(
-                inputParams: [
-                    VariableTypeAndName(
-                        variableType: VariableType.variableTypeZero(
-                            VariableTypeZero(
-                                type: .integerType
-                            )
-                        ),
-                        name: "name"
                     )
                 ],
-                outputType: VariableType.variableTypeZero(
-                    VariableTypeZero(
-                        type: .integerType
-                    )
-                ),
                 methodName: "methodName"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -530,14 +207,14 @@ import Api
         try #require(response == expectedResponse)
     }
 
-    @Test func getdefaultstarterfiles2() async throws -> Void {
+    @Test func getDefaultStarterFiles1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
                 {
                   "files": {
-                    "files": {
+                    "JAVA": {
                       "solutionFile": {
                         "filename": "filename",
                         "contents": "contents"
@@ -558,14 +235,14 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = TraceClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = GetDefaultStarterFilesResponse(
             files: [
-                "files": ProblemFiles(
+                .java: ProblemFiles(
                     solutionFile: FileInfo(
                         filename: "filename",
                         contents: "contents"
@@ -583,31 +260,19 @@ import Api
                 )
             ]
         )
-        let response = try await client.problem.getdefaultstarterfiles(
+        let response = try await client.problem.getDefaultStarterFiles(
             request: .init(
                 inputParams: [
                     VariableTypeAndName(
-                        variableType: VariableType.variableTypeZero(
-                            VariableTypeZero(
-                                type: .integerType
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     ),
                     VariableTypeAndName(
-                        variableType: VariableType.variableTypeZero(
-                            VariableTypeZero(
-                                type: .integerType
-                            )
-                        ),
+                        variableType: VariableType.integerType,
                         name: "name"
                     )
                 ],
-                outputType: VariableType.variableTypeZero(
-                    VariableTypeZero(
-                        type: .integerType
-                    )
-                ),
+                outputType: VariableType.integerType,
                 methodName: "methodName"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)

@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_websocket_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,18 +6,18 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = WebsocketAuthClient::new(config).expect("Failed to build client");
     client
         .auth
-        .gettokenwithclientcredentials(
-            &AuthGetTokenWithClientCredentialsRequest {
+        .get_token_with_client_credentials(
+            &GetTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
-                audience: AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom,
-                grant_type: AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials,
-                scope: None,
+                audience: "https://api.example.com".to_string(),
+                grant_type: "client_credentials".to_string(),
+                scope: Some("scope".to_string()),
             },
-            None,
+            Some(RequestOptions::new().additional_header("X-Api-Key", "X-Api-Key")),
         )
         .await;
 }

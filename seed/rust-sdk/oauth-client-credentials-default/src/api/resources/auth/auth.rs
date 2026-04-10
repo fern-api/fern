@@ -13,15 +13,15 @@ impl AuthClient {
         })
     }
 
-    pub async fn gettoken(
+    pub async fn get_token(
         &self,
-        request: &AuthGetTokenRequest,
+        request: &GetTokenRequest,
         options: Option<RequestOptions>,
     ) -> Result<TokenResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "token",
+                "/token",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

@@ -2,6 +2,7 @@
 
 namespace Seed\Folder;
 
+use Seed\Folder\Service\ServiceClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
@@ -9,9 +10,15 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Folder\Service\ServiceClientInterface;
 
 class FolderClient implements FolderClientInterface
 {
+    /**
+     * @var ServiceClient $service
+     */
+    public ServiceClient $service;
+
     /**
      * @var array{
      *   baseUrl?: string,
@@ -44,6 +51,7 @@ class FolderClient implements FolderClientInterface
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+        $this->service = new ServiceClient($this->client, $this->options);
     }
 
     /**
@@ -65,7 +73,7 @@ class FolderClient implements FolderClientInterface
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "folder",
+                    path: "",
                     method: HttpMethod::POST,
                 ),
                 $options,
@@ -82,5 +90,13 @@ class FolderClient implements FolderClientInterface
             statusCode: $statusCode,
             body: $response->getBody()->getContents(),
         );
+    }
+
+    /**
+     * @return ServiceClientInterface
+     */
+    public function getService(): ServiceClientInterface
+    {
+        return $this->service;
     }
 }

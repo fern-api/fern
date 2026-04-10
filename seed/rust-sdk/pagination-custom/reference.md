@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithcustompager</a>(limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;, starting_after: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;UsersListResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_custom_pager</a>(limit: Option&lt;Option&lt;i64&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;UsersListResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -21,11 +21,13 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .listwithcustompager(
-            &ListwithcustompagerQueryRequest {
+        .list_with_custom_pager(
+            &ListWithCustomPagerQueryRequest {
+                limit: Some(1),
+                starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },
             None,
@@ -46,7 +48,7 @@ async fn main() {
 <dl>
 <dd>
 
-**limit:** `Option<Option<i64>>` — The maximum number of results to return.
+**limit:** `Option<i64>` — The maximum number of results to return.
     
 </dd>
 </dl>
@@ -54,7 +56,7 @@ async fn main() {
 <dl>
 <dd>
 
-**starting_after:** `Option<Option<String>>` — The cursor used for pagination.
+**starting_after:** `Option<String>` — The cursor used for pagination.
     
 </dd>
 </dl>

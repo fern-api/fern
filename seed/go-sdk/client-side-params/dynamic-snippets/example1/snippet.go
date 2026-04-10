@@ -17,21 +17,13 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ServiceListResourcesRequest{
-        Page: 1,
-        PerPage: 1,
-        Sort: "sort",
-        Order: "order",
-        IncludeTotals: true,
-        Fields: fern.String(
-            "fields",
-        ),
-        Search: fern.String(
-            "search",
-        ),
+    request := &fern.GetResourceRequest{
+        IncludeMetadata: true,
+        Format: "json",
     }
-    client.Service.Listresources(
+    client.Service.GetResource(
         context.TODO(),
+        "resourceId",
         request,
     )
 }

@@ -1,2 +1,2 @@
-export { SeedApiError } from "./SeedApiError.js";
-export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";
+export { SeedOauthClientCredentialsEnvironmentVariablesError } from "./SeedOauthClientCredentialsEnvironmentVariablesError.js";
+export { SeedOauthClientCredentialsEnvironmentVariablesTimeoutError } from "./SeedOauthClientCredentialsEnvironmentVariablesTimeoutError.js";

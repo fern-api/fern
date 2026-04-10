@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "BasicAuthPwOmitted",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "BasicAuthPwOmitted",
+            targets: ["BasicAuthPwOmitted"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "BasicAuthPwOmitted",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "BasicAuthPwOmittedTests",
+            dependencies: ["BasicAuthPwOmitted"],
             path: "Tests"
         )
     ]

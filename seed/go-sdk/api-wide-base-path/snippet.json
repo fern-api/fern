@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/api-wide-base-path/fern\"\n\tfernclient \"github.com/api-wide-base-path/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Post(\n\tcontext.TODO(),\n\t\u0026fern.ServicePostRequest{\n\t\tPathParam:     \"pathParam\",\n\t\tServiceParam:  \"serviceParam\",\n\t\tEndpointParam: 1,\n\t\tResourceParam: \"resourceParam\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/api-wide-base-path/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Post(\n\tcontext.TODO(),\n\t\"pathParam\",\n\t\"serviceParam\",\n\t1,\n\t\"resourceParam\",\n)\n"
             }
         }
     ]

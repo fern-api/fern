@@ -4,16 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.token_response import TokenResponse
 from .raw_client import AsyncRawAuthClient, RawAuthClient
-from .types.auth_get_token_with_client_credentials_request_audience import (
-    AuthGetTokenWithClientCredentialsRequestAudience,
-)
-from .types.auth_get_token_with_client_credentials_request_grant_type import (
-    AuthGetTokenWithClientCredentialsRequestGrantType,
-)
-from .types.auth_refresh_token_request_audience import AuthRefreshTokenRequestAudience
-from .types.auth_refresh_token_request_grant_type import AuthRefreshTokenRequestGrantType
+from .types.token_response import TokenResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,26 +26,23 @@ class AuthClient:
         """
         return self._raw_client
 
-    def gettokenwithclientcredentials(
+    def get_token_with_client_credentials(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
-        audience: AuthGetTokenWithClientCredentialsRequestAudience,
-        grant_type: AuthGetTokenWithClientCredentialsRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
-
-        audience : AuthGetTokenWithClientCredentialsRequestAudience
-
-        grant_type : AuthGetTokenWithClientCredentialsRequestGrantType
 
         scope : typing.Optional[str]
 
@@ -64,56 +53,53 @@ class AuthClient:
         -------
         TokenResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedWebsocketAuth
 
-        client = SeedApi(
-            api_key="YOUR_API_KEY",
+        client = SeedWebsocketAuth(
             base_url="https://yourhost.com/path/to/api",
+            x_api_key="YOUR_X_API_KEY",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
-        client.auth.gettokenwithclientcredentials(
+        client.auth.get_token_with_client_credentials(
+            x_api_key="X-Api-Key",
             client_id="client_id",
             client_secret="client_secret",
-            audience="https://api.example.com",
-            grant_type="client_credentials",
+            scope="scope",
         )
         """
-        _response = self._raw_client.gettokenwithclientcredentials(
+        _response = self._raw_client.get_token_with_client_credentials(
+            x_api_key=x_api_key,
             client_id=client_id,
             client_secret=client_secret,
-            audience=audience,
-            grant_type=grant_type,
             scope=scope,
             request_options=request_options,
         )
         return _response.data
 
-    def refreshtoken(
+    def refresh_token(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
         refresh_token: str,
-        audience: AuthRefreshTokenRequestAudience,
-        grant_type: AuthRefreshTokenRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
 
         refresh_token : str
 
-        audience : AuthRefreshTokenRequestAudience
-
-        grant_type : AuthRefreshTokenRequestGrantType
-
         scope : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
@@ -123,29 +109,29 @@ class AuthClient:
         -------
         TokenResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedWebsocketAuth
 
-        client = SeedApi(
-            api_key="YOUR_API_KEY",
+        client = SeedWebsocketAuth(
             base_url="https://yourhost.com/path/to/api",
+            x_api_key="YOUR_X_API_KEY",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
-        client.auth.refreshtoken(
+        client.auth.refresh_token(
+            x_api_key="X-Api-Key",
             client_id="client_id",
             client_secret="client_secret",
             refresh_token="refresh_token",
-            audience="https://api.example.com",
-            grant_type="refresh_token",
+            scope="scope",
         )
         """
-        _response = self._raw_client.refreshtoken(
+        _response = self._raw_client.refresh_token(
+            x_api_key=x_api_key,
             client_id=client_id,
             client_secret=client_secret,
             refresh_token=refresh_token,
-            audience=audience,
-            grant_type=grant_type,
             scope=scope,
             request_options=request_options,
         )
@@ -167,26 +153,23 @@ class AsyncAuthClient:
         """
         return self._raw_client
 
-    async def gettokenwithclientcredentials(
+    async def get_token_with_client_credentials(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
-        audience: AuthGetTokenWithClientCredentialsRequestAudience,
-        grant_type: AuthGetTokenWithClientCredentialsRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
-
-        audience : AuthGetTokenWithClientCredentialsRequestAudience
-
-        grant_type : AuthGetTokenWithClientCredentialsRequestGrantType
 
         scope : typing.Optional[str]
 
@@ -197,64 +180,61 @@ class AsyncAuthClient:
         -------
         TokenResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedWebsocketAuth
 
-        client = AsyncSeedApi(
-            api_key="YOUR_API_KEY",
+        client = AsyncSeedWebsocketAuth(
             base_url="https://yourhost.com/path/to/api",
+            x_api_key="YOUR_X_API_KEY",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
         async def main() -> None:
-            await client.auth.gettokenwithclientcredentials(
+            await client.auth.get_token_with_client_credentials(
+                x_api_key="X-Api-Key",
                 client_id="client_id",
                 client_secret="client_secret",
-                audience="https://api.example.com",
-                grant_type="client_credentials",
+                scope="scope",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.gettokenwithclientcredentials(
+        _response = await self._raw_client.get_token_with_client_credentials(
+            x_api_key=x_api_key,
             client_id=client_id,
             client_secret=client_secret,
-            audience=audience,
-            grant_type=grant_type,
             scope=scope,
             request_options=request_options,
         )
         return _response.data
 
-    async def refreshtoken(
+    async def refresh_token(
         self,
         *,
+        x_api_key: str,
         client_id: str,
         client_secret: str,
         refresh_token: str,
-        audience: AuthRefreshTokenRequestAudience,
-        grant_type: AuthRefreshTokenRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
         Parameters
         ----------
+        x_api_key : str
+
         client_id : str
 
         client_secret : str
 
         refresh_token : str
 
-        audience : AuthRefreshTokenRequestAudience
-
-        grant_type : AuthRefreshTokenRequestGrantType
-
         scope : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
@@ -264,37 +244,37 @@ class AsyncAuthClient:
         -------
         TokenResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedWebsocketAuth
 
-        client = AsyncSeedApi(
-            api_key="YOUR_API_KEY",
+        client = AsyncSeedWebsocketAuth(
             base_url="https://yourhost.com/path/to/api",
+            x_api_key="YOUR_X_API_KEY",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
         async def main() -> None:
-            await client.auth.refreshtoken(
+            await client.auth.refresh_token(
+                x_api_key="X-Api-Key",
                 client_id="client_id",
                 client_secret="client_secret",
                 refresh_token="refresh_token",
-                audience="https://api.example.com",
-                grant_type="refresh_token",
+                scope="scope",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.refreshtoken(
+        _response = await self._raw_client.refresh_token(
+            x_api_key=x_api_key,
             client_id=client_id,
             client_secret=client_secret,
             refresh_token=refresh_token,
-            audience=audience,
-            grant_type=grant_type,
             scope=scope,
             request_options=request_options,
         )

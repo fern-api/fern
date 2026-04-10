@@ -4,7 +4,7 @@ namespace Seed\Imdb;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Imdb\Requests\CreateMovieRequest;
+use Seed\Imdb\Types\CreateMovieRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -12,7 +12,7 @@ use Seed\Core\Client\HttpMethod;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Types\Movie;
+use Seed\Imdb\Types\Movie;
 
 class ImdbClient
 {
@@ -66,14 +66,14 @@ class ImdbClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createmovie(CreateMovieRequest $request, ?array $options = null): ?string
+    public function createMovie(CreateMovieRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movies/create-movie",
+                    path: "/movies/create-movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -113,14 +113,14 @@ class ImdbClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getmovie(string $movieId, ?array $options = null): ?Movie
+    public function getMovie(string $movieId, ?array $options = null): ?Movie
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movies/{$movieId}",
+                    path: "/movies/{$movieId}",
                     method: HttpMethod::GET,
                 ),
                 $options,

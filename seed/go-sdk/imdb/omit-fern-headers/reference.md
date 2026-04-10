@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.Imdb.Createmovie(request) -> fern.MovieID</code></summary>
+<details><summary><code>client.Imdb.CreateMovie(request) -> fern.MovieID</code></summary>
 <dl>
 <dd>
 
@@ -31,7 +31,7 @@ request := &fern.CreateMovieRequest{
         Title: "title",
         Rating: 1.1,
     }
-client.Imdb.Createmovie(
+client.Imdb.CreateMovie(
         context.TODO(),
         request,
     )
@@ -50,15 +50,7 @@ client.Imdb.Createmovie(
 <dl>
 <dd>
 
-**title:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**rating:** `float64` 
+**request:** `*fern.CreateMovieRequest` 
     
 </dd>
 </dl>
@@ -70,7 +62,7 @@ client.Imdb.Createmovie(
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.Getmovie(MovieID) -> *fern.Movie</code></summary>
+<details><summary><code>client.Imdb.GetMovie(MovieID) -> *fern.Movie</code></summary>
 <dl>
 <dd>
 
@@ -83,12 +75,9 @@ client.Imdb.Createmovie(
 <dd>
 
 ```go
-request := &fern.ImdbGetMovieRequest{
-        MovieID: "movieId",
-    }
-client.Imdb.Getmovie(
+client.Imdb.GetMovie(
         context.TODO(),
-        request,
+        "movieId",
     )
 }
 ```

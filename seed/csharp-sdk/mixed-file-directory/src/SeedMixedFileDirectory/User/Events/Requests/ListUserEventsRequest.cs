@@ -1,0 +1,20 @@
+using global::System.Text.Json.Serialization;
+using SeedMixedFileDirectory.Core;
+
+namespace SeedMixedFileDirectory.User_;
+
+[Serializable]
+public record ListUserEventsRequest
+{
+    /// <summary>
+    /// The maximum number of results to return.
+    /// </summary>
+    [JsonIgnore]
+    public int? Limit { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

@@ -1,15 +1,15 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.service.requests.ServiceListResourcesRequest;
+import com.seed.mixedCase.SeedMixedCaseClient;
+import com.seed.mixedCase.resources.service.requests.ListResourcesRequest;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedMixedCaseClient client =
+                SeedMixedCaseClient.builder().url("https://api.fern.com").build();
 
         client.service()
-                .listresources(ServiceListResourcesRequest.builder()
+                .listResources(ListResourcesRequest.builder()
                         .pageLimit(1)
                         .beforeDate("2023-01-15")
                         .build());

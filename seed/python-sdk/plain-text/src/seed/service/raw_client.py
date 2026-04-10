@@ -15,7 +15,7 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def gettext(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[str]:
+    def get_text(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[str]:
         """
         Parameters
         ----------
@@ -25,7 +25,6 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[str]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "text",
@@ -49,7 +48,7 @@ class AsyncRawServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def gettext(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[str]:
+    async def get_text(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
@@ -59,7 +58,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[str]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "text",

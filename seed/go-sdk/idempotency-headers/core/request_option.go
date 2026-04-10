@@ -71,12 +71,20 @@ func (b *BaseURLOption) applyRequestOptions(opts *RequestOptions) {
 	opts.BaseURL = b.BaseURL
 }
 
+func (b *BaseURLOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.BaseURL = b.BaseURL
+}
+
 // HTTPClientOption implements the RequestOption interface.
 type HTTPClientOption struct {
 	HTTPClient HTTPClient
 }
 
 func (h *HTTPClientOption) applyRequestOptions(opts *RequestOptions) {
+	opts.HTTPClient = h.HTTPClient
+}
+
+func (h *HTTPClientOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.HTTPClient = h.HTTPClient
 }
 
@@ -89,12 +97,20 @@ func (h *HTTPHeaderOption) applyRequestOptions(opts *RequestOptions) {
 	opts.HTTPHeader = h.HTTPHeader
 }
 
+func (h *HTTPHeaderOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.HTTPHeader = h.HTTPHeader
+}
+
 // BodyPropertiesOption implements the RequestOption interface.
 type BodyPropertiesOption struct {
 	BodyProperties map[string]interface{}
 }
 
 func (b *BodyPropertiesOption) applyRequestOptions(opts *RequestOptions) {
+	opts.BodyProperties = b.BodyProperties
+}
+
+func (b *BodyPropertiesOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.BodyProperties = b.BodyProperties
 }
 
@@ -107,12 +123,20 @@ func (q *QueryParametersOption) applyRequestOptions(opts *RequestOptions) {
 	opts.QueryParameters = q.QueryParameters
 }
 
+func (q *QueryParametersOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.QueryParameters = q.QueryParameters
+}
+
 // MaxAttemptsOption implements the RequestOption interface.
 type MaxAttemptsOption struct {
 	MaxAttempts uint
 }
 
 func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxAttempts = m.MaxAttempts
+}
+
+func (m *MaxAttemptsOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
 }
 
@@ -125,11 +149,19 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
+func (m *MaxBufSizeOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.MaxBufSize = m.MaxBufSize
+}
+
 // TokenOption implements the RequestOption interface.
 type TokenOption struct {
 	Token string
 }
 
 func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Token = t.Token
+}
+
+func (t *TokenOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.Token = t.Token
 }

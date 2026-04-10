@@ -1,12 +1,21 @@
-using Contoso.Net._;
-using Contoso.Net.Scimconfiguration;
+using Contoso.Net.ScimConfiguration;
 using Contoso.Net.System;
 
 namespace Contoso.Net;
 
 public partial interface IContosoClient
 {
-    public IClient _ { get; }
-    public IScimconfigurationClient Scimconfiguration { get; }
+    public IScimConfigurationClient ScimConfiguration { get; }
     public ISystemClient System { get; }
+    WithRawResponseTask<User> CreateUserAsync(
+        User request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    WithRawResponseTask<Task> CreateTaskAsync(
+        Task request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
 }

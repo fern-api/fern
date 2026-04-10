@@ -5,7 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawTypesClient, RawTypesClient
-from .union_with_time import UnionWithTime
+from .types.union_with_time import UnionWithTime
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -39,16 +39,15 @@ class TypesClient:
         -------
         UnionWithTime
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUnions
 
-        client = SeedApi(
+        client = SeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.types.get(
-            id="id",
+            id="date-example",
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
@@ -67,16 +66,22 @@ class TypesClient:
         -------
         bool
 
-
         Examples
         --------
-        from seed import SeedApi, UnionWithTime_Value
+        import datetime
 
-        client = SeedApi(
+        from seed import SeedUnions
+        from seed.types import UnionWithTime_Date
+
+        client = SeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
         client.types.update(
-            request=UnionWithTime_Value(),
+            request=UnionWithTime_Date(
+                value=datetime.date.fromisoformat(
+                    "1994-01-01",
+                )
+            ),
         )
         """
         _response = self._raw_client.update(request=request, request_options=request_options)
@@ -111,21 +116,20 @@ class AsyncTypesClient:
         -------
         UnionWithTime
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUnions
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.types.get(
-                id="id",
+                id="date-example",
             )
 
 
@@ -147,21 +151,26 @@ class AsyncTypesClient:
         -------
         bool
 
-
         Examples
         --------
         import asyncio
+        import datetime
 
-        from seed import AsyncSeedApi, UnionWithTime_Value
+        from seed import AsyncSeedUnions
+        from seed.types import UnionWithTime_Date
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUnions(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.types.update(
-                request=UnionWithTime_Value(),
+                request=UnionWithTime_Date(
+                    value=datetime.date.fromisoformat(
+                        "1994-01-01",
+                    )
+                ),
             )
 
 

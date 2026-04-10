@@ -14,10 +14,35 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.NullableOptionalGetUserRequest{
-        UserID: "userId",
+    request := &fern.CreateUserRequest{
+        Username: "username",
+        Email: fern.String(
+            "email",
+        ),
+        Phone: fern.String(
+            "phone",
+        ),
+        Address: &fern.Address{
+            Street: "street",
+            City: fern.String(
+                "city",
+            ),
+            State: fern.String(
+                "state",
+            ),
+            ZipCode: "zipCode",
+            Country: fern.String(
+                "country",
+            ),
+            BuildingID: fern.String(
+                "buildingId",
+            ),
+            TenantID: fern.String(
+                "tenantId",
+            ),
+        },
     }
-    client.Nullableoptional.Getuser(
+    client.NullableOptional.CreateUser(
         context.TODO(),
         request,
     )

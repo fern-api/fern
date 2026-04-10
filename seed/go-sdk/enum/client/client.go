@@ -15,10 +15,10 @@ import (
 
 type Client struct {
 	Headers        *headers.Client
-	Inlinedrequest *inlinedrequest.Client
-	Multipartform  *multipartform.Client
-	Pathparam      *pathparam.Client
-	Queryparam     *queryparam.Client
+	InlinedRequest *inlinedrequest.Client
+	MultipartForm  *multipartform.Client
+	PathParam      *pathparam.Client
+	QueryParam     *queryparam.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -29,10 +29,10 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		Headers:        headers.NewClient(options),
-		Inlinedrequest: inlinedrequest.NewClient(options),
-		Multipartform:  multipartform.NewClient(options),
-		Pathparam:      pathparam.NewClient(options),
-		Queryparam:     queryparam.NewClient(options),
+		InlinedRequest: inlinedrequest.NewClient(options),
+		MultipartForm:  multipartform.NewClient(options),
+		PathParam:      pathparam.NewClient(options),
+		QueryParam:     queryparam.NewClient(options),
 		options:        options,
 		baseURL:        options.BaseURL,
 		caller: internal.NewCaller(

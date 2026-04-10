@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Test(
 	ctx context.Context,
-	request *fern.PackageTestRequest,
+	request *fern.TestRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Test(

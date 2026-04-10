@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="/src/api/resources/completions/client.rs">stream</a>(request: CompletionsStreamRequest) -> Result&lt;Vec&lt;u8&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.completions.<a href="/src/api/resources/completions/client.rs">stream</a>(request: StreamCompletionRequest) -> Result&lt;Stream&lt;Vec&lt;u8&gt;&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,18 +13,75 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_server_sent_events::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ServerSentEventsClient::new(config).expect("Failed to build client");
     client
         .completions
         .stream(
-            &CompletionsStreamRequest {
+            &StreamCompletionRequest {
+                query: "foo".to_string(),
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**query:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.completions.<a href="/src/api/resources/completions/client.rs">stream_events</a>(request: StreamEventsRequest) -> Result&lt;Stream&lt;Vec&lt;u8&gt;&gt;, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_server_sent_events::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+    client
+        .completions
+        .stream_events(
+            &StreamEventsRequest {
                 query: "query".to_string(),
             },
             None,
@@ -57,7 +114,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/src/api/resources/completions/client.rs">streamevents</a>(request: CompletionsStreamEventsRequest) -> Result&lt;Vec&lt;u8&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.completions.<a href="/src/api/resources/completions/client.rs">stream_events_context_protocol</a>(request: StreamEventsContextProtocolRequest) -> Result&lt;Stream&lt;Vec&lt;u8&gt;&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -70,75 +127,18 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_server_sent_events::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ServerSentEventsClient::new(config).expect("Failed to build client");
     client
         .completions
-        .streamevents(
-            &CompletionsStreamEventsRequest {
-                query: "query".to_string(),
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**query:** `String` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.completions.<a href="/src/api/resources/completions/client.rs">streameventscontextprotocol</a>(request: CompletionsStreamEventsContextProtocolRequest) -> Result&lt;Vec&lt;u8&gt;, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .completions
-        .streameventscontextprotocol(
-            &CompletionsStreamEventsContextProtocolRequest {
+        .stream_events_context_protocol(
+            &StreamEventsContextProtocolRequest {
                 query: "query".to_string(),
             },
             None,

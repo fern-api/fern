@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="src/seed/_/client.py">foo</a>()</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">foo</a>()</code></summary>
 <dl>
 <dd>
 
@@ -19,7 +18,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client._.foo()
+client.foo()
 
 ```
 </dd>
@@ -47,8 +46,8 @@ client._.foo()
 </dl>
 </details>
 
-## Ab
-<details><summary><code>client.ab.<a href="src/seed/ab/client.py">a_b_foo</a>()</code></summary>
+## A B
+<details><summary><code>client.a.b.<a href="src/seed/a/b/client.py">foo</a>()</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +66,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.ab.a_b_foo()
+client.a.b.foo()
 
 ```
 </dd>
@@ -95,8 +94,8 @@ client.ab.a_b_foo()
 </dl>
 </details>
 
-## Ac
-<details><summary><code>client.ac.<a href="src/seed/ac/client.py">a_c_foo</a>()</code></summary>
+## A C
+<details><summary><code>client.a.c.<a href="src/seed/a/c/client.py">foo</a>()</code></summary>
 <dl>
 <dd>
 
@@ -115,7 +114,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.ac.a_c_foo()
+client.a.c.foo()
 
 ```
 </dd>
@@ -191,8 +190,8 @@ client.folder.foo()
 </dl>
 </details>
 
-## FolderService
-<details><summary><code>client.folder_service.<a href="src/seed/folder_service/client.py">folder_service_endpoint</a>()</code></summary>
+## Folder Service
+<details><summary><code>client.folder.service.<a href="src/seed/folder/service/client.py">endpoint</a>()</code></summary>
 <dl>
 <dd>
 
@@ -211,7 +210,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.folder_service.folder_service_endpoint()
+client.folder.service.endpoint()
 
 ```
 </dd>
@@ -239,7 +238,7 @@ client.folder_service.folder_service_endpoint()
 </dl>
 </details>
 
-<details><summary><code>client.folder_service.<a href="src/seed/folder_service/client.py">folder_service_unknown_request</a>(...)</code></summary>
+<details><summary><code>client.folder.service.<a href="src/seed/folder/service/client.py">unknown_request</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -258,7 +257,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.folder_service.folder_service_unknown_request(
+client.folder.service.unknown_request(
     request={"key": "value"},
 )
 

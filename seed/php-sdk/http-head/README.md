@@ -37,14 +37,9 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\UserListRequest;
 
 $client = new SeedClient();
-$client->user->list(
-    new UserListRequest([
-        'limit' => 1,
-    ]),
-);
+$client->user->head();
 
 ```
 
@@ -57,7 +52,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->user->list(...);
+    $response = $client->user->head(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -111,7 +106,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->user->list(
+$response = $client->user->head(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -124,7 +119,7 @@ $response = $client->user->list(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->user->list(
+$response = $client->user->head(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

@@ -1,24 +1,21 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.auth.requests.AuthRefreshTokenRequest;
-import com.seed.api.resources.auth.types.AuthRefreshTokenRequestAudience;
-import com.seed.api.resources.auth.types.AuthRefreshTokenRequestGrantType;
+import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
+import com.seed.oauthClientCredentials.resources.auth.requests.RefreshTokenRequest;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
-                .token("<token>")
+        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.withCredentials(
+                        "<clientId>", "<clientSecret>")
                 .url("https://api.fern.com")
                 .build();
 
         client.auth()
-                .refreshtoken(AuthRefreshTokenRequest.builder()
-                        .clientId("client_id")
-                        .clientSecret("client_secret")
+                .refreshToken(RefreshTokenRequest.builder()
+                        .clientId("my_oauth_app_123")
+                        .clientSecret("sk_live_abcdef123456789")
                         .refreshToken("refresh_token")
-                        .audience(AuthRefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)
-                        .grantType(AuthRefreshTokenRequestGrantType.REFRESH_TOKEN)
+                        .scope("read:users")
                         .build());
     }
 }

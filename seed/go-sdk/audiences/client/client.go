@@ -4,17 +4,17 @@ package client
 
 import (
 	core "github.com/audiences/fern/core"
-	folderaservice "github.com/audiences/fern/folderaservice"
-	folderdservice "github.com/audiences/fern/folderdservice"
+	client "github.com/audiences/fern/foldera/client"
+	folderdclient "github.com/audiences/fern/folderd/client"
 	foo "github.com/audiences/fern/foo"
 	internal "github.com/audiences/fern/internal"
 	option "github.com/audiences/fern/option"
 )
 
 type Client struct {
-	FolderAService *folderaservice.Client
-	Foo            *foo.Client
-	FolderDService *folderdservice.Client
+	FolderA *client.Client
+	FolderD *folderdclient.Client
+	Foo     *foo.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -24,11 +24,11 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		FolderAService: folderaservice.NewClient(options),
-		Foo:            foo.NewClient(options),
-		FolderDService: folderdservice.NewClient(options),
-		options:        options,
-		baseURL:        options.BaseURL,
+		FolderA: client.NewClient(options),
+		FolderD: folderdclient.NewClient(options),
+		Foo:     foo.NewClient(options),
+		options: options,
+		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

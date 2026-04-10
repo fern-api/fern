@@ -105,6 +105,14 @@ impl QueryBuilder {
         self
     }
 
+    /// Add a UUID parameter (converts to string)
+    pub fn uuid(mut self, key: &str, value: impl Into<Option<uuid::Uuid>>) -> Self {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
     /// Add any serializable parameter (for enums and complex types)
     pub fn serialize<T: Serialize>(mut self, key: &str, value: Option<T>) -> Self {
         if let Some(v) = value {
@@ -319,6 +327,19 @@ mod tests {
         assert_eq!(
             result,
             Some(vec![("active".to_string(), "true".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_uuid_param() {
+        let id = uuid::Uuid::parse_str("550e8400-e29b-41d4-a716-446655440000").unwrap();
+        let result = QueryBuilder::new().uuid("id", Some(id)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "id".to_string(),
+                "550e8400-e29b-41d4-a716-446655440000".to_string()
+            )])
         );
     }
 

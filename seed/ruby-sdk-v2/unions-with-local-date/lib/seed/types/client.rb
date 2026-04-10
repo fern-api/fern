@@ -19,13 +19,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :id
       #
-      # @return [Seed::Types::UnionWithTime]
+      # @return [Seed::Types::Types::UnionWithTime]
       def get(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "time/#{URI.encode_uri_component(params[:id].to_s)}",
+          path: "/time/#{URI.encode_uri_component(params[:id].to_s)}",
           request_options: request_options
         )
         begin
@@ -35,7 +35,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::UnionWithTime.load(response.body)
+          Seed::Types::Types::UnionWithTime.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -43,7 +43,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Types::UnionWithTime]
+      # @param params [Seed::Types::Types::UnionWithTime]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -56,8 +56,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "time",
-          body: Seed::Types::UnionWithTime.new(params).to_h,
+          path: "/time",
+          body: Seed::Types::Types::UnionWithTime.new(params).to_h,
           request_options: request_options
         )
         begin

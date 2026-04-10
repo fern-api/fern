@@ -17,12 +17,17 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ServiceSearchResourcesRequest{
-        Limit: 1,
-        Offset: 1,
+    request := &fern.GetUserRequest{
+        Fields: fern.String(
+            "fields",
+        ),
+        IncludeFields: fern.Bool(
+            true,
+        ),
     }
-    client.Service.Searchresources(
+    client.Service.GetUserByID(
         context.TODO(),
+        "userId",
         request,
     )
 }

@@ -1,13 +1,10 @@
 import Foundation
-import Api
+import OauthClientCredentialsDefault
 
 private func main() async throws {
-    let client = ApiClient(
-        baseURL: "https://api.fern.com",
-        token: "<token>"
-    )
+    let client = OauthClientCredentialsDefaultClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.auth.gettoken(request: .init(
+    _ = try await client.auth.getToken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         grantType: .clientCredentials

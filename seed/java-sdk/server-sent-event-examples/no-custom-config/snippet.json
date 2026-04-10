@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "b615e3c6",
+            "example_identifier": "Stream completions",
             "id": {
                 "method": "POST",
                 "path": "/stream",
@@ -9,34 +9,151 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.completions.requests.CompletionsStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            CompletionsStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.completions.requests.CompletionsStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            CompletionsStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"foo\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"foo\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "b615e3c6",
+            "example_identifier": "Bad request",
+            "id": {
+                "method": "POST",
+                "path": "/stream",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "6080af03",
+            "id": {
+                "method": "POST",
+                "path": "/stream",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "95b7c867",
+            "id": {
+                "method": "POST",
+                "path": "/stream",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "Stream events",
             "id": {
                 "method": "POST",
                 "path": "/stream-events",
-                "identifier_override": "endpoint_completions.streamevents"
+                "identifier_override": "endpoint_completions.streamEvents"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.completions.requests.CompletionsStreamEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.completions().streamevents(\n            CompletionsStreamEventsRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.completions.requests.CompletionsStreamEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.completions().streamevents(\n            CompletionsStreamEventsRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEvents(\n            StreamEventsRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEvents(\n            StreamEventsRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "b615e3c6",
+            "example_identifier": "Bad request",
             "id": {
                 "method": "POST",
-                "path": "/stream-events-context-protocol",
-                "identifier_override": "endpoint_completions.streameventscontextprotocol"
+                "path": "/stream-events",
+                "identifier_override": "endpoint_completions.streamEvents"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.completions.requests.CompletionsStreamEventsContextProtocolRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.completions().streameventscontextprotocol(\n            CompletionsStreamEventsContextProtocolRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.completions.requests.CompletionsStreamEventsContextProtocolRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.completions().streameventscontextprotocol(\n            CompletionsStreamEventsContextProtocolRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEvents(\n            StreamEventsRequest\n                .builder()\n                .query(\"\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEvents(\n            StreamEventsRequest\n                .builder()\n                .query(\"\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "40c16ae2",
+            "id": {
+                "method": "POST",
+                "path": "/stream-events",
+                "identifier_override": "endpoint_completions.streamEvents"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEvents(\n            StreamEventsRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEvents(\n            StreamEventsRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "95b7c867",
+            "id": {
+                "method": "POST",
+                "path": "/stream-events",
+                "identifier_override": "endpoint_completions.streamEvents"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEvents(\n            StreamEventsRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEvents(\n            StreamEventsRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "Stream events context protocol",
+            "id": {
+                "method": "POST",
+                "path": "/stream-events-context-protocol",
+                "identifier_override": "endpoint_completions.streamEventsContextProtocol"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsContextProtocol(\n            StreamEventsContextProtocolRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsContextProtocol(\n            StreamEventsContextProtocolRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "Bad request context protocol",
+            "id": {
+                "method": "POST",
+                "path": "/stream-events-context-protocol",
+                "identifier_override": "endpoint_completions.streamEventsContextProtocol"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsContextProtocol(\n            StreamEventsContextProtocolRequest\n                .builder()\n                .query(\"\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsContextProtocol(\n            StreamEventsContextProtocolRequest\n                .builder()\n                .query(\"\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "f518a80",
+            "id": {
+                "method": "POST",
+                "path": "/stream-events-context-protocol",
+                "identifier_override": "endpoint_completions.streamEventsContextProtocol"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsContextProtocol(\n            StreamEventsContextProtocolRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsContextProtocol(\n            StreamEventsContextProtocolRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "95b7c867",
+            "id": {
+                "method": "POST",
+                "path": "/stream-events-context-protocol",
+                "identifier_override": "endpoint_completions.streamEventsContextProtocol"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsContextProtocol(\n            StreamEventsContextProtocolRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamEventsContextProtocolRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamEventsContextProtocol(\n            StreamEventsContextProtocolRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

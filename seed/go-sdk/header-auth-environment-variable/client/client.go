@@ -3,6 +3,8 @@
 package client
 
 import (
+	os "os"
+
 	core "github.com/header-auth-environment-variable/fern/core"
 	internal "github.com/header-auth-environment-variable/fern/internal"
 	option "github.com/header-auth-environment-variable/fern/option"
@@ -19,6 +21,9 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.HeaderTokenAuth == "" {
+		options.HeaderTokenAuth = os.Getenv("HEADER_TOKEN_ENV_VAR")
+	}
 	return &Client{
 		Service: service.NewClient(options),
 		options: options,

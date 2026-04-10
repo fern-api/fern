@@ -6,31 +6,23 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import TokenResponse
-    from . import auth, nested_api, nested_no_auth_api, simple
+    from . import auth, nested, nested_no_auth, simple
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .auth import (
-        GetTokenRequestAudience,
-        GetTokenRequestGrantType,
-        RefreshTokenRequestAudience,
-        RefreshTokenRequestGrantType,
-    )
-    from .client import AsyncSeedApi, SeedApi
+    from .auth import GetTokenRequest, RefreshTokenRequest, TokenResponse
+    from .client import AsyncSeedInferredAuthImplicit, SeedInferredAuthImplicit
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedInferredAuthImplicit": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "GetTokenRequestAudience": ".auth",
-    "GetTokenRequestGrantType": ".auth",
-    "RefreshTokenRequestAudience": ".auth",
-    "RefreshTokenRequestGrantType": ".auth",
-    "SeedApi": ".client",
-    "TokenResponse": ".types",
+    "GetTokenRequest": ".auth",
+    "RefreshTokenRequest": ".auth",
+    "SeedInferredAuthImplicit": ".client",
+    "TokenResponse": ".auth",
     "__version__": ".version",
     "auth": ".auth",
-    "nested_api": ".nested_api",
-    "nested_no_auth_api": ".nested_no_auth_api",
+    "nested": ".nested",
+    "nested_no_auth": ".nested_no_auth",
     "simple": ".simple",
 }
 
@@ -57,18 +49,16 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedInferredAuthImplicit",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "GetTokenRequestAudience",
-    "GetTokenRequestGrantType",
-    "RefreshTokenRequestAudience",
-    "RefreshTokenRequestGrantType",
-    "SeedApi",
+    "GetTokenRequest",
+    "RefreshTokenRequest",
+    "SeedInferredAuthImplicit",
     "TokenResponse",
     "__version__",
     "auth",
-    "nested_api",
-    "nested_no_auth_api",
+    "nested",
+    "nested_no_auth",
     "simple",
 ]

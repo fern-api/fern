@@ -1,4 +1,4 @@
-using SeedApi;
+using SeedRequestParameters;
 using System.Globalization;
 
 namespace Usage;
@@ -6,19 +6,19 @@ namespace Usage;
 public class Example4
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedRequestParametersClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.User.GetusernameAsync(
-            new UserGetUsernameRequest {
+        await client.User.GetUsernameAsync(
+            new GetUsersRequest {
                 Limit = 1,
-                Id = "id",
+                Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 Date = DateOnly.Parse("2023-01-15"),
                 Deadline = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal),
-                Bytes = "bytes",
+                Bytes = "SGVsbG8gd29ybGQh",
                 User = new User {
                     Name = "name",
                     Tags = new List<string>(){
@@ -28,6 +28,14 @@ public class Example4
 
                 },
                 UserList = new List<User>(){
+                    new User {
+                        Name = "name",
+                        Tags = new List<string>(){
+                            "tags",
+                            "tags",
+                        }
+
+                    },
                     new User {
                         Name = "name",
                         Tags = new List<string>(){
@@ -79,7 +87,7 @@ public class Example4
                 }
                 ,
                 LongParam = 1000000L,
-                BigIntParam = 1
+                BigIntParam = "1000000"
             }
         );
     }

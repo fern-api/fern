@@ -1,10 +1,10 @@
 import Foundation
-import Api
+import PathParameters
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = PathParametersClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.organizations.getorganization(
+    _ = try await client.organizations.getOrganization(
         tenantId: "tenant_id",
         organizationId: "organization_id"
     )

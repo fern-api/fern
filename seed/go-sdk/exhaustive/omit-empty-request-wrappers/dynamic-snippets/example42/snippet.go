@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -17,14 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := []*fern.TypesNestedObjectWithRequiredField{
-        &fern.TypesNestedObjectWithRequiredField{
-            FieldString: "string",
-            NestedObject: &fern.TypesObjectWithOptionalField{},
-        },
-    }
-    client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredFieldAsList(
+    client.Endpoints.Params.GetWithBooleanPath(
         context.TODO(),
-        request,
+        true,
     )
 }

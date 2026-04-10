@@ -6,4 +6,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.basicauth.getwithbasicauth
+client.basic_auth.get_with_basic_auth

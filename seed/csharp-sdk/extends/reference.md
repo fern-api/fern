@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">ExtendedInlineRequestBodyAsync</a>(ExtendedInlineRequestBodyRequest { ... })</code></summary>
+<details><summary><code>client.<a href="/src/SeedExtends/SeedExtendsClient.cs">ExtendedInlineRequestBodyAsync</a>(Inlined { ... })</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +12,12 @@
 <dd>
 
 ```csharp
-await client._.ExtendedInlineRequestBodyAsync(
-    new ExtendedInlineRequestBodyRequest
+await client.ExtendedInlineRequestBodyAsync(
+    new Inlined
     {
-        Docs = "docs",
-        Name = "name",
         Unique = "unique",
+        Name = "name",
+        Docs = "docs",
     }
 );
 ```
@@ -35,7 +34,7 @@ await client._.ExtendedInlineRequestBodyAsync(
 <dl>
 <dd>
 
-**request:** `ExtendedInlineRequestBodyRequest` 
+**request:** `Inlined` 
     
 </dd>
 </dl>

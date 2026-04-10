@@ -6,7 +6,6 @@ import (
 	context "context"
 	http "net/http"
 
-	fern "github.com/oauth-client-credentials-with-variables/fern"
 	core "github.com/oauth-client-credentials-with-variables/fern/core"
 	internal "github.com/oauth-client-credentials-with-variables/fern/internal"
 	option "github.com/oauth-client-credentials-with-variables/fern/option"
@@ -33,7 +32,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Post(
 	ctx context.Context,
-	request *fern.ServicePostRequest,
+	endpointParam string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +43,7 @@ func (r *RawClient) Post(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/service/%v",
-		request.EndpointParam,
+		endpointParam,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

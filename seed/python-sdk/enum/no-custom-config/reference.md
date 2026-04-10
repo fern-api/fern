@@ -13,14 +13,15 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedEnum
 
-client = SeedApi(
+client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.headers.send(
     operand=">",
+    maybe_operand=">",
     operand_or_color="red",
 )
 
@@ -82,8 +83,8 @@ client.headers.send(
 </dl>
 </details>
 
-## Inlinedrequest
-<details><summary><code>client.inlinedrequest.<a href="src/seed/inlinedrequest/client.py">send</a>(...)</code></summary>
+## InlinedRequest
+<details><summary><code>client.inlined_request.<a href="src/seed/inlined_request/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -96,13 +97,13 @@ client.headers.send(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedEnum
 
-client = SeedApi(
+client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inlinedrequest.send(
+client.inlined_request.send(
     operand=">",
     operand_or_color="red",
 )
@@ -165,8 +166,8 @@ client.inlinedrequest.send(
 </dl>
 </details>
 
-## Multipartform
-<details><summary><code>client.multipartform.<a href="src/seed/multipartform/client.py">multipartform</a>(...)</code></summary>
+## MultipartForm
+<details><summary><code>client.multipart_form.<a href="src/seed/multipart_form/client.py">multipart_form</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -179,14 +180,7 @@ client.inlinedrequest.send(
 <dd>
 
 ```python
-from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.multipartform.multipartform()
-
+client.multipart_form.multipart_form(...)
 ```
 </dd>
 </dl>
@@ -201,7 +195,15 @@ client.multipartform.multipartform()
 <dl>
 <dd>
 
-**color:** `typing.Optional[Color]` 
+**color:** `Color` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**color_list:** `typing.List[Color]` 
     
 </dd>
 </dl>
@@ -210,14 +212,6 @@ client.multipartform.multipartform()
 <dd>
 
 **maybe_color:** `typing.Optional[Color]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**color_list:** `typing.Optional[typing.List[Color]]` 
     
 </dd>
 </dl>
@@ -245,8 +239,8 @@ client.multipartform.multipartform()
 </dl>
 </details>
 
-## Pathparam
-<details><summary><code>client.pathparam.<a href="src/seed/pathparam/client.py">send</a>(...)</code></summary>
+## PathParam
+<details><summary><code>client.path_param.<a href="src/seed/path_param/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -259,13 +253,13 @@ client.multipartform.multipartform()
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedEnum
 
-client = SeedApi(
+client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.pathparam.send(
+client.path_param.send(
     operand=">",
     operand_or_color="red",
 )
@@ -312,8 +306,8 @@ client.pathparam.send(
 </dl>
 </details>
 
-## Queryparam
-<details><summary><code>client.queryparam.<a href="src/seed/queryparam/client.py">send</a>(...)</code></summary>
+## QueryParam
+<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -326,13 +320,13 @@ client.pathparam.send(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedEnum
 
-client = SeedApi(
+client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.queryparam.send(
+client.query_param.send(
     operand=">",
     operand_or_color="red",
 )
@@ -359,7 +353,7 @@ client.queryparam.send(
 <dl>
 <dd>
 
-**operand_or_color:** `Color` 
+**operand_or_color:** `ColorOrOperand` 
     
 </dd>
 </dl>
@@ -395,7 +389,7 @@ client.queryparam.send(
 </dl>
 </details>
 
-<details><summary><code>client.queryparam.<a href="src/seed/queryparam/client.py">sendlist</a>(...)</code></summary>
+<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send_list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -408,13 +402,13 @@ client.queryparam.send(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedEnum
 
-client = SeedApi(
+client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.queryparam.sendlist(
+client.query_param.send_list(
     operand=[
         ">"
     ],
@@ -443,7 +437,15 @@ client.queryparam.sendlist(
 <dl>
 <dd>
 
-**operand:** `typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]]` 
+**operand:** `typing.Union[Operand, typing.Sequence[Operand]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**operand_or_color:** `typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]` 
     
 </dd>
 </dl>
@@ -452,14 +454,6 @@ client.queryparam.sendlist(
 <dd>
 
 **maybe_operand:** `typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**operand_or_color:** `typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]]` 
     
 </dd>
 </dl>

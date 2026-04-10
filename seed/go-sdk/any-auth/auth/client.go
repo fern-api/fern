@@ -4,6 +4,7 @@ package auth
 
 import (
 	context "context"
+	os "os"
 
 	fern "github.com/any-auth/fern"
 	core "github.com/any-auth/fern/core"
@@ -20,6 +21,24 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
+	if options.Token == "" {
+		options.Token = os.Getenv("MY_TOKEN")
+	}
+	if options.APIKey == "" {
+		options.APIKey = os.Getenv("MY_API_KEY")
+	}
+	if options.ClientID == "" {
+		options.ClientID = os.Getenv("MY_CLIENT_ID")
+	}
+	if options.ClientSecret == "" {
+		options.ClientSecret = os.Getenv("MY_CLIENT_SECRET")
+	}
+	if options.Username == "" {
+		options.Username = os.Getenv("MY_USERNAME")
+	}
+	if options.Password == "" {
+		options.Password = os.Getenv("MY_PASSWORD")
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
@@ -33,12 +52,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Gettoken(
+func (c *Client) GetToken(
 	ctx context.Context,
-	request *fern.AuthGetTokenRequest,
+	request *fern.GetTokenRequest,
 	opts ...option.RequestOption,
 ) (*fern.TokenResponse, error) {
-	response, err := c.WithRawResponse.Gettoken(
+	response, err := c.WithRawResponse.GetToken(
 		ctx,
 		request,
 		opts...,

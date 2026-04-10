@@ -30,16 +30,23 @@ require "seed"
 
 client = Seed::Client.new
 
-client.user.getusername(
+client.user.get_username(
   limit: 1,
-  id: "id",
+  id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   date: "2023-01-15",
   deadline: "2024-01-15T09:30:00Z",
-  bytes: "bytes",
+  bytes: "SGVsbG8gd29ybGQh",
   user: {
     name: "name",
     tags: %w[tags tags]
   },
+  user_list: [{
+    name: "name",
+    tags: %w[tags tags]
+  }, {
+    name: "name",
+    tags: %w[tags tags]
+  }],
   optional_deadline: "2024-01-15T09:30:00Z",
   key_value: {
     keyValue: "keyValue"
@@ -84,7 +91,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client.user.getusername
+    result = client.user.get_username
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -129,7 +136,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.user.getusername(
+response = client.user.get_username(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -142,7 +149,7 @@ If you would like to send additional headers as part of the request, use the `ad
 ```ruby
 require "seed"
 
-response = client.user.getusername(
+response = client.user.get_username(
     ...,
     request_options: {
         additional_headers: {
@@ -159,7 +166,7 @@ If you would like to send additional query parameters as part of the request, us
 ```ruby
 require "seed"
 
-response = client.user.getusername(
+response = client.user.get_username(
     ...,
     request_options: {
         additional_query_parameters: {

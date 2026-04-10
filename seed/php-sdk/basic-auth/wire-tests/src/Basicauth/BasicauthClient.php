@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\Basicauth;
+namespace Seed\BasicAuth;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
@@ -12,7 +12,7 @@ use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class BasicauthClient
+class BasicAuthClient
 {
     /**
      * @var array{
@@ -63,7 +63,7 @@ class BasicauthClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getwithbasicauth(?array $options = null): ?bool
+    public function getWithBasicAuth(?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -111,7 +111,7 @@ class BasicauthClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postwithbasicauth(mixed $request, ?array $options = null): ?bool
+    public function postWithBasicAuth(mixed $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {

@@ -33,11 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET request with custom api key
-func (c *Client) Getwithbearertoken(
+func (c *Client) GetWithBearerToken(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Getwithbearertoken(
+	response, err := c.WithRawResponse.GetWithBearerToken(
 		ctx,
 		opts...,
 	)

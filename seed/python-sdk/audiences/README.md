@@ -35,11 +35,15 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedAudiences
 
-client = SeedApi()
+client = SeedAudiences()
 
-client.foo.find()
+client.foo.find(
+    optional_string="optionalString",
+    public_property="publicProperty",
+    private_property=1,
+)
 ```
 
 ## Environments
@@ -47,11 +51,11 @@ client.foo.find()
 This SDK allows you to configure different environments for API requests.
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedAudiences
+from seed.environment import SeedAudiencesEnvironment
 
-client = SeedApi(
-    environment=SeedApiEnvironment.DEFAULT,
+client = SeedAudiences(
+    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
 ```
 
@@ -62,13 +66,17 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedAudiences
 
-client = AsyncSeedApi()
+client = AsyncSeedAudiences()
 
 
 async def main() -> None:
-    await client.foo.find()
+    await client.foo.find(
+        optional_string="optionalString",
+        public_property="publicProperty",
+        private_property=1,
+    )
 
 
 asyncio.run(main())
@@ -97,9 +105,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedAudiences
 
-client = SeedApi(...)
+client = SeedAudiences(...)
 response = client.foo.with_raw_response.find(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -131,9 +139,9 @@ client.foo.find(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedAudiences
 
-client = SeedApi(..., timeout=20.0)
+client = SeedAudiences(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.foo.find(..., request_options={
@@ -148,9 +156,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedAudiences
 
-client = SeedApi(
+client = SeedAudiences(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

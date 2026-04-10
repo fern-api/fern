@@ -4,8 +4,8 @@ namespace Seed\Playlist;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Playlist\Requests\PlaylistCreatePlaylistRequest;
-use Seed\Types\Playlist;
+use Seed\Playlist\Requests\CreatePlaylistRequest;
+use Seed\Playlist\Types\Playlist;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonSerializer;
@@ -14,9 +14,9 @@ use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Playlist\Requests\PlaylistGetPlaylistsRequest;
+use Seed\Playlist\Requests\GetPlaylistsRequest;
 use Seed\Core\Json\JsonDecoder;
-use Seed\Playlist\Requests\UpdatePlaylistRequest;
+use Seed\Playlist\Types\UpdatePlaylistRequest;
 
 class PlaylistClient
 {
@@ -58,7 +58,7 @@ class PlaylistClient
      * Create a new playlist
      *
      * @param int $serviceParam
-     * @param PlaylistCreatePlaylistRequest $request
+     * @param CreatePlaylistRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -71,7 +71,7 @@ class PlaylistClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createplaylist(int $serviceParam, PlaylistCreatePlaylistRequest $request, ?array $options = null): ?Playlist
+    public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): ?Playlist
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -82,8 +82,8 @@ class PlaylistClient
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "v2/playlist/{$serviceParam}/create",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/v2/playlist/{$serviceParam}/create",
                     method: HttpMethod::POST,
                     query: $query,
                     body: $request->body,
@@ -114,7 +114,7 @@ class PlaylistClient
      * Returns the user's playlists
      *
      * @param int $serviceParam
-     * @param PlaylistGetPlaylistsRequest $request
+     * @param GetPlaylistsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -127,26 +127,24 @@ class PlaylistClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getplaylists(int $serviceParam, PlaylistGetPlaylistsRequest $request, ?array $options = null): ?array
+    public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['otherField'] = $request->otherField;
         $query['multiLineDocs'] = $request->multiLineDocs;
+        $query['multipleField'] = $request->multipleField;
         if ($request->limit != null) {
             $query['limit'] = $request->limit;
         }
         if ($request->optionalMultipleField != null) {
             $query['optionalMultipleField'] = $request->optionalMultipleField;
         }
-        if ($request->multipleField != null) {
-            $query['multipleField'] = $request->multipleField;
-        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "v2/playlist/{$serviceParam}/all",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/v2/playlist/{$serviceParam}/all",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -189,14 +187,14 @@ class PlaylistClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getplaylist(int $serviceParam, string $playlistId, ?array $options = null): ?Playlist
+    public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): ?Playlist
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "v2/playlist/{$serviceParam}/{$playlistId}",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/v2/playlist/{$serviceParam}/{$playlistId}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -226,7 +224,7 @@ class PlaylistClient
      *
      * @param int $serviceParam
      * @param string $playlistId
-     * @param UpdatePlaylistRequest $request
+     * @param ?UpdatePlaylistRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -239,14 +237,14 @@ class PlaylistClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateplaylist(int $serviceParam, string $playlistId, UpdatePlaylistRequest $request, ?array $options = null): ?Playlist
+    public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request = null, ?array $options = null): ?Playlist
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "v2/playlist/{$serviceParam}/{$playlistId}",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/v2/playlist/{$serviceParam}/{$playlistId}",
                     method: HttpMethod::PUT,
                     body: $request,
                 ),
@@ -288,14 +286,14 @@ class PlaylistClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function deleteplaylist(int $serviceParam, string $playlistId, ?array $options = null): void
+    public function deletePlaylist(int $serviceParam, string $playlistId, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "v2/playlist/{$serviceParam}/{$playlistId}",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/v2/playlist/{$serviceParam}/{$playlistId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,

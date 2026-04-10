@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.migration import Migration
 from .raw_client import AsyncRawMigrationClient, RawMigrationClient
+from .types.migration import Migration
 
 
 class MigrationClient:
@@ -23,7 +23,7 @@ class MigrationClient:
         """
         return self._raw_client
 
-    def getattemptedmigrations(
+    def get_attempted_migrations(
         self, *, admin_key_header: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Migration]:
         """
@@ -38,19 +38,19 @@ class MigrationClient:
         -------
         typing.List[Migration]
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.migration.getattemptedmigrations(
+        client.migration.get_attempted_migrations(
             admin_key_header="admin-key-header",
         )
         """
-        _response = self._raw_client.getattemptedmigrations(
+        _response = self._raw_client.get_attempted_migrations(
             admin_key_header=admin_key_header, request_options=request_options
         )
         return _response.data
@@ -71,7 +71,7 @@ class AsyncMigrationClient:
         """
         return self._raw_client
 
-    async def getattemptedmigrations(
+    async def get_attempted_migrations(
         self, *, admin_key_header: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Migration]:
         """
@@ -86,27 +86,27 @@ class AsyncMigrationClient:
         -------
         typing.List[Migration]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.migration.getattemptedmigrations(
+            await client.migration.get_attempted_migrations(
                 admin_key_header="admin-key-header",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getattemptedmigrations(
+        _response = await self._raw_client.get_attempted_migrations(
             admin_key_header=admin_key_header, request_options=request_options
         )
         return _response.data

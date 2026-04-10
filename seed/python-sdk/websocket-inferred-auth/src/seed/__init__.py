@@ -6,7 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
+    from . import auth, realtime
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+    from .auth import TokenResponse
+    from .client import AsyncSeedWebsocketAuth, SeedWebsocketAuth
+    from .realtime import (
         ReceiveEvent,
         ReceiveEvent2,
         ReceiveEvent3,
@@ -14,37 +18,24 @@ if typing.TYPE_CHECKING:
         SendEvent,
         SendEvent2,
         SendSnakeCase,
-        TokenResponse,
     )
-    from . import auth
-    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .auth import (
-        AuthGetTokenWithClientCredentialsRequestAudience,
-        AuthGetTokenWithClientCredentialsRequestGrantType,
-        AuthRefreshTokenRequestAudience,
-        AuthRefreshTokenRequestGrantType,
-    )
-    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
-    "AuthGetTokenWithClientCredentialsRequestAudience": ".auth",
-    "AuthGetTokenWithClientCredentialsRequestGrantType": ".auth",
-    "AuthRefreshTokenRequestAudience": ".auth",
-    "AuthRefreshTokenRequestGrantType": ".auth",
+    "AsyncSeedWebsocketAuth": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "ReceiveEvent": ".types",
-    "ReceiveEvent2": ".types",
-    "ReceiveEvent3": ".types",
-    "ReceiveSnakeCase": ".types",
-    "SeedApi": ".client",
-    "SendEvent": ".types",
-    "SendEvent2": ".types",
-    "SendSnakeCase": ".types",
-    "TokenResponse": ".types",
+    "ReceiveEvent": ".realtime",
+    "ReceiveEvent2": ".realtime",
+    "ReceiveEvent3": ".realtime",
+    "ReceiveSnakeCase": ".realtime",
+    "SeedWebsocketAuth": ".client",
+    "SendEvent": ".realtime",
+    "SendEvent2": ".realtime",
+    "SendSnakeCase": ".realtime",
+    "TokenResponse": ".auth",
     "__version__": ".version",
     "auth": ".auth",
+    "realtime": ".realtime",
 }
 
 
@@ -70,22 +61,19 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
-    "AuthGetTokenWithClientCredentialsRequestAudience",
-    "AuthGetTokenWithClientCredentialsRequestGrantType",
-    "AuthRefreshTokenRequestAudience",
-    "AuthRefreshTokenRequestGrantType",
+    "AsyncSeedWebsocketAuth",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
     "ReceiveSnakeCase",
-    "SeedApi",
+    "SeedWebsocketAuth",
     "SendEvent",
     "SendEvent2",
     "SendSnakeCase",
     "TokenResponse",
     "__version__",
     "auth",
+    "realtime",
 ]

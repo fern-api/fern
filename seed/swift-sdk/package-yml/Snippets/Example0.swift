@@ -1,14 +1,14 @@
 import Foundation
-import Api
+import PackageYml
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = PackageYmlClient(baseURL: "https://api.fern.com")
 
-    _ = try await client..echo(
-        id: "id",
-        request: .init(
-            name: "name",
-            size: 1
+    _ = try await client.echo(
+        id: "id-ksfd9c1",
+        request: EchoRequest(
+            name: "Hello world!",
+            size: 20
         )
     )
 }

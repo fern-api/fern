@@ -11,28 +11,28 @@ export function handleNonStatusCodeError(
 ): never {
     switch (error.reason) {
         case "non-json":
-            throw new errors.SeedApiError({
+            throw new errors.SeedWebhooksError({
                 statusCode: error.statusCode,
                 body: error.rawBody,
                 rawResponse: rawResponse,
             });
         case "body-is-null":
-            throw new errors.SeedApiError({
+            throw new errors.SeedWebhooksError({
                 statusCode: error.statusCode,
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedApiTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
+            throw new errors.SeedWebhooksTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
                 cause: error.cause,
             });
         case "unknown":
-            throw new errors.SeedApiError({
+            throw new errors.SeedWebhooksError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
                 cause: error.cause,
             });
         default:
-            throw new errors.SeedApiError({
+            throw new errors.SeedWebhooksError({
                 message: "Unknown error",
                 rawResponse: rawResponse,
             });

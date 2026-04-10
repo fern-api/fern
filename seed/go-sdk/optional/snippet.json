@@ -4,33 +4,33 @@
             "id": {
                 "path": "/deploy/{actionId}/versions/{id}",
                 "method": "POST",
-                "identifier_override": "endpoint_optional.sendoptionalnullablewithalloptionalproperties"
+                "identifier_override": "endpoint_optional.sendOptionalNullableWithAllOptionalProperties"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/optional/fern\"\n\tfernclient \"github.com/optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Optional.Sendoptionalnullablewithalloptionalproperties(\n\tcontext.TODO(),\n\t\u0026fern.DeployParams{\n\t\tActionID: \"actionId\",\n\t\tID:       \"id\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/optional/fern\"\n\tfernclient \"github.com/optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Optional.SendOptionalNullableWithAllOptionalProperties(\n\tcontext.TODO(),\n\t\"actionId\",\n\t\"id\",\n\t\u0026fern.DeployParams{\n\t\tUpdateDraft: fern.Bool(\n\t\t\ttrue,\n\t\t),\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/send-optional-body",
                 "method": "POST",
-                "identifier_override": "endpoint_optional.sendoptionalbody"
+                "identifier_override": "endpoint_optional.sendOptionalBody"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Optional.Sendoptionalbody(\n\tcontext.TODO(),\n\tmap[string]any{\n\t\t\"key\": \"value\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Optional.SendOptionalBody(\n\tcontext.TODO(),\n\tmap[string]any{\n\t\t\"string\": map[string]interface{}{\n\t\t\t\"key\": \"value\",\n\t\t},\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/send-optional-typed-body",
                 "method": "POST",
-                "identifier_override": "endpoint_optional.sendoptionaltypedbody"
+                "identifier_override": "endpoint_optional.sendOptionalTypedBody"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/optional/fern\"\n\tfernclient \"github.com/optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Optional.Sendoptionaltypedbody(\n\tcontext.TODO(),\n\t\u0026fern.SendOptionalBodyRequest{\n\t\tMessage: \"message\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/optional/fern\"\n\tfernclient \"github.com/optional/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Optional.SendOptionalTypedBody(\n\tcontext.TODO(),\n\t\u0026fern.SendOptionalBodyRequest{\n\t\tMessage: \"message\",\n\t},\n)\n"
             }
         }
     ]

@@ -1,30 +1,46 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.mjs";
 import { type NormalizedClientOptions } from "../../../../BaseClient.mjs";
 import * as core from "../../../../core/index.mjs";
-import * as SeedApi from "../../../index.mjs";
-export declare namespace InlinedrequestsClient {
+import * as SeedExhaustive from "../../../index.mjs";
+export declare namespace InlinedRequestsClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }
-export declare class InlinedrequestsClient {
-    protected readonly _options: NormalizedClientOptions<InlinedrequestsClient.Options>;
-    constructor(options: InlinedrequestsClient.Options);
+export declare class InlinedRequestsClient {
+    protected readonly _options: NormalizedClientOptions<InlinedRequestsClient.Options>;
+    constructor(options: InlinedRequestsClient.Options);
     /**
      * POST with custom object in request body, response is an object
      *
-     * @param {SeedApi.InlinedRequestsPostWithObjectBodyandResponseRequest} request
-     * @param {InlinedrequestsClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.BadRequestError}
+     * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
-     *     await client.inlinedrequests.postwithobjectbodyandresponse({
+     *     await client.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",
      *         integer: 1,
-     *         NestedObject: {}
+     *         NestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: "2024-01-15T09:30:00Z",
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["list", "list"],
+     *             set: ["set"],
+     *             map: {
+     *                 1: "map"
+     *             },
+     *             bigint: "1000000"
+     *         }
      *     })
      */
-    postwithobjectbodyandresponse(request: SeedApi.InlinedRequestsPostWithObjectBodyandResponseRequest, requestOptions?: InlinedrequestsClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField>;
-    private __postwithobjectbodyandresponse;
+    postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    private __postWithObjectBodyandResponse;
 }

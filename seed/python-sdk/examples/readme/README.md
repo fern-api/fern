@@ -58,21 +58,23 @@ Generator Invocation Custom Content for fern_examples
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedExamples
 
-client = SeedApi(
+client = SeedExamples(
     token="<token>",
 )
 
-client.service.createmovie(
-    id="id",
-    title="title",
-    from_="from",
-    rating=1.1,
-    type="movie",
-    tag="tag",
+client.service.create_movie(
+    id="movie-c06a4ad7",
+    prequel="movie-cv9b914f",
+    title="The Boy and the Heron",
+    from_="Hayao Miyazaki",
+    rating=8,
+    tag="tag-wf9as23d",
     metadata={
-        "key": "value"
+        "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+        "releaseDate": "2023-12-08",
+        "ratings": {"rottenTomatoes": 97, "imdb": 7.6}
     },
     revenue=1000000,
 )
@@ -83,11 +85,11 @@ client.service.createmovie(
 This SDK allows you to configure different environments for API requests.
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedExamples
+from seed.environment import SeedExamplesEnvironment
 
-client = SeedApi(
-    environment=SeedApiEnvironment.PRODUCTION,
+client = SeedExamples(
+    environment=SeedExamplesEnvironment.PRODUCTION,
 )
 ```
 
@@ -98,16 +100,16 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedExamples
 
-client = AsyncSeedApi(
+client = AsyncSeedExamples(
     token="<token>",
 )
 
 
 async def main() -> None:
-    await client.service.getmovie(
-        movie_id="movieId",
+    await client.service.get_movie(
+        movie_id="movie-c06a4ad7",
     )
 
 
@@ -117,23 +119,25 @@ asyncio.run(main())
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedExamples
 
-client = AsyncSeedApi(
+client = AsyncSeedExamples(
     token="<token>",
 )
 
 
 async def main() -> None:
-    await client.service.createmovie(
-        id="id",
-        title="title",
-        from_="from",
-        rating=1.1,
-        type="movie",
-        tag="tag",
+    await client.service.create_movie(
+        id="movie-c06a4ad7",
+        prequel="movie-cv9b914f",
+        title="The Boy and the Heron",
+        from_="Hayao Miyazaki",
+        rating=8,
+        tag="tag-wf9as23d",
         metadata={
-            "key": "value"
+            "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+            "releaseDate": "2023-12-08",
+            "ratings": {"rottenTomatoes": 97, "imdb": 7.6}
         },
         revenue=1000000,
     )
@@ -151,7 +155,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.service.createmovie(...)
+    client.service.create_movie(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -165,10 +169,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedExamples
 
-client = SeedApi(...)
-response = client.service.with_raw_response.createmovie(...)
+client = SeedExamples(...)
+response = client.service.with_raw_response.create_movie(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -189,7 +193,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.createmovie(..., request_options={
+client.service.create_movie(..., request_options={
     "max_retries": 1
 })
 ```
@@ -199,12 +203,12 @@ client.service.createmovie(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedExamples
 
-client = SeedApi(..., timeout=20.0)
+client = SeedExamples(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.service.createmovie(..., request_options={
+client.service.create_movie(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -216,9 +220,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedExamples
 
-client = SeedApi(
+client = SeedExamples(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

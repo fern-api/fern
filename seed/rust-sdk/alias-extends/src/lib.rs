@@ -1,21 +1,21 @@
-//! # alias-extends SDK
+//! # AliasExtends SDK
 //!
-//! The official Rust SDK for the alias-extends.
+//! A Test Definition for extending an alias
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_alias_extends::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = AliasExtendsClient::new(config).expect("Failed to build client");
 //!     client
-//!         ..extended_inline_request_body(
-//!             &ExtendedInlineRequestBodyRequest {
+//!         .extended_inline_request_body(
+//!             &InlinedChildRequest {
 //!                 parent: "parent".to_string(),
 //!                 child: "child".to_string(),
 //!             },
@@ -35,15 +35,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
 pub use error::{ApiError, BuildError};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-

@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_.getUnion"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient._.get_union()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client._.get_union()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedUndiscriminatedUnionWithResponseProperty\n\nclient = SeedUndiscriminatedUnionWithResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.get_union()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnionWithResponseProperty\n\nclient = AsyncSeedUndiscriminatedUnionWithResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.get_union()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -22,8 +22,8 @@
                 "identifier_override": "endpoint_.listUnions"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient._.list_unions()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client._.list_unions()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedUndiscriminatedUnionWithResponseProperty\n\nclient = SeedUndiscriminatedUnionWithResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.list_unions()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnionWithResponseProperty\n\nclient = AsyncSeedUndiscriminatedUnionWithResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.list_unions()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

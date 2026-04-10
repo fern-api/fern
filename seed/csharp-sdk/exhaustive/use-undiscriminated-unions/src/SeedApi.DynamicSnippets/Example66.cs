@@ -1,27 +1,22 @@
-using SeedApi;
+using SeedExhaustive;
 
 namespace Usage;
 
 public class Example66
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.EndpointsParams.EndpointsParamsGetWithAllowMultipleQueryAsync(
-            new EndpointsParamsGetWithAllowMultipleQueryRequest {
-                Query = new List<string>(){
-                    "query",
-                }
-                ,
-                Number = new List<int>(){
-                    1,
-                }
-
+        await client.ReqWithHeaders.GetWithCustomHeaderAsync(
+            new ReqWithHeaders {
+                XTestServiceHeader = "X-TEST-SERVICE-HEADER",
+                XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
+                Body = "string"
             }
         );
     }

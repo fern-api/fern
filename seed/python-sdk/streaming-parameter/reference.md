@@ -13,15 +13,15 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedStreaming
 
-client = SeedApi(
+client = SeedStreaming(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.dummy.generate(
-    stream=True,
-    num_events=1,
+    stream=False,
+    num_events=5,
 )
 
 ```

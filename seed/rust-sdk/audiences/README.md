@@ -1,7 +1,7 @@
 # Seed Rust Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
-[![crates.io shield](https://img.shields.io/crates/v/seed_api)](https://crates.io/crates/seed_api)
+[![crates.io shield](https://img.shields.io/crates/v/seed_audiences)](https://crates.io/crates/seed_audiences)
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
@@ -26,13 +26,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_api = "0.0.1"
+seed_audiences = "0.0.1"
 ```
 
 Or install via cargo:
 
 ```sh
-cargo add seed_api
+cargo add seed_audiences
 ```
 
 ## Reference
@@ -44,19 +44,21 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use seed_api::prelude::*;
+use seed_audiences::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = AudiencesClient::new(config).expect("Failed to build client");
     client
         .foo
         .find(
-            &FooFindRequest {
-                ..Default::default()
+            &FindRequest {
+                optional_string: OptionalString(Some("optionalString".to_string())),
+                public_property: Some("publicProperty".to_string()),
+                private_property: Some(1),
             },
             None,
         )
@@ -69,10 +71,10 @@ async fn main() {
 This SDK allows you to configure different environments for API requests.
 
 ```rust
-use seed_api::prelude::{*};
+use seed_audiences::prelude::{*};
 
 let config = ClientConfig {
-    base_url: Environment::Default.url().to_string(),
+    base_url: Environment::EnvironmentA.url().to_string(),
     ..Default::default()
 };
 let client = Client::new(config).expect("Failed to build client");
@@ -101,9 +103,9 @@ match client.foo.find(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_api::prelude::{*};
+use seed_audiences::prelude::{*};
 
-let request = FooFindRequest {
+let request = FindRequest {
     ...
 };
 ```

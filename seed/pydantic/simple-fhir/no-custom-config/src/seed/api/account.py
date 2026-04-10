@@ -5,12 +5,11 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from .account_resource_type import AccountResourceType
 from .core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 
 
 class Account(BaseResource):
-    resource_type: AccountResourceType
+    resource_type: typing.Literal["Account"] = "Account"
     name: str
     patient: typing.Optional["Patient"] = None
     practitioner: typing.Optional["Practitioner"] = None

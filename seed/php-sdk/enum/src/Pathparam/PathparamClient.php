@@ -1,6 +1,6 @@
 <?php
 
-namespace Seed\Pathparam;
+namespace Seed\PathParam;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
@@ -12,7 +12,7 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class PathparamClient
+class PathParamClient
 {
     /**
      * @var array{

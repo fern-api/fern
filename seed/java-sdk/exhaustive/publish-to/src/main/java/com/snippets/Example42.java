@@ -1,23 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.types.TypesNestedObjectWithRequiredField;
-import com.seed.api.types.TypesObjectWithOptionalField;
-import java.util.Arrays;
+import com.seed.exhaustive.SeedExhaustiveClient;
 
 public class Example42 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpointsObject()
-                .endpointsObjectGetAndReturnNestedWithRequiredFieldAsList(
-                        Arrays.asList(TypesNestedObjectWithRequiredField.builder()
-                                .string("string")
-                                .nestedObject(
-                                        TypesObjectWithOptionalField.builder().build())
-                                .build()));
+        client.endpoints().params().getWithBooleanPath(true);
     }
 }

@@ -1,8 +1,8 @@
 {
   "mappings": [
     {
-      "id": "1dc9e9dc-becb-434e-9012-bba642172736",
-      "name": "getwithbasicauth - default",
+      "id": "ce59c023-78fc-4d8d-8e8c-95f5e1a6204a",
+      "name": "getWithBasicAuth - default",
       "request": {
         "urlPathTemplate": "/basic-auth",
         "method": "GET",
@@ -19,7 +19,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "1dc9e9dc-becb-434e-9012-bba642172736",
+      "uuid": "ce59c023-78fc-4d8d-8e8c-95f5e1a6204a",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -33,8 +33,8 @@
       "postServeActions": []
     },
     {
-      "id": "4b3aa2ff-bdc0-4320-8cc0-a0002a0e4280",
-      "name": "postwithbasicauth - default",
+      "id": "9cf6385c-29ea-4710-8792-fd2e00adc7c7",
+      "name": "postWithBasicAuth - default",
       "request": {
         "urlPathTemplate": "/basic-auth",
         "method": "POST",
@@ -51,7 +51,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "4b3aa2ff-bdc0-4320-8cc0-a0002a0e4280",
+      "uuid": "9cf6385c-29ea-4710-8792-fd2e00adc7c7",
       "persistent": true,
       "priority": 3,
       "metadata": {

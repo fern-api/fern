@@ -1,29 +1,16 @@
 {
     "endpoints": [
         {
-            "example_identifier": "23d7767",
-            "id": {
-                "method": "GET",
-                "path": "/apiKey",
-                "identifier_override": "endpoint_service.getwithbearertoken"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.service().getwithbearertoken();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.service().getwithbearertoken();\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "34d92e75",
             "id": {
                 "method": "GET",
                 "path": "/apiKey",
-                "identifier_override": "endpoint_service.getwithbearertoken"
+                "identifier_override": "endpoint_service.getWithBearerToken"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.service().getwithbearertoken();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .apiKey(\"<value>\")\n            .build();\n\n        client.service().getwithbearertoken();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.headerTokenEnvironmentVariable.SeedHeaderTokenEnvironmentVariableClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedHeaderTokenEnvironmentVariableClient client = SeedHeaderTokenEnvironmentVariableClient\n            .builder()\n            .headerTokenAuth(\"<value>\")\n            .build();\n\n        client.service().getWithBearerToken();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.headerTokenEnvironmentVariable.SeedHeaderTokenEnvironmentVariableClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedHeaderTokenEnvironmentVariableClient client = SeedHeaderTokenEnvironmentVariableClient\n            .builder()\n            .headerTokenAuth(\"<value>\")\n            .build();\n\n        client.service().getWithBearerToken();\n    }\n}\n"
             }
         }
     ],

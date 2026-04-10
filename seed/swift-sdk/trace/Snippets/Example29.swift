@@ -1,16 +1,13 @@
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = TraceClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.playlist.getplaylist(
-        serviceParam: 1,
-        playlistId: "playlistId"
-    )
+    _ = try await client.sysprop.getNumWarmInstances()
 }
 
 try await main()

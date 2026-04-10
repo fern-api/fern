@@ -1,20 +1,20 @@
 import Foundation
 
 public enum UnionWithTime: Codable, Hashable, Sendable {
-    case date(UnionWithTimeDate)
-    case datetime(UnionWithTimeDatetime)
-    case value(UnionWithTimeValue)
+    case date(CalendarDate)
+    case datetime(Date)
+    case value(Int)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "date":
-            self = .date(try UnionWithTimeDate(from: decoder))
+            self = .date(try container.decode(CalendarDate.self, forKey: .value))
         case "datetime":
-            self = .datetime(try UnionWithTimeDatetime(from: decoder))
+            self = .datetime(try container.decode(Date.self, forKey: .value))
         case "value":
-            self = .value(try UnionWithTimeValue(from: decoder))
+            self = .value(try container.decode(Int.self, forKey: .value))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -30,17 +30,18 @@ public enum UnionWithTime: Codable, Hashable, Sendable {
         switch self {
         case .date(let data):
             try container.encode("date", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         case .datetime(let data):
             try container.encode("datetime", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         case .value(let data):
             try container.encode("value", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
+        case value
     }
 }

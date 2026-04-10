@@ -35,9 +35,9 @@ class RawPackageClient:
             },
             request_options=request_options,
         )
+        if 200 <= _response.status_code < 300:
+            return HttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -74,9 +74,9 @@ class AsyncRawPackageClient:
             },
             request_options=request_options,
         )
+        if 200 <= _response.status_code < 300:
+            return AsyncHttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

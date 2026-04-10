@@ -14,11 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &stream.DummyGenerateRequest{
-        Stream: true,
+    request := &stream.GenerateStreamRequest{
         NumEvents: 1,
     }
-    client.Dummy.Generate(
+    client.Dummy.GenerateStream(
         context.TODO(),
         request,
     )

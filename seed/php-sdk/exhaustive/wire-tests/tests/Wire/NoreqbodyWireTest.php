@@ -5,7 +5,7 @@ namespace Seed\Tests;
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 
-class NoreqbodyWireTest extends WireMockTestCase
+class NoReqBodyWireTest extends WireMockTestCase
 {
     /**
      * @var SeedClient $client
@@ -14,12 +14,12 @@ class NoreqbodyWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetwithnorequestbody(): void {
-        $testId = 'noreqbody.getwithnorequestbody.0';
-        $this->client->noreqbody->getwithnorequestbody(
+    public function testGetWithNoRequestBody(): void {
+        $testId = 'no_req_body.get_with_no_request_body.0';
+        $this->client->noReqBody->getWithNoRequestBody(
             [
                 'headers' => [
-                    'X-Test-Id' => 'noreqbody.getwithnorequestbody.0',
+                    'X-Test-Id' => 'no_req_body.get_with_no_request_body.0',
                 ],
             ],
         );
@@ -34,12 +34,12 @@ class NoreqbodyWireTest extends WireMockTestCase
 
     /**
      */
-    public function testPostwithnorequestbody(): void {
-        $testId = 'noreqbody.postwithnorequestbody.0';
-        $this->client->noreqbody->postwithnorequestbody(
+    public function testPostWithNoRequestBody(): void {
+        $testId = 'no_req_body.post_with_no_request_body.0';
+        $this->client->noReqBody->postWithNoRequestBody(
             [
                 'headers' => [
-                    'X-Test-Id' => 'noreqbody.postwithnorequestbody.0',
+                    'X-Test-Id' => 'no_req_body.post_with_no_request_body.0',
                 ],
             ],
         );

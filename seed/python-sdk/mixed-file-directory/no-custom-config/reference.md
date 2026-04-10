@@ -27,9 +27,9 @@ Create a new organization.
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedMixedFileDirectory
 
-client = SeedApi(
+client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -51,7 +51,7 @@ client.organization.create(
 <dl>
 <dd>
 
-**name:** `str` 
+**request:** `CreateOrganizationRequest` 
     
 </dd>
 </dl>
@@ -99,13 +99,15 @@ List all users.
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedMixedFileDirectory
 
-client = SeedApi(
+client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.list()
+client.user.list(
+    limit=1,
+)
 
 ```
 </dd>
@@ -141,8 +143,8 @@ client.user.list()
 </dl>
 </details>
 
-## UserEvents
-<details><summary><code>client.user_events.<a href="src/seed/user_events/client.py">user_events_list_events</a>(...) -> typing.List[UserEvent]</code></summary>
+## User Events
+<details><summary><code>client.user.events.<a href="src/seed/user/events/client.py">list_events</a>(...) -> typing.List[Event]</code></summary>
 <dl>
 <dd>
 
@@ -169,13 +171,15 @@ List all user events.
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedMixedFileDirectory
 
-client = SeedApi(
+client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user_events.user_events_list_events()
+client.user.events.list_events(
+    limit=1,
+)
 
 ```
 </dd>
@@ -211,8 +215,8 @@ client.user_events.user_events_list_events()
 </dl>
 </details>
 
-## UserEventsMetadata
-<details><summary><code>client.user_events_metadata.<a href="src/seed/user_events_metadata/client.py">user_events_metadata_get_metadata</a>(...) -> UsereventsMetadata</code></summary>
+## User Events Metadata
+<details><summary><code>client.user.events.metadata.<a href="src/seed/user/events/metadata/client.py">get_metadata</a>(...) -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -239,13 +243,13 @@ Get event metadata.
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedMixedFileDirectory
 
-client = SeedApi(
+client = SeedMixedFileDirectory(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user_events_metadata.user_events_metadata_get_metadata(
+client.user.events.metadata.get_metadata(
     id="id",
 )
 

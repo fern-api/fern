@@ -13,21 +13,21 @@ impl UsersClient {
         })
     }
 
-    pub async fn listwithuripagination(
+    pub async fn list_with_uri_pagination(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<ListUsersUriPaginationResponse, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users/uri", None, None, options)
+            .execute_request(Method::GET, "/users/uri", None, None, options)
             .await
     }
 
-    pub async fn listwithpathpagination(
+    pub async fn list_with_path_pagination(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<ListUsersPathPaginationResponse, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users/path", None, None, options)
+            .execute_request(Method::GET, "/users/path", None, None, options)
             .await
     }
 }

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createuser</a>({ ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUser</a>({ ...params }) -> SeedExtraProperties.User</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,10 @@
 <dd>
 
 ```typescript
-await client.user.createuser({
-    _type: "CreateUserRequest",
-    _version: "v1",
-    name: "name"
+await client.user.createUser({
+    name: "Alice",
+    age: 30,
+    location: "Wonderland"
 });
 
 ```
@@ -33,7 +33,7 @@ await client.user.createuser({
 <dl>
 <dd>
 
-**request:** `SeedApi.UserCreateUserRequest` 
+**request:** `SeedExtraProperties.CreateUserRequest` 
     
 </dd>
 </dl>

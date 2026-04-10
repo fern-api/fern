@@ -18,8 +18,9 @@ func do() {
     )
     request := []string{
         "string",
+        "string",
     }
-    client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitives(
+    client.Endpoints.Container.GetAndReturnListOfPrimitives(
         context.TODO(),
         request,
     )

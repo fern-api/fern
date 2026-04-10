@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,15 +7,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_container
-        .endpoints_container_get_and_return_list_of_objects(
-            &vec![TypesObjectWithRequiredField {
-                string: "string".to_string(),
-                ..Default::default()
-            }],
-            None,
-        )
+        .endpoints
+        .container
+        .get_and_return_set_of_primitives(&HashSet::from(["string".to_string()]), None)
         .await;
 }

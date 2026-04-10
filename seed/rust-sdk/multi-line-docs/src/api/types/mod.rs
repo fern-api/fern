@@ -1,7 +1,7 @@
+pub mod create_user_request;
 pub mod operand;
-pub mod user;
-pub mod user_create_user_request;
+pub mod user_user;
 
+pub use create_user_request::CreateUserRequest;
 pub use operand::Operand;
-pub use user::User;
-pub use user_create_user_request::UserCreateUserRequest;
+pub use user_user::User;

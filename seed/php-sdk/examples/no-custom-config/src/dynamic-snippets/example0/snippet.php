@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->_->echo_(
-    'string',
+$client->echo_(
+    'Hello world!\n\nwith\n\tnewlines',
 );

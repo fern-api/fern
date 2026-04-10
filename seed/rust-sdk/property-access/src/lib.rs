@@ -1,20 +1,20 @@
-//! # property-access SDK
+//! # PropertyAccess SDK
 //!
-//! The official Rust SDK for the property-access.
+//! The official Rust SDK for the PropertyAccess.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_property_access::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = PropertyAccessClient::new(config).expect("Failed to build client");
 //!     client
-//!         ..create_user(
+//!         .create_user(
 //!             &User {
 //!                 id: "id".to_string(),
 //!                 email: "email".to_string(),
@@ -46,15 +46,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
 pub use error::{ApiError, BuildError};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-

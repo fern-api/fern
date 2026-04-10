@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.customprefix.SeedApiClient;
-import com.customprefix.resources.imdb.requests.CreateMovieRequest;
+import com.customprefix.resources.imdb.types.CreateMovieRequest;
 
 public class Example0 {
     public static void main(String[] args) {
@@ -11,7 +11,7 @@ public class Example0 {
                 .build();
 
         client.imdb()
-                .createmovie(
+                .createMovie(
                         CreateMovieRequest.builder().title("title").rating(1.1).build());
     }
 }

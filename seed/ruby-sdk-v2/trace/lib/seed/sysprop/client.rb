@@ -17,16 +17,16 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Types::Language] :language
+      # @option params [Seed::Commons::Types::Language] :language
       # @option params [Integer] :num_warm_instances
       #
       # @return [untyped]
-      def setnumwarminstances(request_options: {}, **params)
+      def set_num_warm_instances(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
-          path: "sysprop/num-warm-instances/#{URI.encode_uri_component(params[:language].to_s)}/#{URI.encode_uri_component(params[:num_warm_instances].to_s)}",
+          path: "/sysprop/num-warm-instances/#{URI.encode_uri_component(params[:language].to_s)}/#{URI.encode_uri_component(params[:num_warm_instances].to_s)}",
           request_options: request_options
         )
         begin
@@ -49,13 +49,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Hash[String, Integer]]
-      def getnumwarminstances(request_options: {}, **params)
+      # @return [Hash[Seed::Commons::Types::Language, Integer]]
+      def get_num_warm_instances(request_options: {}, **params)
         Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "sysprop/num-warm-instances",
+          path: "/sysprop/num-warm-instances",
           request_options: request_options
         )
         begin

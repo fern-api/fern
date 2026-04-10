@@ -1,6 +1,6 @@
 # Reference
-## Propertybasederror
-<details><summary><code>client.propertybasederror.<a href="/src/api/resources/propertybasederror/client/Client.ts">throwerror</a>() -> string</code></summary>
+## PropertyBasedError
+<details><summary><code>client.propertyBasedError.<a href="/src/api/resources/propertyBasedError/client/Client.ts">throwError</a>() -> string</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```typescript
-await client.propertybasederror.throwerror();
+await client.propertyBasedError.throwError();
 
 ```
 </dd>
@@ -43,7 +43,7 @@ await client.propertybasederror.throwerror();
 <dl>
 <dd>
 
-**requestOptions:** `PropertybasederrorClient.RequestOptions` 
+**requestOptions:** `PropertyBasedErrorClient.RequestOptions` 
     
 </dd>
 </dl>

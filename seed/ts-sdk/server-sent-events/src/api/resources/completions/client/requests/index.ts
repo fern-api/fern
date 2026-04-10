@@ -1,2 +1,2 @@
-export type { CompletionsStreamRequest } from "./CompletionsStreamRequest.js";
-export type { CompletionsStreamWithoutTerminatorRequest } from "./CompletionsStreamWithoutTerminatorRequest.js";
+export type { StreamCompletionRequest } from "./StreamCompletionRequest.js";
+export type { StreamCompletionRequestWithoutTerminator } from "./StreamCompletionRequestWithoutTerminator.js";

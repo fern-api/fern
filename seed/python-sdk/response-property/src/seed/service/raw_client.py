@@ -10,9 +10,10 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..types.optional_string_response import OptionalStringResponse
-from ..types.optional_with_docs import OptionalWithDocs
-from ..types.response import Response
 from ..types.string_response import StringResponse
+from .types.movie import Movie
+from .types.optional_with_docs import OptionalWithDocs
+from .types.response import Response
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -23,9 +24,9 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def getmovie(
+    def get_movie(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[Response]:
+    ) -> HttpResponse[Movie]:
         """
         Parameters
         ----------
@@ -36,28 +37,25 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[Response]
-
+        HttpResponse[Movie]
         """
         _response = self._client_wrapper.httpx_client.request(
             "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     Response,
                     parse_obj_as(
                         type_=Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _data = _parsed_response.data
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -68,9 +66,9 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getmoviedocs(
+    def get_movie_docs(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[Response]:
+    ) -> HttpResponse[str]:
         """
         Parameters
         ----------
@@ -81,28 +79,25 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[Response]
-
+        HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie/docs",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     Response,
                     parse_obj_as(
                         type_=Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _data = _parsed_response.docs
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -113,9 +108,9 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getmoviename(
+    def get_movie_name(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[StringResponse]:
+    ) -> HttpResponse[str]:
         """
         Parameters
         ----------
@@ -126,28 +121,25 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[StringResponse]
-
+        HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie/name",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     StringResponse,
                     parse_obj_as(
                         type_=StringResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _data = _parsed_response.data
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -158,9 +150,9 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getmoviemetadata(
+    def get_movie_metadata(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[Response]:
+    ) -> HttpResponse[typing.Dict[str, str]]:
         """
         Parameters
         ----------
@@ -171,28 +163,25 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[Response]
-
+        HttpResponse[typing.Dict[str, str]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie/metadata",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     Response,
                     parse_obj_as(
                         type_=Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _data = _parsed_response.metadata
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -203,9 +192,9 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getoptionalmovie(
+    def get_optional_movie(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[Response]:
+    ) -> HttpResponse[typing.Optional[Movie]]:
         """
         Parameters
         ----------
@@ -216,28 +205,27 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[Response]
-
+        HttpResponse[typing.Optional[Movie]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie/optional",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Response,
+                _parsed_response = typing.cast(
+                    typing.Optional[Response],
                     parse_obj_as(
-                        type_=Response,  # type: ignore
+                        type_=typing.Optional[Response],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _data = _parsed_response.data if _parsed_response is not None else _parsed_response
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -248,9 +236,9 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getoptionalmoviedocs(
+    def get_optional_movie_docs(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[OptionalWithDocs]:
+    ) -> HttpResponse[str]:
         """
         Parameters
         ----------
@@ -261,29 +249,28 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[OptionalWithDocs]
-
+        HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie/optional/docs",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     OptionalWithDocs,
                     parse_obj_as(
                         type_=OptionalWithDocs,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=_data)
+                _data = _parsed_response.docs if _parsed_response is not None else None
+                return HttpResponse(response=_response, data=_data)  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -293,9 +280,9 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getoptionalmoviename(
+    def get_optional_movie_name(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[OptionalStringResponse]:
+    ) -> HttpResponse[str]:
         """
         Parameters
         ----------
@@ -306,29 +293,28 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[OptionalStringResponse]
-
+        HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "movie/optional/name",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     OptionalStringResponse,
                     parse_obj_as(
                         type_=OptionalStringResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=_data)
+                _data = _parsed_response.data if _parsed_response is not None else None
+                return HttpResponse(response=_response, data=_data)  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -343,9 +329,9 @@ class AsyncRawServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def getmovie(
+    async def get_movie(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Response]:
+    ) -> AsyncHttpResponse[Movie]:
         """
         Parameters
         ----------
@@ -356,28 +342,25 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[Response]
-
+        AsyncHttpResponse[Movie]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     Response,
                     parse_obj_as(
                         type_=Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _data = _parsed_response.data
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -388,9 +371,9 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getmoviedocs(
+    async def get_movie_docs(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Response]:
+    ) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
@@ -401,28 +384,25 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[Response]
-
+        AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie/docs",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     Response,
                     parse_obj_as(
                         type_=Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _data = _parsed_response.docs
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -433,9 +413,9 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getmoviename(
+    async def get_movie_name(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[StringResponse]:
+    ) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
@@ -446,28 +426,25 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[StringResponse]
-
+        AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie/name",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     StringResponse,
                     parse_obj_as(
                         type_=StringResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _data = _parsed_response.data
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -478,9 +455,9 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getmoviemetadata(
+    async def get_movie_metadata(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Response]:
+    ) -> AsyncHttpResponse[typing.Dict[str, str]]:
         """
         Parameters
         ----------
@@ -491,28 +468,25 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[Response]
-
+        AsyncHttpResponse[typing.Dict[str, str]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie/metadata",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     Response,
                     parse_obj_as(
                         type_=Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _data = _parsed_response.metadata
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -523,9 +497,9 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getoptionalmovie(
+    async def get_optional_movie(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Response]:
+    ) -> AsyncHttpResponse[typing.Optional[Movie]]:
         """
         Parameters
         ----------
@@ -536,28 +510,27 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[Response]
-
+        AsyncHttpResponse[typing.Optional[Movie]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie/optional",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Response,
+                _parsed_response = typing.cast(
+                    typing.Optional[Response],
                     parse_obj_as(
-                        type_=Response,  # type: ignore
+                        type_=typing.Optional[Response],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+                _data = _parsed_response.data if _parsed_response is not None else _parsed_response
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
@@ -568,9 +541,9 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getoptionalmoviedocs(
+    async def get_optional_movie_docs(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[OptionalWithDocs]:
+    ) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
@@ -581,29 +554,28 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[OptionalWithDocs]
-
+        AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie/optional/docs",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     OptionalWithDocs,
                     parse_obj_as(
                         type_=OptionalWithDocs,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=_data)
+                _data = _parsed_response.docs if _parsed_response is not None else None
+                return AsyncHttpResponse(response=_response, data=_data)  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -613,9 +585,9 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getoptionalmoviename(
+    async def get_optional_movie_name(
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[OptionalStringResponse]:
+    ) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
@@ -626,29 +598,28 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[OptionalStringResponse]
-
+        AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "movie/optional/name",
+            "movie",
             method="POST",
             json=request,
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     OptionalStringResponse,
                     parse_obj_as(
                         type_=OptionalStringResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=_data)
+                _data = _parsed_response.data if _parsed_response is not None else None
+                return AsyncHttpResponse(response=_response, data=_data)  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

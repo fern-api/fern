@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getusername</a>({ ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUsername</a>({ ...params }) -> SeedQueryParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -13,20 +13,23 @@
 <dd>
 
 ```typescript
-await client.user.getusername({
+await client.user.getUsername({
     limit: 1,
-    id: "id",
+    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     date: "2023-01-15",
     deadline: "2024-01-15T09:30:00Z",
-    bytes: "bytes",
+    bytes: "SGVsbG8gd29ybGQh",
     user: {
         name: "name",
         tags: ["tags", "tags"]
     },
-    userList: {
-        name: "name",
-        tags: ["tags", "tags"]
-    },
+    userList: [{
+            name: "name",
+            tags: ["tags", "tags"]
+        }, {
+            name: "name",
+            tags: ["tags", "tags"]
+        }],
     optionalDeadline: "2024-01-15T09:30:00Z",
     keyValue: {
         "keyValue": "keyValue"
@@ -64,7 +67,7 @@ await client.user.getusername({
 <dl>
 <dd>
 
-**request:** `SeedApi.UserGetUsernameRequest` 
+**request:** `SeedQueryParameters.GetUsersRequest` 
     
 </dd>
 </dl>

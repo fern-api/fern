@@ -17,8 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := fern.TypesWeatherReportSunny.Ptr()
-    client.EndpointsEnum.EndpointsEnumGetAndReturnEnum(
+    request := &fern.GetWithQuery{
+        Query: "query",
+        Number: 1,
+    }
+    client.Endpoints.Params.GetWithQuery(
         context.TODO(),
         request,
     )

@@ -1,4 +1,4 @@
-import Api
+import Pagination
 import Foundation
 import Testing
 
@@ -14,7 +14,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -23,11 +23,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -47,7 +55,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -56,11 +64,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -80,7 +96,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -89,11 +105,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -112,7 +136,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -121,11 +145,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -143,7 +175,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -152,11 +184,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -175,7 +215,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -184,11 +224,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -207,7 +255,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -216,11 +264,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -243,7 +299,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -253,11 +309,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -290,7 +354,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -300,11 +364,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -333,7 +405,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -343,11 +415,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -388,7 +468,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -397,11 +477,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
 
@@ -416,7 +504,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -425,11 +513,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
 
@@ -448,7 +544,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -457,11 +553,19 @@ import Testing
         do {
             _ = try await client.complex.search(
                 index: "index",
-                request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-                    SingleFilterSearchRequest(
-
+                request: SearchRequest(
+                    pagination: StartingAfterPaging(
+                        perPage: 1,
+                        startingAfter: "starting_after"
+                    ),
+                    query: SearchRequestQuery.singleFilterSearchRequest(
+                        SingleFilterSearchRequest(
+                            field: "field",
+                            operator: .equals,
+                            value: "value"
+                        )
                     )
-                )),
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

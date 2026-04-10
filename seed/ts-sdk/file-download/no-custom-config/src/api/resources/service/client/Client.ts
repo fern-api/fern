@@ -36,7 +36,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "snippet",
+                "/snippet",
             ),
             method: "POST",
             headers: _headers,
@@ -52,7 +52,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedFileDownloadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -62,11 +62,11 @@ export class ServiceClient {
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/snippet");
     }
 
-    public downloadfile(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<core.BinaryResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__downloadfile(requestOptions));
+    public downloadFile(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<core.BinaryResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
     }
 
-    private async __downloadfile(
+    private async __downloadFile(
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.BinaryResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -89,7 +89,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedFileDownloadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

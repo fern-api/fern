@@ -1,39 +1,9 @@
 import Foundation
 import Testing
-import Api
+import MixedFileDirectory
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
     @Test func list1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  {
-                    "id": "id",
-                    "name": "name",
-                    "age": 1
-                  }
-                ]
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            User(
-                id: "id",
-                name: "name",
-                age: 1
-            )
-        ]
-        let response = try await client.user.list(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func list2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -53,7 +23,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -70,7 +40,7 @@ import Api
             )
         ]
         let response = try await client.user.list(
-            limit: .value(1),
+            limit: 1,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

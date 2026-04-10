@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.gettoken(request) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.getToken(request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,11 @@
 <dd>
 
 ```java
-client.auth().gettoken(
-    AuthGetTokenRequest
+client.auth().getToken(
+    GetTokenRequest
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
-        .audience(AuthGetTokenRequestAudience.HTTPS_API_EXAMPLE_COM)
-        .grantType(AuthGetTokenRequestGrantType.CLIENT_CREDENTIALS)
         .build()
 );
 ```
@@ -52,7 +50,7 @@ client.auth().gettoken(
 <dl>
 <dd>
 
-**audience:** `AuthGetTokenRequestAudience` 
+**audience:** `String` 
     
 </dd>
 </dl>
@@ -60,7 +58,7 @@ client.auth().gettoken(
 <dl>
 <dd>
 
-**grantType:** `AuthGetTokenRequestGrantType` 
+**grantType:** `String` 
     
 </dd>
 </dl>
@@ -73,7 +71,7 @@ client.auth().gettoken(
 </details>
 
 ## User
-<details><summary><code>client.user.getwithbearer() -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.user.getWithBearer() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -86,7 +84,7 @@ client.auth().gettoken(
 <dd>
 
 ```java
-client.user().getwithbearer();
+client.user().getWithBearer();
 ```
 </dd>
 </dl>
@@ -98,7 +96,7 @@ client.user().getwithbearer();
 </dl>
 </details>
 
-<details><summary><code>client.user.getwithapikey() -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.user.getWithApiKey() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -111,7 +109,7 @@ client.user().getwithbearer();
 <dd>
 
 ```java
-client.user().getwithapikey();
+client.user().getWithBearer();
 ```
 </dd>
 </dl>
@@ -123,7 +121,7 @@ client.user().getwithapikey();
 </dl>
 </details>
 
-<details><summary><code>client.user.getwithoauth() -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.user.getWithOAuth() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -136,7 +134,7 @@ client.user().getwithapikey();
 <dd>
 
 ```java
-client.user().getwithoauth();
+client.user().getWithBearer();
 ```
 </dd>
 </dl>
@@ -148,7 +146,7 @@ client.user().getwithoauth();
 </dl>
 </details>
 
-<details><summary><code>client.user.getwithbasic() -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.user.getWithBasic() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -161,7 +159,7 @@ client.user().getwithoauth();
 <dd>
 
 ```java
-client.user().getwithbasic();
+client.user().getWithBearer();
 ```
 </dd>
 </dl>
@@ -173,7 +171,7 @@ client.user().getwithbasic();
 </dl>
 </details>
 
-<details><summary><code>client.user.getwithinferredauth() -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.user.getWithInferredAuth() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -186,7 +184,7 @@ client.user().getwithbasic();
 <dd>
 
 ```java
-client.user().getwithinferredauth();
+client.user().getWithBearer();
 ```
 </dd>
 </dl>
@@ -198,7 +196,7 @@ client.user().getwithinferredauth();
 </dl>
 </details>
 
-<details><summary><code>client.user.getwithanyauth() -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.user.getWithAnyAuth() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -211,7 +209,7 @@ client.user().getwithinferredauth();
 <dd>
 
 ```java
-client.user().getwithanyauth();
+client.user().getWithBearer();
 ```
 </dd>
 </dl>
@@ -223,7 +221,7 @@ client.user().getwithanyauth();
 </dl>
 </details>
 
-<details><summary><code>client.user.getwithallauth() -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.user.getWithAllAuth() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -236,7 +234,7 @@ client.user().getwithanyauth();
 <dd>
 
 ```java
-client.user().getwithallauth();
+client.user().getWithBearer();
 ```
 </dd>
 </dl>

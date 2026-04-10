@@ -4,8 +4,10 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.deploy_response import DeployResponse
 from .raw_client import AsyncRawOptionalClient, RawOptionalClient
+from .types.deploy_params import DeployParams
+from .types.deploy_response import DeployResponse
+from .types.send_optional_body_request import SendOptionalBodyRequest
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,7 +28,7 @@ class OptionalClient:
         """
         return self._raw_client
 
-    def sendoptionalbody(
+    def send_optional_body(
         self,
         *,
         request: typing.Optional[typing.Dict[str, typing.Any]] = None,
@@ -47,23 +49,28 @@ class OptionalClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedObjectsWithImports
 
-        client = SeedApi(
+        client = SeedObjectsWithImports(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.optional.sendoptionalbody(
-            request={"key": "value"},
+        client.optional.send_optional_body(
+            request={"string": {"key": "value"}},
         )
         """
-        _response = self._raw_client.sendoptionalbody(request=request, request_options=request_options)
+        _response = self._raw_client.send_optional_body(request=request, request_options=request_options)
         return _response.data
 
-    def sendoptionaltypedbody(self, *, message: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def send_optional_typed_body(
+        self,
+        *,
+        request: typing.Optional[SendOptionalBodyRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> str:
         """
         Parameters
         ----------
-        message : str
+        request : typing.Optional[SendOptionalBodyRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -75,24 +82,27 @@ class OptionalClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedObjectsWithImports
+        from seed.optional import SendOptionalBodyRequest
 
-        client = SeedApi(
+        client = SeedObjectsWithImports(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.optional.sendoptionaltypedbody(
-            message="message",
+        client.optional.send_optional_typed_body(
+            request=SendOptionalBodyRequest(
+                message="message",
+            ),
         )
         """
-        _response = self._raw_client.sendoptionaltypedbody(message=message, request_options=request_options)
+        _response = self._raw_client.send_optional_typed_body(request=request, request_options=request_options)
         return _response.data
 
-    def sendoptionalnullablewithalloptionalproperties(
+    def send_optional_nullable_with_all_optional_properties(
         self,
         action_id: str,
         id: str,
         *,
-        update_draft: typing.Optional[bool] = OMIT,
+        request: typing.Optional[DeployParams] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeployResponse:
         """
@@ -105,7 +115,7 @@ class OptionalClient:
 
         id : str
 
-        update_draft : typing.Optional[bool]
+        request : typing.Optional[DeployParams]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -114,21 +124,24 @@ class OptionalClient:
         -------
         DeployResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedObjectsWithImports
+        from seed.optional import DeployParams
 
-        client = SeedApi(
+        client = SeedObjectsWithImports(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.optional.sendoptionalnullablewithalloptionalproperties(
+        client.optional.send_optional_nullable_with_all_optional_properties(
             action_id="actionId",
             id="id",
+            request=DeployParams(
+                update_draft=True,
+            ),
         )
         """
-        _response = self._raw_client.sendoptionalnullablewithalloptionalproperties(
-            action_id, id, update_draft=update_draft, request_options=request_options
+        _response = self._raw_client.send_optional_nullable_with_all_optional_properties(
+            action_id, id, request=request, request_options=request_options
         )
         return _response.data
 
@@ -148,7 +161,7 @@ class AsyncOptionalClient:
         """
         return self._raw_client
 
-    async def sendoptionalbody(
+    async def send_optional_body(
         self,
         *,
         request: typing.Optional[typing.Dict[str, typing.Any]] = None,
@@ -171,31 +184,34 @@ class AsyncOptionalClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedObjectsWithImports
 
-        client = AsyncSeedApi(
+        client = AsyncSeedObjectsWithImports(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.optional.sendoptionalbody(
-                request={"key": "value"},
+            await client.optional.send_optional_body(
+                request={"string": {"key": "value"}},
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.sendoptionalbody(request=request, request_options=request_options)
+        _response = await self._raw_client.send_optional_body(request=request, request_options=request_options)
         return _response.data
 
-    async def sendoptionaltypedbody(
-        self, *, message: str, request_options: typing.Optional[RequestOptions] = None
+    async def send_optional_typed_body(
+        self,
+        *,
+        request: typing.Optional[SendOptionalBodyRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
         Parameters
         ----------
-        message : str
+        request : typing.Optional[SendOptionalBodyRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -209,30 +225,33 @@ class AsyncOptionalClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedObjectsWithImports
+        from seed.optional import SendOptionalBodyRequest
 
-        client = AsyncSeedApi(
+        client = AsyncSeedObjectsWithImports(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.optional.sendoptionaltypedbody(
-                message="message",
+            await client.optional.send_optional_typed_body(
+                request=SendOptionalBodyRequest(
+                    message="message",
+                ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.sendoptionaltypedbody(message=message, request_options=request_options)
+        _response = await self._raw_client.send_optional_typed_body(request=request, request_options=request_options)
         return _response.data
 
-    async def sendoptionalnullablewithalloptionalproperties(
+    async def send_optional_nullable_with_all_optional_properties(
         self,
         action_id: str,
         id: str,
         *,
-        update_draft: typing.Optional[bool] = OMIT,
+        request: typing.Optional[DeployParams] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DeployResponse:
         """
@@ -245,7 +264,7 @@ class AsyncOptionalClient:
 
         id : str
 
-        update_draft : typing.Optional[bool]
+        request : typing.Optional[DeployParams]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -254,28 +273,31 @@ class AsyncOptionalClient:
         -------
         DeployResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedObjectsWithImports
+        from seed.optional import DeployParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedObjectsWithImports(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.optional.sendoptionalnullablewithalloptionalproperties(
+            await client.optional.send_optional_nullable_with_all_optional_properties(
                 action_id="actionId",
                 id="id",
+                request=DeployParams(
+                    update_draft=True,
+                ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.sendoptionalnullablewithalloptionalproperties(
-            action_id, id, update_draft=update_draft, request_options=request_options
+        _response = await self._raw_client.send_optional_nullable_with_all_optional_properties(
+            action_id, id, request=request, request_options=request_options
         )
         return _response.data

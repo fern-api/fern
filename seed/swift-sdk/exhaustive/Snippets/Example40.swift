@@ -1,20 +1,15 @@
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExhaustiveClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnNestedWithRequiredField(
-        string: "string",
-        request: .init(body: TypesNestedObjectWithRequiredField(
-            string: "string",
-            nestedObject: TypesObjectWithOptionalField(
-
-            )
-        ))
+    _ = try await client.endpoints.params.modifyWithInlinePath(
+        param: "param",
+        request: .init(body: "string")
     )
 }
 

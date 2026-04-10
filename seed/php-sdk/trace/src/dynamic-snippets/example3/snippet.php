@@ -3,9 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Admin\Requests\AdminUpdateTestSubmissionStatusRequest;
-use Seed\Types\TestSubmissionStatus;
-use Seed\Types\TestSubmissionStatusStopped;
+use Seed\Submission\Types\WorkspaceSubmissionStatus;
 
 $client = new SeedClient(
     token: '<token>',
@@ -13,9 +11,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->admin->updatetestsubmissionstatus(
-    'submissionId',
-    new AdminUpdateTestSubmissionStatusRequest([
-        'body' => TestSubmissionStatus::stopped(new TestSubmissionStatusStopped([])),
-    ]),
+$client->admin->updateWorkspaceSubmissionStatus(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    WorkspaceSubmissionStatus::stopped(),
 );

@@ -1,4 +1,4 @@
-package api
+package multilinedocs
 
 import (
 	"time"

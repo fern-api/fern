@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\ServiceListResourcesRequest;
+use Seed\Service\Requests\GetResourceRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,14 +11,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->listresources(
-    new ServiceListResourcesRequest([
-        'page' => 1,
-        'perPage' => 1,
-        'sort' => 'sort',
-        'order' => 'order',
-        'includeTotals' => true,
-        'fields' => 'fields',
-        'search' => 'search',
+$client->service->getResource(
+    'resourceId',
+    new GetResourceRequest([
+        'includeMetadata' => true,
+        'format' => 'json',
     ]),
 );

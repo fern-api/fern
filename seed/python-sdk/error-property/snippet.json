@@ -6,11 +6,11 @@
             "id": {
                 "path": "/property-based-error",
                 "method": "GET",
-                "identifier_override": "endpoint_propertybasederror.throwerror"
+                "identifier_override": "endpoint_property-based-error.ThrowError"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.propertybasederror.throwerror()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.propertybasederror.throwerror()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedErrorProperty\n\nclient = SeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.property_based_error.throw_error()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedErrorProperty\n\nclient = AsyncSeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.property_based_error.throw_error()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

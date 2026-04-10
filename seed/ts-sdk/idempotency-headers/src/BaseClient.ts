@@ -33,6 +33,11 @@ export interface BaseRequestOptions {
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
 
+export interface BaseIdempotentRequestOptions {
+    idempotencyKey: string;
+    idempotencyExpiration: number;
+}
+
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: core.logging.Logger;
     authProvider?: core.AuthProvider;

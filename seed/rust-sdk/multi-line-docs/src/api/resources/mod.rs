@@ -7,12 +7,12 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod user;
-pub struct ApiClient {
+pub struct MultiLineDocsClient {
     pub config: ClientConfig,
     pub user: UserClient,
 }
 
-impl ApiClient {
+impl MultiLineDocsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

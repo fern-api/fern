@@ -14,10 +14,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.NullableCreateUserRequest{
-        Username: "username",
+    request := &fern.DeleteUserRequest{
+        Username: fern.String(
+            "xy",
+        ),
     }
-    client.Nullable.Createuser(
+    client.Nullable.DeleteUser(
         context.TODO(),
         request,
     )

@@ -9,13 +9,13 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedApiApiException;
-import com.fern.sdk.core.SeedApiException;
-import com.fern.sdk.core.SeedApiHttpResponse;
-import com.fern.sdk.errors.BadRequestError;
-import com.fern.sdk.resources.inlinedrequests.requests.InlinedRequestsPostWithObjectBodyandResponseRequest;
-import com.fern.sdk.types.BadObjectRequestInfo;
-import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.core.SeedExhaustiveApiException;
+import com.fern.sdk.core.SeedExhaustiveException;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
+import com.fern.sdk.resources.generalerrors.errors.BadRequestBody;
+import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
+import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
+import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.Override;
@@ -32,29 +32,29 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
 
-public class AsyncRawInlinedrequestsClient {
+public class AsyncRawInlinedRequestsClient {
   protected final ClientOptions clientOptions;
 
-  public AsyncRawInlinedrequestsClient(ClientOptions clientOptions) {
+  public AsyncRawInlinedRequestsClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
   }
 
   /**
    * POST with custom object in request body, response is an object
    */
-  public CompletableFuture<SeedApiHttpResponse<TypesObjectWithOptionalField>> postwithobjectbodyandresponse(
-      InlinedRequestsPostWithObjectBodyandResponseRequest request) {
-    return postwithobjectbodyandresponse(request,null);
+  public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> postWithObjectBodyandResponse(
+      PostWithObjectBody request) {
+    return postWithObjectBodyandResponse(request,null);
   }
 
   /**
    * POST with custom object in request body, response is an object
    */
-  public CompletableFuture<SeedApiHttpResponse<TypesObjectWithOptionalField>> postwithobjectbodyandresponse(
-      InlinedRequestsPostWithObjectBodyandResponseRequest request, RequestOptions requestOptions) {
+  public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> postWithObjectBodyandResponse(
+      PostWithObjectBody request, RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-
-      .addPathSegments("req-bodies/object");if (requestOptions != null) {
+      .addPathSegments("req-bodies")
+      .addPathSegments("object");if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
@@ -64,7 +64,7 @@ public class AsyncRawInlinedrequestsClient {
         body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
       }
       catch(JsonProcessingException e) {
-        throw new SeedApiException("Failed to serialize request", e);
+        throw new SeedExhaustiveException("Failed to serialize request", e);
       }
       Request okhttpRequest = new Request.Builder()
         .url(httpUrl.build())
@@ -77,19 +77,19 @@ public class AsyncRawInlinedrequestsClient {
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
-      CompletableFuture<SeedApiHttpResponse<TypesObjectWithOptionalField>> future = new CompletableFuture<>();
+      CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
       client.newCall(okhttpRequest).enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
           try (ResponseBody responseBody = response.body()) {
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-              future.complete(new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TypesObjectWithOptionalField.class), response));
+              future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithOptionalField.class), response));
               return;
             }
             try {
               if (response.code() == 400) {
-                future.completeExceptionally(new BadRequestError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class), response));
+                future.completeExceptionally(new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class), response));
                 return;
               }
             }
@@ -97,17 +97,17 @@ public class AsyncRawInlinedrequestsClient {
               // unable to map error response, throwing generic error
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            future.completeExceptionally(new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+            future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
             return;
           }
           catch (IOException e) {
-            future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
           }
         }
 
         @Override
         public void onFailure(@NotNull Call call, @NotNull IOException e) {
-          future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
         }
       });
       return future;

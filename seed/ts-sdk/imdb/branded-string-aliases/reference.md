@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client/Client.ts">createmovie</a>({ ...params }) -> SeedApi.MovieId</code></summary>
+<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client/Client.ts">createMovie</a>({ ...params }) -> SeedApi.MovieId</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```typescript
-await client.imdb.createmovie({
+await client.imdb.createMovie({
     title: "title",
     rating: 1.1
 });
@@ -66,7 +66,7 @@ await client.imdb.createmovie({
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client/Client.ts">getmovie</a>({ ...params }) -> SeedApi.Movie</code></summary>
+<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client/Client.ts">getMovie</a>(movieId) -> SeedApi.Movie</code></summary>
 <dl>
 <dd>
 
@@ -79,9 +79,7 @@ await client.imdb.createmovie({
 <dd>
 
 ```typescript
-await client.imdb.getmovie({
-    movieId: SeedApi.MovieId("movieId")
-});
+await client.imdb.getMovie(SeedApi.MovieId("movieId"));
 
 ```
 </dd>
@@ -97,7 +95,7 @@ await client.imdb.getmovie({
 <dl>
 <dd>
 
-**request:** `SeedApi.ImdbGetMovieRequest` 
+**movieId:** `SeedApi.MovieId` 
     
 </dd>
 </dl>

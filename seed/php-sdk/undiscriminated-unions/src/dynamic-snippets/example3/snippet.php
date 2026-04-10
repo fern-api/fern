@@ -9,4 +9,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->union->getmetadata();
+$client->union->updateMetadata(
+    [
+        'string' => [
+            'key' => "value",
+        ],
+    ],
+);

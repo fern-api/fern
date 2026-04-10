@@ -4,11 +4,11 @@
             "id": {
                 "path": "/text",
                 "method": "POST",
-                "identifier_override": "endpoint_service.gettext"
+                "identifier_override": "endpoint_service.getText"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/plain-text/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Gettext(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/plain-text/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.GetText(\n\tcontext.TODO(),\n)\n"
             }
         }
     ]

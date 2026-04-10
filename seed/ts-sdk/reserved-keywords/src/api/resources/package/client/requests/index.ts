@@ -1,1 +1,1 @@
-export type { PackageTestRequest } from "./PackageTestRequest.js";
+export type { TestRequest } from "./TestRequest.js";

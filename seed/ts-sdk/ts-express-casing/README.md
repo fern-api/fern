@@ -58,7 +58,7 @@ following namespace:
 ```typescript
 import { SeedApi } from "@fern/ts-express-casing";
 
-const request: SeedApi.ImdbCreateMovieRequest = {
+const request: SeedApi.CreateMovieRequest = {
     ...
 };
 ```

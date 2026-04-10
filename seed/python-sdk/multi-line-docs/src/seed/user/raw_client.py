@@ -10,7 +10,7 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.user import User
+from .types.user import User
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -21,7 +21,7 @@ class RawUserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def getuser(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def get_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
         Retrieve a user.
         This endpoint is used to retrieve a user.
@@ -56,7 +56,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def createuser(
+    def create_user(
         self, *, name: str, age: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[User]:
         """
@@ -79,7 +79,6 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -87,9 +86,6 @@ class RawUserClient:
             json={
                 "name": name,
                 "age": age,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -118,7 +114,7 @@ class AsyncRawUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def getuser(
+    async def get_user(
         self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
@@ -155,7 +151,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def createuser(
+    async def create_user(
         self, *, name: str, age: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[User]:
         """
@@ -178,7 +174,6 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -186,9 +181,6 @@ class AsyncRawUserClient:
             json={
                 "name": name,
                 "age": age,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

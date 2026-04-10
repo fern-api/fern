@@ -55,25 +55,21 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;
-import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;
-import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;
+import com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;
+import com.seed.inferredAuthImplicit.resources.auth.requests.GetTokenRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient
             .builder()
             .build();
 
-        client.auth().gettokenwithclientcredentials(
-            AuthGetTokenWithClientCredentialsRequest
+        client.auth().getTokenWithClientCredentials(
+            GetTokenRequest
                 .builder()
-                .apiKey("apiKey")
+                .xApiKey("X-Api-Key")
                 .clientId("client_id")
                 .clientSecret("client_secret")
-                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)
-                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)
                 .scope("scope")
                 .build()
         );
@@ -86,9 +82,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;
 
-SeedApiClient client = SeedApiClient
+SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient
     .builder()
     .url("https://example.com")
     .build();
@@ -99,11 +95,11 @@ SeedApiClient client = SeedApiClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.api.core.SeedApiApiException;
+import com.seed.inferredAuthImplicit.core.SeedInferredAuthImplicitApiException;
 
 try{
-    client.auth().gettokenwithclientcredentials(...);
-} catch (SeedApiApiException e){
+    client.auth().getTokenWithClientCredentials(...);
+} catch (SeedInferredAuthImplicitApiException e){
     // Do something with the API exception...
 }
 ```
@@ -116,12 +112,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient
+SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -144,9 +140,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;
 
-SeedApiClient client = SeedApiClient
+SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient
     .builder()
     .maxRetries(1)
     .build();
@@ -156,17 +152,17 @@ SeedApiClient client = SeedApiClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;
+import com.seed.inferredAuthImplicit.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.auth().gettokenwithclientcredentials(
+client.auth().getTokenWithClientCredentials(
     ...,
     RequestOptions
         .builder()
@@ -180,11 +176,11 @@ client.auth().gettokenwithclientcredentials(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;
+import com.seed.inferredAuthImplicit.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -192,7 +188,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.auth().gettokenwithclientcredentials(
+client.auth().getTokenWithClientCredentials(
     ...,
     RequestOptions
         .builder()
@@ -208,7 +204,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.auth().withRawResponse().gettokenwithclientcredentials(...);
+SeedInferredAuthImplicitHttpResponse response = client.auth().withRawResponse().getTokenWithClientCredentials(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

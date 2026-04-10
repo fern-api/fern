@@ -2,44 +2,75 @@
 //!
 //! This module contains client implementations for:
 //!
-//! - ****
-//! - **FileNotificationService**
-//! - **FileService**
-//! - **HealthService**
+//! - **Commons**
+//! - **File**
+//! - **Health**
 //! - **Service**
+//! - **Types**
 
-use crate::{ClientConfig, ApiError};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
-pub mod ;
-pub mod file_notification_service;
-pub mod file_service;
-pub mod health_service;
+pub mod commons;
+pub mod file;
+pub mod health;
 pub mod service;
-pub struct ApiClient {
+pub mod types;
+pub struct ExamplesClient {
     pub config: ClientConfig,
-    pub : Client,
-    pub file_notification_service: FileNotificationServiceClient,
-    pub file_service: FileServiceClient,
-    pub health_service: HealthServiceClient,
-    pub service: ServiceClient,
+    pub http_client: HttpClient,
+    pub file: FileClient,
+    pub health: HealthClient,
+    pub service: ServiceClient4,
 }
 
-impl ApiClient {
+impl ExamplesClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            : Client::new(config.clone())?,
-            file_notification_service: FileNotificationServiceClient::new(config.clone())?,
-            file_service: FileServiceClient::new(config.clone())?,
-            health_service: HealthServiceClient::new(config.clone())?,
-            service: ServiceClient::new(config.clone())?
+            http_client: HttpClient::new(config.clone())?,
+            file: FileClient::new(config.clone())?,
+            health: HealthClient::new(config.clone())?,
+            service: ServiceClient4::new(config.clone())?,
         })
     }
 
+    pub async fn echo(
+        &self,
+        request: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    pub async fn create_type(
+        &self,
+        request: &Type,
+        options: Option<RequestOptions>,
+    ) -> Result<Identifier, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
 }
 
-pub use ::Client;
-pub use file_notification_service::FileNotificationServiceClient;
-pub use file_service::FileServiceClient;
-pub use health_service::HealthServiceClient;
-pub use service::ServiceClient;
+pub use commons::CommonsClient;
+pub use file::FileClient;
+pub use health::HealthClient;
+pub use service::ServiceClient4;
+pub use types::TypesClient2;

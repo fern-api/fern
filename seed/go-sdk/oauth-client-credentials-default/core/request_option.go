@@ -12,6 +12,9 @@ type RequestOption interface {
 	applyRequestOptions(*RequestOptions)
 }
 
+// TokenGetter is a function that returns an access token.
+type TokenGetter func() (string, error)
+
 // RequestOptions defines all of the possible request options.
 //
 // This type is primarily used by the generated code and is not meant
@@ -24,6 +27,9 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
+	tokenGetter     TokenGetter
+	ClientID        string
+	ClientSecret    string
 	Token           string
 }
 
@@ -49,6 +55,11 @@ func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
 	if r.Token != "" {
 		header.Set("Authorization", "Bearer "+r.Token)
+	}
+	if header.Get("Authorization") == "" && r.tokenGetter != nil {
+		if token, err := r.tokenGetter(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
 	}
 	return header
 }
@@ -125,6 +136,35 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
+// ClientIDOption implements the RequestOption interface.
+type ClientIDOption struct {
+	ClientID string
+}
+
+func (c *ClientIDOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientID = c.ClientID
+}
+
+// ClientSecretOption implements the RequestOption interface.
+type ClientSecretOption struct {
+	ClientSecret string
+}
+
+func (c *ClientSecretOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientSecret = c.ClientSecret
+}
+
+// ClientCredentialsOption implements the RequestOption interface.
+type ClientCredentialsOption struct {
+	ClientID     string
+	ClientSecret string
+}
+
+func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientID = c.ClientID
+	opts.ClientSecret = c.ClientSecret
+}
+
 // TokenOption implements the RequestOption interface.
 type TokenOption struct {
 	Token string
@@ -132,4 +172,10 @@ type TokenOption struct {
 
 func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Token = t.Token
+}
+
+// SetTokenGetter sets the token getter function for OAuth.
+// This is an internal method and should not be called directly.
+func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {
+	r.tokenGetter = getter
 }

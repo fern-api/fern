@@ -15,7 +15,7 @@ impl PathClient {
 
     pub async fn send(
         &self,
-        id: &PathSendRequestId,
+        id: &str,
         options: Option<RequestOptions>,
     ) -> Result<SendResponse, ApiError> {
         self.http_client

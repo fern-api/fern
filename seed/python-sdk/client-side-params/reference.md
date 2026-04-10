@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">listresources</a>(...) -> typing.List[Resource]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_resources</a>(...) -> typing.List[Resource]</code></summary>
 <dl>
 <dd>
 
@@ -27,19 +27,21 @@ List resources with pagination
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.listresources(
+client.service.list_resources(
     page=1,
     per_page=1,
-    sort="sort",
-    order="order",
+    sort="created_at",
+    order="desc",
     include_totals=True,
+    fields="fields",
+    search="search",
 )
 
 ```
@@ -124,7 +126,7 @@ client.service.listresources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">getresource</a>(...) -> Resource</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_resource</a>(...) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -151,17 +153,17 @@ Get a single resource
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.getresource(
+client.service.get_resource(
     resource_id="resourceId",
     include_metadata=True,
-    format="format",
+    format="json",
 )
 
 ```
@@ -214,7 +216,7 @@ client.service.getresource(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">searchresources</a>(...) -> SearchResponse</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">search_resources</a>(...) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -241,16 +243,20 @@ Search resources with complex parameters
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.searchresources(
+client.service.search_resources(
     limit=1,
     offset=1,
+    query="query",
+    filters={
+        "filters": {"key": "value"}
+    },
 )
 
 ```
@@ -311,7 +317,7 @@ client.service.searchresources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">listusers</a>(...) -> PaginatedUserResponse</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_users</a>(...) -> PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -338,14 +344,23 @@ List or search for users
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.listusers()
+client.service.list_users(
+    page=1,
+    per_page=1,
+    include_totals=True,
+    sort="sort",
+    connection="connection",
+    q="q",
+    search_engine="search_engine",
+    fields="fields",
+)
 
 ```
 </dd>
@@ -437,144 +452,7 @@ client.service.listusers()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">createuser</a>(...) -> User</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import SeedApi
-
-client = SeedApi(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.createuser(
-    email="email",
-    connection="connection",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**email:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connection:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_verified:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**username:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone_number:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone_verified:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**app_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.service.<a href="src/seed/service/client.py">getuserbyid</a>(...) -> User</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_user_by_id</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -601,15 +479,17 @@ Get a user by ID
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.getuserbyid(
+client.service.get_user_by_id(
     user_id="userId",
+    fields="fields",
+    include_fields=True,
 )
 
 ```
@@ -662,7 +542,7 @@ client.service.getuserbyid(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">deleteuser</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -674,7 +554,7 @@ client.service.getuserbyid(
 <dl>
 <dd>
 
-Delete a user
+Create a new user
 </dd>
 </dl>
 </dd>
@@ -689,15 +569,27 @@ Delete a user
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.deleteuser(
-    user_id="userId",
+client.service.create_user(
+    email="email",
+    email_verified=True,
+    username="username",
+    password="password",
+    phone_number="phone_number",
+    phone_verified=True,
+    user_metadata={
+        "user_metadata": {"key": "value"}
+    },
+    app_metadata={
+        "app_metadata": {"key": "value"}
+    },
+    connection="connection",
 )
 
 ```
@@ -714,7 +606,7 @@ client.service.deleteuser(
 <dl>
 <dd>
 
-**user_id:** `str` 
+**request:** `CreateUserRequest` 
     
 </dd>
 </dl>
@@ -734,7 +626,7 @@ client.service.deleteuser(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">updateuser</a>(...) -> User</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">update_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -761,14 +653,107 @@ Update a user
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.updateuser(
+client.service.update_user(
+    user_id="userId",
+    email="email",
+    email_verified=True,
+    username="username",
+    phone_number="phone_number",
+    phone_verified=True,
+    user_metadata={
+        "user_metadata": {"key": "value"}
+    },
+    app_metadata={
+        "app_metadata": {"key": "value"}
+    },
+    password="password",
+    blocked=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.<a href="src/seed/service/client.py">delete_user</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedClientSideParams
+
+client = SeedClientSideParams(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.service.delete_user(
     user_id="userId",
 )
 
@@ -794,78 +779,6 @@ client.service.updateuser(
 <dl>
 <dd>
 
-**email:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_verified:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**username:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone_number:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone_verified:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**app_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**blocked:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -878,7 +791,7 @@ client.service.updateuser(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">listconnections</a>(...) -> typing.List[Connection]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_connections</a>(...) -> typing.List[Connection]</code></summary>
 <dl>
 <dd>
 
@@ -905,14 +818,18 @@ List all connections
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.listconnections()
+client.service.list_connections(
+    strategy="strategy",
+    name="name",
+    fields="fields",
+)
 
 ```
 </dd>
@@ -964,7 +881,7 @@ client.service.listconnections()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">getconnection</a>(...) -> Connection</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_connection</a>(...) -> Connection</code></summary>
 <dl>
 <dd>
 
@@ -991,15 +908,16 @@ Get a connection by ID
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.getconnection(
+client.service.get_connection(
     connection_id="connectionId",
+    fields="fields",
 )
 
 ```
@@ -1044,7 +962,7 @@ client.service.getconnection(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">listclients</a>(...) -> PaginatedClientResponse</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_clients</a>(...) -> PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -1071,14 +989,26 @@ List all clients/applications
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.listclients()
+client.service.list_clients(
+    fields="fields",
+    include_fields=True,
+    page=1,
+    per_page=1,
+    include_totals=True,
+    is_global=True,
+    is_first_party=True,
+    app_type=[
+        "app_type",
+        "app_type"
+    ],
+)
 
 ```
 </dd>
@@ -1170,7 +1100,7 @@ client.service.listclients()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">getclient</a>(...) -> Client</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_client</a>(...) -> Client</code></summary>
 <dl>
 <dd>
 
@@ -1197,15 +1127,17 @@ Get a client by ID
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedClientSideParams
 
-client = SeedApi(
+client = SeedClientSideParams(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.getclient(
+client.service.get_client(
     client_id="clientId",
+    fields="fields",
+    include_fields=True,
 )
 
 ```

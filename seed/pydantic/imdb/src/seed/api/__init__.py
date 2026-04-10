@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from .movie import Movie
-from .movie_id import MovieId
+from .resources import CreateMovieRequest, Movie, MovieId, imdb
 
-__all__ = ["Movie", "MovieId"]
+__all__ = ["CreateMovieRequest", "Movie", "MovieId", "imdb"]

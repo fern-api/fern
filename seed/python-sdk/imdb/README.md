@@ -41,7 +41,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.imdb.createmovie(
+client.imdb.create_movie(
     title="title",
     rating=1.1,
 )
@@ -63,7 +63,7 @@ client = AsyncSeedApi(
 
 
 async def main() -> None:
-    await client.imdb.createmovie(
+    await client.imdb.create_movie(
         title="title",
         rating=1.1,
     )
@@ -81,7 +81,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.imdb.createmovie(...)
+    client.imdb.create_movie(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -98,7 +98,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from seed import SeedApi
 
 client = SeedApi(...)
-response = client.imdb.with_raw_response.createmovie(...)
+response = client.imdb.with_raw_response.create_movie(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -119,7 +119,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.imdb.createmovie(..., request_options={
+client.imdb.create_movie(..., request_options={
     "max_retries": 1
 })
 ```
@@ -134,7 +134,7 @@ from seed import SeedApi
 client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.imdb.createmovie(..., request_options={
+client.imdb.create_movie(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

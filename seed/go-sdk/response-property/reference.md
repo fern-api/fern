@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.Getmovie(request) -> *fern.Response</code></summary>
+<details><summary><code>client.Service.GetMovie(request) -> *fern.Response</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Service.Getmovie(
+client.Service.GetMovie(
         context.TODO(),
         request,
     )
@@ -44,7 +44,7 @@ client.Service.Getmovie(
 </dl>
 </details>
 
-<details><summary><code>client.Service.Getmoviedocs(request) -> *fern.Response</code></summary>
+<details><summary><code>client.Service.GetMovieDocs(request) -> *fern.Response</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.Service.Getmovie(
 <dd>
 
 ```go
-client.Service.Getmoviedocs(
+client.Service.GetMovie(
         context.TODO(),
         request,
     )
@@ -88,7 +88,7 @@ client.Service.Getmoviedocs(
 </dl>
 </details>
 
-<details><summary><code>client.Service.Getmoviename(request) -> *fern.StringResponse</code></summary>
+<details><summary><code>client.Service.GetMovieName(request) -> *fern.StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ client.Service.Getmoviedocs(
 <dd>
 
 ```go
-client.Service.Getmoviename(
+client.Service.GetMovie(
         context.TODO(),
         request,
     )
@@ -132,7 +132,7 @@ client.Service.Getmoviename(
 </dl>
 </details>
 
-<details><summary><code>client.Service.Getmoviemetadata(request) -> *fern.Response</code></summary>
+<details><summary><code>client.Service.GetMovieMetadata(request) -> *fern.Response</code></summary>
 <dl>
 <dd>
 
@@ -145,7 +145,7 @@ client.Service.Getmoviename(
 <dd>
 
 ```go
-client.Service.Getmoviemetadata(
+client.Service.GetMovie(
         context.TODO(),
         request,
     )
@@ -176,7 +176,7 @@ client.Service.Getmoviemetadata(
 </dl>
 </details>
 
-<details><summary><code>client.Service.Getoptionalmovie(request) -> *fern.Response</code></summary>
+<details><summary><code>client.Service.GetOptionalMovie(request) -> *fern.Response</code></summary>
 <dl>
 <dd>
 
@@ -189,7 +189,7 @@ client.Service.Getmoviemetadata(
 <dd>
 
 ```go
-client.Service.Getoptionalmovie(
+client.Service.GetMovie(
         context.TODO(),
         request,
     )
@@ -220,7 +220,7 @@ client.Service.Getoptionalmovie(
 </dl>
 </details>
 
-<details><summary><code>client.Service.Getoptionalmoviedocs(request) -> fern.OptionalWithDocs</code></summary>
+<details><summary><code>client.Service.GetOptionalMovieDocs(request) -> fern.OptionalWithDocs</code></summary>
 <dl>
 <dd>
 
@@ -233,7 +233,7 @@ client.Service.Getoptionalmovie(
 <dd>
 
 ```go
-client.Service.Getoptionalmoviedocs(
+client.Service.GetMovie(
         context.TODO(),
         request,
     )
@@ -264,7 +264,7 @@ client.Service.Getoptionalmoviedocs(
 </dl>
 </details>
 
-<details><summary><code>client.Service.Getoptionalmoviename(request) -> fern.OptionalStringResponse</code></summary>
+<details><summary><code>client.Service.GetOptionalMovieName(request) -> fern.OptionalStringResponse</code></summary>
 <dl>
 <dd>
 
@@ -277,7 +277,7 @@ client.Service.Getoptionalmoviedocs(
 <dd>
 
 ```go
-client.Service.Getoptionalmoviename(
+client.Service.GetMovie(
         context.TODO(),
         request,
     )

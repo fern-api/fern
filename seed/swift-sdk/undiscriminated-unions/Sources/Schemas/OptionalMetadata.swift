@@ -1,3 +1,3 @@
 import Foundation
 
-public typealias OptionalMetadata = Nullable<[String: JSONValue]>
+public typealias OptionalMetadata = [String: JSONValue]?

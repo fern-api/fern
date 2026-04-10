@@ -12,14 +12,14 @@ class FileNotificationServiceWireTest < WireMockTestCase
     )
   end
 
-  def test_file_notification_service_file_notification_service_get_exception_with_wiremock
-    test_id = "file_notification_service.file_notification_service_get_exception.0"
+  def test_file_notification_service_get_exception_with_wiremock
+    test_id = "file.notification.service.get_exception.0"
 
-    @client.file_notification_service.file_notification_service_get_exception(
-      notification_id: "notificationId",
+    @client.file.notification.service.get_exception(
+      notification_id: "notification-hsy129x",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "file_notification_service.file_notification_service_get_exception.0"
+          "X-Test-Id" => "file.notification.service.get_exception.0"
         }
       }
     )
@@ -27,7 +27,7 @@ class FileNotificationServiceWireTest < WireMockTestCase
     verify_request_count(
       test_id: test_id,
       method: "GET",
-      url_path: "/file/notification/notificationId",
+      url_path: "/file/notification/notification-hsy129x",
       query_params: nil,
       expected: 1
     )

@@ -7,7 +7,6 @@ use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
-use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
@@ -62,13 +61,13 @@ class DummyClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getdummy(?array $options = null): ?string
+    public function getDummy(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Production->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "dummy",
                     method: HttpMethod::GET,
                 ),

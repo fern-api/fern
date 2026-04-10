@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import Enum
 
-@Suite("InlinedrequestClient Wire Tests") struct InlinedrequestClientWireTests {
+@Suite("InlinedRequestClient Wire Tests") struct InlinedRequestClientWireTests {
 }

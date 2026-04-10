@@ -1,23 +1,18 @@
-using SeedApi;
-using SeedApi.EndpointsParams;
+using SeedExhaustive;
 
 namespace Usage;
 
 public class Example57
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.EndpointsParams.EndpointsParamsGetWithPathAsync(
-            new EndpointsParamsGetWithPathRequest {
-                Param = "param"
-            }
-        );
+        await client.Endpoints.Urls.NoEndingSlashAsync();
     }
 
 }

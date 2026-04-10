@@ -6,17 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Currency
     from . import payment
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedIdempotencyHeaders, SeedIdempotencyHeaders
+    from .payment import Currency
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
-    "Currency": ".types",
+    "AsyncSeedIdempotencyHeaders": ".client",
+    "Currency": ".payment",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedApi": ".client",
+    "SeedIdempotencyHeaders": ".client",
     "__version__": ".version",
     "payment": ".payment",
 }
@@ -44,11 +44,11 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedIdempotencyHeaders",
     "Currency",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedApi",
+    "SeedIdempotencyHeaders",
     "__version__",
     "payment",
 ]

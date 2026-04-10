@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="src/seed/_/client.py">echo</a>(...) -> str</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">echo</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -13,16 +12,17 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedPackageYml
 
-client = SeedApi(
+client = SeedPackageYml(
+    id="id-ksfd9c1",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client._.echo(
-    id="id",
-    name="name",
-    size=1,
+client.echo(
+    id="id-ksfd9c1",
+    name="Hello world!",
+    size=20,
 )
 
 ```
@@ -47,15 +47,7 @@ client._.echo(
 <dl>
 <dd>
 
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**size:** `int` 
+**request:** `EchoRequest` 
     
 </dd>
 </dl>
@@ -89,15 +81,16 @@ client._.echo(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedPackageYml
 
-client = SeedApi(
+client = SeedPackageYml(
+    id="id-a2ijs82",
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.nop(
-    id="id",
-    nested_id="nestedId",
+    id="id-a2ijs82",
+    nested_id="id-219xca8",
 )
 
 ```

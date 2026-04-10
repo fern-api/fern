@@ -1,17 +1,18 @@
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExhaustiveClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpointsContainer.endpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(request: [
-        "string": TypesMixedType.double(
-            1.1
+    _ = try await client.endpoints.httpMethods.testPut(
+        id: "id",
+        request: ObjectWithRequiredField(
+            string: "string"
         )
-    ])
+    )
 }
 
 try await main()

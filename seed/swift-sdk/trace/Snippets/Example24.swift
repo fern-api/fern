@@ -1,22 +1,13 @@
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = TraceClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.playlist.createplaylist(
-        serviceParam: 1,
-        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        request: .init(body: PlaylistCreateRequest(
-            name: "name",
-            problems: [
-                "problems"
-            ]
-        ))
-    )
+    _ = try await client.submission.createExecutionSession(language: .java)
 }
 
 try await main()

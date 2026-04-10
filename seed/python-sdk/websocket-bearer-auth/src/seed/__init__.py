@@ -6,9 +6,10 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        NoAuthReceiveEvent,
-        NoAuthSendEvent,
+    from . import realtime, realtime_no_auth
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+    from .client import AsyncSeedWebsocketBearerAuth, SeedWebsocketBearerAuth
+    from .realtime import (
         ReceiveEvent,
         ReceiveEvent2,
         ReceiveEvent3,
@@ -17,24 +18,25 @@ if typing.TYPE_CHECKING:
         SendEvent2,
         SendSnakeCase,
     )
-    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .realtime_no_auth import NoAuthReceiveEvent, NoAuthSendEvent
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedWebsocketBearerAuth": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "NoAuthReceiveEvent": ".types",
-    "NoAuthSendEvent": ".types",
-    "ReceiveEvent": ".types",
-    "ReceiveEvent2": ".types",
-    "ReceiveEvent3": ".types",
-    "ReceiveSnakeCase": ".types",
-    "SeedApi": ".client",
-    "SendEvent": ".types",
-    "SendEvent2": ".types",
-    "SendSnakeCase": ".types",
+    "NoAuthReceiveEvent": ".realtime_no_auth",
+    "NoAuthSendEvent": ".realtime_no_auth",
+    "ReceiveEvent": ".realtime",
+    "ReceiveEvent2": ".realtime",
+    "ReceiveEvent3": ".realtime",
+    "ReceiveSnakeCase": ".realtime",
+    "SeedWebsocketBearerAuth": ".client",
+    "SendEvent": ".realtime",
+    "SendEvent2": ".realtime",
+    "SendSnakeCase": ".realtime",
     "__version__": ".version",
+    "realtime": ".realtime",
+    "realtime_no_auth": ".realtime_no_auth",
 }
 
 
@@ -60,7 +62,7 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedWebsocketBearerAuth",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "NoAuthReceiveEvent",
@@ -69,9 +71,11 @@ __all__ = [
     "ReceiveEvent2",
     "ReceiveEvent3",
     "ReceiveSnakeCase",
-    "SeedApi",
+    "SeedWebsocketBearerAuth",
     "SendEvent",
     "SendEvent2",
     "SendSnakeCase",
     "__version__",
+    "realtime",
+    "realtime_no_auth",
 ]

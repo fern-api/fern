@@ -1,8 +1,11 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct Failure {
-    pub status: FailureStatus,
+    pub status: String,
+    /// Additional properties that are not part of the defined schema.
+    #[serde(flatten)]
+    pub extra: std::collections::HashMap<String, serde_json::Value>,
 }
 
 impl Failure {
@@ -14,12 +17,12 @@ impl Failure {
 #[derive(Clone, PartialEq, Default, Debug)]
 #[non_exhaustive]
 pub struct FailureBuilder {
-    status: Option<FailureStatus>,
+    status: Option<String>,
 }
 
 impl FailureBuilder {
-    pub fn status(mut self, value: FailureStatus) -> Self {
-        self.status = Some(value);
+    pub fn status(mut self, value: impl Into<String>) -> Self {
+        self.status = Some(value.into());
         self
     }
 
@@ -31,6 +34,7 @@ impl FailureBuilder {
             status: self
                 .status
                 .ok_or_else(|| BuildError::missing_field("status"))?,
+            extra: Default::default(),
         })
     }
 }

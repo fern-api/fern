@@ -14,9 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.HeadersSendRequest{
-        EndpointVersion: fern.HeadersSendRequestXEndpointVersionTwo122024,
-        Async: true,
+    request := &fern.SendLiteralsInHeadersRequest{
         Query: "query",
     }
     client.Headers.Send(

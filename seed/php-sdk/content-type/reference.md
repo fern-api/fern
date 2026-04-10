@@ -14,7 +14,10 @@
 
 ```php
 $client->service->patch(
-    new ServicePatchRequest([]),
+    new PatchProxyRequest([
+        'application' => 'application',
+        'requireAuth' => true,
+    ]),
 );
 ```
 </dd>
@@ -50,7 +53,7 @@ $client->service->patch(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;patchcomplex($id, $request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;patchComplex($id, $request)</code></summary>
 <dl>
 <dd>
 
@@ -80,9 +83,31 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```php
-$client->service->patchcomplex(
+$client->service->patchComplex(
     'id',
-    new ServicePatchComplexRequest([]),
+    new PatchComplexRequest([
+        'name' => 'name',
+        'age' => 1,
+        'active' => true,
+        'metadata' => [
+            'metadata' => [
+                'key' => "value",
+            ],
+        ],
+        'tags' => [
+            'tags',
+            'tags',
+        ],
+        'email' => 'email',
+        'nickname' => 'nickname',
+        'bio' => 'bio',
+        'profileImageUrl' => 'profileImageUrl',
+        'settings' => [
+            'settings' => [
+                'key' => "value",
+            ],
+        ],
+    ]),
 );
 ```
 </dd>
@@ -190,7 +215,7 @@ $client->service->patchcomplex(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;namedpatchwithmixed($id, $request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;namedPatchWithMixed($id, $request)</code></summary>
 <dl>
 <dd>
 
@@ -218,9 +243,13 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```php
-$client->service->namedpatchwithmixed(
+$client->service->namedPatchWithMixed(
     'id',
-    new ServiceNamedPatchWithMixedRequest([]),
+    new NamedMixedPatchRequest([
+        'appId' => 'appId',
+        'instructions' => 'instructions',
+        'active' => true,
+    ]),
 );
 ```
 </dd>
@@ -272,7 +301,7 @@ $client->service->namedpatchwithmixed(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;optionalmergepatchtest($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;optionalMergePatchTest($request)</code></summary>
 <dl>
 <dd>
 
@@ -302,9 +331,13 @@ This endpoint should:
 <dd>
 
 ```php
-$client->service->optionalmergepatchtest(
-    new ServiceOptionalMergePatchTestRequest([
+$client->service->optionalMergePatchTest(
+    new OptionalMergePatchRequest([
         'requiredField' => 'requiredField',
+        'optionalString' => 'optionalString',
+        'optionalInteger' => 1,
+        'optionalBoolean' => true,
+        'nullableString' => 'nullableString',
     ]),
 );
 ```
@@ -365,7 +398,7 @@ $client->service->optionalmergepatchtest(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;regularpatch($id, $request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;regularPatch($id, $request)</code></summary>
 <dl>
 <dd>
 
@@ -392,9 +425,12 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```php
-$client->service->regularpatch(
+$client->service->regularPatch(
     'id',
-    new ServiceRegularPatchRequest([]),
+    new RegularPatchRequest([
+        'field1' => 'field1',
+        'field2' => 1,
+    ]),
 );
 ```
 </dd>

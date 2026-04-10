@@ -1,19 +1,16 @@
-using SeedApi;
+using SeedMultiUrlEnvironmentNoDefault;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
-            token: "<token>",
-            clientOptions: new ClientOptions {
-                BaseUrl = "https://api.fern.com"
-            }
+        var client = new SeedMultiUrlEnvironmentNoDefaultClient(
+            token: "<token>"
         );
 
-        await client.Ec2.BootinstanceAsync(
-            new Ec2BootInstanceRequest {
+        await client.Ec2.BootInstanceAsync(
+            new BootInstanceRequest {
                 Size = "size"
             }
         );

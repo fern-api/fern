@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedOauthClientCredentials from "../../../index.js";
 
 export declare namespace SimpleClient {
     export type Options = BaseClientOptions;
@@ -23,17 +23,17 @@ export class SimpleClient {
      * @param {SimpleClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.simple.getsomething()
+     *     await client.simple.getSomething()
      */
-    public getsomething(
+    public getSomething(
         requestOptions?: SimpleClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.simple.getsomething.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__getsomething(requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedOauthClientCredentials.simple.getSomething.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getSomething(requestOptions));
     }
 
-    private async __getsomething(
+    private async __getSomething(
         requestOptions?: SimpleClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.simple.getsomething.Error>>> {
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedOauthClientCredentials.simple.getSomething.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -44,7 +44,7 @@ export class SimpleClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "get-something",
+                "/get-something",
             ),
             method: "GET",
             headers: _headers,
@@ -70,7 +70,7 @@ export class SimpleClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.simple.getsomething.Error._unknown(_response.error),
+                error: SeedOauthClientCredentials.simple.getSomething.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

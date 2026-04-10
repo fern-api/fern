@@ -1,6 +1,6 @@
 # Reference
-## FolderAService
-<details><summary><code>client.folderAService.<a href="/Sources/Resources/FolderAService/FolderAServiceClient.swift">folderAServiceGetDirectThread</a>(ids: String?, tags: String?, requestOptions: RequestOptions?) -> FolderAResponse</code></summary>
+## FolderA Service
+<details><summary><code>client.folderA.service.<a href="/Sources/Resources/FolderA/Service/ServiceClient.swift">getDirectThread</a>(ids: String, tags: String, requestOptions: RequestOptions?) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import Audiences
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = AudiencesClient()
 
-    _ = try await client.folderAService.folderAServiceGetDirectThread()
+    _ = try await client.folderA.service.getDirectThread()
 }
 
 try await main()
@@ -37,7 +37,7 @@ try await main()
 <dl>
 <dd>
 
-**ids:** `String?` 
+**ids:** `String` 
     
 </dd>
 </dl>
@@ -45,10 +45,60 @@ try await main()
 <dl>
 <dd>
 
-**tags:** `String?` 
+**tags:** `String` 
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## FolderD Service
+<details><summary><code>client.folderD.service.<a href="/Sources/Resources/FolderD/Service/FolderDServiceClient.swift">getDirectThread</a>(requestOptions: RequestOptions?) -> ResponseType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Audiences
+
+private func main() async throws {
+    let client = AudiencesClient()
+
+    _ = try await client.folderD.service.getDirectThread()
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>
@@ -66,7 +116,7 @@ try await main()
 </details>
 
 ## Foo
-<details><summary><code>client.foo.<a href="/Sources/Resources/Foo/FooClient.swift">find</a>(optionalString: Nullable&lt;OptionalString&gt;?, request: Requests.FooFindRequest, requestOptions: RequestOptions?) -> ImportingType</code></summary>
+<details><summary><code>client.foo.<a href="/Sources/Resources/Foo/FooClient.swift">find</a>(optionalString: OptionalString, request: Requests.FindRequest, requestOptions: RequestOptions?) -> ImportingType</code></summary>
 <dl>
 <dd>
 
@@ -80,12 +130,18 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Audiences
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = AudiencesClient()
 
-    _ = try await client.foo.find(request: .init())
+    _ = try await client.foo.find(
+        optionalString: "optionalString",
+        request: .init(
+            publicProperty: "publicProperty",
+            privateProperty: 1
+        )
+    )
 }
 
 try await main()
@@ -103,7 +159,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalString:** `Nullable<OptionalString>?` 
+**optionalString:** `OptionalString` 
     
 </dd>
 </dl>
@@ -111,60 +167,10 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.FooFindRequest` 
+**request:** `Requests.FindRequest` 
     
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## FolderDService
-<details><summary><code>client.folderDService.<a href="/Sources/Resources/FolderDService/FolderDServiceClient.swift">folderDServiceGetDirectThread</a>(requestOptions: RequestOptions?) -> FolderDResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient()
-
-    _ = try await client.folderDService.folderDServiceGetDirectThread()
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
 
 <dl>
 <dd>

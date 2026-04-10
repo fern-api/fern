@@ -1,8 +1,21 @@
-//! # bytes-upload SDK
+//! # BytesUpload SDK
 //!
-//! The official Rust SDK for the bytes-upload.
+//! The official Rust SDK for the BytesUpload.
 //!
 //! ## Getting Started
+//!
+//! ```rust
+//! use seed_bytes_upload::prelude::*;
+//!
+//! #[tokio::main]
+//! async fn main() {
+//!     let config = ClientConfig {
+//!         ..Default::default()
+//!     };
+//!     let client = BytesUploadClient::new(config).expect("Failed to build client");
+//!     client.service.upload(&vec![], None).await;
+//! }
+//! ```
 //!
 //! ## Modules
 //!

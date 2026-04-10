@@ -1,19 +1,27 @@
 import Foundation
-import Api
+import Pagination
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = PaginationClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
     _ = try await client.complex.search(
         index: "index",
-        request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
-            SingleFilterSearchRequest(
-
+        request: SearchRequest(
+            pagination: StartingAfterPaging(
+                perPage: 1,
+                startingAfter: "starting_after"
+            ),
+            query: SearchRequestQuery.singleFilterSearchRequest(
+                SingleFilterSearchRequest(
+                    field: "field",
+                    operator: .equals,
+                    value: "value"
+                )
             )
-        ))
+        )
     )
 }
 

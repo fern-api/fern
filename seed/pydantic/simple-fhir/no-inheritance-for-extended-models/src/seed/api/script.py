@@ -6,11 +6,10 @@ import typing
 
 import pydantic
 from .core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
-from .script_resource_type import ScriptResourceType
 
 
 class Script(UniversalBaseModel):
-    resource_type: ScriptResourceType
+    resource_type: typing.Literal["Script"] = "Script"
     name: str
     id: str
     related_resources: typing.List["ResourceList"]

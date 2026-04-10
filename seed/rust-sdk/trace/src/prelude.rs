@@ -1,7 +1,7 @@
 //! Prelude module for convenient imports
 //!
 //! This module re-exports the most commonly used types and traits.
-//! Import it with: `use seed_api::prelude::*;`
+//! Import it with: `use seed_trace::prelude::*;`
 
 // Client and configuration
 pub use crate::config::ClientConfig;
@@ -17,3 +17,4 @@ pub use serde::{Deserialize, Serialize};
 pub use serde_json::{json, Value};
 pub use std::collections::{HashMap, HashSet};
 pub use std::fmt;
+pub use uuid::Uuid;

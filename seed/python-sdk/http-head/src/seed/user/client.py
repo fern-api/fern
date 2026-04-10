@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.user import User
 from .raw_client import AsyncRawUserClient, RawUserClient
+from .types.user import User
 
 
 class UserClient:
@@ -23,34 +23,6 @@ class UserClient:
         """
         return self._raw_client
 
-    def list(self, *, limit: int, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
-        """
-        Parameters
-        ----------
-        limit : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[User]
-
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.user.list(
-            limit=1,
-        )
-        """
-        _response = self._raw_client.list(limit=limit, request_options=request_options)
-        return _response.data
-
     def head(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Dict[str, str]:
         """
         Parameters
@@ -64,15 +36,42 @@ class UserClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedHttpHead
 
-        client = SeedApi(
+        client = SeedHttpHead(
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.head()
         """
         _response = self._raw_client.head(request_options=request_options)
         return _response.headers
+
+    def list(self, *, limit: int, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+        """
+        Parameters
+        ----------
+        limit : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[User]
+
+        Examples
+        --------
+        from seed import SeedHttpHead
+
+        client = SeedHttpHead(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.list(
+            limit=1,
+        )
+        """
+        _response = self._raw_client.list(limit=limit, request_options=request_options)
+        return _response.data
 
 
 class AsyncUserClient:
@@ -90,42 +89,6 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def list(self, *, limit: int, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
-        """
-        Parameters
-        ----------
-        limit : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[User]
-
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.user.list(
-                limit=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.list(limit=limit, request_options=request_options)
-        return _response.data
-
     async def head(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Dict[str, str]:
         """
         Parameters
@@ -141,9 +104,9 @@ class AsyncUserClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedHttpHead
 
-        client = AsyncSeedApi(
+        client = AsyncSeedHttpHead(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -156,3 +119,38 @@ class AsyncUserClient:
         """
         _response = await self._raw_client.head(request_options=request_options)
         return _response.headers
+
+    async def list(self, *, limit: int, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+        """
+        Parameters
+        ----------
+        limit : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[User]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedHttpHead
+
+        client = AsyncSeedHttpHead(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.user.list(
+                limit=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list(limit=limit, request_options=request_options)
+        return _response.data

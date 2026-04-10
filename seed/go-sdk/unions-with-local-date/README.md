@@ -32,18 +32,14 @@ package example
 import (
     context "context"
 
-    fern "github.com/unions-with-local-date/fern"
     client "github.com/unions-with-local-date/fern/client"
 )
 
 func do() {
     client := client.NewClient()
-    request := &fern.BigunionGetRequest{
-        ID: "id",
-    }
     client.Bigunion.Get(
         context.TODO(),
-        request,
+        "id",
     )
 }
 ```

@@ -34,16 +34,16 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedValidation
 
-client = SeedApi(
+client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client._.create(
-    decimal=1.1,
-    even=1,
-    name="name",
+client.create(
+    decimal=2.2,
+    even=100,
+    name="fern",
     shape="SQUARE",
 )
 ```
@@ -55,18 +55,18 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedValidation
 
-client = AsyncSeedApi(
+client = AsyncSeedValidation(
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client._.create(
-        decimal=1.1,
-        even=1,
-        name="name",
+    await client.create(
+        decimal=2.2,
+        even=100,
+        name="fern",
         shape="SQUARE",
     )
 
@@ -83,7 +83,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client._.create(...)
+    client.create(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -97,10 +97,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedValidation
 
-client = SeedApi(...)
-response = client._.with_raw_response.create(...)
+client = SeedValidation(...)
+response = client.with_raw_response.create(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -121,7 +121,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client._.create(..., request_options={
+client.create(..., request_options={
     "max_retries": 1
 })
 ```
@@ -131,12 +131,12 @@ client._.create(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedValidation
 
-client = SeedApi(..., timeout=20.0)
+client = SeedValidation(..., timeout=20.0)
 
 # Override timeout for a specific method
-client._.create(..., request_options={
+client.create(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -148,9 +148,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedValidation
 
-client = SeedApi(
+client = SeedValidation(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

@@ -1,7 +1,7 @@
-pub mod create_movie_request;
-pub mod movie;
-pub mod movie_id;
+pub mod imdb_create_movie_request;
+pub mod imdb_movie;
+pub mod imdb_movie_id;
 
-pub use create_movie_request::CreateMovieRequest;
-pub use movie::Movie;
-pub use movie_id::MovieId;
+pub use imdb_create_movie_request::CreateMovieRequest;
+pub use imdb_movie::Movie;
+pub use imdb_movie_id::MovieId;

@@ -2,9 +2,9 @@
 
 import typing
 
+from ..commons.types.problem_id import ProblemId
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.problem_id import ProblemId
 from .raw_client import AsyncRawHomepageClient, RawHomepageClient
 
 # this is used as the default value for optional parameters
@@ -26,7 +26,9 @@ class HomepageClient:
         """
         return self._raw_client
 
-    def gethomepageproblems(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ProblemId]:
+    def get_homepage_problems(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ProblemId]:
         """
         Parameters
         ----------
@@ -37,20 +39,20 @@ class HomepageClient:
         -------
         typing.List[ProblemId]
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.homepage.gethomepageproblems()
+        client.homepage.get_homepage_problems()
         """
-        _response = self._raw_client.gethomepageproblems(request_options=request_options)
+        _response = self._raw_client.get_homepage_problems(request_options=request_options)
         return _response.data
 
-    def sethomepageproblems(
+    def set_homepage_problems(
         self, *, request: typing.Sequence[ProblemId], request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -67,16 +69,17 @@ class HomepageClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.homepage.sethomepageproblems(
-            request=["string"],
+        client.homepage.set_homepage_problems(
+            request=["string", "string"],
         )
         """
-        _response = self._raw_client.sethomepageproblems(request=request, request_options=request_options)
+        _response = self._raw_client.set_homepage_problems(request=request, request_options=request_options)
         return _response.data
 
 
@@ -95,7 +98,7 @@ class AsyncHomepageClient:
         """
         return self._raw_client
 
-    async def gethomepageproblems(
+    async def get_homepage_problems(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ProblemId]:
         """
@@ -108,28 +111,28 @@ class AsyncHomepageClient:
         -------
         typing.List[ProblemId]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.homepage.gethomepageproblems()
+            await client.homepage.get_homepage_problems()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.gethomepageproblems(request_options=request_options)
+        _response = await self._raw_client.get_homepage_problems(request_options=request_options)
         return _response.data
 
-    async def sethomepageproblems(
+    async def set_homepage_problems(
         self, *, request: typing.Sequence[ProblemId], request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -148,20 +151,21 @@ class AsyncHomepageClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.homepage.sethomepageproblems(
-                request=["string"],
+            await client.homepage.set_homepage_problems(
+                request=["string", "string"],
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.sethomepageproblems(request=request, request_options=request_options)
+        _response = await self._raw_client.set_homepage_problems(request=request, request_options=request_options)
         return _response.data

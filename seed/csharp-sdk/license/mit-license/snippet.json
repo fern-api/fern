@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.GetAsync();\n"
+                "client": "using SeedLicense;\n\nvar client = new SeedLicenseClient();\nawait client.GetAsync();\n"
             }
         }
     ]

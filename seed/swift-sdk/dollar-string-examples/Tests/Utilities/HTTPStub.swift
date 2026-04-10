@@ -1,4 +1,4 @@
-import Api
+import DollarStringExamples
 import Foundation
 
 final class HTTPStub {

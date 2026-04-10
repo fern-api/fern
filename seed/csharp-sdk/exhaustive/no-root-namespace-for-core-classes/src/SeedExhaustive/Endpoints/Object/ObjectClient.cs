@@ -1,0 +1,1204 @@
+using global::System.Text.Json;
+using SeedExhaustive;
+using SeedExhaustive.Core;
+using SeedExhaustive.Types;
+
+namespace SeedExhaustive.Endpoints;
+
+public partial class ObjectClient : IObjectClient
+{
+    private readonly RawClient _client;
+
+    internal ObjectClient(RawClient client)
+    {
+        _client = client;
+    }
+
+    private async Task<
+        WithRawResponse<ObjectWithOptionalField>
+    > GetAndReturnWithOptionalFieldAsyncCore(
+        ObjectWithOptionalField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-with-optional-field",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                return new WithRawResponse<ObjectWithOptionalField>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<ObjectWithRequiredField>
+    > GetAndReturnWithRequiredFieldAsyncCore(
+        ObjectWithRequiredField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-with-required-field",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithRequiredField>(responseBody)!;
+                return new WithRawResponse<ObjectWithRequiredField>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<WithRawResponse<ObjectWithMapOfMap>> GetAndReturnWithMapOfMapAsyncCore(
+        ObjectWithMapOfMap request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-with-map-of-map",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
+                return new WithRawResponse<ObjectWithMapOfMap>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<NestedObjectWithOptionalField>
+    > GetAndReturnNestedWithOptionalFieldAsyncCore(
+        NestedObjectWithOptionalField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-nested-with-optional-field",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<NestedObjectWithOptionalField>(
+                    responseBody
+                )!;
+                return new WithRawResponse<NestedObjectWithOptionalField>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<NestedObjectWithRequiredField>
+    > GetAndReturnNestedWithRequiredFieldAsyncCore(
+        string string_,
+        NestedObjectWithRequiredField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = string.Format(
+                        "/object/get-and-return-nested-with-required-field/{0}",
+                        ValueConvert.ToPathParameterString(string_)
+                    ),
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<NestedObjectWithRequiredField>(
+                    responseBody
+                )!;
+                return new WithRawResponse<NestedObjectWithRequiredField>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<NestedObjectWithRequiredField>
+    > GetAndReturnNestedWithRequiredFieldAsListAsyncCore(
+        IEnumerable<NestedObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-nested-with-required-field-list",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<NestedObjectWithRequiredField>(
+                    responseBody
+                )!;
+                return new WithRawResponse<NestedObjectWithRequiredField>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<ObjectWithUnknownField>
+    > GetAndReturnWithUnknownFieldAsyncCore(
+        ObjectWithUnknownField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-with-unknown-field",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithUnknownField>(responseBody)!;
+                return new WithRawResponse<ObjectWithUnknownField>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<ObjectWithDocumentedUnknownType>
+    > GetAndReturnWithDocumentedUnknownTypeAsyncCore(
+        ObjectWithDocumentedUnknownType request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-with-documented-unknown-type",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithDocumentedUnknownType>(
+                    responseBody
+                )!;
+                return new WithRawResponse<ObjectWithDocumentedUnknownType>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<Dictionary<string, object?>>
+    > GetAndReturnMapOfDocumentedUnknownTypeAsyncCore(
+        Dictionary<string, object?> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-map-of-documented-unknown-type",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<Dictionary<string, object?>>(
+                    responseBody
+                )!;
+                return new WithRawResponse<Dictionary<string, object?>>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<ObjectWithMixedRequiredAndOptionalFields>
+    > GetAndReturnWithMixedRequiredAndOptionalFieldsAsyncCore(
+        ObjectWithMixedRequiredAndOptionalFields request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-with-mixed-required-and-optional-fields",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithMixedRequiredAndOptionalFields>(
+                    responseBody
+                )!;
+                return new WithRawResponse<ObjectWithMixedRequiredAndOptionalFields>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<ObjectWithRequiredNestedObject>
+    > GetAndReturnWithRequiredNestedObjectAsyncCore(
+        ObjectWithRequiredNestedObject request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-with-required-nested-object",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithRequiredNestedObject>(
+                    responseBody
+                )!;
+                return new WithRawResponse<ObjectWithRequiredNestedObject>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    private async Task<
+        WithRawResponse<ObjectWithDatetimeLikeString>
+    > GetAndReturnWithDatetimeLikeStringAsyncCore(
+        ObjectWithDatetimeLikeString request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/object/get-and-return-with-datetime-like-string",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                var responseData = JsonUtils.Deserialize<ObjectWithDatetimeLikeString>(
+                    responseBody
+                )!;
+                return new WithRawResponse<ObjectWithDatetimeLikeString>()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    responseBody,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
+    ///     new ObjectWithOptionalField
+    ///     {
+    ///         String = "string",
+    ///         Integer = 1,
+    ///         Long = 1000000,
+    ///         Double = 1.1,
+    ///         Bool = true,
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Date = new DateOnly(2023, 1, 15),
+    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Base64 = "SGVsbG8gd29ybGQh",
+    ///         List = new List&lt;string&gt;() { "list", "list" },
+    ///         Set = new HashSet&lt;string&gt;() { "set" },
+    ///         Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///         Bigint = "1000000",
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(
+        ObjectWithOptionalField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithOptionalField>(
+            GetAndReturnWithOptionalFieldAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
+    ///     new ObjectWithRequiredField { String = "string" }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
+        ObjectWithRequiredField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithRequiredField>(
+            GetAndReturnWithRequiredFieldAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
+    ///     new ObjectWithMapOfMap
+    ///     {
+    ///         Map = new Dictionary&lt;string, Dictionary&lt;string, string&gt;&gt;()
+    ///         {
+    ///             {
+    ///                 "map",
+    ///                 new Dictionary&lt;string, string&gt;() { { "map", "map" } }
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(
+        ObjectWithMapOfMap request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithMapOfMap>(
+            GetAndReturnWithMapOfMapAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
+    ///     new NestedObjectWithOptionalField
+    ///     {
+    ///         String = "string",
+    ///         NestedObject = new ObjectWithOptionalField
+    ///         {
+    ///             String = "string",
+    ///             Integer = 1,
+    ///             Long = 1000000,
+    ///             Double = 1.1,
+    ///             Bool = true,
+    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///             Date = new DateOnly(2023, 1, 15),
+    ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             Base64 = "SGVsbG8gd29ybGQh",
+    ///             List = new List&lt;string&gt;() { "list", "list" },
+    ///             Set = new HashSet&lt;string&gt;() { "set" },
+    ///             Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///             Bigint = "1000000",
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
+        NestedObjectWithOptionalField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<NestedObjectWithOptionalField>(
+            GetAndReturnNestedWithOptionalFieldAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
+    ///     "string",
+    ///     new NestedObjectWithRequiredField
+    ///     {
+    ///         String = "string",
+    ///         NestedObject = new ObjectWithOptionalField
+    ///         {
+    ///             String = "string",
+    ///             Integer = 1,
+    ///             Long = 1000000,
+    ///             Double = 1.1,
+    ///             Bool = true,
+    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///             Date = new DateOnly(2023, 1, 15),
+    ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             Base64 = "SGVsbG8gd29ybGQh",
+    ///             List = new List&lt;string&gt;() { "list", "list" },
+    ///             Set = new HashSet&lt;string&gt;() { "set" },
+    ///             Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///             Bigint = "1000000",
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
+        string string_,
+        NestedObjectWithRequiredField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<NestedObjectWithRequiredField>(
+            GetAndReturnNestedWithRequiredFieldAsyncCore(
+                string_,
+                request,
+                options,
+                cancellationToken
+            )
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
+    ///     new List&lt;NestedObjectWithRequiredField&gt;()
+    ///     {
+    ///         new NestedObjectWithRequiredField
+    ///         {
+    ///             String = "string",
+    ///             NestedObject = new ObjectWithOptionalField
+    ///             {
+    ///                 String = "string",
+    ///                 Integer = 1,
+    ///                 Long = 1000000,
+    ///                 Double = 1.1,
+    ///                 Bool = true,
+    ///                 Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///                 Date = new DateOnly(2023, 1, 15),
+    ///                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///                 Base64 = "SGVsbG8gd29ybGQh",
+    ///                 List = new List&lt;string&gt;() { "list", "list" },
+    ///                 Set = new HashSet&lt;string&gt;() { "set" },
+    ///                 Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///                 Bigint = "1000000",
+    ///             },
+    ///         },
+    ///         new NestedObjectWithRequiredField
+    ///         {
+    ///             String = "string",
+    ///             NestedObject = new ObjectWithOptionalField
+    ///             {
+    ///                 String = "string",
+    ///                 Integer = 1,
+    ///                 Long = 1000000,
+    ///                 Double = 1.1,
+    ///                 Bool = true,
+    ///                 Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///                 Date = new DateOnly(2023, 1, 15),
+    ///                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///                 Base64 = "SGVsbG8gd29ybGQh",
+    ///                 List = new List&lt;string&gt;() { "list", "list" },
+    ///                 Set = new HashSet&lt;string&gt;() { "set" },
+    ///                 Map = new Dictionary&lt;int, string&gt;() { { 1, "map" } },
+    ///                 Bigint = "1000000",
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
+        IEnumerable<NestedObjectWithRequiredField> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<NestedObjectWithRequiredField>(
+            GetAndReturnNestedWithRequiredFieldAsListAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(
+    ///     new ObjectWithUnknownField
+    ///     {
+    ///         Unknown = new Dictionary&lt;object, object?&gt;() { { "$ref", "https://example.com/schema" } },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithUnknownField> GetAndReturnWithUnknownFieldAsync(
+        ObjectWithUnknownField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithUnknownField>(
+            GetAndReturnWithUnknownFieldAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithDocumentedUnknownTypeAsync(
+    ///     new ObjectWithDocumentedUnknownType
+    ///     {
+    ///         DocumentedUnknownType = new Dictionary&lt;object, object?&gt;() { { "key", "value" } },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithDocumentedUnknownType> GetAndReturnWithDocumentedUnknownTypeAsync(
+        ObjectWithDocumentedUnknownType request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithDocumentedUnknownType>(
+            GetAndReturnWithDocumentedUnknownTypeAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownTypeAsync(
+    ///     new Dictionary&lt;string, object&gt;()
+    ///     {
+    ///         {
+    ///             "string",
+    ///             new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<
+        Dictionary<string, object?>
+    > GetAndReturnMapOfDocumentedUnknownTypeAsync(
+        Dictionary<string, object?> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<Dictionary<string, object?>>(
+            GetAndReturnMapOfDocumentedUnknownTypeAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Tests that dynamic snippets include all required properties in the
+    /// object initializer, even when the example omits some required fields.
+    /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(
+    ///     new ObjectWithMixedRequiredAndOptionalFields
+    ///     {
+    ///         RequiredString = "hello",
+    ///         RequiredInteger = 0,
+    ///         OptionalString = "world",
+    ///         RequiredLong = 0,
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithMixedRequiredAndOptionalFields> GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(
+        ObjectWithMixedRequiredAndOptionalFields request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithMixedRequiredAndOptionalFields>(
+            GetAndReturnWithMixedRequiredAndOptionalFieldsAsyncCore(
+                request,
+                options,
+                cancellationToken
+            )
+        );
+    }
+
+    /// <summary>
+    /// Tests that dynamic snippets recursively construct default objects for
+    /// required properties whose type is a named object. When the example
+    /// omits the nested object, the generator should construct a default
+    /// initializer with the nested object's required properties filled in.
+    /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithRequiredNestedObjectAsync(
+    ///     new ObjectWithRequiredNestedObject
+    ///     {
+    ///         RequiredString = "hello",
+    ///         RequiredObject = new NestedObjectWithRequiredField
+    ///         {
+    ///             String = "nested",
+    ///             NestedObject = new ObjectWithOptionalField(),
+    ///         },
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithRequiredNestedObject> GetAndReturnWithRequiredNestedObjectAsync(
+        ObjectWithRequiredNestedObject request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithRequiredNestedObject>(
+            GetAndReturnWithRequiredNestedObjectAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// Tests that string fields containing datetime-like values are NOT reformatted.
+    /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
+    /// without being converted to "2023-08-31T14:15:22.000Z".
+    /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
+    ///     new ObjectWithDatetimeLikeString
+    ///     {
+    ///         DatetimeLikeString = "2023-08-31T14:15:22Z",
+    ///         ActualDatetime = new DateTime(2023, 08, 31, 14, 15, 22, 000),
+    ///     }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithDatetimeLikeString> GetAndReturnWithDatetimeLikeStringAsync(
+        ObjectWithDatetimeLikeString request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithDatetimeLikeString>(
+            GetAndReturnWithDatetimeLikeStringAsyncCore(request, options, cancellationToken)
+        );
+    }
+}

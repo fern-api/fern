@@ -12,7 +12,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->_->createUser(
+$client->createUser(
     new User([
         'id' => 'id',
         'email' => 'email',

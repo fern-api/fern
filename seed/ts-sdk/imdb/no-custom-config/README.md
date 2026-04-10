@@ -10,7 +10,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -43,23 +42,10 @@ Instantiate and use the client with the following:
 import { SeedApiClient } from "@fern/imdb";
 
 const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.imdb.createmovie({
+await client.imdb.createMovie({
     title: "title",
     rating: 1.1
 });
-```
-
-## Request and Response Types
-
-The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
-following namespace:
-
-```typescript
-import { SeedApi } from "@fern/imdb";
-
-const request: SeedApi.CreateMovieRequest = {
-    ...
-};
 ```
 
 ## Exception Handling
@@ -71,7 +57,7 @@ will be thrown.
 import { SeedApiError } from "@fern/imdb";
 
 try {
-    await client.imdb.createmovie(...);
+    await client.imdb.createMovie(...);
 } catch (err) {
     if (err instanceof SeedApiError) {
         console.log(err.statusCode);
@@ -108,7 +94,7 @@ const client = new SeedApiClient({
     }
 });
 
-const response = await client.imdb.createmovie(..., {
+const response = await client.imdb.createMovie(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -120,7 +106,7 @@ const response = await client.imdb.createmovie(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.imdb.createmovie(..., {
+const response = await client.imdb.createMovie(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -142,7 +128,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.imdb.createmovie(..., {
+const response = await client.imdb.createMovie(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -152,7 +138,7 @@ const response = await client.imdb.createmovie(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.imdb.createmovie(..., {
+const response = await client.imdb.createMovie(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -163,7 +149,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.imdb.createmovie(..., {
+const response = await client.imdb.createMovie(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -175,7 +161,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.imdb.createmovie(...).withRawResponse();
+const { data, rawResponse } = await client.imdb.createMovie(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);

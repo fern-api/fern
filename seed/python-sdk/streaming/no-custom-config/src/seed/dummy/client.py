@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.stream_response import StreamResponse
 from .raw_client import AsyncRawDummyClient, RawDummyClient
+from .types.stream_response import StreamResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -27,36 +27,40 @@ class DummyClient:
         return self._raw_client
 
     def generate_stream(
-        self, *, stream: bool, num_events: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[bytes]:
+        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[StreamResponse]:
         """
         Parameters
         ----------
-        stream : bool
-
         num_events : int
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Returns
-        -------
-        typing.Iterator[bytes]
+        Yields
+        ------
+        typing.Iterator[StreamResponse]
 
+        Examples
+        --------
+        from seed import SeedStreaming
+
+        client = SeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.dummy.generate_stream(
+            num_events=1,
+        )
+        for chunk in response:
+            yield chunk
         """
-        with self._raw_client.generate_stream(
-            stream=stream, num_events=num_events, request_options=request_options
-        ) as r:
+        with self._raw_client.generate_stream(num_events=num_events, request_options=request_options) as r:
             yield from r.data
 
-    def generate(
-        self, *, stream: bool, num_events: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> StreamResponse:
+    def generate(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> StreamResponse:
         """
         Parameters
         ----------
-        stream : bool
-
         num_events : int
 
         request_options : typing.Optional[RequestOptions]
@@ -66,20 +70,18 @@ class DummyClient:
         -------
         StreamResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedStreaming
 
-        client = SeedApi(
+        client = SeedStreaming(
             base_url="https://yourhost.com/path/to/api",
         )
         client.dummy.generate(
-            stream=True,
-            num_events=1,
+            num_events=5,
         )
         """
-        _response = self._raw_client.generate(stream=stream, num_events=num_events, request_options=request_options)
+        _response = self._raw_client.generate(num_events=num_events, request_options=request_options)
         return _response.data
 
 
@@ -99,37 +101,51 @@ class AsyncDummyClient:
         return self._raw_client
 
     async def generate_stream(
-        self, *, stream: bool, num_events: int, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[bytes]:
+        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[StreamResponse]:
         """
         Parameters
         ----------
-        stream : bool
-
         num_events : int
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Returns
-        -------
-        typing.AsyncIterator[bytes]
+        Yields
+        ------
+        typing.AsyncIterator[StreamResponse]
 
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedStreaming
+
+        client = AsyncSeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.dummy.generate_stream(
+                num_events=1,
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
         """
-        async with self._raw_client.generate_stream(
-            stream=stream, num_events=num_events, request_options=request_options
-        ) as r:
+        async with self._raw_client.generate_stream(num_events=num_events, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk
 
     async def generate(
-        self, *, stream: bool, num_events: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> StreamResponse:
         """
         Parameters
         ----------
-        stream : bool
-
         num_events : int
 
         request_options : typing.Optional[RequestOptions]
@@ -139,28 +155,24 @@ class AsyncDummyClient:
         -------
         StreamResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedStreaming
 
-        client = AsyncSeedApi(
+        client = AsyncSeedStreaming(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.dummy.generate(
-                stream=True,
-                num_events=1,
+                num_events=5,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.generate(
-            stream=stream, num_events=num_events, request_options=request_options
-        )
+        _response = await self._raw_client.generate(num_events=num_events, request_options=request_options)
         return _response.data

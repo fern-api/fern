@@ -48,19 +48,22 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedContentTypes
 
-        client = SeedApi(
+        client = SeedContentTypes(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.patch()
+        client.service.patch(
+            application="application",
+            require_auth=True,
+        )
         """
         _response = self._raw_client.patch(
             application=application, require_auth=require_auth, request_options=request_options
         )
         return _response.data
 
-    def patchcomplex(
+    def patch_complex(
         self,
         id: str,
         *,
@@ -115,16 +118,26 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedContentTypes
 
-        client = SeedApi(
+        client = SeedContentTypes(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.patchcomplex(
+        client.service.patch_complex(
             id="id",
+            name="name",
+            age=1,
+            active=True,
+            metadata={"metadata": {"key": "value"}},
+            tags=["tags", "tags"],
+            email="email",
+            nickname="nickname",
+            bio="bio",
+            profile_image_url="profileImageUrl",
+            settings={"settings": {"key": "value"}},
         )
         """
-        _response = self._raw_client.patchcomplex(
+        _response = self._raw_client.patch_complex(
             id,
             name=name,
             age=age,
@@ -140,7 +153,7 @@ class ServiceClient:
         )
         return _response.data
 
-    def namedpatchwithmixed(
+    def named_patch_with_mixed(
         self,
         id: str,
         *,
@@ -172,21 +185,24 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedContentTypes
 
-        client = SeedApi(
+        client = SeedContentTypes(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.namedpatchwithmixed(
+        client.service.named_patch_with_mixed(
             id="id",
+            app_id="appId",
+            instructions="instructions",
+            active=True,
         )
         """
-        _response = self._raw_client.namedpatchwithmixed(
+        _response = self._raw_client.named_patch_with_mixed(
             id, app_id=app_id, instructions=instructions, active=active, request_options=request_options
         )
         return _response.data
 
-    def optionalmergepatchtest(
+    def optional_merge_patch_test(
         self,
         *,
         required_field: str,
@@ -223,16 +239,20 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedContentTypes
 
-        client = SeedApi(
+        client = SeedContentTypes(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.optionalmergepatchtest(
+        client.service.optional_merge_patch_test(
             required_field="requiredField",
+            optional_string="optionalString",
+            optional_integer=1,
+            optional_boolean=True,
+            nullable_string="nullableString",
         )
         """
-        _response = self._raw_client.optionalmergepatchtest(
+        _response = self._raw_client.optional_merge_patch_test(
             required_field=required_field,
             optional_string=optional_string,
             optional_integer=optional_integer,
@@ -242,7 +262,7 @@ class ServiceClient:
         )
         return _response.data
 
-    def regularpatch(
+    def regular_patch(
         self,
         id: str,
         *,
@@ -270,16 +290,18 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedContentTypes
 
-        client = SeedApi(
+        client = SeedContentTypes(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.regularpatch(
+        client.service.regular_patch(
             id="id",
+            field1="field1",
+            field2=1,
         )
         """
-        _response = self._raw_client.regularpatch(id, field1=field1, field2=field2, request_options=request_options)
+        _response = self._raw_client.regular_patch(id, field1=field1, field2=field2, request_options=request_options)
         return _response.data
 
 
@@ -323,15 +345,18 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedContentTypes
 
-        client = AsyncSeedApi(
+        client = AsyncSeedContentTypes(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.patch()
+            await client.service.patch(
+                application="application",
+                require_auth=True,
+            )
 
 
         asyncio.run(main())
@@ -341,7 +366,7 @@ class AsyncServiceClient:
         )
         return _response.data
 
-    async def patchcomplex(
+    async def patch_complex(
         self,
         id: str,
         *,
@@ -398,22 +423,32 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedContentTypes
 
-        client = AsyncSeedApi(
+        client = AsyncSeedContentTypes(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.patchcomplex(
+            await client.service.patch_complex(
                 id="id",
+                name="name",
+                age=1,
+                active=True,
+                metadata={"metadata": {"key": "value"}},
+                tags=["tags", "tags"],
+                email="email",
+                nickname="nickname",
+                bio="bio",
+                profile_image_url="profileImageUrl",
+                settings={"settings": {"key": "value"}},
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.patchcomplex(
+        _response = await self._raw_client.patch_complex(
             id,
             name=name,
             age=age,
@@ -429,7 +464,7 @@ class AsyncServiceClient:
         )
         return _response.data
 
-    async def namedpatchwithmixed(
+    async def named_patch_with_mixed(
         self,
         id: str,
         *,
@@ -463,27 +498,30 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedContentTypes
 
-        client = AsyncSeedApi(
+        client = AsyncSeedContentTypes(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.namedpatchwithmixed(
+            await client.service.named_patch_with_mixed(
                 id="id",
+                app_id="appId",
+                instructions="instructions",
+                active=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.namedpatchwithmixed(
+        _response = await self._raw_client.named_patch_with_mixed(
             id, app_id=app_id, instructions=instructions, active=active, request_options=request_options
         )
         return _response.data
 
-    async def optionalmergepatchtest(
+    async def optional_merge_patch_test(
         self,
         *,
         required_field: str,
@@ -522,22 +560,26 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedContentTypes
 
-        client = AsyncSeedApi(
+        client = AsyncSeedContentTypes(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.optionalmergepatchtest(
+            await client.service.optional_merge_patch_test(
                 required_field="requiredField",
+                optional_string="optionalString",
+                optional_integer=1,
+                optional_boolean=True,
+                nullable_string="nullableString",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.optionalmergepatchtest(
+        _response = await self._raw_client.optional_merge_patch_test(
             required_field=required_field,
             optional_string=optional_string,
             optional_integer=optional_integer,
@@ -547,7 +589,7 @@ class AsyncServiceClient:
         )
         return _response.data
 
-    async def regularpatch(
+    async def regular_patch(
         self,
         id: str,
         *,
@@ -577,22 +619,24 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedContentTypes
 
-        client = AsyncSeedApi(
+        client = AsyncSeedContentTypes(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.regularpatch(
+            await client.service.regular_patch(
                 id="id",
+                field1="field1",
+                field2=1,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.regularpatch(
+        _response = await self._raw_client.regular_patch(
             id, field1=field1, field2=field2, request_options=request_options
         )
         return _response.data

@@ -5,4 +5,8 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_container.endpoints_container_get_and_return_set_of_primitives(request: %w[string string])
+client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
+  string: {
+    string: "string"
+  }
+})

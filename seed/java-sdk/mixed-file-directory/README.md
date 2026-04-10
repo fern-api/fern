@@ -55,12 +55,12 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.organization.requests.CreateOrganizationRequest;
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.mixedFileDirectory.resources.organization.types.CreateOrganizationRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
             .builder()
             .build();
 
@@ -79,9 +79,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
 
-SeedApiClient client = SeedApiClient
+SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
     .builder()
     .url("https://example.com")
     .build();
@@ -92,11 +92,11 @@ SeedApiClient client = SeedApiClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.api.core.SeedApiApiException;
+import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryApiException;
 
 try{
     client.organization().create(...);
-} catch (SeedApiApiException e){
+} catch (SeedMixedFileDirectoryApiException e){
     // Do something with the API exception...
 }
 ```
@@ -109,12 +109,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient
+SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -137,9 +137,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
 
-SeedApiClient client = SeedApiClient
+SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
     .builder()
     .maxRetries(1)
     .build();
@@ -149,11 +149,11 @@ SeedApiClient client = SeedApiClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.mixedFileDirectory.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
     .builder()
     .timeout(60)
     .build();
@@ -173,11 +173,11 @@ client.organization().create(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
+import com.seed.mixedFileDirectory.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -201,7 +201,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.organization().withRawResponse().create(...);
+SeedMixedFileDirectoryHttpResponse response = client.organization().withRawResponse().create(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

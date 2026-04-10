@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.Createuser(request) -> *fern.User</code></summary>
+<details><summary><code>client.User.CreateUser(request) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,10 @@
 <dd>
 
 ```go
-request := &fern.UserCreateUserRequest{
-        Type: fern.UserCreateUserRequestTypeCreateUserRequest,
-        Version: fern.UserCreateUserRequestVersionV1,
-        Name: "name",
+request := &fern.CreateUserRequest{
+        Name: "Alice",
     }
-client.User.Createuser(
+client.User.CreateUser(
         context.TODO(),
         request,
     )
@@ -37,7 +35,7 @@ client.User.Createuser(
 <dl>
 <dd>
 
-**type_:** `*fern.UserCreateUserRequestType` 
+**type_:** `string` 
     
 </dd>
 </dl>
@@ -45,7 +43,7 @@ client.User.Createuser(
 <dl>
 <dd>
 
-**version:** `*fern.UserCreateUserRequestVersion` 
+**version:** `string` 
     
 </dd>
 </dl>

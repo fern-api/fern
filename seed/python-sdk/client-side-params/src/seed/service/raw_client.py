@@ -10,13 +10,13 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.client import Client
-from ..types.connection import Connection
-from ..types.paginated_client_response import PaginatedClientResponse
-from ..types.paginated_user_response import PaginatedUserResponse
-from ..types.resource import Resource
-from ..types.search_response import SearchResponse
-from ..types.user import User
+from ..types.types.client import Client
+from ..types.types.connection import Connection
+from ..types.types.paginated_client_response import PaginatedClientResponse
+from ..types.types.paginated_user_response import PaginatedUserResponse
+from ..types.types.resource import Resource
+from ..types.types.search_response import SearchResponse
+from ..types.types.user import User
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -27,7 +27,7 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def listresources(
+    def list_resources(
         self,
         *,
         page: int,
@@ -71,7 +71,6 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[typing.List[Resource]]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/resources",
@@ -106,7 +105,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getresource(
+    def get_resource(
         self,
         resource_id: str,
         *,
@@ -133,7 +132,6 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[Resource]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/resources/{encode_path_param(resource_id)}",
@@ -163,7 +161,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def searchresources(
+    def search_resources(
         self,
         *,
         limit: int,
@@ -194,7 +192,6 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[SearchResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/resources/search",
@@ -206,9 +203,6 @@ class RawServiceClient:
             json={
                 "query": query,
                 "filters": filters,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -232,7 +226,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def listusers(
+    def list_users(
         self,
         *,
         page: typing.Optional[int] = None,
@@ -316,7 +310,63 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def createuser(
+    def get_user_by_id(
+        self,
+        user_id: str,
+        *,
+        fields: typing.Optional[str] = None,
+        include_fields: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[User]:
+        """
+        Get a user by ID
+
+        Parameters
+        ----------
+        user_id : str
+
+        fields : typing.Optional[str]
+            Comma-separated list of fields to include or exclude
+
+        include_fields : typing.Optional[bool]
+            true to include the fields specified, false to exclude them
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[User]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/users/{encode_path_param(user_id)}",
+            method="GET",
+            params={
+                "fields": fields,
+                "include_fields": include_fields,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    User,
+                    parse_obj_as(
+                        type_=User,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def create_user(
         self,
         *,
         email: str,
@@ -359,7 +409,6 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/users",
@@ -374,9 +423,6 @@ class RawServiceClient:
                 "user_metadata": user_metadata,
                 "app_metadata": app_metadata,
                 "connection": connection,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -400,98 +446,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getuserbyid(
-        self,
-        user_id: str,
-        *,
-        fields: typing.Optional[str] = None,
-        include_fields: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[User]:
-        """
-        Get a user by ID
-
-        Parameters
-        ----------
-        user_id : str
-
-        fields : typing.Optional[str]
-            Comma-separated list of fields to include or exclude
-
-        include_fields : typing.Optional[bool]
-            true to include the fields specified, false to exclude them
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[User]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/users/{encode_path_param(user_id)}",
-            method="GET",
-            params={
-                "fields": fields,
-                "include_fields": include_fields,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def deleteuser(
-        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[None]:
-        """
-        Delete a user
-
-        Parameters
-        ----------
-        user_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[None]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/users/{encode_path_param(user_id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def updateuser(
+    def update_user(
         self,
         user_id: str,
         *,
@@ -537,7 +492,6 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/users/{encode_path_param(user_id)}",
@@ -552,9 +506,6 @@ class RawServiceClient:
                 "app_metadata": app_metadata,
                 "password": password,
                 "blocked": blocked,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -578,7 +529,41 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def listconnections(
+    def delete_user(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
+        """
+        Delete a user
+
+        Parameters
+        ----------
+        user_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/users/{encode_path_param(user_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_connections(
         self,
         *,
         strategy: typing.Optional[str] = None,
@@ -606,7 +591,6 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[typing.List[Connection]]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/connections",
@@ -637,7 +621,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getconnection(
+    def get_connection(
         self,
         connection_id: str,
         *,
@@ -660,7 +644,6 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[Connection]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/connections/{encode_path_param(connection_id)}",
@@ -689,7 +672,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def listclients(
+    def list_clients(
         self,
         *,
         fields: typing.Optional[str] = None,
@@ -737,7 +720,6 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[PaginatedClientResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/clients",
@@ -773,7 +755,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getclient(
+    def get_client(
         self,
         client_id: str,
         *,
@@ -800,7 +782,6 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[Client]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/clients/{encode_path_param(client_id)}",
@@ -835,7 +816,7 @@ class AsyncRawServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def listresources(
+    async def list_resources(
         self,
         *,
         page: int,
@@ -879,7 +860,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[Resource]]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/resources",
@@ -914,7 +894,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getresource(
+    async def get_resource(
         self,
         resource_id: str,
         *,
@@ -941,7 +921,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[Resource]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/resources/{encode_path_param(resource_id)}",
@@ -971,7 +950,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def searchresources(
+    async def search_resources(
         self,
         *,
         limit: int,
@@ -1002,7 +981,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[SearchResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/resources/search",
@@ -1014,9 +992,6 @@ class AsyncRawServiceClient:
             json={
                 "query": query,
                 "filters": filters,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1040,7 +1015,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def listusers(
+    async def list_users(
         self,
         *,
         page: typing.Optional[int] = None,
@@ -1124,7 +1099,63 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def createuser(
+    async def get_user_by_id(
+        self,
+        user_id: str,
+        *,
+        fields: typing.Optional[str] = None,
+        include_fields: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[User]:
+        """
+        Get a user by ID
+
+        Parameters
+        ----------
+        user_id : str
+
+        fields : typing.Optional[str]
+            Comma-separated list of fields to include or exclude
+
+        include_fields : typing.Optional[bool]
+            true to include the fields specified, false to exclude them
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[User]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/users/{encode_path_param(user_id)}",
+            method="GET",
+            params={
+                "fields": fields,
+                "include_fields": include_fields,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    User,
+                    parse_obj_as(
+                        type_=User,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create_user(
         self,
         *,
         email: str,
@@ -1167,7 +1198,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/users",
@@ -1182,9 +1212,6 @@ class AsyncRawServiceClient:
                 "user_metadata": user_metadata,
                 "app_metadata": app_metadata,
                 "connection": connection,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1208,98 +1235,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getuserbyid(
-        self,
-        user_id: str,
-        *,
-        fields: typing.Optional[str] = None,
-        include_fields: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[User]:
-        """
-        Get a user by ID
-
-        Parameters
-        ----------
-        user_id : str
-
-        fields : typing.Optional[str]
-            Comma-separated list of fields to include or exclude
-
-        include_fields : typing.Optional[bool]
-            true to include the fields specified, false to exclude them
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[User]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/users/{encode_path_param(user_id)}",
-            method="GET",
-            params={
-                "fields": fields,
-                "include_fields": include_fields,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def deleteuser(
-        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[None]:
-        """
-        Delete a user
-
-        Parameters
-        ----------
-        user_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[None]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/users/{encode_path_param(user_id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def updateuser(
+    async def update_user(
         self,
         user_id: str,
         *,
@@ -1345,7 +1281,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/users/{encode_path_param(user_id)}",
@@ -1360,9 +1295,6 @@ class AsyncRawServiceClient:
                 "app_metadata": app_metadata,
                 "password": password,
                 "blocked": blocked,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1386,7 +1318,41 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def listconnections(
+    async def delete_user(
+        self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
+        """
+        Delete a user
+
+        Parameters
+        ----------
+        user_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/users/{encode_path_param(user_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_connections(
         self,
         *,
         strategy: typing.Optional[str] = None,
@@ -1414,7 +1380,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[Connection]]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/connections",
@@ -1445,7 +1410,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getconnection(
+    async def get_connection(
         self,
         connection_id: str,
         *,
@@ -1468,7 +1433,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[Connection]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/connections/{encode_path_param(connection_id)}",
@@ -1497,7 +1461,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def listclients(
+    async def list_clients(
         self,
         *,
         fields: typing.Optional[str] = None,
@@ -1545,7 +1509,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[PaginatedClientResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/clients",
@@ -1581,7 +1544,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getclient(
+    async def get_client(
         self,
         client_id: str,
         *,
@@ -1608,7 +1571,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[Client]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/clients/{encode_path_param(client_id)}",

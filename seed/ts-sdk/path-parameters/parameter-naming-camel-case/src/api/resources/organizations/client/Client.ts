@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedPathParameters from "../../../index.js";
 
 export declare namespace OrganizationsClient {
     export type Options = BaseClientOptions;
@@ -22,33 +22,29 @@ export class OrganizationsClient {
     }
 
     /**
-     * @param {SeedApi.OrganizationsGetOrganizationRequest} request
+     * @param {string} organizationId
      * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.organizations.getorganization({
-     *         tenantId: "tenant_id",
-     *         organizationId: "organization_id"
-     *     })
+     *     await client.organizations.getOrganization("organization_id")
      */
-    public getorganization(
-        request: SeedApi.OrganizationsGetOrganizationRequest,
+    public getOrganization(
+        organizationId: string,
         requestOptions?: OrganizationsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Organization> {
-        return core.HttpResponsePromise.fromPromise(this.__getorganization(request, requestOptions));
+    ): core.HttpResponsePromise<SeedPathParameters.Organization> {
+        return core.HttpResponsePromise.fromPromise(this.__getOrganization(organizationId, requestOptions));
     }
 
-    private async __getorganization(
-        request: SeedApi.OrganizationsGetOrganizationRequest,
+    private async __getOrganization(
+        organizationId: string,
         requestOptions?: OrganizationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Organization>> {
-        const { tenantId, organizationId } = request;
+    ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `${core.url.encodePathParam(tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/`,
+                `/${core.url.encodePathParam(this._options.tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/`,
             ),
             method: "GET",
             headers: _headers,
@@ -60,11 +56,11 @@ export class OrganizationsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.Organization, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedPathParameters.Organization, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -80,34 +76,33 @@ export class OrganizationsClient {
     }
 
     /**
-     * @param {SeedApi.OrganizationsGetOrganizationUserRequest} request
+     * @param {SeedPathParameters.GetOrganizationUserRequest} request
      * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.organizations.getorganizationuser({
-     *         tenantId: "tenant_id",
+     *     await client.organizations.getOrganizationUser({
      *         organizationId: "organization_id",
      *         userId: "user_id"
      *     })
      */
-    public getorganizationuser(
-        request: SeedApi.OrganizationsGetOrganizationUserRequest,
+    public getOrganizationUser(
+        request: SeedPathParameters.GetOrganizationUserRequest,
         requestOptions?: OrganizationsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getorganizationuser(request, requestOptions));
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getOrganizationUser(request, requestOptions));
     }
 
-    private async __getorganizationuser(
-        request: SeedApi.OrganizationsGetOrganizationUserRequest,
+    private async __getOrganizationUser(
+        request: SeedPathParameters.GetOrganizationUserRequest,
         requestOptions?: OrganizationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.User>> {
-        const { tenantId, organizationId, userId } = request;
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+        const { organizationId, userId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `${core.url.encodePathParam(tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
+                `/${core.url.encodePathParam(this._options.tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -119,11 +114,11 @@ export class OrganizationsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -139,27 +134,31 @@ export class OrganizationsClient {
     }
 
     /**
-     * @param {SeedApi.OrganizationsSearchOrganizationsRequest} request
+     * @param {string} organizationId
+     * @param {SeedPathParameters.SearchOrganizationsRequest} request
      * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.organizations.searchorganizations({
-     *         tenantId: "tenant_id",
-     *         organizationId: "organization_id"
+     *     await client.organizations.searchOrganizations("organization_id", {
+     *         limit: 1
      *     })
      */
-    public searchorganizations(
-        request: SeedApi.OrganizationsSearchOrganizationsRequest,
+    public searchOrganizations(
+        organizationId: string,
+        request: SeedPathParameters.SearchOrganizationsRequest = {},
         requestOptions?: OrganizationsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Organization[]> {
-        return core.HttpResponsePromise.fromPromise(this.__searchorganizations(request, requestOptions));
+    ): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__searchOrganizations(organizationId, request, requestOptions),
+        );
     }
 
-    private async __searchorganizations(
-        request: SeedApi.OrganizationsSearchOrganizationsRequest,
+    private async __searchOrganizations(
+        organizationId: string,
+        request: SeedPathParameters.SearchOrganizationsRequest = {},
         requestOptions?: OrganizationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Organization[]>> {
-        const { tenantId, organizationId, limit } = request;
+    ): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
+        const { limit } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
         };
@@ -168,7 +167,7 @@ export class OrganizationsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `${core.url.encodePathParam(tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/search`,
+                `/${core.url.encodePathParam(this._options.tenantId)}/organizations/${core.url.encodePathParam(organizationId)}/search`,
             ),
             method: "GET",
             headers: _headers,
@@ -180,11 +179,11 @@ export class OrganizationsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.Organization[], rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedPathParameters.Organization[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

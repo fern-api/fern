@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
-    fern "github.com/mixed-file-directory/fern"
     client "github.com/mixed-file-directory/fern/client"
     option "github.com/mixed-file-directory/fern/option"
+    events "github.com/mixed-file-directory/fern/user/events"
 )
 
 func do() {
@@ -14,12 +14,10 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.UserListRequest{
-        Limit: fern.Int(
-            1,
-        ),
+    request := &events.GetEventMetadataRequest{
+        ID: "id",
     }
-    client.User.List(
+    client.User.Events.Metadata.GetMetadata(
         context.TODO(),
         request,
     )

@@ -1,5 +1,33 @@
 # Reference
 ## User
+<details><summary><code>client.User.Head() -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.User.Head(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.User.List() -> []*fern.User</code></summary>
 <dl>
 <dd>
@@ -13,7 +41,7 @@
 <dd>
 
 ```go
-request := &fern.UserListRequest{
+request := &fern.ListUsersRequest{
         Limit: 1,
     }
 client.User.List(
@@ -37,34 +65,6 @@ client.User.List(
 
 **limit:** `int` 
     
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.User.Head() -> error</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.User.Head(
-        context.TODO(),
-    )
-}
-```
 </dd>
 </dl>
 </dd>

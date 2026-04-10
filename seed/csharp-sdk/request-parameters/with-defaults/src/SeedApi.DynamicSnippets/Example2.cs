@@ -1,17 +1,17 @@
-using SeedApi;
+using SeedRequestParameters;
 
 namespace Usage;
 
 public class Example2
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedRequestParametersClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.User.CreateusernameoptionalAsync(
+        await client.User.CreateUsernameOptionalAsync(
             new CreateUsernameBodyOptionalProperties()
         );
     }

@@ -4,7 +4,7 @@ mod wire_test_utils;
 
 #[tokio::test]
 #[allow(unused_variables, unreachable_code)]
-async fn test_imdb_createmovie_with_wiremock() {
+async fn test_imdb_create_movie_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
     let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
@@ -18,10 +18,11 @@ async fn test_imdb_createmovie_with_wiremock() {
 
     let result = client
         .imdb
-        .createmovie(
+        .create_movie(
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
+                ..Default::default()
             },
             None,
         )
@@ -36,7 +37,7 @@ async fn test_imdb_createmovie_with_wiremock() {
 
 #[tokio::test]
 #[allow(unused_variables, unreachable_code)]
-async fn test_imdb_getmovie_with_wiremock() {
+async fn test_imdb_get_movie_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
     let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
@@ -50,7 +51,7 @@ async fn test_imdb_getmovie_with_wiremock() {
 
     let result = client
         .imdb
-        .getmovie(&MovieId("movieId".to_string()), None)
+        .get_movie(&MovieId("movieId".to_string()), None)
         .await;
 
     assert!(result.is_ok(), "Client method call should succeed");

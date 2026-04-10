@@ -9,4 +9,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->_->getUnion();
+$client->getUnion();

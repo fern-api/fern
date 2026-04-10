@@ -1,7 +1,3 @@
-pub mod bad_request_error_body;
-pub mod bad_request_error_body_error_name;
-pub mod property_based_error_test_body;
+pub mod errors_property_based_error_test_body;
 
-pub use bad_request_error_body::BadRequestErrorBody;
-pub use bad_request_error_body_error_name::BadRequestErrorBodyErrorName;
-pub use property_based_error_test_body::PropertyBasedErrorTestBody;
+pub use errors_property_based_error_test_body::PropertyBasedErrorTestBody;

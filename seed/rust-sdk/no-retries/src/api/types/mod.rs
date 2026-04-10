@@ -1,3 +1,3 @@
-pub mod user;
+pub mod retries_user;
 
-pub use user::User;
+pub use retries_user::User;

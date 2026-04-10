@@ -44,27 +44,27 @@
             },
             "default": "./dist/cjs/api/resources/user/exports.js"
         },
-        "./userEvents": {
+        "./user/events": {
             "import": {
-                "types": "./dist/esm/api/resources/userEvents/exports.d.mts",
-                "default": "./dist/esm/api/resources/userEvents/exports.mjs"
+                "types": "./dist/esm/api/resources/user/resources/events/exports.d.mts",
+                "default": "./dist/esm/api/resources/user/resources/events/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/userEvents/exports.d.ts",
-                "default": "./dist/cjs/api/resources/userEvents/exports.js"
+                "types": "./dist/cjs/api/resources/user/resources/events/exports.d.ts",
+                "default": "./dist/cjs/api/resources/user/resources/events/exports.js"
             },
-            "default": "./dist/cjs/api/resources/userEvents/exports.js"
+            "default": "./dist/cjs/api/resources/user/resources/events/exports.js"
         },
-        "./userEventsMetadata": {
+        "./user/events/metadata": {
             "import": {
-                "types": "./dist/esm/api/resources/userEventsMetadata/exports.d.mts",
-                "default": "./dist/esm/api/resources/userEventsMetadata/exports.mjs"
+                "types": "./dist/esm/api/resources/user/resources/events/resources/metadata/exports.d.mts",
+                "default": "./dist/esm/api/resources/user/resources/events/resources/metadata/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/userEventsMetadata/exports.d.ts",
-                "default": "./dist/cjs/api/resources/userEventsMetadata/exports.js"
+                "types": "./dist/cjs/api/resources/user/resources/events/resources/metadata/exports.d.ts",
+                "default": "./dist/cjs/api/resources/user/resources/events/resources/metadata/exports.js"
             },
-            "default": "./dist/cjs/api/resources/userEventsMetadata/exports.js"
+            "default": "./dist/cjs/api/resources/user/resources/events/resources/metadata/exports.js"
         },
         "./package.json": "./package.json"
     },

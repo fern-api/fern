@@ -1,6 +1,6 @@
-//! # circular-references SDK
+//! # Api SDK
 //!
-//! The official Rust SDK for the circular-references.
+//! The official Rust SDK for the Api.
 //!
 //! ## Getting Started
 //!

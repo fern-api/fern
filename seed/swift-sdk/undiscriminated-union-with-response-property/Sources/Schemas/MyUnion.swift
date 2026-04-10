@@ -4,46 +4,35 @@ import Foundation
 /// This reproduces the Pipedream issue where Emitter is a union of
 /// DeployedComponent, HttpInterface, and TimerInterface.
 public enum MyUnion: Codable, Hashable, Sendable {
-    case a(VariantA)
-    case b(VariantB)
-    case c(VariantC)
+    case variantA(VariantA)
+    case variantB(VariantB)
+    case variantC(VariantC)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
-        switch discriminant {
-        case "A":
-            self = .a(try VariantA(from: decoder))
-        case "B":
-            self = .b(try VariantB(from: decoder))
-        case "C":
-            self = .c(try VariantC(from: decoder))
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(VariantA.self) {
+            self = .variantA(value)
+        } else if let value = try? container.decode(VariantB.self) {
+            self = .variantB(value)
+        } else if let value = try? container.decode(VariantC.self) {
+            self = .variantC(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .a(let data):
-            try container.encode("A", forKey: .type)
-            try data.encode(to: encoder)
-        case .b(let data):
-            try container.encode("B", forKey: .type)
-            try data.encode(to: encoder)
-        case .c(let data):
-            try container.encode("C", forKey: .type)
-            try data.encode(to: encoder)
+        case .variantA(let value):
+            try container.encode(value)
+        case .variantB(let value):
+            try container.encode(value)
+        case .variantC(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
     }
 }

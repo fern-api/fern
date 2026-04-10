@@ -63,7 +63,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestImdbCreatemovieWithWireMock(
+func TestImdbCreateMovieWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -77,19 +77,19 @@ func TestImdbCreatemovieWithWireMock(
 		Title:  "title",
 		Rating: 1.1,
 	}
-	_, invocationErr := client.Imdb.Createmovie(
+	_, invocationErr := client.Imdb.CreateMovie(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestImdbCreatemovieWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestImdbCreateMovieWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestImdbCreatemovieWithWireMock", "POST", "/movies/create-movie", nil, 1)
+	VerifyRequestCount(t, "TestImdbCreateMovieWithWireMock", "POST", "/movies/create-movie", nil, 1)
 }
 
-func TestImdbGetmovieWithWireMock(
+func TestImdbGetMovieWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -99,17 +99,14 @@ func TestImdbGetmovieWithWireMock(
 	client := client.NewIMDBClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := &testPackageName.ImdbGetMovieRequest{
-		MovieID: "movieId",
-	}
-	_, invocationErr := client.Imdb.Getmovie(
+	_, invocationErr := client.Imdb.GetMovie(
 		context.TODO(),
-		request,
+		"movieId",
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestImdbGetmovieWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestImdbGetMovieWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestImdbGetmovieWithWireMock", "GET", "/movies/movieId", nil, 1)
+	VerifyRequestCount(t, "TestImdbGetMovieWithWireMock", "GET", "/movies/movieId", nil, 1)
 }

@@ -1,4 +1,4 @@
-package api
+package unions
 
 import (
 	"time"

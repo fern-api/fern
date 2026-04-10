@@ -1,21 +1,15 @@
 package com.snippets;
 
-import com.fern.sdk.SeedApiClient;
-import com.fern.sdk.types.TypesObjectWithRequiredField;
+import com.fern.sdk.SeedExhaustiveClient;
 
 public class Example15 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpointsContainer().endpointsContainerGetAndReturnOptional(
-            TypesObjectWithRequiredField
-                .builder()
-                .string("string")
-                .build()
-        );
+        client.endpoints().httpMethods().testDelete("id");
     }
 }

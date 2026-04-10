@@ -1,24 +1,26 @@
-using SeedApi;
+using SeedOauthClientCredentialsMandatoryAuth;
 
 namespace Usage;
 
 public class Example2
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedOauthClientCredentialsMandatoryAuthClient(
             clientOptions: new ClientOptions {
-                Token = "<token>",
+                ClientId = "<clientId>",
+                ClientSecret = "<clientSecret>",
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Auth.RefreshtokenAsync(
-            new AuthRefreshTokenRequest {
-                ClientId = "client_id",
-                ClientSecret = "client_secret",
+        await client.Auth.RefreshTokenAsync(
+            new RefreshTokenRequest {
+                ClientId = "my_oauth_app_123",
+                ClientSecret = "sk_live_abcdef123456789",
                 RefreshToken = "refresh_token",
-                Audience = AuthRefreshTokenRequestAudience.HttpsApiExampleCom,
-                GrantType = AuthRefreshTokenRequestGrantType.RefreshToken
+                Audience = "https://api.example.com",
+                GrantType = "refresh_token",
+                Scope = "read:users"
             }
         );
     }

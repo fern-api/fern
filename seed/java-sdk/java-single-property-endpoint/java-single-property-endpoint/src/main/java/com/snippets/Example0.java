@@ -1,14 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.singleproperty.requests.SinglePropertyDoThingRequest;
+import com.seed.singleProperty.SeedSinglePropertyClient;
+import com.seed.singleProperty.resources.singleproperty.requests.GetThingRequest;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedSinglePropertyClient client =
+                SeedSinglePropertyClient.builder().url("https://api.fern.com").build();
 
-        client.singleproperty()
-                .dothing("id", SinglePropertyDoThingRequest.builder().build());
+        client.singleProperty()
+                .doThing("id", GetThingRequest.builder().includeRemoteData(true).build());
     }
 }

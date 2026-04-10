@@ -2,6 +2,28 @@
     "endpoints": [
         {
             "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.createType"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.CreateType(\n\tcontext.TODO(),\n\t\u0026pleaseinhere.Type{\n\t\tBasicType: pleaseinhere.BasicTypePrimitive,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.echo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Echo(\n\tcontext.TODO(),\n\t\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/big-entity",
                 "method": "POST",
                 "identifier_override": "endpoint_service.createBigEntity"
@@ -20,17 +42,6 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nerr := client.Health.Service.Check(\n\tcontext.TODO(),\n\t\"id-2sdx82h\",\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/echo",
-                "method": "POST",
-                "identifier_override": "endpoint_.echo"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Echo(\n\tcontext.TODO(),\n\t\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\",\n)\n"
             }
         },
         {
@@ -97,17 +108,6 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.Health.Service.Ping(\n\tcontext.TODO(),\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/type",
-                "method": "POST",
-                "identifier_override": "endpoint_.createType"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\toption \"github.com/examples/fern/pleaseinhere/option\"\n\tpleaseinhere \"github.com/examples/fern/pleaseinhere\"\n\tpleaseinhereclient \"github.com/examples/fern/pleaseinhere/client\"\n)\n\nclient := pleaseinhereclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n\toption.WithBaseURL(\n\t\tpleaseinhere.Environments.Production,\n\t),\n)\nresponse, err := client.CreateType(\n\tcontext.TODO(),\n\t\u0026pleaseinhere.Type{\n\t\tBasicType: pleaseinhere.BasicTypePrimitive,\n\t},\n)\n"
             }
         }
     ]

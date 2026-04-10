@@ -1,15 +1,16 @@
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExhaustiveClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithOptionalField(request: TypesObjectWithOptionalField(
-
-    ))
+    _ = try await client.endpoints.pagination.listItems(
+        cursor: "cursor",
+        limit: 1
+    )
 }
 
 try await main()

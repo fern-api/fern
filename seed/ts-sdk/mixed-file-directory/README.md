@@ -40,9 +40,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/mixed-file-directory";
+import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+const client = new SeedMixedFileDirectoryClient({ environment: "YOUR_BASE_URL" });
 await client.organization.create({
     name: "name"
 });
@@ -54,9 +54,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedApi } from "@fern/mixed-file-directory";
+import { SeedMixedFileDirectory } from "@fern/mixed-file-directory";
 
-const request: SeedApi.CreateOrganizationRequest = {
+const request: SeedMixedFileDirectory.ListUsersRequest = {
     ...
 };
 ```
@@ -67,12 +67,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/mixed-file-directory";
+import { SeedMixedFileDirectoryError } from "@fern/mixed-file-directory";
 
 try {
     await client.organization.create(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedMixedFileDirectoryError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -98,9 +98,9 @@ const client = new OrganizationClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/mixed-file-directory";
+import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
 
-const client = new SeedApiClient({
+const client = new SeedMixedFileDirectoryClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -185,9 +185,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/mixed-file-directory";
+import { SeedMixedFileDirectoryClient, logging } from "@fern/mixed-file-directory";
 
-const client = new SeedApiClient({
+const client = new SeedMixedFileDirectoryClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

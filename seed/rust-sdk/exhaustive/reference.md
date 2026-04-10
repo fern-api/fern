@@ -1,6 +1,6 @@
 # Reference
-## EndpointsContainer
-<details><summary><code>client.endpoints_container.<a href="/src/api/resources/endpoints_container/client.rs">endpoints_container_get_and_return_list_of_primitives</a>(request: Vec&lt;String&gt;) -> Result&lt;Vec&lt;String&gt;, ApiError&gt;</code></summary>
+## Endpoints Container
+<details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_list_of_primitives</a>(request: Vec&lt;String&gt;) -> Result&lt;Vec&lt;String&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -21,10 +21,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_container
-        .endpoints_container_get_and_return_list_of_primitives(&vec!["string".to_string()], None)
+        .endpoints
+        .container
+        .get_and_return_list_of_primitives(&vec!["string".to_string(), "string".to_string()], None)
         .await;
 }
 ```
@@ -38,7 +39,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="/src/api/resources/endpoints_container/client.rs">endpoints_container_get_and_return_list_of_objects</a>(request: Vec&lt;TypesObjectWithRequiredField&gt;) -> Result&lt;Vec&lt;TypesObjectWithRequiredField&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_list_of_objects</a>(request: Vec&lt;ObjectWithRequiredField&gt;) -> Result&lt;Vec&lt;ObjectWithRequiredField&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -51,7 +52,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -59,14 +60,105 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_container
-        .endpoints_container_get_and_return_list_of_objects(
-            &vec![TypesObjectWithRequiredField {
+        .endpoints
+        .container
+        .get_and_return_list_of_objects(
+            &vec![
+                ObjectWithRequiredField {
+                    string: "string".to_string(),
+                    ..Default::default()
+                },
+                ObjectWithRequiredField {
+                    string: "string".to_string(),
+                    ..Default::default()
+                },
+            ],
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_set_of_primitives</a>(request: Vec&lt;String&gt;) -> Result&lt;Vec&lt;String&gt;, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .container
+        .get_and_return_set_of_primitives(&HashSet::from(["string".to_string()]), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_set_of_objects</a>(request: Vec&lt;ObjectWithRequiredField&gt;) -> Result&lt;Vec&lt;ObjectWithRequiredField&gt;, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .container
+        .get_and_return_set_of_objects(
+            &HashSet::from([ObjectWithRequiredField {
                 string: "string".to_string(),
                 ..Default::default()
-            }],
+            }]),
             None,
         )
         .await;
@@ -82,7 +174,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="/src/api/resources/endpoints_container/client.rs">endpoints_container_get_and_return_set_of_primitives</a>(request: Vec&lt;String&gt;) -> Result&lt;Vec&lt;String&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_map_prim_to_prim</a>(request: std::collections::HashMap&lt;String, String&gt;) -> Result&lt;std::collections::HashMap&lt;String, String&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -95,7 +187,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -103,52 +195,12 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_container
-        .endpoints_container_get_and_return_set_of_primitives(&vec!["string".to_string()], None)
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_container.<a href="/src/api/resources/endpoints_container/client.rs">endpoints_container_get_and_return_set_of_objects</a>(request: Vec&lt;TypesObjectWithRequiredField&gt;) -> Result&lt;Vec&lt;TypesObjectWithRequiredField&gt;, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_container
-        .endpoints_container_get_and_return_set_of_objects(
-            &vec![TypesObjectWithRequiredField {
-                string: "string".to_string(),
-                ..Default::default()
-            }],
+        .endpoints
+        .container
+        .get_and_return_map_prim_to_prim(
+            &HashMap::from([("string".to_string(), "string".to_string())]),
             None,
         )
         .await;
@@ -164,7 +216,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="/src/api/resources/endpoints_container/client.rs">endpoints_container_get_and_return_map_prim_to_prim</a>(request: std::collections::HashMap&lt;String, String&gt;) -> Result&lt;std::collections::HashMap&lt;String, String&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_map_of_prim_to_object</a>(request: std::collections::HashMap&lt;String, ObjectWithRequiredField&gt;) -> Result&lt;std::collections::HashMap&lt;String, ObjectWithRequiredField&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -177,7 +229,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -185,54 +237,14 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_container
-        .endpoints_container_get_and_return_map_prim_to_prim(
-            &HashMap::from([("key".to_string(), "value".to_string())]),
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_container.<a href="/src/api/resources/endpoints_container/client.rs">endpoints_container_get_and_return_map_of_prim_to_object</a>(request: std::collections::HashMap&lt;String, TypesObjectWithRequiredField&gt;) -> Result&lt;std::collections::HashMap&lt;String, TypesObjectWithRequiredField&gt;, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_container
-        .endpoints_container_get_and_return_map_of_prim_to_object(
+        .endpoints
+        .container
+        .get_and_return_map_of_prim_to_object(
             &HashMap::from([(
-                "key".to_string(),
-                TypesObjectWithRequiredField {
+                "string".to_string(),
+                ObjectWithRequiredField {
                     string: "string".to_string(),
                     ..Default::default()
                 },
@@ -252,7 +264,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="/src/api/resources/endpoints_container/client.rs">endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union</a>(request: std::collections::HashMap&lt;String, TypesMixedType&gt;) -> Result&lt;std::collections::HashMap&lt;String, TypesMixedType&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_map_of_prim_to_undiscriminated_union</a>(request: std::collections::HashMap&lt;String, MixedType&gt;) -> Result&lt;std::collections::HashMap&lt;String, MixedType&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -265,7 +277,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -273,11 +285,12 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_container
-        .endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union(
-            &HashMap::from([("key".to_string(), TypesMixedType::Double(1.1))]),
+        .endpoints
+        .container
+        .get_and_return_map_of_prim_to_undiscriminated_union(
+            &HashMap::from([("string".to_string(), MixedType::Double(1.1))]),
             None,
         )
         .await;
@@ -293,7 +306,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="/src/api/resources/endpoints_container/client.rs">endpoints_container_get_and_return_optional</a>(request: TypesObjectWithRequiredField) -> Result&lt;TypesObjectWithRequiredField, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().container.<a href="/src/api/resources/endpoints/container/client.rs">get_and_return_optional</a>(request: Option&lt;ObjectWithRequiredField&gt;) -> Result&lt;Option&lt;ObjectWithRequiredField&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -306,7 +319,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -314,14 +327,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_container
-        .endpoints_container_get_and_return_optional(
-            &TypesObjectWithRequiredField {
+        .endpoints
+        .container
+        .get_and_return_optional(
+            &Some(ObjectWithRequiredField {
                 string: "string".to_string(),
                 ..Default::default()
-            },
+            }),
             None,
         )
         .await;
@@ -337,8 +351,8 @@ async fn main() {
 </dl>
 </details>
 
-## EndpointsContentType
-<details><summary><code>client.endpoints_content_type.<a href="/src/api/resources/endpoints_content_type/client.rs">endpoints_content_type_post_json_patch_content_type</a>(request: TypesObjectWithOptionalField) -> Result&lt;(), ApiError&gt;</code></summary>
+## Endpoints ContentType
+<details><summary><code>client.endpoints().content_type.<a href="/src/api/resources/endpoints/content_type/client.rs">post_json_patch_content_type</a>(request: ObjectWithOptionalField) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -351,7 +365,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -359,11 +373,29 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_content_type
-        .endpoints_content_type_post_json_patch_content_type(
-            &TypesObjectWithOptionalField {
+        .endpoints
+        .content_type
+        .post_json_patch_content_type(
+            &ObjectWithOptionalField {
+                string: Some("string".to_string()),
+                integer: Some(1),
+                long: Some(1000000),
+                double: Some(1.1),
+                bool: Some(true),
+                datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
+                date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                base64: Some(
+                    base64::engine::general_purpose::STANDARD
+                        .decode("SGVsbG8gd29ybGQh")
+                        .unwrap(),
+                ),
+                list: Some(vec!["list".to_string(), "list".to_string()]),
+                set: Some(HashSet::from(["set".to_string()])),
+                map: Some(HashMap::from([(1, "map".to_string())])),
+                bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                 ..Default::default()
             },
             None,
@@ -381,7 +413,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_content_type.<a href="/src/api/resources/endpoints_content_type/client.rs">endpoints_content_type_post_json_patch_content_with_charset_type</a>(request: TypesObjectWithOptionalField) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().content_type.<a href="/src/api/resources/endpoints/content_type/client.rs">post_json_patch_content_with_charset_type</a>(request: ObjectWithOptionalField) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -394,7 +426,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -402,11 +434,29 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_content_type
-        .endpoints_content_type_post_json_patch_content_with_charset_type(
-            &TypesObjectWithOptionalField {
+        .endpoints
+        .content_type
+        .post_json_patch_content_with_charset_type(
+            &ObjectWithOptionalField {
+                string: Some("string".to_string()),
+                integer: Some(1),
+                long: Some(1000000),
+                double: Some(1.1),
+                bool: Some(true),
+                datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
+                date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                base64: Some(
+                    base64::engine::general_purpose::STANDARD
+                        .decode("SGVsbG8gd29ybGQh")
+                        .unwrap(),
+                ),
+                list: Some(vec!["list".to_string(), "list".to_string()]),
+                set: Some(HashSet::from(["set".to_string()])),
+                map: Some(HashMap::from([(1, "map".to_string())])),
+                bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                 ..Default::default()
             },
             None,
@@ -424,8 +474,8 @@ async fn main() {
 </dl>
 </details>
 
-## EndpointsEnum
-<details><summary><code>client.endpoints_enum.<a href="/src/api/resources/endpoints_enum/client.rs">endpoints_enum_get_and_return_enum</a>(request: TypesWeatherReport) -> Result&lt;TypesWeatherReport, ApiError&gt;</code></summary>
+## Endpoints Enum
+<details><summary><code>client.endpoints().enum_.<a href="/src/api/resources/endpoints/enum_/client.rs">get_and_return_enum</a>(request: WeatherReport) -> Result&lt;WeatherReport, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -438,7 +488,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -446,10 +496,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_enum
-        .endpoints_enum_get_and_return_enum(&TypesWeatherReport::Sunny, None)
+        .endpoints
+        .enum_
+        .get_and_return_enum(&WeatherReport::Sunny, None)
         .await;
 }
 ```
@@ -463,8 +514,8 @@ async fn main() {
 </dl>
 </details>
 
-## EndpointsHttpMethods
-<details><summary><code>client.endpoints_http_methods.<a href="/src/api/resources/endpoints_http_methods/client.rs">endpoints_http_methods_test_get</a>(id: String) -> Result&lt;String, ApiError&gt;</code></summary>
+## Endpoints HttpMethods
+<details><summary><code>client.endpoints().http_methods.<a href="/src/api/resources/endpoints/http_methods/client.rs">test_get</a>(id: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -477,7 +528,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -485,10 +536,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_http_methods
-        .endpoints_http_methods_test_get(&"id".to_string(), None)
+        .endpoints
+        .http_methods
+        .test_get(&"id".to_string(), None)
         .await;
 }
 ```
@@ -517,7 +569,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_http_methods.<a href="/src/api/resources/endpoints_http_methods/client.rs">endpoints_http_methods_test_put</a>(id: String, request: TypesObjectWithRequiredField) -> Result&lt;TypesObjectWithOptionalField, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().http_methods.<a href="/src/api/resources/endpoints/http_methods/client.rs">test_post</a>(request: ObjectWithRequiredField) -> Result&lt;ObjectWithOptionalField, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -530,7 +582,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -538,12 +590,58 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_http_methods
-        .endpoints_http_methods_test_put(
+        .endpoints
+        .http_methods
+        .test_post(
+            &ObjectWithRequiredField {
+                string: "string".to_string(),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().http_methods.<a href="/src/api/resources/endpoints/http_methods/client.rs">test_put</a>(id: String, request: ObjectWithRequiredField) -> Result&lt;ObjectWithOptionalField, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .http_methods
+        .test_put(
             &"id".to_string(),
-            &TypesObjectWithRequiredField {
+            &ObjectWithRequiredField {
                 string: "string".to_string(),
                 ..Default::default()
             },
@@ -577,7 +675,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_http_methods.<a href="/src/api/resources/endpoints_http_methods/client.rs">endpoints_http_methods_test_delete</a>(id: String) -> Result&lt;bool, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().http_methods.<a href="/src/api/resources/endpoints/http_methods/client.rs">test_patch</a>(id: String, request: ObjectWithOptionalField) -> Result&lt;ObjectWithOptionalField, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -590,7 +688,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -598,65 +696,30 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_http_methods
-        .endpoints_http_methods_test_delete(&"id".to_string(), None)
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `String` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_http_methods.<a href="/src/api/resources/endpoints_http_methods/client.rs">endpoints_http_methods_test_patch</a>(id: String, request: TypesObjectWithOptionalField) -> Result&lt;TypesObjectWithOptionalField, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_http_methods
-        .endpoints_http_methods_test_patch(
+        .endpoints
+        .http_methods
+        .test_patch(
             &"id".to_string(),
-            &TypesObjectWithOptionalField {
+            &ObjectWithOptionalField {
+                string: Some("string".to_string()),
+                integer: Some(1),
+                long: Some(1000000),
+                double: Some(1.1),
+                bool: Some(true),
+                datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
+                date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                base64: Some(
+                    base64::engine::general_purpose::STANDARD
+                        .decode("SGVsbG8gd29ybGQh")
+                        .unwrap(),
+                ),
+                list: Some(vec!["list".to_string(), "list".to_string()]),
+                set: Some(HashSet::from(["set".to_string()])),
+                map: Some(HashMap::from([(1, "map".to_string())])),
+                bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                 ..Default::default()
             },
             None,
@@ -689,7 +752,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_http_methods.<a href="/src/api/resources/endpoints_http_methods/client.rs">endpoints_http_methods_test_post</a>(request: TypesObjectWithRequiredField) -> Result&lt;TypesObjectWithOptionalField, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().http_methods.<a href="/src/api/resources/endpoints/http_methods/client.rs">test_delete</a>(id: String) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -702,7 +765,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -710,11 +773,128 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_http_methods
-        .endpoints_http_methods_test_post(
-            &TypesObjectWithRequiredField {
+        .endpoints
+        .http_methods
+        .test_delete(&"id".to_string(), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Object
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_optional_field</a>(request: ObjectWithOptionalField) -> Result&lt;ObjectWithOptionalField, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .object
+        .get_and_return_with_optional_field(
+            &ObjectWithOptionalField {
+                string: Some("string".to_string()),
+                integer: Some(1),
+                long: Some(1000000),
+                double: Some(1.1),
+                bool: Some(true),
+                datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
+                date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                base64: Some(
+                    base64::engine::general_purpose::STANDARD
+                        .decode("SGVsbG8gd29ybGQh")
+                        .unwrap(),
+                ),
+                list: Some(vec!["list".to_string(), "list".to_string()]),
+                set: Some(HashSet::from(["set".to_string()])),
+                map: Some(HashMap::from([(1, "map".to_string())])),
+                bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_required_field</a>(request: ObjectWithRequiredField) -> Result&lt;ObjectWithRequiredField, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .object
+        .get_and_return_with_required_field(
+            &ObjectWithRequiredField {
                 string: "string".to_string(),
                 ..Default::default()
             },
@@ -733,8 +913,7 @@ async fn main() {
 </dl>
 </details>
 
-## EndpointsObject
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_with_optional_field</a>(request: TypesObjectWithOptionalField) -> Result&lt;TypesObjectWithOptionalField, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_map_of_map</a>(request: ObjectWithMapOfMap) -> Result&lt;ObjectWithMapOfMap, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -747,7 +926,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -755,101 +934,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_optional_field(
-            &TypesObjectWithOptionalField {
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_with_required_field</a>(request: TypesObjectWithRequiredField) -> Result&lt;TypesObjectWithRequiredField, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_required_field(
-            &TypesObjectWithRequiredField {
-                string: "string".to_string(),
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_with_map_of_map</a>(request: TypesObjectWithMapOfMap) -> Result&lt;TypesObjectWithMapOfMap, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_map_of_map(
-            &TypesObjectWithMapOfMap {
+        .endpoints
+        .object
+        .get_and_return_with_map_of_map(
+            &ObjectWithMapOfMap {
                 map: HashMap::from([(
-                    "key".to_string(),
-                    HashMap::from([("key".to_string(), "value".to_string())]),
+                    "map".to_string(),
+                    HashMap::from([("map".to_string(), "map".to_string())]),
                 )]),
                 ..Default::default()
             },
@@ -868,7 +961,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_nested_with_optional_field</a>(request: TypesNestedObjectWithOptionalField) -> Result&lt;TypesNestedObjectWithOptionalField, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_nested_with_optional_field</a>(request: NestedObjectWithOptionalField) -> Result&lt;NestedObjectWithOptionalField, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -881,7 +974,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -889,11 +982,33 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_nested_with_optional_field(
-            &TypesNestedObjectWithOptionalField {
+        .endpoints
+        .object
+        .get_and_return_nested_with_optional_field(
+            &NestedObjectWithOptionalField {
+                string: Some("string".to_string()),
+                nested_object: Some(ObjectWithOptionalField {
+                    string: Some("string".to_string()),
+                    integer: Some(1),
+                    long: Some(1000000),
+                    double: Some(1.1),
+                    bool: Some(true),
+                    datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
+                    date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                    uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                    base64: Some(
+                        base64::engine::general_purpose::STANDARD
+                            .decode("SGVsbG8gd29ybGQh")
+                            .unwrap(),
+                    ),
+                    list: Some(vec!["list".to_string(), "list".to_string()]),
+                    set: Some(HashSet::from(["set".to_string()])),
+                    map: Some(HashMap::from([(1, "map".to_string())])),
+                    bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                    ..Default::default()
+                }),
                 ..Default::default()
             },
             None,
@@ -911,7 +1026,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_nested_with_required_field</a>(string: String, request: TypesNestedObjectWithRequiredField) -> Result&lt;TypesNestedObjectWithRequiredField, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_nested_with_required_field</a>(string: String, request: NestedObjectWithRequiredField) -> Result&lt;NestedObjectWithRequiredField, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -924,7 +1039,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -932,14 +1047,32 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_nested_with_required_field(
+        .endpoints
+        .object
+        .get_and_return_nested_with_required_field(
             &"string".to_string(),
-            &TypesNestedObjectWithRequiredField {
+            &NestedObjectWithRequiredField {
                 string: "string".to_string(),
-                nested_object: TypesObjectWithOptionalField {
+                nested_object: ObjectWithOptionalField {
+                    string: Some("string".to_string()),
+                    integer: Some(1),
+                    long: Some(1000000),
+                    double: Some(1.1),
+                    bool: Some(true),
+                    datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
+                    date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                    uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                    base64: Some(
+                        base64::engine::general_purpose::STANDARD
+                            .decode("SGVsbG8gd29ybGQh")
+                            .unwrap(),
+                    ),
+                    list: Some(vec!["list".to_string(), "list".to_string()]),
+                    set: Some(HashSet::from(["set".to_string()])),
+                    map: Some(HashMap::from([(1, "map".to_string())])),
+                    bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                     ..Default::default()
                 },
                 ..Default::default()
@@ -974,7 +1107,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_nested_with_required_field_as_list</a>(request: Vec&lt;TypesNestedObjectWithRequiredField&gt;) -> Result&lt;TypesNestedObjectWithRequiredField, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_nested_with_required_field_as_list</a>(request: Vec&lt;NestedObjectWithRequiredField&gt;) -> Result&lt;NestedObjectWithRequiredField, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -987,7 +1120,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -995,17 +1128,69 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_nested_with_required_field_as_list(
-            &vec![TypesNestedObjectWithRequiredField {
-                string: "string".to_string(),
-                nested_object: TypesObjectWithOptionalField {
+        .endpoints
+        .object
+        .get_and_return_nested_with_required_field_as_list(
+            &vec![
+                NestedObjectWithRequiredField {
+                    string: "string".to_string(),
+                    nested_object: ObjectWithOptionalField {
+                        string: Some("string".to_string()),
+                        integer: Some(1),
+                        long: Some(1000000),
+                        double: Some(1.1),
+                        bool: Some(true),
+                        datetime: Some(
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                        ),
+                        date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                        uuid: Some(
+                            Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+                        ),
+                        base64: Some(
+                            base64::engine::general_purpose::STANDARD
+                                .decode("SGVsbG8gd29ybGQh")
+                                .unwrap(),
+                        ),
+                        list: Some(vec!["list".to_string(), "list".to_string()]),
+                        set: Some(HashSet::from(["set".to_string()])),
+                        map: Some(HashMap::from([(1, "map".to_string())])),
+                        bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                        ..Default::default()
+                    },
                     ..Default::default()
                 },
-                ..Default::default()
-            }],
+                NestedObjectWithRequiredField {
+                    string: "string".to_string(),
+                    nested_object: ObjectWithOptionalField {
+                        string: Some("string".to_string()),
+                        integer: Some(1),
+                        long: Some(1000000),
+                        double: Some(1.1),
+                        bool: Some(true),
+                        datetime: Some(
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                        ),
+                        date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                        uuid: Some(
+                            Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+                        ),
+                        base64: Some(
+                            base64::engine::general_purpose::STANDARD
+                                .decode("SGVsbG8gd29ybGQh")
+                                .unwrap(),
+                        ),
+                        list: Some(vec!["list".to_string(), "list".to_string()]),
+                        set: Some(HashSet::from(["set".to_string()])),
+                        map: Some(HashMap::from([(1, "map".to_string())])),
+                        bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+            ],
             None,
         )
         .await;
@@ -1021,7 +1206,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_with_unknown_field</a>(request: TypesObjectWithUnknownField) -> Result&lt;TypesObjectWithUnknownField, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_unknown_field</a>(request: ObjectWithUnknownField) -> Result&lt;ObjectWithUnknownField, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1034,7 +1219,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1042,58 +1227,13 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_unknown_field(
-            &TypesObjectWithUnknownField {
-                unknown: serde_json::json!({"key":"value"}),
-                ..Default::default()
-            },
-            None,
-        )
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_with_documented_unknown_type</a>(request: TypesObjectWithDocumentedUnknownType) -> Result&lt;TypesObjectWithDocumentedUnknownType, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_documented_unknown_type(
-            &TypesObjectWithDocumentedUnknownType {
-                documented_unknown_type: TypesDocumentedUnknownType(
-                    serde_json::json!({"key":"value"}),
-                ),
+        .endpoints
+        .object
+        .get_and_return_with_unknown_field(
+            &ObjectWithUnknownField {
+                unknown: serde_json::json!({"$ref":"https://example.com/schema"}),
                 ..Default::default()
             },
             None,
@@ -1111,7 +1251,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_map_of_documented_unknown_type</a>(request: TypesMapOfDocumentedUnknownType) -> Result&lt;TypesMapOfDocumentedUnknownType, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_documented_unknown_type</a>(request: ObjectWithDocumentedUnknownType) -> Result&lt;ObjectWithDocumentedUnknownType, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1124,7 +1264,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1132,11 +1272,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_map_of_documented_unknown_type(
-            &TypesMapOfDocumentedUnknownType(HashMap::from([])),
+        .endpoints
+        .object
+        .get_and_return_with_documented_unknown_type(
+            &ObjectWithDocumentedUnknownType {
+                documented_unknown_type: DocumentedUnknownType(serde_json::json!({"key":"value"})),
+                ..Default::default()
+            },
             None,
         )
         .await;
@@ -1152,7 +1296,52 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_with_mixed_required_and_optional_fields</a>(request: TypesObjectWithMixedRequiredAndOptionalFields) -> Result&lt;TypesObjectWithMixedRequiredAndOptionalFields, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_map_of_documented_unknown_type</a>(request: MapOfDocumentedUnknownType) -> Result&lt;MapOfDocumentedUnknownType, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .object
+        .get_and_return_map_of_documented_unknown_type(
+            &MapOfDocumentedUnknownType(HashMap::from([(
+                "string".to_string(),
+                DocumentedUnknownType(serde_json::json!({"key":"value"})),
+            )])),
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_mixed_required_and_optional_fields</a>(request: ObjectWithMixedRequiredAndOptionalFields) -> Result&lt;ObjectWithMixedRequiredAndOptionalFields, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1180,7 +1369,7 @@ object initializer, even when the example omits some required fields.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1188,14 +1377,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_mixed_required_and_optional_fields(
-            &TypesObjectWithMixedRequiredAndOptionalFields {
-                required_string: "requiredString".to_string(),
-                required_integer: 1,
-                required_long: 1000000,
+        .endpoints
+        .object
+        .get_and_return_with_mixed_required_and_optional_fields(
+            &ObjectWithMixedRequiredAndOptionalFields {
+                required_string: "hello".to_string(),
+                required_integer: 0,
+                optional_string: Some("world".to_string()),
+                required_long: 0,
                 ..Default::default()
             },
             None,
@@ -1213,7 +1404,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_with_required_nested_object</a>(request: TypesObjectWithRequiredNestedObject) -> Result&lt;TypesObjectWithRequiredNestedObject, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_required_nested_object</a>(request: ObjectWithRequiredNestedObject) -> Result&lt;ObjectWithRequiredNestedObject, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1243,7 +1434,7 @@ initializer with the nested object's required properties filled in.
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1251,15 +1442,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_required_nested_object(
-            &TypesObjectWithRequiredNestedObject {
-                required_string: "requiredString".to_string(),
-                required_object: TypesNestedObjectWithRequiredField {
-                    string: "string".to_string(),
-                    nested_object: TypesObjectWithOptionalField {
+        .endpoints
+        .object
+        .get_and_return_with_required_nested_object(
+            &ObjectWithRequiredNestedObject {
+                required_string: "hello".to_string(),
+                required_object: NestedObjectWithRequiredField {
+                    string: "nested".to_string(),
+                    nested_object: ObjectWithOptionalField {
                         ..Default::default()
                     },
                     ..Default::default()
@@ -1281,7 +1473,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="/src/api/resources/endpoints_object/client.rs">endpoints_object_get_and_return_with_datetime_like_string</a>(request: TypesObjectWithDatetimeLikeString) -> Result&lt;TypesObjectWithDatetimeLikeString, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_datetime_like_string</a>(request: ObjectWithDatetimeLikeString) -> Result&lt;ObjectWithDatetimeLikeString, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1310,7 +1502,7 @@ without being converted to "2023-08-31T14:15:22.000Z".
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1318,13 +1510,14 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_datetime_like_string(
-            &TypesObjectWithDatetimeLikeString {
-                datetime_like_string: "datetimeLikeString".to_string(),
-                actual_datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+        .endpoints
+        .object
+        .get_and_return_with_datetime_like_string(
+            &ObjectWithDatetimeLikeString {
+                datetime_like_string: "2023-08-31T14:15:22Z".to_string(),
+                actual_datetime: DateTime::parse_from_rfc3339("2023-08-31T14:15:22Z").unwrap(),
                 ..Default::default()
             },
             None,
@@ -1342,8 +1535,8 @@ async fn main() {
 </dl>
 </details>
 
-## EndpointsPagination
-<details><summary><code>client.endpoints_pagination.<a href="/src/api/resources/endpoints_pagination/client.rs">endpoints_pagination_list_items</a>(cursor: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, limit: Option&lt;Option&lt;Option&lt;i64&gt;&gt;&gt;) -> Result&lt;EndpointsPaginatedResponse, ApiError&gt;</code></summary>
+## Endpoints Pagination
+<details><summary><code>client.endpoints().pagination.<a href="/src/api/resources/endpoints/pagination/client.rs">list_items</a>(cursor: Option&lt;Option&lt;String&gt;&gt;, limit: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;PaginatedResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1370,7 +1563,7 @@ List items with cursor pagination
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1378,11 +1571,14 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_pagination
-        .endpoints_pagination_list_items(
-            &EndpointsPaginationListItemsQueryRequest {
+        .endpoints
+        .pagination
+        .list_items(
+            &ListItemsQueryRequest {
+                cursor: Some("cursor".to_string()),
+                limit: Some(1),
                 ..Default::default()
             },
             None,
@@ -1403,7 +1599,7 @@ async fn main() {
 <dl>
 <dd>
 
-**cursor:** `Option<Option<String>>` — The cursor for pagination
+**cursor:** `Option<String>` — The cursor for pagination
     
 </dd>
 </dl>
@@ -1411,7 +1607,7 @@ async fn main() {
 <dl>
 <dd>
 
-**limit:** `Option<Option<i64>>` — Maximum number of items to return
+**limit:** `Option<i64>` — Maximum number of items to return
     
 </dd>
 </dl>
@@ -1423,8 +1619,8 @@ async fn main() {
 </dl>
 </details>
 
-## EndpointsParams
-<details><summary><code>client.endpoints_params.<a href="/src/api/resources/endpoints_params/client.rs">endpoints_params_get_with_path</a>(param: String) -> Result&lt;String, ApiError&gt;</code></summary>
+## Endpoints Params
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_path</a>(param: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1451,7 +1647,7 @@ GET with path param
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1459,10 +1655,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_params
-        .endpoints_params_get_with_path(&"param".to_string(), None)
+        .endpoints
+        .params
+        .get_with_path(&"param".to_string(), None)
         .await;
 }
 ```
@@ -1491,74 +1688,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="/src/api/resources/endpoints_params/client.rs">endpoints_params_modify_with_path</a>(param: String, request: String) -> Result&lt;String, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_params
-        .endpoints_params_modify_with_path(&"param".to_string(), &"string".to_string(), None)
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `String` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_params.<a href="/src/api/resources/endpoints_params/client.rs">endpoints_params_get_with_inline_path</a>(param: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_inline_path</a>(param: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1585,7 +1715,7 @@ GET with path param
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1593,10 +1723,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_params
-        .endpoints_params_get_with_inline_path(&"param".to_string(), None)
+        .endpoints
+        .params
+        .get_with_path(&"param".to_string(), None)
         .await;
 }
 ```
@@ -1625,74 +1756,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="/src/api/resources/endpoints_params/client.rs">endpoints_params_modify_with_inline_path</a>(param: String, request: String) -> Result&lt;String, ApiError&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```rust
-use seed_api::prelude::*;
-
-#[tokio::main]
-async fn main() {
-    let config = ClientConfig {
-        token: Some("<token>".to_string()),
-        ..Default::default()
-    };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_params
-        .endpoints_params_modify_with_inline_path(&"param".to_string(), &"string".to_string(), None)
-        .await;
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `String` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_params.<a href="/src/api/resources/endpoints_params/client.rs">endpoints_params_get_with_query</a>(query: Option&lt;String&gt;, number: Option&lt;i64&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_query</a>(query: Option&lt;String&gt;, number: Option&lt;i64&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1719,7 +1783,7 @@ GET with query param
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1727,11 +1791,12 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_params
-        .endpoints_params_get_with_query(
-            &EndpointsParamsGetWithQueryQueryRequest {
+        .endpoints
+        .params
+        .get_with_query(
+            &GetWithQueryQueryRequest {
                 query: "query".to_string(),
                 number: 1,
             },
@@ -1773,7 +1838,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="/src/api/resources/endpoints_params/client.rs">endpoints_params_get_with_allow_multiple_query</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_allow_multiple_query</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1800,7 +1865,7 @@ GET with multiple of same query param
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1808,13 +1873,14 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_params
-        .endpoints_params_get_with_allow_multiple_query(
-            &EndpointsParamsGetWithAllowMultipleQueryQueryRequest {
-                query: vec![Some("query".to_string())],
-                number: vec![Some(1)],
+        .endpoints
+        .params
+        .get_with_query(
+            &GetWithQueryQueryRequest {
+                query: "query".to_string(),
+                number: 1,
             },
             None,
         )
@@ -1834,7 +1900,7 @@ async fn main() {
 <dl>
 <dd>
 
-**query:** `Option<String>` 
+**query:** `String` 
     
 </dd>
 </dl>
@@ -1842,7 +1908,7 @@ async fn main() {
 <dl>
 <dd>
 
-**number:** `Option<i64>` 
+**number:** `i64` 
     
 </dd>
 </dl>
@@ -1854,7 +1920,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="/src/api/resources/endpoints_params/client.rs">endpoints_params_get_with_path_and_query</a>(param: String, query: Option&lt;String&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_path_and_query</a>(param: String, query: Option&lt;String&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1881,7 +1947,7 @@ GET with path and query params
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1889,12 +1955,13 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_params
-        .endpoints_params_get_with_path_and_query(
+        .endpoints
+        .params
+        .get_with_path_and_query(
             &"param".to_string(),
-            &EndpointsParamsGetWithPathAndQueryQueryRequest {
+            &GetWithPathAndQueryQueryRequest {
                 query: "query".to_string(),
             },
             None,
@@ -1935,7 +2002,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="/src/api/resources/endpoints_params/client.rs">endpoints_params_get_with_inline_path_and_query</a>(param: String, query: Option&lt;String&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_inline_path_and_query</a>(param: String, query: Option&lt;String&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1962,7 +2029,7 @@ GET with path and query params
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1970,12 +2037,13 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_params
-        .endpoints_params_get_with_inline_path_and_query(
+        .endpoints
+        .params
+        .get_with_path_and_query(
             &"param".to_string(),
-            &EndpointsParamsGetWithInlinePathAndQueryQueryRequest {
+            &GetWithPathAndQueryQueryRequest {
                 query: "query".to_string(),
             },
             None,
@@ -2016,7 +2084,211 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="/src/api/resources/endpoints_params/client.rs">endpoints_params_get_with_boolean_path</a>(param: bool) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">modify_with_path</a>(param: String, request: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .params
+        .modify_with_path(&"param".to_string(), &"string".to_string(), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">modify_with_inline_path</a>(param: String, request: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .params
+        .modify_with_path(&"param".to_string(), &"string".to_string(), None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">upload_with_path</a>(param: String) -> Result&lt;ObjectWithRequiredField, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .params
+        .upload_with_path(&"upload-path".to_string(), &vec![], None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_boolean_path</a>(param: bool) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2043,7 +2315,7 @@ GET with boolean path param
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2051,10 +2323,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_params
-        .endpoints_params_get_with_boolean_path(true, None)
+        .endpoints
+        .params
+        .get_with_boolean_path(true, None)
         .await;
 }
 ```
@@ -2083,7 +2356,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="/src/api/resources/endpoints_params/client.rs">endpoints_params_get_with_path_and_errors</a>(param: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_path_and_errors</a>(param: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2110,7 +2383,7 @@ GET with path param that can throw errors
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2118,10 +2391,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_params
-        .endpoints_params_get_with_path_and_errors(&"param".to_string(), None)
+        .endpoints
+        .params
+        .get_with_path(&"param".to_string(), None)
         .await;
 }
 ```
@@ -2150,8 +2424,8 @@ async fn main() {
 </dl>
 </details>
 
-## EndpointsPrimitive
-<details><summary><code>client.endpoints_primitive.<a href="/src/api/resources/endpoints_primitive/client.rs">endpoints_primitive_get_and_return_string</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
+## Endpoints Primitive
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_string</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2164,7 +2438,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2172,10 +2446,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive
-        .endpoints_primitive_get_and_return_string(&"string".to_string(), None)
+        .endpoints
+        .primitive
+        .get_and_return_string(&"string".to_string(), None)
         .await;
 }
 ```
@@ -2189,7 +2464,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="/src/api/resources/endpoints_primitive/client.rs">endpoints_primitive_get_and_return_int</a>(request: i64) -> Result&lt;i64, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_int</a>(request: i64) -> Result&lt;i64, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2202,7 +2477,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2210,10 +2485,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive
-        .endpoints_primitive_get_and_return_int(&1, None)
+        .endpoints
+        .primitive
+        .get_and_return_int(&1, None)
         .await;
 }
 ```
@@ -2227,7 +2503,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="/src/api/resources/endpoints_primitive/client.rs">endpoints_primitive_get_and_return_long</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_long</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2240,7 +2516,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2248,10 +2524,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive
-        .endpoints_primitive_get_and_return_long(&1000000, None)
+        .endpoints
+        .primitive
+        .get_and_return_long(&1000000, None)
         .await;
 }
 ```
@@ -2265,7 +2542,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="/src/api/resources/endpoints_primitive/client.rs">endpoints_primitive_get_and_return_double</a>(request: f64) -> Result&lt;f64, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_double</a>(request: f64) -> Result&lt;f64, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2278,7 +2555,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2286,10 +2563,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive
-        .endpoints_primitive_get_and_return_double(&1.1, None)
+        .endpoints
+        .primitive
+        .get_and_return_double(&1.1, None)
         .await;
 }
 ```
@@ -2303,7 +2581,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="/src/api/resources/endpoints_primitive/client.rs">endpoints_primitive_get_and_return_bool</a>(request: bool) -> Result&lt;bool, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_bool</a>(request: bool) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2316,7 +2594,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2324,10 +2602,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive
-        .endpoints_primitive_get_and_return_bool(&true, None)
+        .endpoints
+        .primitive
+        .get_and_return_bool(&true, None)
         .await;
 }
 ```
@@ -2341,7 +2620,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="/src/api/resources/endpoints_primitive/client.rs">endpoints_primitive_get_and_return_datetime</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_datetime</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2354,7 +2633,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2362,10 +2641,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive
-        .endpoints_primitive_get_and_return_datetime(
+        .endpoints
+        .primitive
+        .get_and_return_datetime(
             &DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
             None,
         )
@@ -2382,7 +2662,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="/src/api/resources/endpoints_primitive/client.rs">endpoints_primitive_get_and_return_date</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_date</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2395,7 +2675,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2403,10 +2683,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive
-        .endpoints_primitive_get_and_return_date(
+        .endpoints
+        .primitive
+        .get_and_return_date(
             &NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
             None,
         )
@@ -2423,7 +2704,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="/src/api/resources/endpoints_primitive/client.rs">endpoints_primitive_get_and_return_uuid</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_uuid</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2436,7 +2717,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2444,10 +2725,14 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive
-        .endpoints_primitive_get_and_return_uuid(&"string".to_string(), None)
+        .endpoints
+        .primitive
+        .get_and_return_uuid(
+            &Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+            None,
+        )
         .await;
 }
 ```
@@ -2461,7 +2746,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="/src/api/resources/endpoints_primitive/client.rs">endpoints_primitive_get_and_return_base64</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_base64</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2474,7 +2759,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2482,10 +2767,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive
-        .endpoints_primitive_get_and_return_base64(&"string".to_string(), None)
+        .endpoints
+        .primitive
+        .get_and_return_base64(
+            &base64::engine::general_purpose::STANDARD
+                .decode("SGVsbG8gd29ybGQh")
+                .unwrap(),
+            None,
+        )
         .await;
 }
 ```
@@ -2499,8 +2790,8 @@ async fn main() {
 </dl>
 </details>
 
-## EndpointsPut
-<details><summary><code>client.endpoints_put.<a href="/src/api/resources/endpoints_put/client.rs">endpoints_put_add</a>(id: String) -> Result&lt;EndpointsPutResponse, ApiError&gt;</code></summary>
+## Endpoints Put
+<details><summary><code>client.endpoints().put.<a href="/src/api/resources/endpoints/put/client.rs">add</a>(id: String) -> Result&lt;PutResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2513,7 +2804,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2521,11 +2812,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_put
-        .endpoints_put_add(&"id".to_string(), None)
-        .await;
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client.endpoints.put.add(&"id".to_string(), None).await;
 }
 ```
 </dd>
@@ -2553,8 +2841,8 @@ async fn main() {
 </dl>
 </details>
 
-## EndpointsUnion
-<details><summary><code>client.endpoints_union.<a href="/src/api/resources/endpoints_union/client.rs">endpoints_union_get_and_return_union</a>(request: TypesAnimal) -> Result&lt;TypesAnimal, ApiError&gt;</code></summary>
+## Endpoints Union
+<details><summary><code>client.endpoints().union_.<a href="/src/api/resources/endpoints/union_/client.rs">get_and_return_union</a>(request: Animal) -> Result&lt;Animal, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2567,7 +2855,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2575,18 +2863,18 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_union
-        .endpoints_union_get_and_return_union(
-            &TypesAnimal::TypesAnimalZero(TypesAnimalZero {
-                types_dog_fields: TypesDog {
+        .endpoints
+        .union_
+        .get_and_return_union(
+            &Animal::Dog {
+                data: Dog {
                     name: "name".to_string(),
                     likes_to_woof: true,
                     ..Default::default()
                 },
-                animal: TypesAnimalZeroAnimal::Dog,
-            }),
+            },
             None,
         )
         .await;
@@ -2602,8 +2890,8 @@ async fn main() {
 </dl>
 </details>
 
-## EndpointsUrLs
-<details><summary><code>client.endpoints_ur_ls.<a href="/src/api/resources/endpoints_ur_ls/client.rs">endpoints_urls_with_mixed_case</a>() -> Result&lt;String, ApiError&gt;</code></summary>
+## Endpoints Urls
+<details><summary><code>client.endpoints().urls.<a href="/src/api/resources/endpoints/urls/client.rs">with_mixed_case</a>() -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2616,7 +2904,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2624,11 +2912,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_ur_ls
-        .endpoints_urls_with_mixed_case(None)
-        .await;
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client.endpoints.urls.with_mixed_case(None).await;
 }
 ```
 </dd>
@@ -2641,7 +2926,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_ur_ls.<a href="/src/api/resources/endpoints_ur_ls/client.rs">endpoints_urls_no_ending_slash</a>() -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().urls.<a href="/src/api/resources/endpoints/urls/client.rs">no_ending_slash</a>() -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2654,7 +2939,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2662,11 +2947,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_ur_ls
-        .endpoints_urls_no_ending_slash(None)
-        .await;
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client.endpoints.urls.no_ending_slash(None).await;
 }
 ```
 </dd>
@@ -2679,7 +2961,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_ur_ls.<a href="/src/api/resources/endpoints_ur_ls/client.rs">endpoints_urls_with_ending_slash</a>() -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().urls.<a href="/src/api/resources/endpoints/urls/client.rs">with_ending_slash</a>() -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2692,7 +2974,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2700,11 +2982,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_ur_ls
-        .endpoints_urls_with_ending_slash(None)
-        .await;
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client.endpoints.urls.with_ending_slash(None).await;
 }
 ```
 </dd>
@@ -2717,7 +2996,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_ur_ls.<a href="/src/api/resources/endpoints_ur_ls/client.rs">endpoints_urls_with_underscores</a>() -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().urls.<a href="/src/api/resources/endpoints/urls/client.rs">with_underscores</a>() -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2730,7 +3009,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2738,11 +3017,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .endpoints_ur_ls
-        .endpoints_urls_with_underscores(None)
-        .await;
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client.endpoints.urls.with_underscores(None).await;
 }
 ```
 </dd>
@@ -2755,8 +3031,8 @@ async fn main() {
 </dl>
 </details>
 
-## Inlinedrequests
-<details><summary><code>client.inlinedrequests.<a href="/src/api/resources/inlinedrequests/client.rs">postwithobjectbodyandresponse</a>(request: InlinedRequestsPostWithObjectBodyandResponseRequest) -> Result&lt;TypesObjectWithOptionalField, ApiError&gt;</code></summary>
+## InlinedRequests
+<details><summary><code>client.inlined_requests.<a href="/src/api/resources/inlined_requests/client.rs">post_with_object_bodyand_response</a>(request: PostWithObjectBody) -> Result&lt;ObjectWithOptionalField, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2783,7 +3059,7 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2791,14 +3067,31 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .inlinedrequests
-        .postwithobjectbodyandresponse(
-            &InlinedRequestsPostWithObjectBodyandResponseRequest {
+        .inlined_requests
+        .post_with_object_bodyand_response(
+            &PostWithObjectBody {
                 string: "string".to_string(),
                 integer: 1,
-                nested_object: TypesObjectWithOptionalField {
+                nested_object: ObjectWithOptionalField {
+                    string: Some("string".to_string()),
+                    integer: Some(1),
+                    long: Some(1000000),
+                    double: Some(1.1),
+                    bool: Some(true),
+                    datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
+                    date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+                    uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                    base64: Some(
+                        base64::engine::general_purpose::STANDARD
+                            .decode("SGVsbG8gd29ybGQh")
+                            .unwrap(),
+                    ),
+                    list: Some(vec!["list".to_string(), "list".to_string()]),
+                    set: Some(HashSet::from(["set".to_string()])),
+                    map: Some(HashMap::from([(1, "map".to_string())])),
+                    bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
                     ..Default::default()
                 },
             },
@@ -2836,7 +3129,7 @@ async fn main() {
 <dl>
 <dd>
 
-**nested_object:** `TypesObjectWithOptionalField` 
+**nested_object:** `ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -2848,8 +3141,8 @@ async fn main() {
 </dl>
 </details>
 
-## Noauth
-<details><summary><code>client.noauth.<a href="/src/api/resources/noauth/client.rs">postwithnoauth</a>(request: serde_json::Value) -> Result&lt;bool, ApiError&gt;</code></summary>
+## NoAuth
+<details><summary><code>client.no_auth.<a href="/src/api/resources/no_auth/client.rs">post_with_no_auth</a>(request: serde_json::Value) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2876,7 +3169,7 @@ POST request with no auth
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2884,10 +3177,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .noauth
-        .postwithnoauth(&serde_json::json!({"key":"value"}), None)
+        .no_auth
+        .post_with_no_auth(&serde_json::json!({"key":"value"}), None)
         .await;
 }
 ```
@@ -2901,8 +3194,8 @@ async fn main() {
 </dl>
 </details>
 
-## Noreqbody
-<details><summary><code>client.noreqbody.<a href="/src/api/resources/noreqbody/client.rs">getwithnorequestbody</a>() -> Result&lt;TypesObjectWithOptionalField, ApiError&gt;</code></summary>
+## NoReqBody
+<details><summary><code>client.no_req_body.<a href="/src/api/resources/no_req_body/client.rs">get_with_no_request_body</a>() -> Result&lt;ObjectWithOptionalField, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2915,7 +3208,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2923,8 +3216,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.noreqbody.getwithnorequestbody(None).await;
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client.no_req_body.get_with_no_request_body(None).await;
 }
 ```
 </dd>
@@ -2937,7 +3230,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.noreqbody.<a href="/src/api/resources/noreqbody/client.rs">postwithnorequestbody</a>() -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.no_req_body.<a href="/src/api/resources/no_req_body/client.rs">post_with_no_request_body</a>() -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2950,7 +3243,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2958,8 +3251,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.noreqbody.postwithnorequestbody(None).await;
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client.no_req_body.post_with_no_request_body(None).await;
 }
 ```
 </dd>
@@ -2972,8 +3265,8 @@ async fn main() {
 </dl>
 </details>
 
-## Reqwithheaders
-<details><summary><code>client.reqwithheaders.<a href="/src/api/resources/reqwithheaders/client.rs">getwithcustomheader</a>(request: String) -> Result&lt;(), ApiError&gt;</code></summary>
+## ReqWithHeaders
+<details><summary><code>client.req_with_headers.<a href="/src/api/resources/req_with_headers/client.rs">get_with_custom_header</a>(request: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2986,7 +3279,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -2994,13 +3287,14 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .reqwithheaders
-        .getwithcustomheader(
+        .req_with_headers
+        .get_with_custom_header(
             &"string".to_string(),
             Some(
                 RequestOptions::new()
+                    .additional_header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
                     .additional_header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER"),
             ),
         )

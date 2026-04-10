@@ -19,31 +19,34 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :index
       #
-      # @return [Seed::Types::PaginatedConversationResponse]
+      # @return [Seed::Complex::Types::PaginatedConversationResponse]
       def search(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::Complex::Types::SearchRequest.new(params).to_h
-        non_body_param_names = ["index"]
-        body = request_data.except(*non_body_param_names)
-
-        request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
-          method: "POST",
-          path: "#{URI.encode_uri_component(params[:index].to_s)}/conversations/search",
-          body: body,
-          request_options: request_options
-        )
-        begin
-          response = @client.send(request)
-        rescue Net::HTTPRequestTimeout
-          raise Seed::Errors::TimeoutError
-        end
-        code = response.code.to_i
-        if code.between?(200, 299)
-          Seed::Types::PaginatedConversationResponse.load(response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+        Seed::Internal::CursorItemIterator.new(
+          cursor_field: :starting_after,
+          item_field: :conversations,
+          initial_cursor: query_params["starting_after"]
+        ) do |next_cursor|
+          query_params["starting_after"] = next_cursor
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "#{URI.encode_uri_component(params[:index].to_s)}/conversations/search",
+            body: Seed::Complex::Types::SearchRequest.new(params).to_h,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Complex::Types::PaginatedConversationResponse.load(response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
         end
       end
     end

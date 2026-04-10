@@ -1,3 +1,3 @@
 import Foundation
 
-public typealias SubmissionId = String
+public typealias SubmissionId = UUID

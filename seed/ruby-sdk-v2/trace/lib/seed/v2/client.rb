@@ -38,6 +38,16 @@ module Seed
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
       end
+
+      # @return [Seed::Problem::Client]
+      def problem
+        @problem ||= Seed::V2::Problem::Client.new(client: @client)
+      end
+
+      # @return [Seed::V3::Client]
+      def v3
+        @v3 ||= Seed::V2::V3::Client.new(client: @client)
+      end
     end
   end
 end

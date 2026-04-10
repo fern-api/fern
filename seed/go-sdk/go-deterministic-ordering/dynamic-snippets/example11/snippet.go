@@ -17,12 +17,13 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]*fern.TypesObjectWithRequiredField{
-        "string": &fern.TypesObjectWithRequiredField{
-            FieldString: "string",
-        },
+    request := &fern.GetRequestA{
+        ID: "id",
+        Filter: fern.String(
+            "filter",
+        ),
     }
-    client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToObject(
+    client.Endpoints.DuplicateNamesA.Get(
         context.TODO(),
         request,
     )

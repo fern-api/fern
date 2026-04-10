@@ -1,20 +1,19 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.endpointsparams.requests.EndpointsParamsModifyWithInlinePathRequest;
+import com.seed.exhaustive.SeedExhaustiveClient;
+import java.util.HashMap;
 
 public class Example62 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpointsParams()
-                .endpointsParamsModifyWithInlinePath(
-                        "param",
-                        EndpointsParamsModifyWithInlinePathRequest.builder()
-                                .body("string")
-                                .build());
+        client.noAuth().postWithNoAuth(new HashMap<String, Object>() {
+            {
+                put("key", "value");
+            }
+        });
     }
 }

@@ -4,7 +4,7 @@ public struct WorkspaceSubmitRequest: Codable, Hashable, Sendable {
     public let submissionId: SubmissionId
     public let language: Language
     public let submissionFiles: [SubmissionFileInfo]
-    public let userId: Nullable<String>?
+    public let userId: String?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -12,7 +12,7 @@ public struct WorkspaceSubmitRequest: Codable, Hashable, Sendable {
         submissionId: SubmissionId,
         language: Language,
         submissionFiles: [SubmissionFileInfo],
-        userId: Nullable<String>? = nil,
+        userId: String? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.submissionId = submissionId
@@ -27,7 +27,7 @@ public struct WorkspaceSubmitRequest: Codable, Hashable, Sendable {
         self.submissionId = try container.decode(SubmissionId.self, forKey: .submissionId)
         self.language = try container.decode(Language.self, forKey: .language)
         self.submissionFiles = try container.decode([SubmissionFileInfo].self, forKey: .submissionFiles)
-        self.userId = try container.decodeNullableIfPresent(String.self, forKey: .userId)
+        self.userId = try container.decodeIfPresent(String.self, forKey: .userId)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -37,7 +37,7 @@ public struct WorkspaceSubmitRequest: Codable, Hashable, Sendable {
         try container.encode(self.submissionId, forKey: .submissionId)
         try container.encode(self.language, forKey: .language)
         try container.encode(self.submissionFiles, forKey: .submissionFiles)
-        try container.encodeNullableIfPresent(self.userId, forKey: .userId)
+        try container.encodeIfPresent(self.userId, forKey: .userId)
     }
 
     /// Keys for encoding/decoding struct properties.

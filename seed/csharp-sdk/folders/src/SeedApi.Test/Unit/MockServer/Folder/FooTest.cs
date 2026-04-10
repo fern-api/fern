@@ -8,20 +8,10 @@ namespace SeedApi.Test.Unit.MockServer.Folder;
 public class FooTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public void MockServerTest_1()
+    public void MockServerTest()
     {
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/folder").UsingPost())
-            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
-
-        Assert.DoesNotThrowAsync(async () => await Client.Folder.FooAsync());
-    }
-
-    [NUnit.Framework.Test]
-    public void MockServerTest_2()
-    {
-        Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/folder").UsingPost())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/").UsingPost())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(async () => await Client.Folder.FooAsync());

@@ -6,55 +6,59 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedExhaustive from "../../../index.js";
 
-export declare namespace ReqwithheadersClient {
+export declare namespace ReqWithHeadersClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class ReqwithheadersClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<ReqwithheadersClient.Options>;
+export class ReqWithHeadersClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<ReqWithHeadersClient.Options>;
 
-    constructor(options: ReqwithheadersClient.Options) {
+    constructor(options: ReqWithHeadersClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
-     * @param {SeedApi.ReqWithHeadersGetWithCustomHeaderRequest} request
-     * @param {ReqwithheadersClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedExhaustive.ReqWithHeaders} request
+     * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.reqwithheaders.getwithcustomheader({
-     *         testEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+     *     await client.reqWithHeaders.getWithCustomHeader({
+     *         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+     *         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
      *         body: "string"
      *     })
      */
-    public getwithcustomheader(
-        request: SeedApi.ReqWithHeadersGetWithCustomHeaderRequest,
-        requestOptions?: ReqwithheadersClient.RequestOptions,
+    public getWithCustomHeader(
+        request: SeedExhaustive.ReqWithHeaders,
+        requestOptions?: ReqWithHeadersClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__getwithcustomheader(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
     }
 
-    private async __getwithcustomheader(
-        request: SeedApi.ReqWithHeadersGetWithCustomHeaderRequest,
-        requestOptions?: ReqwithheadersClient.RequestOptions,
+    private async __getWithCustomHeader(
+        request: SeedExhaustive.ReqWithHeaders,
+        requestOptions?: ReqWithHeadersClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { testEndpointHeader, body: _body } = request;
+        const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-TEST-ENDPOINT-HEADER": testEndpointHeader }),
+            mergeOnlyDefinedHeaders({
+                "X-TEST-SERVICE-HEADER": xTestServiceHeader,
+                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
+            }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "test-headers/custom-header",
+                "/test-headers/custom-header",
             ),
             method: "POST",
             headers: _headers,
@@ -73,7 +77,7 @@ export class ReqwithheadersClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

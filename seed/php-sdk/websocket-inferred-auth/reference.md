@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-&gt;auth-&gt;gettokenwithclientcredentials($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;getTokenWithClientCredentials($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,14 @@
 <dd>
 
 ```php
-$client->auth->gettokenwithclientcredentials(
-    new AuthGetTokenWithClientCredentialsRequest([
+$client->auth->getTokenWithClientCredentials(
+    new GetTokenRequest([
+        'xApiKey' => 'X-Api-Key',
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
-        'audience' => AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom->value,
-        'grantType' => AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials->value,
+        'audience' => 'https://api.example.com',
+        'grantType' => 'client_credentials',
+        'scope' => 'scope',
     ]),
 );
 ```
@@ -31,6 +33,14 @@ $client->auth->gettokenwithclientcredentials(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**$xApiKey:** `string` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -79,7 +89,7 @@ $client->auth->gettokenwithclientcredentials(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;auth-&gt;refreshtoken($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;refreshToken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -92,13 +102,15 @@ $client->auth->gettokenwithclientcredentials(
 <dd>
 
 ```php
-$client->auth->refreshtoken(
-    new AuthRefreshTokenRequest([
+$client->auth->refreshToken(
+    new RefreshTokenRequest([
+        'xApiKey' => 'X-Api-Key',
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
         'refreshToken' => 'refresh_token',
-        'audience' => AuthRefreshTokenRequestAudience::HttpsApiExampleCom->value,
-        'grantType' => AuthRefreshTokenRequestGrantType::RefreshToken->value,
+        'audience' => 'https://api.example.com',
+        'grantType' => 'refresh_token',
+        'scope' => 'scope',
     ]),
 );
 ```
@@ -111,6 +123,14 @@ $client->auth->refreshtoken(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**$xApiKey:** `string` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

@@ -34,12 +34,29 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get a user by ID
-func (c *Client) Getuser(
+func (c *Client) GetUser(
 	ctx context.Context,
-	request *fern.NullableOptionalGetUserRequest,
+	userID string,
 	opts ...option.RequestOption,
 ) (*fern.UserResponse, error) {
-	response, err := c.WithRawResponse.Getuser(
+	response, err := c.WithRawResponse.GetUser(
+		ctx,
+		userID,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Create a new user
+func (c *Client) CreateUser(
+	ctx context.Context,
+	request *fern.CreateUserRequest,
+	opts ...option.RequestOption,
+) (*fern.UserResponse, error) {
+	response, err := c.WithRawResponse.CreateUser(
 		ctx,
 		request,
 		opts...,
@@ -51,13 +68,15 @@ func (c *Client) Getuser(
 }
 
 // Update a user (partial update)
-func (c *Client) Updateuser(
+func (c *Client) UpdateUser(
 	ctx context.Context,
+	userID string,
 	request *fern.UpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.UserResponse, error) {
-	response, err := c.WithRawResponse.Updateuser(
+	response, err := c.WithRawResponse.UpdateUser(
 		ctx,
+		userID,
 		request,
 		opts...,
 	)
@@ -68,29 +87,12 @@ func (c *Client) Updateuser(
 }
 
 // List all users
-func (c *Client) Listusers(
+func (c *Client) ListUsers(
 	ctx context.Context,
-	request *fern.NullableOptionalListUsersRequest,
+	request *fern.ListUsersRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.UserResponse, error) {
-	response, err := c.WithRawResponse.Listusers(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-// Create a new user
-func (c *Client) Createuser(
-	ctx context.Context,
-	request *fern.CreateUserRequest,
-	opts ...option.RequestOption,
-) (*fern.UserResponse, error) {
-	response, err := c.WithRawResponse.Createuser(
+	response, err := c.WithRawResponse.ListUsers(
 		ctx,
 		request,
 		opts...,
@@ -102,12 +104,12 @@ func (c *Client) Createuser(
 }
 
 // Search users
-func (c *Client) Searchusers(
+func (c *Client) SearchUsers(
 	ctx context.Context,
-	request *fern.NullableOptionalSearchUsersRequest,
+	request *fern.SearchUsersRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.UserResponse, error) {
-	response, err := c.WithRawResponse.Searchusers(
+	response, err := c.WithRawResponse.SearchUsers(
 		ctx,
 		request,
 		opts...,
@@ -119,12 +121,12 @@ func (c *Client) Searchusers(
 }
 
 // Create a complex profile to test nullable enums and unions
-func (c *Client) Createcomplexprofile(
+func (c *Client) CreateComplexProfile(
 	ctx context.Context,
 	request *fern.ComplexProfile,
 	opts ...option.RequestOption,
 ) (*fern.ComplexProfile, error) {
-	response, err := c.WithRawResponse.Createcomplexprofile(
+	response, err := c.WithRawResponse.CreateComplexProfile(
 		ctx,
 		request,
 		opts...,
@@ -136,14 +138,14 @@ func (c *Client) Createcomplexprofile(
 }
 
 // Get a complex profile by ID
-func (c *Client) Getcomplexprofile(
+func (c *Client) GetComplexProfile(
 	ctx context.Context,
-	request *fern.NullableOptionalGetComplexProfileRequest,
+	profileID string,
 	opts ...option.RequestOption,
 ) (*fern.ComplexProfile, error) {
-	response, err := c.WithRawResponse.Getcomplexprofile(
+	response, err := c.WithRawResponse.GetComplexProfile(
 		ctx,
-		request,
+		profileID,
 		opts...,
 	)
 	if err != nil {
@@ -153,13 +155,15 @@ func (c *Client) Getcomplexprofile(
 }
 
 // Update complex profile to test nullable field updates
-func (c *Client) Updatecomplexprofile(
+func (c *Client) UpdateComplexProfile(
 	ctx context.Context,
-	request *fern.NullableOptionalUpdateComplexProfileRequest,
+	profileID string,
+	request *fern.UpdateComplexProfileRequest,
 	opts ...option.RequestOption,
 ) (*fern.ComplexProfile, error) {
-	response, err := c.WithRawResponse.Updatecomplexprofile(
+	response, err := c.WithRawResponse.UpdateComplexProfile(
 		ctx,
+		profileID,
 		request,
 		opts...,
 	)
@@ -170,12 +174,12 @@ func (c *Client) Updatecomplexprofile(
 }
 
 // Test endpoint for validating null deserialization
-func (c *Client) Testdeserialization(
+func (c *Client) TestDeserialization(
 	ctx context.Context,
 	request *fern.DeserializationTestRequest,
 	opts ...option.RequestOption,
 ) (*fern.DeserializationTestResponse, error) {
-	response, err := c.WithRawResponse.Testdeserialization(
+	response, err := c.WithRawResponse.TestDeserialization(
 		ctx,
 		request,
 		opts...,
@@ -187,12 +191,12 @@ func (c *Client) Testdeserialization(
 }
 
 // Filter users by role with nullable enum
-func (c *Client) Filterbyrole(
+func (c *Client) FilterByRole(
 	ctx context.Context,
-	request *fern.NullableOptionalFilterByRoleRequest,
+	request *fern.FilterByRoleRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.UserResponse, error) {
-	response, err := c.WithRawResponse.Filterbyrole(
+	response, err := c.WithRawResponse.FilterByRole(
 		ctx,
 		request,
 		opts...,
@@ -204,14 +208,14 @@ func (c *Client) Filterbyrole(
 }
 
 // Get notification settings which may be null
-func (c *Client) Getnotificationsettings(
+func (c *Client) GetNotificationSettings(
 	ctx context.Context,
-	request *fern.NullableOptionalGetNotificationSettingsRequest,
+	userID string,
 	opts ...option.RequestOption,
 ) (*fern.NotificationMethod, error) {
-	response, err := c.WithRawResponse.Getnotificationsettings(
+	response, err := c.WithRawResponse.GetNotificationSettings(
 		ctx,
-		request,
+		userID,
 		opts...,
 	)
 	if err != nil {
@@ -221,13 +225,15 @@ func (c *Client) Getnotificationsettings(
 }
 
 // Update tags to test array handling
-func (c *Client) Updatetags(
+func (c *Client) UpdateTags(
 	ctx context.Context,
-	request *fern.NullableOptionalUpdateTagsRequest,
+	userID string,
+	request *fern.UpdateTagsRequest,
 	opts ...option.RequestOption,
 ) ([]string, error) {
-	response, err := c.WithRawResponse.Updatetags(
+	response, err := c.WithRawResponse.UpdateTags(
 		ctx,
+		userID,
 		request,
 		opts...,
 	)
@@ -238,12 +244,12 @@ func (c *Client) Updatetags(
 }
 
 // Get search results with nullable unions
-func (c *Client) Getsearchresults(
+func (c *Client) GetSearchResults(
 	ctx context.Context,
-	request *fern.NullableOptionalGetSearchResultsRequest,
+	request *fern.SearchRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.SearchResult, error) {
-	response, err := c.WithRawResponse.Getsearchresults(
+	response, err := c.WithRawResponse.GetSearchResults(
 		ctx,
 		request,
 		opts...,

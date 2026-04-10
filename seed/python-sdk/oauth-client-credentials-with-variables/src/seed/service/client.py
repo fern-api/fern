@@ -22,12 +22,10 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def post(self, endpoint_param: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        endpoint_param : str
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -37,17 +35,17 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedOauthClientCredentialsWithVariables
 
-        client = SeedApi(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
+        client = SeedOauthClientCredentialsWithVariables(
+            base_url="YOUR_BASE_URL",
+            root_variable="YOUR_ROOT_VARIABLE",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
-        client.service.post(
-            endpoint_param="endpointParam",
-        )
+        client.service.post()
         """
-        _response = self._raw_client.post(endpoint_param, request_options=request_options)
+        _response = self._raw_client.post(request_options=request_options)
         return _response.data
 
 
@@ -66,12 +64,10 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def post(self, endpoint_param: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        endpoint_param : str
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -83,21 +79,21 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedOauthClientCredentialsWithVariables
 
-        client = AsyncSeedApi(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
+        client = AsyncSeedOauthClientCredentialsWithVariables(
+            base_url="YOUR_BASE_URL",
+            root_variable="YOUR_ROOT_VARIABLE",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
         async def main() -> None:
-            await client.service.post(
-                endpoint_param="endpointParam",
-            )
+            await client.service.post()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post(endpoint_param, request_options=request_options)
+        _response = await self._raw_client.post(request_options=request_options)
         return _response.data

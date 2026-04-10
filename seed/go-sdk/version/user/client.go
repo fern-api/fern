@@ -33,14 +33,14 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Getuser(
+func (c *Client) GetUser(
 	ctx context.Context,
-	request *fern.UserGetUserRequest,
+	userID fern.UserID,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
-	response, err := c.WithRawResponse.Getuser(
+	response, err := c.WithRawResponse.GetUser(
 		ctx,
-		request,
+		userID,
 		opts...,
 	)
 	if err != nil {

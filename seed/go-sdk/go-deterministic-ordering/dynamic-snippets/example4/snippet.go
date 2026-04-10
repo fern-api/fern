@@ -16,10 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := []string{
-        "string",
+    request := map[string]string{
+        "string": "string",
     }
-    client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfPrimitives(
+    client.Endpoints.Container.GetAndReturnMapPrimToPrim(
         context.TODO(),
         request,
     )

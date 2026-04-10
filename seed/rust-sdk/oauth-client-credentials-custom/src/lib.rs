@@ -1,30 +1,29 @@
-//! # oauth-client-credentials-custom SDK
+//! # OauthClientCredentials SDK
 //!
-//! The official Rust SDK for the oauth-client-credentials-custom.
+//! The official Rust SDK for the OauthClientCredentials.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_oauth_client_credentials::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
-//!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = OauthClientCredentialsClient::new(config).expect("Failed to build client");
 //!     client
 //!         .auth
-//!         .gettokenwithclientcredentials(
-//!             &AuthGetTokenWithClientCredentialsRequest {
+//!         .get_token_with_client_credentials(
+//!             &GetTokenRequest {
 //!                 cid: "cid".to_string(),
 //!                 csr: "csr".to_string(),
 //!                 scp: "scp".to_string(),
 //!                 entity_id: "entity_id".to_string(),
-//!                 audience: AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom,
-//!                 grant_type: AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials,
-//!                 scope: None,
+//!                 audience: "https://api.example.com".to_string(),
+//!                 grant_type: "client_credentials".to_string(),
+//!                 scope: Some("scope".to_string()),
 //!             },
 //!             None,
 //!         )

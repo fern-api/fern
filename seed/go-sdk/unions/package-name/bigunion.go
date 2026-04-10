@@ -7,32 +7,8 @@ import (
 	fmt "fmt"
 	internal "github.com/fern-api/unions-go/internal"
 	big "math/big"
+	time "time"
 )
-
-var (
-	bigunionGetRequestFieldID = big.NewInt(1 << 0)
-)
-
-type BigunionGetRequest struct {
-	ID string `json:"-" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (b *BigunionGetRequest) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetID sets the ID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigunionGetRequest) SetID(id string) {
-	b.ID = id
-	b.require(bigunionGetRequestFieldID)
-}
 
 var (
 	activeDiamondFieldValue = big.NewInt(1 << 0)
@@ -203,4083 +179,798 @@ func (a *AttractiveScript) String() string {
 }
 
 type BigUnion struct {
-	BigUnionZero        *BigUnionZero
-	BigUnionOne         *BigUnionOne
-	BigUnionTwo         *BigUnionTwo
-	BigUnionThree       *BigUnionThree
-	BigUnionFour        *BigUnionFour
-	BigUnionFive        *BigUnionFive
-	BigUnionSix         *BigUnionSix
-	BigUnionSeven       *BigUnionSeven
-	BigUnionEight       *BigUnionEight
-	BigUnionNine        *BigUnionNine
-	BigUnionTen         *BigUnionTen
-	BigUnionEleven      *BigUnionEleven
-	BigUnionTwelve      *BigUnionTwelve
-	BigUnionThirteen    *BigUnionThirteen
-	BigUnionFourteen    *BigUnionFourteen
-	BigUnionFifteen     *BigUnionFifteen
-	BigUnionSixteen     *BigUnionSixteen
-	BigUnionSeventeen   *BigUnionSeventeen
-	BigUnionEighteen    *BigUnionEighteen
-	BigUnionNineteen    *BigUnionNineteen
-	BigUnionTwenty      *BigUnionTwenty
-	BigUnionTwentyOne   *BigUnionTwentyOne
-	BigUnionTwentyTwo   *BigUnionTwentyTwo
-	BigUnionTwentyThree *BigUnionTwentyThree
-	BigUnionTwentyFour  *BigUnionTwentyFour
-	BigUnionTwentyFive  *BigUnionTwentyFive
-	BigUnionTwentySix   *BigUnionTwentySix
-	BigUnionTwentySeven *BigUnionTwentySeven
-	BigUnionTwentyEight *BigUnionTwentyEight
-
-	typ string
+	Type               string
+	ID                 string
+	CreatedAt          time.Time
+	ArchivedAt         *time.Time
+	NormalSweet        *NormalSweet
+	ThankfulFactor     *ThankfulFactor
+	JumboEnd           *JumboEnd
+	HastyPain          *HastyPain
+	MistySnow          *MistySnow
+	DistinctFailure    *DistinctFailure
+	PracticalPrinciple *PracticalPrinciple
+	LimpingStep        *LimpingStep
+	VibrantExcitement  *VibrantExcitement
+	ActiveDiamond      *ActiveDiamond
+	PopularLimit       *PopularLimit
+	FalseMirror        *FalseMirror
+	PrimaryBlock       *PrimaryBlock
+	RotatingRatio      *RotatingRatio
+	ColorfulCover      *ColorfulCover
+	DisloyalValue      *DisloyalValue
+	GruesomeCoach      *GruesomeCoach
+	TotalWork          *TotalWork
+	HarmoniousPlay     *HarmoniousPlay
+	UniqueStress       *UniqueStress
+	UnwillingSmoke     *UnwillingSmoke
+	FrozenSleep        *FrozenSleep
+	DiligentDeal       *DiligentDeal
+	AttractiveScript   *AttractiveScript
+	HoarseMouse        *HoarseMouse
+	CircularCard       *CircularCard
+	PotableBad         *PotableBad
+	TriangularRepair   *TriangularRepair
+	GaseousRoad        *GaseousRoad
 }
 
-func (b *BigUnion) GetBigUnionZero() *BigUnionZero {
+func (b *BigUnion) GetType() string {
+	if b == nil {
+		return ""
+	}
+	return b.Type
+}
+
+func (b *BigUnion) GetID() string {
+	if b == nil {
+		return ""
+	}
+	return b.ID
+}
+
+func (b *BigUnion) GetCreatedAt() time.Time {
+	if b == nil {
+		return time.Time{}
+	}
+	return b.CreatedAt
+}
+
+func (b *BigUnion) GetArchivedAt() *time.Time {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionZero
+	return b.ArchivedAt
 }
 
-func (b *BigUnion) GetBigUnionOne() *BigUnionOne {
+func (b *BigUnion) GetNormalSweet() *NormalSweet {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionOne
+	return b.NormalSweet
 }
 
-func (b *BigUnion) GetBigUnionTwo() *BigUnionTwo {
+func (b *BigUnion) GetThankfulFactor() *ThankfulFactor {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwo
+	return b.ThankfulFactor
 }
 
-func (b *BigUnion) GetBigUnionThree() *BigUnionThree {
+func (b *BigUnion) GetJumboEnd() *JumboEnd {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionThree
+	return b.JumboEnd
 }
 
-func (b *BigUnion) GetBigUnionFour() *BigUnionFour {
+func (b *BigUnion) GetHastyPain() *HastyPain {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionFour
+	return b.HastyPain
 }
 
-func (b *BigUnion) GetBigUnionFive() *BigUnionFive {
+func (b *BigUnion) GetMistySnow() *MistySnow {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionFive
+	return b.MistySnow
 }
 
-func (b *BigUnion) GetBigUnionSix() *BigUnionSix {
+func (b *BigUnion) GetDistinctFailure() *DistinctFailure {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionSix
+	return b.DistinctFailure
 }
 
-func (b *BigUnion) GetBigUnionSeven() *BigUnionSeven {
+func (b *BigUnion) GetPracticalPrinciple() *PracticalPrinciple {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionSeven
+	return b.PracticalPrinciple
 }
 
-func (b *BigUnion) GetBigUnionEight() *BigUnionEight {
+func (b *BigUnion) GetLimpingStep() *LimpingStep {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionEight
+	return b.LimpingStep
 }
 
-func (b *BigUnion) GetBigUnionNine() *BigUnionNine {
+func (b *BigUnion) GetVibrantExcitement() *VibrantExcitement {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionNine
+	return b.VibrantExcitement
 }
 
-func (b *BigUnion) GetBigUnionTen() *BigUnionTen {
+func (b *BigUnion) GetActiveDiamond() *ActiveDiamond {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTen
+	return b.ActiveDiamond
 }
 
-func (b *BigUnion) GetBigUnionEleven() *BigUnionEleven {
+func (b *BigUnion) GetPopularLimit() *PopularLimit {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionEleven
+	return b.PopularLimit
 }
 
-func (b *BigUnion) GetBigUnionTwelve() *BigUnionTwelve {
+func (b *BigUnion) GetFalseMirror() *FalseMirror {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwelve
+	return b.FalseMirror
 }
 
-func (b *BigUnion) GetBigUnionThirteen() *BigUnionThirteen {
+func (b *BigUnion) GetPrimaryBlock() *PrimaryBlock {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionThirteen
+	return b.PrimaryBlock
 }
 
-func (b *BigUnion) GetBigUnionFourteen() *BigUnionFourteen {
+func (b *BigUnion) GetRotatingRatio() *RotatingRatio {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionFourteen
+	return b.RotatingRatio
 }
 
-func (b *BigUnion) GetBigUnionFifteen() *BigUnionFifteen {
+func (b *BigUnion) GetColorfulCover() *ColorfulCover {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionFifteen
+	return b.ColorfulCover
 }
 
-func (b *BigUnion) GetBigUnionSixteen() *BigUnionSixteen {
+func (b *BigUnion) GetDisloyalValue() *DisloyalValue {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionSixteen
+	return b.DisloyalValue
 }
 
-func (b *BigUnion) GetBigUnionSeventeen() *BigUnionSeventeen {
+func (b *BigUnion) GetGruesomeCoach() *GruesomeCoach {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionSeventeen
+	return b.GruesomeCoach
 }
 
-func (b *BigUnion) GetBigUnionEighteen() *BigUnionEighteen {
+func (b *BigUnion) GetTotalWork() *TotalWork {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionEighteen
+	return b.TotalWork
 }
 
-func (b *BigUnion) GetBigUnionNineteen() *BigUnionNineteen {
+func (b *BigUnion) GetHarmoniousPlay() *HarmoniousPlay {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionNineteen
+	return b.HarmoniousPlay
 }
 
-func (b *BigUnion) GetBigUnionTwenty() *BigUnionTwenty {
+func (b *BigUnion) GetUniqueStress() *UniqueStress {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwenty
+	return b.UniqueStress
 }
 
-func (b *BigUnion) GetBigUnionTwentyOne() *BigUnionTwentyOne {
+func (b *BigUnion) GetUnwillingSmoke() *UnwillingSmoke {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwentyOne
+	return b.UnwillingSmoke
 }
 
-func (b *BigUnion) GetBigUnionTwentyTwo() *BigUnionTwentyTwo {
+func (b *BigUnion) GetFrozenSleep() *FrozenSleep {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwentyTwo
+	return b.FrozenSleep
 }
 
-func (b *BigUnion) GetBigUnionTwentyThree() *BigUnionTwentyThree {
+func (b *BigUnion) GetDiligentDeal() *DiligentDeal {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwentyThree
+	return b.DiligentDeal
 }
 
-func (b *BigUnion) GetBigUnionTwentyFour() *BigUnionTwentyFour {
+func (b *BigUnion) GetAttractiveScript() *AttractiveScript {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwentyFour
+	return b.AttractiveScript
 }
 
-func (b *BigUnion) GetBigUnionTwentyFive() *BigUnionTwentyFive {
+func (b *BigUnion) GetHoarseMouse() *HoarseMouse {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwentyFive
+	return b.HoarseMouse
 }
 
-func (b *BigUnion) GetBigUnionTwentySix() *BigUnionTwentySix {
+func (b *BigUnion) GetCircularCard() *CircularCard {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwentySix
+	return b.CircularCard
 }
 
-func (b *BigUnion) GetBigUnionTwentySeven() *BigUnionTwentySeven {
+func (b *BigUnion) GetPotableBad() *PotableBad {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwentySeven
+	return b.PotableBad
 }
 
-func (b *BigUnion) GetBigUnionTwentyEight() *BigUnionTwentyEight {
+func (b *BigUnion) GetTriangularRepair() *TriangularRepair {
 	if b == nil {
 		return nil
 	}
-	return b.BigUnionTwentyEight
+	return b.TriangularRepair
+}
+
+func (b *BigUnion) GetGaseousRoad() *GaseousRoad {
+	if b == nil {
+		return nil
+	}
+	return b.GaseousRoad
 }
 
 func (b *BigUnion) UnmarshalJSON(data []byte) error {
-	valueBigUnionZero := new(BigUnionZero)
-	if err := json.Unmarshal(data, &valueBigUnionZero); err == nil {
-		b.typ = "BigUnionZero"
-		b.BigUnionZero = valueBigUnionZero
-		return nil
+	var unmarshaler struct {
+		Type       string     `json:"type"`
+		ID         string     `json:"id"`
+		CreatedAt  time.Time  `json:"created-at"`
+		ArchivedAt *time.Time `json:"archived-at,omitempty"`
 	}
-	valueBigUnionOne := new(BigUnionOne)
-	if err := json.Unmarshal(data, &valueBigUnionOne); err == nil {
-		b.typ = "BigUnionOne"
-		b.BigUnionOne = valueBigUnionOne
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	valueBigUnionTwo := new(BigUnionTwo)
-	if err := json.Unmarshal(data, &valueBigUnionTwo); err == nil {
-		b.typ = "BigUnionTwo"
-		b.BigUnionTwo = valueBigUnionTwo
-		return nil
+	b.Type = unmarshaler.Type
+	b.ID = unmarshaler.ID
+	b.CreatedAt = unmarshaler.CreatedAt
+	b.ArchivedAt = unmarshaler.ArchivedAt
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", b)
 	}
-	valueBigUnionThree := new(BigUnionThree)
-	if err := json.Unmarshal(data, &valueBigUnionThree); err == nil {
-		b.typ = "BigUnionThree"
-		b.BigUnionThree = valueBigUnionThree
-		return nil
+	switch unmarshaler.Type {
+	case "normalSweet":
+		value := new(NormalSweet)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.NormalSweet = value
+	case "thankfulFactor":
+		value := new(ThankfulFactor)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.ThankfulFactor = value
+	case "jumboEnd":
+		value := new(JumboEnd)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.JumboEnd = value
+	case "hastyPain":
+		value := new(HastyPain)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.HastyPain = value
+	case "mistySnow":
+		value := new(MistySnow)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.MistySnow = value
+	case "distinctFailure":
+		value := new(DistinctFailure)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.DistinctFailure = value
+	case "practicalPrinciple":
+		value := new(PracticalPrinciple)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.PracticalPrinciple = value
+	case "limpingStep":
+		value := new(LimpingStep)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.LimpingStep = value
+	case "vibrantExcitement":
+		value := new(VibrantExcitement)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.VibrantExcitement = value
+	case "activeDiamond":
+		value := new(ActiveDiamond)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.ActiveDiamond = value
+	case "popularLimit":
+		value := new(PopularLimit)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.PopularLimit = value
+	case "falseMirror":
+		value := new(FalseMirror)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.FalseMirror = value
+	case "primaryBlock":
+		value := new(PrimaryBlock)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.PrimaryBlock = value
+	case "rotatingRatio":
+		value := new(RotatingRatio)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.RotatingRatio = value
+	case "colorfulCover":
+		value := new(ColorfulCover)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.ColorfulCover = value
+	case "disloyalValue":
+		value := new(DisloyalValue)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.DisloyalValue = value
+	case "gruesomeCoach":
+		value := new(GruesomeCoach)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.GruesomeCoach = value
+	case "totalWork":
+		value := new(TotalWork)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.TotalWork = value
+	case "harmoniousPlay":
+		value := new(HarmoniousPlay)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.HarmoniousPlay = value
+	case "uniqueStress":
+		value := new(UniqueStress)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.UniqueStress = value
+	case "unwillingSmoke":
+		value := new(UnwillingSmoke)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.UnwillingSmoke = value
+	case "frozenSleep":
+		value := new(FrozenSleep)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.FrozenSleep = value
+	case "diligentDeal":
+		value := new(DiligentDeal)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.DiligentDeal = value
+	case "attractiveScript":
+		value := new(AttractiveScript)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.AttractiveScript = value
+	case "hoarseMouse":
+		value := new(HoarseMouse)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.HoarseMouse = value
+	case "circularCard":
+		value := new(CircularCard)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.CircularCard = value
+	case "potableBad":
+		value := new(PotableBad)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.PotableBad = value
+	case "triangularRepair":
+		value := new(TriangularRepair)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.TriangularRepair = value
+	case "gaseousRoad":
+		value := new(GaseousRoad)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		b.GaseousRoad = value
 	}
-	valueBigUnionFour := new(BigUnionFour)
-	if err := json.Unmarshal(data, &valueBigUnionFour); err == nil {
-		b.typ = "BigUnionFour"
-		b.BigUnionFour = valueBigUnionFour
-		return nil
-	}
-	valueBigUnionFive := new(BigUnionFive)
-	if err := json.Unmarshal(data, &valueBigUnionFive); err == nil {
-		b.typ = "BigUnionFive"
-		b.BigUnionFive = valueBigUnionFive
-		return nil
-	}
-	valueBigUnionSix := new(BigUnionSix)
-	if err := json.Unmarshal(data, &valueBigUnionSix); err == nil {
-		b.typ = "BigUnionSix"
-		b.BigUnionSix = valueBigUnionSix
-		return nil
-	}
-	valueBigUnionSeven := new(BigUnionSeven)
-	if err := json.Unmarshal(data, &valueBigUnionSeven); err == nil {
-		b.typ = "BigUnionSeven"
-		b.BigUnionSeven = valueBigUnionSeven
-		return nil
-	}
-	valueBigUnionEight := new(BigUnionEight)
-	if err := json.Unmarshal(data, &valueBigUnionEight); err == nil {
-		b.typ = "BigUnionEight"
-		b.BigUnionEight = valueBigUnionEight
-		return nil
-	}
-	valueBigUnionNine := new(BigUnionNine)
-	if err := json.Unmarshal(data, &valueBigUnionNine); err == nil {
-		b.typ = "BigUnionNine"
-		b.BigUnionNine = valueBigUnionNine
-		return nil
-	}
-	valueBigUnionTen := new(BigUnionTen)
-	if err := json.Unmarshal(data, &valueBigUnionTen); err == nil {
-		b.typ = "BigUnionTen"
-		b.BigUnionTen = valueBigUnionTen
-		return nil
-	}
-	valueBigUnionEleven := new(BigUnionEleven)
-	if err := json.Unmarshal(data, &valueBigUnionEleven); err == nil {
-		b.typ = "BigUnionEleven"
-		b.BigUnionEleven = valueBigUnionEleven
-		return nil
-	}
-	valueBigUnionTwelve := new(BigUnionTwelve)
-	if err := json.Unmarshal(data, &valueBigUnionTwelve); err == nil {
-		b.typ = "BigUnionTwelve"
-		b.BigUnionTwelve = valueBigUnionTwelve
-		return nil
-	}
-	valueBigUnionThirteen := new(BigUnionThirteen)
-	if err := json.Unmarshal(data, &valueBigUnionThirteen); err == nil {
-		b.typ = "BigUnionThirteen"
-		b.BigUnionThirteen = valueBigUnionThirteen
-		return nil
-	}
-	valueBigUnionFourteen := new(BigUnionFourteen)
-	if err := json.Unmarshal(data, &valueBigUnionFourteen); err == nil {
-		b.typ = "BigUnionFourteen"
-		b.BigUnionFourteen = valueBigUnionFourteen
-		return nil
-	}
-	valueBigUnionFifteen := new(BigUnionFifteen)
-	if err := json.Unmarshal(data, &valueBigUnionFifteen); err == nil {
-		b.typ = "BigUnionFifteen"
-		b.BigUnionFifteen = valueBigUnionFifteen
-		return nil
-	}
-	valueBigUnionSixteen := new(BigUnionSixteen)
-	if err := json.Unmarshal(data, &valueBigUnionSixteen); err == nil {
-		b.typ = "BigUnionSixteen"
-		b.BigUnionSixteen = valueBigUnionSixteen
-		return nil
-	}
-	valueBigUnionSeventeen := new(BigUnionSeventeen)
-	if err := json.Unmarshal(data, &valueBigUnionSeventeen); err == nil {
-		b.typ = "BigUnionSeventeen"
-		b.BigUnionSeventeen = valueBigUnionSeventeen
-		return nil
-	}
-	valueBigUnionEighteen := new(BigUnionEighteen)
-	if err := json.Unmarshal(data, &valueBigUnionEighteen); err == nil {
-		b.typ = "BigUnionEighteen"
-		b.BigUnionEighteen = valueBigUnionEighteen
-		return nil
-	}
-	valueBigUnionNineteen := new(BigUnionNineteen)
-	if err := json.Unmarshal(data, &valueBigUnionNineteen); err == nil {
-		b.typ = "BigUnionNineteen"
-		b.BigUnionNineteen = valueBigUnionNineteen
-		return nil
-	}
-	valueBigUnionTwenty := new(BigUnionTwenty)
-	if err := json.Unmarshal(data, &valueBigUnionTwenty); err == nil {
-		b.typ = "BigUnionTwenty"
-		b.BigUnionTwenty = valueBigUnionTwenty
-		return nil
-	}
-	valueBigUnionTwentyOne := new(BigUnionTwentyOne)
-	if err := json.Unmarshal(data, &valueBigUnionTwentyOne); err == nil {
-		b.typ = "BigUnionTwentyOne"
-		b.BigUnionTwentyOne = valueBigUnionTwentyOne
-		return nil
-	}
-	valueBigUnionTwentyTwo := new(BigUnionTwentyTwo)
-	if err := json.Unmarshal(data, &valueBigUnionTwentyTwo); err == nil {
-		b.typ = "BigUnionTwentyTwo"
-		b.BigUnionTwentyTwo = valueBigUnionTwentyTwo
-		return nil
-	}
-	valueBigUnionTwentyThree := new(BigUnionTwentyThree)
-	if err := json.Unmarshal(data, &valueBigUnionTwentyThree); err == nil {
-		b.typ = "BigUnionTwentyThree"
-		b.BigUnionTwentyThree = valueBigUnionTwentyThree
-		return nil
-	}
-	valueBigUnionTwentyFour := new(BigUnionTwentyFour)
-	if err := json.Unmarshal(data, &valueBigUnionTwentyFour); err == nil {
-		b.typ = "BigUnionTwentyFour"
-		b.BigUnionTwentyFour = valueBigUnionTwentyFour
-		return nil
-	}
-	valueBigUnionTwentyFive := new(BigUnionTwentyFive)
-	if err := json.Unmarshal(data, &valueBigUnionTwentyFive); err == nil {
-		b.typ = "BigUnionTwentyFive"
-		b.BigUnionTwentyFive = valueBigUnionTwentyFive
-		return nil
-	}
-	valueBigUnionTwentySix := new(BigUnionTwentySix)
-	if err := json.Unmarshal(data, &valueBigUnionTwentySix); err == nil {
-		b.typ = "BigUnionTwentySix"
-		b.BigUnionTwentySix = valueBigUnionTwentySix
-		return nil
-	}
-	valueBigUnionTwentySeven := new(BigUnionTwentySeven)
-	if err := json.Unmarshal(data, &valueBigUnionTwentySeven); err == nil {
-		b.typ = "BigUnionTwentySeven"
-		b.BigUnionTwentySeven = valueBigUnionTwentySeven
-		return nil
-	}
-	valueBigUnionTwentyEight := new(BigUnionTwentyEight)
-	if err := json.Unmarshal(data, &valueBigUnionTwentyEight); err == nil {
-		b.typ = "BigUnionTwentyEight"
-		b.BigUnionTwentyEight = valueBigUnionTwentyEight
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, b)
+	return nil
 }
 
 func (b BigUnion) MarshalJSON() ([]byte, error) {
-	if b.typ == "BigUnionZero" || b.BigUnionZero != nil {
-		return json.Marshal(b.BigUnionZero)
+	if err := b.validate(); err != nil {
+		return nil, err
 	}
-	if b.typ == "BigUnionOne" || b.BigUnionOne != nil {
-		return json.Marshal(b.BigUnionOne)
+	if b.NormalSweet != nil {
+		return internal.MarshalJSONWithExtraProperty(b.NormalSweet, "type", "normalSweet")
 	}
-	if b.typ == "BigUnionTwo" || b.BigUnionTwo != nil {
-		return json.Marshal(b.BigUnionTwo)
+	if b.ThankfulFactor != nil {
+		return internal.MarshalJSONWithExtraProperty(b.ThankfulFactor, "type", "thankfulFactor")
 	}
-	if b.typ == "BigUnionThree" || b.BigUnionThree != nil {
-		return json.Marshal(b.BigUnionThree)
+	if b.JumboEnd != nil {
+		return internal.MarshalJSONWithExtraProperty(b.JumboEnd, "type", "jumboEnd")
 	}
-	if b.typ == "BigUnionFour" || b.BigUnionFour != nil {
-		return json.Marshal(b.BigUnionFour)
+	if b.HastyPain != nil {
+		return internal.MarshalJSONWithExtraProperty(b.HastyPain, "type", "hastyPain")
 	}
-	if b.typ == "BigUnionFive" || b.BigUnionFive != nil {
-		return json.Marshal(b.BigUnionFive)
+	if b.MistySnow != nil {
+		return internal.MarshalJSONWithExtraProperty(b.MistySnow, "type", "mistySnow")
 	}
-	if b.typ == "BigUnionSix" || b.BigUnionSix != nil {
-		return json.Marshal(b.BigUnionSix)
+	if b.DistinctFailure != nil {
+		return internal.MarshalJSONWithExtraProperty(b.DistinctFailure, "type", "distinctFailure")
 	}
-	if b.typ == "BigUnionSeven" || b.BigUnionSeven != nil {
-		return json.Marshal(b.BigUnionSeven)
+	if b.PracticalPrinciple != nil {
+		return internal.MarshalJSONWithExtraProperty(b.PracticalPrinciple, "type", "practicalPrinciple")
 	}
-	if b.typ == "BigUnionEight" || b.BigUnionEight != nil {
-		return json.Marshal(b.BigUnionEight)
+	if b.LimpingStep != nil {
+		return internal.MarshalJSONWithExtraProperty(b.LimpingStep, "type", "limpingStep")
 	}
-	if b.typ == "BigUnionNine" || b.BigUnionNine != nil {
-		return json.Marshal(b.BigUnionNine)
+	if b.VibrantExcitement != nil {
+		return internal.MarshalJSONWithExtraProperty(b.VibrantExcitement, "type", "vibrantExcitement")
 	}
-	if b.typ == "BigUnionTen" || b.BigUnionTen != nil {
-		return json.Marshal(b.BigUnionTen)
+	if b.ActiveDiamond != nil {
+		return internal.MarshalJSONWithExtraProperty(b.ActiveDiamond, "type", "activeDiamond")
 	}
-	if b.typ == "BigUnionEleven" || b.BigUnionEleven != nil {
-		return json.Marshal(b.BigUnionEleven)
+	if b.PopularLimit != nil {
+		return internal.MarshalJSONWithExtraProperty(b.PopularLimit, "type", "popularLimit")
 	}
-	if b.typ == "BigUnionTwelve" || b.BigUnionTwelve != nil {
-		return json.Marshal(b.BigUnionTwelve)
+	if b.FalseMirror != nil {
+		return internal.MarshalJSONWithExtraProperty(b.FalseMirror, "type", "falseMirror")
 	}
-	if b.typ == "BigUnionThirteen" || b.BigUnionThirteen != nil {
-		return json.Marshal(b.BigUnionThirteen)
+	if b.PrimaryBlock != nil {
+		return internal.MarshalJSONWithExtraProperty(b.PrimaryBlock, "type", "primaryBlock")
 	}
-	if b.typ == "BigUnionFourteen" || b.BigUnionFourteen != nil {
-		return json.Marshal(b.BigUnionFourteen)
+	if b.RotatingRatio != nil {
+		return internal.MarshalJSONWithExtraProperty(b.RotatingRatio, "type", "rotatingRatio")
 	}
-	if b.typ == "BigUnionFifteen" || b.BigUnionFifteen != nil {
-		return json.Marshal(b.BigUnionFifteen)
+	if b.ColorfulCover != nil {
+		return internal.MarshalJSONWithExtraProperty(b.ColorfulCover, "type", "colorfulCover")
 	}
-	if b.typ == "BigUnionSixteen" || b.BigUnionSixteen != nil {
-		return json.Marshal(b.BigUnionSixteen)
+	if b.DisloyalValue != nil {
+		return internal.MarshalJSONWithExtraProperty(b.DisloyalValue, "type", "disloyalValue")
 	}
-	if b.typ == "BigUnionSeventeen" || b.BigUnionSeventeen != nil {
-		return json.Marshal(b.BigUnionSeventeen)
+	if b.GruesomeCoach != nil {
+		return internal.MarshalJSONWithExtraProperty(b.GruesomeCoach, "type", "gruesomeCoach")
 	}
-	if b.typ == "BigUnionEighteen" || b.BigUnionEighteen != nil {
-		return json.Marshal(b.BigUnionEighteen)
+	if b.TotalWork != nil {
+		return internal.MarshalJSONWithExtraProperty(b.TotalWork, "type", "totalWork")
 	}
-	if b.typ == "BigUnionNineteen" || b.BigUnionNineteen != nil {
-		return json.Marshal(b.BigUnionNineteen)
+	if b.HarmoniousPlay != nil {
+		return internal.MarshalJSONWithExtraProperty(b.HarmoniousPlay, "type", "harmoniousPlay")
 	}
-	if b.typ == "BigUnionTwenty" || b.BigUnionTwenty != nil {
-		return json.Marshal(b.BigUnionTwenty)
+	if b.UniqueStress != nil {
+		return internal.MarshalJSONWithExtraProperty(b.UniqueStress, "type", "uniqueStress")
 	}
-	if b.typ == "BigUnionTwentyOne" || b.BigUnionTwentyOne != nil {
-		return json.Marshal(b.BigUnionTwentyOne)
+	if b.UnwillingSmoke != nil {
+		return internal.MarshalJSONWithExtraProperty(b.UnwillingSmoke, "type", "unwillingSmoke")
 	}
-	if b.typ == "BigUnionTwentyTwo" || b.BigUnionTwentyTwo != nil {
-		return json.Marshal(b.BigUnionTwentyTwo)
+	if b.FrozenSleep != nil {
+		return internal.MarshalJSONWithExtraProperty(b.FrozenSleep, "type", "frozenSleep")
 	}
-	if b.typ == "BigUnionTwentyThree" || b.BigUnionTwentyThree != nil {
-		return json.Marshal(b.BigUnionTwentyThree)
+	if b.DiligentDeal != nil {
+		return internal.MarshalJSONWithExtraProperty(b.DiligentDeal, "type", "diligentDeal")
 	}
-	if b.typ == "BigUnionTwentyFour" || b.BigUnionTwentyFour != nil {
-		return json.Marshal(b.BigUnionTwentyFour)
+	if b.AttractiveScript != nil {
+		return internal.MarshalJSONWithExtraProperty(b.AttractiveScript, "type", "attractiveScript")
 	}
-	if b.typ == "BigUnionTwentyFive" || b.BigUnionTwentyFive != nil {
-		return json.Marshal(b.BigUnionTwentyFive)
+	if b.HoarseMouse != nil {
+		return internal.MarshalJSONWithExtraProperty(b.HoarseMouse, "type", "hoarseMouse")
 	}
-	if b.typ == "BigUnionTwentySix" || b.BigUnionTwentySix != nil {
-		return json.Marshal(b.BigUnionTwentySix)
+	if b.CircularCard != nil {
+		return internal.MarshalJSONWithExtraProperty(b.CircularCard, "type", "circularCard")
 	}
-	if b.typ == "BigUnionTwentySeven" || b.BigUnionTwentySeven != nil {
-		return json.Marshal(b.BigUnionTwentySeven)
+	if b.PotableBad != nil {
+		return internal.MarshalJSONWithExtraProperty(b.PotableBad, "type", "potableBad")
 	}
-	if b.typ == "BigUnionTwentyEight" || b.BigUnionTwentyEight != nil {
-		return json.Marshal(b.BigUnionTwentyEight)
+	if b.TriangularRepair != nil {
+		return internal.MarshalJSONWithExtraProperty(b.TriangularRepair, "type", "triangularRepair")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", b)
+	if b.GaseousRoad != nil {
+		return internal.MarshalJSONWithExtraProperty(b.GaseousRoad, "type", "gaseousRoad")
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", b)
 }
 
 type BigUnionVisitor interface {
-	VisitBigUnionZero(*BigUnionZero) error
-	VisitBigUnionOne(*BigUnionOne) error
-	VisitBigUnionTwo(*BigUnionTwo) error
-	VisitBigUnionThree(*BigUnionThree) error
-	VisitBigUnionFour(*BigUnionFour) error
-	VisitBigUnionFive(*BigUnionFive) error
-	VisitBigUnionSix(*BigUnionSix) error
-	VisitBigUnionSeven(*BigUnionSeven) error
-	VisitBigUnionEight(*BigUnionEight) error
-	VisitBigUnionNine(*BigUnionNine) error
-	VisitBigUnionTen(*BigUnionTen) error
-	VisitBigUnionEleven(*BigUnionEleven) error
-	VisitBigUnionTwelve(*BigUnionTwelve) error
-	VisitBigUnionThirteen(*BigUnionThirteen) error
-	VisitBigUnionFourteen(*BigUnionFourteen) error
-	VisitBigUnionFifteen(*BigUnionFifteen) error
-	VisitBigUnionSixteen(*BigUnionSixteen) error
-	VisitBigUnionSeventeen(*BigUnionSeventeen) error
-	VisitBigUnionEighteen(*BigUnionEighteen) error
-	VisitBigUnionNineteen(*BigUnionNineteen) error
-	VisitBigUnionTwenty(*BigUnionTwenty) error
-	VisitBigUnionTwentyOne(*BigUnionTwentyOne) error
-	VisitBigUnionTwentyTwo(*BigUnionTwentyTwo) error
-	VisitBigUnionTwentyThree(*BigUnionTwentyThree) error
-	VisitBigUnionTwentyFour(*BigUnionTwentyFour) error
-	VisitBigUnionTwentyFive(*BigUnionTwentyFive) error
-	VisitBigUnionTwentySix(*BigUnionTwentySix) error
-	VisitBigUnionTwentySeven(*BigUnionTwentySeven) error
-	VisitBigUnionTwentyEight(*BigUnionTwentyEight) error
+	VisitNormalSweet(*NormalSweet) error
+	VisitThankfulFactor(*ThankfulFactor) error
+	VisitJumboEnd(*JumboEnd) error
+	VisitHastyPain(*HastyPain) error
+	VisitMistySnow(*MistySnow) error
+	VisitDistinctFailure(*DistinctFailure) error
+	VisitPracticalPrinciple(*PracticalPrinciple) error
+	VisitLimpingStep(*LimpingStep) error
+	VisitVibrantExcitement(*VibrantExcitement) error
+	VisitActiveDiamond(*ActiveDiamond) error
+	VisitPopularLimit(*PopularLimit) error
+	VisitFalseMirror(*FalseMirror) error
+	VisitPrimaryBlock(*PrimaryBlock) error
+	VisitRotatingRatio(*RotatingRatio) error
+	VisitColorfulCover(*ColorfulCover) error
+	VisitDisloyalValue(*DisloyalValue) error
+	VisitGruesomeCoach(*GruesomeCoach) error
+	VisitTotalWork(*TotalWork) error
+	VisitHarmoniousPlay(*HarmoniousPlay) error
+	VisitUniqueStress(*UniqueStress) error
+	VisitUnwillingSmoke(*UnwillingSmoke) error
+	VisitFrozenSleep(*FrozenSleep) error
+	VisitDiligentDeal(*DiligentDeal) error
+	VisitAttractiveScript(*AttractiveScript) error
+	VisitHoarseMouse(*HoarseMouse) error
+	VisitCircularCard(*CircularCard) error
+	VisitPotableBad(*PotableBad) error
+	VisitTriangularRepair(*TriangularRepair) error
+	VisitGaseousRoad(*GaseousRoad) error
 }
 
 func (b *BigUnion) Accept(visitor BigUnionVisitor) error {
-	if b.typ == "BigUnionZero" || b.BigUnionZero != nil {
-		return visitor.VisitBigUnionZero(b.BigUnionZero)
+	if b.NormalSweet != nil {
+		return visitor.VisitNormalSweet(b.NormalSweet)
 	}
-	if b.typ == "BigUnionOne" || b.BigUnionOne != nil {
-		return visitor.VisitBigUnionOne(b.BigUnionOne)
+	if b.ThankfulFactor != nil {
+		return visitor.VisitThankfulFactor(b.ThankfulFactor)
 	}
-	if b.typ == "BigUnionTwo" || b.BigUnionTwo != nil {
-		return visitor.VisitBigUnionTwo(b.BigUnionTwo)
+	if b.JumboEnd != nil {
+		return visitor.VisitJumboEnd(b.JumboEnd)
 	}
-	if b.typ == "BigUnionThree" || b.BigUnionThree != nil {
-		return visitor.VisitBigUnionThree(b.BigUnionThree)
+	if b.HastyPain != nil {
+		return visitor.VisitHastyPain(b.HastyPain)
 	}
-	if b.typ == "BigUnionFour" || b.BigUnionFour != nil {
-		return visitor.VisitBigUnionFour(b.BigUnionFour)
+	if b.MistySnow != nil {
+		return visitor.VisitMistySnow(b.MistySnow)
 	}
-	if b.typ == "BigUnionFive" || b.BigUnionFive != nil {
-		return visitor.VisitBigUnionFive(b.BigUnionFive)
+	if b.DistinctFailure != nil {
+		return visitor.VisitDistinctFailure(b.DistinctFailure)
 	}
-	if b.typ == "BigUnionSix" || b.BigUnionSix != nil {
-		return visitor.VisitBigUnionSix(b.BigUnionSix)
+	if b.PracticalPrinciple != nil {
+		return visitor.VisitPracticalPrinciple(b.PracticalPrinciple)
 	}
-	if b.typ == "BigUnionSeven" || b.BigUnionSeven != nil {
-		return visitor.VisitBigUnionSeven(b.BigUnionSeven)
+	if b.LimpingStep != nil {
+		return visitor.VisitLimpingStep(b.LimpingStep)
 	}
-	if b.typ == "BigUnionEight" || b.BigUnionEight != nil {
-		return visitor.VisitBigUnionEight(b.BigUnionEight)
+	if b.VibrantExcitement != nil {
+		return visitor.VisitVibrantExcitement(b.VibrantExcitement)
 	}
-	if b.typ == "BigUnionNine" || b.BigUnionNine != nil {
-		return visitor.VisitBigUnionNine(b.BigUnionNine)
+	if b.ActiveDiamond != nil {
+		return visitor.VisitActiveDiamond(b.ActiveDiamond)
 	}
-	if b.typ == "BigUnionTen" || b.BigUnionTen != nil {
-		return visitor.VisitBigUnionTen(b.BigUnionTen)
+	if b.PopularLimit != nil {
+		return visitor.VisitPopularLimit(b.PopularLimit)
 	}
-	if b.typ == "BigUnionEleven" || b.BigUnionEleven != nil {
-		return visitor.VisitBigUnionEleven(b.BigUnionEleven)
+	if b.FalseMirror != nil {
+		return visitor.VisitFalseMirror(b.FalseMirror)
 	}
-	if b.typ == "BigUnionTwelve" || b.BigUnionTwelve != nil {
-		return visitor.VisitBigUnionTwelve(b.BigUnionTwelve)
+	if b.PrimaryBlock != nil {
+		return visitor.VisitPrimaryBlock(b.PrimaryBlock)
 	}
-	if b.typ == "BigUnionThirteen" || b.BigUnionThirteen != nil {
-		return visitor.VisitBigUnionThirteen(b.BigUnionThirteen)
+	if b.RotatingRatio != nil {
+		return visitor.VisitRotatingRatio(b.RotatingRatio)
 	}
-	if b.typ == "BigUnionFourteen" || b.BigUnionFourteen != nil {
-		return visitor.VisitBigUnionFourteen(b.BigUnionFourteen)
+	if b.ColorfulCover != nil {
+		return visitor.VisitColorfulCover(b.ColorfulCover)
 	}
-	if b.typ == "BigUnionFifteen" || b.BigUnionFifteen != nil {
-		return visitor.VisitBigUnionFifteen(b.BigUnionFifteen)
+	if b.DisloyalValue != nil {
+		return visitor.VisitDisloyalValue(b.DisloyalValue)
 	}
-	if b.typ == "BigUnionSixteen" || b.BigUnionSixteen != nil {
-		return visitor.VisitBigUnionSixteen(b.BigUnionSixteen)
+	if b.GruesomeCoach != nil {
+		return visitor.VisitGruesomeCoach(b.GruesomeCoach)
 	}
-	if b.typ == "BigUnionSeventeen" || b.BigUnionSeventeen != nil {
-		return visitor.VisitBigUnionSeventeen(b.BigUnionSeventeen)
+	if b.TotalWork != nil {
+		return visitor.VisitTotalWork(b.TotalWork)
 	}
-	if b.typ == "BigUnionEighteen" || b.BigUnionEighteen != nil {
-		return visitor.VisitBigUnionEighteen(b.BigUnionEighteen)
+	if b.HarmoniousPlay != nil {
+		return visitor.VisitHarmoniousPlay(b.HarmoniousPlay)
 	}
-	if b.typ == "BigUnionNineteen" || b.BigUnionNineteen != nil {
-		return visitor.VisitBigUnionNineteen(b.BigUnionNineteen)
+	if b.UniqueStress != nil {
+		return visitor.VisitUniqueStress(b.UniqueStress)
 	}
-	if b.typ == "BigUnionTwenty" || b.BigUnionTwenty != nil {
-		return visitor.VisitBigUnionTwenty(b.BigUnionTwenty)
+	if b.UnwillingSmoke != nil {
+		return visitor.VisitUnwillingSmoke(b.UnwillingSmoke)
 	}
-	if b.typ == "BigUnionTwentyOne" || b.BigUnionTwentyOne != nil {
-		return visitor.VisitBigUnionTwentyOne(b.BigUnionTwentyOne)
+	if b.FrozenSleep != nil {
+		return visitor.VisitFrozenSleep(b.FrozenSleep)
 	}
-	if b.typ == "BigUnionTwentyTwo" || b.BigUnionTwentyTwo != nil {
-		return visitor.VisitBigUnionTwentyTwo(b.BigUnionTwentyTwo)
+	if b.DiligentDeal != nil {
+		return visitor.VisitDiligentDeal(b.DiligentDeal)
 	}
-	if b.typ == "BigUnionTwentyThree" || b.BigUnionTwentyThree != nil {
-		return visitor.VisitBigUnionTwentyThree(b.BigUnionTwentyThree)
+	if b.AttractiveScript != nil {
+		return visitor.VisitAttractiveScript(b.AttractiveScript)
 	}
-	if b.typ == "BigUnionTwentyFour" || b.BigUnionTwentyFour != nil {
-		return visitor.VisitBigUnionTwentyFour(b.BigUnionTwentyFour)
+	if b.HoarseMouse != nil {
+		return visitor.VisitHoarseMouse(b.HoarseMouse)
 	}
-	if b.typ == "BigUnionTwentyFive" || b.BigUnionTwentyFive != nil {
-		return visitor.VisitBigUnionTwentyFive(b.BigUnionTwentyFive)
+	if b.CircularCard != nil {
+		return visitor.VisitCircularCard(b.CircularCard)
 	}
-	if b.typ == "BigUnionTwentySix" || b.BigUnionTwentySix != nil {
-		return visitor.VisitBigUnionTwentySix(b.BigUnionTwentySix)
+	if b.PotableBad != nil {
+		return visitor.VisitPotableBad(b.PotableBad)
 	}
-	if b.typ == "BigUnionTwentySeven" || b.BigUnionTwentySeven != nil {
-		return visitor.VisitBigUnionTwentySeven(b.BigUnionTwentySeven)
+	if b.TriangularRepair != nil {
+		return visitor.VisitTriangularRepair(b.TriangularRepair)
 	}
-	if b.typ == "BigUnionTwentyEight" || b.BigUnionTwentyEight != nil {
-		return visitor.VisitBigUnionTwentyEight(b.BigUnionTwentyEight)
+	if b.GaseousRoad != nil {
+		return visitor.VisitGaseousRoad(b.GaseousRoad)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", b)
+	return fmt.Errorf("type %T does not define a non-empty union type", b)
 }
 
-var (
-	bigUnionEightFieldValue = big.NewInt(1 << 0)
-	bigUnionEightFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionEight struct {
-	Value string            `json:"value" url:"value"`
-	Type  BigUnionEightType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionEight) GetValue() string {
+func (b *BigUnion) validate() error {
 	if b == nil {
-		return ""
+		return fmt.Errorf("type %T is nil", b)
 	}
-	return b.Value
-}
-
-func (b *BigUnionEight) GetType() BigUnionEightType {
-	if b == nil {
-		return ""
+	var fields []string
+	if b.NormalSweet != nil {
+		fields = append(fields, "normalSweet")
 	}
-	return b.Type
-}
-
-func (b *BigUnionEight) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
+	if b.ThankfulFactor != nil {
+		fields = append(fields, "thankfulFactor")
 	}
-	return b.extraProperties
-}
-
-func (b *BigUnionEight) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	if b.JumboEnd != nil {
+		fields = append(fields, "jumboEnd")
 	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionEight) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionEightFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionEight) SetType(type_ BigUnionEightType) {
-	b.Type = type_
-	b.require(bigUnionEightFieldType)
-}
-
-func (b *BigUnionEight) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionEight
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
+	if b.HastyPain != nil {
+		fields = append(fields, "hastyPain")
 	}
-	*b = BigUnionEight(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
+	if b.MistySnow != nil {
+		fields = append(fields, "mistySnow")
 	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionEight) MarshalJSON() ([]byte, error) {
-	type embed BigUnionEight
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
+	if b.DistinctFailure != nil {
+		fields = append(fields, "distinctFailure")
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionEight) String() string {
-	if b == nil {
-		return "<nil>"
+	if b.PracticalPrinciple != nil {
+		fields = append(fields, "practicalPrinciple")
 	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
+	if b.LimpingStep != nil {
+		fields = append(fields, "limpingStep")
+	}
+	if b.VibrantExcitement != nil {
+		fields = append(fields, "vibrantExcitement")
+	}
+	if b.ActiveDiamond != nil {
+		fields = append(fields, "activeDiamond")
+	}
+	if b.PopularLimit != nil {
+		fields = append(fields, "popularLimit")
+	}
+	if b.FalseMirror != nil {
+		fields = append(fields, "falseMirror")
+	}
+	if b.PrimaryBlock != nil {
+		fields = append(fields, "primaryBlock")
+	}
+	if b.RotatingRatio != nil {
+		fields = append(fields, "rotatingRatio")
+	}
+	if b.ColorfulCover != nil {
+		fields = append(fields, "colorfulCover")
+	}
+	if b.DisloyalValue != nil {
+		fields = append(fields, "disloyalValue")
+	}
+	if b.GruesomeCoach != nil {
+		fields = append(fields, "gruesomeCoach")
+	}
+	if b.TotalWork != nil {
+		fields = append(fields, "totalWork")
+	}
+	if b.HarmoniousPlay != nil {
+		fields = append(fields, "harmoniousPlay")
+	}
+	if b.UniqueStress != nil {
+		fields = append(fields, "uniqueStress")
+	}
+	if b.UnwillingSmoke != nil {
+		fields = append(fields, "unwillingSmoke")
+	}
+	if b.FrozenSleep != nil {
+		fields = append(fields, "frozenSleep")
+	}
+	if b.DiligentDeal != nil {
+		fields = append(fields, "diligentDeal")
+	}
+	if b.AttractiveScript != nil {
+		fields = append(fields, "attractiveScript")
+	}
+	if b.HoarseMouse != nil {
+		fields = append(fields, "hoarseMouse")
+	}
+	if b.CircularCard != nil {
+		fields = append(fields, "circularCard")
+	}
+	if b.PotableBad != nil {
+		fields = append(fields, "potableBad")
+	}
+	if b.TriangularRepair != nil {
+		fields = append(fields, "triangularRepair")
+	}
+	if b.GaseousRoad != nil {
+		fields = append(fields, "gaseousRoad")
+	}
+	if len(fields) == 0 {
+		if b.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", b, b.Type)
+		}
+		return fmt.Errorf("type %T is empty", b)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", b, fields)
+	}
+	if b.Type != "" {
+		field := fields[0]
+		if b.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				b,
+				b.Type,
+				b,
+			)
 		}
 	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionEightType string
-
-const (
-	BigUnionEightTypeVibrantExcitement BigUnionEightType = "vibrantExcitement"
-)
-
-func NewBigUnionEightTypeFromString(s string) (BigUnionEightType, error) {
-	switch s {
-	case "vibrantExcitement":
-		return BigUnionEightTypeVibrantExcitement, nil
-	}
-	var t BigUnionEightType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionEightType) Ptr() *BigUnionEightType {
-	return &b
-}
-
-var (
-	bigUnionEighteenFieldValue = big.NewInt(1 << 0)
-	bigUnionEighteenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionEighteen struct {
-	Value string               `json:"value" url:"value"`
-	Type  BigUnionEighteenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionEighteen) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionEighteen) GetType() BigUnionEighteenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionEighteen) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionEighteen) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionEighteen) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionEighteenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionEighteen) SetType(type_ BigUnionEighteenType) {
-	b.Type = type_
-	b.require(bigUnionEighteenFieldType)
-}
-
-func (b *BigUnionEighteen) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionEighteen
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionEighteen(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
 	return nil
-}
-
-func (b *BigUnionEighteen) MarshalJSON() ([]byte, error) {
-	type embed BigUnionEighteen
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionEighteen) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionEighteenType string
-
-const (
-	BigUnionEighteenTypeHarmoniousPlay BigUnionEighteenType = "harmoniousPlay"
-)
-
-func NewBigUnionEighteenTypeFromString(s string) (BigUnionEighteenType, error) {
-	switch s {
-	case "harmoniousPlay":
-		return BigUnionEighteenTypeHarmoniousPlay, nil
-	}
-	var t BigUnionEighteenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionEighteenType) Ptr() *BigUnionEighteenType {
-	return &b
-}
-
-var (
-	bigUnionElevenFieldValue = big.NewInt(1 << 0)
-	bigUnionElevenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionEleven struct {
-	Value string             `json:"value" url:"value"`
-	Type  BigUnionElevenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionEleven) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionEleven) GetType() BigUnionElevenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionEleven) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionEleven) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionEleven) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionElevenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionEleven) SetType(type_ BigUnionElevenType) {
-	b.Type = type_
-	b.require(bigUnionElevenFieldType)
-}
-
-func (b *BigUnionEleven) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionEleven
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionEleven(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionEleven) MarshalJSON() ([]byte, error) {
-	type embed BigUnionEleven
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionEleven) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionElevenType string
-
-const (
-	BigUnionElevenTypeFalseMirror BigUnionElevenType = "falseMirror"
-)
-
-func NewBigUnionElevenTypeFromString(s string) (BigUnionElevenType, error) {
-	switch s {
-	case "falseMirror":
-		return BigUnionElevenTypeFalseMirror, nil
-	}
-	var t BigUnionElevenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionElevenType) Ptr() *BigUnionElevenType {
-	return &b
-}
-
-var (
-	bigUnionFifteenFieldValue = big.NewInt(1 << 0)
-	bigUnionFifteenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionFifteen struct {
-	Value string              `json:"value" url:"value"`
-	Type  BigUnionFifteenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionFifteen) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionFifteen) GetType() BigUnionFifteenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionFifteen) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionFifteen) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionFifteen) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionFifteenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionFifteen) SetType(type_ BigUnionFifteenType) {
-	b.Type = type_
-	b.require(bigUnionFifteenFieldType)
-}
-
-func (b *BigUnionFifteen) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionFifteen
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionFifteen(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionFifteen) MarshalJSON() ([]byte, error) {
-	type embed BigUnionFifteen
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionFifteen) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionFifteenType string
-
-const (
-	BigUnionFifteenTypeDisloyalValue BigUnionFifteenType = "disloyalValue"
-)
-
-func NewBigUnionFifteenTypeFromString(s string) (BigUnionFifteenType, error) {
-	switch s {
-	case "disloyalValue":
-		return BigUnionFifteenTypeDisloyalValue, nil
-	}
-	var t BigUnionFifteenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionFifteenType) Ptr() *BigUnionFifteenType {
-	return &b
-}
-
-var (
-	bigUnionFiveFieldValue = big.NewInt(1 << 0)
-	bigUnionFiveFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionFive struct {
-	Value string           `json:"value" url:"value"`
-	Type  BigUnionFiveType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionFive) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionFive) GetType() BigUnionFiveType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionFive) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionFive) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionFive) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionFiveFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionFive) SetType(type_ BigUnionFiveType) {
-	b.Type = type_
-	b.require(bigUnionFiveFieldType)
-}
-
-func (b *BigUnionFive) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionFive
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionFive(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionFive) MarshalJSON() ([]byte, error) {
-	type embed BigUnionFive
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionFive) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionFiveType string
-
-const (
-	BigUnionFiveTypeDistinctFailure BigUnionFiveType = "distinctFailure"
-)
-
-func NewBigUnionFiveTypeFromString(s string) (BigUnionFiveType, error) {
-	switch s {
-	case "distinctFailure":
-		return BigUnionFiveTypeDistinctFailure, nil
-	}
-	var t BigUnionFiveType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionFiveType) Ptr() *BigUnionFiveType {
-	return &b
-}
-
-var (
-	bigUnionFourFieldValue = big.NewInt(1 << 0)
-	bigUnionFourFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionFour struct {
-	Value string           `json:"value" url:"value"`
-	Type  BigUnionFourType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionFour) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionFour) GetType() BigUnionFourType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionFour) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionFour) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionFour) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionFourFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionFour) SetType(type_ BigUnionFourType) {
-	b.Type = type_
-	b.require(bigUnionFourFieldType)
-}
-
-func (b *BigUnionFour) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionFour
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionFour(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionFour) MarshalJSON() ([]byte, error) {
-	type embed BigUnionFour
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionFour) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionFourType string
-
-const (
-	BigUnionFourTypeMistySnow BigUnionFourType = "mistySnow"
-)
-
-func NewBigUnionFourTypeFromString(s string) (BigUnionFourType, error) {
-	switch s {
-	case "mistySnow":
-		return BigUnionFourTypeMistySnow, nil
-	}
-	var t BigUnionFourType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionFourType) Ptr() *BigUnionFourType {
-	return &b
-}
-
-var (
-	bigUnionFourteenFieldValue = big.NewInt(1 << 0)
-	bigUnionFourteenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionFourteen struct {
-	Value string               `json:"value" url:"value"`
-	Type  BigUnionFourteenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionFourteen) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionFourteen) GetType() BigUnionFourteenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionFourteen) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionFourteen) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionFourteen) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionFourteenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionFourteen) SetType(type_ BigUnionFourteenType) {
-	b.Type = type_
-	b.require(bigUnionFourteenFieldType)
-}
-
-func (b *BigUnionFourteen) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionFourteen
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionFourteen(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionFourteen) MarshalJSON() ([]byte, error) {
-	type embed BigUnionFourteen
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionFourteen) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionFourteenType string
-
-const (
-	BigUnionFourteenTypeColorfulCover BigUnionFourteenType = "colorfulCover"
-)
-
-func NewBigUnionFourteenTypeFromString(s string) (BigUnionFourteenType, error) {
-	switch s {
-	case "colorfulCover":
-		return BigUnionFourteenTypeColorfulCover, nil
-	}
-	var t BigUnionFourteenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionFourteenType) Ptr() *BigUnionFourteenType {
-	return &b
-}
-
-var (
-	bigUnionNineFieldValue = big.NewInt(1 << 0)
-	bigUnionNineFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionNine struct {
-	Value string           `json:"value" url:"value"`
-	Type  BigUnionNineType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionNine) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionNine) GetType() BigUnionNineType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionNine) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionNine) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionNine) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionNineFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionNine) SetType(type_ BigUnionNineType) {
-	b.Type = type_
-	b.require(bigUnionNineFieldType)
-}
-
-func (b *BigUnionNine) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionNine
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionNine(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionNine) MarshalJSON() ([]byte, error) {
-	type embed BigUnionNine
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionNine) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionNineType string
-
-const (
-	BigUnionNineTypeActiveDiamond BigUnionNineType = "activeDiamond"
-)
-
-func NewBigUnionNineTypeFromString(s string) (BigUnionNineType, error) {
-	switch s {
-	case "activeDiamond":
-		return BigUnionNineTypeActiveDiamond, nil
-	}
-	var t BigUnionNineType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionNineType) Ptr() *BigUnionNineType {
-	return &b
-}
-
-var (
-	bigUnionNineteenFieldValue = big.NewInt(1 << 0)
-	bigUnionNineteenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionNineteen struct {
-	Value string               `json:"value" url:"value"`
-	Type  BigUnionNineteenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionNineteen) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionNineteen) GetType() BigUnionNineteenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionNineteen) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionNineteen) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionNineteen) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionNineteenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionNineteen) SetType(type_ BigUnionNineteenType) {
-	b.Type = type_
-	b.require(bigUnionNineteenFieldType)
-}
-
-func (b *BigUnionNineteen) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionNineteen
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionNineteen(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionNineteen) MarshalJSON() ([]byte, error) {
-	type embed BigUnionNineteen
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionNineteen) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionNineteenType string
-
-const (
-	BigUnionNineteenTypeUniqueStress BigUnionNineteenType = "uniqueStress"
-)
-
-func NewBigUnionNineteenTypeFromString(s string) (BigUnionNineteenType, error) {
-	switch s {
-	case "uniqueStress":
-		return BigUnionNineteenTypeUniqueStress, nil
-	}
-	var t BigUnionNineteenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionNineteenType) Ptr() *BigUnionNineteenType {
-	return &b
-}
-
-var (
-	bigUnionOneFieldValue = big.NewInt(1 << 0)
-	bigUnionOneFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionOne struct {
-	Value string          `json:"value" url:"value"`
-	Type  BigUnionOneType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionOne) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionOne) GetType() BigUnionOneType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionOne) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionOne) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionOne) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionOneFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionOne) SetType(type_ BigUnionOneType) {
-	b.Type = type_
-	b.require(bigUnionOneFieldType)
-}
-
-func (b *BigUnionOne) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionOne
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionOne(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionOne) MarshalJSON() ([]byte, error) {
-	type embed BigUnionOne
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionOne) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionOneType string
-
-const (
-	BigUnionOneTypeThankfulFactor BigUnionOneType = "thankfulFactor"
-)
-
-func NewBigUnionOneTypeFromString(s string) (BigUnionOneType, error) {
-	switch s {
-	case "thankfulFactor":
-		return BigUnionOneTypeThankfulFactor, nil
-	}
-	var t BigUnionOneType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionOneType) Ptr() *BigUnionOneType {
-	return &b
-}
-
-var (
-	bigUnionSevenFieldValue = big.NewInt(1 << 0)
-	bigUnionSevenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionSeven struct {
-	Value string            `json:"value" url:"value"`
-	Type  BigUnionSevenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionSeven) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionSeven) GetType() BigUnionSevenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionSeven) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionSeven) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionSeven) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionSevenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionSeven) SetType(type_ BigUnionSevenType) {
-	b.Type = type_
-	b.require(bigUnionSevenFieldType)
-}
-
-func (b *BigUnionSeven) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionSeven
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionSeven(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionSeven) MarshalJSON() ([]byte, error) {
-	type embed BigUnionSeven
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionSeven) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionSevenType string
-
-const (
-	BigUnionSevenTypeLimpingStep BigUnionSevenType = "limpingStep"
-)
-
-func NewBigUnionSevenTypeFromString(s string) (BigUnionSevenType, error) {
-	switch s {
-	case "limpingStep":
-		return BigUnionSevenTypeLimpingStep, nil
-	}
-	var t BigUnionSevenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionSevenType) Ptr() *BigUnionSevenType {
-	return &b
-}
-
-var (
-	bigUnionSeventeenFieldValue = big.NewInt(1 << 0)
-	bigUnionSeventeenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionSeventeen struct {
-	Value string                `json:"value" url:"value"`
-	Type  BigUnionSeventeenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionSeventeen) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionSeventeen) GetType() BigUnionSeventeenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionSeventeen) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionSeventeen) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionSeventeen) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionSeventeenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionSeventeen) SetType(type_ BigUnionSeventeenType) {
-	b.Type = type_
-	b.require(bigUnionSeventeenFieldType)
-}
-
-func (b *BigUnionSeventeen) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionSeventeen
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionSeventeen(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionSeventeen) MarshalJSON() ([]byte, error) {
-	type embed BigUnionSeventeen
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionSeventeen) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionSeventeenType string
-
-const (
-	BigUnionSeventeenTypeTotalWork BigUnionSeventeenType = "totalWork"
-)
-
-func NewBigUnionSeventeenTypeFromString(s string) (BigUnionSeventeenType, error) {
-	switch s {
-	case "totalWork":
-		return BigUnionSeventeenTypeTotalWork, nil
-	}
-	var t BigUnionSeventeenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionSeventeenType) Ptr() *BigUnionSeventeenType {
-	return &b
-}
-
-var (
-	bigUnionSixFieldValue = big.NewInt(1 << 0)
-	bigUnionSixFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionSix struct {
-	Value string          `json:"value" url:"value"`
-	Type  BigUnionSixType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionSix) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionSix) GetType() BigUnionSixType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionSix) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionSix) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionSix) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionSixFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionSix) SetType(type_ BigUnionSixType) {
-	b.Type = type_
-	b.require(bigUnionSixFieldType)
-}
-
-func (b *BigUnionSix) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionSix
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionSix(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionSix) MarshalJSON() ([]byte, error) {
-	type embed BigUnionSix
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionSix) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionSixType string
-
-const (
-	BigUnionSixTypePracticalPrinciple BigUnionSixType = "practicalPrinciple"
-)
-
-func NewBigUnionSixTypeFromString(s string) (BigUnionSixType, error) {
-	switch s {
-	case "practicalPrinciple":
-		return BigUnionSixTypePracticalPrinciple, nil
-	}
-	var t BigUnionSixType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionSixType) Ptr() *BigUnionSixType {
-	return &b
-}
-
-var (
-	bigUnionSixteenFieldValue = big.NewInt(1 << 0)
-	bigUnionSixteenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionSixteen struct {
-	Value string              `json:"value" url:"value"`
-	Type  BigUnionSixteenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionSixteen) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionSixteen) GetType() BigUnionSixteenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionSixteen) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionSixteen) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionSixteen) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionSixteenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionSixteen) SetType(type_ BigUnionSixteenType) {
-	b.Type = type_
-	b.require(bigUnionSixteenFieldType)
-}
-
-func (b *BigUnionSixteen) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionSixteen
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionSixteen(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionSixteen) MarshalJSON() ([]byte, error) {
-	type embed BigUnionSixteen
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionSixteen) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionSixteenType string
-
-const (
-	BigUnionSixteenTypeGruesomeCoach BigUnionSixteenType = "gruesomeCoach"
-)
-
-func NewBigUnionSixteenTypeFromString(s string) (BigUnionSixteenType, error) {
-	switch s {
-	case "gruesomeCoach":
-		return BigUnionSixteenTypeGruesomeCoach, nil
-	}
-	var t BigUnionSixteenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionSixteenType) Ptr() *BigUnionSixteenType {
-	return &b
-}
-
-var (
-	bigUnionTenFieldValue = big.NewInt(1 << 0)
-	bigUnionTenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTen struct {
-	Value string          `json:"value" url:"value"`
-	Type  BigUnionTenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTen) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTen) GetType() BigUnionTenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTen) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTen) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTen) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTen) SetType(type_ BigUnionTenType) {
-	b.Type = type_
-	b.require(bigUnionTenFieldType)
-}
-
-func (b *BigUnionTen) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTen
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTen(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTen) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTen
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTen) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTenType string
-
-const (
-	BigUnionTenTypePopularLimit BigUnionTenType = "popularLimit"
-)
-
-func NewBigUnionTenTypeFromString(s string) (BigUnionTenType, error) {
-	switch s {
-	case "popularLimit":
-		return BigUnionTenTypePopularLimit, nil
-	}
-	var t BigUnionTenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTenType) Ptr() *BigUnionTenType {
-	return &b
-}
-
-var (
-	bigUnionThirteenFieldValue = big.NewInt(1 << 0)
-	bigUnionThirteenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionThirteen struct {
-	Value string               `json:"value" url:"value"`
-	Type  BigUnionThirteenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionThirteen) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionThirteen) GetType() BigUnionThirteenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionThirteen) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionThirteen) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionThirteen) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionThirteenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionThirteen) SetType(type_ BigUnionThirteenType) {
-	b.Type = type_
-	b.require(bigUnionThirteenFieldType)
-}
-
-func (b *BigUnionThirteen) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionThirteen
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionThirteen(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionThirteen) MarshalJSON() ([]byte, error) {
-	type embed BigUnionThirteen
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionThirteen) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionThirteenType string
-
-const (
-	BigUnionThirteenTypeRotatingRatio BigUnionThirteenType = "rotatingRatio"
-)
-
-func NewBigUnionThirteenTypeFromString(s string) (BigUnionThirteenType, error) {
-	switch s {
-	case "rotatingRatio":
-		return BigUnionThirteenTypeRotatingRatio, nil
-	}
-	var t BigUnionThirteenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionThirteenType) Ptr() *BigUnionThirteenType {
-	return &b
-}
-
-var (
-	bigUnionThreeFieldValue = big.NewInt(1 << 0)
-	bigUnionThreeFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionThree struct {
-	Value string            `json:"value" url:"value"`
-	Type  BigUnionThreeType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionThree) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionThree) GetType() BigUnionThreeType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionThree) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionThree) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionThree) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionThreeFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionThree) SetType(type_ BigUnionThreeType) {
-	b.Type = type_
-	b.require(bigUnionThreeFieldType)
-}
-
-func (b *BigUnionThree) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionThree
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionThree(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionThree) MarshalJSON() ([]byte, error) {
-	type embed BigUnionThree
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionThree) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionThreeType string
-
-const (
-	BigUnionThreeTypeHastyPain BigUnionThreeType = "hastyPain"
-)
-
-func NewBigUnionThreeTypeFromString(s string) (BigUnionThreeType, error) {
-	switch s {
-	case "hastyPain":
-		return BigUnionThreeTypeHastyPain, nil
-	}
-	var t BigUnionThreeType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionThreeType) Ptr() *BigUnionThreeType {
-	return &b
-}
-
-var (
-	bigUnionTwelveFieldValue = big.NewInt(1 << 0)
-	bigUnionTwelveFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwelve struct {
-	Value string             `json:"value" url:"value"`
-	Type  BigUnionTwelveType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwelve) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwelve) GetType() BigUnionTwelveType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwelve) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwelve) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwelve) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwelveFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwelve) SetType(type_ BigUnionTwelveType) {
-	b.Type = type_
-	b.require(bigUnionTwelveFieldType)
-}
-
-func (b *BigUnionTwelve) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwelve
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwelve(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwelve) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwelve
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwelve) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTwelveType string
-
-const (
-	BigUnionTwelveTypePrimaryBlock BigUnionTwelveType = "primaryBlock"
-)
-
-func NewBigUnionTwelveTypeFromString(s string) (BigUnionTwelveType, error) {
-	switch s {
-	case "primaryBlock":
-		return BigUnionTwelveTypePrimaryBlock, nil
-	}
-	var t BigUnionTwelveType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwelveType) Ptr() *BigUnionTwelveType {
-	return &b
-}
-
-var (
-	bigUnionTwentyFieldValue = big.NewInt(1 << 0)
-	bigUnionTwentyFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwenty struct {
-	Value string             `json:"value" url:"value"`
-	Type  BigUnionTwentyType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwenty) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwenty) GetType() BigUnionTwentyType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwenty) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwenty) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwenty) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwentyFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwenty) SetType(type_ BigUnionTwentyType) {
-	b.Type = type_
-	b.require(bigUnionTwentyFieldType)
-}
-
-func (b *BigUnionTwenty) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwenty
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwenty(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwenty) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwenty
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwenty) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-var (
-	bigUnionTwentyEightFieldValue = big.NewInt(1 << 0)
-	bigUnionTwentyEightFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwentyEight struct {
-	Value string                  `json:"value" url:"value"`
-	Type  BigUnionTwentyEightType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwentyEight) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwentyEight) GetType() BigUnionTwentyEightType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwentyEight) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwentyEight) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyEight) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwentyEightFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyEight) SetType(type_ BigUnionTwentyEightType) {
-	b.Type = type_
-	b.require(bigUnionTwentyEightFieldType)
-}
-
-func (b *BigUnionTwentyEight) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwentyEight
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwentyEight(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwentyEight) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwentyEight
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwentyEight) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTwentyEightType string
-
-const (
-	BigUnionTwentyEightTypeGaseousRoad BigUnionTwentyEightType = "gaseousRoad"
-)
-
-func NewBigUnionTwentyEightTypeFromString(s string) (BigUnionTwentyEightType, error) {
-	switch s {
-	case "gaseousRoad":
-		return BigUnionTwentyEightTypeGaseousRoad, nil
-	}
-	var t BigUnionTwentyEightType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwentyEightType) Ptr() *BigUnionTwentyEightType {
-	return &b
-}
-
-var (
-	bigUnionTwentyFiveFieldValue = big.NewInt(1 << 0)
-	bigUnionTwentyFiveFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwentyFive struct {
-	Value string                 `json:"value" url:"value"`
-	Type  BigUnionTwentyFiveType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwentyFive) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwentyFive) GetType() BigUnionTwentyFiveType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwentyFive) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwentyFive) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyFive) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwentyFiveFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyFive) SetType(type_ BigUnionTwentyFiveType) {
-	b.Type = type_
-	b.require(bigUnionTwentyFiveFieldType)
-}
-
-func (b *BigUnionTwentyFive) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwentyFive
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwentyFive(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwentyFive) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwentyFive
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwentyFive) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTwentyFiveType string
-
-const (
-	BigUnionTwentyFiveTypeCircularCard BigUnionTwentyFiveType = "circularCard"
-)
-
-func NewBigUnionTwentyFiveTypeFromString(s string) (BigUnionTwentyFiveType, error) {
-	switch s {
-	case "circularCard":
-		return BigUnionTwentyFiveTypeCircularCard, nil
-	}
-	var t BigUnionTwentyFiveType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwentyFiveType) Ptr() *BigUnionTwentyFiveType {
-	return &b
-}
-
-var (
-	bigUnionTwentyFourFieldValue = big.NewInt(1 << 0)
-	bigUnionTwentyFourFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwentyFour struct {
-	Value string                 `json:"value" url:"value"`
-	Type  BigUnionTwentyFourType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwentyFour) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwentyFour) GetType() BigUnionTwentyFourType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwentyFour) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwentyFour) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyFour) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwentyFourFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyFour) SetType(type_ BigUnionTwentyFourType) {
-	b.Type = type_
-	b.require(bigUnionTwentyFourFieldType)
-}
-
-func (b *BigUnionTwentyFour) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwentyFour
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwentyFour(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwentyFour) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwentyFour
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwentyFour) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTwentyFourType string
-
-const (
-	BigUnionTwentyFourTypeHoarseMouse BigUnionTwentyFourType = "hoarseMouse"
-)
-
-func NewBigUnionTwentyFourTypeFromString(s string) (BigUnionTwentyFourType, error) {
-	switch s {
-	case "hoarseMouse":
-		return BigUnionTwentyFourTypeHoarseMouse, nil
-	}
-	var t BigUnionTwentyFourType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwentyFourType) Ptr() *BigUnionTwentyFourType {
-	return &b
-}
-
-var (
-	bigUnionTwentyOneFieldValue = big.NewInt(1 << 0)
-	bigUnionTwentyOneFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwentyOne struct {
-	Value string                `json:"value" url:"value"`
-	Type  BigUnionTwentyOneType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwentyOne) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwentyOne) GetType() BigUnionTwentyOneType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwentyOne) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwentyOne) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyOne) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwentyOneFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyOne) SetType(type_ BigUnionTwentyOneType) {
-	b.Type = type_
-	b.require(bigUnionTwentyOneFieldType)
-}
-
-func (b *BigUnionTwentyOne) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwentyOne
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwentyOne(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwentyOne) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwentyOne
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwentyOne) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTwentyOneType string
-
-const (
-	BigUnionTwentyOneTypeFrozenSleep BigUnionTwentyOneType = "frozenSleep"
-)
-
-func NewBigUnionTwentyOneTypeFromString(s string) (BigUnionTwentyOneType, error) {
-	switch s {
-	case "frozenSleep":
-		return BigUnionTwentyOneTypeFrozenSleep, nil
-	}
-	var t BigUnionTwentyOneType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwentyOneType) Ptr() *BigUnionTwentyOneType {
-	return &b
-}
-
-var (
-	bigUnionTwentySevenFieldValue = big.NewInt(1 << 0)
-	bigUnionTwentySevenFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwentySeven struct {
-	Value string                  `json:"value" url:"value"`
-	Type  BigUnionTwentySevenType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwentySeven) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwentySeven) GetType() BigUnionTwentySevenType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwentySeven) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwentySeven) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentySeven) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwentySevenFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentySeven) SetType(type_ BigUnionTwentySevenType) {
-	b.Type = type_
-	b.require(bigUnionTwentySevenFieldType)
-}
-
-func (b *BigUnionTwentySeven) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwentySeven
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwentySeven(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwentySeven) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwentySeven
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwentySeven) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTwentySevenType string
-
-const (
-	BigUnionTwentySevenTypeTriangularRepair BigUnionTwentySevenType = "triangularRepair"
-)
-
-func NewBigUnionTwentySevenTypeFromString(s string) (BigUnionTwentySevenType, error) {
-	switch s {
-	case "triangularRepair":
-		return BigUnionTwentySevenTypeTriangularRepair, nil
-	}
-	var t BigUnionTwentySevenType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwentySevenType) Ptr() *BigUnionTwentySevenType {
-	return &b
-}
-
-var (
-	bigUnionTwentySixFieldValue = big.NewInt(1 << 0)
-	bigUnionTwentySixFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwentySix struct {
-	Value string                `json:"value" url:"value"`
-	Type  BigUnionTwentySixType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwentySix) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwentySix) GetType() BigUnionTwentySixType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwentySix) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwentySix) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentySix) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwentySixFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentySix) SetType(type_ BigUnionTwentySixType) {
-	b.Type = type_
-	b.require(bigUnionTwentySixFieldType)
-}
-
-func (b *BigUnionTwentySix) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwentySix
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwentySix(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwentySix) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwentySix
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwentySix) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTwentySixType string
-
-const (
-	BigUnionTwentySixTypePotableBad BigUnionTwentySixType = "potableBad"
-)
-
-func NewBigUnionTwentySixTypeFromString(s string) (BigUnionTwentySixType, error) {
-	switch s {
-	case "potableBad":
-		return BigUnionTwentySixTypePotableBad, nil
-	}
-	var t BigUnionTwentySixType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwentySixType) Ptr() *BigUnionTwentySixType {
-	return &b
-}
-
-var (
-	bigUnionTwentyThreeFieldValue = big.NewInt(1 << 0)
-	bigUnionTwentyThreeFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwentyThree struct {
-	Value string                  `json:"value" url:"value"`
-	Type  BigUnionTwentyThreeType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwentyThree) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwentyThree) GetType() BigUnionTwentyThreeType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwentyThree) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwentyThree) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyThree) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwentyThreeFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyThree) SetType(type_ BigUnionTwentyThreeType) {
-	b.Type = type_
-	b.require(bigUnionTwentyThreeFieldType)
-}
-
-func (b *BigUnionTwentyThree) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwentyThree
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwentyThree(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwentyThree) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwentyThree
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwentyThree) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTwentyThreeType string
-
-const (
-	BigUnionTwentyThreeTypeAttractiveScript BigUnionTwentyThreeType = "attractiveScript"
-)
-
-func NewBigUnionTwentyThreeTypeFromString(s string) (BigUnionTwentyThreeType, error) {
-	switch s {
-	case "attractiveScript":
-		return BigUnionTwentyThreeTypeAttractiveScript, nil
-	}
-	var t BigUnionTwentyThreeType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwentyThreeType) Ptr() *BigUnionTwentyThreeType {
-	return &b
-}
-
-var (
-	bigUnionTwentyTwoFieldValue = big.NewInt(1 << 0)
-	bigUnionTwentyTwoFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwentyTwo struct {
-	Value string                `json:"value" url:"value"`
-	Type  BigUnionTwentyTwoType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwentyTwo) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwentyTwo) GetType() BigUnionTwentyTwoType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwentyTwo) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwentyTwo) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyTwo) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwentyTwoFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwentyTwo) SetType(type_ BigUnionTwentyTwoType) {
-	b.Type = type_
-	b.require(bigUnionTwentyTwoFieldType)
-}
-
-func (b *BigUnionTwentyTwo) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwentyTwo
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwentyTwo(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwentyTwo) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwentyTwo
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwentyTwo) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTwentyTwoType string
-
-const (
-	BigUnionTwentyTwoTypeDiligentDeal BigUnionTwentyTwoType = "diligentDeal"
-)
-
-func NewBigUnionTwentyTwoTypeFromString(s string) (BigUnionTwentyTwoType, error) {
-	switch s {
-	case "diligentDeal":
-		return BigUnionTwentyTwoTypeDiligentDeal, nil
-	}
-	var t BigUnionTwentyTwoType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwentyTwoType) Ptr() *BigUnionTwentyTwoType {
-	return &b
-}
-
-type BigUnionTwentyType string
-
-const (
-	BigUnionTwentyTypeUnwillingSmoke BigUnionTwentyType = "unwillingSmoke"
-)
-
-func NewBigUnionTwentyTypeFromString(s string) (BigUnionTwentyType, error) {
-	switch s {
-	case "unwillingSmoke":
-		return BigUnionTwentyTypeUnwillingSmoke, nil
-	}
-	var t BigUnionTwentyType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwentyType) Ptr() *BigUnionTwentyType {
-	return &b
-}
-
-var (
-	bigUnionTwoFieldValue = big.NewInt(1 << 0)
-	bigUnionTwoFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionTwo struct {
-	Value string          `json:"value" url:"value"`
-	Type  BigUnionTwoType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionTwo) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionTwo) GetType() BigUnionTwoType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionTwo) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionTwo) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwo) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionTwoFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionTwo) SetType(type_ BigUnionTwoType) {
-	b.Type = type_
-	b.require(bigUnionTwoFieldType)
-}
-
-func (b *BigUnionTwo) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionTwo
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionTwo(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionTwo) MarshalJSON() ([]byte, error) {
-	type embed BigUnionTwo
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionTwo) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionTwoType string
-
-const (
-	BigUnionTwoTypeJumboEnd BigUnionTwoType = "jumboEnd"
-)
-
-func NewBigUnionTwoTypeFromString(s string) (BigUnionTwoType, error) {
-	switch s {
-	case "jumboEnd":
-		return BigUnionTwoTypeJumboEnd, nil
-	}
-	var t BigUnionTwoType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionTwoType) Ptr() *BigUnionTwoType {
-	return &b
-}
-
-var (
-	bigUnionZeroFieldValue = big.NewInt(1 << 0)
-	bigUnionZeroFieldType  = big.NewInt(1 << 1)
-)
-
-type BigUnionZero struct {
-	Value string           `json:"value" url:"value"`
-	Type  BigUnionZeroType `json:"type" url:"type"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (b *BigUnionZero) GetValue() string {
-	if b == nil {
-		return ""
-	}
-	return b.Value
-}
-
-func (b *BigUnionZero) GetType() BigUnionZeroType {
-	if b == nil {
-		return ""
-	}
-	return b.Type
-}
-
-func (b *BigUnionZero) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *BigUnionZero) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionZero) SetValue(value string) {
-	b.Value = value
-	b.require(bigUnionZeroFieldValue)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *BigUnionZero) SetType(type_ BigUnionZeroType) {
-	b.Type = type_
-	b.require(bigUnionZeroFieldType)
-}
-
-func (b *BigUnionZero) UnmarshalJSON(data []byte) error {
-	type unmarshaler BigUnionZero
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = BigUnionZero(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *BigUnionZero) MarshalJSON() ([]byte, error) {
-	type embed BigUnionZero
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *BigUnionZero) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
-}
-
-type BigUnionZeroType string
-
-const (
-	BigUnionZeroTypeNormalSweet BigUnionZeroType = "normalSweet"
-)
-
-func NewBigUnionZeroTypeFromString(s string) (BigUnionZeroType, error) {
-	switch s {
-	case "normalSweet":
-		return BigUnionZeroTypeNormalSweet, nil
-	}
-	var t BigUnionZeroType
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (b BigUnionZeroType) Ptr() *BigUnionZeroType {
-	return &b
 }
 
 var (

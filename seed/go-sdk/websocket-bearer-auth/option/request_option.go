@@ -72,9 +72,9 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithToken sets the 'Authorization: Bearer <token>' request header.
-func WithToken(token string) *core.TokenOption {
-	return &core.TokenOption{
-		Token: token,
+// WithAPIKey sets the 'Authorization: Bearer <apiKey>' request header.
+func WithAPIKey(apiKey string) *core.APIKeyOption {
+	return &core.APIKeyOption{
+		APIKey: apiKey,
 	}
 }

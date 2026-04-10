@@ -1,4 +1,4 @@
-package api
+package crosspackagetypenames
 
 import (
 	"testing"

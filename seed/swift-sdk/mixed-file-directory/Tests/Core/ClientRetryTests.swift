@@ -1,4 +1,4 @@
-import Api
+import MixedFileDirectory
 import Foundation
 import Testing
 
@@ -14,14 +14,16 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -41,14 +43,16 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -68,14 +72,16 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -94,14 +100,16 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -119,14 +127,16 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -145,14 +155,16 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -171,14 +183,16 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -201,7 +215,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -209,7 +223,9 @@ import Testing
         let startTime = Date()
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -242,7 +258,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -250,7 +266,9 @@ import Testing
         let startTime = Date()
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -279,7 +297,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -287,7 +305,9 @@ import Testing
         let startTime = Date()
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -328,14 +348,16 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
 
@@ -350,14 +372,16 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
 
@@ -376,14 +400,16 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = MixedFileDirectoryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
             _ = try await client.organization.create(
-                request: .init(name: "name"),
+                request: CreateOrganizationRequest(
+                    name: "name"
+                ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

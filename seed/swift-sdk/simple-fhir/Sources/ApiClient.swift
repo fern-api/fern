@@ -2,7 +2,6 @@ import Foundation
 
 /// Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 public final class ApiClient: Sendable {
-    public let : Client
     private let httpClient: HTTPClient
 
     /// Initialize the client with the specified configuration.
@@ -51,7 +50,15 @@ public final class ApiClient: Sendable {
             maxRetries: maxRetries,
             urlSession: urlSession
         )
-        self. = Client(config: config)
         self.httpClient = HTTPClient(config: config)
+    }
+
+    public func getAccount(accountId: String, requestOptions: RequestOptions? = nil) async throws -> Account {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/account/\(accountId)",
+            requestOptions: requestOptions,
+            responseType: Account.self
+        )
     }
 }

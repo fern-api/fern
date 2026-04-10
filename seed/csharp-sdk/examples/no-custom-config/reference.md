@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">EchoAsync</a>(string { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">EchoAsync</a>(string { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```csharp
-await client._.EchoAsync("string");
+await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 ```
 </dd>
 </dl>
@@ -40,7 +39,7 @@ await client._.EchoAsync("string");
 </dl>
 </details>
 
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">CreateTypeAsync</a>(OneOf&lt;BasicType, ComplexType&gt; { ... }) -> WithRawResponseTask&lt;Identifier&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf&lt;BasicType, ComplexType&gt; { ... }) -> WithRawResponseTask&lt;Identifier&gt;</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +52,7 @@ await client._.EchoAsync("string");
 <dd>
 
 ```csharp
-await client._.CreateTypeAsync(BasicType.Primitive);
+await client.CreateTypeAsync(BasicType.Primitive);
 ```
 </dd>
 </dl>
@@ -80,8 +79,8 @@ await client._.CreateTypeAsync(BasicType.Primitive);
 </dl>
 </details>
 
-## FileNotificationService
-<details><summary><code>client.FileNotificationService.<a href="/src/SeedApi/FileNotificationService/FileNotificationServiceClient.cs">FileNotificationServiceGetExceptionAsync</a>(FileNotificationServiceGetExceptionRequest { ... }) -> WithRawResponseTask&lt;OneOf&lt;ExceptionZero, ExceptionType&gt;&gt;</code></summary>
+## File Notification Service
+<details><summary><code>client.File.Notification.Service.<a href="/src/SeedExamples/File/Notification/Service/ServiceClient.cs">GetExceptionAsync</a>(notificationId) -> WithRawResponseTask&lt;Exception&gt;</code></summary>
 <dl>
 <dd>
 
@@ -94,9 +93,7 @@ await client._.CreateTypeAsync(BasicType.Primitive);
 <dd>
 
 ```csharp
-await client.FileNotificationService.FileNotificationServiceGetExceptionAsync(
-    new FileNotificationServiceGetExceptionRequest { NotificationId = "notificationId" }
-);
+await client.File.Notification.Service.GetExceptionAsync("notification-hsy129x");
 ```
 </dd>
 </dl>
@@ -111,7 +108,7 @@ await client.FileNotificationService.FileNotificationServiceGetExceptionAsync(
 <dl>
 <dd>
 
-**request:** `FileNotificationServiceGetExceptionRequest` 
+**notificationId:** `string` 
     
 </dd>
 </dl>
@@ -123,8 +120,8 @@ await client.FileNotificationService.FileNotificationServiceGetExceptionAsync(
 </dl>
 </details>
 
-## FileService
-<details><summary><code>client.FileService.<a href="/src/SeedApi/FileService/FileServiceClient.cs">FileServiceGetFileAsync</a>(FileServiceGetFileRequest { ... }) -> WithRawResponseTask&lt;File&gt;</code></summary>
+## File Service
+<details><summary><code>client.File.Service.<a href="/src/SeedExamples/File/Service/ServiceClient.cs">GetFileAsync</a>(filename, GetFileRequest { ... }) -> WithRawResponseTask&lt;File&gt;</code></summary>
 <dl>
 <dd>
 
@@ -151,8 +148,9 @@ This endpoint returns a file by its name.
 <dd>
 
 ```csharp
-await client.FileService.FileServiceGetFileAsync(
-    new FileServiceGetFileRequest { Filename = "filename" }
+await client.File.Service.GetFileAsync(
+    "file.txt",
+    new GetFileRequest { XFileApiVersion = "0.0.2" }
 );
 ```
 </dd>
@@ -168,7 +166,15 @@ await client.FileService.FileServiceGetFileAsync(
 <dl>
 <dd>
 
-**request:** `FileServiceGetFileRequest` 
+**filename:** `string` — This is a filename
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GetFileRequest` 
     
 </dd>
 </dl>
@@ -180,8 +186,8 @@ await client.FileService.FileServiceGetFileAsync(
 </dl>
 </details>
 
-## HealthService
-<details><summary><code>client.HealthService.<a href="/src/SeedApi/HealthService/HealthServiceClient.cs">HealthServiceCheckAsync</a>(HealthServiceCheckRequest { ... })</code></summary>
+## Health Service
+<details><summary><code>client.Health.Service.<a href="/src/SeedExamples/Health/Service/ServiceClient.cs">CheckAsync</a>(id)</code></summary>
 <dl>
 <dd>
 
@@ -208,7 +214,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```csharp
-await client.HealthService.HealthServiceCheckAsync(new HealthServiceCheckRequest { Id = "id" });
+await client.Health.Service.CheckAsync("id-2sdx82h");
 ```
 </dd>
 </dl>
@@ -223,7 +229,7 @@ await client.HealthService.HealthServiceCheckAsync(new HealthServiceCheckRequest
 <dl>
 <dd>
 
-**request:** `HealthServiceCheckRequest` 
+**id:** `string` — The id to check
     
 </dd>
 </dl>
@@ -235,7 +241,7 @@ await client.HealthService.HealthServiceCheckAsync(new HealthServiceCheckRequest
 </dl>
 </details>
 
-<details><summary><code>client.HealthService.<a href="/src/SeedApi/HealthService/HealthServiceClient.cs">HealthServicePingAsync</a>() -> WithRawResponseTask&lt;bool&gt;</code></summary>
+<details><summary><code>client.Health.Service.<a href="/src/SeedExamples/Health/Service/ServiceClient.cs">PingAsync</a>() -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -262,7 +268,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```csharp
-await client.HealthService.HealthServicePingAsync();
+await client.Health.Service.PingAsync();
 ```
 </dd>
 </dl>
@@ -275,7 +281,7 @@ await client.HealthService.HealthServicePingAsync();
 </details>
 
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetmovieAsync</a>(ServiceGetMovieRequest { ... }) -> WithRawResponseTask&lt;Movie&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMovieAsync</a>(movieId) -> WithRawResponseTask&lt;Movie&gt;</code></summary>
 <dl>
 <dd>
 
@@ -288,7 +294,7 @@ await client.HealthService.HealthServicePingAsync();
 <dd>
 
 ```csharp
-await client.Service.GetmovieAsync(new ServiceGetMovieRequest { MovieId = "movieId" });
+await client.Service.GetMovieAsync("movie-c06a4ad7");
 ```
 </dd>
 </dl>
@@ -303,7 +309,7 @@ await client.Service.GetmovieAsync(new ServiceGetMovieRequest { MovieId = "movie
 <dl>
 <dd>
 
-**request:** `ServiceGetMovieRequest` 
+**movieId:** `string` 
     
 </dd>
 </dl>
@@ -315,7 +321,7 @@ await client.Service.GetmovieAsync(new ServiceGetMovieRequest { MovieId = "movie
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">CreatemovieAsync</a>(Movie { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateMovieAsync</a>(Movie { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -328,16 +334,28 @@ await client.Service.GetmovieAsync(new ServiceGetMovieRequest { MovieId = "movie
 <dd>
 
 ```csharp
-await client.Service.CreatemovieAsync(
+await client.Service.CreateMovieAsync(
     new Movie
     {
-        Id = "id",
-        Title = "title",
-        From = "from",
-        Rating = 1.1,
-        Type = MovieType.Movie,
-        Tag = "tag",
-        Metadata = new Dictionary<string, object?>() { { "key", "value" } },
+        Id = "movie-c06a4ad7",
+        Prequel = "movie-cv9b914f",
+        Title = "The Boy and the Heron",
+        From = "Hayao Miyazaki",
+        Rating = 8,
+        Type = "movie",
+        Tag = "tag-wf9as23d",
+        Metadata = new Dictionary<string, object?>()
+        {
+            {
+                "actors",
+                new List<object?>() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
+            },
+            { "releaseDate", "2023-12-08" },
+            {
+                "ratings",
+                new Dictionary<object, object?>() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
+            },
+        },
         Revenue = 1000000,
     }
 );
@@ -367,7 +385,7 @@ await client.Service.CreatemovieAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetmetadataAsync</a>(ServiceGetMetadataRequest { ... }) -> WithRawResponseTask&lt;Metadata&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">GetMetadataAsync</a>(GetMetadataRequest { ... }) -> WithRawResponseTask&lt;Metadata&gt;</code></summary>
 <dl>
 <dd>
 
@@ -380,8 +398,13 @@ await client.Service.CreatemovieAsync(
 <dd>
 
 ```csharp
-await client.Service.GetmetadataAsync(
-    new ServiceGetMetadataRequest { ApiVersion = "X-API-Version" }
+await client.Service.GetMetadataAsync(
+    new GetMetadataRequest
+    {
+        Shallow = false,
+        Tag = ["development"],
+        XApiVersion = "0.0.1",
+    }
 );
 ```
 </dd>
@@ -397,7 +420,7 @@ await client.Service.GetmetadataAsync(
 <dl>
 <dd>
 
-**request:** `ServiceGetMetadataRequest` 
+**request:** `GetMetadataRequest` 
     
 </dd>
 </dl>
@@ -409,7 +432,7 @@ await client.Service.GetmetadataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">CreatebigentityAsync</a>(BigEntity { ... }) -> WithRawResponseTask&lt;Response&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">CreateBigEntityAsync</a>(BigEntity { ... }) -> WithRawResponseTask&lt;Response&gt;</code></summary>
 <dl>
 <dd>
 
@@ -422,7 +445,223 @@ await client.Service.GetmetadataAsync(
 <dd>
 
 ```csharp
-await client.Service.CreatebigentityAsync(new BigEntity());
+await client.Service.CreateBigEntityAsync(
+    new BigEntity
+    {
+        CastMember = new Actor { Name = "name", Id = "id" },
+        ExtendedMovie = new ExtendedMovie
+        {
+            Cast = new List<string>() { "cast", "cast" },
+            Id = "id",
+            Prequel = "prequel",
+            Title = "title",
+            From = "from",
+            Rating = 1.1,
+            Type = "movie",
+            Tag = "tag",
+            Book = "book",
+            Metadata = new Dictionary<string, object?>()
+            {
+                {
+                    "metadata",
+                    new Dictionary<object, object?>() { { "key", "value" } }
+                },
+            },
+            Revenue = 1000000,
+        },
+        Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
+        Metadata = new SeedExamples.Metadata(new SeedExamples.Metadata.Html("metadata")),
+        CommonMetadata = new SeedExamples.Commons.Metadata
+        {
+            Id = "id",
+            Data = new Dictionary<string, string>() { { "data", "data" } },
+            JsonString = "jsonString",
+        },
+        EventInfo = new EventInfo(
+            new SeedExamples.Commons.EventInfo.Metadata(
+                new SeedExamples.Commons.Metadata
+                {
+                    Id = "id",
+                    Data = new Dictionary<string, string>() { { "data", "data" } },
+                    JsonString = "jsonString",
+                }
+            )
+        ),
+        Data = new Data(new Data.String("data")),
+        Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
+        Exception = new SeedExamples.Exception(
+            new SeedExamples.Exception.Generic(
+                new ExceptionInfo
+                {
+                    ExceptionType = "exceptionType",
+                    ExceptionMessage = "exceptionMessage",
+                    ExceptionStacktrace = "exceptionStacktrace",
+                }
+            )
+        ),
+        Test = new Test(new Test.And(true)),
+        Node = new Node
+        {
+            Name = "name",
+            Nodes = new List<Node>()
+            {
+                new Node
+                {
+                    Name = "name",
+                    Nodes = new List<Node>()
+                    {
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = null,
+                            Trees = null,
+                        },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = null,
+                            Trees = null,
+                        },
+                    },
+                    Trees = new List<Tree>()
+                    {
+                        new Tree { Nodes = new List<Node>() { } },
+                        new Tree { Nodes = new List<Node>() { } },
+                    },
+                },
+                new Node
+                {
+                    Name = "name",
+                    Nodes = new List<Node>()
+                    {
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = null,
+                            Trees = null,
+                        },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = null,
+                            Trees = null,
+                        },
+                    },
+                    Trees = new List<Tree>()
+                    {
+                        new Tree { Nodes = new List<Node>() { } },
+                        new Tree { Nodes = new List<Node>() { } },
+                    },
+                },
+            },
+            Trees = new List<Tree>()
+            {
+                new Tree
+                {
+                    Nodes = new List<Node>()
+                    {
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                    },
+                },
+                new Tree
+                {
+                    Nodes = new List<Node>()
+                    {
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                        new Node
+                        {
+                            Name = "name",
+                            Nodes = new List<Node>() { },
+                            Trees = new List<Tree>() { },
+                        },
+                    },
+                },
+            },
+        },
+        Directory = new SeedExamples.Directory
+        {
+            Name = "name",
+            Files = new List<SeedExamples.File>()
+            {
+                new SeedExamples.File { Name = "name", Contents = "contents" },
+                new SeedExamples.File { Name = "name", Contents = "contents" },
+            },
+            Directories = new List<SeedExamples.Directory>()
+            {
+                new SeedExamples.Directory
+                {
+                    Name = "name",
+                    Files = new List<SeedExamples.File>()
+                    {
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
+                    },
+                    Directories = new List<SeedExamples.Directory>()
+                    {
+                        new SeedExamples.Directory
+                        {
+                            Name = "name",
+                            Files = null,
+                            Directories = null,
+                        },
+                        new SeedExamples.Directory
+                        {
+                            Name = "name",
+                            Files = null,
+                            Directories = null,
+                        },
+                    },
+                },
+                new SeedExamples.Directory
+                {
+                    Name = "name",
+                    Files = new List<SeedExamples.File>()
+                    {
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
+                    },
+                    Directories = new List<SeedExamples.Directory>()
+                    {
+                        new SeedExamples.Directory
+                        {
+                            Name = "name",
+                            Files = null,
+                            Directories = null,
+                        },
+                        new SeedExamples.Directory
+                        {
+                            Name = "name",
+                            Files = null,
+                            Directories = null,
+                        },
+                    },
+                },
+            },
+        },
+        Moment = new Moment
+        {
+            Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            Date = new DateOnly(2023, 1, 15),
+            Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+        },
+    }
+);
 ```
 </dd>
 </dl>
@@ -449,7 +688,7 @@ await client.Service.CreatebigentityAsync(new BigEntity());
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">RefreshtokenAsync</a>(RefreshTokenRequest { ... })</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedExamples/Service/ServiceClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest? { ... })</code></summary>
 <dl>
 <dd>
 
@@ -462,7 +701,7 @@ await client.Service.CreatebigentityAsync(new BigEntity());
 <dd>
 
 ```csharp
-await client.Service.RefreshtokenAsync(new RefreshTokenRequest { Ttl = 1 });
+await client.Service.RefreshTokenAsync(null);
 ```
 </dd>
 </dl>
@@ -477,7 +716,7 @@ await client.Service.RefreshtokenAsync(new RefreshTokenRequest { Ttl = 1 });
 <dl>
 <dd>
 
-**request:** `RefreshTokenRequest` 
+**request:** `RefreshTokenRequest?` 
     
 </dd>
 </dl>

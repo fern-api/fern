@@ -1,4 +1,4 @@
-//! Request and response types for the imdb
+//! Request and response types for the Api
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -8,11 +8,11 @@
 //! - **Request/Response Types**: 1 types for API operations
 //! - **Model Types**: 2 types for data representation
 
-pub mod movie_id;
-pub mod movie;
-pub mod create_movie_request;
+pub mod imdb_movie_id;
+pub mod imdb_movie;
+pub mod imdb_create_movie_request;
 
-pub use movie_id::MovieId;
-pub use movie::Movie;
-pub use create_movie_request::CreateMovieRequest;
+pub use imdb_movie_id::MovieId;
+pub use imdb_movie::Movie;
+pub use imdb_create_movie_request::CreateMovieRequest;
 

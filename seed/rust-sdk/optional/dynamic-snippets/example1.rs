@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_objects_with_imports::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,14 +6,14 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ObjectsWithImportsClient::new(config).expect("Failed to build client");
     client
         .optional
-        .sendoptionalbody(
-            &Some(HashMap::from([(
-                "string".to_string(),
-                serde_json::json!({"key":"value"}),
-            )])),
+        .send_optional_typed_body(
+            &Some(SendOptionalBodyRequest {
+                message: "message".to_string(),
+                ..Default::default()
+            }),
             None,
         )
         .await;

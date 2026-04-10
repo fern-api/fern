@@ -1,14 +1,12 @@
 import Foundation
-import Api
+import ObjectsWithImports
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = ObjectsWithImportsClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.optional.sendoptionalbody(request: .value([
-        "string": .object([
-            "key": .string("value")
-        ])
-    ]))
+    _ = try await client.optional.sendOptionalTypedBody(request: SendOptionalBodyRequest(
+        message: "message"
+    ))
 }
 
 try await main()

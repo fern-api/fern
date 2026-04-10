@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Getpresignedurl(
+func (c *Client) GetPresignedURL(
 	ctx context.Context,
-	request *fern.S3GetPresignedURLRequest,
+	request *fern.GetPresignedURLRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Getpresignedurl(
+	response, err := c.WithRawResponse.GetPresignedURL(
 		ctx,
 		request,
 		opts...,

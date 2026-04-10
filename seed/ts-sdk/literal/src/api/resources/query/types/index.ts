@@ -1,2 +1,2 @@
-export * from "./QuerySendRequestOptionalPrompt.js";
-export * from "./QuerySendRequestPrompt.js";
+export * from "./AliasToPrompt.js";
+export * from "./AliasToStream.js";

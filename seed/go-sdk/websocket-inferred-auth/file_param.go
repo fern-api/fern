@@ -1,4 +1,4 @@
-package api
+package websocketauth
 
 import (
 	"io"

@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Patch(
 	ctx context.Context,
-	request *fern.ServicePatchRequest,
+	request *fern.PatchProxyRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Patch(
@@ -53,13 +53,15 @@ func (c *Client) Patch(
 // This endpoint demonstrates the distinction between:
 // - optional<T> fields (can be present or absent, but not null)
 // - optional<nullable<T>> fields (can be present, absent, or null)
-func (c *Client) Patchcomplex(
+func (c *Client) PatchComplex(
 	ctx context.Context,
-	request *fern.ServicePatchComplexRequest,
+	id string,
+	request *fern.PatchComplexRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Patchcomplex(
+	_, err := c.WithRawResponse.PatchComplex(
 		ctx,
+		id,
 		request,
 		opts...,
 	)
@@ -71,13 +73,15 @@ func (c *Client) Patchcomplex(
 
 // Named request with mixed optional/nullable fields and merge-patch content type.
 // This should trigger the NPE issue when optional fields aren't initialized.
-func (c *Client) Namedpatchwithmixed(
+func (c *Client) NamedPatchWithMixed(
 	ctx context.Context,
-	request *fern.ServiceNamedPatchWithMixedRequest,
+	id string,
+	request *fern.NamedMixedPatchRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Namedpatchwithmixed(
+	_, err := c.WithRawResponse.NamedPatchWithMixed(
 		ctx,
+		id,
 		request,
 		opts...,
 	)
@@ -91,12 +95,12 @@ func (c *Client) Namedpatchwithmixed(
 // This endpoint should:
 // 1. Not NPE when fields are not provided (tests initialization)
 // 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
-func (c *Client) Optionalmergepatchtest(
+func (c *Client) OptionalMergePatchTest(
 	ctx context.Context,
-	request *fern.ServiceOptionalMergePatchTestRequest,
+	request *fern.OptionalMergePatchRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Optionalmergepatchtest(
+	_, err := c.WithRawResponse.OptionalMergePatchTest(
 		ctx,
 		request,
 		opts...,
@@ -108,13 +112,15 @@ func (c *Client) Optionalmergepatchtest(
 }
 
 // Regular PATCH endpoint without merge-patch semantics
-func (c *Client) Regularpatch(
+func (c *Client) RegularPatch(
 	ctx context.Context,
-	request *fern.ServiceRegularPatchRequest,
+	id string,
+	request *fern.RegularPatchRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Regularpatch(
+	_, err := c.WithRawResponse.RegularPatch(
 		ctx,
+		id,
 		request,
 		opts...,
 	)

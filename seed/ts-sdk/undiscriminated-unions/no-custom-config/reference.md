@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">get</a>({ ...params }) -> SeedApi.MyUnion</code></summary>
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">get</a>({ ...params }) -> SeedUndiscriminatedUnions.MyUnion</code></summary>
 <dl>
 <dd>
 
@@ -29,7 +29,7 @@ await client.union.get("string");
 <dl>
 <dd>
 
-**request:** `SeedApi.MyUnion` 
+**request:** `SeedUndiscriminatedUnions.MyUnion` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ await client.union.get("string");
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">getmetadata</a>() -> SeedApi.Metadata</code></summary>
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">getMetadata</a>() -> SeedUndiscriminatedUnions.Metadata</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ await client.union.get("string");
 <dd>
 
 ```typescript
-await client.union.getmetadata();
+await client.union.getMetadata();
 
 ```
 </dd>
@@ -90,7 +90,7 @@ await client.union.getmetadata();
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">updatemetadata</a>({ ...params }) -> boolean</code></summary>
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">updateMetadata</a>({ ...params }) -> boolean</code></summary>
 <dl>
 <dd>
 
@@ -103,8 +103,10 @@ await client.union.getmetadata();
 <dd>
 
 ```typescript
-await client.union.updatemetadata({
-    "key": "value"
+await client.union.updateMetadata({
+    "string": {
+        "key": "value"
+    }
 });
 
 ```
@@ -121,7 +123,7 @@ await client.union.updatemetadata({
 <dl>
 <dd>
 
-**request:** `SeedApi.MetadataUnion` 
+**request:** `SeedUndiscriminatedUnions.MetadataUnion` 
     
 </dd>
 </dl>
@@ -154,157 +156,11 @@ await client.union.updatemetadata({
 <dd>
 
 ```typescript
-await client.union.call();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.Request` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `UnionClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">duplicatetypesunion</a>({ ...params }) -> SeedApi.UnionWithDuplicateTypes</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.union.duplicatetypesunion("string");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.UnionWithDuplicateTypes` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `UnionClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">nestedunions</a>({ ...params }) -> string</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.union.nestedunions("string");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.NestedUnionRoot` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `UnionClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">testcamelcaseproperties</a>({ ...params }) -> string</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.union.testcamelcaseproperties({
-    paymentMethod: {
-        method: "method",
-        cardNumber: "cardNumber"
+await client.union.call({
+    union: {
+        "string": {
+            "key": "value"
+        }
     }
 });
 
@@ -322,7 +178,159 @@ await client.union.testcamelcaseproperties({
 <dl>
 <dd>
 
-**request:** `SeedApi.UnionTestCamelCasePropertiesRequest` 
+**request:** `SeedUndiscriminatedUnions.Request` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">duplicateTypesUnion</a>({ ...params }) -> SeedUndiscriminatedUnions.UnionWithDuplicateTypes</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.union.duplicateTypesUnion("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedUndiscriminatedUnions.UnionWithDuplicateTypes` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">nestedUnions</a>({ ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.union.nestedUnions("string");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedUndiscriminatedUnions.NestedUnionRoot` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">testCamelCaseProperties</a>({ ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.union.testCamelCaseProperties({
+    paymentMethod: {
+        method: "card",
+        cardNumber: "1234567890123456"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedUndiscriminatedUnions.PaymentRequest` 
     
 </dd>
 </dl>

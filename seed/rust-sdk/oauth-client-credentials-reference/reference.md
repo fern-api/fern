@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">gettoken</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,21 +13,22 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_oauth_client_credentials_reference::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client =
+        OauthClientCredentialsReferenceClient::new(config).expect("Failed to build client");
     client
         .auth
-        .gettoken(
+        .get_token(
             &GetTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -39,36 +40,13 @@ async fn main() {
 </dd>
 </dl>
 
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**client_id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `String` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
 
 </dd>
 </dl>
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">getsomething</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -81,16 +59,16 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_oauth_client_credentials_reference::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.simple.getsomething(None).await;
+    let client =
+        OauthClientCredentialsReferenceClient::new(config).expect("Failed to build client");
+    client.simple.get_something(None).await;
 }
 ```
 </dd>

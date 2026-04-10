@@ -49,10 +49,10 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Api
+import SimpleApi
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = SimpleApiClient(token: "<token>")
 
     _ = try await client.user.get(id: "id")
 }
@@ -65,9 +65,9 @@ try await main()
 This SDK allows you to configure different environments for API requests.
 
 ```swift
-import Api
+import SimpleApi
 
-let client = ApiClient(
+let client = SimpleApiClient(
     ...,
     environment: .production
 )
@@ -78,14 +78,14 @@ let client = ApiClient(
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Api
+import SimpleApi
 
-let client = ApiClient(...)
+let client = SimpleApiClient(...)
 
 do {
     let response = try await client.user.get(...)
     // Handle successful response
-} catch let error as ApiError {
+} catch let error as SimpleApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -145,9 +145,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Api
+import SimpleApi
 
-let client = ApiClient(
+let client = SimpleApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>$client-&gt;bigunion-&gt;get($id) -> BigUnionZero|BigUnionOne|BigUnionTwo|BigUnionThree|BigUnionFour|BigUnionFive|BigUnionSix|BigUnionSeven|BigUnionEight|BigUnionNine|BigUnionTen|BigUnionEleven|BigUnionTwelve|BigUnionThirteen|BigUnionFourteen|BigUnionFifteen|BigUnionSixteen|BigUnionSeventeen|BigUnionEighteen|BigUnionNineteen|BigUnionTwenty|BigUnionTwentyOne|BigUnionTwentyTwo|BigUnionTwentyThree|BigUnionTwentyFour|BigUnionTwentyFive|BigUnionTwentySix|BigUnionTwentySeven|BigUnionTwentyEight|null</code></summary>
+<details><summary><code>$client-&gt;bigunion-&gt;get($id) -> ?BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -56,10 +56,9 @@ $client->bigunion->get(
 
 ```php
 $client->bigunion->update(
-    new BigUnionZero([
+    BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
         'value' => 'value',
-        'type' => BigUnionZeroType::NormalSweet->value,
-    ]),
+    ])),
 );
 ```
 </dd>
@@ -75,7 +74,7 @@ $client->bigunion->update(
 <dl>
 <dd>
 
-**$request:** `BigUnionZero|BigUnionOne|BigUnionTwo|BigUnionThree|BigUnionFour|BigUnionFive|BigUnionSix|BigUnionSeven|BigUnionEight|BigUnionNine|BigUnionTen|BigUnionEleven|BigUnionTwelve|BigUnionThirteen|BigUnionFourteen|BigUnionFifteen|BigUnionSixteen|BigUnionSeventeen|BigUnionEighteen|BigUnionNineteen|BigUnionTwenty|BigUnionTwentyOne|BigUnionTwentyTwo|BigUnionTwentyThree|BigUnionTwentyFour|BigUnionTwentyFive|BigUnionTwentySix|BigUnionTwentySeven|BigUnionTwentyEight` 
+**$request:** `BigUnion` 
     
 </dd>
 </dl>
@@ -102,10 +101,12 @@ $client->bigunion->update(
 ```php
 $client->bigunion->updateMany(
     [
-        new BigUnionZero([
+        BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
             'value' => 'value',
-            'type' => BigUnionZeroType::NormalSweet->value,
-        ]),
+        ])),
+        BigUnion::normalSweet('id', new DateTime('2024-01-15T09:30:00Z'), new DateTime('2024-01-15T09:30:00Z'), new NormalSweet([
+            'value' => 'value',
+        ])),
     ],
 );
 ```
@@ -149,7 +150,7 @@ $client->bigunion->updateMany(
 
 ```php
 $client->types->get(
-    'id',
+    'date-example',
 );
 ```
 </dd>
@@ -191,7 +192,7 @@ $client->types->get(
 
 ```php
 $client->types->update(
-    UnionWithTime::value(new UnionWithTimeValue([])),
+    UnionWithTime::date(),
 );
 ```
 </dd>
@@ -220,7 +221,7 @@ $client->types->update(
 </details>
 
 ## Union
-<details><summary><code>$client-&gt;union-&gt;get($id) -> ShapeZero|ShapeOne|null</code></summary>
+<details><summary><code>$client-&gt;union-&gt;get($id) -> ?Shape</code></summary>
 <dl>
 <dd>
 
@@ -233,7 +234,7 @@ $client->types->update(
 <dd>
 
 ```php
-$client->union->get(
+$client->bigunion->get(
     'id',
 );
 ```
@@ -276,10 +277,9 @@ $client->union->get(
 
 ```php
 $client->union->update(
-    new ShapeZero([
+    Shape::circle('id', new Circle([
         'radius' => 1.1,
-        'type' => ShapeZeroType::Circle->value,
-    ]),
+    ])),
 );
 ```
 </dd>
@@ -295,7 +295,7 @@ $client->union->update(
 <dl>
 <dd>
 
-**$request:** `ShapeZero|ShapeOne` 
+**$request:** `Shape` 
     
 </dd>
 </dl>

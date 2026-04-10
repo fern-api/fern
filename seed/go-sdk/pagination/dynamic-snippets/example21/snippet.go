@@ -17,12 +17,16 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest{
-        Cursor: fern.String(
-            "cursor",
+    request := &fern.ListUsersOffsetStepPaginationRequest{
+        Page: fern.Int(
+            1,
         ),
+        Limit: fern.Int(
+            1,
+        ),
+        Order: fern.OrderAsc.Ptr(),
     }
-    client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResultsAndOptionalData(
+    client.Users.ListWithOffsetStepPagination(
         context.TODO(),
         request,
     )

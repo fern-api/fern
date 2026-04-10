@@ -17,8 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.TypesObjectWithOptionalField{}
-    client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentType(
+    request := &fern.CreateRequestC{
+        Label: "label",
+        Priority: 1,
+    }
+    client.Endpoints.DuplicateNamesC.Create(
         context.TODO(),
         request,
     )

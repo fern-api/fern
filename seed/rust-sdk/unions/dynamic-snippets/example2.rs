@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,17 +6,24 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = UnionsClient::new(config).expect("Failed to build client");
     client
         .bigunion
-        .update(
-            &BigUnion::BigUnionZero(BigUnionZero {
-                normal_sweet_fields: NormalSweet {
-                    value: "value".to_string(),
-                    ..Default::default()
+        .update_many(
+            &vec![
+                BigUnion::NormalSweet {
+                    data: NormalSweet {
+                        value: "value".to_string(),
+                        ..Default::default()
+                    },
                 },
-                r#type: BigUnionZeroType::NormalSweet,
-            }),
+                BigUnion::NormalSweet {
+                    data: NormalSweet {
+                        value: "value".to_string(),
+                        ..Default::default()
+                    },
+                },
+            ],
             None,
         )
         .await;

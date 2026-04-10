@@ -13,12 +13,9 @@
 <dd>
 
 ```go
-request := &fern.UserGetRequest{
-        ID: "id",
-    }
 client.User.Get(
         context.TODO(),
-        request,
+        "id",
     )
 }
 ```

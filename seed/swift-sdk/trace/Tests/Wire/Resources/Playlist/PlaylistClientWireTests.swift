@@ -1,52 +1,9 @@
 import Foundation
 import Testing
-import Api
+import Trace
 
 @Suite("PlaylistClient Wire Tests") struct PlaylistClientWireTests {
-    @Test func createplaylist1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "name": "name",
-                  "problems": [
-                    "problems"
-                  ],
-                  "playlist_id": "playlist_id",
-                  "owner-id": "owner-id"
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Playlist(
-            name: "name",
-            problems: [
-                "problems"
-            ],
-            playlistId: "playlist_id",
-            ownerId: "owner-id"
-        )
-        let response = try await client.playlist.createplaylist(
-            serviceParam: 1,
-            datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            request: .init(body: PlaylistCreateRequest(
-                name: "name",
-                problems: [
-                    "problems"
-                ]
-            )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func createplaylist2() async throws -> Void {
+    @Test func createPlaylist1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -63,7 +20,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = TraceClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -77,10 +34,10 @@ import Api
                 "problems"
             ]
         )
-        let response = try await client.playlist.createplaylist(
+        let response = try await client.playlist.createPlaylist(
             serviceParam: 1,
             datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            optionalDatetime: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+            optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             request: .init(body: PlaylistCreateRequest(
                 name: "name",
                 problems: [
@@ -93,7 +50,7 @@ import Api
         try #require(response == expectedResponse)
     }
 
-    @Test func getplaylists1() async throws -> Void {
+    @Test func getPlaylists1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -121,7 +78,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = TraceClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -146,9 +103,9 @@ import Api
                 ]
             )
         ]
-        let response = try await client.playlist.getplaylists(
+        let response = try await client.playlist.getPlaylists(
             serviceParam: 1,
-            limit: .value(1),
+            limit: 1,
             otherField: "otherField",
             multiLineDocs: "multiLineDocs",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -156,44 +113,7 @@ import Api
         try #require(response == expectedResponse)
     }
 
-    @Test func getplaylist1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "name": "name",
-                  "problems": [
-                    "problems"
-                  ],
-                  "playlist_id": "playlist_id",
-                  "owner-id": "owner-id"
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Playlist(
-            name: "name",
-            problems: [
-                "problems"
-            ],
-            playlistId: "playlist_id",
-            ownerId: "owner-id"
-        )
-        let response = try await client.playlist.getplaylist(
-            serviceParam: 1,
-            playlistId: "playlistId",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getplaylist2() async throws -> Void {
+    @Test func getPlaylist1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -210,7 +130,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = TraceClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -224,7 +144,7 @@ import Api
                 "problems"
             ]
         )
-        let response = try await client.playlist.getplaylist(
+        let response = try await client.playlist.getPlaylist(
             serviceParam: 1,
             playlistId: "playlistId",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -232,50 +152,7 @@ import Api
         try #require(response == expectedResponse)
     }
 
-    @Test func updateplaylist1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "name": "name",
-                  "problems": [
-                    "problems"
-                  ],
-                  "playlist_id": "playlist_id",
-                  "owner-id": "owner-id"
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Playlist(
-            name: "name",
-            problems: [
-                "problems"
-            ],
-            playlistId: "playlist_id",
-            ownerId: "owner-id"
-        )
-        let response = try await client.playlist.updateplaylist(
-            serviceParam: 1,
-            playlistId: "playlistId",
-            request: .init(
-                name: "name",
-                problems: [
-                    "problems"
-                ]
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func updateplaylist2() async throws -> Void {
+    @Test func updatePlaylist1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -292,12 +169,12 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = TraceClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = Playlist(
+        let expectedResponse = Optional(Playlist(
             playlistId: "playlist_id",
             ownerId: "owner-id",
             name: "name",
@@ -305,11 +182,11 @@ import Api
                 "problems",
                 "problems"
             ]
-        )
-        let response = try await client.playlist.updateplaylist(
+        ))
+        let response = try await client.playlist.updatePlaylist(
             serviceParam: 1,
             playlistId: "playlistId",
-            request: .init(
+            request: UpdatePlaylistRequest(
                 name: "name",
                 problems: [
                     "problems",

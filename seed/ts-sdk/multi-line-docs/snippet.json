@@ -4,22 +4,22 @@
             "id": {
                 "path": "/users/{userId}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getuser"
+                "identifier_override": "endpoint_user.getUser"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/multi-line-docs\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getuser({\n    userId: \"userId\"\n});\n"
+                "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst client = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUser(\"userId\");\n"
             }
         },
         {
             "id": {
                 "path": "/users",
                 "method": "POST",
-                "identifier_override": "endpoint_user.createuser"
+                "identifier_override": "endpoint_user.createUser"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/multi-line-docs\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createuser({\n    name: \"name\"\n});\n"
+                "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst client = new SeedMultiLineDocsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    name: \"name\",\n    age: 1\n});\n"
             }
         }
     ],

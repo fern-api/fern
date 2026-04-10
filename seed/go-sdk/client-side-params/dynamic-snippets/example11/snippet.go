@@ -17,8 +17,7 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ServiceGetUserByIDRequest{
-        UserID: "userId",
+    request := &fern.GetClientRequest{
         Fields: fern.String(
             "fields",
         ),
@@ -26,8 +25,9 @@ func do() {
             true,
         ),
     }
-    client.Service.Getuserbyid(
+    client.Service.GetClient(
         context.TODO(),
+        "clientId",
         request,
     )
 }

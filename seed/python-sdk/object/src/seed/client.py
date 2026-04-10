@@ -7,7 +7,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 
-class SeedApi:
+class SeedObject:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -33,9 +33,9 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedObject
 
-    client = SeedApi(
+    client = SeedObject(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -84,7 +84,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedObject:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -110,9 +110,9 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedObject
 
-    client = AsyncSeedApi(
+    client = AsyncSeedObject(
         base_url="https://yourhost.com/path/to/api",
     )
     """

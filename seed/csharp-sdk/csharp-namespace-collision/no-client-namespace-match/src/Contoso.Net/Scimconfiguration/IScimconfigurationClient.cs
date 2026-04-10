@@ -1,21 +1,21 @@
 using Contoso.Net;
 
-namespace Contoso.Net.Scimconfiguration;
+namespace Contoso.Net.ScimConfiguration;
 
-public partial interface IScimconfigurationClient
+public partial interface IScimConfigurationClient
 {
-    WithRawResponseTask<ScimConfigurationScimConfiguration> GetconfigurationAsync(
+    WithRawResponseTask<ScimConfiguration> GetConfigurationAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    WithRawResponseTask<ScimConfigurationScimToken> CreatetokenAsync(
-        ScimConfigurationScimToken request,
+    WithRawResponseTask<ScimToken> CreateTokenAsync(
+        ScimToken request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    WithRawResponseTask<IEnumerable<User>> ListusersAsync(
+    WithRawResponseTask<IEnumerable<Contoso.Net.User>> ListUsersAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

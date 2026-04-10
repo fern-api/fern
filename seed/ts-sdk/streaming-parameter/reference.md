@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client/Client.ts">generate</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client/Client.ts">generate</a>({ ...params }) -> core.Stream&lt;SeedStreaming.StreamResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,13 @@
 <dd>
 
 ```typescript
-await client.dummy.generate({
-    stream: true,
-    num_events: 1
+const response = await client.dummy.generate({
+    stream: false,
+    num_events: 5
 });
+for await (const item of response) {
+    console.log(item);
+}
 
 ```
 </dd>
@@ -32,7 +35,7 @@ await client.dummy.generate({
 <dl>
 <dd>
 
-**request:** `SeedApi.DummyGenerateRequest` 
+**request:** `SeedStreaming.GenerateRequest` 
     
 </dd>
 </dl>

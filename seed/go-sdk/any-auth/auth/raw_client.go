@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Gettoken(
+func (r *RawClient) GetToken(
 	ctx context.Context,
-	request *fern.AuthGetTokenRequest,
+	request *fern.GetTokenRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.TokenResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,7 +47,6 @@ func (r *RawClient) Gettoken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

@@ -37,11 +37,11 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Package\Requests\PackageTestRequest;
+use Seed\Package\Requests\TestRequest;
 
 $client = new SeedClient();
 $client->package->test(
-    new PackageTestRequest([
+    new TestRequest([
         'for' => 'for',
     ]),
 );

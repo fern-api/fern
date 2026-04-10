@@ -3,28 +3,28 @@ import * as errors from "./index.mjs";
 export function handleNonStatusCodeError(error, rawResponse, method, path) {
     switch (error.reason) {
         case "non-json":
-            throw new errors.SeedApiError({
+            throw new errors.SeedExhaustiveError({
                 statusCode: error.statusCode,
                 body: error.rawBody,
                 rawResponse: rawResponse,
             });
         case "body-is-null":
-            throw new errors.SeedApiError({
+            throw new errors.SeedExhaustiveError({
                 statusCode: error.statusCode,
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedApiTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
+            throw new errors.SeedExhaustiveTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
                 cause: error.cause,
             });
         case "unknown":
-            throw new errors.SeedApiError({
+            throw new errors.SeedExhaustiveError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
                 cause: error.cause,
             });
         default:
-            throw new errors.SeedApiError({
+            throw new errors.SeedExhaustiveError({
                 message: "Unknown error",
                 rawResponse: rawResponse,
             });

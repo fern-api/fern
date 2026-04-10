@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_idempotency_headers::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,15 +7,6 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .payment
-        .create(
-            &PaymentCreateRequest {
-                amount: 1,
-                currency: Currency::Usd,
-            },
-            None,
-        )
-        .await;
+    let client = IdempotencyHeadersClient::new(config).expect("Failed to build client");
+    client.payment.delete(&"paymentId".to_string(), None).await;
 }

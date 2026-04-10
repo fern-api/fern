@@ -7,18 +7,18 @@ import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedExhaustive from "../../../index.js";
 
-export declare namespace NoauthClient {
+export declare namespace NoAuthClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class NoauthClient {
-    protected readonly _options: NormalizedClientOptions<NoauthClient.Options>;
+export class NoAuthClient {
+    protected readonly _options: NormalizedClientOptions<NoAuthClient.Options>;
 
-    constructor(options: NoauthClient.Options) {
+    constructor(options: NoAuthClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
@@ -26,32 +26,32 @@ export class NoauthClient {
      * POST request with no auth
      *
      * @param {unknown} request
-     * @param {NoauthClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.BadRequestError}
+     * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
-     *     await client.noauth.postwithnoauth({
+     *     await client.noAuth.postWithNoAuth({
      *         "key": "value"
      *     })
      */
-    public postwithnoauth(
+    public postWithNoAuth(
         request?: unknown,
-        requestOptions?: NoauthClient.RequestOptions,
+        requestOptions?: NoAuthClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__postwithnoauth(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__postWithNoAuth(request, requestOptions));
     }
 
-    private async __postwithnoauth(
+    private async __postWithNoAuth(
         request?: unknown,
-        requestOptions?: NoauthClient.RequestOptions,
+        requestOptions?: NoAuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "no-auth",
+                "/no-auth",
             ),
             method: "POST",
             headers: _headers,
@@ -67,7 +67,7 @@ export class NoauthClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.noauth.postwithnoauth.Response.parseOrThrow(_response.body, {
+                data: serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -81,7 +81,7 @@ export class NoauthClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new SeedApi.BadRequestError(
+                    throw new SeedExhaustive.BadRequestBody(
                         serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -92,7 +92,7 @@ export class NoauthClient {
                         _response.rawResponse,
                     );
                 default:
-                    throw new errors.SeedApiError({
+                    throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,

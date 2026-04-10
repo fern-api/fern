@@ -15,7 +15,7 @@ impl HeadersClient {
 
     pub async fn send(
         &self,
-        request: &HeadersSendRequest,
+        request: &SendLiteralsInHeadersRequest,
         options: Option<RequestOptions>,
     ) -> Result<SendResponse, ApiError> {
         self.http_client

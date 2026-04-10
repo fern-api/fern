@@ -17,14 +17,14 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Query::Types::QuerySendRequestPrompt] :prompt
-      # @option params [Seed::Query::Types::QuerySendRequestOptionalPrompt, nil] :optional_prompt
-      # @option params [Seed::Types::AliasToPrompt] :alias_prompt
-      # @option params [Seed::Types::AliasToPrompt, nil] :alias_optional_prompt
+      # @option params [String] :prompt
+      # @option params [String, nil] :optional_prompt
+      # @option params [Seed::Query::Types::AliasToPrompt] :alias_prompt
+      # @option params [String, nil] :alias_optional_prompt
       # @option params [String] :query
       # @option params [Boolean] :stream
       # @option params [Boolean, nil] :optional_stream
-      # @option params [Seed::Types::AliasToStream] :alias_stream
+      # @option params [Seed::Query::Types::AliasToStream] :alias_stream
       # @option params [Boolean, nil] :alias_optional_stream
       #
       # @return [Seed::Types::SendResponse]

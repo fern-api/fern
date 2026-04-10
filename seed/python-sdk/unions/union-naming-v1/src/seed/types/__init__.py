@@ -6,428 +6,145 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .active_diamond import ActiveDiamond
-    from .attractive_script import AttractiveScript
-    from .bar import Bar
-    from .big_union import BigUnion
-    from .big_union_eight import BigUnionEight
-    from .big_union_eight_type import BigUnionEightType
-    from .big_union_eighteen import BigUnionEighteen
-    from .big_union_eighteen_type import BigUnionEighteenType
-    from .big_union_eleven import BigUnionEleven
-    from .big_union_eleven_type import BigUnionElevenType
-    from .big_union_fifteen import BigUnionFifteen
-    from .big_union_fifteen_type import BigUnionFifteenType
-    from .big_union_five import BigUnionFive
-    from .big_union_five_type import BigUnionFiveType
-    from .big_union_four import BigUnionFour
-    from .big_union_four_type import BigUnionFourType
-    from .big_union_fourteen import BigUnionFourteen
-    from .big_union_fourteen_type import BigUnionFourteenType
-    from .big_union_nine import BigUnionNine
-    from .big_union_nine_type import BigUnionNineType
-    from .big_union_nineteen import BigUnionNineteen
-    from .big_union_nineteen_type import BigUnionNineteenType
-    from .big_union_one import BigUnionOne
-    from .big_union_one_type import BigUnionOneType
-    from .big_union_seven import BigUnionSeven
-    from .big_union_seven_type import BigUnionSevenType
-    from .big_union_seventeen import BigUnionSeventeen
-    from .big_union_seventeen_type import BigUnionSeventeenType
-    from .big_union_six import BigUnionSix
-    from .big_union_six_type import BigUnionSixType
-    from .big_union_sixteen import BigUnionSixteen
-    from .big_union_sixteen_type import BigUnionSixteenType
-    from .big_union_ten import BigUnionTen
-    from .big_union_ten_type import BigUnionTenType
-    from .big_union_thirteen import BigUnionThirteen
-    from .big_union_thirteen_type import BigUnionThirteenType
-    from .big_union_three import BigUnionThree
-    from .big_union_three_type import BigUnionThreeType
-    from .big_union_twelve import BigUnionTwelve
-    from .big_union_twelve_type import BigUnionTwelveType
-    from .big_union_twenty import BigUnionTwenty
-    from .big_union_twenty_eight import BigUnionTwentyEight
-    from .big_union_twenty_eight_type import BigUnionTwentyEightType
-    from .big_union_twenty_five import BigUnionTwentyFive
-    from .big_union_twenty_five_type import BigUnionTwentyFiveType
-    from .big_union_twenty_four import BigUnionTwentyFour
-    from .big_union_twenty_four_type import BigUnionTwentyFourType
-    from .big_union_twenty_one import BigUnionTwentyOne
-    from .big_union_twenty_one_type import BigUnionTwentyOneType
-    from .big_union_twenty_seven import BigUnionTwentySeven
-    from .big_union_twenty_seven_type import BigUnionTwentySevenType
-    from .big_union_twenty_six import BigUnionTwentySix
-    from .big_union_twenty_six_type import BigUnionTwentySixType
-    from .big_union_twenty_three import BigUnionTwentyThree
-    from .big_union_twenty_three_type import BigUnionTwentyThreeType
-    from .big_union_twenty_two import BigUnionTwentyTwo
-    from .big_union_twenty_two_type import BigUnionTwentyTwoType
-    from .big_union_twenty_type import BigUnionTwentyType
-    from .big_union_two import BigUnionTwo
-    from .big_union_two_type import BigUnionTwoType
-    from .big_union_zero import BigUnionZero
-    from .big_union_zero_type import BigUnionZeroType
-    from .circle import Circle
-    from .circular_card import CircularCard
-    from .colorful_cover import ColorfulCover
-    from .diligent_deal import DiligentDeal
-    from .disloyal_value import DisloyalValue
-    from .distinct_failure import DistinctFailure
-    from .false_mirror import FalseMirror
-    from .first_item_type import FirstItemType
-    from .first_item_type_type import FirstItemTypeType
-    from .foo import Foo
-    from .foo_extended import FooExtended
-    from .frozen_sleep import FrozenSleep
-    from .gaseous_road import GaseousRoad
-    from .get_shape_request import GetShapeRequest
-    from .gruesome_coach import GruesomeCoach
-    from .harmonious_play import HarmoniousPlay
-    from .hasty_pain import HastyPain
-    from .hoarse_mouse import HoarseMouse
-    from .jumbo_end import JumboEnd
-    from .limping_step import LimpingStep
-    from .misty_snow import MistySnow
-    from .normal_sweet import NormalSweet
-    from .popular_limit import PopularLimit
-    from .potable_bad import PotableBad
-    from .practical_principle import PracticalPrinciple
-    from .primary_block import PrimaryBlock
-    from .rotating_ratio import RotatingRatio
-    from .second_item_type import SecondItemType
-    from .second_item_type_type import SecondItemTypeType
-    from .shape import Shape
-    from .shape_one import ShapeOne
-    from .shape_one_type import ShapeOneType
-    from .shape_zero import ShapeZero
-    from .shape_zero_type import ShapeZeroType
-    from .square import Square
-    from .thankful_factor import ThankfulFactor
-    from .total_work import TotalWork
-    from .triangular_repair import TriangularRepair
-    from .type_with_optional_map import TypeWithOptionalMap
-    from .union import BarUnion, FooUnion, Union
-    from .union_bar import UnionBar
-    from .union_foo import UnionFoo
-    from .union_with_base_properties import UnionWithBaseProperties
-    from .union_with_base_properties_one import UnionWithBasePropertiesOne
-    from .union_with_base_properties_one_type import UnionWithBasePropertiesOneType
-    from .union_with_base_properties_two import UnionWithBasePropertiesTwo
-    from .union_with_base_properties_two_type import UnionWithBasePropertiesTwoType
-    from .union_with_base_properties_zero import UnionWithBasePropertiesZero
-    from .union_with_base_properties_zero_type import UnionWithBasePropertiesZeroType
-    from .union_with_discriminant import BarUnionWithDiscriminant, FooUnionWithDiscriminant, UnionWithDiscriminant
-    from .union_with_discriminant_bar import UnionWithDiscriminantBar
-    from .union_with_discriminant_foo import UnionWithDiscriminantFoo
-    from .union_with_duplicate_primitive import (
+    from .types import (
+        AnyNumberUnionWithSameNumberTypes,
+        Bar,
+        BarUnion,
+        BarUnionWithDiscriminant,
+        BarUnionWithNullableReference,
+        BarUnionWithOptionalReference,
+        BarUnionWithoutKey,
+        CustomFormatUnionWithSameStringTypes,
+        DateUnionWithOptionalTime,
+        DateUnionWithTime,
+        DatetimeUnionWithOptionalTime,
+        DatetimeUnionWithTime,
+        Empty1UnionWithMultipleNoProperties,
+        Empty2UnionWithMultipleNoProperties,
+        EmptyUnionWithNoProperties,
+        FernUnionWithLiteral,
+        FirstItemType,
+        FirstItemTypeUnionWithDuplicativeDiscriminants,
+        Foo,
+        Foo1UnionWithDuplicateTypes,
+        Foo2UnionWithDuplicateTypes,
+        FooExtended,
+        FooExtendedUnionWithSubTypes,
+        FooUnion,
+        FooUnionWithBaseProperties,
+        FooUnionWithDiscriminant,
+        FooUnionWithMultipleNoProperties,
+        FooUnionWithNoProperties,
+        FooUnionWithNullableReference,
+        FooUnionWithOptionalReference,
+        FooUnionWithSingleElement,
+        FooUnionWithSubTypes,
+        FooUnionWithoutKey,
         Integer1UnionWithDuplicatePrimitive,
         Integer2UnionWithDuplicatePrimitive,
+        IntegerUnionWithBaseProperties,
+        IntegerUnionWithPrimitive,
+        NegativeIntUnionWithSameNumberTypes,
+        PatternStringUnionWithSameStringTypes,
+        PositiveIntUnionWithSameNumberTypes,
+        RegularStringUnionWithSameStringTypes,
+        SecondItemType,
+        SecondItemTypeUnionWithDuplicativeDiscriminants,
         String1UnionWithDuplicatePrimitive,
         String2UnionWithDuplicatePrimitive,
+        StringUnionWithBaseProperties,
+        StringUnionWithPrimitive,
+        TypeWithOptionalMap,
+        Union,
+        UnionWithBaseProperties,
+        UnionWithDiscriminant,
         UnionWithDuplicatePrimitive,
-    )
-    from .union_with_duplicate_primitive_integer1 import UnionWithDuplicatePrimitiveInteger1
-    from .union_with_duplicate_primitive_integer2 import UnionWithDuplicatePrimitiveInteger2
-    from .union_with_duplicate_primitive_string1 import UnionWithDuplicatePrimitiveString1
-    from .union_with_duplicate_primitive_string2 import UnionWithDuplicatePrimitiveString2
-    from .union_with_duplicate_types import UnionWithDuplicateTypes
-    from .union_with_duplicate_types_one import UnionWithDuplicateTypesOne
-    from .union_with_duplicate_types_one_type import UnionWithDuplicateTypesOneType
-    from .union_with_duplicate_types_zero import UnionWithDuplicateTypesZero
-    from .union_with_duplicate_types_zero_type import UnionWithDuplicateTypesZeroType
-    from .union_with_duplicative_discriminants import UnionWithDuplicativeDiscriminants
-    from .union_with_duplicative_discriminants_one import UnionWithDuplicativeDiscriminantsOne
-    from .union_with_duplicative_discriminants_one_type import UnionWithDuplicativeDiscriminantsOneType
-    from .union_with_duplicative_discriminants_zero import UnionWithDuplicativeDiscriminantsZero
-    from .union_with_duplicative_discriminants_zero_type import UnionWithDuplicativeDiscriminantsZeroType
-    from .union_with_literal import UnionWithLiteral
-    from .union_with_literal_type import UnionWithLiteralType
-    from .union_with_literal_value import UnionWithLiteralValue
-    from .union_with_multiple_no_properties import UnionWithMultipleNoProperties
-    from .union_with_multiple_no_properties_one import UnionWithMultipleNoPropertiesOne
-    from .union_with_multiple_no_properties_one_type import UnionWithMultipleNoPropertiesOneType
-    from .union_with_multiple_no_properties_two import UnionWithMultipleNoPropertiesTwo
-    from .union_with_multiple_no_properties_two_type import UnionWithMultipleNoPropertiesTwoType
-    from .union_with_multiple_no_properties_zero import UnionWithMultipleNoPropertiesZero
-    from .union_with_multiple_no_properties_zero_type import UnionWithMultipleNoPropertiesZeroType
-    from .union_with_no_properties import UnionWithNoProperties
-    from .union_with_no_properties_type import UnionWithNoPropertiesType
-    from .union_with_no_properties_type_type import UnionWithNoPropertiesTypeType
-    from .union_with_no_properties_zero import UnionWithNoPropertiesZero
-    from .union_with_no_properties_zero_type import UnionWithNoPropertiesZeroType
-    from .union_with_nullable_reference import (
-        BarUnionWithNullableReference,
-        FooUnionWithNullableReference,
+        UnionWithDuplicateTypes,
+        UnionWithDuplicativeDiscriminants,
+        UnionWithLiteral,
+        UnionWithMultipleNoProperties,
+        UnionWithNoProperties,
         UnionWithNullableReference,
-    )
-    from .union_with_nullable_reference_bar import UnionWithNullableReferenceBar
-    from .union_with_nullable_reference_foo import UnionWithNullableReferenceFoo
-    from .union_with_optional_reference import (
-        BarUnionWithOptionalReference,
-        FooUnionWithOptionalReference,
         UnionWithOptionalReference,
-    )
-    from .union_with_optional_reference_bar import UnionWithOptionalReferenceBar
-    from .union_with_optional_reference_foo import UnionWithOptionalReferenceFoo
-    from .union_with_optional_time import (
-        DateUnionWithOptionalTime,
-        DatetimeUnionWithOptionalTime,
         UnionWithOptionalTime,
-    )
-    from .union_with_optional_time_date import UnionWithOptionalTimeDate
-    from .union_with_optional_time_datetime import UnionWithOptionalTimeDatetime
-    from .union_with_primitive import IntegerUnionWithPrimitive, StringUnionWithPrimitive, UnionWithPrimitive
-    from .union_with_primitive_integer import UnionWithPrimitiveInteger
-    from .union_with_primitive_string import UnionWithPrimitiveString
-    from .union_with_same_number_types import (
-        AnyNumberUnionWithSameNumberTypes,
-        NegativeIntUnionWithSameNumberTypes,
-        PositiveIntUnionWithSameNumberTypes,
+        UnionWithPrimitive,
         UnionWithSameNumberTypes,
-    )
-    from .union_with_same_number_types_any_number import UnionWithSameNumberTypesAnyNumber
-    from .union_with_same_number_types_negative_int import UnionWithSameNumberTypesNegativeInt
-    from .union_with_same_number_types_positive_int import UnionWithSameNumberTypesPositiveInt
-    from .union_with_same_string_types import (
-        CustomFormatUnionWithSameStringTypes,
-        PatternStringUnionWithSameStringTypes,
-        RegularStringUnionWithSameStringTypes,
         UnionWithSameStringTypes,
+        UnionWithSingleElement,
+        UnionWithSubTypes,
+        UnionWithTime,
+        UnionWithoutKey,
+        ValueUnionWithTime,
     )
-    from .union_with_same_string_types_custom_format import UnionWithSameStringTypesCustomFormat
-    from .union_with_same_string_types_pattern_string import UnionWithSameStringTypesPatternString
-    from .union_with_same_string_types_regular_string import UnionWithSameStringTypesRegularString
-    from .union_with_single_element import UnionWithSingleElement
-    from .union_with_single_element_type import UnionWithSingleElementType
-    from .union_with_sub_types import UnionWithSubTypes
-    from .union_with_sub_types_one import UnionWithSubTypesOne
-    from .union_with_sub_types_one_type import UnionWithSubTypesOneType
-    from .union_with_sub_types_zero import UnionWithSubTypesZero
-    from .union_with_sub_types_zero_type import UnionWithSubTypesZeroType
-    from .union_with_time import DateUnionWithTime, DatetimeUnionWithTime, UnionWithTime, ValueUnionWithTime
-    from .union_with_time_date import UnionWithTimeDate
-    from .union_with_time_datetime import UnionWithTimeDatetime
-    from .union_with_time_value import UnionWithTimeValue
-    from .union_without_key import UnionWithoutKey
-    from .union_without_key_one import UnionWithoutKeyOne
-    from .union_without_key_one_type import UnionWithoutKeyOneType
-    from .union_without_key_zero import UnionWithoutKeyZero
-    from .union_without_key_zero_type import UnionWithoutKeyZeroType
-    from .unique_stress import UniqueStress
-    from .unwilling_smoke import UnwillingSmoke
-    from .vibrant_excitement import VibrantExcitement
-    from .with_name import WithName
 _dynamic_imports: typing.Dict[str, str] = {
-    "ActiveDiamond": ".active_diamond",
-    "AnyNumberUnionWithSameNumberTypes": ".union_with_same_number_types",
-    "AttractiveScript": ".attractive_script",
-    "Bar": ".bar",
-    "BarUnion": ".union",
-    "BarUnionWithDiscriminant": ".union_with_discriminant",
-    "BarUnionWithNullableReference": ".union_with_nullable_reference",
-    "BarUnionWithOptionalReference": ".union_with_optional_reference",
-    "BigUnion": ".big_union",
-    "BigUnionEight": ".big_union_eight",
-    "BigUnionEightType": ".big_union_eight_type",
-    "BigUnionEighteen": ".big_union_eighteen",
-    "BigUnionEighteenType": ".big_union_eighteen_type",
-    "BigUnionEleven": ".big_union_eleven",
-    "BigUnionElevenType": ".big_union_eleven_type",
-    "BigUnionFifteen": ".big_union_fifteen",
-    "BigUnionFifteenType": ".big_union_fifteen_type",
-    "BigUnionFive": ".big_union_five",
-    "BigUnionFiveType": ".big_union_five_type",
-    "BigUnionFour": ".big_union_four",
-    "BigUnionFourType": ".big_union_four_type",
-    "BigUnionFourteen": ".big_union_fourteen",
-    "BigUnionFourteenType": ".big_union_fourteen_type",
-    "BigUnionNine": ".big_union_nine",
-    "BigUnionNineType": ".big_union_nine_type",
-    "BigUnionNineteen": ".big_union_nineteen",
-    "BigUnionNineteenType": ".big_union_nineteen_type",
-    "BigUnionOne": ".big_union_one",
-    "BigUnionOneType": ".big_union_one_type",
-    "BigUnionSeven": ".big_union_seven",
-    "BigUnionSevenType": ".big_union_seven_type",
-    "BigUnionSeventeen": ".big_union_seventeen",
-    "BigUnionSeventeenType": ".big_union_seventeen_type",
-    "BigUnionSix": ".big_union_six",
-    "BigUnionSixType": ".big_union_six_type",
-    "BigUnionSixteen": ".big_union_sixteen",
-    "BigUnionSixteenType": ".big_union_sixteen_type",
-    "BigUnionTen": ".big_union_ten",
-    "BigUnionTenType": ".big_union_ten_type",
-    "BigUnionThirteen": ".big_union_thirteen",
-    "BigUnionThirteenType": ".big_union_thirteen_type",
-    "BigUnionThree": ".big_union_three",
-    "BigUnionThreeType": ".big_union_three_type",
-    "BigUnionTwelve": ".big_union_twelve",
-    "BigUnionTwelveType": ".big_union_twelve_type",
-    "BigUnionTwenty": ".big_union_twenty",
-    "BigUnionTwentyEight": ".big_union_twenty_eight",
-    "BigUnionTwentyEightType": ".big_union_twenty_eight_type",
-    "BigUnionTwentyFive": ".big_union_twenty_five",
-    "BigUnionTwentyFiveType": ".big_union_twenty_five_type",
-    "BigUnionTwentyFour": ".big_union_twenty_four",
-    "BigUnionTwentyFourType": ".big_union_twenty_four_type",
-    "BigUnionTwentyOne": ".big_union_twenty_one",
-    "BigUnionTwentyOneType": ".big_union_twenty_one_type",
-    "BigUnionTwentySeven": ".big_union_twenty_seven",
-    "BigUnionTwentySevenType": ".big_union_twenty_seven_type",
-    "BigUnionTwentySix": ".big_union_twenty_six",
-    "BigUnionTwentySixType": ".big_union_twenty_six_type",
-    "BigUnionTwentyThree": ".big_union_twenty_three",
-    "BigUnionTwentyThreeType": ".big_union_twenty_three_type",
-    "BigUnionTwentyTwo": ".big_union_twenty_two",
-    "BigUnionTwentyTwoType": ".big_union_twenty_two_type",
-    "BigUnionTwentyType": ".big_union_twenty_type",
-    "BigUnionTwo": ".big_union_two",
-    "BigUnionTwoType": ".big_union_two_type",
-    "BigUnionZero": ".big_union_zero",
-    "BigUnionZeroType": ".big_union_zero_type",
-    "Circle": ".circle",
-    "CircularCard": ".circular_card",
-    "ColorfulCover": ".colorful_cover",
-    "CustomFormatUnionWithSameStringTypes": ".union_with_same_string_types",
-    "DateUnionWithOptionalTime": ".union_with_optional_time",
-    "DateUnionWithTime": ".union_with_time",
-    "DatetimeUnionWithOptionalTime": ".union_with_optional_time",
-    "DatetimeUnionWithTime": ".union_with_time",
-    "DiligentDeal": ".diligent_deal",
-    "DisloyalValue": ".disloyal_value",
-    "DistinctFailure": ".distinct_failure",
-    "FalseMirror": ".false_mirror",
-    "FirstItemType": ".first_item_type",
-    "FirstItemTypeType": ".first_item_type_type",
-    "Foo": ".foo",
-    "FooExtended": ".foo_extended",
-    "FooUnion": ".union",
-    "FooUnionWithDiscriminant": ".union_with_discriminant",
-    "FooUnionWithNullableReference": ".union_with_nullable_reference",
-    "FooUnionWithOptionalReference": ".union_with_optional_reference",
-    "FrozenSleep": ".frozen_sleep",
-    "GaseousRoad": ".gaseous_road",
-    "GetShapeRequest": ".get_shape_request",
-    "GruesomeCoach": ".gruesome_coach",
-    "HarmoniousPlay": ".harmonious_play",
-    "HastyPain": ".hasty_pain",
-    "HoarseMouse": ".hoarse_mouse",
-    "Integer1UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
-    "Integer2UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
-    "IntegerUnionWithPrimitive": ".union_with_primitive",
-    "JumboEnd": ".jumbo_end",
-    "LimpingStep": ".limping_step",
-    "MistySnow": ".misty_snow",
-    "NegativeIntUnionWithSameNumberTypes": ".union_with_same_number_types",
-    "NormalSweet": ".normal_sweet",
-    "PatternStringUnionWithSameStringTypes": ".union_with_same_string_types",
-    "PopularLimit": ".popular_limit",
-    "PositiveIntUnionWithSameNumberTypes": ".union_with_same_number_types",
-    "PotableBad": ".potable_bad",
-    "PracticalPrinciple": ".practical_principle",
-    "PrimaryBlock": ".primary_block",
-    "RegularStringUnionWithSameStringTypes": ".union_with_same_string_types",
-    "RotatingRatio": ".rotating_ratio",
-    "SecondItemType": ".second_item_type",
-    "SecondItemTypeType": ".second_item_type_type",
-    "Shape": ".shape",
-    "ShapeOne": ".shape_one",
-    "ShapeOneType": ".shape_one_type",
-    "ShapeZero": ".shape_zero",
-    "ShapeZeroType": ".shape_zero_type",
-    "Square": ".square",
-    "String1UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
-    "String2UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
-    "StringUnionWithPrimitive": ".union_with_primitive",
-    "ThankfulFactor": ".thankful_factor",
-    "TotalWork": ".total_work",
-    "TriangularRepair": ".triangular_repair",
-    "TypeWithOptionalMap": ".type_with_optional_map",
-    "Union": ".union",
-    "UnionBar": ".union_bar",
-    "UnionFoo": ".union_foo",
-    "UnionWithBaseProperties": ".union_with_base_properties",
-    "UnionWithBasePropertiesOne": ".union_with_base_properties_one",
-    "UnionWithBasePropertiesOneType": ".union_with_base_properties_one_type",
-    "UnionWithBasePropertiesTwo": ".union_with_base_properties_two",
-    "UnionWithBasePropertiesTwoType": ".union_with_base_properties_two_type",
-    "UnionWithBasePropertiesZero": ".union_with_base_properties_zero",
-    "UnionWithBasePropertiesZeroType": ".union_with_base_properties_zero_type",
-    "UnionWithDiscriminant": ".union_with_discriminant",
-    "UnionWithDiscriminantBar": ".union_with_discriminant_bar",
-    "UnionWithDiscriminantFoo": ".union_with_discriminant_foo",
-    "UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
-    "UnionWithDuplicatePrimitiveInteger1": ".union_with_duplicate_primitive_integer1",
-    "UnionWithDuplicatePrimitiveInteger2": ".union_with_duplicate_primitive_integer2",
-    "UnionWithDuplicatePrimitiveString1": ".union_with_duplicate_primitive_string1",
-    "UnionWithDuplicatePrimitiveString2": ".union_with_duplicate_primitive_string2",
-    "UnionWithDuplicateTypes": ".union_with_duplicate_types",
-    "UnionWithDuplicateTypesOne": ".union_with_duplicate_types_one",
-    "UnionWithDuplicateTypesOneType": ".union_with_duplicate_types_one_type",
-    "UnionWithDuplicateTypesZero": ".union_with_duplicate_types_zero",
-    "UnionWithDuplicateTypesZeroType": ".union_with_duplicate_types_zero_type",
-    "UnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
-    "UnionWithDuplicativeDiscriminantsOne": ".union_with_duplicative_discriminants_one",
-    "UnionWithDuplicativeDiscriminantsOneType": ".union_with_duplicative_discriminants_one_type",
-    "UnionWithDuplicativeDiscriminantsZero": ".union_with_duplicative_discriminants_zero",
-    "UnionWithDuplicativeDiscriminantsZeroType": ".union_with_duplicative_discriminants_zero_type",
-    "UnionWithLiteral": ".union_with_literal",
-    "UnionWithLiteralType": ".union_with_literal_type",
-    "UnionWithLiteralValue": ".union_with_literal_value",
-    "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
-    "UnionWithMultipleNoPropertiesOne": ".union_with_multiple_no_properties_one",
-    "UnionWithMultipleNoPropertiesOneType": ".union_with_multiple_no_properties_one_type",
-    "UnionWithMultipleNoPropertiesTwo": ".union_with_multiple_no_properties_two",
-    "UnionWithMultipleNoPropertiesTwoType": ".union_with_multiple_no_properties_two_type",
-    "UnionWithMultipleNoPropertiesZero": ".union_with_multiple_no_properties_zero",
-    "UnionWithMultipleNoPropertiesZeroType": ".union_with_multiple_no_properties_zero_type",
-    "UnionWithNoProperties": ".union_with_no_properties",
-    "UnionWithNoPropertiesType": ".union_with_no_properties_type",
-    "UnionWithNoPropertiesTypeType": ".union_with_no_properties_type_type",
-    "UnionWithNoPropertiesZero": ".union_with_no_properties_zero",
-    "UnionWithNoPropertiesZeroType": ".union_with_no_properties_zero_type",
-    "UnionWithNullableReference": ".union_with_nullable_reference",
-    "UnionWithNullableReferenceBar": ".union_with_nullable_reference_bar",
-    "UnionWithNullableReferenceFoo": ".union_with_nullable_reference_foo",
-    "UnionWithOptionalReference": ".union_with_optional_reference",
-    "UnionWithOptionalReferenceBar": ".union_with_optional_reference_bar",
-    "UnionWithOptionalReferenceFoo": ".union_with_optional_reference_foo",
-    "UnionWithOptionalTime": ".union_with_optional_time",
-    "UnionWithOptionalTimeDate": ".union_with_optional_time_date",
-    "UnionWithOptionalTimeDatetime": ".union_with_optional_time_datetime",
-    "UnionWithPrimitive": ".union_with_primitive",
-    "UnionWithPrimitiveInteger": ".union_with_primitive_integer",
-    "UnionWithPrimitiveString": ".union_with_primitive_string",
-    "UnionWithSameNumberTypes": ".union_with_same_number_types",
-    "UnionWithSameNumberTypesAnyNumber": ".union_with_same_number_types_any_number",
-    "UnionWithSameNumberTypesNegativeInt": ".union_with_same_number_types_negative_int",
-    "UnionWithSameNumberTypesPositiveInt": ".union_with_same_number_types_positive_int",
-    "UnionWithSameStringTypes": ".union_with_same_string_types",
-    "UnionWithSameStringTypesCustomFormat": ".union_with_same_string_types_custom_format",
-    "UnionWithSameStringTypesPatternString": ".union_with_same_string_types_pattern_string",
-    "UnionWithSameStringTypesRegularString": ".union_with_same_string_types_regular_string",
-    "UnionWithSingleElement": ".union_with_single_element",
-    "UnionWithSingleElementType": ".union_with_single_element_type",
-    "UnionWithSubTypes": ".union_with_sub_types",
-    "UnionWithSubTypesOne": ".union_with_sub_types_one",
-    "UnionWithSubTypesOneType": ".union_with_sub_types_one_type",
-    "UnionWithSubTypesZero": ".union_with_sub_types_zero",
-    "UnionWithSubTypesZeroType": ".union_with_sub_types_zero_type",
-    "UnionWithTime": ".union_with_time",
-    "UnionWithTimeDate": ".union_with_time_date",
-    "UnionWithTimeDatetime": ".union_with_time_datetime",
-    "UnionWithTimeValue": ".union_with_time_value",
-    "UnionWithoutKey": ".union_without_key",
-    "UnionWithoutKeyOne": ".union_without_key_one",
-    "UnionWithoutKeyOneType": ".union_without_key_one_type",
-    "UnionWithoutKeyZero": ".union_without_key_zero",
-    "UnionWithoutKeyZeroType": ".union_without_key_zero_type",
-    "UniqueStress": ".unique_stress",
-    "UnwillingSmoke": ".unwilling_smoke",
-    "ValueUnionWithTime": ".union_with_time",
-    "VibrantExcitement": ".vibrant_excitement",
-    "WithName": ".with_name",
+    "AnyNumberUnionWithSameNumberTypes": ".types",
+    "Bar": ".types",
+    "BarUnion": ".types",
+    "BarUnionWithDiscriminant": ".types",
+    "BarUnionWithNullableReference": ".types",
+    "BarUnionWithOptionalReference": ".types",
+    "BarUnionWithoutKey": ".types",
+    "CustomFormatUnionWithSameStringTypes": ".types",
+    "DateUnionWithOptionalTime": ".types",
+    "DateUnionWithTime": ".types",
+    "DatetimeUnionWithOptionalTime": ".types",
+    "DatetimeUnionWithTime": ".types",
+    "Empty1UnionWithMultipleNoProperties": ".types",
+    "Empty2UnionWithMultipleNoProperties": ".types",
+    "EmptyUnionWithNoProperties": ".types",
+    "FernUnionWithLiteral": ".types",
+    "FirstItemType": ".types",
+    "FirstItemTypeUnionWithDuplicativeDiscriminants": ".types",
+    "Foo": ".types",
+    "Foo1UnionWithDuplicateTypes": ".types",
+    "Foo2UnionWithDuplicateTypes": ".types",
+    "FooExtended": ".types",
+    "FooExtendedUnionWithSubTypes": ".types",
+    "FooUnion": ".types",
+    "FooUnionWithBaseProperties": ".types",
+    "FooUnionWithDiscriminant": ".types",
+    "FooUnionWithMultipleNoProperties": ".types",
+    "FooUnionWithNoProperties": ".types",
+    "FooUnionWithNullableReference": ".types",
+    "FooUnionWithOptionalReference": ".types",
+    "FooUnionWithSingleElement": ".types",
+    "FooUnionWithSubTypes": ".types",
+    "FooUnionWithoutKey": ".types",
+    "Integer1UnionWithDuplicatePrimitive": ".types",
+    "Integer2UnionWithDuplicatePrimitive": ".types",
+    "IntegerUnionWithBaseProperties": ".types",
+    "IntegerUnionWithPrimitive": ".types",
+    "NegativeIntUnionWithSameNumberTypes": ".types",
+    "PatternStringUnionWithSameStringTypes": ".types",
+    "PositiveIntUnionWithSameNumberTypes": ".types",
+    "RegularStringUnionWithSameStringTypes": ".types",
+    "SecondItemType": ".types",
+    "SecondItemTypeUnionWithDuplicativeDiscriminants": ".types",
+    "String1UnionWithDuplicatePrimitive": ".types",
+    "String2UnionWithDuplicatePrimitive": ".types",
+    "StringUnionWithBaseProperties": ".types",
+    "StringUnionWithPrimitive": ".types",
+    "TypeWithOptionalMap": ".types",
+    "Union": ".types",
+    "UnionWithBaseProperties": ".types",
+    "UnionWithDiscriminant": ".types",
+    "UnionWithDuplicatePrimitive": ".types",
+    "UnionWithDuplicateTypes": ".types",
+    "UnionWithDuplicativeDiscriminants": ".types",
+    "UnionWithLiteral": ".types",
+    "UnionWithMultipleNoProperties": ".types",
+    "UnionWithNoProperties": ".types",
+    "UnionWithNullableReference": ".types",
+    "UnionWithOptionalReference": ".types",
+    "UnionWithOptionalTime": ".types",
+    "UnionWithPrimitive": ".types",
+    "UnionWithSameNumberTypes": ".types",
+    "UnionWithSameStringTypes": ".types",
+    "UnionWithSingleElement": ".types",
+    "UnionWithSubTypes": ".types",
+    "UnionWithTime": ".types",
+    "UnionWithoutKey": ".types",
+    "ValueUnionWithTime": ".types",
 }
 
 
@@ -453,213 +170,72 @@ def __dir__():
 
 
 __all__ = [
-    "ActiveDiamond",
     "AnyNumberUnionWithSameNumberTypes",
-    "AttractiveScript",
     "Bar",
     "BarUnion",
     "BarUnionWithDiscriminant",
     "BarUnionWithNullableReference",
     "BarUnionWithOptionalReference",
-    "BigUnion",
-    "BigUnionEight",
-    "BigUnionEightType",
-    "BigUnionEighteen",
-    "BigUnionEighteenType",
-    "BigUnionEleven",
-    "BigUnionElevenType",
-    "BigUnionFifteen",
-    "BigUnionFifteenType",
-    "BigUnionFive",
-    "BigUnionFiveType",
-    "BigUnionFour",
-    "BigUnionFourType",
-    "BigUnionFourteen",
-    "BigUnionFourteenType",
-    "BigUnionNine",
-    "BigUnionNineType",
-    "BigUnionNineteen",
-    "BigUnionNineteenType",
-    "BigUnionOne",
-    "BigUnionOneType",
-    "BigUnionSeven",
-    "BigUnionSevenType",
-    "BigUnionSeventeen",
-    "BigUnionSeventeenType",
-    "BigUnionSix",
-    "BigUnionSixType",
-    "BigUnionSixteen",
-    "BigUnionSixteenType",
-    "BigUnionTen",
-    "BigUnionTenType",
-    "BigUnionThirteen",
-    "BigUnionThirteenType",
-    "BigUnionThree",
-    "BigUnionThreeType",
-    "BigUnionTwelve",
-    "BigUnionTwelveType",
-    "BigUnionTwenty",
-    "BigUnionTwentyEight",
-    "BigUnionTwentyEightType",
-    "BigUnionTwentyFive",
-    "BigUnionTwentyFiveType",
-    "BigUnionTwentyFour",
-    "BigUnionTwentyFourType",
-    "BigUnionTwentyOne",
-    "BigUnionTwentyOneType",
-    "BigUnionTwentySeven",
-    "BigUnionTwentySevenType",
-    "BigUnionTwentySix",
-    "BigUnionTwentySixType",
-    "BigUnionTwentyThree",
-    "BigUnionTwentyThreeType",
-    "BigUnionTwentyTwo",
-    "BigUnionTwentyTwoType",
-    "BigUnionTwentyType",
-    "BigUnionTwo",
-    "BigUnionTwoType",
-    "BigUnionZero",
-    "BigUnionZeroType",
-    "Circle",
-    "CircularCard",
-    "ColorfulCover",
+    "BarUnionWithoutKey",
     "CustomFormatUnionWithSameStringTypes",
     "DateUnionWithOptionalTime",
     "DateUnionWithTime",
     "DatetimeUnionWithOptionalTime",
     "DatetimeUnionWithTime",
-    "DiligentDeal",
-    "DisloyalValue",
-    "DistinctFailure",
-    "FalseMirror",
+    "Empty1UnionWithMultipleNoProperties",
+    "Empty2UnionWithMultipleNoProperties",
+    "EmptyUnionWithNoProperties",
+    "FernUnionWithLiteral",
     "FirstItemType",
-    "FirstItemTypeType",
+    "FirstItemTypeUnionWithDuplicativeDiscriminants",
     "Foo",
+    "Foo1UnionWithDuplicateTypes",
+    "Foo2UnionWithDuplicateTypes",
     "FooExtended",
+    "FooExtendedUnionWithSubTypes",
     "FooUnion",
+    "FooUnionWithBaseProperties",
     "FooUnionWithDiscriminant",
+    "FooUnionWithMultipleNoProperties",
+    "FooUnionWithNoProperties",
     "FooUnionWithNullableReference",
     "FooUnionWithOptionalReference",
-    "FrozenSleep",
-    "GaseousRoad",
-    "GetShapeRequest",
-    "GruesomeCoach",
-    "HarmoniousPlay",
-    "HastyPain",
-    "HoarseMouse",
+    "FooUnionWithSingleElement",
+    "FooUnionWithSubTypes",
+    "FooUnionWithoutKey",
     "Integer1UnionWithDuplicatePrimitive",
     "Integer2UnionWithDuplicatePrimitive",
+    "IntegerUnionWithBaseProperties",
     "IntegerUnionWithPrimitive",
-    "JumboEnd",
-    "LimpingStep",
-    "MistySnow",
     "NegativeIntUnionWithSameNumberTypes",
-    "NormalSweet",
     "PatternStringUnionWithSameStringTypes",
-    "PopularLimit",
     "PositiveIntUnionWithSameNumberTypes",
-    "PotableBad",
-    "PracticalPrinciple",
-    "PrimaryBlock",
     "RegularStringUnionWithSameStringTypes",
-    "RotatingRatio",
     "SecondItemType",
-    "SecondItemTypeType",
-    "Shape",
-    "ShapeOne",
-    "ShapeOneType",
-    "ShapeZero",
-    "ShapeZeroType",
-    "Square",
+    "SecondItemTypeUnionWithDuplicativeDiscriminants",
     "String1UnionWithDuplicatePrimitive",
     "String2UnionWithDuplicatePrimitive",
+    "StringUnionWithBaseProperties",
     "StringUnionWithPrimitive",
-    "ThankfulFactor",
-    "TotalWork",
-    "TriangularRepair",
     "TypeWithOptionalMap",
     "Union",
-    "UnionBar",
-    "UnionFoo",
     "UnionWithBaseProperties",
-    "UnionWithBasePropertiesOne",
-    "UnionWithBasePropertiesOneType",
-    "UnionWithBasePropertiesTwo",
-    "UnionWithBasePropertiesTwoType",
-    "UnionWithBasePropertiesZero",
-    "UnionWithBasePropertiesZeroType",
     "UnionWithDiscriminant",
-    "UnionWithDiscriminantBar",
-    "UnionWithDiscriminantFoo",
     "UnionWithDuplicatePrimitive",
-    "UnionWithDuplicatePrimitiveInteger1",
-    "UnionWithDuplicatePrimitiveInteger2",
-    "UnionWithDuplicatePrimitiveString1",
-    "UnionWithDuplicatePrimitiveString2",
     "UnionWithDuplicateTypes",
-    "UnionWithDuplicateTypesOne",
-    "UnionWithDuplicateTypesOneType",
-    "UnionWithDuplicateTypesZero",
-    "UnionWithDuplicateTypesZeroType",
     "UnionWithDuplicativeDiscriminants",
-    "UnionWithDuplicativeDiscriminantsOne",
-    "UnionWithDuplicativeDiscriminantsOneType",
-    "UnionWithDuplicativeDiscriminantsZero",
-    "UnionWithDuplicativeDiscriminantsZeroType",
     "UnionWithLiteral",
-    "UnionWithLiteralType",
-    "UnionWithLiteralValue",
     "UnionWithMultipleNoProperties",
-    "UnionWithMultipleNoPropertiesOne",
-    "UnionWithMultipleNoPropertiesOneType",
-    "UnionWithMultipleNoPropertiesTwo",
-    "UnionWithMultipleNoPropertiesTwoType",
-    "UnionWithMultipleNoPropertiesZero",
-    "UnionWithMultipleNoPropertiesZeroType",
     "UnionWithNoProperties",
-    "UnionWithNoPropertiesType",
-    "UnionWithNoPropertiesTypeType",
-    "UnionWithNoPropertiesZero",
-    "UnionWithNoPropertiesZeroType",
     "UnionWithNullableReference",
-    "UnionWithNullableReferenceBar",
-    "UnionWithNullableReferenceFoo",
     "UnionWithOptionalReference",
-    "UnionWithOptionalReferenceBar",
-    "UnionWithOptionalReferenceFoo",
     "UnionWithOptionalTime",
-    "UnionWithOptionalTimeDate",
-    "UnionWithOptionalTimeDatetime",
     "UnionWithPrimitive",
-    "UnionWithPrimitiveInteger",
-    "UnionWithPrimitiveString",
     "UnionWithSameNumberTypes",
-    "UnionWithSameNumberTypesAnyNumber",
-    "UnionWithSameNumberTypesNegativeInt",
-    "UnionWithSameNumberTypesPositiveInt",
     "UnionWithSameStringTypes",
-    "UnionWithSameStringTypesCustomFormat",
-    "UnionWithSameStringTypesPatternString",
-    "UnionWithSameStringTypesRegularString",
     "UnionWithSingleElement",
-    "UnionWithSingleElementType",
     "UnionWithSubTypes",
-    "UnionWithSubTypesOne",
-    "UnionWithSubTypesOneType",
-    "UnionWithSubTypesZero",
-    "UnionWithSubTypesZeroType",
     "UnionWithTime",
-    "UnionWithTimeDate",
-    "UnionWithTimeDatetime",
-    "UnionWithTimeValue",
     "UnionWithoutKey",
-    "UnionWithoutKeyOne",
-    "UnionWithoutKeyOneType",
-    "UnionWithoutKeyZero",
-    "UnionWithoutKeyZeroType",
-    "UniqueStress",
-    "UnwillingSmoke",
     "ValueUnionWithTime",
-    "VibrantExcitement",
-    "WithName",
 ]

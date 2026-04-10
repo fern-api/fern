@@ -1,6 +1,6 @@
 # Reference
-## Nullableoptional
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">getuser</a>(...) -> UserResponse</code></summary>
+## NullableOptional
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_user</a>(...) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,13 +27,13 @@ Get a user by ID
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedNullableOptional
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.getuser(
+client.nullable_optional.get_user(
     user_id="userId",
 )
 
@@ -71,7 +71,90 @@ client.nullableoptional.getuser(
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">updateuser</a>(...) -> UserResponse</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">create_user</a>(...) -> UserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedNullableOptional
+from seed.nullable_optional import Address
+
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.nullable_optional.create_user(
+    username="username",
+    email="email",
+    phone="phone",
+    address=Address(
+        street="street",
+        city="city",
+        state="state",
+        zip_code="zipCode",
+        country="country",
+        building_id="buildingId",
+        tenant_id="tenantId",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_user</a>(...) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -98,14 +181,27 @@ Update a user (partial update)
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedNullableOptional
+from seed.nullable_optional import Address
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.updateuser(
+client.nullable_optional.update_user(
     user_id="userId",
+    username="username",
+    email="email",
+    phone="phone",
+    address=Address(
+        street="street",
+        city="city",
+        state="state",
+        zip_code="zipCode",
+        country="country",
+        building_id="buildingId",
+        tenant_id="tenantId",
+    ),
 )
 
 ```
@@ -130,31 +226,7 @@ client.nullableoptional.updateuser(
 <dl>
 <dd>
 
-**username:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**address:** `typing.Optional[Address]` 
+**request:** `UpdateUserRequest` 
     
 </dd>
 </dl>
@@ -174,7 +246,7 @@ client.nullableoptional.updateuser(
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">listusers</a>(...) -> typing.List[UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">list_users</a>(...) -> typing.List[UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -201,13 +273,18 @@ List all users
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedNullableOptional
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.listusers()
+client.nullable_optional.list_users(
+    limit=1,
+    offset=1,
+    include_deleted=True,
+    sort_by="sortBy",
+)
 
 ```
 </dd>
@@ -267,102 +344,7 @@ client.nullableoptional.listusers()
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">createuser</a>(...) -> UserResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.nullableoptional.createuser(
-    username="username",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**username:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**address:** `typing.Optional[Address]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">searchusers</a>(...) -> typing.List[UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">search_users</a>(...) -> typing.List[UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -389,15 +371,17 @@ Search users
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedNullableOptional
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.searchusers(
+client.nullable_optional.search_users(
     query="query",
     department="department",
+    role="role",
+    is_active=True,
 )
 
 ```
@@ -458,7 +442,7 @@ client.nullableoptional.searchusers(
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">createcomplexprofile</a>(...) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">create_complex_profile</a>(...) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -485,28 +469,113 @@ Create a complex profile to test nullable enums and unions
 <dd>
 
 ```python
-from seed import SeedApi, NotificationMethodZero, SearchResultZero
+from seed import SeedNullableOptional
+from seed.nullable_optional import NotificationMethod_Email, SearchResult_User, Address
 import datetime
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.createcomplexprofile(
+client.nullable_optional.create_complex_profile(
     id="id",
     nullable_role="ADMIN",
+    optional_role="ADMIN",
+    optional_nullable_role="ADMIN",
     nullable_status="active",
-    nullable_notification=NotificationMethodZero(
+    optional_status="active",
+    optional_nullable_status="active",
+    nullable_notification=NotificationMethod_Email(
         email_address="emailAddress",
         subject="subject",
-        type="email",
+        html_content="htmlContent",
     ),
-    nullable_search_result=SearchResultZero(
+    optional_notification=NotificationMethod_Email(
+        email_address="emailAddress",
+        subject="subject",
+        html_content="htmlContent",
+    ),
+    optional_nullable_notification=NotificationMethod_Email(
+        email_address="emailAddress",
+        subject="subject",
+        html_content="htmlContent",
+    ),
+    nullable_search_result=SearchResult_User(
         id="id",
         username="username",
+        email="email",
+        phone="phone",
         created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        type="user",
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        address=Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        ),
     ),
+    optional_search_result=SearchResult_User(
+        id="id",
+        username="username",
+        email="email",
+        phone="phone",
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        address=Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        ),
+    ),
+    nullable_array=[
+        "nullableArray",
+        "nullableArray"
+    ],
+    optional_array=[
+        "optionalArray",
+        "optionalArray"
+    ],
+    optional_nullable_array=[
+        "optionalNullableArray",
+        "optionalNullableArray"
+    ],
+    nullable_list_of_nullables=[
+        "nullableListOfNullables",
+        "nullableListOfNullables"
+    ],
+    nullable_map_of_nullables={
+        "nullableMapOfNullables": Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        )
+    },
+    nullable_list_of_unions=[
+        NotificationMethod_Email(
+            email_address="emailAddress",
+            subject="subject",
+            html_content="htmlContent",
+        ),
+        NotificationMethod_Email(
+            email_address="emailAddress",
+            subject="subject",
+            html_content="htmlContent",
+        )
+    ],
+    optional_map_of_enums={
+        "optionalMapOfEnums": "ADMIN"
+    },
 )
 
 ```
@@ -543,7 +612,7 @@ client.nullableoptional.createcomplexprofile(
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">getcomplexprofile</a>(...) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_complex_profile</a>(...) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -570,13 +639,13 @@ Get a complex profile by ID
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedNullableOptional
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.getcomplexprofile(
+client.nullable_optional.get_complex_profile(
     profile_id="profileId",
 )
 
@@ -614,7 +683,7 @@ client.nullableoptional.getcomplexprofile(
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">updatecomplexprofile</a>(...) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_complex_profile</a>(...) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -641,14 +710,44 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedNullableOptional
+from seed.nullable_optional import NotificationMethod_Email, SearchResult_User, Address
+import datetime
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.updatecomplexprofile(
+client.nullable_optional.update_complex_profile(
     profile_id="profileId",
+    nullable_role="ADMIN",
+    nullable_status="active",
+    nullable_notification=NotificationMethod_Email(
+        email_address="emailAddress",
+        subject="subject",
+        html_content="htmlContent",
+    ),
+    nullable_search_result=SearchResult_User(
+        id="id",
+        username="username",
+        email="email",
+        phone="phone",
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        address=Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        ),
+    ),
+    nullable_array=[
+        "nullableArray",
+        "nullableArray"
+    ],
 )
 
 ```
@@ -725,7 +824,7 @@ client.nullableoptional.updatecomplexprofile(
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">testdeserialization</a>(...) -> DeserializationTestResponse</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">test_deserialization</a>(...) -> DeserializationTestResponse</code></summary>
 <dl>
 <dd>
 
@@ -752,23 +851,64 @@ Test endpoint for validating null deserialization
 <dd>
 
 ```python
-from seed import SeedApi, NotificationMethodZero, Address
+from seed import SeedNullableOptional
+from seed.nullable_optional import NotificationMethod_Email, SearchResult_User, Address, Organization
+import datetime
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.testdeserialization(
+client.nullable_optional.test_deserialization(
     required_string="requiredString",
+    nullable_string="nullableString",
+    optional_string="optionalString",
+    optional_nullable_string="optionalNullableString",
     nullable_enum="ADMIN",
-    nullable_union=NotificationMethodZero(
+    optional_enum="active",
+    nullable_union=NotificationMethod_Email(
         email_address="emailAddress",
         subject="subject",
-        type="email",
+        html_content="htmlContent",
     ),
+    optional_union=SearchResult_User(
+        id="id",
+        username="username",
+        email="email",
+        phone="phone",
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        address=Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        ),
+    ),
+    nullable_list=[
+        "nullableList",
+        "nullableList"
+    ],
+    nullable_map={
+        "nullableMap": 1
+    },
     nullable_object=Address(
         street="street",
+        city="city",
+        state="state",
         zip_code="zipCode",
+        country="country",
+        building_id="buildingId",
+        tenant_id="tenantId",
+    ),
+    optional_object=Organization(
+        id="id",
+        name="name",
+        domain="domain",
+        employee_count=1,
     ),
 )
 
@@ -806,7 +946,7 @@ client.nullableoptional.testdeserialization(
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">filterbyrole</a>(...) -> typing.List[UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">filter_by_role</a>(...) -> typing.List[UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -833,14 +973,16 @@ Filter users by role with nullable enum
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedNullableOptional
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.filterbyrole(
+client.nullable_optional.filter_by_role(
     role="ADMIN",
+    status="active",
+    secondary_role="ADMIN",
 )
 
 ```
@@ -857,7 +999,7 @@ client.nullableoptional.filterbyrole(
 <dl>
 <dd>
 
-**role:** `UserRole` 
+**role:** `typing.Optional[UserRole]` 
     
 </dd>
 </dl>
@@ -893,7 +1035,7 @@ client.nullableoptional.filterbyrole(
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">getnotificationsettings</a>(...) -> NotificationMethod</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_notification_settings</a>(...) -> typing.Optional[NotificationMethod]</code></summary>
 <dl>
 <dd>
 
@@ -920,13 +1062,13 @@ Get notification settings which may be null
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedNullableOptional
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.getnotificationsettings(
+client.nullable_optional.get_notification_settings(
     user_id="userId",
 )
 
@@ -964,7 +1106,7 @@ client.nullableoptional.getnotificationsettings(
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">updatetags</a>(...) -> typing.List[str]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_tags</a>(...) -> typing.List[str]</code></summary>
 <dl>
 <dd>
 
@@ -991,14 +1133,26 @@ Update tags to test array handling
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedNullableOptional
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.updatetags(
+client.nullable_optional.update_tags(
     user_id="userId",
+    tags=[
+        "tags",
+        "tags"
+    ],
+    categories=[
+        "categories",
+        "categories"
+    ],
+    labels=[
+        "labels",
+        "labels"
+    ],
 )
 
 ```
@@ -1059,7 +1213,7 @@ client.nullableoptional.updatetags(
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="src/seed/nullableoptional/client.py">getsearchresults</a>(...) -> typing.Optional[typing.List[SearchResult]]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_search_results</a>(...) -> typing.Optional[typing.List[SearchResult]]</code></summary>
 <dl>
 <dd>
 
@@ -1086,14 +1240,21 @@ Get search results with nullable unions
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedNullableOptional
 
-client = SeedApi(
+client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nullableoptional.getsearchresults(
+client.nullable_optional.get_search_results(
     query="query",
+    filters={
+        "filters": "filters"
+    },
+    include_types=[
+        "includeTypes",
+        "includeTypes"
+    ],
 )
 
 ```

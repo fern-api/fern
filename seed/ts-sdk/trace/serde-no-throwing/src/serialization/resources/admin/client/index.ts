@@ -1,3 +1,3 @@
 export * from "./requests/index.js";
-export * as storetracedtestcasev2 from "./storetracedtestcasev2.js";
-export * as storetracedworkspacev2 from "./storetracedworkspacev2.js";
+export * as storeTracedTestCaseV2 from "./storeTracedTestCaseV2.js";
+export * as storeTracedWorkspaceV2 from "./storeTracedWorkspaceV2.js";

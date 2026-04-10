@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.ec2.<a href="/src/api/resources/ec2/client/Client.ts">bootinstance</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.ec2.<a href="/src/api/resources/ec2/client/Client.ts">bootInstance</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.ec2.bootinstance({
+await client.ec2.bootInstance({
     size: "size"
 });
 
@@ -31,7 +31,7 @@ await client.ec2.bootinstance({
 <dl>
 <dd>
 
-**request:** `SeedApi.Ec2BootInstanceRequest` 
+**request:** `SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest` 
     
 </dd>
 </dl>
@@ -52,7 +52,7 @@ await client.ec2.bootinstance({
 </details>
 
 ## S3
-<details><summary><code>client.s3.<a href="/src/api/resources/s3/client/Client.ts">getpresignedurl</a>({ ...params }) -> string</code></summary>
+<details><summary><code>client.s3.<a href="/src/api/resources/s3/client/Client.ts">getPresignedUrl</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ await client.ec2.bootinstance({
 <dd>
 
 ```typescript
-await client.s3.getpresignedurl({
+await client.s3.getPresignedUrl({
     s3Key: "s3Key"
 });
 
@@ -83,7 +83,7 @@ await client.s3.getpresignedurl({
 <dl>
 <dd>
 
-**request:** `SeedApi.S3GetPresignedUrlRequest` 
+**request:** `SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest` 
     
 </dd>
 </dl>

@@ -6,7 +6,7 @@ public struct TraceResponse: Codable, Hashable, Sendable {
     public let returnValue: DebugVariableValue?
     public let expressionLocation: ExpressionLocation?
     public let stack: StackInformation
-    public let stdout: Nullable<String>?
+    public let stdout: String?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -16,7 +16,7 @@ public struct TraceResponse: Codable, Hashable, Sendable {
         returnValue: DebugVariableValue? = nil,
         expressionLocation: ExpressionLocation? = nil,
         stack: StackInformation,
-        stdout: Nullable<String>? = nil,
+        stdout: String? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.submissionId = submissionId
@@ -35,7 +35,7 @@ public struct TraceResponse: Codable, Hashable, Sendable {
         self.returnValue = try container.decodeIfPresent(DebugVariableValue.self, forKey: .returnValue)
         self.expressionLocation = try container.decodeIfPresent(ExpressionLocation.self, forKey: .expressionLocation)
         self.stack = try container.decode(StackInformation.self, forKey: .stack)
-        self.stdout = try container.decodeNullableIfPresent(String.self, forKey: .stdout)
+        self.stdout = try container.decodeIfPresent(String.self, forKey: .stdout)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -47,7 +47,7 @@ public struct TraceResponse: Codable, Hashable, Sendable {
         try container.encodeIfPresent(self.returnValue, forKey: .returnValue)
         try container.encodeIfPresent(self.expressionLocation, forKey: .expressionLocation)
         try container.encode(self.stack, forKey: .stack)
-        try container.encodeNullableIfPresent(self.stdout, forKey: .stdout)
+        try container.encodeIfPresent(self.stdout, forKey: .stdout)
     }
 
     /// Keys for encoding/decoding struct properties.

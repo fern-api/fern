@@ -3,12 +3,13 @@
 import datetime as dt
 import typing
 
+from ..commons.types.problem_id import ProblemId
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.playlist import Playlist
-from ..types.playlist_id import PlaylistId
-from ..types.problem_id import ProblemId
 from .raw_client import AsyncRawPlaylistClient, RawPlaylistClient
+from .types.playlist import Playlist
+from .types.playlist_id import PlaylistId
+from .types.update_playlist_request import UpdatePlaylistRequest
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -29,7 +30,7 @@ class PlaylistClient:
         """
         return self._raw_client
 
-    def createplaylist(
+    def create_playlist(
         self,
         service_param: int,
         *,
@@ -61,26 +62,29 @@ class PlaylistClient:
         -------
         Playlist
 
-
         Examples
         --------
         import datetime
 
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.playlist.createplaylist(
+        client.playlist.create_playlist(
             service_param=1,
             datetime=datetime.datetime.fromisoformat(
                 "2024-01-15 09:30:00+00:00",
             ),
+            optional_datetime=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
             name="name",
-            problems=["problems"],
+            problems=["problems", "problems"],
         )
         """
-        _response = self._raw_client.createplaylist(
+        _response = self._raw_client.create_playlist(
             service_param,
             datetime=datetime,
             name=name,
@@ -90,15 +94,15 @@ class PlaylistClient:
         )
         return _response.data
 
-    def getplaylists(
+    def get_playlists(
         self,
         service_param: int,
         *,
         other_field: str,
         multi_line_docs: str,
+        multiple_field: typing.Union[str, typing.Sequence[str]],
         limit: typing.Optional[int] = None,
         optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Playlist]:
         """
@@ -115,11 +119,11 @@ class PlaylistClient:
             I'm a multiline
             description
 
+        multiple_field : typing.Union[str, typing.Sequence[str]]
+
         limit : typing.Optional[int]
 
         optional_multiple_field : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-
-        multiple_field : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -128,15 +132,15 @@ class PlaylistClient:
         -------
         typing.List[Playlist]
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.playlist.getplaylists(
+        client.playlist.get_playlists(
             service_param=1,
             limit=1,
             other_field="otherField",
@@ -145,18 +149,18 @@ class PlaylistClient:
             multiple_field="multipleField",
         )
         """
-        _response = self._raw_client.getplaylists(
+        _response = self._raw_client.get_playlists(
             service_param,
             other_field=other_field,
             multi_line_docs=multi_line_docs,
+            multiple_field=multiple_field,
             limit=limit,
             optional_multiple_field=optional_multiple_field,
-            multiple_field=multiple_field,
             request_options=request_options,
         )
         return _response.data
 
-    def getplaylist(
+    def get_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Playlist:
         """
@@ -175,31 +179,30 @@ class PlaylistClient:
         -------
         Playlist
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.playlist.getplaylist(
+        client.playlist.get_playlist(
             service_param=1,
             playlist_id="playlistId",
         )
         """
-        _response = self._raw_client.getplaylist(service_param, playlist_id, request_options=request_options)
+        _response = self._raw_client.get_playlist(service_param, playlist_id, request_options=request_options)
         return _response.data
 
-    def updateplaylist(
+    def update_playlist(
         self,
         service_param: int,
         playlist_id: PlaylistId,
         *,
-        name: str,
-        problems: typing.Sequence[ProblemId],
+        request: typing.Optional[UpdatePlaylistRequest] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Playlist:
+    ) -> typing.Optional[Playlist]:
         """
         Updates a playlist
 
@@ -209,39 +212,39 @@ class PlaylistClient:
 
         playlist_id : PlaylistId
 
-        name : str
-
-        problems : typing.Sequence[ProblemId]
-            The problems that make up the playlist.
+        request : typing.Optional[UpdatePlaylistRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Playlist
-
+        typing.Optional[Playlist]
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
+        from seed.playlist import UpdatePlaylistRequest
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.playlist.updateplaylist(
+        client.playlist.update_playlist(
             service_param=1,
             playlist_id="playlistId",
-            name="name",
-            problems=["problems"],
+            request=UpdatePlaylistRequest(
+                name="name",
+                problems=["problems", "problems"],
+            ),
         )
         """
-        _response = self._raw_client.updateplaylist(
-            service_param, playlist_id, name=name, problems=problems, request_options=request_options
+        _response = self._raw_client.update_playlist(
+            service_param, playlist_id, request=request, request_options=request_options
         )
         return _response.data
 
-    def deleteplaylist(
+    def delete_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -262,17 +265,18 @@ class PlaylistClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedTrace
 
-        client = SeedApi(
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
-        client.playlist.deleteplaylist(
+        client.playlist.delete_playlist(
             service_param=1,
             playlist_id="playlist_id",
         )
         """
-        _response = self._raw_client.deleteplaylist(service_param, playlist_id, request_options=request_options)
+        _response = self._raw_client.delete_playlist(service_param, playlist_id, request_options=request_options)
         return _response.data
 
 
@@ -291,7 +295,7 @@ class AsyncPlaylistClient:
         """
         return self._raw_client
 
-    async def createplaylist(
+    async def create_playlist(
         self,
         service_param: int,
         *,
@@ -323,33 +327,36 @@ class AsyncPlaylistClient:
         -------
         Playlist
 
-
         Examples
         --------
         import asyncio
         import datetime
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.playlist.createplaylist(
+            await client.playlist.create_playlist(
                 service_param=1,
                 datetime=datetime.datetime.fromisoformat(
                     "2024-01-15 09:30:00+00:00",
                 ),
+                optional_datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
                 name="name",
-                problems=["problems"],
+                problems=["problems", "problems"],
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.createplaylist(
+        _response = await self._raw_client.create_playlist(
             service_param,
             datetime=datetime,
             name=name,
@@ -359,15 +366,15 @@ class AsyncPlaylistClient:
         )
         return _response.data
 
-    async def getplaylists(
+    async def get_playlists(
         self,
         service_param: int,
         *,
         other_field: str,
         multi_line_docs: str,
+        multiple_field: typing.Union[str, typing.Sequence[str]],
         limit: typing.Optional[int] = None,
         optional_multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        multiple_field: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Playlist]:
         """
@@ -384,11 +391,11 @@ class AsyncPlaylistClient:
             I'm a multiline
             description
 
+        multiple_field : typing.Union[str, typing.Sequence[str]]
+
         limit : typing.Optional[int]
 
         optional_multiple_field : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-
-        multiple_field : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -397,20 +404,20 @@ class AsyncPlaylistClient:
         -------
         typing.List[Playlist]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.playlist.getplaylists(
+            await client.playlist.get_playlists(
                 service_param=1,
                 limit=1,
                 other_field="otherField",
@@ -422,18 +429,18 @@ class AsyncPlaylistClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getplaylists(
+        _response = await self._raw_client.get_playlists(
             service_param,
             other_field=other_field,
             multi_line_docs=multi_line_docs,
+            multiple_field=multiple_field,
             limit=limit,
             optional_multiple_field=optional_multiple_field,
-            multiple_field=multiple_field,
             request_options=request_options,
         )
         return _response.data
 
-    async def getplaylist(
+    async def get_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Playlist:
         """
@@ -452,20 +459,20 @@ class AsyncPlaylistClient:
         -------
         Playlist
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.playlist.getplaylist(
+            await client.playlist.get_playlist(
                 service_param=1,
                 playlist_id="playlistId",
             )
@@ -473,18 +480,17 @@ class AsyncPlaylistClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getplaylist(service_param, playlist_id, request_options=request_options)
+        _response = await self._raw_client.get_playlist(service_param, playlist_id, request_options=request_options)
         return _response.data
 
-    async def updateplaylist(
+    async def update_playlist(
         self,
         service_param: int,
         playlist_id: PlaylistId,
         *,
-        name: str,
-        problems: typing.Sequence[ProblemId],
+        request: typing.Optional[UpdatePlaylistRequest] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Playlist:
+    ) -> typing.Optional[Playlist]:
         """
         Updates a playlist
 
@@ -494,47 +500,47 @@ class AsyncPlaylistClient:
 
         playlist_id : PlaylistId
 
-        name : str
-
-        problems : typing.Sequence[ProblemId]
-            The problems that make up the playlist.
+        request : typing.Optional[UpdatePlaylistRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Playlist
-
+        typing.Optional[Playlist]
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
+        from seed.playlist import UpdatePlaylistRequest
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.playlist.updateplaylist(
+            await client.playlist.update_playlist(
                 service_param=1,
                 playlist_id="playlistId",
-                name="name",
-                problems=["problems"],
+                request=UpdatePlaylistRequest(
+                    name="name",
+                    problems=["problems", "problems"],
+                ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.updateplaylist(
-            service_param, playlist_id, name=name, problems=problems, request_options=request_options
+        _response = await self._raw_client.update_playlist(
+            service_param, playlist_id, request=request, request_options=request_options
         )
         return _response.data
 
-    async def deleteplaylist(
+    async def delete_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -557,15 +563,16 @@ class AsyncPlaylistClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedTrace
 
-        client = AsyncSeedApi(
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
             token="YOUR_TOKEN",
         )
 
 
         async def main() -> None:
-            await client.playlist.deleteplaylist(
+            await client.playlist.delete_playlist(
                 service_param=1,
                 playlist_id="playlist_id",
             )
@@ -573,5 +580,5 @@ class AsyncPlaylistClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.deleteplaylist(service_param, playlist_id, request_options=request_options)
+        _response = await self._raw_client.delete_playlist(service_param, playlist_id, request_options=request_options)
         return _response.data

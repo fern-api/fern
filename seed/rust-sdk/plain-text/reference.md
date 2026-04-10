@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">gettext</a>() -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_text</a>() -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,15 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_plain_text::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.service.gettext(None).await;
+    let client = PlainTextClient::new(config).expect("Failed to build client");
+    client.service.get_text(None).await;
 }
 ```
 </dd>

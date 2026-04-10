@@ -42,7 +42,7 @@ use Seed\SeedClient;
 $client = new SeedClient(
     token: '<token>',
 );
-$client->dummy->getdummy();
+$client->dummy->getDummy();
 
 ```
 
@@ -67,6 +67,7 @@ $client = new SeedClient(
 
 Available environments:
 - `Environments::Production`
+- `Environments::Staging`
 ```
 
 ## Exception Handling
@@ -78,7 +79,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->dummy->getdummy(...);
+    $response = $client->dummy->getDummy(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -132,7 +133,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->dummy->getdummy(
+$response = $client->dummy->getDummy(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -145,7 +146,7 @@ $response = $client->dummy->getdummy(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->dummy->getdummy(
+$response = $client->dummy->getDummy(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

@@ -1,4 +1,4 @@
-import Api
+import EndpointSecurityAuth
 import Foundation
 import Testing
 
@@ -14,15 +14,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -48,15 +47,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -82,15 +80,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -115,15 +112,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -147,15 +143,14 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -180,15 +175,14 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -213,15 +207,14 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -250,16 +243,15 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -298,16 +290,15 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -342,16 +333,15 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -398,15 +388,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -427,15 +416,14 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
@@ -460,15 +448,14 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettoken(
+            _ = try await client.auth.getToken(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",

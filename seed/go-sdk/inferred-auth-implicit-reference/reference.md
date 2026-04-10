@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.Gettokenwithclientcredentials(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.GetTokenWithClientCredentials(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -16,10 +16,11 @@
 request := &fern.GetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
-        Audience: fern.GetTokenRequestAudienceHttpsApiExampleCom,
-        GrantType: fern.GetTokenRequestGrantTypeClientCredentials,
+        Scope: fern.String(
+            "scope",
+        ),
     }
-client.Auth.Gettokenwithclientcredentials(
+client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
         request,
     )
@@ -38,39 +39,7 @@ client.Auth.Gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**clientID:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientSecret:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**audience:** `*fern.GetTokenRequestAudience` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**grantType:** `*fern.GetTokenRequestGrantType` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `*string` 
+**request:** `*fern.GetTokenRequest` 
     
 </dd>
 </dl>
@@ -82,7 +51,7 @@ client.Auth.Gettokenwithclientcredentials(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.Refreshtoken(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.RefreshToken(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -99,10 +68,11 @@ request := &fern.RefreshTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
         RefreshToken: "refresh_token",
-        Audience: fern.RefreshTokenRequestAudienceHttpsApiExampleCom,
-        GrantType: fern.RefreshTokenRequestGrantTypeRefreshToken,
+        Scope: fern.String(
+            "scope",
+        ),
     }
-client.Auth.Refreshtoken(
+client.Auth.RefreshToken(
         context.TODO(),
         request,
     )
@@ -121,47 +91,7 @@ client.Auth.Refreshtoken(
 <dl>
 <dd>
 
-**clientID:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientSecret:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**refreshToken:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**audience:** `*fern.RefreshTokenRequestAudience` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**grantType:** `*fern.RefreshTokenRequestGrantType` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `*string` 
+**request:** `*fern.RefreshTokenRequest` 
     
 </dd>
 </dl>
@@ -173,8 +103,8 @@ client.Auth.Refreshtoken(
 </dl>
 </details>
 
-## NestedNoAuthAPI
-<details><summary><code>client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething() -> error</code></summary>
+## NestedNoAuth API
+<details><summary><code>client.NestedNoAuth.API.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -187,7 +117,7 @@ client.Auth.Refreshtoken(
 <dd>
 
 ```go
-client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething(
+client.NestedNoAuth.API.GetSomething(
         context.TODO(),
     )
 }
@@ -202,8 +132,8 @@ client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething(
 </dl>
 </details>
 
-## NestedAPI
-<details><summary><code>client.NestedAPI.NestedAPIGetSomething() -> error</code></summary>
+## Nested API
+<details><summary><code>client.Nested.API.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -216,7 +146,7 @@ client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething(
 <dd>
 
 ```go
-client.NestedAPI.NestedAPIGetSomething(
+client.Nested.API.GetSomething(
         context.TODO(),
     )
 }
@@ -232,7 +162,7 @@ client.NestedAPI.NestedAPIGetSomething(
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.Getsomething() -> error</code></summary>
+<details><summary><code>client.Simple.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -245,7 +175,7 @@ client.NestedAPI.NestedAPIGetSomething(
 <dd>
 
 ```go
-client.Simple.Getsomething(
+client.Simple.GetSomething(
         context.TODO(),
     )
 }

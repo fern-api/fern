@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream</a>(request) -> String</code></summary>
+<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream</a>(request) -> Seed::Completions::Types::StreamedCompletion</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.completions.stream(query: "query")
+client.completions.stream(query: "foo")
 ```
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.completions.stream(query: "query")
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">streamevents</a>(request) -> String</code></summary>
+<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream_events</a>(request) -> Seed::Completions::Types::StreamEvent</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.completions.stream(query: "query")
 <dd>
 
 ```ruby
-client.completions.streamevents(query: "query")
+client.completions.stream_events(query: "query")
 ```
 </dd>
 </dl>
@@ -96,7 +96,7 @@ client.completions.streamevents(query: "query")
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">streameventscontextprotocol</a>(request) -> String</code></summary>
+<details><summary><code>client.completions.<a href="/lib/seed/completions/client.rb">stream_events_context_protocol</a>(request) -> Seed::Completions::Types::StreamEventContextProtocol</code></summary>
 <dl>
 <dd>
 
@@ -109,7 +109,7 @@ client.completions.streamevents(query: "query")
 <dd>
 
 ```ruby
-client.completions.streameventscontextprotocol(query: "query")
+client.completions.stream_events_context_protocol(query: "query")
 ```
 </dd>
 </dl>

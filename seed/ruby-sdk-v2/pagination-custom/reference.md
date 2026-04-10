@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithcustompager</a>() -> Seed::Types::UsersListResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_custom_pager</a>() -> Seed::Types::UsersListResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,10 @@
 <dd>
 
 ```ruby
-client.users.listwithcustompager
+client.users.list_with_custom_pager(
+  limit: 1,
+  starting_after: "starting_after"
+)
 ```
 </dd>
 </dl>

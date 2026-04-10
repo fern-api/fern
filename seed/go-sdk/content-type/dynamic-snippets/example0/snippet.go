@@ -14,7 +14,14 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.ServicePatchRequest{}
+    request := &fern.PatchProxyRequest{
+        Application: fern.String(
+            "application",
+        ),
+        RequireAuth: fern.Bool(
+            true,
+        ),
+    }
     client.Service.Patch(
         context.TODO(),
         request,

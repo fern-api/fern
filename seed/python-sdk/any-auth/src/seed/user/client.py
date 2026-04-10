@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.user import User
 from .raw_client import AsyncRawUserClient, RawUserClient
+from .types.user import User
 
 
 class UserClient:
@@ -34,22 +34,21 @@ class UserClient:
         -------
         typing.List[User]
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedAnyAuth
 
-        client = SeedApi(
-            api_key="YOUR_API_KEY",
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
+        client = SeedAnyAuth(
+            base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.user.get()
         """
         _response = self._raw_client.get(request_options=request_options)
         return _response.data
 
-    def getadmins(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    def get_admins(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -60,19 +59,18 @@ class UserClient:
         -------
         typing.List[User]
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedAnyAuth
 
-        client = SeedApi(
-            api_key="YOUR_API_KEY",
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
+        client = SeedAnyAuth(
+            base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
-        client.user.getadmins()
+        client.user.get_admins()
         """
-        _response = self._raw_client.getadmins(request_options=request_options)
+        _response = self._raw_client.get_admins(request_options=request_options)
         return _response.data
 
 
@@ -102,17 +100,16 @@ class AsyncUserClient:
         -------
         typing.List[User]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedAnyAuth
 
-        client = AsyncSeedApi(
-            api_key="YOUR_API_KEY",
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
+        client = AsyncSeedAnyAuth(
+            base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -125,7 +122,7 @@ class AsyncUserClient:
         _response = await self._raw_client.get(request_options=request_options)
         return _response.data
 
-    async def getadmins(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    async def get_admins(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -136,25 +133,24 @@ class AsyncUserClient:
         -------
         typing.List[User]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedAnyAuth
 
-        client = AsyncSeedApi(
-            api_key="YOUR_API_KEY",
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
+        client = AsyncSeedAnyAuth(
+            base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
         async def main() -> None:
-            await client.user.getadmins()
+            await client.user.get_admins()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getadmins(request_options=request_options)
+        _response = await self._raw_client.get_admins(request_options=request_options)
         return _response.data

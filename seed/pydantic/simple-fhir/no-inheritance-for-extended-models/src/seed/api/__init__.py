@@ -3,37 +3,11 @@
 # isort: skip_file
 
 from .account import Account
-from .account_resource_type import AccountResourceType
 from .base_resource import BaseResource
 from .memo import Memo
 from .patient import Patient
-from .patient_resource_type import PatientResourceType
 from .practitioner import Practitioner
-from .practitioner_resource_type import PractitionerResourceType
-from .resource_list import (
-    ResourceList,
-    ResourceList_Account,
-    ResourceList_Patient,
-    ResourceList_Practitioner,
-    ResourceList_Script,
-)
+from .resource_list import ResourceList
 from .script import Script
-from .script_resource_type import ScriptResourceType
 
-__all__ = [
-    "Account",
-    "AccountResourceType",
-    "BaseResource",
-    "Memo",
-    "Patient",
-    "PatientResourceType",
-    "Practitioner",
-    "PractitionerResourceType",
-    "ResourceList",
-    "ResourceList_Account",
-    "ResourceList_Patient",
-    "ResourceList_Practitioner",
-    "ResourceList_Script",
-    "Script",
-    "ScriptResourceType",
-]
+__all__ = ["Account", "BaseResource", "Memo", "Patient", "Practitioner", "ResourceList", "Script"]

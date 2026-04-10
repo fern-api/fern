@@ -1,4 +1,4 @@
-import Api
+import ObjectsWithImports
 import Foundation
 import Testing
 
@@ -14,16 +14,18 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -43,16 +45,18 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -72,16 +76,18 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -100,16 +106,18 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -127,16 +135,18 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -155,16 +165,18 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -183,16 +195,18 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -215,17 +229,19 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -258,17 +274,19 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -297,17 +315,19 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -348,16 +368,18 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
 
@@ -372,16 +394,18 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
 
@@ -400,16 +424,18 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ObjectsWithImportsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.optional.sendoptionalbody(
-                request: .value([
-                    "key": .string("value")
-                ]),
+            _ = try await client.optional.sendOptionalBody(
+                request: [
+                    "string": .object([
+                        "key": .string("value")
+                    ])
+                ],
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

@@ -4,20 +4,20 @@ namespace Contoso.Net.System;
 
 public partial interface ISystemClient
 {
-    WithRawResponseTask<SystemUser> CreateuserAsync(
-        SystemUser request,
+    WithRawResponseTask<User> CreateUserAsync(
+        User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    WithRawResponseTask<SystemTask> CreatetaskAsync(
-        SystemTask request,
+    WithRawResponseTask<Task> CreateTaskAsync(
+        Task request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    WithRawResponseTask<SystemUser> GetuserAsync(
-        SystemGetUserRequest request,
+    WithRawResponseTask<User> GetUserAsync(
+        string userId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

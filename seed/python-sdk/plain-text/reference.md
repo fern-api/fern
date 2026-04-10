@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">gettext</a>() -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_text</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedPlainText
 
-client = SeedApi(
+client = SeedPlainText(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.gettext()
+client.service.get_text()
 
 ```
 </dd>

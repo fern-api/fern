@@ -6,7 +6,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedLiteral from "../../../index.js";
 
 export declare namespace HeadersClient {
     export type Options = BaseClientOptions;
@@ -22,31 +22,33 @@ export class HeadersClient {
     }
 
     /**
-     * @param {SeedApi.HeadersSendRequest} request
+     * @param {SeedLiteral.SendLiteralsInHeadersRequest} request
      * @param {HeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.headers.send({
-     *         "X-Endpoint-Version": "02-12-2024",
-     *         "X-Async": true,
-     *         query: "query"
+     *         query: "What is the weather today"
      *     })
      */
     public send(
-        request: SeedApi.HeadersSendRequest,
+        request: SeedLiteral.SendLiteralsInHeadersRequest,
         requestOptions?: HeadersClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.SendResponse> {
+    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedApi.HeadersSendRequest,
+        request: SeedLiteral.SendLiteralsInHeadersRequest,
         requestOptions?: HeadersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.SendResponse>> {
-        const { "X-Endpoint-Version": endpointVersion, "X-Async": async, ..._body } = request;
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-Endpoint-Version": endpointVersion, "X-Async": async }),
+            mergeOnlyDefinedHeaders({
+                "X-Endpoint-Version": "02-12-2024",
+                "X-Async": "true",
+                "X-API-Version": requestOptions?.version ?? "02-02-2024",
+                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
+            }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -60,7 +62,7 @@ export class HeadersClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -68,11 +70,11 @@ export class HeadersClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.SendResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedLiteralError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

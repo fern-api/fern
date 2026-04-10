@@ -1,1 +1,1 @@
-export type { Ec2BootInstanceRequest } from "./Ec2BootInstanceRequest.js";
+export type { BootInstanceRequest } from "./BootInstanceRequest.js";

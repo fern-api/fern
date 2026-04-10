@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getusername</a>(limit: Option&lt;i64&gt;, id: Option&lt;String&gt;, date: Option&lt;String&gt;, deadline: Option&lt;String&gt;, bytes: Option&lt;String&gt;, user: Option&lt;User&gt;, optional_deadline: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, key_value: Option&lt;std::collections::HashMap&lt;String, String&gt;&gt;, optional_string: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, nested_user: Option&lt;NestedUser&gt;, optional_user: Option&lt;Option&lt;User&gt;&gt;) -> Result&lt;User, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_username</a>(limit: Option&lt;i64&gt;, id: Option&lt;String&gt;, date: Option&lt;String&gt;, deadline: Option&lt;String&gt;, bytes: Option&lt;String&gt;, user: Option&lt;User&gt;, user_list: Option&lt;Vec&lt;User&gt;&gt;, optional_deadline: Option&lt;Option&lt;String&gt;&gt;, key_value: Option&lt;std::collections::HashMap&lt;String, String&gt;&gt;, optional_string: Option&lt;Option&lt;String&gt;&gt;, nested_user: Option&lt;NestedUser&gt;, optional_user: Option&lt;Option&lt;User&gt;&gt;) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,33 +13,42 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_query_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = QueryParametersClient::new(config).expect("Failed to build client");
     client
         .user
-        .getusername(
-            &GetusernameQueryRequest {
+        .get_username(
+            &GetUsernameQueryRequest {
                 limit: 1,
-                id: "id".to_string(),
+                id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
                 deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                bytes: "bytes".to_string(),
+                bytes: base64::engine::general_purpose::STANDARD
+                    .decode("SGVsbG8gd29ybGQh")
+                    .unwrap(),
                 user: User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
                     ..Default::default()
                 },
-                user_list: vec![Some(User {
-                    name: "name".to_string(),
-                    tags: vec!["tags".to_string(), "tags".to_string()],
-                    ..Default::default()
-                })],
+                user_list: vec![
+                    User {
+                        name: "name".to_string(),
+                        tags: vec!["tags".to_string(), "tags".to_string()],
+                        ..Default::default()
+                    },
+                    User {
+                        name: "name".to_string(),
+                        tags: vec!["tags".to_string(), "tags".to_string()],
+                        ..Default::default()
+                    },
+                ],
                 optional_deadline: Some(
                     DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 ),
@@ -59,12 +68,12 @@ async fn main() {
                     tags: vec!["tags".to_string(), "tags".to_string()],
                     ..Default::default()
                 }),
-                exclude_user: vec![Some(User {
+                exclude_user: vec![User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
                     ..Default::default()
-                })],
-                filter: vec![Some("filter".to_string())],
+                }],
+                filter: vec!["filter".to_string()],
             },
             None,
         )
@@ -132,7 +141,7 @@ async fn main() {
 <dl>
 <dd>
 
-**user_list:** `Option<User>` 
+**user_list:** `Vec<User>` 
     
 </dd>
 </dl>
@@ -140,7 +149,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_deadline:** `Option<Option<String>>` 
+**optional_deadline:** `Option<String>` 
     
 </dd>
 </dl>
@@ -156,7 +165,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_string:** `Option<Option<String>>` 
+**optional_string:** `Option<String>` 
     
 </dd>
 </dl>
@@ -180,7 +189,7 @@ async fn main() {
 <dl>
 <dd>
 
-**exclude_user:** `Option<User>` 
+**exclude_user:** `User` 
     
 </dd>
 </dl>
@@ -188,7 +197,7 @@ async fn main() {
 <dl>
 <dd>
 
-**filter:** `Option<String>` 
+**filter:** `String` 
     
 </dd>
 </dl>

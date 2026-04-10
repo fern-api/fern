@@ -2,8 +2,8 @@ require "seed"
 
 client = Seed::Client.new(
   username: "<username>",
-  password: "<password>",
+  access_token: "<password>",
   base_url: "https://api.fern.com"
 )
 
-client.basicauth.getwithbasicauth
+client.basic_auth.post_with_basic_auth

@@ -1,10 +1,10 @@
 <?php
 
-namespace Seed\Noreqbody;
+namespace Seed\NoReqBody;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\TypesObjectWithOptionalField;
+use Seed\Types\Object\Types\ObjectWithOptionalField;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -13,7 +13,7 @@ use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Core\Json\JsonDecoder;
 
-class NoreqbodyClient
+class NoReqBodyClient
 {
     /**
      * @var array{
@@ -58,18 +58,18 @@ class NoreqbodyClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?TypesObjectWithOptionalField
+     * @return ?ObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getwithnorequestbody(?array $options = null): ?TypesObjectWithOptionalField
+    public function getWithNoRequestBody(?array $options = null): ?ObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "no-req-body",
+                    path: "/no-req-body",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -80,7 +80,7 @@ class NoreqbodyClient
                 if (empty($json)) {
                     return null;
                 }
-                return TypesObjectWithOptionalField::fromJson($json);
+                return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -107,14 +107,14 @@ class NoreqbodyClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postwithnorequestbody(?array $options = null): ?string
+    public function postWithNoRequestBody(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "no-req-body",
+                    path: "/no-req-body",
                     method: HttpMethod::POST,
                 ),
                 $options,

@@ -12,8 +12,8 @@ public class Example0
             }
         );
 
-        await client._.UploadJsonDocumentAsync(
-            new UploadJsonDocumentRequest()
+        await client.UploadJsonDocumentAsync(
+            new UploadDocumentRequest()
         );
     }
 

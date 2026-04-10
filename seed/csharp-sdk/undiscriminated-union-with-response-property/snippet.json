@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.GetUnionAsync();\n"
+                "client": "using SeedUndiscriminatedUnionWithResponseProperty;\n\nvar client = new SeedUndiscriminatedUnionWithResponsePropertyClient();\nawait client.GetUnionAsync();\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.ListUnionsAsync();\n"
+                "client": "using SeedUndiscriminatedUnionWithResponseProperty;\n\nvar client = new SeedUndiscriminatedUnionWithResponsePropertyClient();\nawait client.ListUnionsAsync();\n"
             }
         }
     ]

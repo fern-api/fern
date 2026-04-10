@@ -1,13 +1,13 @@
 import Foundation
-import Api
+import HeaderToken
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = HeaderTokenClient(
         baseURL: "https://api.fern.com",
-        apiKey: "<value>"
+        headerTokenAuth: "<value>"
     )
 
-    _ = try await client.service.getwithbearertoken()
+    _ = try await client.service.getWithBearerToken()
 }
 
 try await main()

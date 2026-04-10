@@ -4,54 +4,70 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedExhaustive from "../../../index.js";
 
-export declare namespace InlinedrequestsClient {
+export declare namespace InlinedRequestsClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class InlinedrequestsClient {
-    protected readonly _options: NormalizedClientOptions<InlinedrequestsClient.Options>;
+export class InlinedRequestsClient {
+    protected readonly _options: NormalizedClientOptions<InlinedRequestsClient.Options>;
 
-    constructor(options: InlinedrequestsClient.Options) {
+    constructor(options: InlinedRequestsClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
      * POST with custom object in request body, response is an object
      *
-     * @param {SeedApi.InlinedRequestsPostWithObjectBodyandResponseRequest} request
-     * @param {InlinedrequestsClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.inlinedrequests.postwithobjectbodyandresponse({
+     *     await client.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",
      *         integer: 1,
-     *         NestedObject: {}
+     *         NestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: "2024-01-15T09:30:00Z",
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["list", "list"],
+     *             set: ["set"],
+     *             map: {
+     *                 1: "map"
+     *             },
+     *             bigint: "1000000"
+     *         }
      *     })
      */
-    public postwithobjectbodyandresponse(
-        request: SeedApi.InlinedRequestsPostWithObjectBodyandResponseRequest,
-        requestOptions?: InlinedrequestsClient.RequestOptions,
+    public postWithObjectBodyandResponse(
+        request: SeedExhaustive.PostWithObjectBody,
+        requestOptions?: InlinedRequestsClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedApi.TypesObjectWithOptionalField,
-            SeedApi.inlinedrequests.postwithobjectbodyandresponse.Error
+            SeedExhaustive.types.ObjectWithOptionalField,
+            SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error
         >
     > {
-        return core.HttpResponsePromise.fromPromise(this.__postwithobjectbodyandresponse(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
     }
 
-    private async __postwithobjectbodyandresponse(
-        request: SeedApi.InlinedRequestsPostWithObjectBodyandResponseRequest,
-        requestOptions?: InlinedrequestsClient.RequestOptions,
+    private async __postWithObjectBodyandResponse(
+        request: SeedExhaustive.PostWithObjectBody,
+        requestOptions?: InlinedRequestsClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedApi.TypesObjectWithOptionalField,
-                SeedApi.inlinedrequests.postwithobjectbodyandresponse.Error
+                SeedExhaustive.types.ObjectWithOptionalField,
+                SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error
             >
         >
     > {
@@ -60,7 +76,7 @@ export class InlinedrequestsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "req-bodies/object",
+                "/req-bodies/object",
             ),
             method: "POST",
             headers: _headers,
@@ -78,7 +94,7 @@ export class InlinedrequestsClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedApi.TypesObjectWithOptionalField,
+                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -92,8 +108,8 @@ export class InlinedrequestsClient {
                     return {
                         data: {
                             ok: false,
-                            error: SeedApi.inlinedrequests.postwithobjectbodyandresponse.Error.badRequestError(
-                                _response.error.body as SeedApi.BadObjectRequestInfo,
+                            error: SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error.badRequestBody(
+                                _response.error.body as SeedExhaustive.BadObjectRequestInfo,
                             ),
                             rawResponse: _response.rawResponse,
                         },
@@ -105,7 +121,7 @@ export class InlinedrequestsClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.inlinedrequests.postwithobjectbodyandresponse.Error._unknown(_response.error),
+                error: SeedExhaustive.inlinedRequests.postWithObjectBodyandResponse.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">uploadJsonDocument</a>({ ...params }) -> SeedApi.UploadDocumentResponse</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">uploadJsonDocument</a>({ ...params }) -> SeedApi.UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```typescript
-await client..uploadJsonDocument();
+await client.uploadJsonDocument();
 
 ```
 </dd>
@@ -29,7 +28,7 @@ await client..uploadJsonDocument();
 <dl>
 <dd>
 
-**request:** `SeedApi.UploadJsonDocumentRequest` 
+**request:** `SeedApi.UploadDocumentRequest` 
     
 </dd>
 </dl>
@@ -37,7 +36,7 @@ await client..uploadJsonDocument();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `SeedApiClient.RequestOptions` 
     
 </dd>
 </dl>

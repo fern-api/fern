@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
 )
@@ -17,13 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.TypesObjectWithDatetimeLikeString{
-        DatetimeLikeString: "datetimeLikeString",
-        ActualDatetime: fern.MustParseDateTime(
-            "2024-01-15T09:30:00Z",
-        ),
+    request := map[string]any{
+        "key": "value",
     }
-    client.EndpointsObject.EndpointsObjectGetAndReturnWithDatetimeLikeString(
+    client.NoAuth.PostWithNoAuth(
         context.TODO(),
         request,
     )

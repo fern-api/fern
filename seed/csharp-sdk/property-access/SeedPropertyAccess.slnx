@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedPropertyAccess.Test/SeedPropertyAccess.Test.csproj" />
+  <Project Path="src/SeedPropertyAccess/SeedPropertyAccess.csproj" />
+</Solution>

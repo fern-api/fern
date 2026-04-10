@@ -9,8 +9,8 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\User\Requests\UserCreateUserRequest;
-use Seed\Types\User;
+use Seed\User\Requests\CreateUserRequest;
+use Seed\User\Types\User;
 use JsonException;
 
 class UserClient
@@ -68,7 +68,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getuser(string $userId, ?array $options = null): void
+    public function getUser(string $userId, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -98,7 +98,7 @@ class UserClient
      * Create a new user.
      * This endpoint is used to create a new user.
      *
-     * @param UserCreateUserRequest $request
+     * @param CreateUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -111,7 +111,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createuser(UserCreateUserRequest $request, ?array $options = null): ?User
+    public function createUser(CreateUserRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {

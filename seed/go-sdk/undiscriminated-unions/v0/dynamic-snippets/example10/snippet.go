@@ -14,10 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.NestedUnionRoot{
-        String: "string",
+    request := &fern.PaymentRequest{
+        PaymentMethod: &fern.PaymentMethodUnion{
+            TokenizeCard: &fern.TokenizeCard{
+                Method: "method",
+                CardNumber: "cardNumber",
+            },
+        },
     }
-    client.Union.Nestedunions(
+    client.Union.TestCamelCaseProperties(
         context.TODO(),
         request,
     )

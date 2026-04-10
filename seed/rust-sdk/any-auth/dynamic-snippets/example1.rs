@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_any_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,17 +7,6 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .auth
-        .gettoken(
-            &AuthGetTokenRequest {
-                client_id: "client_id".to_string(),
-                client_secret: "client_secret".to_string(),
-                audience: AuthGetTokenRequestAudience::HttpsApiExampleCom,
-                grant_type: AuthGetTokenRequestGrantType::ClientCredentials,
-            },
-            None,
-        )
-        .await;
+    let client = AnyAuthClient::new(config).expect("Failed to build client");
+    client.user.get(None).await;
 }

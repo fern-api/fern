@@ -1,22 +1,19 @@
-//! # variables SDK
+//! # Variables SDK
 //!
-//! The official Rust SDK for the variables.
+//! The official Rust SDK for the Variables.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_variables::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client
-//!         .service
-//!         .post(&"endpointParam".to_string(), None)
-//!         .await;
+//!     let client = VariablesClient::new(config).expect("Failed to build client");
+//!     client.service.post(None).await;
 //! }
 //! ```
 //!

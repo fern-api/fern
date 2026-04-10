@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">CreateAsync</a>(CreateRequest { ... }) -> WithRawResponseTask&lt;Type&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">CreateAsync</a>(CreateRequest { ... }) -> WithRawResponseTask&lt;Type&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +12,12 @@
 <dd>
 
 ```csharp
-await client._.CreateAsync(
+await client.CreateAsync(
     new CreateRequest
     {
-        Decimal = 1.1,
-        Even = 1,
-        Name = "name",
+        Decimal = 2.2,
+        Even = 100,
+        Name = "fern",
         Shape = Shape.Square,
     }
 );
@@ -48,7 +47,7 @@ await client._.CreateAsync(
 </dl>
 </details>
 
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">GetAsync</a>(GetRequest { ... }) -> WithRawResponseTask&lt;Type&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedValidation/SeedValidationClient.cs">GetAsync</a>(GetRequest { ... }) -> WithRawResponseTask&lt;Type&gt;</code></summary>
 <dl>
 <dd>
 
@@ -61,12 +60,12 @@ await client._.CreateAsync(
 <dd>
 
 ```csharp
-await client._.GetAsync(
+await client.GetAsync(
     new GetRequest
     {
-        Decimal = 1.1,
-        Even = 1,
-        Name = "name",
+        Decimal = 2.2,
+        Even = 100,
+        Name = "fern",
     }
 );
 ```

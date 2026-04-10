@@ -7,52 +7,8 @@ import (
 	assert "github.com/stretchr/testify/assert"
 	require "github.com/stretchr/testify/require"
 	testing "testing"
+	time "time"
 )
-
-func TestSettersBigunionGetRequest(t *testing.T) {
-	t.Run("SetID", func(t *testing.T) {
-		obj := &BigunionGetRequest{}
-		var fernTestValueID string
-		obj.SetID(fernTestValueID)
-		assert.Equal(t, fernTestValueID, obj.ID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestSettersMarkExplicitBigunionGetRequest(t *testing.T) {
-	t.Run("SetID_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigunionGetRequest{}
-		var fernTestValueID string
-
-		// Act
-		obj.SetID(fernTestValueID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
 
 func TestSettersActiveDiamond(t *testing.T) {
 	t.Run("SetValue", func(t *testing.T) {
@@ -197,1013 +153,11 @@ func TestSettersMarkExplicitAttractiveScript(t *testing.T) {
 }
 
 func TestGettersBigUnion(t *testing.T) {
-	t.Run("GetBigUnionZero", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionZero
-		obj.BigUnionZero = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionZero(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionZero_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionZero = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionZero(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionZero_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionZero() // Should return zero value
-	})
-
-	t.Run("GetBigUnionOne", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionOne
-		obj.BigUnionOne = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionOne(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionOne_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionOne = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionOne(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionOne_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionOne() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwo", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwo
-		obj.BigUnionTwo = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwo(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwo_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwo = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwo(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwo_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwo() // Should return zero value
-	})
-
-	t.Run("GetBigUnionThree", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionThree
-		obj.BigUnionThree = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionThree(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionThree_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionThree = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionThree(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionThree_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionThree() // Should return zero value
-	})
-
-	t.Run("GetBigUnionFour", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionFour
-		obj.BigUnionFour = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionFour(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionFour_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionFour = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionFour(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionFour_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionFour() // Should return zero value
-	})
-
-	t.Run("GetBigUnionFive", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionFive
-		obj.BigUnionFive = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionFive(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionFive_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionFive = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionFive(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionFive_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionFive() // Should return zero value
-	})
-
-	t.Run("GetBigUnionSix", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionSix
-		obj.BigUnionSix = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionSix(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionSix_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionSix = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionSix(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionSix_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionSix() // Should return zero value
-	})
-
-	t.Run("GetBigUnionSeven", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionSeven
-		obj.BigUnionSeven = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionSeven(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionSeven_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionSeven = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionSeven(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionSeven_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionSeven() // Should return zero value
-	})
-
-	t.Run("GetBigUnionEight", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionEight
-		obj.BigUnionEight = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionEight(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionEight_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionEight = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionEight(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionEight_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionEight() // Should return zero value
-	})
-
-	t.Run("GetBigUnionNine", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionNine
-		obj.BigUnionNine = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionNine(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionNine_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionNine = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionNine(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionNine_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionNine() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTen", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTen
-		obj.BigUnionTen = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTen(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTen_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTen = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTen(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTen_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTen() // Should return zero value
-	})
-
-	t.Run("GetBigUnionEleven", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionEleven
-		obj.BigUnionEleven = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionEleven(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionEleven_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionEleven = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionEleven(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionEleven_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionEleven() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwelve", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwelve
-		obj.BigUnionTwelve = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwelve(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwelve_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwelve = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwelve(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwelve_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwelve() // Should return zero value
-	})
-
-	t.Run("GetBigUnionThirteen", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionThirteen
-		obj.BigUnionThirteen = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionThirteen(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionThirteen_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionThirteen = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionThirteen(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionThirteen_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionThirteen() // Should return zero value
-	})
-
-	t.Run("GetBigUnionFourteen", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionFourteen
-		obj.BigUnionFourteen = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionFourteen(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionFourteen_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionFourteen = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionFourteen(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionFourteen_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionFourteen() // Should return zero value
-	})
-
-	t.Run("GetBigUnionFifteen", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionFifteen
-		obj.BigUnionFifteen = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionFifteen(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionFifteen_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionFifteen = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionFifteen(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionFifteen_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionFifteen() // Should return zero value
-	})
-
-	t.Run("GetBigUnionSixteen", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionSixteen
-		obj.BigUnionSixteen = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionSixteen(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionSixteen_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionSixteen = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionSixteen(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionSixteen_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionSixteen() // Should return zero value
-	})
-
-	t.Run("GetBigUnionSeventeen", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionSeventeen
-		obj.BigUnionSeventeen = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionSeventeen(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionSeventeen_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionSeventeen = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionSeventeen(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionSeventeen_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionSeventeen() // Should return zero value
-	})
-
-	t.Run("GetBigUnionEighteen", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionEighteen
-		obj.BigUnionEighteen = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionEighteen(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionEighteen_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionEighteen = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionEighteen(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionEighteen_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionEighteen() // Should return zero value
-	})
-
-	t.Run("GetBigUnionNineteen", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionNineteen
-		obj.BigUnionNineteen = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionNineteen(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionNineteen_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionNineteen = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionNineteen(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionNineteen_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionNineteen() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwenty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwenty
-		obj.BigUnionTwenty = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwenty(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwenty_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwenty = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwenty(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwenty_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwenty() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwentyOne", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwentyOne
-		obj.BigUnionTwentyOne = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwentyOne(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwentyOne_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwentyOne = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwentyOne(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwentyOne_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwentyOne() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwentyTwo", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwentyTwo
-		obj.BigUnionTwentyTwo = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwentyTwo(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwentyTwo_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwentyTwo = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwentyTwo(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwentyTwo_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwentyTwo() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwentyThree", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwentyThree
-		obj.BigUnionTwentyThree = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwentyThree(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwentyThree_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwentyThree = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwentyThree(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwentyThree_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwentyThree() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwentyFour", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwentyFour
-		obj.BigUnionTwentyFour = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwentyFour(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwentyFour_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwentyFour = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwentyFour(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwentyFour_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwentyFour() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwentyFive", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwentyFive
-		obj.BigUnionTwentyFive = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwentyFive(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwentyFive_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwentyFive = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwentyFive(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwentyFive_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwentyFive() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwentySix", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwentySix
-		obj.BigUnionTwentySix = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwentySix(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwentySix_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwentySix = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwentySix(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwentySix_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwentySix() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwentySeven", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwentySeven
-		obj.BigUnionTwentySeven = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwentySeven(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwentySeven_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwentySeven = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwentySeven(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwentySeven_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwentySeven() // Should return zero value
-	})
-
-	t.Run("GetBigUnionTwentyEight", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		var expected *BigUnionTwentyEight
-		obj.BigUnionTwentyEight = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetBigUnionTwentyEight(), "getter should return the property value")
-	})
-
-	t.Run("GetBigUnionTwentyEight_NilValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnion{}
-		obj.BigUnionTwentyEight = nil
-
-		// Act & Assert
-		assert.Nil(t, obj.GetBigUnionTwentyEight(), "getter should return nil when property is nil")
-	})
-
-	t.Run("GetBigUnionTwentyEight_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnion
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetBigUnionTwentyEight() // Should return zero value
-	})
-
-}
-
-func TestSettersBigUnionEight(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionEight{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionEight{}
-		var fernTestValueType BigUnionEightType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionEight(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionEight{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionEight
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
 	t.Run("GetType", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionEight{}
-		var expected BigUnionEightType
+		obj := &BigUnion{}
+		var expected string
 		obj.Type = expected
 
 		// Act & Assert
@@ -1212,7 +166,7 @@ func TestGettersBigUnionEight(t *testing.T) {
 
 	t.Run("GetType_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionEight
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
@@ -1222,3793 +176,1040 @@ func TestGettersBigUnionEight(t *testing.T) {
 		_ = obj.GetType() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionEight(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionEight{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionEight{}
-		var fernTestValueType BigUnionEightType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionEighteen(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionEighteen{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionEighteen{}
-		var fernTestValueType BigUnionEighteenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionEighteen(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionEighteen{}
+		obj := &BigUnion{}
 		var expected string
-		obj.Value = expected
+		obj.ID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionEighteen
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetID() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetCreatedAt", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionEighteen{}
-		var expected BigUnionEighteenType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected time.Time
+		obj.CreatedAt = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCreatedAt(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetCreatedAt_NilReceiver", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionEighteen
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetCreatedAt() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionEighteen(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetArchivedAt", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionEighteen{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionEighteen{}
-		var fernTestValueType BigUnionEighteenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionEleven(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionEleven{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionEleven{}
-		var fernTestValueType BigUnionElevenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionEleven(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionEleven{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *time.Time
+		obj.ArchivedAt = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetArchivedAt(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetArchivedAt_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionEleven
+		// Arrange
+		obj := &BigUnion{}
+		obj.ArchivedAt = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetArchivedAt(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetArchivedAt_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetArchivedAt() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetNormalSweet", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionEleven{}
-		var expected BigUnionElevenType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *NormalSweet
+		obj.NormalSweet = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetNormalSweet(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetNormalSweet_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionEleven
+		// Arrange
+		obj := &BigUnion{}
+		obj.NormalSweet = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetNormalSweet(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetNormalSweet_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetNormalSweet() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionEleven(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetThankfulFactor", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionEleven{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionEleven{}
-		var fernTestValueType BigUnionElevenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionFifteen(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionFifteen{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionFifteen{}
-		var fernTestValueType BigUnionFifteenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionFifteen(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFifteen{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *ThankfulFactor
+		obj.ThankfulFactor = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetThankfulFactor(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetThankfulFactor_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionFifteen
+		// Arrange
+		obj := &BigUnion{}
+		obj.ThankfulFactor = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetThankfulFactor(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetThankfulFactor_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetThankfulFactor() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetJumboEnd", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionFifteen{}
-		var expected BigUnionFifteenType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *JumboEnd
+		obj.JumboEnd = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetJumboEnd(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetJumboEnd_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionFifteen
+		// Arrange
+		obj := &BigUnion{}
+		obj.JumboEnd = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetJumboEnd(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetJumboEnd_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetJumboEnd() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionFifteen(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetHastyPain", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionFifteen{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFifteen{}
-		var fernTestValueType BigUnionFifteenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionFive(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionFive{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionFive{}
-		var fernTestValueType BigUnionFiveType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionFive(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFive{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *HastyPain
+		obj.HastyPain = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetHastyPain(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetHastyPain_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionFive
+		// Arrange
+		obj := &BigUnion{}
+		obj.HastyPain = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHastyPain(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHastyPain_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetHastyPain() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetMistySnow", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionFive{}
-		var expected BigUnionFiveType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *MistySnow
+		obj.MistySnow = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetMistySnow(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetMistySnow_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionFive
+		// Arrange
+		obj := &BigUnion{}
+		obj.MistySnow = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetMistySnow(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetMistySnow_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetMistySnow() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionFive(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetDistinctFailure", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionFive{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFive{}
-		var fernTestValueType BigUnionFiveType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionFour(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionFour{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionFour{}
-		var fernTestValueType BigUnionFourType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionFour(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFour{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *DistinctFailure
+		obj.DistinctFailure = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetDistinctFailure(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetDistinctFailure_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionFour
+		// Arrange
+		obj := &BigUnion{}
+		obj.DistinctFailure = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDistinctFailure(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDistinctFailure_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetDistinctFailure() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetPracticalPrinciple", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionFour{}
-		var expected BigUnionFourType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *PracticalPrinciple
+		obj.PracticalPrinciple = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPracticalPrinciple(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetPracticalPrinciple_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionFour
+		// Arrange
+		obj := &BigUnion{}
+		obj.PracticalPrinciple = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPracticalPrinciple(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPracticalPrinciple_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetPracticalPrinciple() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionFour(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetLimpingStep", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionFour{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFour{}
-		var fernTestValueType BigUnionFourType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionFourteen(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionFourteen{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionFourteen{}
-		var fernTestValueType BigUnionFourteenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionFourteen(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFourteen{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *LimpingStep
+		obj.LimpingStep = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLimpingStep(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetLimpingStep_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionFourteen
+		// Arrange
+		obj := &BigUnion{}
+		obj.LimpingStep = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetLimpingStep(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetLimpingStep_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetLimpingStep() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetVibrantExcitement", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionFourteen{}
-		var expected BigUnionFourteenType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *VibrantExcitement
+		obj.VibrantExcitement = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetVibrantExcitement(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetVibrantExcitement_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionFourteen
+		// Arrange
+		obj := &BigUnion{}
+		obj.VibrantExcitement = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetVibrantExcitement(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetVibrantExcitement_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetVibrantExcitement() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionFourteen(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetActiveDiamond", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionFourteen{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFourteen{}
-		var fernTestValueType BigUnionFourteenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionNine(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionNine{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionNine{}
-		var fernTestValueType BigUnionNineType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionNine(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionNine{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *ActiveDiamond
+		obj.ActiveDiamond = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetActiveDiamond(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetActiveDiamond_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionNine
+		// Arrange
+		obj := &BigUnion{}
+		obj.ActiveDiamond = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetActiveDiamond(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetActiveDiamond_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetActiveDiamond() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetPopularLimit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionNine{}
-		var expected BigUnionNineType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *PopularLimit
+		obj.PopularLimit = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPopularLimit(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetPopularLimit_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionNine
+		// Arrange
+		obj := &BigUnion{}
+		obj.PopularLimit = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPopularLimit(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPopularLimit_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetPopularLimit() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionNine(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetFalseMirror", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionNine{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionNine{}
-		var fernTestValueType BigUnionNineType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionNineteen(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionNineteen{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionNineteen{}
-		var fernTestValueType BigUnionNineteenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionNineteen(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionNineteen{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *FalseMirror
+		obj.FalseMirror = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFalseMirror(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetFalseMirror_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionNineteen
+		// Arrange
+		obj := &BigUnion{}
+		obj.FalseMirror = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetFalseMirror(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetFalseMirror_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetFalseMirror() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetPrimaryBlock", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionNineteen{}
-		var expected BigUnionNineteenType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *PrimaryBlock
+		obj.PrimaryBlock = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPrimaryBlock(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetPrimaryBlock_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionNineteen
+		// Arrange
+		obj := &BigUnion{}
+		obj.PrimaryBlock = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPrimaryBlock(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPrimaryBlock_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetPrimaryBlock() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionNineteen(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetRotatingRatio", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionNineteen{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionNineteen{}
-		var fernTestValueType BigUnionNineteenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionOne(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionOne{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionOne{}
-		var fernTestValueType BigUnionOneType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionOne(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionOne{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *RotatingRatio
+		obj.RotatingRatio = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetRotatingRatio(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetRotatingRatio_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionOne
+		// Arrange
+		obj := &BigUnion{}
+		obj.RotatingRatio = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetRotatingRatio(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetRotatingRatio_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetRotatingRatio() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetColorfulCover", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionOne{}
-		var expected BigUnionOneType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *ColorfulCover
+		obj.ColorfulCover = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetColorfulCover(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetColorfulCover_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionOne
+		// Arrange
+		obj := &BigUnion{}
+		obj.ColorfulCover = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetColorfulCover(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetColorfulCover_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetColorfulCover() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionOne(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetDisloyalValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionOne{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionOne{}
-		var fernTestValueType BigUnionOneType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionSeven(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionSeven{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionSeven{}
-		var fernTestValueType BigUnionSevenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionSeven(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSeven{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *DisloyalValue
+		obj.DisloyalValue = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetDisloyalValue(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetDisloyalValue_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionSeven
+		// Arrange
+		obj := &BigUnion{}
+		obj.DisloyalValue = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDisloyalValue(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDisloyalValue_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetDisloyalValue() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetGruesomeCoach", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionSeven{}
-		var expected BigUnionSevenType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *GruesomeCoach
+		obj.GruesomeCoach = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetGruesomeCoach(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetGruesomeCoach_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionSeven
+		// Arrange
+		obj := &BigUnion{}
+		obj.GruesomeCoach = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetGruesomeCoach(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetGruesomeCoach_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetGruesomeCoach() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionSeven(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetTotalWork", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionSeven{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSeven{}
-		var fernTestValueType BigUnionSevenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionSeventeen(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionSeventeen{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionSeventeen{}
-		var fernTestValueType BigUnionSeventeenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionSeventeen(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSeventeen{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *TotalWork
+		obj.TotalWork = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTotalWork(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetTotalWork_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionSeventeen
+		// Arrange
+		obj := &BigUnion{}
+		obj.TotalWork = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetTotalWork(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetTotalWork_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetTotalWork() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetHarmoniousPlay", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionSeventeen{}
-		var expected BigUnionSeventeenType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *HarmoniousPlay
+		obj.HarmoniousPlay = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetHarmoniousPlay(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetHarmoniousPlay_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionSeventeen
+		// Arrange
+		obj := &BigUnion{}
+		obj.HarmoniousPlay = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHarmoniousPlay(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHarmoniousPlay_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetHarmoniousPlay() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionSeventeen(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetUniqueStress", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionSeventeen{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSeventeen{}
-		var fernTestValueType BigUnionSeventeenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionSix(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionSix{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionSix{}
-		var fernTestValueType BigUnionSixType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionSix(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSix{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *UniqueStress
+		obj.UniqueStress = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetUniqueStress(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetUniqueStress_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionSix
+		// Arrange
+		obj := &BigUnion{}
+		obj.UniqueStress = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetUniqueStress(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetUniqueStress_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetUniqueStress() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetUnwillingSmoke", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionSix{}
-		var expected BigUnionSixType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *UnwillingSmoke
+		obj.UnwillingSmoke = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetUnwillingSmoke(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetUnwillingSmoke_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionSix
+		// Arrange
+		obj := &BigUnion{}
+		obj.UnwillingSmoke = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetUnwillingSmoke(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetUnwillingSmoke_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetUnwillingSmoke() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionSix(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetFrozenSleep", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionSix{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSix{}
-		var fernTestValueType BigUnionSixType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionSixteen(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionSixteen{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionSixteen{}
-		var fernTestValueType BigUnionSixteenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionSixteen(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSixteen{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *FrozenSleep
+		obj.FrozenSleep = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFrozenSleep(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetFrozenSleep_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionSixteen
+		// Arrange
+		obj := &BigUnion{}
+		obj.FrozenSleep = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetFrozenSleep(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetFrozenSleep_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetFrozenSleep() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetDiligentDeal", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionSixteen{}
-		var expected BigUnionSixteenType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *DiligentDeal
+		obj.DiligentDeal = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetDiligentDeal(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetDiligentDeal_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionSixteen
+		// Arrange
+		obj := &BigUnion{}
+		obj.DiligentDeal = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDiligentDeal(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDiligentDeal_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetDiligentDeal() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionSixteen(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetAttractiveScript", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionSixteen{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSixteen{}
-		var fernTestValueType BigUnionSixteenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTen(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTen{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTen{}
-		var fernTestValueType BigUnionTenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTen(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTen{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *AttractiveScript
+		obj.AttractiveScript = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAttractiveScript(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetAttractiveScript_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionTen
+		// Arrange
+		obj := &BigUnion{}
+		obj.AttractiveScript = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAttractiveScript(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAttractiveScript_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetAttractiveScript() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetHoarseMouse", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionTen{}
-		var expected BigUnionTenType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *HoarseMouse
+		obj.HoarseMouse = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetHoarseMouse(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetHoarseMouse_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionTen
+		// Arrange
+		obj := &BigUnion{}
+		obj.HoarseMouse = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetHoarseMouse(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetHoarseMouse_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetHoarseMouse() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionTen(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetCircularCard", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionTen{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTen{}
-		var fernTestValueType BigUnionTenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionThirteen(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionThirteen{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionThirteen{}
-		var fernTestValueType BigUnionThirteenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionThirteen(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionThirteen{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *CircularCard
+		obj.CircularCard = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCircularCard(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetCircularCard_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionThirteen
+		// Arrange
+		obj := &BigUnion{}
+		obj.CircularCard = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetCircularCard(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetCircularCard_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetCircularCard() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetPotableBad", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionThirteen{}
-		var expected BigUnionThirteenType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *PotableBad
+		obj.PotableBad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPotableBad(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetPotableBad_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionThirteen
+		// Arrange
+		obj := &BigUnion{}
+		obj.PotableBad = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPotableBad(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPotableBad_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
+		_ = obj.GetPotableBad() // Should return zero value
 	})
 
-}
-
-func TestSettersMarkExplicitBigUnionThirteen(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
+	t.Run("GetTriangularRepair", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionThirteen{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionThirteen{}
-		var fernTestValueType BigUnionThirteenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionThree(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionThree{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionThree{}
-		var fernTestValueType BigUnionThreeType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionThree(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionThree{}
-		var expected string
-		obj.Value = expected
+		obj := &BigUnion{}
+		var expected *TriangularRepair
+		obj.TriangularRepair = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTriangularRepair(), "getter should return the property value")
 	})
 
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetTriangularRepair_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionThree
+		// Arrange
+		obj := &BigUnion{}
+		obj.TriangularRepair = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetTriangularRepair(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetTriangularRepair_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetValue() // Should return zero value
+		_ = obj.GetTriangularRepair() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
+	t.Run("GetGaseousRoad", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
-		obj := &BigUnionThree{}
-		var expected BigUnionThreeType
-		obj.Type = expected
+		obj := &BigUnion{}
+		var expected *GaseousRoad
+		obj.GaseousRoad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetGaseousRoad(), "getter should return the property value")
 	})
 
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
+	t.Run("GetGaseousRoad_NilValue", func(t *testing.T) {
 		t.Parallel()
-		var obj *BigUnionThree
+		// Arrange
+		obj := &BigUnion{}
+		obj.GaseousRoad = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetGaseousRoad(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetGaseousRoad_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *BigUnion
 		// Should not panic - getters should handle nil receiver gracefully
 		defer func() {
 			if r := recover(); r != nil {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionThree(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionThree{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionThree{}
-		var fernTestValueType BigUnionThreeType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwelve(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwelve{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwelve{}
-		var fernTestValueType BigUnionTwelveType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwelve(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwelve{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwelve
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwelve{}
-		var expected BigUnionTwelveType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwelve
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwelve(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwelve{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwelve{}
-		var fernTestValueType BigUnionTwelveType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwenty(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwenty{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwenty{}
-		var fernTestValueType BigUnionTwentyType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwenty(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwenty{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwenty
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwenty{}
-		var expected BigUnionTwentyType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwenty
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwenty(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwenty{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwenty{}
-		var fernTestValueType BigUnionTwentyType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwentyEight(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwentyEight{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwentyEight{}
-		var fernTestValueType BigUnionTwentyEightType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwentyEight(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyEight{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyEight
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyEight{}
-		var expected BigUnionTwentyEightType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyEight
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwentyEight(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyEight{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyEight{}
-		var fernTestValueType BigUnionTwentyEightType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwentyFive(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwentyFive{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwentyFive{}
-		var fernTestValueType BigUnionTwentyFiveType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwentyFive(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyFive{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyFive
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyFive{}
-		var expected BigUnionTwentyFiveType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyFive
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwentyFive(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyFive{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyFive{}
-		var fernTestValueType BigUnionTwentyFiveType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwentyFour(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwentyFour{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwentyFour{}
-		var fernTestValueType BigUnionTwentyFourType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwentyFour(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyFour{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyFour
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyFour{}
-		var expected BigUnionTwentyFourType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyFour
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwentyFour(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyFour{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyFour{}
-		var fernTestValueType BigUnionTwentyFourType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwentyOne(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwentyOne{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwentyOne{}
-		var fernTestValueType BigUnionTwentyOneType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwentyOne(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyOne{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyOne
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyOne{}
-		var expected BigUnionTwentyOneType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyOne
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwentyOne(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyOne{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyOne{}
-		var fernTestValueType BigUnionTwentyOneType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwentySeven(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwentySeven{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwentySeven{}
-		var fernTestValueType BigUnionTwentySevenType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwentySeven(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentySeven{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentySeven
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentySeven{}
-		var expected BigUnionTwentySevenType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentySeven
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwentySeven(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentySeven{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentySeven{}
-		var fernTestValueType BigUnionTwentySevenType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwentySix(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwentySix{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwentySix{}
-		var fernTestValueType BigUnionTwentySixType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwentySix(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentySix{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentySix
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentySix{}
-		var expected BigUnionTwentySixType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentySix
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwentySix(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentySix{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentySix{}
-		var fernTestValueType BigUnionTwentySixType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwentyThree(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwentyThree{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwentyThree{}
-		var fernTestValueType BigUnionTwentyThreeType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwentyThree(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyThree{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyThree
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyThree{}
-		var expected BigUnionTwentyThreeType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyThree
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwentyThree(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyThree{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyThree{}
-		var fernTestValueType BigUnionTwentyThreeType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwentyTwo(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwentyTwo{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwentyTwo{}
-		var fernTestValueType BigUnionTwentyTwoType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwentyTwo(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyTwo{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyTwo
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyTwo{}
-		var expected BigUnionTwentyTwoType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyTwo
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwentyTwo(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyTwo{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyTwo{}
-		var fernTestValueType BigUnionTwentyTwoType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionTwo(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionTwo{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionTwo{}
-		var fernTestValueType BigUnionTwoType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionTwo(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwo{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwo
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwo{}
-		var expected BigUnionTwoType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwo
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionTwo(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwo{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwo{}
-		var fernTestValueType BigUnionTwoType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-}
-
-func TestSettersBigUnionZero(t *testing.T) {
-	t.Run("SetValue", func(t *testing.T) {
-		obj := &BigUnionZero{}
-		var fernTestValueValue string
-		obj.SetValue(fernTestValueValue)
-		assert.Equal(t, fernTestValueValue, obj.Value)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &BigUnionZero{}
-		var fernTestValueType BigUnionZeroType
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-}
-
-func TestGettersBigUnionZero(t *testing.T) {
-	t.Run("GetValue", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionZero{}
-		var expected string
-		obj.Value = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetValue(), "getter should return the property value")
-	})
-
-	t.Run("GetValue_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionZero
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetValue() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionZero{}
-		var expected BigUnionZeroType
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionZero
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-}
-
-func TestSettersMarkExplicitBigUnionZero(t *testing.T) {
-	t.Run("SetValue_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionZero{}
-		var fernTestValueValue string
-
-		// Act
-		obj.SetValue(fernTestValueValue)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionZero{}
-		var fernTestValueType BigUnionZeroType
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
+		_ = obj.GetGaseousRoad() // Should return zero value
 	})
 
 }
@@ -6996,963 +3197,6 @@ func TestJSONMarshalingAttractiveScript(t *testing.T) {
 	})
 }
 
-func TestJSONMarshalingBigUnionEight(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionEight{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionEight
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionEight
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionEight
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionEighteen(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionEighteen{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionEighteen
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionEighteen
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionEighteen
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionEleven(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionEleven{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionEleven
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionEleven
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionEleven
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionFifteen(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFifteen{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionFifteen
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionFifteen
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionFifteen
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionFive(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFive{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionFive
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionFive
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionFive
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionFour(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFour{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionFour
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionFour
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionFour
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionFourteen(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionFourteen{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionFourteen
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionFourteen
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionFourteen
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionNine(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionNine{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionNine
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionNine
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionNine
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionNineteen(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionNineteen{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionNineteen
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionNineteen
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionNineteen
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionOne(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionOne{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionOne
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionOne
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionOne
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionSeven(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSeven{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionSeven
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionSeven
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionSeven
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionSeventeen(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSeventeen{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionSeventeen
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionSeventeen
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionSeventeen
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionSix(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSix{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionSix
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionSix
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionSix
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionSixteen(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionSixteen{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionSixteen
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionSixteen
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionSixteen
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTen(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTen{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTen
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTen
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTen
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionThirteen(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionThirteen{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionThirteen
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionThirteen
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionThirteen
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionThree(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionThree{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionThree
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionThree
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionThree
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwelve(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwelve{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwelve
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwelve
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwelve
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwenty(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwenty{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwenty
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwenty
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwenty
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwentyEight(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyEight{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwentyEight
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyEight
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyEight
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwentyFive(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyFive{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwentyFive
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyFive
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyFive
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwentyFour(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyFour{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwentyFour
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyFour
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyFour
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwentyOne(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyOne{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwentyOne
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyOne
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyOne
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwentySeven(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentySeven{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwentySeven
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentySeven
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentySeven
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwentySix(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentySix{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwentySix
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentySix
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentySix
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwentyThree(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyThree{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwentyThree
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyThree
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyThree
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwentyTwo(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwentyTwo{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwentyTwo
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyTwo
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwentyTwo
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionTwo(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionTwo{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionTwo
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwo
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionTwo
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
-func TestJSONMarshalingBigUnionZero(t *testing.T) {
-	t.Run("MarshalUnmarshal", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &BigUnionZero{}
-
-		// Act - Marshal to JSON
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		assert.NotNil(t, data, "marshaled data should not be nil")
-		assert.NotEmpty(t, data, "marshaled data should not be empty")
-
-		// Unmarshal back and verify round-trip
-		var unmarshaled BigUnionZero
-		err = json.Unmarshal(data, &unmarshaled)
-		assert.NoError(t, err, "round-trip unmarshal should succeed")
-	})
-
-	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionZero
-		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
-		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
-	})
-
-	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
-		t.Parallel()
-		var obj BigUnionZero
-		err := json.Unmarshal([]byte(`{}`), &obj)
-		assert.NoError(t, err, "unmarshaling empty object should succeed")
-	})
-}
-
 func TestJSONMarshalingCircularCard(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -8876,470 +4120,6 @@ func TestStringAttractiveScript(t *testing.T) {
 	})
 }
 
-func TestStringBigUnionEight(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionEight{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionEight
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionEighteen(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionEighteen{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionEighteen
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionEleven(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionEleven{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionEleven
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionFifteen(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionFifteen{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionFifteen
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionFive(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionFive{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionFive
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionFour(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionFour{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionFour
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionFourteen(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionFourteen{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionFourteen
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionNine(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionNine{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionNine
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionNineteen(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionNineteen{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionNineteen
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionOne(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionOne{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionOne
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionSeven(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionSeven{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionSeven
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionSeventeen(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionSeventeen{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionSeventeen
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionSix(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionSix{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionSix
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionSixteen(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionSixteen{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionSixteen
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTen(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTen{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTen
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionThirteen(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionThirteen{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionThirteen
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionThree(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionThree{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionThree
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwelve(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwelve{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwelve
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwenty(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwenty{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwenty
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwentyEight(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyEight{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyEight
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwentyFive(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyFive{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyFive
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwentyFour(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyFour{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyFour
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwentyOne(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyOne{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyOne
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwentySeven(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentySeven{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentySeven
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwentySix(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentySix{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentySix
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwentyThree(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyThree{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyThree
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwentyTwo(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyTwo{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyTwo
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionTwo(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwo{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwo
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
-func TestStringBigUnionZero(t *testing.T) {
-	t.Run("StringMethod", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionZero{}
-		result := obj.String()
-		assert.NotEmpty(t, result, "String() should return a non-empty representation")
-	})
-
-	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionZero
-		result := obj.String()
-		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
-	})
-}
-
 func TestStringCircularCard(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -9772,644 +4552,6 @@ func TestStringVibrantExcitement(t *testing.T) {
 	})
 }
 
-func TestEnumBigUnionEightType(t *testing.T) {
-	t.Run("NewFromString_vibrantExcitement", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionEightTypeFromString("vibrantExcitement")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionEightType("vibrantExcitement"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionEightTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionEightTypeFromString("vibrantExcitement")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionEighteenType(t *testing.T) {
-	t.Run("NewFromString_harmoniousPlay", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionEighteenTypeFromString("harmoniousPlay")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionEighteenType("harmoniousPlay"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionEighteenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionEighteenTypeFromString("harmoniousPlay")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionElevenType(t *testing.T) {
-	t.Run("NewFromString_falseMirror", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionElevenTypeFromString("falseMirror")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionElevenType("falseMirror"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionElevenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionElevenTypeFromString("falseMirror")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionFifteenType(t *testing.T) {
-	t.Run("NewFromString_disloyalValue", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionFifteenTypeFromString("disloyalValue")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionFifteenType("disloyalValue"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionFifteenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionFifteenTypeFromString("disloyalValue")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionFiveType(t *testing.T) {
-	t.Run("NewFromString_distinctFailure", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionFiveTypeFromString("distinctFailure")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionFiveType("distinctFailure"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionFiveTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionFiveTypeFromString("distinctFailure")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionFourType(t *testing.T) {
-	t.Run("NewFromString_mistySnow", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionFourTypeFromString("mistySnow")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionFourType("mistySnow"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionFourTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionFourTypeFromString("mistySnow")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionFourteenType(t *testing.T) {
-	t.Run("NewFromString_colorfulCover", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionFourteenTypeFromString("colorfulCover")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionFourteenType("colorfulCover"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionFourteenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionFourteenTypeFromString("colorfulCover")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionNineType(t *testing.T) {
-	t.Run("NewFromString_activeDiamond", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionNineTypeFromString("activeDiamond")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionNineType("activeDiamond"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionNineTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionNineTypeFromString("activeDiamond")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionNineteenType(t *testing.T) {
-	t.Run("NewFromString_uniqueStress", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionNineteenTypeFromString("uniqueStress")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionNineteenType("uniqueStress"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionNineteenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionNineteenTypeFromString("uniqueStress")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionOneType(t *testing.T) {
-	t.Run("NewFromString_thankfulFactor", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionOneTypeFromString("thankfulFactor")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionOneType("thankfulFactor"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionOneTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionOneTypeFromString("thankfulFactor")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionSevenType(t *testing.T) {
-	t.Run("NewFromString_limpingStep", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionSevenTypeFromString("limpingStep")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionSevenType("limpingStep"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionSevenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionSevenTypeFromString("limpingStep")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionSeventeenType(t *testing.T) {
-	t.Run("NewFromString_totalWork", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionSeventeenTypeFromString("totalWork")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionSeventeenType("totalWork"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionSeventeenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionSeventeenTypeFromString("totalWork")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionSixType(t *testing.T) {
-	t.Run("NewFromString_practicalPrinciple", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionSixTypeFromString("practicalPrinciple")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionSixType("practicalPrinciple"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionSixTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionSixTypeFromString("practicalPrinciple")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionSixteenType(t *testing.T) {
-	t.Run("NewFromString_gruesomeCoach", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionSixteenTypeFromString("gruesomeCoach")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionSixteenType("gruesomeCoach"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionSixteenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionSixteenTypeFromString("gruesomeCoach")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTenType(t *testing.T) {
-	t.Run("NewFromString_popularLimit", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTenTypeFromString("popularLimit")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTenType("popularLimit"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTenTypeFromString("popularLimit")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionThirteenType(t *testing.T) {
-	t.Run("NewFromString_rotatingRatio", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionThirteenTypeFromString("rotatingRatio")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionThirteenType("rotatingRatio"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionThirteenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionThirteenTypeFromString("rotatingRatio")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionThreeType(t *testing.T) {
-	t.Run("NewFromString_hastyPain", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionThreeTypeFromString("hastyPain")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionThreeType("hastyPain"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionThreeTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionThreeTypeFromString("hastyPain")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwelveType(t *testing.T) {
-	t.Run("NewFromString_primaryBlock", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwelveTypeFromString("primaryBlock")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwelveType("primaryBlock"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwelveTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwelveTypeFromString("primaryBlock")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwentyEightType(t *testing.T) {
-	t.Run("NewFromString_gaseousRoad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwentyEightTypeFromString("gaseousRoad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwentyEightType("gaseousRoad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwentyEightTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwentyEightTypeFromString("gaseousRoad")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwentyFiveType(t *testing.T) {
-	t.Run("NewFromString_circularCard", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwentyFiveTypeFromString("circularCard")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwentyFiveType("circularCard"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwentyFiveTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwentyFiveTypeFromString("circularCard")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwentyFourType(t *testing.T) {
-	t.Run("NewFromString_hoarseMouse", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwentyFourTypeFromString("hoarseMouse")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwentyFourType("hoarseMouse"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwentyFourTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwentyFourTypeFromString("hoarseMouse")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwentyOneType(t *testing.T) {
-	t.Run("NewFromString_frozenSleep", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwentyOneTypeFromString("frozenSleep")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwentyOneType("frozenSleep"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwentyOneTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwentyOneTypeFromString("frozenSleep")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwentySevenType(t *testing.T) {
-	t.Run("NewFromString_triangularRepair", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwentySevenTypeFromString("triangularRepair")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwentySevenType("triangularRepair"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwentySevenTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwentySevenTypeFromString("triangularRepair")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwentySixType(t *testing.T) {
-	t.Run("NewFromString_potableBad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwentySixTypeFromString("potableBad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwentySixType("potableBad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwentySixTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwentySixTypeFromString("potableBad")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwentyThreeType(t *testing.T) {
-	t.Run("NewFromString_attractiveScript", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwentyThreeTypeFromString("attractiveScript")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwentyThreeType("attractiveScript"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwentyThreeTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwentyThreeTypeFromString("attractiveScript")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwentyTwoType(t *testing.T) {
-	t.Run("NewFromString_diligentDeal", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwentyTwoTypeFromString("diligentDeal")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwentyTwoType("diligentDeal"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwentyTwoTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwentyTwoTypeFromString("diligentDeal")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwentyType(t *testing.T) {
-	t.Run("NewFromString_unwillingSmoke", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwentyTypeFromString("unwillingSmoke")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwentyType("unwillingSmoke"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwentyTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwentyTypeFromString("unwillingSmoke")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionTwoType(t *testing.T) {
-	t.Run("NewFromString_jumboEnd", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionTwoTypeFromString("jumboEnd")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionTwoType("jumboEnd"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionTwoTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionTwoTypeFromString("jumboEnd")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumBigUnionZeroType(t *testing.T) {
-	t.Run("NewFromString_normalSweet", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewBigUnionZeroTypeFromString("normalSweet")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, BigUnionZeroType("normalSweet"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewBigUnionZeroTypeFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewBigUnionZeroTypeFromString("normalSweet")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestExtraPropertiesActiveDiamond(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -10451,673 +4593,6 @@ func TestExtraPropertiesAttractiveScript(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *AttractiveScript
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionEight(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionEight{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionEight
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionEighteen(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionEighteen{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionEighteen
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionEleven(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionEleven{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionEleven
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionFifteen(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionFifteen{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionFifteen
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionFive(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionFive{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionFive
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionFour(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionFour{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionFour
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionFourteen(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionFourteen{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionFourteen
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionNine(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionNine{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionNine
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionNineteen(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionNineteen{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionNineteen
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionOne(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionOne{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionOne
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionSeven(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionSeven{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionSeven
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionSeventeen(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionSeventeen{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionSeventeen
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionSix(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionSix{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionSix
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionSixteen(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionSixteen{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionSixteen
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTen(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTen{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTen
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionThirteen(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionThirteen{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionThirteen
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionThree(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionThree{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionThree
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwelve(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwelve{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwelve
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwenty(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwenty{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwenty
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwentyEight(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyEight{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyEight
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwentyFive(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyFive{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyFive
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwentyFour(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyFour{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyFour
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwentyOne(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyOne{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyOne
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwentySeven(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentySeven{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentySeven
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwentySix(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentySix{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentySix
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwentyThree(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyThree{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyThree
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwentyTwo(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwentyTwo{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwentyTwo
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionTwo(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionTwo{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionTwo
-		extraProps := obj.GetExtraProperties()
-		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
-	})
-}
-
-func TestExtraPropertiesBigUnionZero(t *testing.T) {
-	t.Run("GetExtraProperties", func(t *testing.T) {
-		t.Parallel()
-		obj := &BigUnionZero{}
-		// Should not panic when calling GetExtraProperties()
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("GetExtraProperties() panicked: %v", r)
-			}
-		}()
-		extraProps := obj.GetExtraProperties()
-		// Result can be nil or an empty/non-empty map
-		_ = extraProps
-	})
-
-	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *BigUnionZero
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

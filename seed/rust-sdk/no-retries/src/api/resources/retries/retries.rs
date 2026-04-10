@@ -13,9 +13,9 @@ impl RetriesClient {
         })
     }
 
-    pub async fn getusers(&self, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
+    pub async fn get_users(&self, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users", None, None, options)
+            .execute_request(Method::GET, "/users", None, None, options)
             .await
     }
 }

@@ -13,7 +13,7 @@ impl ServiceClient {
         })
     }
 
-    pub async fn getmovie(
+    pub async fn get_movie(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -29,7 +29,7 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn getmoviedocs(
+    pub async fn get_movie_docs(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -37,7 +37,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie/docs",
+                "movie",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -45,7 +45,7 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn getmoviename(
+    pub async fn get_movie_name(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -53,7 +53,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie/name",
+                "movie",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -61,7 +61,7 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn getmoviemetadata(
+    pub async fn get_movie_metadata(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -69,7 +69,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie/metadata",
+                "movie",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -77,15 +77,15 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn getoptionalmovie(
+    pub async fn get_optional_movie(
         &self,
         request: &str,
         options: Option<RequestOptions>,
-    ) -> Result<Response, ApiError> {
+    ) -> Result<Option<Response>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie/optional",
+                "movie",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -93,7 +93,7 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn getoptionalmoviedocs(
+    pub async fn get_optional_movie_docs(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -101,7 +101,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie/optional/docs",
+                "movie",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -109,7 +109,7 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn getoptionalmoviename(
+    pub async fn get_optional_movie_name(
         &self,
         request: &str,
         options: Option<RequestOptions>,
@@ -117,7 +117,7 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "movie/optional/name",
+                "movie",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

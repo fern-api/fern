@@ -4,37 +4,37 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/bigunion/{id}",
+                "path": "/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_bigunion.get"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Bigunion.GetAsync(new BigunionGetRequest { Id = \"id\" });\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.GetAsync(\"id\");\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/bigunion",
+                "path": "/",
                 "method": "PATCH",
                 "identifier_override": "endpoint_bigunion.update"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Bigunion.UpdateAsync(\n    new BigUnionZero { Value = \"value\", Type = BigUnionZeroType.NormalSweet }\n);\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateAsync(\n    new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = \"value\" }))\n);\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/bigunion/many",
+                "path": "/many",
                 "method": "PATCH",
-                "identifier_override": "endpoint_bigunion.updateMany"
+                "identifier_override": "endpoint_bigunion.update-many"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using OneOf;\nusing SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Bigunion.UpdateManyAsync(\n    new List<\n        OneOf<\n            BigUnionZero,\n            BigUnionOne,\n            BigUnionTwo,\n            BigUnionThree,\n            BigUnionFour,\n            BigUnionFive,\n            BigUnionSix,\n            BigUnionSeven,\n            BigUnionEight,\n            BigUnionNine,\n            BigUnionTen,\n            BigUnionEleven,\n            BigUnionTwelve,\n            BigUnionThirteen,\n            BigUnionFourteen,\n            BigUnionFifteen,\n            BigUnionSixteen,\n            BigUnionSeventeen,\n            BigUnionEighteen,\n            BigUnionNineteen,\n            BigUnionTwenty,\n            BigUnionTwentyOne,\n            BigUnionTwentyTwo,\n            BigUnionTwentyThree,\n            BigUnionTwentyFour,\n            BigUnionTwentyFive,\n            BigUnionTwentySix,\n            BigUnionTwentySeven,\n            BigUnionTwentyEight\n        >\n    >()\n    {\n        new BigUnionZero { Value = \"value\", Type = BigUnionZeroType.NormalSweet },\n    }\n);\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Bigunion.UpdateManyAsync(\n    new List<BigUnion>()\n    {\n        new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = \"value\" })),\n        new BigUnion(new BigUnion.NormalSweet(new NormalSweet { Value = \"value\" })),\n    }\n);\n"
             }
         },
         {
@@ -46,7 +46,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Union.GetAsync(new UnionGetRequest { Id = \"id\" });\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Union.GetAsync(\"id\");\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Union.UpdateAsync(new ShapeZero { Radius = 1.1, Type = ShapeZeroType.Circle });\n"
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Union.UpdateAsync(new Shape(new Shape.Circle(new Circle { Radius = 1.1 })));\n"
             }
         }
     ]

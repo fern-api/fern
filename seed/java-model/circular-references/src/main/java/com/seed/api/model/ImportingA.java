@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.model.a.A;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
@@ -21,14 +22,14 @@ import java.util.Optional;
     builder = ImportingA.Builder.class
 )
 public final class ImportingA {
-  private final Optional<RootType> a;
+  private final Optional<A> a;
 
-  private ImportingA(Optional<RootType> a) {
+  private ImportingA(Optional<A> a) {
     this.a = a;
   }
 
   @JsonProperty("a")
-  public Optional<RootType> getA() {
+  public Optional<A> getA() {
     return a;
   }
 
@@ -60,7 +61,7 @@ public final class ImportingA {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private Optional<RootType> a = Optional.empty();
+    private Optional<A> a = Optional.empty();
 
     private Builder() {
     }
@@ -74,12 +75,12 @@ public final class ImportingA {
         value = "a",
         nulls = Nulls.SKIP
     )
-    public Builder a(Optional<RootType> a) {
+    public Builder a(Optional<A> a) {
       this.a = a;
       return this;
     }
 
-    public Builder a(RootType a) {
+    public Builder a(A a) {
       this.a = Optional.ofNullable(a);
       return this;
     }

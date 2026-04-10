@@ -10,23 +10,67 @@ import (
 )
 
 // A sort field that only allows the value "DEFAULT"
-type SortField string
+type SortField = string
 
-const (
-	SortFieldDefault = "DEFAULT"
-)
+type SearchRequest struct {
+	// The sort field to use
+	SortField *SortField `json:"sortField,omitempty" url:"sortField,omitempty"`
+	// The search query
+	Query string `json:"query" url:"query"`
 
-func NewSortFieldFromString(s string) (SortField, error) {
-	switch s {
-	case "DEFAULT":
-		return SortFieldDefault, nil
-	}
-	var t SortField
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
-func (s SortField) Ptr() *SortField {
-	return &s
+func (s *SearchRequest) GetSortField() *SortField {
+	if s == nil {
+		return nil
+	}
+	return s.SortField
+}
+
+func (s *SearchRequest) GetQuery() string {
+	if s == nil {
+		return ""
+	}
+	return s.Query
+}
+
+func (s *SearchRequest) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SearchRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler SearchRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SearchRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SearchRequest) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 type SearchResponse struct {

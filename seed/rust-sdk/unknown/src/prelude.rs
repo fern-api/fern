@@ -1,7 +1,7 @@
 //! Prelude module for convenient imports
 //!
 //! This module re-exports the most commonly used types and traits.
-//! Import it with: `use seed_api::prelude::*;`
+//! Import it with: `use seed_unknown_as_any::prelude::*;`
 
 // Client and configuration
 pub use crate::config::ClientConfig;

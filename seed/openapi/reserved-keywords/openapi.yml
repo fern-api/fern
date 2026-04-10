@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: reserved-keywords
+  title: nursery-api
   version: ''
 paths:
   /:
@@ -14,10 +14,6 @@ paths:
           required: true
           schema:
             type: string
-          example: for
-          examples:
-            Example1:
-              value: for
       responses:
         '204':
           description: ''

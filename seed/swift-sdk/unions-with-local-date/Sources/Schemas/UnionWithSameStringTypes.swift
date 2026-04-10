@@ -1,20 +1,20 @@
 import Foundation
 
 public enum UnionWithSameStringTypes: Codable, Hashable, Sendable {
-    case customFormat(UnionWithSameStringTypesCustomFormat)
-    case patternString(UnionWithSameStringTypesPatternString)
-    case regularString(UnionWithSameStringTypesRegularString)
+    case customFormat(String)
+    case patternString(String)
+    case regularString(String)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "customFormat":
-            self = .customFormat(try UnionWithSameStringTypesCustomFormat(from: decoder))
+            self = .customFormat(try container.decode(String.self, forKey: .value))
         case "patternString":
-            self = .patternString(try UnionWithSameStringTypesPatternString(from: decoder))
+            self = .patternString(try container.decode(String.self, forKey: .value))
         case "regularString":
-            self = .regularString(try UnionWithSameStringTypesRegularString(from: decoder))
+            self = .regularString(try container.decode(String.self, forKey: .value))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -30,17 +30,18 @@ public enum UnionWithSameStringTypes: Codable, Hashable, Sendable {
         switch self {
         case .customFormat(let data):
             try container.encode("customFormat", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         case .patternString(let data):
             try container.encode("patternString", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         case .regularString(let data):
             try container.encode("regularString", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
+        case value
     }
 }

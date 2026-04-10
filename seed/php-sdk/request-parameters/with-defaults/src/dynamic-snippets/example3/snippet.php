@@ -3,17 +3,17 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\CreateUsernameBodyOptionalProperties;
+use Seed\User\Types\CreateUsernameBodyOptionalProperties;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->createusernameoptional(
+$client->user->createUsernameOptional(
     new CreateUsernameBodyOptionalProperties([
         'username' => 'username',
         'password' => 'password',
-        'name' => 'name',
+        'name' => 'test',
     ]),
 );

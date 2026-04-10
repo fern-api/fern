@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
 )
@@ -17,10 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.TypesObjectWithRequiredField{
-        FieldString: "string",
-    }
-    client.EndpointsObject.EndpointsObjectGetAndReturnWithRequiredField(
+    request := []byte("SGVsbG8gd29ybGQh")
+    client.Endpoints.Primitive.GetAndReturnBase64(
         context.TODO(),
         request,
     )

@@ -2,17 +2,17 @@ import Foundation
 
 /// This is a simple union.
 public enum Union: Codable, Hashable, Sendable {
-    case bar(UnionBar)
-    case foo(UnionFoo)
+    case bar(Bar)
+    case foo(Foo)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "bar":
-            self = .bar(try UnionBar(from: decoder))
+            self = .bar(try container.decode(Bar.self, forKey: .bar))
         case "foo":
-            self = .foo(try UnionFoo(from: decoder))
+            self = .foo(try container.decode(Foo.self, forKey: .foo))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -28,14 +28,16 @@ public enum Union: Codable, Hashable, Sendable {
         switch self {
         case .bar(let data):
             try container.encode("bar", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .bar)
         case .foo(let data):
             try container.encode("foo", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .foo)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
+        case bar
+        case foo
     }
 }

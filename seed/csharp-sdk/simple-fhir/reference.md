@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">GetAccountAsync</a>(GetAccountRequest { ... }) -> WithRawResponseTask&lt;Account&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetAccountAsync</a>(accountId) -> WithRawResponseTask&lt;Account&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```csharp
-await client._.GetAccountAsync(new GetAccountRequest { AccountId = "account_id" });
+await client.GetAccountAsync("account_id");
 ```
 </dd>
 </dl>
@@ -28,7 +27,7 @@ await client._.GetAccountAsync(new GetAccountRequest { AccountId = "account_id" 
 <dl>
 <dd>
 
-**request:** `GetAccountRequest` 
+**accountId:** `string` 
     
 </dd>
 </dl>

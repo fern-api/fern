@@ -11,7 +11,6 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Errors](#errors)
-- [Request Types](#request-types)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -54,10 +53,11 @@ async fn main() {
     let client = CustomImdbClient::new(config).expect("Failed to build client");
     client
         .imdb
-        .createmovie(
+        .create_movie(
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
+                ..Default::default()
             },
             None,
         )
@@ -70,7 +70,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.imdb.createmovie(None)?.await {
+match client.imdb.create_movie(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -81,18 +81,6 @@ match client.imdb.createmovie(None)?.await {
         println!("Other error: {:?}", e);
     }
 }
-```
-
-## Request Types
-
-The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
-
-```rust
-use custom_imdb_sdk::prelude::{*};
-
-let request = CreateMovieRequest {
-    ...
-};
 ```
 
 ## Advanced
@@ -112,7 +100,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.imdb.createmovie(
+let response = client.imdb.create_movie(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -122,7 +110,7 @@ let response = client.imdb.createmovie(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.imdb.createmovie(
+let response = client.imdb.create_movie(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -132,7 +120,7 @@ let response = client.imdb.createmovie(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.imdb.createmovie(
+let response = client.imdb.create_movie(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -147,7 +135,7 @@ let response = client.imdb.createmovie(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.imdb.createmovie(
+let response = client.imdb.create_movie(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

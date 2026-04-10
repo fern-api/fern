@@ -9,9 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.auth_token_response import AuthTokenResponse
-from .types.auth_get_token_request_audience import AuthGetTokenRequestAudience
-from .types.auth_get_token_request_grant_type import AuthGetTokenRequestGrantType
+from .types.token_response import TokenResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -22,26 +20,20 @@ class RawAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def gettoken(
+    def get_token(
         self,
         *,
         client_id: str,
         client_secret: str,
-        audience: AuthGetTokenRequestAudience,
-        grant_type: AuthGetTokenRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[AuthTokenResponse]:
+    ) -> HttpResponse[TokenResponse]:
         """
         Parameters
         ----------
         client_id : str
 
         client_secret : str
-
-        audience : AuthGetTokenRequestAudience
-
-        grant_type : AuthGetTokenRequestGrantType
 
         scope : typing.Optional[str]
 
@@ -50,8 +42,7 @@ class RawAuthClient:
 
         Returns
         -------
-        HttpResponse[AuthTokenResponse]
-
+        HttpResponse[TokenResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "token",
@@ -59,12 +50,9 @@ class RawAuthClient:
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
-                "audience": audience,
-                "grant_type": grant_type,
                 "scope": scope,
-            },
-            headers={
-                "content-type": "application/json",
+                "audience": "https://api.example.com",
+                "grant_type": "client_credentials",
             },
             request_options=request_options,
             omit=OMIT,
@@ -72,9 +60,9 @@ class RawAuthClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    AuthTokenResponse,
+                    TokenResponse,
                     parse_obj_as(
-                        type_=AuthTokenResponse,  # type: ignore
+                        type_=TokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -93,26 +81,20 @@ class AsyncRawAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def gettoken(
+    async def get_token(
         self,
         *,
         client_id: str,
         client_secret: str,
-        audience: AuthGetTokenRequestAudience,
-        grant_type: AuthGetTokenRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AuthTokenResponse]:
+    ) -> AsyncHttpResponse[TokenResponse]:
         """
         Parameters
         ----------
         client_id : str
 
         client_secret : str
-
-        audience : AuthGetTokenRequestAudience
-
-        grant_type : AuthGetTokenRequestGrantType
 
         scope : typing.Optional[str]
 
@@ -121,8 +103,7 @@ class AsyncRawAuthClient:
 
         Returns
         -------
-        AsyncHttpResponse[AuthTokenResponse]
-
+        AsyncHttpResponse[TokenResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "token",
@@ -130,12 +111,9 @@ class AsyncRawAuthClient:
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
-                "audience": audience,
-                "grant_type": grant_type,
                 "scope": scope,
-            },
-            headers={
-                "content-type": "application/json",
+                "audience": "https://api.example.com",
+                "grant_type": "client_credentials",
             },
             request_options=request_options,
             omit=OMIT,
@@ -143,9 +121,9 @@ class AsyncRawAuthClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    AuthTokenResponse,
+                    TokenResponse,
                     parse_obj_as(
-                        type_=AuthTokenResponse,  # type: ignore
+                        type_=TokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

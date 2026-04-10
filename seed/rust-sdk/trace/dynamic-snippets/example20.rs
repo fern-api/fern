@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,9 +7,84 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = TraceClient::new(config).expect("Failed to build client");
     client
-        .homepage
-        .sethomepageproblems(&vec![ProblemId("string".to_string())], None)
+        .problem
+        .create_problem(
+            &CreateProblemRequest {
+                problem_name: "problemName".to_string(),
+                problem_description: ProblemDescription {
+                    boards: vec![
+                        ProblemDescriptionBoard::Html {
+                            value: "value".to_string(),
+                        },
+                        ProblemDescriptionBoard::Html {
+                            value: "value".to_string(),
+                        },
+                    ],
+                    ..Default::default()
+                },
+                files: HashMap::from([(
+                    Language::Java,
+                    ProblemFiles {
+                        solution_file: FileInfo {
+                            filename: "filename".to_string(),
+                            contents: "contents".to_string(),
+                            ..Default::default()
+                        },
+                        read_only_files: vec![
+                            FileInfo {
+                                filename: "filename".to_string(),
+                                contents: "contents".to_string(),
+                                ..Default::default()
+                            },
+                            FileInfo {
+                                filename: "filename".to_string(),
+                                contents: "contents".to_string(),
+                                ..Default::default()
+                            },
+                        ],
+                        ..Default::default()
+                    },
+                )]),
+                input_params: vec![
+                    VariableTypeAndName {
+                        variable_type: VariableType::IntegerType,
+                        name: "name".to_string(),
+                    },
+                    VariableTypeAndName {
+                        variable_type: VariableType::IntegerType,
+                        name: "name".to_string(),
+                    },
+                ],
+                output_type: VariableType::IntegerType,
+                testcases: vec![
+                    TestCaseWithExpectedResult {
+                        test_case: TestCase {
+                            id: "id".to_string(),
+                            params: vec![
+                                VariableValue::IntegerValue { value: 0 },
+                                VariableValue::IntegerValue { value: 0 },
+                            ],
+                            ..Default::default()
+                        },
+                        expected_result: VariableValue::IntegerValue { value: 0 },
+                    },
+                    TestCaseWithExpectedResult {
+                        test_case: TestCase {
+                            id: "id".to_string(),
+                            params: vec![
+                                VariableValue::IntegerValue { value: 0 },
+                                VariableValue::IntegerValue { value: 0 },
+                            ],
+                            ..Default::default()
+                        },
+                        expected_result: VariableValue::IntegerValue { value: 0 },
+                    },
+                ],
+                method_name: "methodName".to_string(),
+            },
+            None,
+        )
         .await;
 }

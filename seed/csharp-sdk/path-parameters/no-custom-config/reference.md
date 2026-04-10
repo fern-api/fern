@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.Organizations.<a href="/src/SeedApi/Organizations/OrganizationsClient.cs">GetorganizationAsync</a>(OrganizationsGetOrganizationRequest { ... }) -> WithRawResponseTask&lt;Organization&gt;</code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationAsync</a>(tenantId, organizationId) -> WithRawResponseTask&lt;Organization&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,7 @@
 <dd>
 
 ```csharp
-await client.Organizations.GetorganizationAsync(
-    new OrganizationsGetOrganizationRequest
-    {
-        TenantId = "tenant_id",
-        OrganizationId = "organization_id",
-    }
-);
+await client.Organizations.GetOrganizationAsync("tenant_id", "organization_id");
 ```
 </dd>
 </dl>
@@ -34,7 +28,15 @@ await client.Organizations.GetorganizationAsync(
 <dl>
 <dd>
 
-**request:** `OrganizationsGetOrganizationRequest` 
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationId:** `string` 
     
 </dd>
 </dl>
@@ -46,7 +48,7 @@ await client.Organizations.GetorganizationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.<a href="/src/SeedApi/Organizations/OrganizationsClient.cs">GetorganizationuserAsync</a>(OrganizationsGetOrganizationUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">GetOrganizationUserAsync</a>(GetOrganizationUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -59,8 +61,8 @@ await client.Organizations.GetorganizationAsync(
 <dd>
 
 ```csharp
-await client.Organizations.GetorganizationuserAsync(
-    new OrganizationsGetOrganizationUserRequest
+await client.Organizations.GetOrganizationUserAsync(
+    new GetOrganizationUserRequest
     {
         TenantId = "tenant_id",
         OrganizationId = "organization_id",
@@ -81,7 +83,7 @@ await client.Organizations.GetorganizationuserAsync(
 <dl>
 <dd>
 
-**request:** `OrganizationsGetOrganizationUserRequest` 
+**request:** `GetOrganizationUserRequest` 
     
 </dd>
 </dl>
@@ -93,7 +95,7 @@ await client.Organizations.GetorganizationuserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.<a href="/src/SeedApi/Organizations/OrganizationsClient.cs">SearchorganizationsAsync</a>(OrganizationsSearchOrganizationsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Organization&gt;&gt;</code></summary>
+<details><summary><code>client.Organizations.<a href="/src/SeedPathParameters/Organizations/OrganizationsClient.cs">SearchOrganizationsAsync</a>(tenantId, organizationId, SearchOrganizationsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Organization&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -106,12 +108,10 @@ await client.Organizations.GetorganizationuserAsync(
 <dd>
 
 ```csharp
-await client.Organizations.SearchorganizationsAsync(
-    new OrganizationsSearchOrganizationsRequest
-    {
-        TenantId = "tenant_id",
-        OrganizationId = "organization_id",
-    }
+await client.Organizations.SearchOrganizationsAsync(
+    "tenant_id",
+    "organization_id",
+    new SearchOrganizationsRequest { Limit = 1 }
 );
 ```
 </dd>
@@ -127,7 +127,23 @@ await client.Organizations.SearchorganizationsAsync(
 <dl>
 <dd>
 
-**request:** `OrganizationsSearchOrganizationsRequest` 
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organizationId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SearchOrganizationsRequest` 
     
 </dd>
 </dl>
@@ -140,7 +156,7 @@ await client.Organizations.SearchorganizationsAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetuserAsync</a>(UserGetUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserAsync</a>(GetUsersRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -153,8 +169,53 @@ await client.Organizations.SearchorganizationsAsync(
 <dd>
 
 ```csharp
-await client.User.GetuserAsync(
-    new UserGetUserRequest { TenantId = "tenant_id", UserId = "user_id" }
+await client.User.GetUserAsync(new GetUsersRequest { TenantId = "tenant_id", UserId = "user_id" });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `GetUsersRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">CreateUserAsync</a>(tenantId, User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.CreateUserAsync(
+    "tenant_id",
+    new User
+    {
+        Name = "name",
+        Tags = new List<string>() { "tags", "tags" },
+    }
 );
 ```
 </dd>
@@ -170,7 +231,15 @@ await client.User.GetuserAsync(
 <dl>
 <dd>
 
-**request:** `UserGetUserRequest` 
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `User` 
     
 </dd>
 </dl>
@@ -182,7 +251,7 @@ await client.User.GetuserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">UpdateuserAsync</a>(UserUpdateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">UpdateUserAsync</a>(UpdateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -195,15 +264,15 @@ await client.User.GetuserAsync(
 <dd>
 
 ```csharp
-await client.User.UpdateuserAsync(
-    new UserUpdateUserRequest
+await client.User.UpdateUserAsync(
+    new UpdateUserRequest
     {
         TenantId = "tenant_id",
         UserId = "user_id",
         Body = new User
         {
             Name = "name",
-            Tags = new List<string>() { "tags" },
+            Tags = new List<string>() { "tags", "tags" },
         },
     }
 );
@@ -221,7 +290,7 @@ await client.User.UpdateuserAsync(
 <dl>
 <dd>
 
-**request:** `UserUpdateUserRequest` 
+**request:** `UpdateUserRequest` 
     
 </dd>
 </dl>
@@ -233,7 +302,7 @@ await client.User.UpdateuserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">CreateuserAsync</a>(UserCreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">SearchUsersAsync</a>(SearchUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -246,15 +315,12 @@ await client.User.UpdateuserAsync(
 <dd>
 
 ```csharp
-await client.User.CreateuserAsync(
-    new UserCreateUserRequest
+await client.User.SearchUsersAsync(
+    new SearchUsersRequest
     {
         TenantId = "tenant_id",
-        Body = new User
-        {
-            Name = "name",
-            Tags = new List<string>() { "tags" },
-        },
+        UserId = "user_id",
+        Limit = 1,
     }
 );
 ```
@@ -271,7 +337,7 @@ await client.User.CreateuserAsync(
 <dl>
 <dd>
 
-**request:** `UserCreateUserRequest` 
+**request:** `SearchUsersRequest` 
     
 </dd>
 </dl>
@@ -283,49 +349,7 @@ await client.User.CreateuserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">SearchusersAsync</a>(UserSearchUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.User.SearchusersAsync(
-    new UserSearchUsersRequest { TenantId = "tenant_id", UserId = "user_id" }
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `UserSearchUsersRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetusermetadataAsync</a>(UserGetUserMetadataRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserMetadataAsync</a>(GetUserMetadataRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -352,8 +376,8 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```csharp
-await client.User.GetusermetadataAsync(
-    new UserGetUserMetadataRequest
+await client.User.GetUserMetadataAsync(
+    new GetUserMetadataRequest
     {
         TenantId = "tenant_id",
         UserId = "user_id",
@@ -374,7 +398,7 @@ await client.User.GetusermetadataAsync(
 <dl>
 <dd>
 
-**request:** `UserGetUserMetadataRequest` 
+**request:** `GetUserMetadataRequest` 
     
 </dd>
 </dl>
@@ -386,7 +410,7 @@ await client.User.GetusermetadataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetuserspecificsAsync</a>(UserGetUserSpecificsRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserSpecificsAsync</a>(GetUserSpecificsRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -413,8 +437,8 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```csharp
-await client.User.GetuserspecificsAsync(
-    new UserGetUserSpecificsRequest
+await client.User.GetUserSpecificsAsync(
+    new GetUserSpecificsRequest
     {
         TenantId = "tenant_id",
         UserId = "user_id",
@@ -436,7 +460,7 @@ await client.User.GetuserspecificsAsync(
 <dl>
 <dd>
 
-**request:** `UserGetUserSpecificsRequest` 
+**request:** `GetUserSpecificsRequest` 
     
 </dd>
 </dl>

@@ -13,7 +13,7 @@ impl UserClient {
         })
     }
 
-    pub async fn getuser(
+    pub async fn get_user(
         &self,
         tenant_id: &str,
         user_id: &str,
@@ -22,7 +22,7 @@ impl UserClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("{}/user/{}", tenant_id, user_id),
+                &format!("/{}/user/{}", tenant_id, user_id),
                 None,
                 None,
                 options,
@@ -30,7 +30,24 @@ impl UserClient {
             .await
     }
 
-    pub async fn updateuser(
+    pub async fn create_user(
+        &self,
+        tenant_id: &str,
+        request: &User,
+        options: Option<RequestOptions>,
+    ) -> Result<User, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                &format!("/{}/user/", tenant_id),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    pub async fn update_user(
         &self,
         tenant_id: &str,
         user_id: &str,
@@ -40,7 +57,7 @@ impl UserClient {
         self.http_client
             .execute_request(
                 Method::PATCH,
-                &format!("{}/user/{}", tenant_id, user_id),
+                &format!("/{}/user/{}", tenant_id, user_id),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -48,37 +65,20 @@ impl UserClient {
             .await
     }
 
-    pub async fn createuser(
-        &self,
-        tenant_id: &str,
-        request: &User,
-        options: Option<RequestOptions>,
-    ) -> Result<User, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::POST,
-                &format!("{}/user/", tenant_id),
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
-                None,
-                options,
-            )
-            .await
-    }
-
-    pub async fn searchusers(
+    pub async fn search_users(
         &self,
         tenant_id: &str,
         user_id: &str,
-        request: &SearchusersQueryRequest,
+        request: &SearchUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("{}/user/{}/search", tenant_id, user_id),
+                &format!("/{}/user/{}/search", tenant_id, user_id),
                 None,
                 QueryBuilder::new()
-                    .serialize("limit", request.limit.clone())
+                    .int("limit", request.limit.clone())
                     .build(),
                 options,
             )
@@ -94,7 +94,7 @@ impl UserClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn getusermetadata(
+    pub async fn get_user_metadata(
         &self,
         tenant_id: &str,
         user_id: &str,
@@ -104,7 +104,7 @@ impl UserClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("{}/user/{}/metadata/v{}", tenant_id, user_id, version),
+                &format!("/{}/user/{}/metadata/v{}", tenant_id, user_id, version),
                 None,
                 None,
                 options,
@@ -121,7 +121,7 @@ impl UserClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn getuserspecifics(
+    pub async fn get_user_specifics(
         &self,
         tenant_id: &str,
         user_id: &str,
@@ -133,7 +133,7 @@ impl UserClient {
             .execute_request(
                 Method::GET,
                 &format!(
-                    "{}/user/{}/specifics/{}/{}",
+                    "/{}/user/{}/specifics/{}/{}",
                     tenant_id, user_id, version, thought
                 ),
                 None,

@@ -40,11 +40,22 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/nullable-optional";
+import { SeedNullableOptionalClient } from "@fern/nullable-optional";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client.nullableoptional.createuser({
-    username: "username"
+const client = new SeedNullableOptionalClient({ environment: "YOUR_BASE_URL" });
+await client.nullableOptional.createUser({
+    username: "username",
+    email: "email",
+    phone: "phone",
+    address: {
+        street: "street",
+        city: "city",
+        state: "state",
+        zipCode: "zipCode",
+        country: "country",
+        buildingId: "buildingId",
+        tenantId: "tenantId"
+    }
 });
 ```
 
@@ -54,9 +65,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedApi } from "@fern/nullable-optional";
+import { SeedNullableOptional } from "@fern/nullable-optional";
 
-const request: SeedApi.NullableOptionalGetUserRequest = {
+const request: SeedNullableOptional.ListUsersRequest = {
     ...
 };
 ```
@@ -67,12 +78,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/nullable-optional";
+import { SeedNullableOptionalError } from "@fern/nullable-optional";
 
 try {
-    await client.nullableoptional.createuser(...);
+    await client.nullableOptional.createUser(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedNullableOptionalError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -88,9 +99,9 @@ try {
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { NullableoptionalClient } from '@fern/nullable-optional/nullableoptional';
+import { NullableOptionalClient } from '@fern/nullable-optional/nullableOptional';
 
-const client = new NullableoptionalClient({...});
+const client = new NullableOptionalClient({...});
 ```
 
 ### Additional Headers
@@ -98,16 +109,16 @@ const client = new NullableoptionalClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/nullable-optional";
+import { SeedNullableOptionalClient } from "@fern/nullable-optional";
 
-const client = new SeedApiClient({
+const client = new SeedNullableOptionalClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.nullableoptional.createuser(..., {
+const response = await client.nullableOptional.createUser(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -119,7 +130,7 @@ const response = await client.nullableoptional.createuser(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.nullableoptional.createuser(..., {
+const response = await client.nullableOptional.createUser(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -141,7 +152,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.nullableoptional.createuser(..., {
+const response = await client.nullableOptional.createUser(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -151,7 +162,7 @@ const response = await client.nullableoptional.createuser(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.nullableoptional.createuser(..., {
+const response = await client.nullableOptional.createUser(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -162,7 +173,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.nullableoptional.createuser(..., {
+const response = await client.nullableOptional.createUser(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -174,7 +185,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.nullableoptional.createuser(...).withRawResponse();
+const { data, rawResponse } = await client.nullableOptional.createUser(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -185,9 +196,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/nullable-optional";
+import { SeedNullableOptionalClient, logging } from "@fern/nullable-optional";
 
-const client = new SeedApiClient({
+const client = new SeedNullableOptionalClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

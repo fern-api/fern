@@ -11,7 +11,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Reference](#reference)
 - [Usage](#usage)
 - [Environments](#environments)
-- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -41,12 +40,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { AcmeSdkClient } from "@fern/simple-api";
+import { AcmeApiEnvironment, AcmeSdkClient } from "@fern/simple-api";
 
-const client = new AcmeSdkClient({ token: "YOUR_TOKEN" });
-await client.user.get({
-    id: "id"
-});
+const client = new AcmeSdkClient({ environment: AcmeApiEnvironment.Production, token: "YOUR_TOKEN" });
+await client.user.get("id");
 ```
 
 ## Environments
@@ -59,19 +56,6 @@ import { AcmeSdkClient, acmeEnvironment } from "@fern/simple-api";
 const client = new AcmeSdkClient({
     environment: acmeEnvironment.Production,
 });
-```
-
-## Request and Response Types
-
-The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
-following namespace:
-
-```typescript
-import { acme } from "@fern/simple-api";
-
-const request: acme.UserGetRequest = {
-    ...
-};
 ```
 
 ## Exception Handling

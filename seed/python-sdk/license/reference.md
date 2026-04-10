@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="src/seed/_/client.py">get</a>()</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get</a>()</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +12,13 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedLicense
 
-client = SeedApi(
+client = SeedLicense(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client._.get()
+client.get()
 
 ```
 </dd>

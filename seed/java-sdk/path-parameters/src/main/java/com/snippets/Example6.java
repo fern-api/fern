@@ -1,14 +1,16 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.user.requests.UserGetUserRequest;
+import com.seed.pathParameters.SeedPathParametersClient;
+import com.seed.pathParameters.resources.user.requests.SearchUsersRequest;
 
 public class Example6 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedPathParametersClient client = SeedPathParametersClient.builder()
+                .url("https://api.fern.com")
+                .tenantId("tenant_id")
+                .build();
 
         client.user()
-                .getuser("tenant_id", "user_id", UserGetUserRequest.builder().build());
+                .searchUsers("user_id", SearchUsersRequest.builder().limit(1).build());
     }
 }

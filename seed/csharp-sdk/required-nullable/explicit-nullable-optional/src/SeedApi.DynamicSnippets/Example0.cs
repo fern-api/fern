@@ -11,7 +11,7 @@ public class Example0
             }
         );
 
-        await client._.GetFooAsync(
+        await client.GetFooAsync(
             new GetFooRequest {
                 RequiredBaz = "required_baz",
                 RequiredNullableBaz = "required_nullable_baz"

@@ -1,13 +1,18 @@
 package com.snippets;
 
-import com.seed.unions.SeedApiClient;
-import com.seed.unions.resources.union.requests.UnionGetRequest;
+import com.seed.unions.SeedUnionsClient;
+import com.seed.unions.resources.union.types.Circle;
+import com.seed.unions.resources.union.types.Shape;
 
 public class Example10 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedUnionsClient client =
+                SeedUnionsClient.builder().url("https://api.fern.com").build();
 
-        client.union().get("id", UnionGetRequest.builder().build());
+        client.union()
+                .update(Shape.circle(Circle.builder()
+                        .radius(1.1)
+                        .additionalProperty("id", "id")
+                        .build()));
     }
 }

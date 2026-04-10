@@ -1,4 +1,4 @@
-export * as SeedApi from "./api/index.js";
+export * as SeedLiteralsUnions from "./api/index.js";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-export { SeedApiError, SeedApiTimeoutError } from "./errors/index.js";
+export { SeedLiteralsUnionsError, SeedLiteralsUnionsTimeoutError } from "./errors/index.js";
 export * from "./exports.js";

@@ -7,6 +7,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Child(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from seed import Child
+
+    Child(
+        parent="Property from the parent",
+        child="Property from the child",
+    )
+    """
+
     child: str
     parent: str
 

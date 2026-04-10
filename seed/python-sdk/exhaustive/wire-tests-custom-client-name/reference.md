@@ -1,6 +1,6 @@
 # Reference
-## EndpointsContainer
-<details><summary><code>client.endpoints_container.<a href="src/seed/endpoints_container/client.py">endpoints_container_get_and_return_list_of_primitives</a>(...) -> typing.List[str]</code></summary>
+## Endpoints Container
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_list_of_primitives</a>(...) -> typing.List[str]</code></summary>
 <dl>
 <dd>
 
@@ -20,8 +20,9 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_list_of_primitives(
+client.endpoints.container.get_and_return_list_of_primitives(
     request=[
+        "string",
         "string"
     ],
 )
@@ -60,7 +61,7 @@ client.endpoints_container.endpoints_container_get_and_return_list_of_primitives
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="src/seed/endpoints_container/client.py">endpoints_container_get_and_return_list_of_objects</a>(...) -> typing.List[TypesObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_list_of_objects</a>(...) -> typing.List[ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -73,16 +74,20 @@ client.endpoints_container.endpoints_container_get_and_return_list_of_primitives
 <dd>
 
 ```python
-from seed import Exhaustive, TypesObjectWithRequiredField
+from seed import Exhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_list_of_objects(
+client.endpoints.container.get_and_return_list_of_objects(
     request=[
-        TypesObjectWithRequiredField(
+        ObjectWithRequiredField(
+            string="string",
+        ),
+        ObjectWithRequiredField(
             string="string",
         )
     ],
@@ -102,7 +107,7 @@ client.endpoints_container.endpoints_container_get_and_return_list_of_objects(
 <dl>
 <dd>
 
-**request:** `typing.List[TypesObjectWithRequiredField]` 
+**request:** `typing.List[ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -122,7 +127,7 @@ client.endpoints_container.endpoints_container_get_and_return_list_of_objects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="src/seed/endpoints_container/client.py">endpoints_container_get_and_return_set_of_primitives</a>(...) -> typing.List[str]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_set_of_primitives</a>(...) -> typing.Set[str]</code></summary>
 <dl>
 <dd>
 
@@ -142,7 +147,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_set_of_primitives(
+client.endpoints.container.get_and_return_set_of_primitives(
     request=[
         "string"
     ],
@@ -162,7 +167,7 @@ client.endpoints_container.endpoints_container_get_and_return_set_of_primitives(
 <dl>
 <dd>
 
-**request:** `typing.List[str]` 
+**request:** `typing.Set[str]` 
     
 </dd>
 </dl>
@@ -182,7 +187,7 @@ client.endpoints_container.endpoints_container_get_and_return_set_of_primitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="src/seed/endpoints_container/client.py">endpoints_container_get_and_return_set_of_objects</a>(...) -> typing.List[TypesObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_set_of_objects</a>(...) -> typing.Set[ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -195,16 +200,17 @@ client.endpoints_container.endpoints_container_get_and_return_set_of_primitives(
 <dd>
 
 ```python
-from seed import Exhaustive, TypesObjectWithRequiredField
+from seed import Exhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_set_of_objects(
+client.endpoints.container.get_and_return_set_of_objects(
     request=[
-        TypesObjectWithRequiredField(
+        ObjectWithRequiredField(
             string="string",
         )
     ],
@@ -224,7 +230,7 @@ client.endpoints_container.endpoints_container_get_and_return_set_of_objects(
 <dl>
 <dd>
 
-**request:** `typing.List[TypesObjectWithRequiredField]` 
+**request:** `typing.Set[ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -244,7 +250,7 @@ client.endpoints_container.endpoints_container_get_and_return_set_of_objects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="src/seed/endpoints_container/client.py">endpoints_container_get_and_return_map_prim_to_prim</a>(...) -> typing.Dict[str, str]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_prim_to_prim</a>(...) -> typing.Dict[str, str]</code></summary>
 <dl>
 <dd>
 
@@ -264,9 +270,9 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_map_prim_to_prim(
+client.endpoints.container.get_and_return_map_prim_to_prim(
     request={
-        "key": "value"
+        "string": "string"
     },
 )
 
@@ -304,7 +310,7 @@ client.endpoints_container.endpoints_container_get_and_return_map_prim_to_prim(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="src/seed/endpoints_container/client.py">endpoints_container_get_and_return_map_of_prim_to_object</a>(...) -> typing.Dict[str, TypesObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_of_prim_to_object</a>(...) -> typing.Dict[str, ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -317,16 +323,17 @@ client.endpoints_container.endpoints_container_get_and_return_map_prim_to_prim(
 <dd>
 
 ```python
-from seed import Exhaustive, TypesObjectWithRequiredField
+from seed import Exhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_object(
+client.endpoints.container.get_and_return_map_of_prim_to_object(
     request={
-        "key": TypesObjectWithRequiredField(
+        "string": ObjectWithRequiredField(
             string="string",
         )
     },
@@ -346,7 +353,7 @@ client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_obj
 <dl>
 <dd>
 
-**request:** `typing.Dict[str, TypesObjectWithRequiredField]` 
+**request:** `typing.Dict[str, ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -366,7 +373,7 @@ client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_obj
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="src/seed/endpoints_container/client.py">endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union</a>(...) -> typing.Dict[str, TypesMixedType]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_of_prim_to_undiscriminated_union</a>(...) -> typing.Dict[str, MixedType]</code></summary>
 <dl>
 <dd>
 
@@ -386,9 +393,9 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union(
+client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
     request={
-        "key": 1.1
+        "string": 1.1
     },
 )
 
@@ -406,7 +413,7 @@ client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_und
 <dl>
 <dd>
 
-**request:** `typing.Dict[str, TypesMixedType]` 
+**request:** `typing.Dict[str, MixedType]` 
     
 </dd>
 </dl>
@@ -426,7 +433,7 @@ client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_und
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_container.<a href="src/seed/endpoints_container/client.py">endpoints_container_get_and_return_optional</a>(...) -> TypesObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_optional</a>(...) -> typing.Optional[ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -440,14 +447,97 @@ client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_und
 
 ```python
 from seed import Exhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_optional(
+client.endpoints.container.get_and_return_optional(
+    request=ObjectWithRequiredField(
+        string="string",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `typing.Optional[ObjectWithRequiredField]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints ContentType
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_type</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+import datetime
+import uuid
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.content_type.post_json_patch_content_type(
     string="string",
+    integer=1,
+    long_=1000000,
+    double=1.1,
+    bool_=True,
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    base64="SGVsbG8gd29ybGQh",
+    list_=[
+        "list",
+        "list"
+    ],
+    set_=[
+        "set"
+    ],
+    map_={
+        1: "map"
+    },
+    bigint="1000000",
 )
 
 ```
@@ -464,7 +554,7 @@ client.endpoints_container.endpoints_container_get_and_return_optional(
 <dl>
 <dd>
 
-**request:** `TypesObjectWithRequiredField` 
+**request:** `ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -484,8 +574,7 @@ client.endpoints_container.endpoints_container_get_and_return_optional(
 </dl>
 </details>
 
-## EndpointsContentType
-<details><summary><code>client.endpoints_content_type.<a href="src/seed/endpoints_content_type/client.py">endpoints_content_type_post_json_patch_content_type</a>(...)</code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_with_charset_type</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -499,13 +588,36 @@ client.endpoints_container.endpoints_container_get_and_return_optional(
 
 ```python
 from seed import Exhaustive
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_content_type.endpoints_content_type_post_json_patch_content_type()
+client.endpoints.content_type.post_json_patch_content_with_charset_type(
+    string="string",
+    integer=1,
+    long_=1000000,
+    double=1.1,
+    bool_=True,
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    base64="SGVsbG8gd29ybGQh",
+    list_=[
+        "list",
+        "list"
+    ],
+    set_=[
+        "set"
+    ],
+    map_={
+        1: "map"
+    },
+    bigint="1000000",
+)
 
 ```
 </dd>
@@ -521,7 +633,7 @@ client.endpoints_content_type.endpoints_content_type_post_json_patch_content_typ
 <dl>
 <dd>
 
-**request:** `TypesObjectWithOptionalField` 
+**request:** `ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -541,7 +653,8 @@ client.endpoints_content_type.endpoints_content_type_post_json_patch_content_typ
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_content_type.<a href="src/seed/endpoints_content_type/client.py">endpoints_content_type_post_json_patch_content_with_charset_type</a>(...)</code></summary>
+## Endpoints Enum
+<details><summary><code>client.endpoints.enum.<a href="src/seed/endpoints/enum/client.py">get_and_return_enum</a>(...) -> WeatherReport</code></summary>
 <dl>
 <dd>
 
@@ -561,64 +674,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_content_type.endpoints_content_type_post_json_patch_content_with_charset_type()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithOptionalField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## EndpointsEnum
-<details><summary><code>client.endpoints_enum.<a href="src/seed/endpoints_enum/client.py">endpoints_enum_get_and_return_enum</a>(...) -> TypesWeatherReport</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import Exhaustive
-
-client = Exhaustive(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.endpoints_enum.endpoints_enum_get_and_return_enum(
+client.endpoints.enum.get_and_return_enum(
     request="SUNNY",
 )
 
@@ -636,7 +692,7 @@ client.endpoints_enum.endpoints_enum_get_and_return_enum(
 <dl>
 <dd>
 
-**request:** `TypesWeatherReport` 
+**request:** `WeatherReport` 
     
 </dd>
 </dl>
@@ -656,8 +712,8 @@ client.endpoints_enum.endpoints_enum_get_and_return_enum(
 </dl>
 </details>
 
-## EndpointsHttpMethods
-<details><summary><code>client.endpoints_http_methods.<a href="src/seed/endpoints_http_methods/client.py">endpoints_http_methods_test_get</a>(...) -> str</code></summary>
+## Endpoints HttpMethods
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_get</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -677,7 +733,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_http_methods.endpoints_http_methods_test_get(
+client.endpoints.http_methods.test_get(
     id="id",
 )
 
@@ -715,7 +771,7 @@ client.endpoints_http_methods.endpoints_http_methods_test_get(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_http_methods.<a href="src/seed/endpoints_http_methods/client.py">endpoints_http_methods_test_put</a>(...) -> TypesObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_post</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -735,7 +791,65 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_http_methods.endpoints_http_methods_test_put(
+client.endpoints.http_methods.test_post(
+    string="string",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_put</a>(...) -> ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.http_methods.test_put(
     id="id",
     string="string",
 )
@@ -762,7 +876,7 @@ client.endpoints_http_methods.endpoints_http_methods_test_put(
 <dl>
 <dd>
 
-**request:** `TypesObjectWithRequiredField` 
+**request:** `ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -782,7 +896,7 @@ client.endpoints_http_methods.endpoints_http_methods_test_put(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_http_methods.<a href="src/seed/endpoints_http_methods/client.py">endpoints_http_methods_test_delete</a>(...) -> bool</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_patch</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -796,313 +910,300 @@ client.endpoints_http_methods.endpoints_http_methods_test_put(
 
 ```python
 from seed import Exhaustive
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_http_methods.endpoints_http_methods_test_delete(
+client.endpoints.http_methods.test_patch(
     id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_http_methods.<a href="src/seed/endpoints_http_methods/client.py">endpoints_http_methods_test_patch</a>(...) -> TypesObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import Exhaustive
-
-client = Exhaustive(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.endpoints_http_methods.endpoints_http_methods_test_patch(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithOptionalField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_http_methods.<a href="src/seed/endpoints_http_methods/client.py">endpoints_http_methods_test_post</a>(...) -> TypesObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import Exhaustive
-
-client = Exhaustive(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.endpoints_http_methods.endpoints_http_methods_test_post(
     string="string",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithRequiredField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## EndpointsObject
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_with_optional_field</a>(...) -> TypesObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import Exhaustive
-
-client = Exhaustive(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.endpoints_object.endpoints_object_get_and_return_with_optional_field()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithOptionalField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_with_required_field</a>(...) -> TypesObjectWithRequiredField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import Exhaustive
-
-client = Exhaustive(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.endpoints_object.endpoints_object_get_and_return_with_required_field(
-    string="string",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithRequiredField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_with_map_of_map</a>(...) -> TypesObjectWithMapOfMap</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import Exhaustive
-
-client = Exhaustive(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.endpoints_object.endpoints_object_get_and_return_with_map_of_map(
+    integer=1,
+    long_=1000000,
+    double=1.1,
+    bool_=True,
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    base64="SGVsbG8gd29ybGQh",
+    list_=[
+        "list",
+        "list"
+    ],
+    set_=[
+        "set"
+    ],
     map_={
-        "key": {
-            "key": "value"
+        1: "map"
+    },
+    bigint="1000000",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_delete</a>(...) -> bool</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.http_methods.test_delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Object
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_optional_field</a>(...) -> ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+import datetime
+import uuid
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.object.get_and_return_with_optional_field(
+    string="string",
+    integer=1,
+    long_=1000000,
+    double=1.1,
+    bool_=True,
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    base64="SGVsbG8gd29ybGQh",
+    list_=[
+        "list",
+        "list"
+    ],
+    set_=[
+        "set"
+    ],
+    map_={
+        1: "map"
+    },
+    bigint="1000000",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_required_field</a>(...) -> ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.object.get_and_return_with_required_field(
+    string="string",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_map_of_map</a>(...) -> ObjectWithMapOfMap</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.object.get_and_return_with_map_of_map(
+    map_={
+        "map": {
+            "map": "map"
         }
     },
 )
@@ -1121,7 +1222,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_map_of_map(
 <dl>
 <dd>
 
-**request:** `TypesObjectWithMapOfMap` 
+**request:** `ObjectWithMapOfMap` 
     
 </dd>
 </dl>
@@ -1141,7 +1242,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_map_of_map(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_nested_with_optional_field</a>(...) -> TypesNestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_optional_field</a>(...) -> NestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1155,13 +1256,40 @@ client.endpoints_object.endpoints_object_get_and_return_with_map_of_map(
 
 ```python
 from seed import Exhaustive
+from seed.types.object import ObjectWithOptionalField
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_object.endpoints_object_get_and_return_nested_with_optional_field()
+client.endpoints.object.get_and_return_nested_with_optional_field(
+    string="string",
+    nested_object=ObjectWithOptionalField(
+        string="string",
+        integer=1,
+        long_=1000000,
+        double=1.1,
+        bool_=True,
+        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        date=datetime.date.fromisoformat("2023-01-15"),
+        uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        base64="SGVsbG8gd29ybGQh",
+        list_=[
+            "list",
+            "list"
+        ],
+        set_=[
+            "set"
+        ],
+        map_={
+            1: "map"
+        },
+        bigint="1000000",
+    ),
+)
 
 ```
 </dd>
@@ -1177,7 +1305,7 @@ client.endpoints_object.endpoints_object_get_and_return_nested_with_optional_fie
 <dl>
 <dd>
 
-**request:** `TypesNestedObjectWithOptionalField` 
+**request:** `NestedObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -1197,7 +1325,7 @@ client.endpoints_object.endpoints_object_get_and_return_nested_with_optional_fie
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_nested_with_required_field</a>(...) -> TypesNestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_required_field</a>(...) -> NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1210,17 +1338,41 @@ client.endpoints_object.endpoints_object_get_and_return_nested_with_optional_fie
 <dd>
 
 ```python
-from seed import Exhaustive, TypesObjectWithOptionalField
+from seed import Exhaustive
+from seed.types.object import ObjectWithOptionalField
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_object.endpoints_object_get_and_return_nested_with_required_field(
+client.endpoints.object.get_and_return_nested_with_required_field(
     string_="string",
     string="string",
-    nested_object=TypesObjectWithOptionalField(),
+    nested_object=ObjectWithOptionalField(
+        string="string",
+        integer=1,
+        long_=1000000,
+        double=1.1,
+        bool_=True,
+        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        date=datetime.date.fromisoformat("2023-01-15"),
+        uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        base64="SGVsbG8gd29ybGQh",
+        list_=[
+            "list",
+            "list"
+        ],
+        set_=[
+            "set"
+        ],
+        map_={
+            1: "map"
+        },
+        bigint="1000000",
+    ),
 )
 
 ```
@@ -1245,7 +1397,7 @@ client.endpoints_object.endpoints_object_get_and_return_nested_with_required_fie
 <dl>
 <dd>
 
-**request:** `TypesNestedObjectWithRequiredField` 
+**request:** `NestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1265,7 +1417,7 @@ client.endpoints_object.endpoints_object_get_and_return_nested_with_required_fie
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_nested_with_required_field_as_list</a>(...) -> TypesNestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_required_field_as_list</a>(...) -> NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1278,18 +1430,67 @@ client.endpoints_object.endpoints_object_get_and_return_nested_with_required_fie
 <dd>
 
 ```python
-from seed import Exhaustive, TypesNestedObjectWithRequiredField, TypesObjectWithOptionalField
+from seed import Exhaustive
+from seed.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_object.endpoints_object_get_and_return_nested_with_required_field_as_list(
+client.endpoints.object.get_and_return_nested_with_required_field_as_list(
     request=[
-        TypesNestedObjectWithRequiredField(
+        NestedObjectWithRequiredField(
             string="string",
-            nested_object=TypesObjectWithOptionalField(),
+            nested_object=ObjectWithOptionalField(
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+                date=datetime.date.fromisoformat("2023-01-15"),
+                uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                base64="SGVsbG8gd29ybGQh",
+                list_=[
+                    "list",
+                    "list"
+                ],
+                set_=[
+                    "set"
+                ],
+                map_={
+                    1: "map"
+                },
+                bigint="1000000",
+            ),
+        ),
+        NestedObjectWithRequiredField(
+            string="string",
+            nested_object=ObjectWithOptionalField(
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+                date=datetime.date.fromisoformat("2023-01-15"),
+                uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                base64="SGVsbG8gd29ybGQh",
+                list_=[
+                    "list",
+                    "list"
+                ],
+                set_=[
+                    "set"
+                ],
+                map_={
+                    1: "map"
+                },
+                bigint="1000000",
+            ),
         )
     ],
 )
@@ -1308,7 +1509,7 @@ client.endpoints_object.endpoints_object_get_and_return_nested_with_required_fie
 <dl>
 <dd>
 
-**request:** `typing.List[TypesNestedObjectWithRequiredField]` 
+**request:** `typing.List[NestedObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -1328,7 +1529,7 @@ client.endpoints_object.endpoints_object_get_and_return_nested_with_required_fie
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_with_unknown_field</a>(...) -> TypesObjectWithUnknownField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_unknown_field</a>(...) -> ObjectWithUnknownField</code></summary>
 <dl>
 <dd>
 
@@ -1348,8 +1549,8 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_object.endpoints_object_get_and_return_with_unknown_field(
-    unknown={"key": "value"},
+client.endpoints.object.get_and_return_with_unknown_field(
+    unknown={"$ref": "https://example.com/schema"},
 )
 
 ```
@@ -1366,7 +1567,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_unknown_field(
 <dl>
 <dd>
 
-**request:** `TypesObjectWithUnknownField` 
+**request:** `ObjectWithUnknownField` 
     
 </dd>
 </dl>
@@ -1386,7 +1587,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_unknown_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_with_documented_unknown_type</a>(...) -> TypesObjectWithDocumentedUnknownType</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_documented_unknown_type</a>(...) -> ObjectWithDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1406,7 +1607,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_object.endpoints_object_get_and_return_with_documented_unknown_type(
+client.endpoints.object.get_and_return_with_documented_unknown_type(
     documented_unknown_type={"key": "value"},
 )
 
@@ -1424,7 +1625,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_documented_unknown_
 <dl>
 <dd>
 
-**request:** `TypesObjectWithDocumentedUnknownType` 
+**request:** `ObjectWithDocumentedUnknownType` 
     
 </dd>
 </dl>
@@ -1444,7 +1645,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_documented_unknown_
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_map_of_documented_unknown_type</a>(...) -> TypesMapOfDocumentedUnknownType</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_map_of_documented_unknown_type</a>(...) -> MapOfDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1464,8 +1665,10 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_object.endpoints_object_get_and_return_map_of_documented_unknown_type(
-    request={},
+client.endpoints.object.get_and_return_map_of_documented_unknown_type(
+    request={
+        "string": {"key": "value"}
+    },
 )
 
 ```
@@ -1482,7 +1685,7 @@ client.endpoints_object.endpoints_object_get_and_return_map_of_documented_unknow
 <dl>
 <dd>
 
-**request:** `TypesMapOfDocumentedUnknownType` 
+**request:** `MapOfDocumentedUnknownType` 
     
 </dd>
 </dl>
@@ -1502,7 +1705,7 @@ client.endpoints_object.endpoints_object_get_and_return_map_of_documented_unknow
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_with_mixed_required_and_optional_fields</a>(...) -> TypesObjectWithMixedRequiredAndOptionalFields</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_mixed_required_and_optional_fields</a>(...) -> ObjectWithMixedRequiredAndOptionalFields</code></summary>
 <dl>
 <dd>
 
@@ -1537,10 +1740,11 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_object.endpoints_object_get_and_return_with_mixed_required_and_optional_fields(
-    required_string="requiredString",
-    required_integer=1,
-    required_long=1000000,
+client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+    required_string="hello",
+    required_integer=0,
+    optional_string="world",
+    required_long=0,
 )
 
 ```
@@ -1557,7 +1761,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_mixed_required_and_
 <dl>
 <dd>
 
-**request:** `TypesObjectWithMixedRequiredAndOptionalFields` 
+**request:** `ObjectWithMixedRequiredAndOptionalFields` 
     
 </dd>
 </dl>
@@ -1577,7 +1781,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_mixed_required_and_
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_with_required_nested_object</a>(...) -> TypesObjectWithRequiredNestedObject</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_required_nested_object</a>(...) -> ObjectWithRequiredNestedObject</code></summary>
 <dl>
 <dd>
 
@@ -1607,18 +1811,19 @@ initializer with the nested object's required properties filled in.
 <dd>
 
 ```python
-from seed import Exhaustive, TypesNestedObjectWithRequiredField, TypesObjectWithOptionalField
+from seed import Exhaustive
+from seed.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_object.endpoints_object_get_and_return_with_required_nested_object(
-    required_string="requiredString",
-    required_object=TypesNestedObjectWithRequiredField(
-        string="string",
-        nested_object=TypesObjectWithOptionalField(),
+client.endpoints.object.get_and_return_with_required_nested_object(
+    required_string="hello",
+    required_object=NestedObjectWithRequiredField(
+        string="nested",
+        nested_object=ObjectWithOptionalField(),
     ),
 )
 
@@ -1636,7 +1841,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_required_nested_obj
 <dl>
 <dd>
 
-**request:** `TypesObjectWithRequiredNestedObject` 
+**request:** `ObjectWithRequiredNestedObject` 
     
 </dd>
 </dl>
@@ -1656,7 +1861,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_required_nested_obj
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_object.<a href="src/seed/endpoints_object/client.py">endpoints_object_get_and_return_with_datetime_like_string</a>(...) -> TypesObjectWithDatetimeLikeString</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_datetime_like_string</a>(...) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
 
@@ -1693,9 +1898,9 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_object.endpoints_object_get_and_return_with_datetime_like_string(
-    datetime_like_string="datetimeLikeString",
-    actual_datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+client.endpoints.object.get_and_return_with_datetime_like_string(
+    datetime_like_string="2023-08-31T14:15:22Z",
+    actual_datetime=datetime.datetime.fromisoformat("2023-08-31T14:15:22+00:00"),
 )
 
 ```
@@ -1712,7 +1917,7 @@ client.endpoints_object.endpoints_object_get_and_return_with_datetime_like_strin
 <dl>
 <dd>
 
-**request:** `TypesObjectWithDatetimeLikeString` 
+**request:** `ObjectWithDatetimeLikeString` 
     
 </dd>
 </dl>
@@ -1732,8 +1937,8 @@ client.endpoints_object.endpoints_object_get_and_return_with_datetime_like_strin
 </dl>
 </details>
 
-## EndpointsPagination
-<details><summary><code>client.endpoints_pagination.<a href="src/seed/endpoints_pagination/client.py">endpoints_pagination_list_items</a>(...) -> EndpointsPaginatedResponse</code></summary>
+## Endpoints Pagination
+<details><summary><code>client.endpoints.pagination.<a href="src/seed/endpoints/pagination/client.py">list_items</a>(...) -> PaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1767,7 +1972,10 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_pagination.endpoints_pagination_list_items()
+client.endpoints.pagination.list_items(
+    cursor="cursor",
+    limit=1,
+)
 
 ```
 </dd>
@@ -1811,8 +2019,8 @@ client.endpoints_pagination.endpoints_pagination_list_items()
 </dl>
 </details>
 
-## EndpointsParams
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_get_with_path</a>(...) -> str</code></summary>
+## Endpoints Params
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -1846,7 +2054,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_params.endpoints_params_get_with_path(
+client.endpoints.params.get_with_path(
     param="param",
 )
 
@@ -1884,158 +2092,7 @@ client.endpoints_params.endpoints_params_get_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_upload_with_path</a>(...) -> TypesObjectWithRequiredField</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-POST bytes with path param returning object
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-client.endpoints_params.endpoints_params_upload_with_path(...)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_modify_with_path</a>(...) -> str</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import Exhaustive
-
-client = Exhaustive(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.endpoints_params.endpoints_params_modify_with_path(
-    param="param",
-    request="string",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_get_with_inline_path</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_inline_path</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -2069,7 +2126,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_params.endpoints_params_get_with_inline_path(
+client.endpoints.params.get_with_path(
     param="param",
 )
 
@@ -2107,88 +2164,7 @@ client.endpoints_params.endpoints_params_get_with_inline_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_modify_with_inline_path</a>(...) -> str</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import Exhaustive
-
-client = Exhaustive(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.endpoints_params.endpoints_params_modify_with_inline_path(
-    param="param",
-    request="string",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_get_with_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_query</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2222,7 +2198,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_params.endpoints_params_get_with_query(
+client.endpoints.params.get_with_query(
     query="query",
     number=1,
 )
@@ -2269,7 +2245,7 @@ client.endpoints_params.endpoints_params_get_with_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_get_with_allow_multiple_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_allow_multiple_query</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2303,13 +2279,9 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_params.endpoints_params_get_with_allow_multiple_query(
-    query=[
-        "query"
-    ],
-    number=[
-        1
-    ],
+client.endpoints.params.get_with_query(
+    query="query",
+    number=1,
 )
 
 ```
@@ -2326,7 +2298,7 @@ client.endpoints_params.endpoints_params_get_with_allow_multiple_query(
 <dl>
 <dd>
 
-**query:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**query:** `typing.Union[str, typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -2334,7 +2306,7 @@ client.endpoints_params.endpoints_params_get_with_allow_multiple_query(
 <dl>
 <dd>
 
-**number:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+**number:** `typing.Union[int, typing.Sequence[int]]` 
     
 </dd>
 </dl>
@@ -2354,7 +2326,7 @@ client.endpoints_params.endpoints_params_get_with_allow_multiple_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_get_with_path_and_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path_and_query</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2388,7 +2360,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_params.endpoints_params_get_with_path_and_query(
+client.endpoints.params.get_with_path_and_query(
     param="param",
     query="query",
 )
@@ -2435,7 +2407,7 @@ client.endpoints_params.endpoints_params_get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_get_with_inline_path_and_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_inline_path_and_query</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2469,7 +2441,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_params.endpoints_params_get_with_inline_path_and_query(
+client.endpoints.params.get_with_path_and_query(
     param="param",
     query="query",
 )
@@ -2516,7 +2488,249 @@ client.endpoints_params.endpoints_params_get_with_inline_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_get_with_boolean_path</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">modify_with_path</a>(...) -> str</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.params.modify_with_path(
+    param="param",
+    request="string",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">modify_with_inline_path</a>(...) -> str</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.params.modify_with_path(
+    param="param",
+    request="string",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">upload_with_path</a>(...) -> ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.params.upload_with_path(
+    param="upload-path",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_boolean_path</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -2550,7 +2764,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_params.endpoints_params_get_with_boolean_path(
+client.endpoints.params.get_with_boolean_path(
     param=True,
 )
 
@@ -2588,7 +2802,7 @@ client.endpoints_params.endpoints_params_get_with_boolean_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_params.<a href="src/seed/endpoints_params/client.py">endpoints_params_get_with_path_and_errors</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path_and_errors</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -2622,7 +2836,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_params.endpoints_params_get_with_path_and_errors(
+client.endpoints.params.get_with_path(
     param="param",
 )
 
@@ -2660,8 +2874,8 @@ client.endpoints_params.endpoints_params_get_with_path_and_errors(
 </dl>
 </details>
 
-## EndpointsPrimitive
-<details><summary><code>client.endpoints_primitive.<a href="src/seed/endpoints_primitive/client.py">endpoints_primitive_get_and_return_string</a>(...) -> str</code></summary>
+## Endpoints Primitive
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_string</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -2681,7 +2895,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_primitive.endpoints_primitive_get_and_return_string(
+client.endpoints.primitive.get_and_return_string(
     request="string",
 )
 
@@ -2719,7 +2933,7 @@ client.endpoints_primitive.endpoints_primitive_get_and_return_string(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="src/seed/endpoints_primitive/client.py">endpoints_primitive_get_and_return_int</a>(...) -> int</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_int</a>(...) -> int</code></summary>
 <dl>
 <dd>
 
@@ -2739,7 +2953,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_primitive.endpoints_primitive_get_and_return_int(
+client.endpoints.primitive.get_and_return_int(
     request=1,
 )
 
@@ -2777,7 +2991,7 @@ client.endpoints_primitive.endpoints_primitive_get_and_return_int(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="src/seed/endpoints_primitive/client.py">endpoints_primitive_get_and_return_long</a>(...) -> int</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_long</a>(...) -> int</code></summary>
 <dl>
 <dd>
 
@@ -2797,7 +3011,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_primitive.endpoints_primitive_get_and_return_long(
+client.endpoints.primitive.get_and_return_long(
     request=1000000,
 )
 
@@ -2835,7 +3049,7 @@ client.endpoints_primitive.endpoints_primitive_get_and_return_long(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="src/seed/endpoints_primitive/client.py">endpoints_primitive_get_and_return_double</a>(...) -> float</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_double</a>(...) -> float</code></summary>
 <dl>
 <dd>
 
@@ -2855,7 +3069,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_primitive.endpoints_primitive_get_and_return_double(
+client.endpoints.primitive.get_and_return_double(
     request=1.1,
 )
 
@@ -2893,7 +3107,7 @@ client.endpoints_primitive.endpoints_primitive_get_and_return_double(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="src/seed/endpoints_primitive/client.py">endpoints_primitive_get_and_return_bool</a>(...) -> bool</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_bool</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -2913,7 +3127,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_primitive.endpoints_primitive_get_and_return_bool(
+client.endpoints.primitive.get_and_return_bool(
     request=True,
 )
 
@@ -2951,7 +3165,7 @@ client.endpoints_primitive.endpoints_primitive_get_and_return_bool(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="src/seed/endpoints_primitive/client.py">endpoints_primitive_get_and_return_datetime</a>(...) -> datetime.datetime</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_datetime</a>(...) -> datetime.datetime</code></summary>
 <dl>
 <dd>
 
@@ -2972,7 +3186,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_primitive.endpoints_primitive_get_and_return_datetime(
+client.endpoints.primitive.get_and_return_datetime(
     request=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
 )
 
@@ -3010,7 +3224,7 @@ client.endpoints_primitive.endpoints_primitive_get_and_return_datetime(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="src/seed/endpoints_primitive/client.py">endpoints_primitive_get_and_return_date</a>(...) -> datetime.date</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_date</a>(...) -> datetime.date</code></summary>
 <dl>
 <dd>
 
@@ -3031,7 +3245,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_primitive.endpoints_primitive_get_and_return_date(
+client.endpoints.primitive.get_and_return_date(
     request=datetime.date.fromisoformat("2023-01-15"),
 )
 
@@ -3069,7 +3283,66 @@ client.endpoints_primitive.endpoints_primitive_get_and_return_date(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="src/seed/endpoints_primitive/client.py">endpoints_primitive_get_and_return_uuid</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_uuid</a>(...) -> uuid.UUID</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import Exhaustive
+import uuid
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.primitive.get_and_return_uuid(
+    request=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `uuid.UUID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_base64</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -3089,8 +3362,8 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_primitive.endpoints_primitive_get_and_return_uuid(
-    request="string",
+client.endpoints.primitive.get_and_return_base64(
+    request="SGVsbG8gd29ybGQh",
 )
 
 ```
@@ -3127,7 +3400,8 @@ client.endpoints_primitive.endpoints_primitive_get_and_return_uuid(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_primitive.<a href="src/seed/endpoints_primitive/client.py">endpoints_primitive_get_and_return_base64</a>(...) -> str</code></summary>
+## Endpoints Put
+<details><summary><code>client.endpoints.put.<a href="src/seed/endpoints/put/client.py">add</a>(...) -> PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -3147,66 +3421,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_primitive.endpoints_primitive_get_and_return_base64(
-    request="string",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## EndpointsPut
-<details><summary><code>client.endpoints_put.<a href="src/seed/endpoints_put/client.py">endpoints_put_add</a>(...) -> EndpointsPutResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import Exhaustive
-
-client = Exhaustive(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.endpoints_put.endpoints_put_add(
+client.endpoints.put.add(
     id="id",
 )
 
@@ -3244,8 +3459,8 @@ client.endpoints_put.endpoints_put_add(
 </dl>
 </details>
 
-## EndpointsUnion
-<details><summary><code>client.endpoints_union.<a href="src/seed/endpoints_union/client.py">endpoints_union_get_and_return_union</a>(...) -> TypesAnimal</code></summary>
+## Endpoints Union
+<details><summary><code>client.endpoints.union.<a href="src/seed/endpoints/union/client.py">get_and_return_union</a>(...) -> Animal</code></summary>
 <dl>
 <dd>
 
@@ -3258,18 +3473,18 @@ client.endpoints_put.endpoints_put_add(
 <dd>
 
 ```python
-from seed import Exhaustive, TypesAnimalZero
+from seed import Exhaustive
+from seed.types.union import Animal_Dog
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_union.endpoints_union_get_and_return_union(
-    request=TypesAnimalZero(
+client.endpoints.union.get_and_return_union(
+    request=Animal_Dog(
         name="name",
         likes_to_woof=True,
-        animal="dog",
     ),
 )
 
@@ -3287,7 +3502,7 @@ client.endpoints_union.endpoints_union_get_and_return_union(
 <dl>
 <dd>
 
-**request:** `TypesAnimal` 
+**request:** `Animal` 
     
 </dd>
 </dl>
@@ -3307,8 +3522,8 @@ client.endpoints_union.endpoints_union_get_and_return_union(
 </dl>
 </details>
 
-## EndpointsUrLs
-<details><summary><code>client.endpoints_ur_ls.<a href="src/seed/endpoints_ur_ls/client.py">endpoints_urls_with_mixed_case</a>() -> str</code></summary>
+## Endpoints Urls
+<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_mixed_case</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -3328,7 +3543,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_ur_ls.endpoints_urls_with_mixed_case()
+client.endpoints.urls.with_mixed_case()
 
 ```
 </dd>
@@ -3356,7 +3571,7 @@ client.endpoints_ur_ls.endpoints_urls_with_mixed_case()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_ur_ls.<a href="src/seed/endpoints_ur_ls/client.py">endpoints_urls_no_ending_slash</a>() -> str</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">no_ending_slash</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -3376,7 +3591,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_ur_ls.endpoints_urls_no_ending_slash()
+client.endpoints.urls.no_ending_slash()
 
 ```
 </dd>
@@ -3404,7 +3619,7 @@ client.endpoints_ur_ls.endpoints_urls_no_ending_slash()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_ur_ls.<a href="src/seed/endpoints_ur_ls/client.py">endpoints_urls_with_ending_slash</a>() -> str</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_ending_slash</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -3424,7 +3639,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_ur_ls.endpoints_urls_with_ending_slash()
+client.endpoints.urls.with_ending_slash()
 
 ```
 </dd>
@@ -3452,7 +3667,7 @@ client.endpoints_ur_ls.endpoints_urls_with_ending_slash()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints_ur_ls.<a href="src/seed/endpoints_ur_ls/client.py">endpoints_urls_with_underscores</a>() -> str</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_underscores</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -3472,7 +3687,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_ur_ls.endpoints_urls_with_underscores()
+client.endpoints.urls.with_underscores()
 
 ```
 </dd>
@@ -3500,8 +3715,8 @@ client.endpoints_ur_ls.endpoints_urls_with_underscores()
 </dl>
 </details>
 
-## Inlinedrequests
-<details><summary><code>client.inlinedrequests.<a href="src/seed/inlinedrequests/client.py">postwithobjectbodyandresponse</a>(...) -> TypesObjectWithOptionalField</code></summary>
+## InlinedRequests
+<details><summary><code>client.inlined_requests.<a href="src/seed/inlined_requests/client.py">post_with_object_bodyand_response</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -3528,17 +3743,41 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```python
-from seed import Exhaustive, TypesObjectWithOptionalField
+from seed import Exhaustive
+from seed.types.object import ObjectWithOptionalField
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inlinedrequests.postwithobjectbodyandresponse(
+client.inlined_requests.post_with_object_bodyand_response(
     string="string",
     integer=1,
-    nested_object=TypesObjectWithOptionalField(),
+    nested_object=ObjectWithOptionalField(
+        string="string",
+        integer=1,
+        long_=1000000,
+        double=1.1,
+        bool_=True,
+        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        date=datetime.date.fromisoformat("2023-01-15"),
+        uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        base64="SGVsbG8gd29ybGQh",
+        list_=[
+            "list",
+            "list"
+        ],
+        set_=[
+            "set"
+        ],
+        map_={
+            1: "map"
+        },
+        bigint="1000000",
+    ),
 )
 
 ```
@@ -3571,7 +3810,7 @@ client.inlinedrequests.postwithobjectbodyandresponse(
 <dl>
 <dd>
 
-**nested_object:** `TypesObjectWithOptionalField` 
+**nested_object:** `ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -3591,8 +3830,8 @@ client.inlinedrequests.postwithobjectbodyandresponse(
 </dl>
 </details>
 
-## Noauth
-<details><summary><code>client.noauth.<a href="src/seed/noauth/client.py">postwithnoauth</a>(...) -> bool</code></summary>
+## NoAuth
+<details><summary><code>client.no_auth.<a href="src/seed/no_auth/client.py">post_with_no_auth</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -3626,7 +3865,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.noauth.postwithnoauth(
+client.no_auth.post_with_no_auth(
     request={"key": "value"},
 )
 
@@ -3664,8 +3903,8 @@ client.noauth.postwithnoauth(
 </dl>
 </details>
 
-## Noreqbody
-<details><summary><code>client.noreqbody.<a href="src/seed/noreqbody/client.py">getwithnorequestbody</a>() -> TypesObjectWithOptionalField</code></summary>
+## NoReqBody
+<details><summary><code>client.no_req_body.<a href="src/seed/no_req_body/client.py">get_with_no_request_body</a>() -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -3685,7 +3924,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.noreqbody.getwithnorequestbody()
+client.no_req_body.get_with_no_request_body()
 
 ```
 </dd>
@@ -3713,7 +3952,7 @@ client.noreqbody.getwithnorequestbody()
 </dl>
 </details>
 
-<details><summary><code>client.noreqbody.<a href="src/seed/noreqbody/client.py">postwithnorequestbody</a>() -> str</code></summary>
+<details><summary><code>client.no_req_body.<a href="src/seed/no_req_body/client.py">post_with_no_request_body</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -3733,7 +3972,7 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.noreqbody.postwithnorequestbody()
+client.no_req_body.post_with_no_request_body()
 
 ```
 </dd>
@@ -3761,8 +4000,8 @@ client.noreqbody.postwithnorequestbody()
 </dl>
 </details>
 
-## Reqwithheaders
-<details><summary><code>client.reqwithheaders.<a href="src/seed/reqwithheaders/client.py">getwithcustomheader</a>(...)</code></summary>
+## ReqWithHeaders
+<details><summary><code>client.req_with_headers.<a href="src/seed/req_with_headers/client.py">get_with_custom_header</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3782,8 +4021,9 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.reqwithheaders.getwithcustomheader(
-    test_endpoint_header="X-TEST-ENDPOINT-HEADER",
+client.req_with_headers.get_with_custom_header(
+    x_test_service_header="X-TEST-SERVICE-HEADER",
+    x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
     request="string",
 )
 
@@ -3801,7 +4041,7 @@ client.reqwithheaders.getwithcustomheader(
 <dl>
 <dd>
 
-**test_endpoint_header:** `str` 
+**x_test_endpoint_header:** `str` 
     
 </dd>
 </dl>

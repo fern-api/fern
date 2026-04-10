@@ -49,10 +49,10 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Api
+import ServerSentEvents
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ServerSentEventsClient()
 
     _ = try await client.completions.stream(request: .init(query: "query"))
 }
@@ -65,14 +65,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Api
+import ServerSentEvents
 
-let client = ApiClient(...)
+let client = ServerSentEventsClient(...)
 
 do {
     let response = try await client.completions.stream(...)
     // Handle successful response
-} catch let error as ApiError {
+} catch let error as ServerSentEventsError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -95,9 +95,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import Api
+import ServerSentEvents
 
-let request = Requests.CompletionsStreamRequest(
+let request = Requests.StreamCompletionRequest(
     ...
 )
 ```
@@ -144,9 +144,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Api
+import ServerSentEvents
 
-let client = ApiClient(
+let client = ServerSentEventsClient(
     ...,
     urlSession: // Provide your implementation here
 )

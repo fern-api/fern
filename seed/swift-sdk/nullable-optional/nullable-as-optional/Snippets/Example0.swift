@@ -1,10 +1,10 @@
 import Foundation
-import Api
+import NullableOptional
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = NullableOptionalClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.nullableoptional.getuser(userId: "userId")
+    _ = try await client.nullableOptional.getUser(userId: "userId")
 }
 
 try await main()

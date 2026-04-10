@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/lib/seed/client.rb">get_union</a>() -> Seed::Types::UnionResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_union</a>() -> Seed::Types::UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```ruby
-client..get_union
+client.get_union
 ```
 </dd>
 </dl>
@@ -28,7 +27,7 @@ client..get_union
 <dl>
 <dd>
 
-**request_options:** `Seed::::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>
@@ -40,7 +39,7 @@ client..get_union
 </dl>
 </details>
 
-<details><summary><code>client..<a href="/lib/seed/client.rb">list_unions</a>() -> Seed::Types::UnionListResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">list_unions</a>() -> Seed::Types::UnionListResponse</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +52,7 @@ client..get_union
 <dd>
 
 ```ruby
-client..list_unions
+client.list_unions
 ```
 </dd>
 </dl>
@@ -68,7 +67,7 @@ client..list_unions
 <dl>
 <dd>
 
-**request_options:** `Seed::::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

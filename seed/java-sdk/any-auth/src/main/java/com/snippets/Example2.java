@@ -1,15 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
+import com.seed.anyAuth.SeedAnyAuthClient;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedAnyAuthClient client = SeedAnyAuthClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
-                .apiKey("<X-API-Key>")
                 .build();
 
-        client.user().get();
+        client.user().getAdmins();
     }
 }

@@ -1,24 +1,24 @@
-//! # validation SDK
+//! # Validation SDK
 //!
-//! The official Rust SDK for the validation.
+//! The official Rust SDK for the Validation.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_validation::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = ValidationClient::new(config).expect("Failed to build client");
 //!     client
-//!         ..create(
+//!         .create(
 //!             &CreateRequest {
-//!                 decimal: 1.1,
-//!                 even: 1,
-//!                 name: "name".to_string(),
+//!                 decimal: 2.2,
+//!                 even: 100,
+//!                 name: "fern".to_string(),
 //!                 shape: Shape::Square,
 //!             },
 //!             None,
@@ -37,15 +37,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
 pub use error::{ApiError, BuildError};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-

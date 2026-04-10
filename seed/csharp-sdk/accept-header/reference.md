@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">EndpointAsync</a>()</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedAccept/Service/ServiceClient.cs">EndpointAsync</a>()</code></summary>
 <dl>
 <dd>
 

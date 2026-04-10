@@ -2,13 +2,13 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedTrace from "../../../index.js";
 
 export declare namespace PlaylistClient {
     export type Options = BaseClientOptions;
@@ -26,47 +26,53 @@ export class PlaylistClient {
     /**
      * Create a new playlist
      *
-     * @param {SeedApi.PlaylistCreatePlaylistRequest} request
+     * @param {number} serviceParam
+     * @param {SeedTrace.CreatePlaylistRequest} request
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.playlist.createplaylist({
-     *         serviceParam: 1,
+     *     await client.playlist.createPlaylist(1, {
      *         datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *         optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
      *         body: {
      *             name: "name",
-     *             problems: ["problems"]
+     *             problems: ["problems", "problems"]
      *         }
      *     })
      */
-    public createplaylist(
-        request: SeedApi.PlaylistCreatePlaylistRequest,
+    public createPlaylist(
+        serviceParam: number,
+        request: SeedTrace.CreatePlaylistRequest,
         requestOptions?: PlaylistClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Playlist> {
-        return core.HttpResponsePromise.fromPromise(this.__createplaylist(request, requestOptions));
+    ): core.HttpResponsePromise<SeedTrace.Playlist> {
+        return core.HttpResponsePromise.fromPromise(this.__createPlaylist(serviceParam, request, requestOptions));
     }
 
-    private async __createplaylist(
-        request: SeedApi.PlaylistCreatePlaylistRequest,
+    private async __createPlaylist(
+        serviceParam: number,
+        request: SeedTrace.CreatePlaylistRequest,
         requestOptions?: PlaylistClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Playlist>> {
-        const { serviceParam, datetime, optionalDatetime, body: _body } = request;
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
+        const { datetime, optionalDatetime, body: _body } = request;
         const _queryParams: Record<string, unknown> = {
             datetime: datetime.toISOString(),
-            optionalDatetime: optionalDatetime !== undefined ? optionalDatetime?.toISOString() : undefined,
+            optionalDatetime: optionalDatetime != null ? optionalDatetime?.toISOString() : undefined,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `v2/playlist/${core.url.encodePathParam(serviceParam)}/create`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/create`,
             ),
             method: "POST",
             headers: _headers,
@@ -97,7 +103,7 @@ export class PlaylistClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -115,12 +121,12 @@ export class PlaylistClient {
     /**
      * Returns the user's playlists
      *
-     * @param {SeedApi.PlaylistGetPlaylistsRequest} request
+     * @param {number} serviceParam
+     * @param {SeedTrace.GetPlaylistsRequest} request
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.playlist.getplaylists({
-     *         serviceParam: 1,
+     *     await client.playlist.getPlaylists(1, {
      *         limit: 1,
      *         otherField: "otherField",
      *         multiLineDocs: "multiLineDocs",
@@ -128,18 +134,20 @@ export class PlaylistClient {
      *         multipleField: "multipleField"
      *     })
      */
-    public getplaylists(
-        request: SeedApi.PlaylistGetPlaylistsRequest,
+    public getPlaylists(
+        serviceParam: number,
+        request: SeedTrace.GetPlaylistsRequest,
         requestOptions?: PlaylistClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Playlist[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getplaylists(request, requestOptions));
+    ): core.HttpResponsePromise<SeedTrace.Playlist[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getPlaylists(serviceParam, request, requestOptions));
     }
 
-    private async __getplaylists(
-        request: SeedApi.PlaylistGetPlaylistsRequest,
+    private async __getPlaylists(
+        serviceParam: number,
+        request: SeedTrace.GetPlaylistsRequest,
         requestOptions?: PlaylistClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Playlist[]>> {
-        const { serviceParam, limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist[]>> {
+        const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
             otherField,
@@ -151,14 +159,17 @@ export class PlaylistClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `v2/playlist/${core.url.encodePathParam(serviceParam)}/all`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/all`,
             ),
             method: "GET",
             headers: _headers,
@@ -171,7 +182,7 @@ export class PlaylistClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.playlist.getplaylists.Response.parseOrThrow(_response.body, {
+                data: serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -183,7 +194,7 @@ export class PlaylistClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -201,37 +212,42 @@ export class PlaylistClient {
     /**
      * Returns a playlist
      *
-     * @param {SeedApi.PlaylistGetPlaylistRequest} request
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.UnauthorizedError}
-     * @throws {@link SeedApi.NotFoundError}
+     * @throws {@link SeedTrace.PlaylistIdNotFoundError}
+     * @throws {@link SeedTrace.UnauthorizedError}
      *
      * @example
-     *     await client.playlist.getplaylist({
-     *         serviceParam: 1,
-     *         playlistId: "playlistId"
-     *     })
+     *     await client.playlist.getPlaylist(1, "playlistId")
      */
-    public getplaylist(
-        request: SeedApi.PlaylistGetPlaylistRequest,
+    public getPlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
         requestOptions?: PlaylistClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Playlist> {
-        return core.HttpResponsePromise.fromPromise(this.__getplaylist(request, requestOptions));
+    ): core.HttpResponsePromise<SeedTrace.Playlist> {
+        return core.HttpResponsePromise.fromPromise(this.__getPlaylist(serviceParam, playlistId, requestOptions));
     }
 
-    private async __getplaylist(
-        request: SeedApi.PlaylistGetPlaylistRequest,
+    private async __getPlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
         requestOptions?: PlaylistClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Playlist>> {
-        const { serviceParam, playlistId } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }))}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -256,10 +272,10 @@ export class PlaylistClient {
         }
 
         if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new SeedApi.UnauthorizedError(
-                        serializers.UnauthorizedErrorBody.parseOrThrow(_response.error.body, {
+            switch ((_response.error.body as any)?.errorName) {
+                case "PlaylistIdNotFoundError":
+                    throw new SeedTrace.PlaylistIdNotFoundError(
+                        serializers.PlaylistIdNotFoundErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -268,10 +284,10 @@ export class PlaylistClient {
                         }),
                         _response.rawResponse,
                     );
-                case 404:
-                    throw new SeedApi.NotFoundError(_response.error.body, _response.rawResponse);
+                case "UnauthorizedError":
+                    throw new SeedTrace.UnauthorizedError(_response.rawResponse);
                 default:
-                    throw new errors.SeedApiError({
+                    throw new errors.SeedTraceError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,
@@ -290,50 +306,58 @@ export class PlaylistClient {
     /**
      * Updates a playlist
      *
-     * @param {SeedApi.UpdatePlaylistRequest} request
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {SeedTrace.UpdatePlaylistRequest} request
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.NotFoundError}
+     * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      *
      * @example
-     *     await client.playlist.updateplaylist({
-     *         serviceParam: 1,
-     *         playlistId: "playlistId",
+     *     await client.playlist.updatePlaylist(1, "playlistId", {
      *         name: "name",
-     *         problems: ["problems"]
+     *         problems: ["problems", "problems"]
      *     })
      */
-    public updateplaylist(
-        request: SeedApi.UpdatePlaylistRequest,
+    public updatePlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        request?: SeedTrace.UpdatePlaylistRequest,
         requestOptions?: PlaylistClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Playlist> {
-        return core.HttpResponsePromise.fromPromise(this.__updateplaylist(request, requestOptions));
+    ): core.HttpResponsePromise<SeedTrace.Playlist | undefined> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updatePlaylist(serviceParam, playlistId, request, requestOptions),
+        );
     }
 
-    private async __updateplaylist(
-        request: SeedApi.UpdatePlaylistRequest,
+    private async __updatePlaylist(
+        serviceParam: number,
+        playlistId: SeedTrace.PlaylistId,
+        request?: SeedTrace.UpdatePlaylistRequest,
         requestOptions?: PlaylistClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Playlist>> {
-        const { serviceParam, playlistId, ..._body } = request;
+    ): Promise<core.WithRawResponse<SeedTrace.Playlist | undefined>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }))}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }))}`,
             ),
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.UpdatePlaylistRequest.jsonOrThrow(_body, {
+            body: serializers.playlist.updatePlaylist.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
@@ -345,7 +369,7 @@ export class PlaylistClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.Playlist.parseOrThrow(_response.body, {
+                data: serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -357,11 +381,20 @@ export class PlaylistClient {
         }
 
         if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new SeedApi.NotFoundError(_response.error.body, _response.rawResponse);
+            switch ((_response.error.body as any)?.errorName) {
+                case "PlaylistIdNotFoundError":
+                    throw new SeedTrace.PlaylistIdNotFoundError(
+                        serializers.PlaylistIdNotFoundErrorBody.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
                 default:
-                    throw new errors.SeedApiError({
+                    throw new errors.SeedTraceError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,
@@ -380,39 +413,41 @@ export class PlaylistClient {
     /**
      * Deletes a playlist
      *
-     * @param {SeedApi.PlaylistDeletePlaylistRequest} request
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlist_id
      * @param {PlaylistClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.playlist.deleteplaylist({
-     *         serviceParam: 1,
-     *         playlistId: "playlist_id"
-     *     })
+     *     await client.playlist.deletePlaylist(1, "playlist_id")
      */
-    public deleteplaylist(
-        request: SeedApi.PlaylistDeletePlaylistRequest,
+    public deletePlaylist(
+        serviceParam: number,
+        playlist_id: SeedTrace.PlaylistId,
         requestOptions?: PlaylistClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteplaylist(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__deletePlaylist(serviceParam, playlist_id, requestOptions));
     }
 
-    private async __deleteplaylist(
-        request: SeedApi.PlaylistDeletePlaylistRequest,
+    private async __deletePlaylist(
+        serviceParam: number,
+        playlist_id: SeedTrace.PlaylistId,
         requestOptions?: PlaylistClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { serviceParam, playlistId } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }))}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlist_id, { omitUndefined: true }))}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -428,7 +463,7 @@ export class PlaylistClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

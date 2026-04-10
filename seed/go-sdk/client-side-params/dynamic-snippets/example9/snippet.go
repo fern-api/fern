@@ -17,37 +17,14 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.CreateUserRequest{
-        Email: "email",
-        EmailVerified: fern.Bool(
-            true,
+    request := &fern.GetConnectionRequest{
+        Fields: fern.String(
+            "fields",
         ),
-        Username: fern.String(
-            "username",
-        ),
-        Password: fern.String(
-            "password",
-        ),
-        PhoneNumber: fern.String(
-            "phone_number",
-        ),
-        PhoneVerified: fern.Bool(
-            true,
-        ),
-        UserMetadata: map[string]any{
-            "user_metadata": map[string]any{
-                "key": "value",
-            },
-        },
-        AppMetadata: map[string]any{
-            "app_metadata": map[string]any{
-                "key": "value",
-            },
-        },
-        Connection: "connection",
     }
-    client.Service.Createuser(
+    client.Service.GetConnection(
         context.TODO(),
+        "connectionId",
         request,
     )
 }

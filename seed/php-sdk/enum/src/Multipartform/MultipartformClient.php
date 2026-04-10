@@ -1,10 +1,10 @@
 <?php
 
-namespace Seed\Multipartform;
+namespace Seed\MultipartForm;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Multipartform\Requests\MultipartFormMultipartFormRequest;
+use Seed\MultipartForm\Requests\MultipartFormRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Multipart\MultipartFormData;
@@ -12,7 +12,7 @@ use Seed\Core\Multipart\MultipartApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class MultipartformClient
+class MultipartFormClient
 {
     /**
      * @var array{
@@ -49,7 +49,7 @@ class MultipartformClient
     }
 
     /**
-     * @param MultipartFormMultipartFormRequest $request
+     * @param MultipartFormRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -60,23 +60,21 @@ class MultipartformClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function multipartform(MultipartFormMultipartFormRequest $request = new MultipartFormMultipartFormRequest(), ?array $options = null): void
+    public function multipartForm(MultipartFormRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->color != null) {
-            $body->add(name: 'color', value: $request->color);
-        }
+        $body->add(name: 'color', value: $request->color);
         if ($request->maybeColor != null) {
             $body->add(name: 'maybeColor', value: $request->maybeColor);
         }
-        if ($request->colorList != null) {
-            foreach ($request->colorList as $element) {
-                $body->add(name: 'colorList', value: $element);
-            }
+        foreach ($request->colorList as $element) {
+            $body->add(name: 'colorList', value: $element);
         }
         if ($request->maybeColorList != null) {
-            $body->add(name: 'maybeColorList', value: $request->maybeColorList);
+            foreach ($request->maybeColorList as $element) {
+                $body->add(name: 'maybeColorList', value: $element);
+            }
         }
         try {
             $response = $this->client->sendRequest(

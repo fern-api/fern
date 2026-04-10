@@ -12,6 +12,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Usage](#usage)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -41,8 +42,9 @@ client = Exhaustive(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.endpoints_container.endpoints_container_get_and_return_list_of_primitives(
+client.endpoints.container.get_and_return_list_of_primitives(
     request=[
+        "string",
         "string"
     ],
 )
@@ -64,8 +66,9 @@ client = AsyncExhaustive(
 
 
 async def main() -> None:
-    await client.endpoints_container.endpoints_container_get_and_return_list_of_primitives(
+    await client.endpoints.container.get_and_return_list_of_primitives(
         request=[
+            "string",
             "string"
         ],
     )
@@ -83,10 +86,37 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.endpoints_container.endpoints_container_get_and_return_list_of_primitives(...)
+    client.endpoints.container.get_and_return_list_of_primitives(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
+```
+
+## Pagination
+
+Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
+
+```python
+from seed import Exhaustive
+
+client = Exhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.pagination.list_items(
+    cursor="cursor",
+    limit=1,
+)
+```
+
+```python
+# You can also iterate through pages and access the typed response per page
+pager = client.endpoints.pagination.list_items(...)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)
 ```
 
 ## Advanced
@@ -100,7 +130,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 from seed import Exhaustive
 
 client = Exhaustive(...)
-response = client.endpoints_container.with_raw_response.endpoints_container_get_and_return_list_of_primitives(...)
+response = client.endpoints.container.with_raw_response.get_and_return_list_of_primitives(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -121,7 +151,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.endpoints_container.endpoints_container_get_and_return_list_of_primitives(..., request_options={
+client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
     "max_retries": 1
 })
 ```
@@ -136,7 +166,7 @@ from seed import Exhaustive
 client = Exhaustive(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.endpoints_container.endpoints_container_get_and_return_list_of_primitives(..., request_options={
+client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

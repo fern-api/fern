@@ -1,4 +1,4 @@
-//! API client and types for the exhaustive
+//! API client and types for the Exhaustive
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -12,10 +12,7 @@ pub mod resources;
 pub mod types;
 
 pub use resources::{
-    ApiClient, EndpointsContainerClient, EndpointsContentTypeClient, EndpointsEnumClient,
-    EndpointsHttpMethodsClient, EndpointsObjectClient, EndpointsPaginationClient,
-    EndpointsParamsClient, EndpointsPrimitiveClient, EndpointsPutClient, EndpointsUnionClient,
-    EndpointsUrLsClient, InlinedrequestsClient, NoauthClient, NoreqbodyClient,
-    ReqwithheadersClient,
+    EndpointsClient, ExhaustiveClient, GeneralErrorsClient, InlinedRequestsClient, NoAuthClient,
+    NoReqBodyClient, ReqWithHeadersClient, TypesClient,
 };
 pub use types::*;

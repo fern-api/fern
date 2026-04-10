@@ -11,6 +11,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Reference](#reference)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
@@ -39,10 +40,22 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/pagination-uri-path";
+import { SeedPaginationUriPathClient } from "@fern/pagination-uri-path";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.users.listwithuripagination();
+const client = new SeedPaginationUriPathClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const pageableResponse = await client.users.listWithUriPagination();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.users.listWithUriPagination();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 ```
 
 ## Exception Handling
@@ -51,18 +64,41 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/pagination-uri-path";
+import { SeedPaginationUriPathError } from "@fern/pagination-uri-path";
 
 try {
-    await client.users.listwithuripagination(...);
+    await client.users.listWithUriPagination(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedPaginationUriPathError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
         console.log(err.rawResponse);
     }
 }
+```
+
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedPaginationUriPathClient } from "@fern/pagination-uri-path";
+
+const client = new SeedPaginationUriPathClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const pageableResponse = await client.users.listWithUriPagination();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.users.listWithUriPagination();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 ```
 
 ## Advanced
@@ -82,16 +118,16 @@ const client = new UsersClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/pagination-uri-path";
+import { SeedPaginationUriPathClient } from "@fern/pagination-uri-path";
 
-const client = new SeedApiClient({
+const client = new SeedPaginationUriPathClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.users.listwithuripagination(..., {
+const response = await client.users.listWithUriPagination(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -103,7 +139,7 @@ const response = await client.users.listwithuripagination(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.users.listwithuripagination(..., {
+const response = await client.users.listWithUriPagination(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -125,7 +161,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.users.listwithuripagination(..., {
+const response = await client.users.listWithUriPagination(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -135,7 +171,7 @@ const response = await client.users.listwithuripagination(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.users.listwithuripagination(..., {
+const response = await client.users.listWithUriPagination(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -146,7 +182,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.users.listwithuripagination(..., {
+const response = await client.users.listWithUriPagination(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -158,7 +194,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.users.listwithuripagination(...).withRawResponse();
+const { data, rawResponse } = await client.users.listWithUriPagination(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -169,9 +205,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/pagination-uri-path";
+import { SeedPaginationUriPathClient, logging } from "@fern/pagination-uri-path";
 
-const client = new SeedApiClient({
+const client = new SeedPaginationUriPathClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

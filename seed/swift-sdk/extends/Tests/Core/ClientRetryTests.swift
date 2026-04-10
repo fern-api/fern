@@ -1,4 +1,4 @@
-import Api
+import Extends
 import Foundation
 import Testing
 
@@ -14,13 +14,13 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -45,13 +45,13 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -76,13 +76,13 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -106,13 +106,13 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -135,13 +135,13 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -165,13 +165,13 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -195,13 +195,13 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -229,14 +229,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -274,14 +274,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -315,14 +315,14 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -368,13 +368,13 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -394,13 +394,13 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",
@@ -424,13 +424,13 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ExtendsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..extendedInlineRequestBody(
+            _ = try await client.extendedInlineRequestBody(
                 request: .init(
                     name: "name",
                     docs: "docs",

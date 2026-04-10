@@ -5,97 +5,97 @@ public struct Client: Codable, Hashable, Sendable {
     /// The unique client identifier
     public let clientId: String
     /// The tenant name
-    public let tenant: Nullable<String>?
+    public let tenant: String?
     /// Name of the client
     public let name: String
     /// Free text description of the client
-    public let description: Nullable<String>?
+    public let description: String?
     /// Whether this is a global client
-    public let global: Nullable<Bool>?
+    public let global: Bool?
     /// The client secret (only for non-public clients)
-    public let clientSecret: Nullable<String>?
+    public let clientSecret: String?
     /// The type of application (spa, native, regular_web, non_interactive)
-    public let appType: Nullable<String>?
+    public let appType: String?
     /// URL of the client logo
-    public let logoUri: Nullable<String>?
+    public let logoUri: String?
     /// Whether this client is a first party client
-    public let isFirstParty: Nullable<Bool>?
+    public let isFirstParty: Bool?
     /// Whether this client conforms to OIDC specifications
-    public let oidcConformant: Nullable<Bool>?
+    public let oidcConformant: Bool?
     /// Allowed callback URLs
-    public let callbacks: Nullable<[String]>?
+    public let callbacks: [String]?
     /// Allowed origins for CORS
-    public let allowedOrigins: Nullable<[String]>?
+    public let allowedOrigins: [String]?
     /// Allowed web origins for CORS
-    public let webOrigins: Nullable<[String]>?
+    public let webOrigins: [String]?
     /// Allowed grant types
-    public let grantTypes: Nullable<[String]>?
+    public let grantTypes: [String]?
     /// JWT configuration for the client
-    public let jwtConfiguration: Nullable<[String: JSONValue]>?
+    public let jwtConfiguration: [String: JSONValue]?
     /// Client signing keys
-    public let signingKeys: Nullable<[[String: JSONValue]]>?
+    public let signingKeys: [[String: JSONValue]]?
     /// Encryption key
-    public let encryptionKey: Nullable<[String: JSONValue]>?
+    public let encryptionKey: [String: JSONValue]?
     /// Whether SSO is enabled
-    public let sso: Nullable<Bool>?
+    public let sso: Bool?
     /// Whether SSO is disabled
-    public let ssoDisabled: Nullable<Bool>?
+    public let ssoDisabled: Bool?
     /// Whether to use cross-origin authentication
-    public let crossOriginAuth: Nullable<Bool>?
+    public let crossOriginAuth: Bool?
     /// URL for cross-origin authentication
-    public let crossOriginLoc: Nullable<String>?
+    public let crossOriginLoc: String?
     /// Whether a custom login page is enabled
-    public let customLoginPageOn: Nullable<Bool>?
+    public let customLoginPageOn: Bool?
     /// Custom login page URL
-    public let customLoginPage: Nullable<String>?
+    public let customLoginPage: String?
     /// Custom login page preview URL
-    public let customLoginPagePreview: Nullable<String>?
+    public let customLoginPagePreview: String?
     /// Form template for WS-Federation
-    public let formTemplate: Nullable<String>?
+    public let formTemplate: String?
     /// Whether this is a Heroku application
-    public let isHerokuApp: Nullable<Bool>?
+    public let isHerokuApp: Bool?
     /// Addons enabled for this client
-    public let addons: Nullable<[String: JSONValue]>?
+    public let addons: [String: JSONValue]?
     /// Requested authentication method for the token endpoint
-    public let tokenEndpointAuthMethod: Nullable<String>?
+    public let tokenEndpointAuthMethod: String?
     /// Metadata associated with the client
-    public let clientMetadata: Nullable<[String: JSONValue]>?
+    public let clientMetadata: [String: JSONValue]?
     /// Mobile app settings
-    public let mobile: Nullable<[String: JSONValue]>?
+    public let mobile: [String: JSONValue]?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         clientId: String,
-        tenant: Nullable<String>? = nil,
+        tenant: String? = nil,
         name: String,
-        description: Nullable<String>? = nil,
-        global: Nullable<Bool>? = nil,
-        clientSecret: Nullable<String>? = nil,
-        appType: Nullable<String>? = nil,
-        logoUri: Nullable<String>? = nil,
-        isFirstParty: Nullable<Bool>? = nil,
-        oidcConformant: Nullable<Bool>? = nil,
-        callbacks: Nullable<[String]>? = nil,
-        allowedOrigins: Nullable<[String]>? = nil,
-        webOrigins: Nullable<[String]>? = nil,
-        grantTypes: Nullable<[String]>? = nil,
-        jwtConfiguration: Nullable<[String: JSONValue]>? = nil,
-        signingKeys: Nullable<[[String: JSONValue]]>? = nil,
-        encryptionKey: Nullable<[String: JSONValue]>? = nil,
-        sso: Nullable<Bool>? = nil,
-        ssoDisabled: Nullable<Bool>? = nil,
-        crossOriginAuth: Nullable<Bool>? = nil,
-        crossOriginLoc: Nullable<String>? = nil,
-        customLoginPageOn: Nullable<Bool>? = nil,
-        customLoginPage: Nullable<String>? = nil,
-        customLoginPagePreview: Nullable<String>? = nil,
-        formTemplate: Nullable<String>? = nil,
-        isHerokuApp: Nullable<Bool>? = nil,
-        addons: Nullable<[String: JSONValue]>? = nil,
-        tokenEndpointAuthMethod: Nullable<String>? = nil,
-        clientMetadata: Nullable<[String: JSONValue]>? = nil,
-        mobile: Nullable<[String: JSONValue]>? = nil,
+        description: String? = nil,
+        global: Bool? = nil,
+        clientSecret: String? = nil,
+        appType: String? = nil,
+        logoUri: String? = nil,
+        isFirstParty: Bool? = nil,
+        oidcConformant: Bool? = nil,
+        callbacks: [String]? = nil,
+        allowedOrigins: [String]? = nil,
+        webOrigins: [String]? = nil,
+        grantTypes: [String]? = nil,
+        jwtConfiguration: [String: JSONValue]? = nil,
+        signingKeys: [[String: JSONValue]]? = nil,
+        encryptionKey: [String: JSONValue]? = nil,
+        sso: Bool? = nil,
+        ssoDisabled: Bool? = nil,
+        crossOriginAuth: Bool? = nil,
+        crossOriginLoc: String? = nil,
+        customLoginPageOn: Bool? = nil,
+        customLoginPage: String? = nil,
+        customLoginPagePreview: String? = nil,
+        formTemplate: String? = nil,
+        isHerokuApp: Bool? = nil,
+        addons: [String: JSONValue]? = nil,
+        tokenEndpointAuthMethod: String? = nil,
+        clientMetadata: [String: JSONValue]? = nil,
+        mobile: [String: JSONValue]? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.clientId = clientId
@@ -134,35 +134,35 @@ public struct Client: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.clientId = try container.decode(String.self, forKey: .clientId)
-        self.tenant = try container.decodeNullableIfPresent(String.self, forKey: .tenant)
+        self.tenant = try container.decodeIfPresent(String.self, forKey: .tenant)
         self.name = try container.decode(String.self, forKey: .name)
-        self.description = try container.decodeNullableIfPresent(String.self, forKey: .description)
-        self.global = try container.decodeNullableIfPresent(Bool.self, forKey: .global)
-        self.clientSecret = try container.decodeNullableIfPresent(String.self, forKey: .clientSecret)
-        self.appType = try container.decodeNullableIfPresent(String.self, forKey: .appType)
-        self.logoUri = try container.decodeNullableIfPresent(String.self, forKey: .logoUri)
-        self.isFirstParty = try container.decodeNullableIfPresent(Bool.self, forKey: .isFirstParty)
-        self.oidcConformant = try container.decodeNullableIfPresent(Bool.self, forKey: .oidcConformant)
-        self.callbacks = try container.decodeNullableIfPresent([String].self, forKey: .callbacks)
-        self.allowedOrigins = try container.decodeNullableIfPresent([String].self, forKey: .allowedOrigins)
-        self.webOrigins = try container.decodeNullableIfPresent([String].self, forKey: .webOrigins)
-        self.grantTypes = try container.decodeNullableIfPresent([String].self, forKey: .grantTypes)
-        self.jwtConfiguration = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .jwtConfiguration)
-        self.signingKeys = try container.decodeNullableIfPresent([[String: JSONValue]].self, forKey: .signingKeys)
-        self.encryptionKey = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .encryptionKey)
-        self.sso = try container.decodeNullableIfPresent(Bool.self, forKey: .sso)
-        self.ssoDisabled = try container.decodeNullableIfPresent(Bool.self, forKey: .ssoDisabled)
-        self.crossOriginAuth = try container.decodeNullableIfPresent(Bool.self, forKey: .crossOriginAuth)
-        self.crossOriginLoc = try container.decodeNullableIfPresent(String.self, forKey: .crossOriginLoc)
-        self.customLoginPageOn = try container.decodeNullableIfPresent(Bool.self, forKey: .customLoginPageOn)
-        self.customLoginPage = try container.decodeNullableIfPresent(String.self, forKey: .customLoginPage)
-        self.customLoginPagePreview = try container.decodeNullableIfPresent(String.self, forKey: .customLoginPagePreview)
-        self.formTemplate = try container.decodeNullableIfPresent(String.self, forKey: .formTemplate)
-        self.isHerokuApp = try container.decodeNullableIfPresent(Bool.self, forKey: .isHerokuApp)
-        self.addons = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .addons)
-        self.tokenEndpointAuthMethod = try container.decodeNullableIfPresent(String.self, forKey: .tokenEndpointAuthMethod)
-        self.clientMetadata = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .clientMetadata)
-        self.mobile = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .mobile)
+        self.description = try container.decodeIfPresent(String.self, forKey: .description)
+        self.global = try container.decodeIfPresent(Bool.self, forKey: .global)
+        self.clientSecret = try container.decodeIfPresent(String.self, forKey: .clientSecret)
+        self.appType = try container.decodeIfPresent(String.self, forKey: .appType)
+        self.logoUri = try container.decodeIfPresent(String.self, forKey: .logoUri)
+        self.isFirstParty = try container.decodeIfPresent(Bool.self, forKey: .isFirstParty)
+        self.oidcConformant = try container.decodeIfPresent(Bool.self, forKey: .oidcConformant)
+        self.callbacks = try container.decodeIfPresent([String].self, forKey: .callbacks)
+        self.allowedOrigins = try container.decodeIfPresent([String].self, forKey: .allowedOrigins)
+        self.webOrigins = try container.decodeIfPresent([String].self, forKey: .webOrigins)
+        self.grantTypes = try container.decodeIfPresent([String].self, forKey: .grantTypes)
+        self.jwtConfiguration = try container.decodeIfPresent([String: JSONValue].self, forKey: .jwtConfiguration)
+        self.signingKeys = try container.decodeIfPresent([[String: JSONValue]].self, forKey: .signingKeys)
+        self.encryptionKey = try container.decodeIfPresent([String: JSONValue].self, forKey: .encryptionKey)
+        self.sso = try container.decodeIfPresent(Bool.self, forKey: .sso)
+        self.ssoDisabled = try container.decodeIfPresent(Bool.self, forKey: .ssoDisabled)
+        self.crossOriginAuth = try container.decodeIfPresent(Bool.self, forKey: .crossOriginAuth)
+        self.crossOriginLoc = try container.decodeIfPresent(String.self, forKey: .crossOriginLoc)
+        self.customLoginPageOn = try container.decodeIfPresent(Bool.self, forKey: .customLoginPageOn)
+        self.customLoginPage = try container.decodeIfPresent(String.self, forKey: .customLoginPage)
+        self.customLoginPagePreview = try container.decodeIfPresent(String.self, forKey: .customLoginPagePreview)
+        self.formTemplate = try container.decodeIfPresent(String.self, forKey: .formTemplate)
+        self.isHerokuApp = try container.decodeIfPresent(Bool.self, forKey: .isHerokuApp)
+        self.addons = try container.decodeIfPresent([String: JSONValue].self, forKey: .addons)
+        self.tokenEndpointAuthMethod = try container.decodeIfPresent(String.self, forKey: .tokenEndpointAuthMethod)
+        self.clientMetadata = try container.decodeIfPresent([String: JSONValue].self, forKey: .clientMetadata)
+        self.mobile = try container.decodeIfPresent([String: JSONValue].self, forKey: .mobile)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -170,35 +170,35 @@ public struct Client: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.clientId, forKey: .clientId)
-        try container.encodeNullableIfPresent(self.tenant, forKey: .tenant)
+        try container.encodeIfPresent(self.tenant, forKey: .tenant)
         try container.encode(self.name, forKey: .name)
-        try container.encodeNullableIfPresent(self.description, forKey: .description)
-        try container.encodeNullableIfPresent(self.global, forKey: .global)
-        try container.encodeNullableIfPresent(self.clientSecret, forKey: .clientSecret)
-        try container.encodeNullableIfPresent(self.appType, forKey: .appType)
-        try container.encodeNullableIfPresent(self.logoUri, forKey: .logoUri)
-        try container.encodeNullableIfPresent(self.isFirstParty, forKey: .isFirstParty)
-        try container.encodeNullableIfPresent(self.oidcConformant, forKey: .oidcConformant)
-        try container.encodeNullableIfPresent(self.callbacks, forKey: .callbacks)
-        try container.encodeNullableIfPresent(self.allowedOrigins, forKey: .allowedOrigins)
-        try container.encodeNullableIfPresent(self.webOrigins, forKey: .webOrigins)
-        try container.encodeNullableIfPresent(self.grantTypes, forKey: .grantTypes)
-        try container.encodeNullableIfPresent(self.jwtConfiguration, forKey: .jwtConfiguration)
-        try container.encodeNullableIfPresent(self.signingKeys, forKey: .signingKeys)
-        try container.encodeNullableIfPresent(self.encryptionKey, forKey: .encryptionKey)
-        try container.encodeNullableIfPresent(self.sso, forKey: .sso)
-        try container.encodeNullableIfPresent(self.ssoDisabled, forKey: .ssoDisabled)
-        try container.encodeNullableIfPresent(self.crossOriginAuth, forKey: .crossOriginAuth)
-        try container.encodeNullableIfPresent(self.crossOriginLoc, forKey: .crossOriginLoc)
-        try container.encodeNullableIfPresent(self.customLoginPageOn, forKey: .customLoginPageOn)
-        try container.encodeNullableIfPresent(self.customLoginPage, forKey: .customLoginPage)
-        try container.encodeNullableIfPresent(self.customLoginPagePreview, forKey: .customLoginPagePreview)
-        try container.encodeNullableIfPresent(self.formTemplate, forKey: .formTemplate)
-        try container.encodeNullableIfPresent(self.isHerokuApp, forKey: .isHerokuApp)
-        try container.encodeNullableIfPresent(self.addons, forKey: .addons)
-        try container.encodeNullableIfPresent(self.tokenEndpointAuthMethod, forKey: .tokenEndpointAuthMethod)
-        try container.encodeNullableIfPresent(self.clientMetadata, forKey: .clientMetadata)
-        try container.encodeNullableIfPresent(self.mobile, forKey: .mobile)
+        try container.encodeIfPresent(self.description, forKey: .description)
+        try container.encodeIfPresent(self.global, forKey: .global)
+        try container.encodeIfPresent(self.clientSecret, forKey: .clientSecret)
+        try container.encodeIfPresent(self.appType, forKey: .appType)
+        try container.encodeIfPresent(self.logoUri, forKey: .logoUri)
+        try container.encodeIfPresent(self.isFirstParty, forKey: .isFirstParty)
+        try container.encodeIfPresent(self.oidcConformant, forKey: .oidcConformant)
+        try container.encodeIfPresent(self.callbacks, forKey: .callbacks)
+        try container.encodeIfPresent(self.allowedOrigins, forKey: .allowedOrigins)
+        try container.encodeIfPresent(self.webOrigins, forKey: .webOrigins)
+        try container.encodeIfPresent(self.grantTypes, forKey: .grantTypes)
+        try container.encodeIfPresent(self.jwtConfiguration, forKey: .jwtConfiguration)
+        try container.encodeIfPresent(self.signingKeys, forKey: .signingKeys)
+        try container.encodeIfPresent(self.encryptionKey, forKey: .encryptionKey)
+        try container.encodeIfPresent(self.sso, forKey: .sso)
+        try container.encodeIfPresent(self.ssoDisabled, forKey: .ssoDisabled)
+        try container.encodeIfPresent(self.crossOriginAuth, forKey: .crossOriginAuth)
+        try container.encodeIfPresent(self.crossOriginLoc, forKey: .crossOriginLoc)
+        try container.encodeIfPresent(self.customLoginPageOn, forKey: .customLoginPageOn)
+        try container.encodeIfPresent(self.customLoginPage, forKey: .customLoginPage)
+        try container.encodeIfPresent(self.customLoginPagePreview, forKey: .customLoginPagePreview)
+        try container.encodeIfPresent(self.formTemplate, forKey: .formTemplate)
+        try container.encodeIfPresent(self.isHerokuApp, forKey: .isHerokuApp)
+        try container.encodeIfPresent(self.addons, forKey: .addons)
+        try container.encodeIfPresent(self.tokenEndpointAuthMethod, forKey: .tokenEndpointAuthMethod)
+        try container.encodeIfPresent(self.clientMetadata, forKey: .clientMetadata)
+        try container.encodeIfPresent(self.mobile, forKey: .mobile)
     }
 
     /// Keys for encoding/decoding struct properties.

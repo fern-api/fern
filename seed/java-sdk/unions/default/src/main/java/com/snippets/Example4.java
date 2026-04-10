@@ -1,20 +1,18 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.types.BigUnion;
-import com.seed.api.types.BigUnionZero;
-import com.seed.api.types.BigUnionZeroType;
-import java.util.Arrays;
+import com.seed.unions.SeedUnionsClient;
+import com.seed.unions.resources.union.types.Circle;
+import com.seed.unions.resources.union.types.Shape;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedUnionsClient client =
+                SeedUnionsClient.builder().url("https://api.fern.com").build();
 
-        client.bigunion()
-                .updateMany(Arrays.asList(BigUnion.of(BigUnionZero.builder()
-                        .value("value")
-                        .type(BigUnionZeroType.NORMAL_SWEET)
-                        .build())));
+        client.union()
+                .update(Shape.circle(Circle.builder()
+                        .radius(1.1)
+                        .additionalProperty("id", "id")
+                        .build()));
     }
 }

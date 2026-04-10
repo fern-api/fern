@@ -1,24 +1,23 @@
-using SeedApi;
+using SeedAnyAuth;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedAnyAuthClient(
             token: "<token>",
-            apiKey: "<X-API-Key>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Auth.GettokenAsync(
-            new AuthGetTokenRequest {
+        await client.Auth.GetTokenAsync(
+            new GetTokenRequest {
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
-                Audience = AuthGetTokenRequestAudience.HttpsApiExampleCom,
-                GrantType = AuthGetTokenRequestGrantType.ClientCredentials
+                Audience = "https://api.example.com",
+                GrantType = "client_credentials"
             }
         );
     }

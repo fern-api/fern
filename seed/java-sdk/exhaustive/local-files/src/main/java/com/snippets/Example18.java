@@ -1,19 +1,28 @@
 package com.snippets;
 
-import com.fern.sdk.SeedApiClient;
-import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.resources.types.object.types.ObjectWithMapOfMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Example18 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpointsContentType().endpointsContentTypePostJsonPatchContentWithCharsetType(
-            TypesObjectWithOptionalField
+        client.endpoints().object().getAndReturnWithMapOfMap(
+            ObjectWithMapOfMap
                 .builder()
+                .map(
+                    new HashMap<String, Map<String, String>>() {{
+                        put("map", new HashMap<String, String>() {{
+                            put("map", "map");
+                        }});
+                    }}
+                )
                 .build()
         );
     }

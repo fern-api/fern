@@ -1,29 +1,16 @@
 {
     "endpoints": [
         {
-            "example_identifier": "8092e21e",
+            "example_identifier": "bdd68942",
             "id": {
                 "method": "GET",
                 "path": "/users",
-                "identifier_override": "endpoint_retries.getusers"
+                "identifier_override": "endpoint_retries.getUsers"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.retries().getusers();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.retries().getusers();\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "86b84d02",
-            "id": {
-                "method": "GET",
-                "path": "/users",
-                "identifier_override": "endpoint_retries.getusers"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.retries().getusers();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.retries().getusers();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.noRetries.SeedNoRetriesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNoRetriesClient client = SeedNoRetriesClient\n            .builder()\n            .build();\n\n        client.retries().getUsers();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.noRetries.SeedNoRetriesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNoRetriesClient client = SeedNoRetriesClient\n            .builder()\n            .build();\n\n        client.retries().getUsers();\n    }\n}\n"
             }
         }
     ],

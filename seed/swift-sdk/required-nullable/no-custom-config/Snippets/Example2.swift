@@ -4,9 +4,13 @@ import Api
 private func main() async throws {
     let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client..updateFoo(
+    _ = try await client.updateFoo(
         id: "id",
-        request: .init()
+        request: .init(
+            nullableText: .value("nullable_text"),
+            nullableNumber: .value(1.1),
+            nonNullableText: "non_nullable_text"
+        )
     )
 }
 

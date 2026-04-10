@@ -17,7 +17,7 @@ public final class UnionClient: Sendable {
         )
     }
 
-    public func getmetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {
+    public func getMetadata(requestOptions: RequestOptions? = nil) async throws -> Metadata {
         return try await httpClient.performRequest(
             method: .get,
             path: "/metadata",
@@ -26,7 +26,7 @@ public final class UnionClient: Sendable {
         )
     }
 
-    public func updatemetadata(request: MetadataUnion, requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func updateMetadata(request: MetadataUnion, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .put,
             path: "/metadata",
@@ -36,7 +36,7 @@ public final class UnionClient: Sendable {
         )
     }
 
-    public func call(request: Requests.Request, requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func call(request: Request, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .post,
             path: "/call",
@@ -46,7 +46,7 @@ public final class UnionClient: Sendable {
         )
     }
 
-    public func duplicatetypesunion(request: UnionWithDuplicateTypes, requestOptions: RequestOptions? = nil) async throws -> UnionWithDuplicateTypes {
+    public func duplicateTypesUnion(request: UnionWithDuplicateTypes, requestOptions: RequestOptions? = nil) async throws -> UnionWithDuplicateTypes {
         return try await httpClient.performRequest(
             method: .post,
             path: "/duplicate",
@@ -56,7 +56,7 @@ public final class UnionClient: Sendable {
         )
     }
 
-    public func nestedunions(request: NestedUnionRoot, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func nestedUnions(request: NestedUnionRoot, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/nested",
@@ -66,7 +66,7 @@ public final class UnionClient: Sendable {
         )
     }
 
-    public func testcamelcaseproperties(request: Requests.UnionTestCamelCasePropertiesRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func testCamelCaseProperties(request: Requests.PaymentRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/camel-case",

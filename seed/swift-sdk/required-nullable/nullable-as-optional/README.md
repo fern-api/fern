@@ -54,8 +54,8 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client..getFoo(
-        optionalBaz: .value("optional_baz"),
+    _ = try await client.getFoo(
+        optionalBaz: "optional_baz",
         optionalNullableBaz: .value("optional_nullable_baz"),
         requiredBaz: "required_baz",
         requiredNullableBaz: .value("required_nullable_baz")
@@ -75,7 +75,7 @@ import Api
 let client = ApiClient(...)
 
 do {
-    let response = try await client..getFoo(...)
+    let response = try await client.getFoo(...)
     // Handle successful response
 } catch let error as ApiError {
     switch error {
@@ -114,7 +114,7 @@ let request = Requests.UpdateFooRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client..getFoo(..., requestOptions: .init(
+try await client.getFoo(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -126,7 +126,7 @@ try await client..getFoo(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client..getFoo(..., requestOptions: .init(
+try await client.getFoo(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -138,7 +138,7 @@ try await client..getFoo(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client..getFoo(..., requestOptions: .init(
+try await client.getFoo(..., requestOptions: .init(
     timeout: 30
 ))
 ```

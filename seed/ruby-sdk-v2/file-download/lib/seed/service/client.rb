@@ -24,7 +24,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "snippet",
+          path: "/snippet",
           request_options: request_options
         )
         begin
@@ -48,7 +48,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def downloadfile(request_options: {}, **params)
+      def download_file(request_options: {}, **params)
         Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

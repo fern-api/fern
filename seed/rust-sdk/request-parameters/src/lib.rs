@@ -1,26 +1,26 @@
-//! # request-parameters SDK
+//! # RequestParameters SDK
 //!
-//! The official Rust SDK for the request-parameters.
+//! The official Rust SDK for the RequestParameters.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_request_parameters::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = RequestParametersClient::new(config).expect("Failed to build client");
 //!     client
 //!         .user
-//!         .createusername(
-//!             &UserCreateUsernameRequest {
-//!                 tags: vec![Some("tags".to_string())],
+//!         .create_username(
+//!             &CreateUsernameRequest {
+//!                 tags: vec!["tags".to_string(), "tags".to_string()],
 //!                 username: "username".to_string(),
 //!                 password: "password".to_string(),
-//!                 name: "name".to_string(),
+//!                 name: "test".to_string(),
 //!             },
 //!             None,
 //!         )

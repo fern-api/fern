@@ -2,8 +2,8 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum ApiError {
-    #[error("BadRequestError: Bad request - {{message}}")]
-    BadRequestError {
+    #[error("PropertyBasedErrorTest: Bad request - {{message}}")]
+    PropertyBasedErrorTest {
         message: String,
         field: Option<String>,
         details: Option<String>,
@@ -32,10 +32,10 @@ impl ApiError {
     pub fn from_response(status_code: u16, body: Option<&str>) -> Self {
         match status_code {
             400 => {
-                // Parse error body for BadRequestError;
+                // Parse error body for PropertyBasedErrorTest;
                 if let Some(body_str) = body {
                     if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
-                        return Self::BadRequestError {
+                        return Self::PropertyBasedErrorTest {
                             message: parsed
                                 .get("message")
                                 .and_then(|v| v.as_str())
@@ -50,7 +50,7 @@ impl ApiError {
                         };
                     }
                 }
-                return Self::BadRequestError {
+                return Self::PropertyBasedErrorTest {
                     message: body.unwrap_or("Unknown error").to_string(),
                     field: None,
                     details: None,

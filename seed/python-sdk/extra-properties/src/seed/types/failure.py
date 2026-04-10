@@ -4,11 +4,10 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .failure_status import FailureStatus
 
 
 class Failure(UniversalBaseModel):
-    status: FailureStatus
+    status: typing.Literal["failure"] = "failure"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

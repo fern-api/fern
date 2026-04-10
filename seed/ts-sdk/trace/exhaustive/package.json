@@ -110,27 +110,38 @@
             },
             "default": "./dist/cjs/api/resources/sysprop/exports.js"
         },
-        "./v2Problem": {
+        "./v2/problem": {
             "import": {
-                "types": "./dist/esm/api/resources/v2Problem/exports.d.mts",
-                "default": "./dist/esm/api/resources/v2Problem/exports.mjs"
+                "types": "./dist/esm/api/resources/v2/resources/problem/exports.d.mts",
+                "default": "./dist/esm/api/resources/v2/resources/problem/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/v2Problem/exports.d.ts",
-                "default": "./dist/cjs/api/resources/v2Problem/exports.js"
+                "types": "./dist/cjs/api/resources/v2/resources/problem/exports.d.ts",
+                "default": "./dist/cjs/api/resources/v2/resources/problem/exports.js"
             },
-            "default": "./dist/cjs/api/resources/v2Problem/exports.js"
+            "default": "./dist/cjs/api/resources/v2/resources/problem/exports.js"
         },
-        "./v2V3Problem": {
+        "./v2/v3": {
             "import": {
-                "types": "./dist/esm/api/resources/v2V3Problem/exports.d.mts",
-                "default": "./dist/esm/api/resources/v2V3Problem/exports.mjs"
+                "types": "./dist/esm/api/resources/v2/resources/v3/exports.d.mts",
+                "default": "./dist/esm/api/resources/v2/resources/v3/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/v2V3Problem/exports.d.ts",
-                "default": "./dist/cjs/api/resources/v2V3Problem/exports.js"
+                "types": "./dist/cjs/api/resources/v2/resources/v3/exports.d.ts",
+                "default": "./dist/cjs/api/resources/v2/resources/v3/exports.js"
             },
-            "default": "./dist/cjs/api/resources/v2V3Problem/exports.js"
+            "default": "./dist/cjs/api/resources/v2/resources/v3/exports.js"
+        },
+        "./v2/v3/problem": {
+            "import": {
+                "types": "./dist/esm/api/resources/v2/resources/v3/resources/problem/exports.d.mts",
+                "default": "./dist/esm/api/resources/v2/resources/v3/resources/problem/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/v2/resources/v3/resources/problem/exports.d.ts",
+                "default": "./dist/cjs/api/resources/v2/resources/v3/resources/problem/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/v2/resources/v3/resources/problem/exports.js"
         },
         "./package.json": "./package.json"
     },

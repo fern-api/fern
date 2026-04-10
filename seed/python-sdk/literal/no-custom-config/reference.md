@@ -13,16 +13,16 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedLiteral
 
-client = SeedApi(
+client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.headers.send(
     endpoint_version="02-12-2024",
     async_=True,
-    query="query",
+    query="What is the weather today",
 )
 
 ```
@@ -39,7 +39,7 @@ client.headers.send(
 <dl>
 <dd>
 
-**endpoint_version:** `HeadersSendRequestXEndpointVersion` 
+**endpoint_version:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -47,7 +47,7 @@ client.headers.send(
 <dl>
 <dd>
 
-**async:** `bool` 
+**async:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -89,22 +89,21 @@ client.headers.send(
 <dd>
 
 ```python
-from seed import SeedApi, ATopLevelLiteral, ANestedLiteral
+from seed import SeedLiteral
+from seed.inlined import ATopLevelLiteral, ANestedLiteral
 
-client = SeedApi(
+client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.inlined.send(
-    prompt="You are a helpful assistant",
-    query="query",
-    stream=True,
-    aliased_context="You\'re super wise",
+    temperature=10.1,
     object_with_literal=ATopLevelLiteral(
         nested_literal=ANestedLiteral(
             my_literal="How super cool",
         ),
     ),
+    query="What is the weather today",
 )
 
 ```
@@ -121,7 +120,7 @@ client.inlined.send(
 <dl>
 <dd>
 
-**prompt:** `InlinedSendRequestPrompt` 
+**prompt:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -137,7 +136,7 @@ client.inlined.send(
 <dl>
 <dd>
 
-**stream:** `bool` 
+**stream:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -161,7 +160,7 @@ client.inlined.send(
 <dl>
 <dd>
 
-**context:** `typing.Optional[InlinedSendRequestContext]` 
+**context:** `typing.Optional[typing.Literal]` 
     
 </dd>
 </dl>
@@ -211,15 +210,13 @@ client.inlined.send(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedLiteral
 
-client = SeedApi(
+client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.path.send(
-    id="123",
-)
+client.path.send()
 
 ```
 </dd>
@@ -235,7 +232,7 @@ client.path.send(
 <dl>
 <dd>
 
-**id:** `PathSendRequestId` 
+**id:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -269,18 +266,22 @@ client.path.send(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedLiteral
 
-client = SeedApi(
+client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.query.send(
     prompt="You are a helpful assistant",
+    optional_prompt="You are a helpful assistant",
     alias_prompt="You are a helpful assistant",
-    query="query",
-    stream=True,
-    alias_stream=True,
+    alias_optional_prompt="You are a helpful assistant",
+    stream=False,
+    optional_stream=False,
+    alias_stream=False,
+    alias_optional_stream=False,
+    query="What is the weather today",
 )
 
 ```
@@ -297,7 +298,7 @@ client.query.send(
 <dl>
 <dd>
 
-**prompt:** `QuerySendRequestPrompt` 
+**prompt:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -321,7 +322,7 @@ client.query.send(
 <dl>
 <dd>
 
-**stream:** `bool` 
+**stream:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -337,7 +338,7 @@ client.query.send(
 <dl>
 <dd>
 
-**optional_prompt:** `typing.Optional[QuerySendRequestOptionalPrompt]` 
+**optional_prompt:** `typing.Optional[typing.Literal]` 
     
 </dd>
 </dl>
@@ -353,7 +354,7 @@ client.query.send(
 <dl>
 <dd>
 
-**optional_stream:** `typing.Optional[bool]` 
+**optional_stream:** `typing.Optional[typing.Literal]` 
     
 </dd>
 </dl>
@@ -395,18 +396,15 @@ client.query.send(
 <dd>
 
 ```python
-from seed import SeedApi, ContainerObject, NestedObjectWithLiterals
+from seed import SeedLiteral
+from seed.reference import ContainerObject, NestedObjectWithLiterals
 
-client = SeedApi(
+client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.reference.send(
-    prompt="You are a helpful assistant",
-    query="query",
-    stream=True,
-    ending="$ending",
-    context="You\'re super wise",
+    query="What is the weather today",
     container_object=ContainerObject(
         nested_objects=[
             NestedObjectWithLiterals(
@@ -432,55 +430,7 @@ client.reference.send(
 <dl>
 <dd>
 
-**prompt:** `SendRequestPrompt` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**query:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stream:** `bool` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ending:** `SendRequestEnding` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**context:** `SomeLiteral` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container_object:** `ContainerObject` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**maybe_context:** `typing.Optional[SomeLiteral]` 
+**request:** `SendRequest` 
     
 </dd>
 </dl>

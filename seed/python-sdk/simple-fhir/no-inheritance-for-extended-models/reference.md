@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="src/seed/_/client.py">get_account</a>(...) -> Account</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get_account</a>(...) -> Account</code></summary>
 <dl>
 <dd>
 
@@ -19,7 +18,7 @@ client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client._.get_account(
+client.get_account(
     account_id="account_id",
 )
 

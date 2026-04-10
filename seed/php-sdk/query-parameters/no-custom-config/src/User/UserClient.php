@@ -4,8 +4,8 @@ namespace Seed\User;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\User\Requests\UserGetUsernameRequest;
-use Seed\Types\User;
+use Seed\User\Requests\GetUsersRequest;
+use Seed\User\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonSerializer;
@@ -51,7 +51,7 @@ class UserClient
     }
 
     /**
-     * @param UserGetUsernameRequest $request
+     * @param GetUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -64,7 +64,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getusername(UserGetUsernameRequest $request, ?array $options = null): ?User
+    public function getUsername(GetUsersRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -74,11 +74,11 @@ class UserClient
         $query['deadline'] = JsonSerializer::serializeDateTime($request->deadline);
         $query['bytes'] = $request->bytes;
         $query['user'] = $request->user;
+        $query['userList'] = $request->userList;
         $query['keyValue'] = $request->keyValue;
         $query['nestedUser'] = $request->nestedUser;
-        if ($request->userList != null) {
-            $query['userList'] = $request->userList;
-        }
+        $query['excludeUser'] = $request->excludeUser;
+        $query['filter'] = $request->filter;
         if ($request->optionalDeadline != null) {
             $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->optionalDeadline);
         }
@@ -88,17 +88,11 @@ class UserClient
         if ($request->optionalUser != null) {
             $query['optionalUser'] = $request->optionalUser;
         }
-        if ($request->excludeUser != null) {
-            $query['excludeUser'] = $request->excludeUser;
-        }
-        if ($request->filter != null) {
-            $query['filter'] = $request->filter;
-        }
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "user",
+                    path: "/user",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

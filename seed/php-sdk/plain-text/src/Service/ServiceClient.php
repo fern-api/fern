@@ -59,7 +59,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function gettext(?array $options = null): string
+    public function getText(?array $options = null): string
     {
         $options = array_merge($this->options, $options ?? []);
         try {

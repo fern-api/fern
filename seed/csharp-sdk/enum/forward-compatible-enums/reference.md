@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.Headers.<a href="/src/SeedApi/Headers/HeadersClient.cs">SendAsync</a>(HeadersSendRequest { ... })</code></summary>
+<details><summary><code>client.Headers.<a href="/src/SeedEnum/Headers/HeadersClient.cs">SendAsync</a>(SendEnumAsHeaderRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,13 @@
 
 ```csharp
 await client.Headers.SendAsync(
-    new HeadersSendRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+    new SendEnumAsHeaderRequest
+    {
+        Operand = Operand.GreaterThan,
+        MaybeOperand = Operand.GreaterThan,
+        OperandOrColor = Color.Red,
+        MaybeOperandOrColor = null,
+    }
 );
 ```
 </dd>
@@ -30,7 +36,7 @@ await client.Headers.SendAsync(
 <dl>
 <dd>
 
-**request:** `HeadersSendRequest` 
+**request:** `SendEnumAsHeaderRequest` 
     
 </dd>
 </dl>
@@ -42,8 +48,8 @@ await client.Headers.SendAsync(
 </dl>
 </details>
 
-## Inlinedrequest
-<details><summary><code>client.Inlinedrequest.<a href="/src/SeedApi/Inlinedrequest/InlinedrequestClient.cs">SendAsync</a>(InlinedRequestSendRequest { ... })</code></summary>
+## InlinedRequest
+<details><summary><code>client.InlinedRequest.<a href="/src/SeedEnum/InlinedRequest/InlinedRequestClient.cs">SendAsync</a>(SendEnumInlinedRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -56,8 +62,8 @@ await client.Headers.SendAsync(
 <dd>
 
 ```csharp
-await client.Inlinedrequest.SendAsync(
-    new InlinedRequestSendRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+await client.InlinedRequest.SendAsync(
+    new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
 );
 ```
 </dd>
@@ -73,7 +79,7 @@ await client.Inlinedrequest.SendAsync(
 <dl>
 <dd>
 
-**request:** `InlinedRequestSendRequest` 
+**request:** `SendEnumInlinedRequest` 
     
 </dd>
 </dl>
@@ -85,8 +91,9 @@ await client.Inlinedrequest.SendAsync(
 </dl>
 </details>
 
-## Multipartform
-<details><summary><code>client.Multipartform.<a href="/src/SeedApi/Multipartform/MultipartformClient.cs">MultipartformAsync</a>(MultipartFormMultipartFormRequest { ... })</code></summary>
+## MultipartForm
+## PathParam
+<details><summary><code>client.PathParam.<a href="/src/SeedEnum/PathParam/PathParamClient.cs">SendAsync</a>(operand, operandOrColor)</code></summary>
 <dl>
 <dd>
 
@@ -99,7 +106,7 @@ await client.Inlinedrequest.SendAsync(
 <dd>
 
 ```csharp
-await client.Multipartform.MultipartformAsync(new MultipartFormMultipartFormRequest());
+await client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);
 ```
 </dd>
 </dl>
@@ -114,7 +121,15 @@ await client.Multipartform.MultipartformAsync(new MultipartFormMultipartFormRequ
 <dl>
 <dd>
 
-**request:** `MultipartFormMultipartFormRequest` 
+**operand:** `Operand` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**operandOrColor:** `OneOf<Color, Operand>` 
     
 </dd>
 </dl>
@@ -126,8 +141,8 @@ await client.Multipartform.MultipartformAsync(new MultipartFormMultipartFormRequ
 </dl>
 </details>
 
-## Pathparam
-<details><summary><code>client.Pathparam.<a href="/src/SeedApi/Pathparam/PathparamClient.cs">SendAsync</a>(PathParamSendRequest { ... })</code></summary>
+## QueryParam
+<details><summary><code>client.QueryParam.<a href="/src/SeedEnum/QueryParam/QueryParamClient.cs">SendAsync</a>(SendEnumAsQueryParamRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -140,8 +155,8 @@ await client.Multipartform.MultipartformAsync(new MultipartFormMultipartFormRequ
 <dd>
 
 ```csharp
-await client.Pathparam.SendAsync(
-    new PathParamSendRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+await client.QueryParam.SendAsync(
+    new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
 );
 ```
 </dd>
@@ -157,7 +172,7 @@ await client.Pathparam.SendAsync(
 <dl>
 <dd>
 
-**request:** `PathParamSendRequest` 
+**request:** `SendEnumAsQueryParamRequest` 
     
 </dd>
 </dl>
@@ -169,8 +184,7 @@ await client.Pathparam.SendAsync(
 </dl>
 </details>
 
-## Queryparam
-<details><summary><code>client.Queryparam.<a href="/src/SeedApi/Queryparam/QueryparamClient.cs">SendAsync</a>(QueryParamSendRequest { ... })</code></summary>
+<details><summary><code>client.QueryParam.<a href="/src/SeedEnum/QueryParam/QueryParamClient.cs">SendListAsync</a>(SendEnumListAsQueryParamRequest { ... })</code></summary>
 <dl>
 <dd>
 
@@ -183,50 +197,8 @@ await client.Pathparam.SendAsync(
 <dd>
 
 ```csharp
-await client.Queryparam.SendAsync(
-    new QueryParamSendRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `QueryParamSendRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Queryparam.<a href="/src/SeedApi/Queryparam/QueryparamClient.cs">SendlistAsync</a>(QueryParamSendListRequest { ... })</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Queryparam.SendlistAsync(
-    new QueryParamSendListRequest
+await client.QueryParam.SendListAsync(
+    new SendEnumListAsQueryParamRequest
     {
         Operand = [Operand.GreaterThan],
         MaybeOperand = [Operand.GreaterThan],
@@ -248,7 +220,7 @@ await client.Queryparam.SendlistAsync(
 <dl>
 <dd>
 
-**request:** `QueryParamSendListRequest` 
+**request:** `SendEnumListAsQueryParamRequest` 
     
 </dd>
 </dl>

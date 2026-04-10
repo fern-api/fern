@@ -1,19 +1,28 @@
-using SeedApi;
+using SeedExhaustive;
+using SeedExhaustive.Types.Object;
 
 namespace Usage;
 
 public class Example18
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.EndpointsContentType.EndpointsContentTypePostJsonPatchContentWithCharsetTypeAsync(
-            new TypesObjectWithOptionalField()
+        await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
+            new ObjectWithMapOfMap {
+                Map = new Dictionary<string, Dictionary<string, string>>(){
+                    ["map"] = new Dictionary<string, string>(){
+                        ["map"] = "map",
+                    }
+                    ,
+                }
+
+            }
         );
     }
 

@@ -1,21 +1,21 @@
-using SeedApi;
+using SeedValidation;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedValidationClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client._.CreateAsync(
+        await client.CreateAsync(
             new CreateRequest {
-                Decimal = 1.1,
-                Even = 1,
-                Name = "name",
+                Decimal = 2.2,
+                Even = 100,
+                Name = "fern",
                 Shape = Shape.Square
             }
         );

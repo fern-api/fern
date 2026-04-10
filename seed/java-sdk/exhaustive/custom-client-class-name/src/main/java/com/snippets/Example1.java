@@ -1,6 +1,7 @@
 package com.snippets;
 
-import com.seed.api.Best;
+import com.seed.exhaustive.Best;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
 import java.util.Arrays;
 
 public class Example1 {
@@ -8,6 +9,10 @@ public class Example1 {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpointsContainer().endpointsContainerGetAndReturnListOfPrimitives(Arrays.asList("string", "string"));
+        client.endpoints()
+                .container()
+                .getAndReturnListOfObjects(Arrays.asList(
+                        ObjectWithRequiredField.builder().string("string").build(),
+                        ObjectWithRequiredField.builder().string("string").build()));
     }
 }

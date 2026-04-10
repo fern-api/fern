@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.getdummy() -> String</code></summary>
+<details><summary><code>client.dummy.getDummy() -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.dummy().getdummy();
+client.dummy().getDummy();
 ```
 </dd>
 </dl>

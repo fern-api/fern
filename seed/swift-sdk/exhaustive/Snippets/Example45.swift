@@ -1,17 +1,13 @@
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExhaustiveClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithDocumentedUnknownType(request: TypesObjectWithDocumentedUnknownType(
-        documentedUnknownType: .object([
-            "key": .string("value")
-        ])
-    ))
+    _ = try await client.endpoints.primitive.getAndReturnString(request: "string")
 }
 
 try await main()

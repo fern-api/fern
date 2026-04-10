@@ -24,15 +24,5 @@ module Seed
     def user
       @user ||= Seed::User::Client.new(client: @raw_client)
     end
-
-    # @return [Seed::UserEvents::Client]
-    def user_events
-      @user_events ||= Seed::UserEvents::Client.new(client: @raw_client)
-    end
-
-    # @return [Seed::UserEventsMetadata::Client]
-    def user_events_metadata
-      @user_events_metadata ||= Seed::UserEventsMetadata::Client.new(client: @raw_client)
-    end
   end
 end

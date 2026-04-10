@@ -1,4 +1,4 @@
-//! Request and response types for the no-retries
+//! Request and response types for the NoRetries
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -7,7 +7,7 @@
 //!
 //! - **Model Types**: 1 types for data representation
 
-pub mod user;
+pub mod retries_user;
 
-pub use user::User;
+pub use retries_user::User;
 

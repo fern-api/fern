@@ -2,35 +2,38 @@
 
 namespace Seed;
 
-enum SpecialEnum
- : string {
-    case Empty = "";
-    case HelloWorld = "Hello \\\"World\\\"";
-    case HelloNWorld = "Hello\\nWorld";
-    case HelloRWorld = "Hello\\rWorld";
-    case HelloTWorld = "Hello\\tWorld";
-    case HelloFWorld = "Hello\\fWorld";
-    case HelloU0008World = "Hello\\u0008World";
-    case HelloVWorld = "Hello\\vWorld";
-    case HelloX00World = "Hello\\x00World";
-    case HelloU0007World = "Hello\\u0007World";
-    case HelloU0001World = "Hello\\u0001World";
-    case HelloU0002World = "Hello\\u0002World";
-    case HelloU001FWorld = "Hello\\u001FWorld";
-    case HelloU007FWorld = "Hello\\u007FWorld";
-    case HelloU009FWorld = "Hello\\u009FWorld";
-    case Line1NQuoteTTabBackslashRnLine20Null = "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null";
-    case Nrtx00U0008Fvu0007 = "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007";
-    case Hello世界 = "Hello 世界";
-    case Cafe = "café";
-    case 🚀 = "🚀";
-    case N = "\\\\n";
-    case  = "\\\\";
-    case NameJohnAge30CityNewYork = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}";
-    case SelectFromUsersWhereNameJohnOReilly = "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'";
-    case CUsersJohnDocumentsFileTxt = "C:\\\\Users\\\\John\\\\Documents\\\\file.txt";
-    case UsrLocalBinApp = "/usr/local/bin/app";
-    case D3D2D4 = "\\\\d{3}-\\\\d{2}-\\\\d{4}";
-    case Azaz09Azaz09Azaz2 = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}";
-    case TranscriptTranscriptTypeFinal = "transcript[transcriptType=\"final\"]";
+enum SpecialEnum: string
+{
+    case A = "";
+    case B = "Hello \\\"World\\\"";
+    case C = "Hello 'World'";
+    case D = "Hello\\\\World";
+    case E = "Hello\\nWorld";
+    case F = "Hello\\rWorld";
+    case H = "Hello\\tWorld";
+    case I = "Hello\\fWorld";
+    case J = "Hello\\u0008World";
+    case K = "Hello\\vWorld";
+    case L = "Hello\\x00World";
+    case M = "Hello\\u0007World";
+    case N = "Hello\\u0001World";
+    case O = "Hello\\u0002World";
+    case P = "Hello\\u001FWorld";
+    case Q = "Hello\\u007FWorld";
+    case R = "Hello\\u009FWorld";
+    case S = "Line 1\\n\"Quote\"\\tTab\\\\Backslash\\r\\nLine 2\\0Null";
+    case T = "\\n\\r\\t\\x00\\u0008\\f\\v\\u0007";
+    case U = "Hello 世界";
+    case V = "café";
+    case W = "🚀";
+    case X = "\\\\n";
+    case Y = "\\\\";
+    case Z = "{\"name\": \"John\", \"age\": 30, \"city\": \"New York\"}";
+    case Aa = "SELECT * FROM users WHERE name = 'John O\\\\'Reilly'";
+    case Bb = "C:\\\\Users\\\\John\\\\Documents\\\\file.txt";
+    case Cc = "/usr/local/bin/app";
+    case Dd = "\\\\d{3}-\\\\d{2}-\\\\d{4}";
+    case Ee = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}";
+    case Ff = "transcript[transcriptType=\"final\"]";
+    case Gg = "transcript[transcriptType='final']";
 }

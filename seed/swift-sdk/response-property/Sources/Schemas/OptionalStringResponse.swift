@@ -1,3 +1,3 @@
 import Foundation
 
-public typealias OptionalStringResponse = StringResponse
+public typealias OptionalStringResponse = StringResponse?

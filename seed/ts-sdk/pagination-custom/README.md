@@ -12,6 +12,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Usage](#usage)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
@@ -40,10 +41,28 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/pagination-custom";
+import { SeedPaginationClient } from "@fern/pagination-custom";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.users.listwithcustompager();
+const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const pageableResponse = await client.users.listWithCustomPager({
+    limit: 1,
+    starting_after: "starting_after"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.users.listWithCustomPager({
+    limit: 1,
+    starting_after: "starting_after"
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 ```
 
 ## Request and Response Types
@@ -52,9 +71,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedApi } from "@fern/pagination-custom";
+import { SeedPagination } from "@fern/pagination-custom";
 
-const request: SeedApi.UsersListWithCustomPagerRequest = {
+const request: SeedPagination.ListWithCustomPagerRequest = {
     ...
 };
 ```
@@ -65,18 +84,47 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/pagination-custom";
+import { SeedPaginationError } from "@fern/pagination-custom";
 
 try {
-    await client.users.listwithcustompager(...);
+    await client.users.listWithCustomPager(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedPaginationError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
         console.log(err.rawResponse);
     }
 }
+```
+
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination-custom";
+
+const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const pageableResponse = await client.users.listWithCustomPager({
+    limit: 1,
+    starting_after: "starting_after"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.users.listWithCustomPager({
+    limit: 1,
+    starting_after: "starting_after"
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 ```
 
 ## Advanced
@@ -96,16 +144,16 @@ const client = new UsersClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/pagination-custom";
+import { SeedPaginationClient } from "@fern/pagination-custom";
 
-const client = new SeedApiClient({
+const client = new SeedPaginationClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.users.listwithcustompager(..., {
+const response = await client.users.listWithCustomPager(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -117,7 +165,7 @@ const response = await client.users.listwithcustompager(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.users.listwithcustompager(..., {
+const response = await client.users.listWithCustomPager(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -139,7 +187,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.users.listwithcustompager(..., {
+const response = await client.users.listWithCustomPager(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -149,7 +197,7 @@ const response = await client.users.listwithcustompager(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.users.listwithcustompager(..., {
+const response = await client.users.listWithCustomPager(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -160,7 +208,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.users.listwithcustompager(..., {
+const response = await client.users.listWithCustomPager(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -172,7 +220,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.users.listwithcustompager(...).withRawResponse();
+const { data, rawResponse } = await client.users.listWithCustomPager(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -183,9 +231,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/pagination-custom";
+import { SeedPaginationClient, logging } from "@fern/pagination-custom";
 
-const client = new SeedApiClient({
+const client = new SeedPaginationClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

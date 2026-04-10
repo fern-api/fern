@@ -6,37 +6,37 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedBasicAuthEnvironmentVariables from "../../../index.js";
 
-export declare namespace BasicauthClient {
+export declare namespace BasicAuthClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class BasicauthClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<BasicauthClient.Options>;
+export class BasicAuthClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<BasicAuthClient.Options>;
 
-    constructor(options: BasicauthClient.Options) {
+    constructor(options: BasicAuthClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
      * GET request with basic auth scheme
      *
-     * @param {BasicauthClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {BasicAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.UnauthorizedError}
+     * @throws {@link SeedBasicAuthEnvironmentVariables.UnauthorizedRequest}
      *
      * @example
-     *     await client.basicauth.getwithbasicauth()
+     *     await client.basicAuth.getWithBasicAuth()
      */
-    public getwithbasicauth(requestOptions?: BasicauthClient.RequestOptions): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__getwithbasicauth(requestOptions));
+    public getWithBasicAuth(requestOptions?: BasicAuthClient.RequestOptions): core.HttpResponsePromise<boolean> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithBasicAuth(requestOptions));
     }
 
-    private async __getwithbasicauth(
-        requestOptions?: BasicauthClient.RequestOptions,
+    private async __getWithBasicAuth(
+        requestOptions?: BasicAuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -66,12 +66,12 @@ export class BasicauthClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 401:
-                    throw new SeedApi.UnauthorizedError(
-                        _response.error.body as SeedApi.UnauthorizedRequestErrorBody,
+                    throw new SeedBasicAuthEnvironmentVariables.UnauthorizedRequest(
+                        _response.error.body as SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody,
                         _response.rawResponse,
                     );
                 default:
-                    throw new errors.SeedApiError({
+                    throw new errors.SeedBasicAuthEnvironmentVariablesError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,
@@ -86,26 +86,26 @@ export class BasicauthClient {
      * POST request with basic auth scheme
      *
      * @param {unknown} request
-     * @param {BasicauthClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {BasicAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.BadRequestError}
-     * @throws {@link SeedApi.UnauthorizedError}
+     * @throws {@link SeedBasicAuthEnvironmentVariables.UnauthorizedRequest}
+     * @throws {@link SeedBasicAuthEnvironmentVariables.BadRequest}
      *
      * @example
-     *     await client.basicauth.postwithbasicauth({
+     *     await client.basicAuth.postWithBasicAuth({
      *         "key": "value"
      *     })
      */
-    public postwithbasicauth(
+    public postWithBasicAuth(
         request?: unknown,
-        requestOptions?: BasicauthClient.RequestOptions,
+        requestOptions?: BasicAuthClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__postwithbasicauth(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__postWithBasicAuth(request, requestOptions));
     }
 
-    private async __postwithbasicauth(
+    private async __postWithBasicAuth(
         request?: unknown,
-        requestOptions?: BasicauthClient.RequestOptions,
+        requestOptions?: BasicAuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -137,15 +137,15 @@ export class BasicauthClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 400:
-                    throw new SeedApi.BadRequestError(_response.error.body as unknown, _response.rawResponse);
                 case 401:
-                    throw new SeedApi.UnauthorizedError(
-                        _response.error.body as SeedApi.UnauthorizedRequestErrorBody,
+                    throw new SeedBasicAuthEnvironmentVariables.UnauthorizedRequest(
+                        _response.error.body as SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody,
                         _response.rawResponse,
                     );
+                case 400:
+                    throw new SeedBasicAuthEnvironmentVariables.BadRequest(_response.rawResponse);
                 default:
-                    throw new errors.SeedApiError({
+                    throw new errors.SeedBasicAuthEnvironmentVariablesError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,

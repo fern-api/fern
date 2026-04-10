@@ -52,7 +52,7 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        ..get_foo(
+        .get_foo(
             &GetFooQueryRequest {
                 required_baz: "required_baz".to_string(),
                 required_nullable_baz: Some("required_nullable_baz".to_string()),
@@ -70,7 +70,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client..get_foo(None)?.await {
+match client.get_foo(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -112,7 +112,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client..get_foo(
+let response = client.get_foo(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -122,7 +122,7 @@ let response = client..get_foo(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client..get_foo(
+let response = client.get_foo(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -132,7 +132,7 @@ let response = client..get_foo(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client..get_foo(
+let response = client.get_foo(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -147,7 +147,7 @@ let response = client..get_foo(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client..get_foo(
+let response = client.get_foo(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

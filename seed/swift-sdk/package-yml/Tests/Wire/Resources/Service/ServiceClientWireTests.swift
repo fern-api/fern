@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import PackageYml
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
 }

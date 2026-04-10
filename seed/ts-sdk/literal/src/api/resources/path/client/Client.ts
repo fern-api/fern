@@ -2,11 +2,11 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedLiteral from "../../../index.js";
 
 export declare namespace PathClient {
     export type Options = BaseClientOptions;
@@ -22,27 +22,31 @@ export class PathClient {
     }
 
     /**
-     * @param {SeedApi.PathSendRequest} request
+     * @param {"123"} id
      * @param {PathClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.path.send({
-     *         id: "123"
-     *     })
+     *     await client.path.send("123")
      */
     public send(
-        request: SeedApi.PathSendRequest,
+        id: "123",
         requestOptions?: PathClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.SendResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
+    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__send(id, requestOptions));
     }
 
     private async __send(
-        request: SeedApi.PathSendRequest,
+        id: "123",
         requestOptions?: PathClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.SendResponse>> {
-        const { id } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-API-Version": requestOptions?.version ?? "02-02-2024",
+                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -59,11 +63,11 @@ export class PathClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.SendResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedLiteralError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

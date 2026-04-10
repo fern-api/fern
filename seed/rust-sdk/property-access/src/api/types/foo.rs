@@ -47,9 +47,13 @@ impl FooBuilder {
     /// - [`write`](FooBuilder::write)
     pub fn build(self) -> Result<Foo, BuildError> {
         Ok(Foo {
-            normal: self.normal.ok_or_else(|| BuildError::missing_field("normal"))?,
+            normal: self
+                .normal
+                .ok_or_else(|| BuildError::missing_field("normal"))?,
             read: self.read.ok_or_else(|| BuildError::missing_field("read"))?,
-            write: self.write.ok_or_else(|| BuildError::missing_field("write"))?,
+            write: self
+                .write
+                .ok_or_else(|| BuildError::missing_field("write"))?,
         })
     }
 }

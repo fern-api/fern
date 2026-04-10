@@ -5,7 +5,7 @@ public struct Document: Codable, Hashable, Sendable {
     public let title: String
     public let content: String
     public let author: Nullable<String>
-    public let tags: Nullable<[String]>?
+    public let tags: [String]?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -14,7 +14,7 @@ public struct Document: Codable, Hashable, Sendable {
         title: String,
         content: String,
         author: Nullable<String>,
-        tags: Nullable<[String]>? = nil,
+        tags: [String]? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -31,7 +31,7 @@ public struct Document: Codable, Hashable, Sendable {
         self.title = try container.decode(String.self, forKey: .title)
         self.content = try container.decode(String.self, forKey: .content)
         self.author = try container.decode(Nullable<String>.self, forKey: .author)
-        self.tags = try container.decodeNullableIfPresent([String].self, forKey: .tags)
+        self.tags = try container.decodeIfPresent([String].self, forKey: .tags)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -42,7 +42,7 @@ public struct Document: Codable, Hashable, Sendable {
         try container.encode(self.title, forKey: .title)
         try container.encode(self.content, forKey: .content)
         try container.encode(self.author, forKey: .author)
-        try container.encodeNullableIfPresent(self.tags, forKey: .tags)
+        try container.encodeIfPresent(self.tags, forKey: .tags)
     }
 
     /// Keys for encoding/decoding struct properties.

@@ -7,6 +7,10 @@ export interface BaseClientOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
+    /** Override the X-API-Version header */
+    version?: "02-02-2024";
+    /** Override the X-API-Enable-Audit-Logging header */
+    auditLogging?: true;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -26,6 +30,10 @@ export interface BaseRequestOptions {
     maxRetries?: number;
     /** A hook to abort the request. */
     abortSignal?: AbortSignal;
+    /** Override the X-API-Version header */
+    version?: "02-02-2024";
+    /** Override the X-API-Enable-Audit-Logging header */
+    auditLogging?: true;
     /** Additional query string parameters to include in the request. */
     queryParams?: Record<string, unknown>;
     /** Additional headers to include in the request. */
@@ -47,6 +55,8 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
             "User-Agent": "@fern/literal/0.0.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
+            "X-API-Version": options?.version ?? "02-02-2024",
+            "X-API-Enable-Audit-Logging": (options?.auditLogging ?? true).toString(),
         },
         options?.headers,
     );

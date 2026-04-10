@@ -33,11 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Getusers(
+func (c *Client) GetUsers(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.Getusers(
+	response, err := c.WithRawResponse.GetUsers(
 		ctx,
 		opts...,
 	)

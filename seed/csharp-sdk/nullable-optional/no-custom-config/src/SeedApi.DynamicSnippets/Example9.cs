@@ -1,22 +1,21 @@
-using SeedApi;
+using SeedNullableOptional;
 
 namespace Usage;
 
 public class Example9
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedNullableOptionalClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Nullableoptional.SearchusersAsync(
-            new NullableOptionalSearchUsersRequest {
-                Query = "query",
-                Department = "department",
-                Role = "role",
-                IsActive = true
+        await client.NullableOptional.FilterByRoleAsync(
+            new FilterByRoleRequest {
+                Role = UserRole.Admin,
+                Status = UserStatus.Active,
+                SecondaryRole = UserRole.Admin
             }
         );
     }

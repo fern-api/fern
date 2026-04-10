@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">gettokenwithclientcredentials</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,18 +13,21 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedWebsocketAuth
 
-client = SeedApi(
-    api_key="<X-Api-Key>",
+client = SeedWebsocketAuth(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.gettokenwithclientcredentials(
+client.auth.get_token_with_client_credentials(
+    x_api_key="X-Api-Key",
     client_id="client_id",
     client_secret="client_secret",
-    audience="https://api.example.com",
-    grant_type="client_credentials",
+    scope="scope",
 )
 
 ```
@@ -37,6 +40,14 @@ client.auth.gettokenwithclientcredentials(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**x_api_key:** `str` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -57,7 +68,7 @@ client.auth.gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**audience:** `AuthGetTokenWithClientCredentialsRequestAudience` 
+**audience:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -65,7 +76,7 @@ client.auth.gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**grant_type:** `AuthGetTokenWithClientCredentialsRequestGrantType` 
+**grant_type:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -93,7 +104,7 @@ client.auth.gettokenwithclientcredentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refreshtoken</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -106,19 +117,22 @@ client.auth.gettokenwithclientcredentials(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedWebsocketAuth
 
-client = SeedApi(
-    api_key="<X-Api-Key>",
+client = SeedWebsocketAuth(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.refreshtoken(
+client.auth.refresh_token(
+    x_api_key="X-Api-Key",
     client_id="client_id",
     client_secret="client_secret",
     refresh_token="refresh_token",
-    audience="https://api.example.com",
-    grant_type="refresh_token",
+    scope="scope",
 )
 
 ```
@@ -131,6 +145,14 @@ client.auth.refreshtoken(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**x_api_key:** `str` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -159,7 +181,7 @@ client.auth.refreshtoken(
 <dl>
 <dd>
 
-**audience:** `AuthRefreshTokenRequestAudience` 
+**audience:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -167,7 +189,7 @@ client.auth.refreshtoken(
 <dl>
 <dd>
 
-**grant_type:** `AuthRefreshTokenRequestGrantType` 
+**grant_type:** `typing.Literal` 
     
 </dd>
 </dl>

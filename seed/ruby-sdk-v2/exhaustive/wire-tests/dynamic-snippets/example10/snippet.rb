@@ -5,8 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_object(request: {
-  key: {
-    string: "string"
-  }
-})
+client.endpoints.enum.get_and_return_enum(request: "SUNNY")

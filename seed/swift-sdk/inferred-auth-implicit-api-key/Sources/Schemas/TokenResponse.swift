@@ -5,7 +5,7 @@ public struct TokenResponse: Codable, Hashable, Sendable {
     public let accessToken: String
     public let tokenType: String
     public let expiresIn: Int
-    public let scope: Nullable<String>?
+    public let scope: String?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -13,7 +13,7 @@ public struct TokenResponse: Codable, Hashable, Sendable {
         accessToken: String,
         tokenType: String,
         expiresIn: Int,
-        scope: Nullable<String>? = nil,
+        scope: String? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.accessToken = accessToken
@@ -28,7 +28,7 @@ public struct TokenResponse: Codable, Hashable, Sendable {
         self.accessToken = try container.decode(String.self, forKey: .accessToken)
         self.tokenType = try container.decode(String.self, forKey: .tokenType)
         self.expiresIn = try container.decode(Int.self, forKey: .expiresIn)
-        self.scope = try container.decodeNullableIfPresent(String.self, forKey: .scope)
+        self.scope = try container.decodeIfPresent(String.self, forKey: .scope)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -38,7 +38,7 @@ public struct TokenResponse: Codable, Hashable, Sendable {
         try container.encode(self.accessToken, forKey: .accessToken)
         try container.encode(self.tokenType, forKey: .tokenType)
         try container.encode(self.expiresIn, forKey: .expiresIn)
-        try container.encodeNullableIfPresent(self.scope, forKey: .scope)
+        try container.encodeIfPresent(self.scope, forKey: .scope)
     }
 
     /// Keys for encoding/decoding struct properties.

@@ -122,7 +122,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def justfile(request_options: {}, **params)
+      def just_file(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
@@ -131,7 +131,7 @@ module Seed
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "just-file",
+          path: "/just-file",
           body: body,
           request_options: request_options
         )
@@ -157,11 +157,11 @@ module Seed
       # @option params [String, nil] :maybe_string
       # @option params [Integer] :integer
       # @option params [Integer, nil] :maybe_integer
-      # @option params [String, nil] :list_of_strings
+      # @option params [String] :list_of_strings
       # @option params [String, nil] :optional_list_of_strings
       #
       # @return [untyped]
-      def justfilewithqueryparams(request_options: {}, **params)
+      def just_file_with_query_params(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
@@ -170,7 +170,7 @@ module Seed
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "just-file-with-query-params",
+          path: "/just-file-with-query-params",
           body: body,
           request_options: request_options
         )
@@ -197,7 +197,7 @@ module Seed
       # @option params [Integer, nil] :maybe_integer
       #
       # @return [untyped]
-      def justfilewithoptionalqueryparams(request_options: {}, **params)
+      def just_file_with_optional_query_params(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
@@ -206,7 +206,7 @@ module Seed
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "just-file-with-optional-query-params",
+          path: "/just-file-with-optional-query-params",
           body: body,
           request_options: request_options
         )
@@ -231,7 +231,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def withcontenttype(request_options: {}, **params)
+      def with_content_type(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
@@ -245,20 +245,22 @@ module Seed
         if params[:bar]
           body.add(
             name: "bar",
-            value: params[:bar]
+            value: JSON.generate(Seed::Service::Types::MyObject.new(params[:bar]).to_h),
+            content_type: "application/json"
           )
         end
         if params[:foo_bar]
           body.add(
             name: "foo_bar",
-            value: params[:foo_bar]
+            value: JSON.generate(params[:foo_bar]),
+            content_type: "application/json"
           )
         end
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "with-content-type",
+          path: "/with-content-type",
           body: body,
           request_options: request_options
         )
@@ -283,7 +285,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def withformencoding(request_options: {}, **params)
+      def with_form_encoding(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
@@ -291,20 +293,20 @@ module Seed
         if params[:foo]
           body.add(
             name: "foo",
-            value: params[:foo]
+            value:
           )
         end
         if params[:bar]
           body.add(
             name: "bar",
-            value: params[:bar]
+            value:
           )
         end
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "with-form-encoding",
+          path: "/with-form-encoding",
           body: body,
           request_options: request_options
         )
@@ -329,20 +331,20 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def withformencodedcontainers(request_options: {}, **params)
+      def with_form_encoded_containers(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         if params[:maybe_string]
           body.add(
             name: "maybe_string",
-            value: params[:maybe_string]
+            value:
           )
         end
         if params[:integer]
           body.add(
             name: "integer",
-            value: params[:integer]
+            value:
           )
         end
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -352,68 +354,68 @@ module Seed
         if params[:maybe_integer]
           body.add(
             name: "maybe_integer",
-            value: params[:maybe_integer]
+            value:
           )
         end
         if params[:optional_list_of_strings]
           body.add(
             name: "optional_list_of_strings",
-            value: params[:optional_list_of_strings]
+            value:
           )
         end
         if params[:list_of_objects]
           body.add(
             name: "list_of_objects",
-            value: params[:list_of_objects]
+            value:
           )
         end
         if params[:optional_metadata]
           body.add(
             name: "optional_metadata",
-            value: params[:optional_metadata]
+            value:
           )
         end
         if params[:optional_object_type]
           body.add(
             name: "optional_object_type",
-            value: params[:optional_object_type]
+            value:
           )
         end
         if params[:optional_id]
           body.add(
             name: "optional_id",
-            value: params[:optional_id]
+            value:
           )
         end
         if params[:list_of_objects_with_optionals]
           body.add(
             name: "list_of_objects_with_optionals",
-            value: params[:list_of_objects_with_optionals]
+            value:
           )
         end
         if params[:alias_object]
           body.add(
             name: "alias_object",
-            value: params[:alias_object]
+            value:
           )
         end
         if params[:list_of_alias_object]
           body.add(
             name: "list_of_alias_object",
-            value: params[:list_of_alias_object]
+            value:
           )
         end
         if params[:alias_list_of_object]
           body.add(
             name: "alias_list_of_object",
-            value: params[:alias_list_of_object]
+            value:
           )
         end
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "form-encoded",
+          path: "",
           body: body,
           request_options: request_options
         )
@@ -438,7 +440,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def optionalargs(request_options: {}, **params)
+      def optional_args(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
@@ -446,14 +448,15 @@ module Seed
         if params[:request]
           body.add(
             name: "request",
-            value: params[:request]
+            value: JSON.generate(params[:request]),
+            content_type: "application/json; charset=utf-8"
           )
         end
 
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "optional-args",
+          path: "/optional-args",
           body: body,
           request_options: request_options
         )
@@ -478,7 +481,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def withinlinetype(request_options: {}, **params)
+      def with_inline_type(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
@@ -493,7 +496,7 @@ module Seed
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "inline-type",
+          path: "/inline-type",
           body: body,
           request_options: request_options
         )
@@ -518,7 +521,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def withjsonproperty(request_options: {}, **params)
+      def with_json_property(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
@@ -533,7 +536,7 @@ module Seed
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "with-json-property",
+          path: "/with-json-property",
           body: body,
           request_options: request_options
         )
@@ -563,7 +566,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "snippet",
+          path: "/snippet",
           request_options: request_options
         )
         begin
@@ -587,7 +590,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def withliteralandenumtypes(request_options: {}, **params)
+      def with_literal_and_enum_types(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
@@ -614,7 +617,7 @@ module Seed
         request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "with-literal-enum",
+          path: "/with-literal-enum",
           body: body,
           request_options: request_options
         )

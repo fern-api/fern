@@ -9,24 +9,14 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
-    from .endpoints_container.client import AsyncEndpointsContainerClient, EndpointsContainerClient
-    from .endpoints_content_type.client import AsyncEndpointsContentTypeClient, EndpointsContentTypeClient
-    from .endpoints_enum.client import AsyncEndpointsEnumClient, EndpointsEnumClient
-    from .endpoints_http_methods.client import AsyncEndpointsHttpMethodsClient, EndpointsHttpMethodsClient
-    from .endpoints_object.client import AsyncEndpointsObjectClient, EndpointsObjectClient
-    from .endpoints_pagination.client import AsyncEndpointsPaginationClient, EndpointsPaginationClient
-    from .endpoints_params.client import AsyncEndpointsParamsClient, EndpointsParamsClient
-    from .endpoints_primitive.client import AsyncEndpointsPrimitiveClient, EndpointsPrimitiveClient
-    from .endpoints_put.client import AsyncEndpointsPutClient, EndpointsPutClient
-    from .endpoints_union.client import AsyncEndpointsUnionClient, EndpointsUnionClient
-    from .endpoints_ur_ls.client import AsyncEndpointsUrLsClient, EndpointsUrLsClient
-    from .inlinedrequests.client import AsyncInlinedrequestsClient, InlinedrequestsClient
-    from .noauth.client import AsyncNoauthClient, NoauthClient
-    from .noreqbody.client import AsyncNoreqbodyClient, NoreqbodyClient
-    from .reqwithheaders.client import AsyncReqwithheadersClient, ReqwithheadersClient
+    from .endpoints.client import AsyncEndpointsClient, EndpointsClient
+    from .inlined_requests.client import AsyncInlinedRequestsClient, InlinedRequestsClient
+    from .no_auth.client import AsyncNoAuthClient, NoAuthClient
+    from .no_req_body.client import AsyncNoReqBodyClient, NoReqBodyClient
+    from .req_with_headers.client import AsyncReqWithHeadersClient, ReqWithHeadersClient
 
 
-class SeedApi:
+class SeedExhaustive:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -56,9 +46,9 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedExhaustive
 
-    client = SeedApi(
+    client = SeedExhaustive(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -91,141 +81,51 @@ class SeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._endpoints_container: typing.Optional[EndpointsContainerClient] = None
-        self._endpoints_content_type: typing.Optional[EndpointsContentTypeClient] = None
-        self._endpoints_enum: typing.Optional[EndpointsEnumClient] = None
-        self._endpoints_http_methods: typing.Optional[EndpointsHttpMethodsClient] = None
-        self._endpoints_object: typing.Optional[EndpointsObjectClient] = None
-        self._endpoints_pagination: typing.Optional[EndpointsPaginationClient] = None
-        self._endpoints_params: typing.Optional[EndpointsParamsClient] = None
-        self._endpoints_primitive: typing.Optional[EndpointsPrimitiveClient] = None
-        self._endpoints_put: typing.Optional[EndpointsPutClient] = None
-        self._endpoints_union: typing.Optional[EndpointsUnionClient] = None
-        self._endpoints_ur_ls: typing.Optional[EndpointsUrLsClient] = None
-        self._inlinedrequests: typing.Optional[InlinedrequestsClient] = None
-        self._noauth: typing.Optional[NoauthClient] = None
-        self._noreqbody: typing.Optional[NoreqbodyClient] = None
-        self._reqwithheaders: typing.Optional[ReqwithheadersClient] = None
+        self._endpoints: typing.Optional[EndpointsClient] = None
+        self._inlined_requests: typing.Optional[InlinedRequestsClient] = None
+        self._no_auth: typing.Optional[NoAuthClient] = None
+        self._no_req_body: typing.Optional[NoReqBodyClient] = None
+        self._req_with_headers: typing.Optional[ReqWithHeadersClient] = None
 
     @property
-    def endpoints_container(self):
-        if self._endpoints_container is None:
-            from .endpoints_container.client import EndpointsContainerClient  # noqa: E402
+    def endpoints(self):
+        if self._endpoints is None:
+            from .endpoints.client import EndpointsClient  # noqa: E402
 
-            self._endpoints_container = EndpointsContainerClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_container
-
-    @property
-    def endpoints_content_type(self):
-        if self._endpoints_content_type is None:
-            from .endpoints_content_type.client import EndpointsContentTypeClient  # noqa: E402
-
-            self._endpoints_content_type = EndpointsContentTypeClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_content_type
+            self._endpoints = EndpointsClient(client_wrapper=self._client_wrapper)
+        return self._endpoints
 
     @property
-    def endpoints_enum(self):
-        if self._endpoints_enum is None:
-            from .endpoints_enum.client import EndpointsEnumClient  # noqa: E402
+    def inlined_requests(self):
+        if self._inlined_requests is None:
+            from .inlined_requests.client import InlinedRequestsClient  # noqa: E402
 
-            self._endpoints_enum = EndpointsEnumClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_enum
-
-    @property
-    def endpoints_http_methods(self):
-        if self._endpoints_http_methods is None:
-            from .endpoints_http_methods.client import EndpointsHttpMethodsClient  # noqa: E402
-
-            self._endpoints_http_methods = EndpointsHttpMethodsClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_http_methods
+            self._inlined_requests = InlinedRequestsClient(client_wrapper=self._client_wrapper)
+        return self._inlined_requests
 
     @property
-    def endpoints_object(self):
-        if self._endpoints_object is None:
-            from .endpoints_object.client import EndpointsObjectClient  # noqa: E402
+    def no_auth(self):
+        if self._no_auth is None:
+            from .no_auth.client import NoAuthClient  # noqa: E402
 
-            self._endpoints_object = EndpointsObjectClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_object
-
-    @property
-    def endpoints_pagination(self):
-        if self._endpoints_pagination is None:
-            from .endpoints_pagination.client import EndpointsPaginationClient  # noqa: E402
-
-            self._endpoints_pagination = EndpointsPaginationClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_pagination
+            self._no_auth = NoAuthClient(client_wrapper=self._client_wrapper)
+        return self._no_auth
 
     @property
-    def endpoints_params(self):
-        if self._endpoints_params is None:
-            from .endpoints_params.client import EndpointsParamsClient  # noqa: E402
+    def no_req_body(self):
+        if self._no_req_body is None:
+            from .no_req_body.client import NoReqBodyClient  # noqa: E402
 
-            self._endpoints_params = EndpointsParamsClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_params
-
-    @property
-    def endpoints_primitive(self):
-        if self._endpoints_primitive is None:
-            from .endpoints_primitive.client import EndpointsPrimitiveClient  # noqa: E402
-
-            self._endpoints_primitive = EndpointsPrimitiveClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_primitive
+            self._no_req_body = NoReqBodyClient(client_wrapper=self._client_wrapper)
+        return self._no_req_body
 
     @property
-    def endpoints_put(self):
-        if self._endpoints_put is None:
-            from .endpoints_put.client import EndpointsPutClient  # noqa: E402
+    def req_with_headers(self):
+        if self._req_with_headers is None:
+            from .req_with_headers.client import ReqWithHeadersClient  # noqa: E402
 
-            self._endpoints_put = EndpointsPutClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_put
-
-    @property
-    def endpoints_union(self):
-        if self._endpoints_union is None:
-            from .endpoints_union.client import EndpointsUnionClient  # noqa: E402
-
-            self._endpoints_union = EndpointsUnionClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_union
-
-    @property
-    def endpoints_ur_ls(self):
-        if self._endpoints_ur_ls is None:
-            from .endpoints_ur_ls.client import EndpointsUrLsClient  # noqa: E402
-
-            self._endpoints_ur_ls = EndpointsUrLsClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_ur_ls
-
-    @property
-    def inlinedrequests(self):
-        if self._inlinedrequests is None:
-            from .inlinedrequests.client import InlinedrequestsClient  # noqa: E402
-
-            self._inlinedrequests = InlinedrequestsClient(client_wrapper=self._client_wrapper)
-        return self._inlinedrequests
-
-    @property
-    def noauth(self):
-        if self._noauth is None:
-            from .noauth.client import NoauthClient  # noqa: E402
-
-            self._noauth = NoauthClient(client_wrapper=self._client_wrapper)
-        return self._noauth
-
-    @property
-    def noreqbody(self):
-        if self._noreqbody is None:
-            from .noreqbody.client import NoreqbodyClient  # noqa: E402
-
-            self._noreqbody = NoreqbodyClient(client_wrapper=self._client_wrapper)
-        return self._noreqbody
-
-    @property
-    def reqwithheaders(self):
-        if self._reqwithheaders is None:
-            from .reqwithheaders.client import ReqwithheadersClient  # noqa: E402
-
-            self._reqwithheaders = ReqwithheadersClient(client_wrapper=self._client_wrapper)
-        return self._reqwithheaders
+            self._req_with_headers = ReqWithHeadersClient(client_wrapper=self._client_wrapper)
+        return self._req_with_headers
 
 
 def _make_default_async_client(
@@ -246,7 +146,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedExhaustive:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -279,9 +179,9 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedExhaustive
 
-    client = AsyncSeedApi(
+    client = AsyncSeedExhaustive(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -314,138 +214,48 @@ class AsyncSeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._endpoints_container: typing.Optional[AsyncEndpointsContainerClient] = None
-        self._endpoints_content_type: typing.Optional[AsyncEndpointsContentTypeClient] = None
-        self._endpoints_enum: typing.Optional[AsyncEndpointsEnumClient] = None
-        self._endpoints_http_methods: typing.Optional[AsyncEndpointsHttpMethodsClient] = None
-        self._endpoints_object: typing.Optional[AsyncEndpointsObjectClient] = None
-        self._endpoints_pagination: typing.Optional[AsyncEndpointsPaginationClient] = None
-        self._endpoints_params: typing.Optional[AsyncEndpointsParamsClient] = None
-        self._endpoints_primitive: typing.Optional[AsyncEndpointsPrimitiveClient] = None
-        self._endpoints_put: typing.Optional[AsyncEndpointsPutClient] = None
-        self._endpoints_union: typing.Optional[AsyncEndpointsUnionClient] = None
-        self._endpoints_ur_ls: typing.Optional[AsyncEndpointsUrLsClient] = None
-        self._inlinedrequests: typing.Optional[AsyncInlinedrequestsClient] = None
-        self._noauth: typing.Optional[AsyncNoauthClient] = None
-        self._noreqbody: typing.Optional[AsyncNoreqbodyClient] = None
-        self._reqwithheaders: typing.Optional[AsyncReqwithheadersClient] = None
+        self._endpoints: typing.Optional[AsyncEndpointsClient] = None
+        self._inlined_requests: typing.Optional[AsyncInlinedRequestsClient] = None
+        self._no_auth: typing.Optional[AsyncNoAuthClient] = None
+        self._no_req_body: typing.Optional[AsyncNoReqBodyClient] = None
+        self._req_with_headers: typing.Optional[AsyncReqWithHeadersClient] = None
 
     @property
-    def endpoints_container(self):
-        if self._endpoints_container is None:
-            from .endpoints_container.client import AsyncEndpointsContainerClient  # noqa: E402
+    def endpoints(self):
+        if self._endpoints is None:
+            from .endpoints.client import AsyncEndpointsClient  # noqa: E402
 
-            self._endpoints_container = AsyncEndpointsContainerClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_container
-
-    @property
-    def endpoints_content_type(self):
-        if self._endpoints_content_type is None:
-            from .endpoints_content_type.client import AsyncEndpointsContentTypeClient  # noqa: E402
-
-            self._endpoints_content_type = AsyncEndpointsContentTypeClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_content_type
+            self._endpoints = AsyncEndpointsClient(client_wrapper=self._client_wrapper)
+        return self._endpoints
 
     @property
-    def endpoints_enum(self):
-        if self._endpoints_enum is None:
-            from .endpoints_enum.client import AsyncEndpointsEnumClient  # noqa: E402
+    def inlined_requests(self):
+        if self._inlined_requests is None:
+            from .inlined_requests.client import AsyncInlinedRequestsClient  # noqa: E402
 
-            self._endpoints_enum = AsyncEndpointsEnumClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_enum
-
-    @property
-    def endpoints_http_methods(self):
-        if self._endpoints_http_methods is None:
-            from .endpoints_http_methods.client import AsyncEndpointsHttpMethodsClient  # noqa: E402
-
-            self._endpoints_http_methods = AsyncEndpointsHttpMethodsClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_http_methods
+            self._inlined_requests = AsyncInlinedRequestsClient(client_wrapper=self._client_wrapper)
+        return self._inlined_requests
 
     @property
-    def endpoints_object(self):
-        if self._endpoints_object is None:
-            from .endpoints_object.client import AsyncEndpointsObjectClient  # noqa: E402
+    def no_auth(self):
+        if self._no_auth is None:
+            from .no_auth.client import AsyncNoAuthClient  # noqa: E402
 
-            self._endpoints_object = AsyncEndpointsObjectClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_object
-
-    @property
-    def endpoints_pagination(self):
-        if self._endpoints_pagination is None:
-            from .endpoints_pagination.client import AsyncEndpointsPaginationClient  # noqa: E402
-
-            self._endpoints_pagination = AsyncEndpointsPaginationClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_pagination
+            self._no_auth = AsyncNoAuthClient(client_wrapper=self._client_wrapper)
+        return self._no_auth
 
     @property
-    def endpoints_params(self):
-        if self._endpoints_params is None:
-            from .endpoints_params.client import AsyncEndpointsParamsClient  # noqa: E402
+    def no_req_body(self):
+        if self._no_req_body is None:
+            from .no_req_body.client import AsyncNoReqBodyClient  # noqa: E402
 
-            self._endpoints_params = AsyncEndpointsParamsClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_params
-
-    @property
-    def endpoints_primitive(self):
-        if self._endpoints_primitive is None:
-            from .endpoints_primitive.client import AsyncEndpointsPrimitiveClient  # noqa: E402
-
-            self._endpoints_primitive = AsyncEndpointsPrimitiveClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_primitive
+            self._no_req_body = AsyncNoReqBodyClient(client_wrapper=self._client_wrapper)
+        return self._no_req_body
 
     @property
-    def endpoints_put(self):
-        if self._endpoints_put is None:
-            from .endpoints_put.client import AsyncEndpointsPutClient  # noqa: E402
+    def req_with_headers(self):
+        if self._req_with_headers is None:
+            from .req_with_headers.client import AsyncReqWithHeadersClient  # noqa: E402
 
-            self._endpoints_put = AsyncEndpointsPutClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_put
-
-    @property
-    def endpoints_union(self):
-        if self._endpoints_union is None:
-            from .endpoints_union.client import AsyncEndpointsUnionClient  # noqa: E402
-
-            self._endpoints_union = AsyncEndpointsUnionClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_union
-
-    @property
-    def endpoints_ur_ls(self):
-        if self._endpoints_ur_ls is None:
-            from .endpoints_ur_ls.client import AsyncEndpointsUrLsClient  # noqa: E402
-
-            self._endpoints_ur_ls = AsyncEndpointsUrLsClient(client_wrapper=self._client_wrapper)
-        return self._endpoints_ur_ls
-
-    @property
-    def inlinedrequests(self):
-        if self._inlinedrequests is None:
-            from .inlinedrequests.client import AsyncInlinedrequestsClient  # noqa: E402
-
-            self._inlinedrequests = AsyncInlinedrequestsClient(client_wrapper=self._client_wrapper)
-        return self._inlinedrequests
-
-    @property
-    def noauth(self):
-        if self._noauth is None:
-            from .noauth.client import AsyncNoauthClient  # noqa: E402
-
-            self._noauth = AsyncNoauthClient(client_wrapper=self._client_wrapper)
-        return self._noauth
-
-    @property
-    def noreqbody(self):
-        if self._noreqbody is None:
-            from .noreqbody.client import AsyncNoreqbodyClient  # noqa: E402
-
-            self._noreqbody = AsyncNoreqbodyClient(client_wrapper=self._client_wrapper)
-        return self._noreqbody
-
-    @property
-    def reqwithheaders(self):
-        if self._reqwithheaders is None:
-            from .reqwithheaders.client import AsyncReqwithheadersClient  # noqa: E402
-
-            self._reqwithheaders = AsyncReqwithheadersClient(client_wrapper=self._client_wrapper)
-        return self._reqwithheaders
+            self._req_with_headers = AsyncReqWithHeadersClient(client_wrapper=self._client_wrapper)
+        return self._req_with_headers

@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import FileDownload
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
 }

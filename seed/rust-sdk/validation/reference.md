@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client.<a href="/src/api/resources//client.rs">create</a>(request: CreateRequest) -> Result&lt;Type, ApiError&gt;</code></summary>
+<details><summary><code>client.<a href="/src/client.rs">create</a>(request: CreateRequest) -> Result&lt;Type, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,20 +12,20 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_validation::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ValidationClient::new(config).expect("Failed to build client");
     client
-        ..create(
+        .create(
             &CreateRequest {
-                decimal: 1.1,
-                even: 1,
-                name: "name".to_string(),
+                decimal: 2.2,
+                even: 100,
+                name: "fern".to_string(),
                 shape: Shape::Square,
             },
             None,
@@ -83,7 +82,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/api/resources//client.rs">get</a>(decimal: Option&lt;f64&gt;, even: Option&lt;i64&gt;, name: Option&lt;String&gt;) -> Result&lt;Type, ApiError&gt;</code></summary>
+<details><summary><code>client.<a href="/src/client.rs">get</a>(decimal: Option&lt;f64&gt;, even: Option&lt;i64&gt;, name: Option&lt;String&gt;) -> Result&lt;Type, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -96,20 +95,20 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_validation::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ValidationClient::new(config).expect("Failed to build client");
     client
-        ..get(
+        .get(
             &GetQueryRequest {
-                decimal: 1.1,
-                even: 1,
-                name: "name".to_string(),
+                decimal: 2.2,
+                even: 100,
+                name: "fern".to_string(),
             },
             None,
         )

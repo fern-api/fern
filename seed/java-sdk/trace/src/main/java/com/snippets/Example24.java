@@ -1,27 +1,15 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.playlist.requests.PlaylistCreatePlaylistRequest;
-import com.seed.api.types.PlaylistCreateRequest;
-import java.time.OffsetDateTime;
-import java.util.Arrays;
+import com.seed.trace.SeedTraceClient;
+import com.seed.trace.resources.commons.types.Language;
 
 public class Example24 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedTraceClient client = SeedTraceClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.playlist()
-                .createplaylist(
-                        1,
-                        PlaylistCreatePlaylistRequest.builder()
-                                .datetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                                .body(PlaylistCreateRequest.builder()
-                                        .name("name")
-                                        .problems(Arrays.asList("problems"))
-                                        .build())
-                                .build());
+        client.submission().createExecutionSession(Language.JAVA);
     }
 }

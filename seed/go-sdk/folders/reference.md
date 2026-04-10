@@ -41,7 +41,7 @@ client.Foo(
 <dd>
 
 ```go
-client.A.B.Foo(
+client.Foo(
         context.TODO(),
     )
 }
@@ -70,7 +70,7 @@ client.A.B.Foo(
 <dd>
 
 ```go
-client.A.C.Foo(
+client.Foo(
         context.TODO(),
     )
 }
@@ -99,7 +99,7 @@ client.A.C.Foo(
 <dd>
 
 ```go
-client.Folder.Foo(
+client.Foo(
         context.TODO(),
     )
 }

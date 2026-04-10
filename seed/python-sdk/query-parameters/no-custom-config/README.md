@@ -34,19 +34,21 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi, User, NestedUser
+from seed import SeedQueryParameters
+import uuid
 import datetime
+from seed.user import User, NestedUser
 
-client = SeedApi(
+client = SeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.getusername(
+client.user.get_username(
     limit=1,
-    id="id",
+    id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     date=datetime.date.fromisoformat("2023-01-15"),
     deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    bytes="bytes",
+    bytes="SGVsbG8gd29ybGQh",
     user=User(
         name="name",
         tags=[
@@ -55,6 +57,13 @@ client.user.getusername(
         ],
     ),
     user_list=[
+        User(
+            name="name",
+            tags=[
+                "tags",
+                "tags"
+            ],
+        ),
         User(
             name="name",
             tags=[
@@ -106,22 +115,24 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+import uuid
 import datetime
+from seed.user import User, NestedUser
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedQueryParameters
 
-client = AsyncSeedApi(
+client = AsyncSeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.user.getusername(
+    await client.user.get_username(
         limit=1,
-        id="id",
+        id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         date=datetime.date.fromisoformat("2023-01-15"),
         deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        bytes="bytes",
+        bytes="SGVsbG8gd29ybGQh",
         user=User(
             name="name",
             tags=[
@@ -130,6 +141,13 @@ async def main() -> None:
             ],
         ),
         user_list=[
+            User(
+                name="name",
+                tags=[
+                    "tags",
+                    "tags"
+                ],
+            ),
             User(
                 name="name",
                 tags=[
@@ -187,7 +205,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.user.getusername(...)
+    client.user.get_username(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -201,10 +219,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedQueryParameters
 
-client = SeedApi(...)
-response = client.user.with_raw_response.getusername(...)
+client = SeedQueryParameters(...)
+response = client.user.with_raw_response.get_username(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -225,7 +243,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.user.getusername(..., request_options={
+client.user.get_username(..., request_options={
     "max_retries": 1
 })
 ```
@@ -235,12 +253,12 @@ client.user.getusername(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedQueryParameters
 
-client = SeedApi(..., timeout=20.0)
+client = SeedQueryParameters(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.user.getusername(..., request_options={
+client.user.get_username(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -252,9 +270,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedQueryParameters
 
-client = SeedApi(
+client = SeedQueryParameters(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

@@ -37,13 +37,13 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Dummy\Requests\DummyGenerateRequest;
+use Seed\Dummy\Requests\GenerateRequest;
 
 $client = new SeedClient();
 $client->dummy->generate(
-    new DummyGenerateRequest([
-        'stream' => true,
-        'numEvents' => 1,
+    new GenerateRequest([
+        'stream' => false,
+        'numEvents' => 5,
     ]),
 );
 

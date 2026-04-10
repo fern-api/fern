@@ -1,39 +1,9 @@
 import Foundation
 import Testing
-import Api
+import EndpointSecurityAuth
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
-    @Test func getwithbearer1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  {
-                    "id": "id",
-                    "name": "name"
-                  }
-                ]
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            apiKey: "<X-API-Key>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            User(
-                id: "id",
-                name: "name"
-            )
-        ]
-        let response = try await client.user.getwithbearer(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getwithbearer2() async throws -> Void {
+    @Test func getWithBearer1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -51,10 +21,9 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
         let expectedResponse = [
@@ -67,41 +36,11 @@ import Api
                 name: "name"
             )
         ]
-        let response = try await client.user.getwithbearer(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithBearer(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
-    @Test func getwithapikey1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  {
-                    "id": "id",
-                    "name": "name"
-                  }
-                ]
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            apiKey: "<X-API-Key>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            User(
-                id: "id",
-                name: "name"
-            )
-        ]
-        let response = try await client.user.getwithapikey(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getwithapikey2() async throws -> Void {
+    @Test func getWithApiKey1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -119,10 +58,9 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
         let expectedResponse = [
@@ -135,41 +73,11 @@ import Api
                 name: "name"
             )
         ]
-        let response = try await client.user.getwithapikey(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithApiKey(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
-    @Test func getwithoauth1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  {
-                    "id": "id",
-                    "name": "name"
-                  }
-                ]
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            apiKey: "<X-API-Key>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            User(
-                id: "id",
-                name: "name"
-            )
-        ]
-        let response = try await client.user.getwithoauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getwithoauth2() async throws -> Void {
+    @Test func getWithOAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -187,10 +95,9 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
         let expectedResponse = [
@@ -203,41 +110,11 @@ import Api
                 name: "name"
             )
         ]
-        let response = try await client.user.getwithoauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithOAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
-    @Test func getwithbasic1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  {
-                    "id": "id",
-                    "name": "name"
-                  }
-                ]
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            apiKey: "<X-API-Key>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            User(
-                id: "id",
-                name: "name"
-            )
-        ]
-        let response = try await client.user.getwithbasic(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getwithbasic2() async throws -> Void {
+    @Test func getWithBasic1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -255,10 +132,9 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
         let expectedResponse = [
@@ -271,41 +147,11 @@ import Api
                 name: "name"
             )
         ]
-        let response = try await client.user.getwithbasic(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithBasic(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
-    @Test func getwithinferredauth1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  {
-                    "id": "id",
-                    "name": "name"
-                  }
-                ]
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            apiKey: "<X-API-Key>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            User(
-                id: "id",
-                name: "name"
-            )
-        ]
-        let response = try await client.user.getwithinferredauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getwithinferredauth2() async throws -> Void {
+    @Test func getWithInferredAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -323,10 +169,9 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
         let expectedResponse = [
@@ -339,41 +184,11 @@ import Api
                 name: "name"
             )
         ]
-        let response = try await client.user.getwithinferredauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithInferredAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
-    @Test func getwithanyauth1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  {
-                    "id": "id",
-                    "name": "name"
-                  }
-                ]
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            apiKey: "<X-API-Key>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            User(
-                id: "id",
-                name: "name"
-            )
-        ]
-        let response = try await client.user.getwithanyauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getwithanyauth2() async throws -> Void {
+    @Test func getWithAnyAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -391,10 +206,9 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
         let expectedResponse = [
@@ -407,41 +221,11 @@ import Api
                 name: "name"
             )
         ]
-        let response = try await client.user.getwithanyauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithAnyAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
-    @Test func getwithallauth1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  {
-                    "id": "id",
-                    "name": "name"
-                  }
-                ]
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            apiKey: "<X-API-Key>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            User(
-                id: "id",
-                name: "name"
-            )
-        ]
-        let response = try await client.user.getwithallauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func getwithallauth2() async throws -> Void {
+    @Test func getWithAllAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -459,10 +243,9 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = EndpointSecurityAuthClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
-            apiKey: "<X-API-Key>",
             urlSession: stub.urlSession
         )
         let expectedResponse = [
@@ -475,7 +258,7 @@ import Api
                 name: "name"
             )
         ]
-        let response = try await client.user.getwithallauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.user.getWithAllAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

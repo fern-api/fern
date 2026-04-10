@@ -49,23 +49,23 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Api
+import Pagination
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = PaginationClient(token: "<token>")
 
     _ = try await client.complex.search(
         index: "index",
-        request: .init(
+        request: SearchRequest(
             pagination: StartingAfterPaging(
                 perPage: 1,
-                startingAfter: .value("starting_after")
+                startingAfter: "starting_after"
             ),
             query: SearchRequestQuery.singleFilterSearchRequest(
                 SingleFilterSearchRequest(
-                    field: .value("field"),
-                    operator: .equalTo,
-                    value: .value("value")
+                    field: "field",
+                    operator: .equals,
+                    value: "value"
                 )
             )
         )
@@ -80,14 +80,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Api
+import Pagination
 
-let client = ApiClient(...)
+let client = PaginationClient(...)
 
 do {
     let response = try await client.complex.search(...)
     // Handle successful response
-} catch let error as ApiError {
+} catch let error as PaginationError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -110,9 +110,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import Api
+import Pagination
 
-let request = Requests.SearchRequest(
+let request = Requests.ListUsersBodyCursorPaginationRequest(
     ...
 )
 ```
@@ -159,9 +159,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Api
+import Pagination
 
-let client = ApiClient(
+let client = PaginationClient(
     ...,
     urlSession: // Provide your implementation here
 )

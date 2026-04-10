@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "MixedFileDirectory",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "MixedFileDirectory",
+            targets: ["MixedFileDirectory"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "MixedFileDirectory",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "MixedFileDirectoryTests",
+            dependencies: ["MixedFileDirectory"],
             path: "Tests"
         )
     ]

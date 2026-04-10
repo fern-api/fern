@@ -1,13 +1,13 @@
 import Foundation
-import Api
+import PaginationUriPath
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = PaginationUriPathClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.users.listwithuripagination()
+    _ = try await client.users.listWithPathPagination()
 }
 
 try await main()

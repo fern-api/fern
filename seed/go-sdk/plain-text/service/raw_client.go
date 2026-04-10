@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Gettext(
+func (r *RawClient) GetText(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {

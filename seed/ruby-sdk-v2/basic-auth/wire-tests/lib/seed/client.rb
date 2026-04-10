@@ -19,9 +19,9 @@ module Seed
       )
     end
 
-    # @return [Seed::Basicauth::Client]
-    def basicauth
-      @basicauth ||= Seed::Basicauth::Client.new(client: @raw_client)
+    # @return [Seed::BasicAuth::Client]
+    def basic_auth
+      @basic_auth ||= Seed::BasicAuth::Client.new(client: @raw_client)
     end
   end
 end

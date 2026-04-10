@@ -3,8 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\EndpointsHttpMethods\Requests\EndpointsHttpMethodsTestPutRequest;
-use Seed\Types\TypesObjectWithRequiredField;
+use Seed\Types\Object\Types\ObjectWithDocumentedUnknownType;
 
 $client = new SeedClient(
     token: '<token>',
@@ -12,11 +11,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsHttpMethods->endpointsHttpMethodsTestPut(
-    'id',
-    new EndpointsHttpMethodsTestPutRequest([
-        'body' => new TypesObjectWithRequiredField([
-            'string' => 'string',
-        ]),
+$client->endpoints->object->getAndReturnWithDocumentedUnknownType(
+    new ObjectWithDocumentedUnknownType([
+        'documentedUnknownType' => [
+            'key' => "value",
+        ],
     ]),
 );

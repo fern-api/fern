@@ -5,15 +5,9 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.complex.search(
-  index: "index",
-  pagination: {
-    per_page: 1,
-    starting_after: "starting_after"
-  },
-  query: {
-    field: "field",
-    operator: "=",
-    value: "value"
-  }
+client.inline_users.inline_users.list_with_cursor_pagination(
+  page: 1,
+  per_page: 1,
+  order: "asc",
+  starting_after: "starting_after"
 )

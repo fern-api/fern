@@ -1,19 +1,23 @@
-using SeedApi;
+using SeedUndiscriminatedUnions;
 
 namespace Usage;
 
 public class Example4
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedUndiscriminatedUnionsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Union.UpdatemetadataAsync(
+        await client.Union.UpdateMetadataAsync(
             new Dictionary<string, object?>(){
-                ["key"] = "value",
+                ["string"] = new Dictionary<string, object>()
+                {
+                    ["key"] = "value",
+                }
+                ,
             }
         );
     }

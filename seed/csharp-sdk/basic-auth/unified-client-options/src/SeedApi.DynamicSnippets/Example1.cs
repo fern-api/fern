@@ -1,11 +1,11 @@
-using SeedApi;
+using SeedBasicAuth;
 
 namespace Usage;
 
 public class Example1
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedBasicAuthClient(
             clientOptions: new ClientOptions {
                 Username = "<username>",
                 Password = "<password>",
@@ -13,7 +13,7 @@ public class Example1
             }
         );
 
-        await client.Basicauth.GetwithbasicauthAsync();
+        await client.BasicAuth.GetWithBasicAuthAsync();
     }
 
 }

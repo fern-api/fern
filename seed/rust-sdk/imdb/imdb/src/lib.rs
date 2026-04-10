@@ -1,6 +1,6 @@
-//! # imdb SDK
+//! # Api SDK
 //!
-//! The official Rust SDK for the imdb.
+//! The official Rust SDK for the Api.
 //!
 //! ## Getting Started
 //!
@@ -16,10 +16,11 @@
 //!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .imdb
-//!         .createmovie(
+//!         .create_movie(
 //!             &CreateMovieRequest {
 //!                 title: "title".to_string(),
 //!                 rating: 1.1,
+//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )

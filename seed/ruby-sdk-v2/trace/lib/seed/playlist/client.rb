@@ -13,7 +13,7 @@ module Seed
       # Create a new playlist
       #
       # @param request_options [Hash]
-      # @param params [Seed::Types::PlaylistCreateRequest]
+      # @param params [Seed::Playlist::Types::PlaylistCreateRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -23,8 +23,8 @@ module Seed
       # @option params [String] :datetime
       # @option params [String, nil] :optional_datetime
       #
-      # @return [Seed::Types::Playlist]
-      def createplaylist(request_options: {}, **params)
+      # @return [Seed::Playlist::Types::Playlist]
+      def create_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[service_param]
         body_params = params.except(*path_param_names)
@@ -38,9 +38,9 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/create",
+          path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/create",
           query: query_params,
-          body: Seed::Types::PlaylistCreateRequest.new(body_params).to_h,
+          body: Seed::Playlist::Types::PlaylistCreateRequest.new(body_params).to_h,
           request_options: request_options
         )
         begin
@@ -50,7 +50,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Playlist.load(response.body)
+          Seed::Playlist::Types::Playlist.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -71,10 +71,10 @@ module Seed
       # @option params [String] :other_field
       # @option params [String] :multi_line_docs
       # @option params [String, nil] :optional_multiple_field
-      # @option params [String, nil] :multiple_field
+      # @option params [String] :multiple_field
       #
-      # @return [Array[Seed::Types::Playlist]]
-      def getplaylists(request_options: {}, **params)
+      # @return [Array[Seed::Playlist::Types::Playlist]]
+      def get_playlists(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit other_field multi_line_docs optional_multiple_field multiple_field]
         query_params = {}
@@ -88,7 +88,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/all",
+          path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/all",
           query: query_params,
           request_options: request_options
         )
@@ -114,15 +114,15 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
-      # @option params [Seed::Types::PlaylistID] :playlist_id
+      # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
-      # @return [Seed::Types::Playlist]
-      def getplaylist(request_options: {}, **params)
+      # @return [Seed::Playlist::Types::Playlist]
+      def get_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
+          path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -132,7 +132,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Playlist.load(response.body)
+          Seed::Playlist::Types::Playlist.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -142,27 +142,23 @@ module Seed
       # Updates a playlist
       #
       # @param request_options [Hash]
-      # @param params [Seed::Playlist::Types::UpdatePlaylistRequest]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
-      # @option params [Seed::Types::PlaylistID] :playlist_id
+      # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
-      # @return [Seed::Types::Playlist]
-      def updateplaylist(request_options: {}, **params)
+      # @return [Seed::Playlist::Types::Playlist, nil]
+      def update_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::Playlist::Types::UpdatePlaylistRequest.new(params).to_h
-        non_body_param_names = %w[serviceParam playlistId]
-        body = request_data.except(*non_body_param_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
-          path: "v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
-          body: body,
+          path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
+          body: params,
           request_options: request_options
         )
         begin
@@ -171,12 +167,10 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        if code.between?(200, 299)
-          Seed::Types::Playlist.load(response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
-        end
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Deletes a playlist
@@ -189,15 +183,15 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
-      # @option params [Seed::Types::PlaylistID] :playlist_id
+      # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
       # @return [untyped]
-      def deleteplaylist(request_options: {}, **params)
+      def delete_playlist(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
+          path: "/v2/playlist/#{URI.encode_uri_component(params[:service_param].to_s)}/#{URI.encode_uri_component(params[:playlist_id].to_s)}",
           request_options: request_options
         )
         begin

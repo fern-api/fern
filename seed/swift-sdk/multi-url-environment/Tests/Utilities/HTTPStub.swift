@@ -1,4 +1,4 @@
-import Api
+import MultiUrlEnvironment
 import Foundation
 
 final class HTTPStub {

@@ -1,6 +1,6 @@
-//! # public-object SDK
+//! # PublicObject SDK
 //!
-//! The official Rust SDK for the public-object.
+//! The official Rust SDK for the PublicObject.
 //!
 //! ## Getting Started
 //!

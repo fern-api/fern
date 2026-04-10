@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/inferred-auth-implicit-reference/fern"
     client "github.com/inferred-auth-implicit-reference/fern/client"
     option "github.com/inferred-auth-implicit-reference/fern/option"
 )
@@ -13,19 +12,14 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-    )
-    request := &fern.RefreshTokenRequest{
-        ClientID: "client_id",
-        ClientSecret: "client_secret",
-        RefreshToken: "refresh_token",
-        Audience: fern.RefreshTokenRequestAudienceHttpsApiExampleCom,
-        GrantType: fern.RefreshTokenRequestGrantTypeRefreshToken,
-        Scope: fern.String(
-            "scope",
+        option.WithClientID(
+            "client_id",
         ),
-    }
-    client.Auth.Refreshtoken(
+        option.WithClientSecret(
+            "client_secret",
+        ),
+    )
+    client.Nested.API.GetSomething(
         context.TODO(),
-        request,
     )
 }

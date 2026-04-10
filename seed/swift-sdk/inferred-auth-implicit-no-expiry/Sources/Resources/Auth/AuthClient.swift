@@ -7,12 +7,12 @@ public final class AuthClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func gettokenwithclientcredentials(apiKey: String, request: Requests.AuthGetTokenWithClientCredentialsRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
+    public func getTokenWithClientCredentials(xApiKey: String, request: Requests.GetTokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/token",
             headers: [
-                "X-Api-Key": apiKey
+                "X-Api-Key": xApiKey
             ],
             body: request,
             requestOptions: requestOptions,
@@ -20,12 +20,12 @@ public final class AuthClient: Sendable {
         )
     }
 
-    public func refreshtoken(apiKey: String, request: Requests.AuthRefreshTokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
+    public func refreshToken(xApiKey: String, request: Requests.RefreshTokenRequest, requestOptions: RequestOptions? = nil) async throws -> TokenResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/token/refresh",
             headers: [
-                "X-Api-Key": apiKey
+                "X-Api-Key": xApiKey
             ],
             body: request,
             requestOptions: requestOptions,

@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/Sources/Resources/Dummy/DummyClient.swift">getdummy</a>(requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.dummy.<a href="/Sources/Resources/Dummy/DummyClient.swift">getDummy</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import NoEnvironment
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = NoEnvironmentClient(token: "<token>")
 
-    _ = try await client.dummy.getdummy()
+    _ = try await client.dummy.getDummy()
 }
 
 try await main()

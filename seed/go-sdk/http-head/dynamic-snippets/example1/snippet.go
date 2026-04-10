@@ -14,7 +14,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.UserListRequest{
+    request := &fern.ListUsersRequest{
         Limit: 1,
     }
     client.User.List(

@@ -1,12 +1,12 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
+import com.seed.errorProperty.SeedErrorPropertyClient;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedErrorPropertyClient client =
+                SeedErrorPropertyClient.builder().url("https://api.fern.com").build();
 
-        client.propertybasederror().throwerror();
+        client.propertyBasedError().throwError();
     }
 }

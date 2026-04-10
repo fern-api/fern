@@ -2,23 +2,26 @@
 //!
 //! This module contains client implementations for:
 //!
-//! - **Basicauth**
+//! - **BasicAuth**
+//! - **Errors**
 
 use crate::{ApiError, ClientConfig};
 
-pub mod basicauth;
-pub struct ApiClient {
+pub mod basic_auth;
+pub mod errors;
+pub struct BasicAuthPwOmittedClient {
     pub config: ClientConfig,
-    pub basicauth: BasicauthClient,
+    pub basic_auth: BasicAuthClient,
 }
 
-impl ApiClient {
+impl BasicAuthPwOmittedClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            basicauth: BasicauthClient::new(config.clone())?,
+            basic_auth: BasicAuthClient::new(config.clone())?,
         })
     }
 }
 
-pub use basicauth::BasicauthClient;
+pub use basic_auth::BasicAuthClient;
+pub use errors::ErrorsClient;

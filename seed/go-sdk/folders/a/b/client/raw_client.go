@@ -40,7 +40,7 @@ func (r *RawClient) Foo(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/a/b"
+	endpointURL := baseURL
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

@@ -29,7 +29,7 @@ impl UnknownClient {
             .await
     }
 
-    pub async fn postobject(
+    pub async fn post_object(
         &self,
         request: &MyObject,
         options: Option<RequestOptions>,
@@ -37,7 +37,7 @@ impl UnknownClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "with-object",
+                "/with-object",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

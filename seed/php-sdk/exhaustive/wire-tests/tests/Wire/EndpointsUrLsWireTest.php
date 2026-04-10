@@ -5,7 +5,7 @@ namespace Seed\Tests;
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 
-class EndpointsUrLsWireTest extends WireMockTestCase
+class EndpointsUrlsWireTest extends WireMockTestCase
 {
     /**
      * @var SeedClient $client
@@ -14,12 +14,12 @@ class EndpointsUrLsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testEndpointsUrlsWithMixedCase(): void {
-        $testId = 'endpoints_ur_ls.endpoints_urls_with_mixed_case.0';
-        $this->client->endpointsUrLs->endpointsUrlsWithMixedCase(
+    public function testWithMixedCase(): void {
+        $testId = 'endpoints.urls.with_mixed_case.0';
+        $this->client->endpoints->urls->withMixedCase(
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints_ur_ls.endpoints_urls_with_mixed_case.0',
+                    'X-Test-Id' => 'endpoints.urls.with_mixed_case.0',
                 ],
             ],
         );
@@ -34,12 +34,12 @@ class EndpointsUrLsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testEndpointsUrlsNoEndingSlash(): void {
-        $testId = 'endpoints_ur_ls.endpoints_urls_no_ending_slash.0';
-        $this->client->endpointsUrLs->endpointsUrlsNoEndingSlash(
+    public function testNoEndingSlash(): void {
+        $testId = 'endpoints.urls.no_ending_slash.0';
+        $this->client->endpoints->urls->noEndingSlash(
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints_ur_ls.endpoints_urls_no_ending_slash.0',
+                    'X-Test-Id' => 'endpoints.urls.no_ending_slash.0',
                 ],
             ],
         );
@@ -54,12 +54,12 @@ class EndpointsUrLsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testEndpointsUrlsWithEndingSlash(): void {
-        $testId = 'endpoints_ur_ls.endpoints_urls_with_ending_slash.0';
-        $this->client->endpointsUrLs->endpointsUrlsWithEndingSlash(
+    public function testWithEndingSlash(): void {
+        $testId = 'endpoints.urls.with_ending_slash.0';
+        $this->client->endpoints->urls->withEndingSlash(
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints_ur_ls.endpoints_urls_with_ending_slash.0',
+                    'X-Test-Id' => 'endpoints.urls.with_ending_slash.0',
                 ],
             ],
         );
@@ -74,12 +74,12 @@ class EndpointsUrLsWireTest extends WireMockTestCase
 
     /**
      */
-    public function testEndpointsUrlsWithUnderscores(): void {
-        $testId = 'endpoints_ur_ls.endpoints_urls_with_underscores.0';
-        $this->client->endpointsUrLs->endpointsUrlsWithUnderscores(
+    public function testWithUnderscores(): void {
+        $testId = 'endpoints.urls.with_underscores.0';
+        $this->client->endpoints->urls->withUnderscores(
             [
                 'headers' => [
-                    'X-Test-Id' => 'endpoints_ur_ls.endpoints_urls_with_underscores.0',
+                    'X-Test-Id' => 'endpoints.urls.with_underscores.0',
                 ],
             ],
         );

@@ -1,24 +1,20 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.deepcursorpath.requests.A;
-import com.seed.api.types.B;
-import com.seed.api.types.C;
-import com.seed.api.types.D;
+import com.seed.deepCursorPath.SeedDeepCursorPathClient;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired;
+import com.seed.deepCursorPath.resources.deepcursorpath.types.MainRequired;
+import java.util.Arrays;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedDeepCursorPathClient client =
+                SeedDeepCursorPathClient.builder().url("https://api.fern.com").build();
 
-        client.deepcursorpath()
-                .doThing(A.builder()
-                        .b(B.builder()
-                                .c(C.builder()
-                                        .d(D.builder()
-                                                .startingAfter("starting_after")
-                                                .build())
-                                        .build())
+        client.deepCursorPath()
+                .doThingRequired(MainRequired.builder()
+                        .indirection(IndirectionRequired.builder()
+                                .results(Arrays.asList("results", "results"))
+                                .startingAfter("starting_after")
                                 .build())
                         .build());
     }

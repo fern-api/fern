@@ -35,9 +35,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedSimpleApi
 
-client = SeedApi(
+client = SeedSimpleApi(
     token="<token>",
 )
 
@@ -51,11 +51,11 @@ client.user.get(
 This SDK allows you to configure different environments for API requests.
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedSimpleApi
+from seed.environment import SeedSimpleApiEnvironment
 
-client = SeedApi(
-    environment=SeedApiEnvironment.PRODUCTION,
+client = SeedSimpleApi(
+    environment=SeedSimpleApiEnvironment.PRODUCTION,
 )
 ```
 
@@ -66,9 +66,9 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedSimpleApi
 
-client = AsyncSeedApi(
+client = AsyncSeedSimpleApi(
     token="<token>",
 )
 
@@ -105,9 +105,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedSimpleApi
 
-client = SeedApi(...)
+client = SeedSimpleApi(...)
 response = client.user.with_raw_response.get(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -139,9 +139,9 @@ client.user.get(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedSimpleApi
 
-client = SeedApi(..., timeout=20.0)
+client = SeedSimpleApi(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.user.get(..., request_options={
@@ -156,9 +156,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedSimpleApi
 
-client = SeedApi(
+client = SeedSimpleApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

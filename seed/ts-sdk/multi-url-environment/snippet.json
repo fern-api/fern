@@ -4,22 +4,22 @@
             "id": {
                 "path": "/ec2/boot",
                 "method": "POST",
-                "identifier_override": "endpoint_ec2.bootinstance"
+                "identifier_override": "endpoint_ec2.bootInstance"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/multi-url-environment\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.ec2.bootinstance({\n    size: \"size\"\n});\n"
+                "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst client = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait client.ec2.bootInstance({\n    size: \"size\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/s3/presigned-url",
                 "method": "POST",
-                "identifier_override": "endpoint_s3.getpresignedurl"
+                "identifier_override": "endpoint_s3.getPresignedUrl"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/multi-url-environment\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.s3.getpresignedurl({\n    s3Key: \"s3Key\"\n});\n"
+                "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst client = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait client.s3.getPresignedUrl({\n    s3Key: \"s3Key\"\n});\n"
             }
         }
     ],

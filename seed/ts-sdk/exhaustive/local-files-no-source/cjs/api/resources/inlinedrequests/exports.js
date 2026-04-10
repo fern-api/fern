@@ -15,7 +15,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InlinedrequestsClient = void 0;
+exports.InlinedRequestsClient = void 0;
 var Client_js_1 = require("./client/Client.js");
-Object.defineProperty(exports, "InlinedrequestsClient", { enumerable: true, get: function () { return Client_js_1.InlinedrequestsClient; } });
+Object.defineProperty(exports, "InlinedRequestsClient", { enumerable: true, get: function () { return Client_js_1.InlinedRequestsClient; } });
 __exportStar(require("./client/index.js"), exports);

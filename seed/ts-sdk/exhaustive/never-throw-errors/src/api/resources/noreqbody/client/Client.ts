@@ -4,40 +4,46 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedExhaustive from "../../../index.js";
 
-export declare namespace NoreqbodyClient {
+export declare namespace NoReqBodyClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class NoreqbodyClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<NoreqbodyClient.Options>;
+export class NoReqBodyClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<NoReqBodyClient.Options>;
 
-    constructor(options: NoreqbodyClient.Options) {
+    constructor(options: NoReqBodyClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
-     * @param {NoreqbodyClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.noreqbody.getwithnorequestbody()
+     *     await client.noReqBody.getWithNoRequestBody()
      */
-    public getwithnorequestbody(
-        requestOptions?: NoreqbodyClient.RequestOptions,
+    public getWithNoRequestBody(
+        requestOptions?: NoReqBodyClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<SeedApi.TypesObjectWithOptionalField, SeedApi.noreqbody.getwithnorequestbody.Error>
+        core.APIResponse<
+            SeedExhaustive.types.ObjectWithOptionalField,
+            SeedExhaustive.noReqBody.getWithNoRequestBody.Error
+        >
     > {
-        return core.HttpResponsePromise.fromPromise(this.__getwithnorequestbody(requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
     }
 
-    private async __getwithnorequestbody(
-        requestOptions?: NoreqbodyClient.RequestOptions,
+    private async __getWithNoRequestBody(
+        requestOptions?: NoReqBodyClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<SeedApi.TypesObjectWithOptionalField, SeedApi.noreqbody.getwithnorequestbody.Error>
+            core.APIResponse<
+                SeedExhaustive.types.ObjectWithOptionalField,
+                SeedExhaustive.noReqBody.getWithNoRequestBody.Error
+            >
         >
     > {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -50,7 +56,7 @@ export class NoreqbodyClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "no-req-body",
+                "/no-req-body",
             ),
             method: "GET",
             headers: _headers,
@@ -65,7 +71,7 @@ export class NoreqbodyClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedApi.TypesObjectWithOptionalField,
+                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -76,7 +82,7 @@ export class NoreqbodyClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.noreqbody.getwithnorequestbody.Error._unknown(_response.error),
+                error: SeedExhaustive.noReqBody.getWithNoRequestBody.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -84,20 +90,20 @@ export class NoreqbodyClient {
     }
 
     /**
-     * @param {NoreqbodyClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.noreqbody.postwithnorequestbody()
+     *     await client.noReqBody.postWithNoRequestBody()
      */
-    public postwithnorequestbody(
-        requestOptions?: NoreqbodyClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedApi.noreqbody.postwithnorequestbody.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__postwithnorequestbody(requestOptions));
+    public postWithNoRequestBody(
+        requestOptions?: NoReqBodyClient.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.noReqBody.postWithNoRequestBody.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__postWithNoRequestBody(requestOptions));
     }
 
-    private async __postwithnorequestbody(
-        requestOptions?: NoreqbodyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedApi.noreqbody.postwithnorequestbody.Error>>> {
+    private async __postWithNoRequestBody(
+        requestOptions?: NoReqBodyClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.noReqBody.postWithNoRequestBody.Error>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -108,7 +114,7 @@ export class NoreqbodyClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "no-req-body",
+                "/no-req-body",
             ),
             method: "POST",
             headers: _headers,
@@ -134,7 +140,7 @@ export class NoreqbodyClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.noreqbody.postwithnorequestbody.Error._unknown(_response.error),
+                error: SeedExhaustive.noReqBody.postWithNoRequestBody.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

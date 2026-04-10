@@ -1,9 +1,14 @@
 //! Service clients and API endpoints
 //!
-//! This module provides the client implementations for all available services.
+//! This module contains client implementations for:
+//!
+//! - **A**
+//! - **Ast**
 
 use crate::{ApiError, ClientConfig};
 
+pub mod a;
+pub mod ast;
 pub struct ApiClient {
     pub config: ClientConfig,
 }
@@ -15,3 +20,6 @@ impl ApiClient {
         })
     }
 }
+
+pub use a::AClient;
+pub use ast::AstClient;

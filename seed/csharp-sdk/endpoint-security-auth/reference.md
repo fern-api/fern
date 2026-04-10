@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedApi/Auth/AuthClient.cs">GettokenAsync</a>(AuthGetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedEndpointSecurityAuth/Auth/AuthClient.cs">GetTokenAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```csharp
-await client.Auth.GettokenAsync(
-    new AuthGetTokenRequest
+await client.Auth.GetTokenAsync(
+    new GetTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",
-        Audience = AuthGetTokenRequestAudience.HttpsApiExampleCom,
-        GrantType = AuthGetTokenRequestGrantType.ClientCredentials,
+        Audience = "https://api.example.com",
+        GrantType = "client_credentials",
     }
 );
 ```
@@ -36,7 +36,7 @@ await client.Auth.GettokenAsync(
 <dl>
 <dd>
 
-**request:** `AuthGetTokenRequest` 
+**request:** `GetTokenRequest` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ await client.Auth.GettokenAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetwithbearerAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithBearerAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ await client.Auth.GettokenAsync(
 <dd>
 
 ```csharp
-await client.User.GetwithbearerAsync();
+await client.User.GetWithBearerAsync();
 ```
 </dd>
 </dl>
@@ -74,7 +74,7 @@ await client.User.GetwithbearerAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetwithapikeyAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithApiKeyAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -87,7 +87,7 @@ await client.User.GetwithbearerAsync();
 <dd>
 
 ```csharp
-await client.User.GetwithapikeyAsync();
+await client.User.GetWithApiKeyAsync();
 ```
 </dd>
 </dl>
@@ -99,7 +99,7 @@ await client.User.GetwithapikeyAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetwithoauthAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithOAuthAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -112,7 +112,7 @@ await client.User.GetwithapikeyAsync();
 <dd>
 
 ```csharp
-await client.User.GetwithoauthAsync();
+await client.User.GetWithOAuthAsync();
 ```
 </dd>
 </dl>
@@ -124,7 +124,7 @@ await client.User.GetwithoauthAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetwithbasicAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithBasicAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -137,7 +137,7 @@ await client.User.GetwithoauthAsync();
 <dd>
 
 ```csharp
-await client.User.GetwithbasicAsync();
+await client.User.GetWithBasicAsync();
 ```
 </dd>
 </dl>
@@ -149,7 +149,7 @@ await client.User.GetwithbasicAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetwithinferredauthAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithInferredAuthAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -162,7 +162,7 @@ await client.User.GetwithbasicAsync();
 <dd>
 
 ```csharp
-await client.User.GetwithinferredauthAsync();
+await client.User.GetWithInferredAuthAsync();
 ```
 </dd>
 </dl>
@@ -174,7 +174,7 @@ await client.User.GetwithinferredauthAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetwithanyauthAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithAnyAuthAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -187,7 +187,7 @@ await client.User.GetwithinferredauthAsync();
 <dd>
 
 ```csharp
-await client.User.GetwithanyauthAsync();
+await client.User.GetWithAnyAuthAsync();
 ```
 </dd>
 </dl>
@@ -199,7 +199,7 @@ await client.User.GetwithanyauthAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetwithallauthAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithAllAuthAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -212,7 +212,7 @@ await client.User.GetwithanyauthAsync();
 <dd>
 
 ```csharp
-await client.User.GetwithallauthAsync();
+await client.User.GetWithAllAuthAsync();
 ```
 </dd>
 </dl>

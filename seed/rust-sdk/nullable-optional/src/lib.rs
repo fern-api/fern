@@ -1,21 +1,21 @@
-//! # nullable-optional SDK
+//! # NullableOptional SDK
 //!
-//! The official Rust SDK for the nullable-optional.
+//! The official Rust SDK for the NullableOptional.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_nullable_optional::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = NullableOptionalClient::new(config).expect("Failed to build client");
 //!     client
-//!         .nullableoptional
-//!         .getuser(&"userId".to_string(), None)
+//!         .nullable_optional
+//!         .get_user(&"userId".to_string(), None)
 //!         .await;
 //! }
 //! ```

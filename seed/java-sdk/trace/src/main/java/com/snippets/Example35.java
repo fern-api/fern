@@ -1,19 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.playlist.requests.PlaylistDeletePlaylistRequest;
+import com.seed.trace.SeedTraceClient;
 
 public class Example35 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedTraceClient client = SeedTraceClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.playlist()
-                .deleteplaylist(
-                        1,
-                        "playlist_id",
-                        PlaylistDeletePlaylistRequest.builder().build());
+        client.v2().v3().problem().getProblems();
     }
 }

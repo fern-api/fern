@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="src/seed/_/client.py">create</a>(...) -> str</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">create</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +12,25 @@
 <dd>
 
 ```python
-from seed import SeedApi, BondSingleLeg, Isin, Quantity, TakerParty, Trader
+from seed import SeedPythonPositionalSingleProperty, BondSingleLeg, Isin, Quantity, TakerParty, Trader
 
-client = SeedApi(
+client = SeedPythonPositionalSingleProperty(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client._.create(
+client.create(
     instrument=BondSingleLeg(
         identifier=Isin(
-            isin="isin",
+            isin="US0378331005",
         ),
         quantity=Quantity(
-            quantity=1.1,
+            quantity=10000,
             type="QUANTITY",
         ),
     ),
     taker=TakerParty(
         trader=Trader(
-            uuid_=1,
+            uuid_=1234567,
         ),
     ),
 )

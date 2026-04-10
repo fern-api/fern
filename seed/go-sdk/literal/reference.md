@@ -13,10 +13,8 @@
 <dd>
 
 ```go
-request := &fern.HeadersSendRequest{
-        EndpointVersion: fern.HeadersSendRequestXEndpointVersionTwo122024,
-        Async: true,
-        Query: "query",
+request := &fern.SendLiteralsInHeadersRequest{
+        Query: "What is the weather today",
     }
 client.Headers.Send(
         context.TODO(),
@@ -37,7 +35,7 @@ client.Headers.Send(
 <dl>
 <dd>
 
-**endpointVersion:** `*fern.HeadersSendRequestXEndpointVersion` 
+**endpointVersion:** `string` 
     
 </dd>
 </dl>
@@ -79,16 +77,20 @@ client.Headers.Send(
 <dd>
 
 ```go
-request := &fern.InlinedSendRequest{
-        Prompt: fern.InlinedSendRequestPromptYouAreAHelpfulAssistant,
-        Query: "query",
-        Stream: true,
-        AliasedContext: fern.SomeAliasedLiteralYoureSuperWise,
+request := &fern.SendLiteralsInlinedRequest{
+        Temperature: fern.Float64(
+            10.1,
+        ),
+        AliasedContext: fern.SomeAliasedLiteral(
+            "You're super wise",
+        ),
+        MaybeContext: fern.String(
+            "You're super wise",
+        ),
         ObjectWithLiteral: &fern.ATopLevelLiteral{
-            NestedLiteral: &fern.ANestedLiteral{
-                MyLiteral: fern.ANestedLiteralMyLiteralHowSuperCool,
-            },
+            NestedLiteral: &fern.ANestedLiteral{},
         },
+        Query: "What is the weather today",
     }
 client.Inlined.Send(
         context.TODO(),
@@ -109,7 +111,7 @@ client.Inlined.Send(
 <dl>
 <dd>
 
-**prompt:** `*fern.InlinedSendRequestPrompt` 
+**prompt:** `string` 
     
 </dd>
 </dl>
@@ -117,7 +119,7 @@ client.Inlined.Send(
 <dl>
 <dd>
 
-**context:** `*fern.InlinedSendRequestContext` 
+**context:** `*string` 
     
 </dd>
 </dl>
@@ -149,7 +151,7 @@ client.Inlined.Send(
 <dl>
 <dd>
 
-**aliasedContext:** `*fern.SomeAliasedLiteral` 
+**aliasedContext:** `fern.SomeAliasedLiteral` 
     
 </dd>
 </dl>
@@ -191,12 +193,9 @@ client.Inlined.Send(
 <dd>
 
 ```go
-request := &fern.PathSendRequest{
-        ID: fern.PathSendRequestIDOneHundredTwentyThree.Ptr(),
-    }
 client.Path.Send(
         context.TODO(),
-        request,
+        nil,
     )
 }
 ```
@@ -213,7 +212,7 @@ client.Path.Send(
 <dl>
 <dd>
 
-**id:** `*fern.PathSendRequestID` 
+**id:** `string` 
     
 </dd>
 </dl>
@@ -239,12 +238,20 @@ client.Path.Send(
 <dd>
 
 ```go
-request := &fern.QuerySendRequest{
-        Prompt: fern.QuerySendRequestPromptYouAreAHelpfulAssistant,
-        AliasPrompt: fern.AliasToPromptYouAreAHelpfulAssistant,
-        Query: "query",
-        Stream: true,
-        AliasStream: true,
+request := &fern.SendLiteralsInQueryRequest{
+        AliasPrompt: fern.AliasToPrompt(
+            "You are a helpful assistant",
+        ),
+        AliasOptionalPrompt: fern.String(
+            "You are a helpful assistant",
+        ),
+        AliasStream: fern.AliasToStream(
+            false,
+        ),
+        AliasOptionalStream: fern.Bool(
+            false,
+        ),
+        Query: "What is the weather today",
     }
 client.Query.Send(
         context.TODO(),
@@ -265,7 +272,7 @@ client.Query.Send(
 <dl>
 <dd>
 
-**prompt:** `*fern.QuerySendRequestPrompt` 
+**prompt:** `string` 
     
 </dd>
 </dl>
@@ -273,7 +280,7 @@ client.Query.Send(
 <dl>
 <dd>
 
-**optionalPrompt:** `*fern.QuerySendRequestOptionalPrompt` 
+**optionalPrompt:** `*string` 
     
 </dd>
 </dl>
@@ -281,7 +288,7 @@ client.Query.Send(
 <dl>
 <dd>
 
-**aliasPrompt:** `*fern.AliasToPrompt` 
+**aliasPrompt:** `fern.AliasToPrompt` 
     
 </dd>
 </dl>
@@ -356,16 +363,13 @@ client.Query.Send(
 
 ```go
 request := &fern.SendRequest{
-        Prompt: fern.SendRequestPromptYouAreAHelpfulAssistant,
-        Query: "query",
-        Stream: true,
-        Ending: fern.SendRequestEndingEnding,
-        Context: fern.SomeLiteralYoureSuperWise,
+        Context: fern.SomeLiteral(
+            "You're super wise",
+        ),
+        Query: "What is the weather today",
         ContainerObject: &fern.ContainerObject{
             NestedObjects: []*fern.NestedObjectWithLiterals{
                 &fern.NestedObjectWithLiterals{
-                    Literal1: fern.NestedObjectWithLiteralsLiteral1Literal1,
-                    Literal2: fern.NestedObjectWithLiteralsLiteral2Literal2,
                     StrProp: "strProp",
                 },
             },
@@ -390,55 +394,7 @@ client.Reference.Send(
 <dl>
 <dd>
 
-**prompt:** `*fern.SendRequestPrompt` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**query:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stream:** `bool` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ending:** `*fern.SendRequestEnding` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**context:** `*fern.SomeLiteral` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**maybeContext:** `*fern.SomeLiteral` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**containerObject:** `*fern.ContainerObject` 
+**request:** `*fern.SendRequest` 
     
 </dd>
 </dl>

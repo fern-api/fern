@@ -13,9 +13,10 @@ use Seed\Core\Types\Union;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Types\NamedMetadata;
-use Seed\Union\Requests\Request;
-use Seed\Union\Requests\UnionTestCamelCasePropertiesRequest;
+use Seed\Union\Types\KeyType;
+use Seed\Union\Types\NamedMetadata;
+use Seed\Union\Types\Request;
+use Seed\Union\Requests\PaymentRequest;
 
 class UnionClient
 {
@@ -56,10 +57,10 @@ class UnionClient
     /**
      * @param (
      *    string
+     *   |array<string>
      *   |int
      *   |array<int>
      *   |array<array<int>>
-     *   |array<string>
      * ) $request
      * @param ?array{
      *   baseUrl?: string,
@@ -71,15 +72,15 @@ class UnionClient
      * } $options
      * @return (
      *    string
+     *   |array<string>
      *   |int
      *   |array<int>
      *   |array<array<int>>
-     *   |array<string>
      * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function get(string|int|array $request, ?array $options = null): string|int|array|null
+    public function get(string|array|int $request, ?array $options = null): string|array|int|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -88,7 +89,7 @@ class UnionClient
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::POST,
-                    body: JsonSerializer::serializeUnion($request, new Union('string', 'integer', ['integer'], [['integer']], ['string'])),
+                    body: JsonSerializer::serializeUnion($request, new Union('string', ['string'], 'integer', ['integer'], [['integer']])),
                 ),
                 $options,
             );
@@ -98,7 +99,7 @@ class UnionClient
                 if (empty($json)) {
                     return null;
                 }
-                return JsonDecoder::decodeUnion($json, new Union('string', 'integer', ['integer'], [['integer']], ['string'])); // @phpstan-ignore-line
+                return JsonDecoder::decodeUnion($json, new Union('string', ['string'], 'integer', ['integer'], [['integer']])); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -121,18 +122,21 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?array<string, string>
+     * @return ?array<(
+     *    value-of<KeyType>
+     *   |'default'
+     * ), string>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getmetadata(?array $options = null): ?array
+    public function getMetadata(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "metadata",
+                    path: "/metadata",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -175,14 +179,14 @@ class UnionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updatemetadata(array|NamedMetadata|null $request, ?array $options = null): ?bool
+    public function updateMetadata(array|NamedMetadata|null $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "metadata",
+                    path: "/metadata",
                     method: HttpMethod::PUT,
                     body: JsonSerializer::serializeUnion($request, new Union(new Union(['string' => 'mixed'], 'null'), NamedMetadata::class)),
                 ),
@@ -222,14 +226,14 @@ class UnionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function call(Request $request = new Request(), ?array $options = null): ?bool
+    public function call(Request $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "call",
+                    path: "/call",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -258,8 +262,8 @@ class UnionClient
     /**
      * @param (
      *    string
-     *   |int
      *   |array<string>
+     *   |int
      * ) $request
      * @param ?array{
      *   baseUrl?: string,
@@ -271,22 +275,22 @@ class UnionClient
      * } $options
      * @return (
      *    string
-     *   |int
      *   |array<string>
+     *   |int
      * )|null
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function duplicatetypesunion(string|int|array $request, ?array $options = null): string|int|array|null
+    public function duplicateTypesUnion(string|array|int $request, ?array $options = null): string|array|int|null
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "duplicate",
+                    path: "/duplicate",
                     method: HttpMethod::POST,
-                    body: JsonSerializer::serializeUnion($request, new Union('string', 'integer', ['string'])),
+                    body: JsonSerializer::serializeUnion($request, new Union('string', ['string'], 'integer')),
                 ),
                 $options,
             );
@@ -296,7 +300,7 @@ class UnionClient
                 if (empty($json)) {
                     return null;
                 }
-                return JsonDecoder::decodeUnion($json, new Union('string', 'integer', ['string'])); // @phpstan-ignore-line
+                return JsonDecoder::decodeUnion($json, new Union('string', ['string'], 'integer')); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -329,14 +333,14 @@ class UnionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function nestedunions(string|array|int|bool $request, ?array $options = null): ?string
+    public function nestedUnions(string|array|int|bool $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "nested",
+                    path: "/nested",
                     method: HttpMethod::POST,
                     body: JsonSerializer::serializeUnion($request, new Union('string', ['string'], 'integer', 'bool')),
                 ),
@@ -363,7 +367,7 @@ class UnionClient
     }
 
     /**
-     * @param UnionTestCamelCasePropertiesRequest $request
+     * @param PaymentRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -376,14 +380,14 @@ class UnionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function testcamelcaseproperties(UnionTestCamelCasePropertiesRequest $request, ?array $options = null): ?string
+    public function testCamelCaseProperties(PaymentRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "camel-case",
+                    path: "/camel-case",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

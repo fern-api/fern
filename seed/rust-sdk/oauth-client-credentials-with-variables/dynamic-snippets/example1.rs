@@ -1,21 +1,22 @@
-use seed_api::prelude::*;
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client =
+        OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
     client
         .auth
-        .gettokenwithclientcredentials(
-            &AuthGetTokenWithClientCredentialsRequest {
+        .refresh_token(
+            &RefreshTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
-                audience: AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom,
-                grant_type: AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials,
+                refresh_token: "refresh_token".to_string(),
+                audience: "https://api.example.com".to_string(),
+                grant_type: "refresh_token".to_string(),
                 scope: Some("scope".to_string()),
             },
             None,

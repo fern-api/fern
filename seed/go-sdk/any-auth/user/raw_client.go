@@ -70,7 +70,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Getadmins(
+func (r *RawClient) GetAdmins(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {

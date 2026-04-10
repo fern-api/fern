@@ -1,3 +1,3 @@
-pub mod uploadwithqueryparams_request;
+pub mod upload_with_query_params_request;
 
-pub use uploadwithqueryparams_request::UploadwithqueryparamsRequest;
+pub use upload_with_query_params_request::UploadWithQueryParamsRequest;

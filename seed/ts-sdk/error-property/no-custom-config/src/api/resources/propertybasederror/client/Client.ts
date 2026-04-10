@@ -6,37 +6,37 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedErrorProperty from "../../../index.js";
 
-export declare namespace PropertybasederrorClient {
+export declare namespace PropertyBasedErrorClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class PropertybasederrorClient {
-    protected readonly _options: NormalizedClientOptions<PropertybasederrorClient.Options>;
+export class PropertyBasedErrorClient {
+    protected readonly _options: NormalizedClientOptions<PropertyBasedErrorClient.Options>;
 
-    constructor(options: PropertybasederrorClient.Options) {
+    constructor(options: PropertyBasedErrorClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
      * GET request that always throws an error
      *
-     * @param {PropertybasederrorClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PropertyBasedErrorClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.BadRequestError}
+     * @throws {@link SeedErrorProperty.PropertyBasedErrorTest}
      *
      * @example
-     *     await client.propertybasederror.throwerror()
+     *     await client.propertyBasedError.throwError()
      */
-    public throwerror(requestOptions?: PropertybasederrorClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__throwerror(requestOptions));
+    public throwError(requestOptions?: PropertyBasedErrorClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__throwError(requestOptions));
     }
 
-    private async __throwerror(
-        requestOptions?: PropertybasederrorClient.RequestOptions,
+    private async __throwError(
+        requestOptions?: PropertyBasedErrorClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -59,14 +59,14 @@ export class PropertybasederrorClient {
         }
 
         if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new SeedApi.BadRequestError(
-                        _response.error.body as SeedApi.BadRequestErrorBody,
+            switch ((_response.error.body as any)?.errorName) {
+                case "PropertyBasedErrorTest":
+                    throw new SeedErrorProperty.PropertyBasedErrorTest(
+                        _response.error.body as SeedErrorProperty.PropertyBasedErrorTestBody,
                         _response.rawResponse,
                     );
                 default:
-                    throw new errors.SeedApiError({
+                    throw new errors.SeedErrorPropertyError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,

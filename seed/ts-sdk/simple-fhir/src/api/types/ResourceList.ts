@@ -2,26 +2,4 @@
 
 import type * as SeedApi from "../index.js";
 
-export type ResourceList =
-    | SeedApi.ResourceList.Account
-    | SeedApi.ResourceList.Patient
-    | SeedApi.ResourceList.Practitioner
-    | SeedApi.ResourceList.Script;
-
-export namespace ResourceList {
-    export interface Account extends SeedApi.Account {
-        resource_type: "Account";
-    }
-
-    export interface Patient extends SeedApi.Patient {
-        resource_type: "Patient";
-    }
-
-    export interface Practitioner extends SeedApi.Practitioner {
-        resource_type: "Practitioner";
-    }
-
-    export interface Script extends SeedApi.Script {
-        resource_type: "Script";
-    }
-}
+export type ResourceList = SeedApi.Account | SeedApi.Patient | SeedApi.Practitioner | SeedApi.Script;

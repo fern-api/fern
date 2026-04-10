@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,17 +6,9 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = NullableOptionalClient::new(config).expect("Failed to build client");
     client
-        .nullableoptional
-        .createuser(
-            &CreateUserRequest {
-                username: "username".to_string(),
-                email: None,
-                phone: None,
-                address: None,
-            },
-            None,
-        )
+        .nullable_optional
+        .get_complex_profile(&"profileId".to_string(), None)
         .await;
 }

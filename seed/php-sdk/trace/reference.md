@@ -26,7 +26,7 @@ $client->v2->test();
 </details>
 
 ## Admin
-<details><summary><code>$client-&gt;admin-&gt;updatetestsubmissionstatus($submissionId, $request)</code></summary>
+<details><summary><code>$client-&gt;admin-&gt;updateTestSubmissionStatus($submissionId, $request)</code></summary>
 <dl>
 <dd>
 
@@ -39,11 +39,9 @@ $client->v2->test();
 <dd>
 
 ```php
-$client->admin->updatetestsubmissionstatus(
-    'submissionId',
-    new AdminUpdateTestSubmissionStatusRequest([
-        'body' => TestSubmissionStatus::stopped(new TestSubmissionStatusStopped([])),
-    ]),
+$client->admin->updateTestSubmissionStatus(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    TestSubmissionStatus::stopped(),
 );
 ```
 </dd>
@@ -79,7 +77,7 @@ $client->admin->updatetestsubmissionstatus(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;admin-&gt;sendtestsubmissionupdate($submissionId, $request)</code></summary>
+<details><summary><code>$client-&gt;admin-&gt;sendTestSubmissionUpdate($submissionId, $request)</code></summary>
 <dl>
 <dd>
 
@@ -92,15 +90,11 @@ $client->admin->updatetestsubmissionstatus(
 <dd>
 
 ```php
-$client->admin->sendtestsubmissionupdate(
-    'submissionId',
-    new AdminSendTestSubmissionUpdateRequest([
-        'body' => new TestSubmissionUpdate([
-            'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
-            'updateInfo' => new TestSubmissionUpdateInfoZero([
-                'type' => TestSubmissionUpdateInfoZeroType::Running->value,
-            ]),
-        ]),
+$client->admin->sendTestSubmissionUpdate(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    new TestSubmissionUpdate([
+        'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
+        'updateInfo' => TestSubmissionUpdateInfo::running(),
     ]),
 );
 ```
@@ -137,7 +131,7 @@ $client->admin->sendtestsubmissionupdate(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;admin-&gt;updateworkspacesubmissionstatus($submissionId, $request)</code></summary>
+<details><summary><code>$client-&gt;admin-&gt;updateWorkspaceSubmissionStatus($submissionId, $request)</code></summary>
 <dl>
 <dd>
 
@@ -150,13 +144,9 @@ $client->admin->sendtestsubmissionupdate(
 <dd>
 
 ```php
-$client->admin->updateworkspacesubmissionstatus(
-    'submissionId',
-    new AdminUpdateWorkspaceSubmissionStatusRequest([
-        'body' => new WorkspaceSubmissionStatusZero([
-            'type' => WorkspaceSubmissionStatusZeroType::Stopped->value,
-        ]),
-    ]),
+$client->admin->updateWorkspaceSubmissionStatus(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    WorkspaceSubmissionStatus::stopped(),
 );
 ```
 </dd>
@@ -180,7 +170,7 @@ $client->admin->updateworkspacesubmissionstatus(
 <dl>
 <dd>
 
-**$request:** `WorkspaceSubmissionStatusZero|WorkspaceSubmissionStatusOne|WorkspaceSubmissionStatusType|WorkspaceSubmissionStatusThree|WorkspaceSubmissionStatusFour` 
+**$request:** `WorkspaceSubmissionStatus` 
     
 </dd>
 </dl>
@@ -192,7 +182,7 @@ $client->admin->updateworkspacesubmissionstatus(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;admin-&gt;sendworkspacesubmissionupdate($submissionId, $request)</code></summary>
+<details><summary><code>$client-&gt;admin-&gt;sendWorkspaceSubmissionUpdate($submissionId, $request)</code></summary>
 <dl>
 <dd>
 
@@ -205,15 +195,11 @@ $client->admin->updateworkspacesubmissionstatus(
 <dd>
 
 ```php
-$client->admin->sendworkspacesubmissionupdate(
-    'submissionId',
-    new AdminSendWorkspaceSubmissionUpdateRequest([
-        'body' => new WorkspaceSubmissionUpdate([
-            'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
-            'updateInfo' => new WorkspaceSubmissionUpdateInfoZero([
-                'type' => WorkspaceSubmissionUpdateInfoZeroType::Running->value,
-            ]),
-        ]),
+$client->admin->sendWorkspaceSubmissionUpdate(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    new WorkspaceSubmissionUpdate([
+        'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
+        'updateInfo' => WorkspaceSubmissionUpdateInfo::running(),
     ]),
 );
 ```
@@ -250,7 +236,7 @@ $client->admin->sendworkspacesubmissionupdate(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;admin-&gt;storetracedtestcase($submissionId, $testCaseId, $request)</code></summary>
+<details><summary><code>$client-&gt;admin-&gt;storeTracedTestCase($submissionId, $testCaseId, $request)</code></summary>
 <dl>
 <dd>
 
@@ -263,29 +249,76 @@ $client->admin->sendworkspacesubmissionupdate(
 <dd>
 
 ```php
-$client->admin->storetracedtestcase(
-    'submissionId',
+$client->admin->storeTracedTestCase(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     'testCaseId',
-    new AdminStoreTracedTestCaseRequest([
+    new StoreTracedTestCaseRequest([
         'result' => new TestCaseResultWithStdout([
             'result' => new TestCaseResult([
-                'expectedResult' => new VariableValueZero([
-                    'type' => VariableValueZeroType::IntegerValue->value,
-                ]),
-                'actualResult' => new ActualResultZero([
-                    'type' => ActualResultZeroType::Value->value,
-                ]),
+                'expectedResult' => VariableValue::integerValue(),
+                'actualResult' => ActualResult::value(),
                 'passed' => true,
             ]),
             'stdout' => 'stdout',
         ]),
         'traceResponses' => [
             new TraceResponse([
-                'submissionId' => 'submissionId',
+                'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
+                'returnValue' => DebugVariableValue::integerValue(),
+                'expressionLocation' => new ExpressionLocation([
+                    'start' => 1,
+                    'offset' => 1,
+                ]),
                 'stack' => new StackInformation([
                     'numStackFrames' => 1,
+                    'topStackFrame' => new StackFrame([
+                        'methodName' => 'methodName',
+                        'lineNumber' => 1,
+                        'scopes' => [
+                            new Scope([
+                                'variables' => [
+                                    'variables' => DebugVariableValue::integerValue(),
+                                ],
+                            ]),
+                            new Scope([
+                                'variables' => [
+                                    'variables' => DebugVariableValue::integerValue(),
+                                ],
+                            ]),
+                        ],
+                    ]),
                 ]),
+                'stdout' => 'stdout',
+            ]),
+            new TraceResponse([
+                'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+                'lineNumber' => 1,
+                'returnValue' => DebugVariableValue::integerValue(),
+                'expressionLocation' => new ExpressionLocation([
+                    'start' => 1,
+                    'offset' => 1,
+                ]),
+                'stack' => new StackInformation([
+                    'numStackFrames' => 1,
+                    'topStackFrame' => new StackFrame([
+                        'methodName' => 'methodName',
+                        'lineNumber' => 1,
+                        'scopes' => [
+                            new Scope([
+                                'variables' => [
+                                    'variables' => DebugVariableValue::integerValue(),
+                                ],
+                            ]),
+                            new Scope([
+                                'variables' => [
+                                    'variables' => DebugVariableValue::integerValue(),
+                                ],
+                            ]),
+                        ],
+                    ]),
+                ]),
+                'stdout' => 'stdout',
             ]),
         ],
     ]),
@@ -340,7 +373,7 @@ $client->admin->storetracedtestcase(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;admin-&gt;storetracedtestcasev2($submissionId, $testCaseId, $request)</code></summary>
+<details><summary><code>$client-&gt;admin-&gt;storeTracedTestCaseV2($submissionId, $testCaseId, $request)</code></summary>
 <dl>
 <dd>
 
@@ -353,24 +386,77 @@ $client->admin->storetracedtestcase(
 <dd>
 
 ```php
-$client->admin->storetracedtestcasev2(
-    'submissionId',
+$client->admin->storeTracedTestCaseV2(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     'testCaseId',
-    new AdminStoreTracedTestCaseV2Request([
-        'body' => [
-            new TraceResponseV2([
-                'submissionId' => 'submissionId',
-                'lineNumber' => 1,
-                'file' => new TracedFile([
-                    'filename' => 'filename',
-                    'directory' => 'directory',
-                ]),
-                'stack' => new StackInformation([
-                    'numStackFrames' => 1,
+    [
+        new TraceResponseV2([
+            'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+            'lineNumber' => 1,
+            'file' => new TracedFile([
+                'filename' => 'filename',
+                'directory' => 'directory',
+            ]),
+            'returnValue' => DebugVariableValue::integerValue(),
+            'expressionLocation' => new ExpressionLocation([
+                'start' => 1,
+                'offset' => 1,
+            ]),
+            'stack' => new StackInformation([
+                'numStackFrames' => 1,
+                'topStackFrame' => new StackFrame([
+                    'methodName' => 'methodName',
+                    'lineNumber' => 1,
+                    'scopes' => [
+                        new Scope([
+                            'variables' => [
+                                'variables' => DebugVariableValue::integerValue(),
+                            ],
+                        ]),
+                        new Scope([
+                            'variables' => [
+                                'variables' => DebugVariableValue::integerValue(),
+                            ],
+                        ]),
+                    ],
                 ]),
             ]),
-        ],
-    ]),
+            'stdout' => 'stdout',
+        ]),
+        new TraceResponseV2([
+            'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+            'lineNumber' => 1,
+            'file' => new TracedFile([
+                'filename' => 'filename',
+                'directory' => 'directory',
+            ]),
+            'returnValue' => DebugVariableValue::integerValue(),
+            'expressionLocation' => new ExpressionLocation([
+                'start' => 1,
+                'offset' => 1,
+            ]),
+            'stack' => new StackInformation([
+                'numStackFrames' => 1,
+                'topStackFrame' => new StackFrame([
+                    'methodName' => 'methodName',
+                    'lineNumber' => 1,
+                    'scopes' => [
+                        new Scope([
+                            'variables' => [
+                                'variables' => DebugVariableValue::integerValue(),
+                            ],
+                        ]),
+                        new Scope([
+                            'variables' => [
+                                'variables' => DebugVariableValue::integerValue(),
+                            ],
+                        ]),
+                    ],
+                ]),
+            ]),
+            'stdout' => 'stdout',
+        ]),
+    ],
 );
 ```
 </dd>
@@ -414,7 +500,7 @@ $client->admin->storetracedtestcasev2(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;admin-&gt;storetracedworkspace($submissionId, $request)</code></summary>
+<details><summary><code>$client-&gt;admin-&gt;storeTracedWorkspace($submissionId, $request)</code></summary>
 <dl>
 <dd>
 
@@ -427,19 +513,80 @@ $client->admin->storetracedtestcasev2(
 <dd>
 
 ```php
-$client->admin->storetracedworkspace(
-    'submissionId',
-    new AdminStoreTracedWorkspaceRequest([
+$client->admin->storeTracedWorkspace(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    new StoreTracedWorkspaceRequest([
         'workspaceRunDetails' => new WorkspaceRunDetails([
+            'exceptionV2' => ExceptionV2::generic(new ExceptionInfo([
+                'exceptionType' => 'exceptionType',
+                'exceptionMessage' => 'exceptionMessage',
+                'exceptionStacktrace' => 'exceptionStacktrace',
+            ])),
+            'exception' => new ExceptionInfo([
+                'exceptionType' => 'exceptionType',
+                'exceptionMessage' => 'exceptionMessage',
+                'exceptionStacktrace' => 'exceptionStacktrace',
+            ]),
             'stdout' => 'stdout',
         ]),
         'traceResponses' => [
             new TraceResponse([
-                'submissionId' => 'submissionId',
+                'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
                 'lineNumber' => 1,
+                'returnValue' => DebugVariableValue::integerValue(),
+                'expressionLocation' => new ExpressionLocation([
+                    'start' => 1,
+                    'offset' => 1,
+                ]),
                 'stack' => new StackInformation([
                     'numStackFrames' => 1,
+                    'topStackFrame' => new StackFrame([
+                        'methodName' => 'methodName',
+                        'lineNumber' => 1,
+                        'scopes' => [
+                            new Scope([
+                                'variables' => [
+                                    'variables' => DebugVariableValue::integerValue(),
+                                ],
+                            ]),
+                            new Scope([
+                                'variables' => [
+                                    'variables' => DebugVariableValue::integerValue(),
+                                ],
+                            ]),
+                        ],
+                    ]),
                 ]),
+                'stdout' => 'stdout',
+            ]),
+            new TraceResponse([
+                'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+                'lineNumber' => 1,
+                'returnValue' => DebugVariableValue::integerValue(),
+                'expressionLocation' => new ExpressionLocation([
+                    'start' => 1,
+                    'offset' => 1,
+                ]),
+                'stack' => new StackInformation([
+                    'numStackFrames' => 1,
+                    'topStackFrame' => new StackFrame([
+                        'methodName' => 'methodName',
+                        'lineNumber' => 1,
+                        'scopes' => [
+                            new Scope([
+                                'variables' => [
+                                    'variables' => DebugVariableValue::integerValue(),
+                                ],
+                            ]),
+                            new Scope([
+                                'variables' => [
+                                    'variables' => DebugVariableValue::integerValue(),
+                                ],
+                            ]),
+                        ],
+                    ]),
+                ]),
+                'stdout' => 'stdout',
             ]),
         ],
     ]),
@@ -486,7 +633,7 @@ $client->admin->storetracedworkspace(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;admin-&gt;storetracedworkspacev2($submissionId, $request)</code></summary>
+<details><summary><code>$client-&gt;admin-&gt;storeTracedWorkspaceV2($submissionId, $request)</code></summary>
 <dl>
 <dd>
 
@@ -499,23 +646,76 @@ $client->admin->storetracedworkspace(
 <dd>
 
 ```php
-$client->admin->storetracedworkspacev2(
-    'submissionId',
-    new AdminStoreTracedWorkspaceV2Request([
-        'body' => [
-            new TraceResponseV2([
-                'submissionId' => 'submissionId',
-                'lineNumber' => 1,
-                'file' => new TracedFile([
-                    'filename' => 'filename',
-                    'directory' => 'directory',
-                ]),
-                'stack' => new StackInformation([
-                    'numStackFrames' => 1,
+$client->admin->storeTracedWorkspaceV2(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    [
+        new TraceResponseV2([
+            'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+            'lineNumber' => 1,
+            'file' => new TracedFile([
+                'filename' => 'filename',
+                'directory' => 'directory',
+            ]),
+            'returnValue' => DebugVariableValue::integerValue(),
+            'expressionLocation' => new ExpressionLocation([
+                'start' => 1,
+                'offset' => 1,
+            ]),
+            'stack' => new StackInformation([
+                'numStackFrames' => 1,
+                'topStackFrame' => new StackFrame([
+                    'methodName' => 'methodName',
+                    'lineNumber' => 1,
+                    'scopes' => [
+                        new Scope([
+                            'variables' => [
+                                'variables' => DebugVariableValue::integerValue(),
+                            ],
+                        ]),
+                        new Scope([
+                            'variables' => [
+                                'variables' => DebugVariableValue::integerValue(),
+                            ],
+                        ]),
+                    ],
                 ]),
             ]),
-        ],
-    ]),
+            'stdout' => 'stdout',
+        ]),
+        new TraceResponseV2([
+            'submissionId' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+            'lineNumber' => 1,
+            'file' => new TracedFile([
+                'filename' => 'filename',
+                'directory' => 'directory',
+            ]),
+            'returnValue' => DebugVariableValue::integerValue(),
+            'expressionLocation' => new ExpressionLocation([
+                'start' => 1,
+                'offset' => 1,
+            ]),
+            'stack' => new StackInformation([
+                'numStackFrames' => 1,
+                'topStackFrame' => new StackFrame([
+                    'methodName' => 'methodName',
+                    'lineNumber' => 1,
+                    'scopes' => [
+                        new Scope([
+                            'variables' => [
+                                'variables' => DebugVariableValue::integerValue(),
+                            ],
+                        ]),
+                        new Scope([
+                            'variables' => [
+                                'variables' => DebugVariableValue::integerValue(),
+                            ],
+                        ]),
+                    ],
+                ]),
+            ]),
+            'stdout' => 'stdout',
+        ]),
+    ],
 );
 ```
 </dd>
@@ -552,7 +752,7 @@ $client->admin->storetracedworkspacev2(
 </details>
 
 ## Homepage
-<details><summary><code>$client-&gt;homepage-&gt;gethomepageproblems() -> ?array</code></summary>
+<details><summary><code>$client-&gt;homepage-&gt;getHomepageProblems() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -565,7 +765,7 @@ $client->admin->storetracedworkspacev2(
 <dd>
 
 ```php
-$client->homepage->gethomepageproblems();
+$client->homepage->getHomepageProblems();
 ```
 </dd>
 </dl>
@@ -577,7 +777,7 @@ $client->homepage->gethomepageproblems();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;homepage-&gt;sethomepageproblems($request)</code></summary>
+<details><summary><code>$client-&gt;homepage-&gt;setHomepageProblems($request)</code></summary>
 <dl>
 <dd>
 
@@ -590,8 +790,9 @@ $client->homepage->gethomepageproblems();
 <dd>
 
 ```php
-$client->homepage->sethomepageproblems(
+$client->homepage->setHomepageProblems(
     [
+        'string',
         'string',
     ],
 );
@@ -622,7 +823,7 @@ $client->homepage->sethomepageproblems(
 </details>
 
 ## Migration
-<details><summary><code>$client-&gt;migration-&gt;getattemptedmigrations($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;migration-&gt;getAttemptedMigrations($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -635,8 +836,8 @@ $client->homepage->sethomepageproblems(
 <dd>
 
 ```php
-$client->migration->getattemptedmigrations(
-    new MigrationGetAttemptedMigrationsRequest([
+$client->migration->getAttemptedMigrations(
+    new GetAttemptedMigrationsRequest([
         'adminKeyHeader' => 'admin-key-header',
     ]),
 );
@@ -667,7 +868,7 @@ $client->migration->getattemptedmigrations(
 </details>
 
 ## Playlist
-<details><summary><code>$client-&gt;playlist-&gt;createplaylist($serviceParam, $request) -> ?Playlist</code></summary>
+<details><summary><code>$client-&gt;playlist-&gt;createPlaylist($serviceParam, $request) -> ?Playlist</code></summary>
 <dl>
 <dd>
 
@@ -694,13 +895,15 @@ Create a new playlist
 <dd>
 
 ```php
-$client->playlist->createplaylist(
+$client->playlist->createPlaylist(
     1,
-    new PlaylistCreatePlaylistRequest([
+    new CreatePlaylistRequest([
         'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+        'optionalDatetime' => new DateTime('2024-01-15T09:30:00Z'),
         'body' => new PlaylistCreateRequest([
             'name' => 'name',
             'problems' => [
+                'problems',
                 'problems',
             ],
         ]),
@@ -756,7 +959,7 @@ $client->playlist->createplaylist(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;playlist-&gt;getplaylists($serviceParam, $request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;playlist-&gt;getPlaylists($serviceParam, $request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -783,9 +986,9 @@ Returns the user's playlists
 <dd>
 
 ```php
-$client->playlist->getplaylists(
+$client->playlist->getPlaylists(
     1,
-    new PlaylistGetPlaylistsRequest([
+    new GetPlaylistsRequest([
         'limit' => 1,
         'otherField' => 'otherField',
         'multiLineDocs' => 'multiLineDocs',
@@ -854,7 +1057,7 @@ description
 <dl>
 <dd>
 
-**$multipleField:** `?string` 
+**$multipleField:** `string` 
     
 </dd>
 </dl>
@@ -866,7 +1069,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;playlist-&gt;getplaylist($serviceParam, $playlistId) -> ?Playlist</code></summary>
+<details><summary><code>$client-&gt;playlist-&gt;getPlaylist($serviceParam, $playlistId) -> ?Playlist</code></summary>
 <dl>
 <dd>
 
@@ -893,7 +1096,7 @@ Returns a playlist
 <dd>
 
 ```php
-$client->playlist->getplaylist(
+$client->playlist->getPlaylist(
     1,
     'playlistId',
 );
@@ -931,7 +1134,7 @@ $client->playlist->getplaylist(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;playlist-&gt;updateplaylist($serviceParam, $playlistId, $request) -> ?Playlist</code></summary>
+<details><summary><code>$client-&gt;playlist-&gt;updatePlaylist($serviceParam, $playlistId, $request) -> ?Playlist</code></summary>
 <dl>
 <dd>
 
@@ -958,12 +1161,13 @@ Updates a playlist
 <dd>
 
 ```php
-$client->playlist->updateplaylist(
+$client->playlist->updatePlaylist(
     1,
     'playlistId',
     new UpdatePlaylistRequest([
         'name' => 'name',
         'problems' => [
+            'problems',
             'problems',
         ],
     ]),
@@ -998,15 +1202,7 @@ $client->playlist->updateplaylist(
 <dl>
 <dd>
 
-**$name:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$problems:** `array` — The problems that make up the playlist.
+**$request:** `?UpdatePlaylistRequest` 
     
 </dd>
 </dl>
@@ -1018,7 +1214,7 @@ $client->playlist->updateplaylist(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;playlist-&gt;deleteplaylist($serviceParam, $playlistId)</code></summary>
+<details><summary><code>$client-&gt;playlist-&gt;deletePlaylist($serviceParam, $playlistId)</code></summary>
 <dl>
 <dd>
 
@@ -1045,7 +1241,7 @@ Deletes a playlist
 <dd>
 
 ```php
-$client->playlist->deleteplaylist(
+$client->playlist->deletePlaylist(
     1,
     'playlist_id',
 );
@@ -1084,7 +1280,7 @@ $client->playlist->deleteplaylist(
 </details>
 
 ## Problem
-<details><summary><code>$client-&gt;problem-&gt;createproblem($request) -> ?CreateProblemResponse</code></summary>
+<details><summary><code>$client-&gt;problem-&gt;createProblem($request) -> ?CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1111,16 +1307,17 @@ Creates a problem
 <dd>
 
 ```php
-$client->problem->createproblem(
+$client->problem->createProblem(
     new CreateProblemRequest([
         'problemName' => 'problemName',
         'problemDescription' => new ProblemDescription([
             'boards' => [
-                ProblemDescriptionBoard::html(new ProblemDescriptionBoardHtml([])),
+                ProblemDescriptionBoard::html(),
+                ProblemDescriptionBoard::html(),
             ],
         ]),
         'files' => [
-            'key' => new ProblemFiles([
+            Language::Java->value => new ProblemFiles([
                 'solutionFile' => new FileInfo([
                     'filename' => 'filename',
                     'contents' => 'contents',
@@ -1130,33 +1327,44 @@ $client->problem->createproblem(
                         'filename' => 'filename',
                         'contents' => 'contents',
                     ]),
+                    new FileInfo([
+                        'filename' => 'filename',
+                        'contents' => 'contents',
+                    ]),
                 ],
             ]),
         ],
         'inputParams' => [
             new VariableTypeAndName([
-                'variableType' => new VariableTypeZero([
-                    'type' => VariableTypeZeroType::IntegerType->value,
-                ]),
+                'variableType' => VariableType::integerType(),
+                'name' => 'name',
+            ]),
+            new VariableTypeAndName([
+                'variableType' => VariableType::integerType(),
                 'name' => 'name',
             ]),
         ],
-        'outputType' => new VariableTypeZero([
-            'type' => VariableTypeZeroType::IntegerType->value,
-        ]),
+        'outputType' => VariableType::integerType(),
         'testcases' => [
             new TestCaseWithExpectedResult([
                 'testCase' => new TestCase([
                     'id' => 'id',
                     'params' => [
-                        new VariableValueZero([
-                            'type' => VariableValueZeroType::IntegerValue->value,
-                        ]),
+                        VariableValue::integerValue(),
+                        VariableValue::integerValue(),
                     ],
                 ]),
-                'expectedResult' => new VariableValueZero([
-                    'type' => VariableValueZeroType::IntegerValue->value,
+                'expectedResult' => VariableValue::integerValue(),
+            ]),
+            new TestCaseWithExpectedResult([
+                'testCase' => new TestCase([
+                    'id' => 'id',
+                    'params' => [
+                        VariableValue::integerValue(),
+                        VariableValue::integerValue(),
+                    ],
                 ]),
+                'expectedResult' => VariableValue::integerValue(),
             ]),
         ],
         'methodName' => 'methodName',
@@ -1188,7 +1396,7 @@ $client->problem->createproblem(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;problem-&gt;updateproblem($problemId, $request) -> ?UpdateProblemResponse</code></summary>
+<details><summary><code>$client-&gt;problem-&gt;updateProblem($problemId, $request) -> ?UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1215,58 +1423,68 @@ Updates a problem
 <dd>
 
 ```php
-$client->problem->updateproblem(
+$client->problem->updateProblem(
     'problemId',
-    new ProblemUpdateProblemRequest([
-        'body' => new CreateProblemRequest([
-            'problemName' => 'problemName',
-            'problemDescription' => new ProblemDescription([
-                'boards' => [
-                    ProblemDescriptionBoard::html(new ProblemDescriptionBoardHtml([])),
-                ],
-            ]),
-            'files' => [
-                'key' => new ProblemFiles([
-                    'solutionFile' => new FileInfo([
+    new CreateProblemRequest([
+        'problemName' => 'problemName',
+        'problemDescription' => new ProblemDescription([
+            'boards' => [
+                ProblemDescriptionBoard::html(),
+                ProblemDescriptionBoard::html(),
+            ],
+        ]),
+        'files' => [
+            Language::Java->value => new ProblemFiles([
+                'solutionFile' => new FileInfo([
+                    'filename' => 'filename',
+                    'contents' => 'contents',
+                ]),
+                'readOnlyFiles' => [
+                    new FileInfo([
                         'filename' => 'filename',
                         'contents' => 'contents',
                     ]),
-                    'readOnlyFiles' => [
-                        new FileInfo([
-                            'filename' => 'filename',
-                            'contents' => 'contents',
-                        ]),
+                    new FileInfo([
+                        'filename' => 'filename',
+                        'contents' => 'contents',
+                    ]),
+                ],
+            ]),
+        ],
+        'inputParams' => [
+            new VariableTypeAndName([
+                'variableType' => VariableType::integerType(),
+                'name' => 'name',
+            ]),
+            new VariableTypeAndName([
+                'variableType' => VariableType::integerType(),
+                'name' => 'name',
+            ]),
+        ],
+        'outputType' => VariableType::integerType(),
+        'testcases' => [
+            new TestCaseWithExpectedResult([
+                'testCase' => new TestCase([
+                    'id' => 'id',
+                    'params' => [
+                        VariableValue::integerValue(),
+                        VariableValue::integerValue(),
                     ],
                 ]),
-            ],
-            'inputParams' => [
-                new VariableTypeAndName([
-                    'variableType' => new VariableTypeZero([
-                        'type' => VariableTypeZeroType::IntegerType->value,
-                    ]),
-                    'name' => 'name',
-                ]),
-            ],
-            'outputType' => new VariableTypeZero([
-                'type' => VariableTypeZeroType::IntegerType->value,
+                'expectedResult' => VariableValue::integerValue(),
             ]),
-            'testcases' => [
-                new TestCaseWithExpectedResult([
-                    'testCase' => new TestCase([
-                        'id' => 'id',
-                        'params' => [
-                            new VariableValueZero([
-                                'type' => VariableValueZeroType::IntegerValue->value,
-                            ]),
-                        ],
-                    ]),
-                    'expectedResult' => new VariableValueZero([
-                        'type' => VariableValueZeroType::IntegerValue->value,
-                    ]),
+            new TestCaseWithExpectedResult([
+                'testCase' => new TestCase([
+                    'id' => 'id',
+                    'params' => [
+                        VariableValue::integerValue(),
+                        VariableValue::integerValue(),
+                    ],
                 ]),
-            ],
-            'methodName' => 'methodName',
-        ]),
+                'expectedResult' => VariableValue::integerValue(),
+            ]),
+        ],
+        'methodName' => 'methodName',
     ]),
 );
 ```
@@ -1303,7 +1521,7 @@ $client->problem->updateproblem(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;problem-&gt;deleteproblem($problemId)</code></summary>
+<details><summary><code>$client-&gt;problem-&gt;deleteProblem($problemId)</code></summary>
 <dl>
 <dd>
 
@@ -1330,7 +1548,7 @@ Soft deletes a problem
 <dd>
 
 ```php
-$client->problem->deleteproblem(
+$client->problem->deleteProblem(
     'problemId',
 );
 ```
@@ -1359,7 +1577,7 @@ $client->problem->deleteproblem(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;problem-&gt;getdefaultstarterfiles($request) -> ?GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>$client-&gt;problem-&gt;getDefaultStarterFiles($request) -> ?GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1386,19 +1604,19 @@ Returns default starter files for problem
 <dd>
 
 ```php
-$client->problem->getdefaultstarterfiles(
-    new ProblemGetDefaultStarterFilesRequest([
+$client->problem->getDefaultStarterFiles(
+    new GetDefaultStarterFilesRequest([
         'inputParams' => [
             new VariableTypeAndName([
-                'variableType' => new VariableTypeZero([
-                    'type' => VariableTypeZeroType::IntegerType->value,
-                ]),
+                'variableType' => VariableType::integerType(),
+                'name' => 'name',
+            ]),
+            new VariableTypeAndName([
+                'variableType' => VariableType::integerType(),
                 'name' => 'name',
             ]),
         ],
-        'outputType' => new VariableTypeZero([
-            'type' => VariableTypeZeroType::IntegerType->value,
-        ]),
+        'outputType' => VariableType::integerType(),
         'methodName' => 'methodName',
     ]),
 );
@@ -1424,7 +1642,7 @@ $client->problem->getdefaultstarterfiles(
 <dl>
 <dd>
 
-**$outputType:** `VariableTypeZero|VariableTypeOne|VariableTypeTwo|VariableTypeThree|VariableTypeFour|VariableTypeFive|VariableTypeSix|VariableTypeSeven|VariableTypeEight|VariableTypeNine` 
+**$outputType:** `VariableType` 
     
 </dd>
 </dl>
@@ -1452,7 +1670,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>$client-&gt;submission-&gt;createexecutionsession($language) -> ?ExecutionSessionResponse</code></summary>
+<details><summary><code>$client-&gt;submission-&gt;createExecutionSession($language) -> ?ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1479,7 +1697,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```php
-$client->submission->createexecutionsession(
+$client->submission->createExecutionSession(
     Language::Java->value,
 );
 ```
@@ -1508,7 +1726,7 @@ $client->submission->createexecutionsession(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;submission-&gt;getexecutionsession($sessionId) -> ?ExecutionSessionResponse</code></summary>
+<details><summary><code>$client-&gt;submission-&gt;getExecutionSession($sessionId) -> ?ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1535,7 +1753,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```php
-$client->submission->getexecutionsession(
+$client->submission->getExecutionSession(
     'sessionId',
 );
 ```
@@ -1564,7 +1782,7 @@ $client->submission->getexecutionsession(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;submission-&gt;stopexecutionsession($sessionId)</code></summary>
+<details><summary><code>$client-&gt;submission-&gt;stopExecutionSession($sessionId)</code></summary>
 <dl>
 <dd>
 
@@ -1591,7 +1809,7 @@ Stops execution session.
 <dd>
 
 ```php
-$client->submission->stopexecutionsession(
+$client->submission->stopExecutionSession(
     'sessionId',
 );
 ```
@@ -1620,7 +1838,7 @@ $client->submission->stopexecutionsession(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;submission-&gt;getexecutionsessionsstate() -> ?GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>$client-&gt;submission-&gt;getExecutionSessionsState() -> ?GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -1633,7 +1851,7 @@ $client->submission->stopexecutionsession(
 <dd>
 
 ```php
-$client->submission->getexecutionsessionsstate();
+$client->submission->getExecutionSessionsState();
 ```
 </dd>
 </dl>
@@ -1646,7 +1864,7 @@ $client->submission->getexecutionsessionsstate();
 </details>
 
 ## Sysprop
-<details><summary><code>$client-&gt;sysprop-&gt;setnumwarminstances($language, $numWarmInstances)</code></summary>
+<details><summary><code>$client-&gt;sysprop-&gt;setNumWarmInstances($language, $numWarmInstances)</code></summary>
 <dl>
 <dd>
 
@@ -1659,7 +1877,7 @@ $client->submission->getexecutionsessionsstate();
 <dd>
 
 ```php
-$client->sysprop->setnumwarminstances(
+$client->sysprop->setNumWarmInstances(
     Language::Java->value,
     1,
 );
@@ -1697,7 +1915,7 @@ $client->sysprop->setnumwarminstances(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;sysprop-&gt;getnumwarminstances() -> ?array</code></summary>
+<details><summary><code>$client-&gt;sysprop-&gt;getNumWarmInstances() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -1710,7 +1928,7 @@ $client->sysprop->setnumwarminstances(
 <dd>
 
 ```php
-$client->sysprop->getnumwarminstances();
+$client->sysprop->getNumWarmInstances();
 ```
 </dd>
 </dl>
@@ -1722,8 +1940,8 @@ $client->sysprop->getnumwarminstances();
 </dl>
 </details>
 
-## V2Problem
-<details><summary><code>$client-&gt;v2Problem-&gt;v2ProblemGetLightweightProblems() -> ?array</code></summary>
+## V2 Problem
+<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getLightweightProblems() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -1750,7 +1968,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```php
-$client->v2Problem->v2ProblemGetLightweightProblems();
+$client->v2->problem->getLightweightProblems();
 ```
 </dd>
 </dl>
@@ -1762,7 +1980,7 @@ $client->v2Problem->v2ProblemGetLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2Problem-&gt;v2ProblemGetProblems() -> ?array</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getProblems() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -1789,7 +2007,7 @@ Returns latest versions of all problems
 <dd>
 
 ```php
-$client->v2Problem->v2ProblemGetProblems();
+$client->v2->problem->getProblems();
 ```
 </dd>
 </dl>
@@ -1801,7 +2019,7 @@ $client->v2Problem->v2ProblemGetProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2Problem-&gt;v2ProblemGetLatestProblem($problemId) -> ?V2ProblemInfoV2</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getLatestProblem($problemId) -> ?ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1828,7 +2046,7 @@ Returns latest version of a problem
 <dd>
 
 ```php
-$client->v2Problem->v2ProblemGetLatestProblem(
+$client->v2->problem->getLatestProblem(
     'problemId',
 );
 ```
@@ -1857,7 +2075,7 @@ $client->v2Problem->v2ProblemGetLatestProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2Problem-&gt;v2ProblemGetProblemVersion($problemId, $problemVersion) -> ?V2ProblemInfoV2</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;problem-&gt;getProblemVersion($problemId, $problemVersion) -> ?ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1884,7 +2102,7 @@ Returns requested version of a problem
 <dd>
 
 ```php
-$client->v2Problem->v2ProblemGetProblemVersion(
+$client->v2->problem->getProblemVersion(
     'problemId',
     1,
 );
@@ -1922,8 +2140,8 @@ $client->v2Problem->v2ProblemGetProblemVersion(
 </dl>
 </details>
 
-## V2V3Problem
-<details><summary><code>$client-&gt;v2V3Problem-&gt;v2V3ProblemGetLightweightProblems() -> ?array</code></summary>
+## V2 V3 Problem
+<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getLightweightProblems() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -1950,7 +2168,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```php
-$client->v2V3Problem->v2V3ProblemGetLightweightProblems();
+$client->v2->problem->getLightweightProblems();
 ```
 </dd>
 </dl>
@@ -1962,7 +2180,7 @@ $client->v2V3Problem->v2V3ProblemGetLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2V3Problem-&gt;v2V3ProblemGetProblems() -> ?array</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getProblems() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -1989,7 +2207,7 @@ Returns latest versions of all problems
 <dd>
 
 ```php
-$client->v2V3Problem->v2V3ProblemGetProblems();
+$client->v2->problem->getProblems();
 ```
 </dd>
 </dl>
@@ -2001,7 +2219,7 @@ $client->v2V3Problem->v2V3ProblemGetProblems();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2V3Problem-&gt;v2V3ProblemGetLatestProblem($problemId) -> ?V2V3ProblemInfoV2</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getLatestProblem($problemId) -> ?ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2028,7 +2246,7 @@ Returns latest version of a problem
 <dd>
 
 ```php
-$client->v2V3Problem->v2V3ProblemGetLatestProblem(
+$client->v2->problem->getLatestProblem(
     'problemId',
 );
 ```
@@ -2057,7 +2275,7 @@ $client->v2V3Problem->v2V3ProblemGetLatestProblem(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;v2V3Problem-&gt;v2V3ProblemGetProblemVersion($problemId, $problemVersion) -> ?V2V3ProblemInfoV2</code></summary>
+<details><summary><code>$client-&gt;v2-&gt;v3-&gt;problem-&gt;getProblemVersion($problemId, $problemVersion) -> ?ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2084,7 +2302,7 @@ Returns requested version of a problem
 <dd>
 
 ```php
-$client->v2V3Problem->v2V3ProblemGetProblemVersion(
+$client->v2->problem->getProblemVersion(
     'problemId',
     1,
 );

@@ -8,14 +8,14 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import PaymentInfo
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedDollarStringExamples, SeedDollarStringExamples
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedDollarStringExamples": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "PaymentInfo": ".types",
-    "SeedApi": ".client",
+    "SeedDollarStringExamples": ".client",
     "__version__": ".version",
 }
 
@@ -41,4 +41,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedApi", "DefaultAioHttpClient", "DefaultAsyncHttpxClient", "PaymentInfo", "SeedApi", "__version__"]
+__all__ = [
+    "AsyncSeedDollarStringExamples",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
+    "PaymentInfo",
+    "SeedDollarStringExamples",
+    "__version__",
+]

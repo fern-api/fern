@@ -12,8 +12,11 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
+        option.WithAPIKey(
+            "X-Api-Key",
+        ),
     )
-    client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething(
+    client.Simple.GetSomething(
         context.TODO(),
     )
 }

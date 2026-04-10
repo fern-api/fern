@@ -47,7 +47,7 @@ func do() {
         Title: "title",
         Rating: 1.1,
     }
-    client.Imdb.Createmovie(
+    client.Imdb.CreateMovie(
         context.TODO(),
         request,
     )
@@ -71,7 +71,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.Imdb.Createmovie(...)
+response, err := client.Imdb.CreateMovie(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -105,7 +105,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.Imdb.Createmovie(
+response, err := client.Imdb.CreateMovie(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -120,7 +120,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.Imdb.WithRawResponse.Createmovie(...)
+response, err := client.Imdb.WithRawResponse.CreateMovie(...)
 if err != nil {
     return err
 }
@@ -150,7 +150,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.Imdb.Createmovie(
+response, err := client.Imdb.CreateMovie(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -164,7 +164,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Imdb.Createmovie(ctx, ...)
+response, err := client.Imdb.CreateMovie(ctx, ...)
 ```
 
 ### Explicit Null
@@ -186,7 +186,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.Imdb.Createmovie(ctx, request, ...)
+response, err := client.Imdb.CreateMovie(ctx, request, ...)
 ```
 
 ## Contributing

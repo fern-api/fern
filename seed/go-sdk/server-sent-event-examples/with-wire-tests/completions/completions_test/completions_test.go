@@ -73,8 +73,8 @@ func TestCompletionsStreamWithWireMock(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := &sse.CompletionsStreamRequest{
-		Query: "query",
+	request := &sse.StreamCompletionRequest{
+		Query: "foo",
 	}
 	_, invocationErr := client.Completions.Stream(
 		context.TODO(),
@@ -88,7 +88,7 @@ func TestCompletionsStreamWithWireMock(
 	VerifyRequestCount(t, "TestCompletionsStreamWithWireMock", "POST", "/stream", nil, 1)
 }
 
-func TestCompletionsStreameventsWithWireMock(
+func TestCompletionsStreamEventsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -98,22 +98,22 @@ func TestCompletionsStreameventsWithWireMock(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := &sse.CompletionsStreamEventsRequest{
+	request := &sse.StreamEventsRequest{
 		Query: "query",
 	}
-	_, invocationErr := client.Completions.Streamevents(
+	_, invocationErr := client.Completions.StreamEvents(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestCompletionsStreameventsWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestCompletionsStreamEventsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestCompletionsStreameventsWithWireMock", "POST", "/stream-events", nil, 1)
+	VerifyRequestCount(t, "TestCompletionsStreamEventsWithWireMock", "POST", "/stream-events", nil, 1)
 }
 
-func TestCompletionsStreameventscontextprotocolWithWireMock(
+func TestCompletionsStreamEventsContextProtocolWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -123,17 +123,17 @@ func TestCompletionsStreameventscontextprotocolWithWireMock(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := &sse.CompletionsStreamEventsContextProtocolRequest{
+	request := &sse.StreamEventsContextProtocolRequest{
 		Query: "query",
 	}
-	_, invocationErr := client.Completions.Streameventscontextprotocol(
+	_, invocationErr := client.Completions.StreamEventsContextProtocol(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestCompletionsStreameventscontextprotocolWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestCompletionsStreamEventsContextProtocolWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestCompletionsStreameventscontextprotocolWithWireMock", "POST", "/stream-events-context-protocol", nil, 1)
+	VerifyRequestCount(t, "TestCompletionsStreamEventsContextProtocolWithWireMock", "POST", "/stream-events-context-protocol", nil, 1)
 }

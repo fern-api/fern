@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_.echo"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient._.echo(\n    id=\"id\",\n    name=\"name\",\n    size=1,\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client._.echo(\n        id=\"id\",\n        name=\"name\",\n        size=1,\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPackageYml\n\nclient = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.echo(\n    name=\"Hello world!\",\n    size=20,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPackageYml\n\nclient = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.echo(\n        name=\"Hello world!\",\n        size=20,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -22,8 +22,8 @@
                 "identifier_override": "endpoint_service.nop"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.nop(\n    id=\"id\",\n    nested_id=\"nestedId\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.nop(\n        id=\"id\",\n        nested_id=\"nestedId\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPackageYml\n\nclient = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.nop(\n    nested_id=\"id-219xca8\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPackageYml\n\nclient = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.nop(\n        nested_id=\"id-219xca8\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

@@ -1,6 +1,6 @@
 # Reference
-## FolderAService
-<details><summary><code>client.folder_a_service.<a href="src/seed/folder_a_service/client.py">folder_a_service_get_direct_thread</a>() -> FolderAResponse</code></summary>
+## FolderA Service
+<details><summary><code>client.folder_a.service.<a href="src/seed/folder_a/service/client.py">get_direct_thread</a>() -> Response</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedCrossPackageTypeNames
 
-client = SeedApi(
+client = SeedCrossPackageTypeNames(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.folder_a_service.folder_a_service_get_direct_thread()
+client.folder_a.service.get_direct_thread()
 
 ```
 </dd>
@@ -47,8 +47,8 @@ client.folder_a_service.folder_a_service_get_direct_thread()
 </dl>
 </details>
 
-## FolderDService
-<details><summary><code>client.folder_d_service.<a href="src/seed/folder_d_service/client.py">folder_d_service_get_direct_thread</a>() -> FolderDResponse</code></summary>
+## FolderD Service
+<details><summary><code>client.folder_d.service.<a href="src/seed/folder_d/service/client.py">get_direct_thread</a>() -> Response</code></summary>
 <dl>
 <dd>
 
@@ -61,13 +61,13 @@ client.folder_a_service.folder_a_service_get_direct_thread()
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedCrossPackageTypeNames
 
-client = SeedApi(
+client = SeedCrossPackageTypeNames(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.folder_d_service.folder_d_service_get_direct_thread()
+client.folder_a.service.get_direct_thread()
 
 ```
 </dd>
@@ -109,13 +109,17 @@ client.folder_d_service.folder_d_service_get_direct_thread()
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedCrossPackageTypeNames
 
-client = SeedApi(
+client = SeedCrossPackageTypeNames(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.foo.find()
+client.foo.find(
+    optional_string="optionalString",
+    public_property="publicProperty",
+    private_property=1,
+)
 
 ```
 </dd>
@@ -131,7 +135,7 @@ client.foo.find()
 <dl>
 <dd>
 
-**optional_string:** `typing.Optional[OptionalString]` 
+**optional_string:** `OptionalString` 
     
 </dd>
 </dl>

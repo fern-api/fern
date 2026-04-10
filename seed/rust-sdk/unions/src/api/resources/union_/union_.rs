@@ -15,7 +15,7 @@ impl UnionClient {
 
     pub async fn get(&self, id: &str, options: Option<RequestOptions>) -> Result<Shape, ApiError> {
         self.http_client
-            .execute_request(Method::GET, &format!("{}", id), None, None, options)
+            .execute_request(Method::GET, &format!("/{}", id), None, None, options)
             .await
     }
 

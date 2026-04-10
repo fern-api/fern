@@ -1,13 +1,13 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.types.FooRequest;
+import com.seed.errors.SeedErrorsClient;
+import com.seed.errors.resources.simple.types.FooRequest;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedErrorsClient client =
+                SeedErrorsClient.builder().url("https://api.fern.com").build();
 
-        client.simple().foowithoutendpointerror(FooRequest.builder().bar("bar").build());
+        client.simple().fooWithoutEndpointError(FooRequest.builder().bar("bar").build());
     }
 }

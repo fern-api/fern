@@ -15,11 +15,8 @@ func do() {
         option.WithToken(
             "<token>",
         ),
-        option.WithAPIKey(
-            "<X-API-Key>",
-        ),
     )
-    client.User.Get(
+    client.User.GetAdmins(
         context.TODO(),
     )
 }

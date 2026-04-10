@@ -15,7 +15,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Exception Handling](#exception-handling)
 - [File Uploads](#file-uploads)
 - [Advanced](#advanced)
-  - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
   - [Retries](#retries)
@@ -45,7 +44,7 @@ Instantiate and use the client with the following:
 import { SeedApiClient } from "@fern/multiple-request-bodies";
 
 const client = new SeedApiClient({ token: "YOUR_TOKEN" });
-await client..uploadJsonDocument();
+await client.uploadJsonDocument();
 ```
 
 ## Environments
@@ -68,7 +67,7 @@ following namespace:
 ```typescript
 import { SeedApi } from "@fern/multiple-request-bodies";
 
-const request: SeedApi.UploadJsonDocumentRequest = {
+const request: SeedApi.UploadDocumentRequest = {
     ...
 };
 ```
@@ -82,7 +81,7 @@ will be thrown.
 import { SeedApiError } from "@fern/multiple-request-bodies";
 
 try {
-    await client..uploadJsonDocument(...);
+    await client.uploadJsonDocument(...);
 } catch (err) {
     if (err instanceof SeedApiError) {
         console.log(err.statusCode);
@@ -100,13 +99,13 @@ You can upload files using the client:
 ```typescript
 import { createReadStream } from "fs";
 
-await client..uploadPdfDocument(createReadStream("path/to/file"), ...);
-await client..uploadPdfDocument(new ReadableStream(), ...);
-await client..uploadPdfDocument(Buffer.from('binary data'), ...);
-await client..uploadPdfDocument(new Blob(['binary data'], { type: 'audio/mpeg' }), ...);
-await client..uploadPdfDocument(new File(['binary data'], 'file.mp3'), ...);
-await client..uploadPdfDocument(new ArrayBuffer(8), ...);
-await client..uploadPdfDocument(new Uint8Array([0, 1, 2]), ...);
+await client.uploadPdfDocument(createReadStream("path/to/file"), ...);
+await client.uploadPdfDocument(new ReadableStream(), ...);
+await client.uploadPdfDocument(Buffer.from('binary data'), ...);
+await client.uploadPdfDocument(new Blob(['binary data'], { type: 'audio/mpeg' }), ...);
+await client.uploadPdfDocument(new File(['binary data'], 'file.mp3'), ...);
+await client.uploadPdfDocument(new ArrayBuffer(8), ...);
+await client.uploadPdfDocument(new Uint8Array([0, 1, 2]), ...);
 ```
 The client accepts a variety of types for file upload parameters:
 * Stream types: `fs.ReadStream`, `stream.Readable`, and `ReadableStream`
@@ -140,16 +139,6 @@ For example, `fs.ReadStream` has a `path` property which the SDK uses to retriev
 
 ## Advanced
 
-### Subpackage Exports
-
-This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
-
-```typescript
-import { Client } from '@fern/multiple-request-bodies/';
-
-const client = new Client({...});
-```
-
 ### Additional Headers
 
 If you would like to send additional headers as part of the request, use the `headers` request option.
@@ -164,7 +153,7 @@ const client = new SeedApiClient({
     }
 });
 
-const response = await client..uploadJsonDocument(..., {
+const response = await client.uploadJsonDocument(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -176,7 +165,7 @@ const response = await client..uploadJsonDocument(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client..uploadJsonDocument(..., {
+const response = await client.uploadJsonDocument(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -198,7 +187,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client..uploadJsonDocument(..., {
+const response = await client.uploadJsonDocument(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -208,7 +197,7 @@ const response = await client..uploadJsonDocument(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client..uploadJsonDocument(..., {
+const response = await client.uploadJsonDocument(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -219,7 +208,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client..uploadJsonDocument(..., {
+const response = await client.uploadJsonDocument(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -231,7 +220,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client..uploadJsonDocument(...).withRawResponse();
+const { data, rawResponse } = await client.uploadJsonDocument(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);

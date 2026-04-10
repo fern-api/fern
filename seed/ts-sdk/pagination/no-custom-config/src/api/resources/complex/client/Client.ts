@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedPagination from "../../../index.js";
 
 export declare namespace ComplexClient {
     export type Options = BaseClientOptions;
@@ -22,71 +22,93 @@ export class ComplexClient {
     }
 
     /**
-     * @param {SeedApi.SearchRequest} request
+     * @param {string} index
+     * @param {SeedPagination.SearchRequest} request
      * @param {ComplexClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.complex.search({
-     *         index: "index",
-     *         query: {}
+     *     await client.complex.search("index", {
+     *         pagination: {
+     *             per_page: 1,
+     *             starting_after: "starting_after"
+     *         },
+     *         query: {
+     *             field: "field",
+     *             operator: "=",
+     *             value: "value"
+     *         }
      *     })
      */
-    public search(
-        request: SeedApi.SearchRequest,
+    public async search(
+        index: string,
+        request: SeedPagination.SearchRequest,
         requestOptions?: ComplexClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.PaginatedConversationResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__search(request, requestOptions));
-    }
-
-    private async __search(
-        request: SeedApi.SearchRequest,
-        requestOptions?: ComplexClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.PaginatedConversationResponse>> {
-        const { index, ..._body } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
+    ): Promise<core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.SearchRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.PaginatedConversationResponse>> => {
+                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    _authRequest.headers,
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        `${core.url.encodePathParam(index)}/conversations/search`,
+                    ),
+                    method: "POST",
+                    headers: _headers,
+                    contentType: "application/json",
+                    queryParameters: requestOptions?.queryParams,
+                    requestType: "json",
+                    body: request,
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as SeedPagination.PaginatedConversationResponse,
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedPaginationError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+                }
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "POST",
+                    "/{index}/conversations/search",
+                );
+            },
         );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `${core.url.encodePathParam(index)}/conversations/search`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: _body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.pages?.next?.starting_after != null &&
+                !(
+                    typeof response?.pages?.next?.starting_after === "string" &&
+                    response?.pages?.next?.starting_after === ""
+                ),
+            getItems: (response) => response?.conversations ?? [],
+            loadPage: (response) => {
+                return list(
+                    core.setObjectProperty(request, "pagination.starting_after", response?.pages?.next?.starting_after),
+                );
+            },
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedApi.PaginatedConversationResponse,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/{index}/conversations/search",
-        );
     }
 }

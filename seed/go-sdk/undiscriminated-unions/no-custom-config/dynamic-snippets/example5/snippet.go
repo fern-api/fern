@@ -14,14 +14,16 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &undiscriminated.MetadataUnion{
-        OptionalMetadataOptional: map[string]any{
-            "string": map[string]any{
-                "key": "value",
+    request := &undiscriminated.Request{
+        Union: &undiscriminated.MetadataUnion{
+            OptionalMetadata: map[string]any{
+                "string": map[string]any{
+                    "key": "value",
+                },
             },
         },
     }
-    client.Union.Updatemetadata(
+    client.Union.Call(
         context.TODO(),
         request,
     )

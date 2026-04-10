@@ -1,10 +1,10 @@
 import Foundation
-import Api
+import Errors
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = ErrorsClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.simple.foowithoutendpointerror(request: FooRequest(
+    _ = try await client.simple.foo(request: FooRequest(
         bar: "bar"
     ))
 }

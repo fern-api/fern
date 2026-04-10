@@ -1,4 +1,4 @@
-package api
+package httphead
 
 import (
 	"testing"

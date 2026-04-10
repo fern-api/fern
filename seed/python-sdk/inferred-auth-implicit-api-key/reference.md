@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">gettoken</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,15 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthImplicitApiKey
 
-client = SeedApi(
+client = SeedInferredAuthImplicitApiKey(
+    api_key="X-Api-Key",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.gettoken(
-    api_key="X-Api-Key",
+client.auth.get_token(
+    api_key="api_key",
 )
 
 ```
@@ -57,8 +58,8 @@ client.auth.gettoken(
 </dl>
 </details>
 
-## NestedNoAuthApi
-<details><summary><code>client.nested_no_auth_api.<a href="src/seed/nested_no_auth_api/client.py">nested_no_auth_api_get_something</a>()</code></summary>
+## NestedNoAuth Api
+<details><summary><code>client.nested_no_auth.api.<a href="src/seed/nested_no_auth/api/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -71,13 +72,14 @@ client.auth.gettoken(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthImplicitApiKey
 
-client = SeedApi(
+client = SeedInferredAuthImplicitApiKey(
+    api_key="X-Api-Key",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nested_no_auth_api.nested_no_auth_api_get_something()
+client.nested_no_auth.api.get_something()
 
 ```
 </dd>
@@ -105,8 +107,8 @@ client.nested_no_auth_api.nested_no_auth_api_get_something()
 </dl>
 </details>
 
-## NestedApi
-<details><summary><code>client.nested_api.<a href="src/seed/nested_api/client.py">nested_api_get_something</a>()</code></summary>
+## Nested Api
+<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -119,13 +121,14 @@ client.nested_no_auth_api.nested_no_auth_api_get_something()
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthImplicitApiKey
 
-client = SeedApi(
+client = SeedInferredAuthImplicitApiKey(
+    api_key="X-Api-Key",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nested_api.nested_api_get_something()
+client.nested.api.get_something()
 
 ```
 </dd>
@@ -154,7 +157,7 @@ client.nested_api.nested_api_get_something()
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">getsomething</a>()</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -167,13 +170,14 @@ client.nested_api.nested_api_get_something()
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthImplicitApiKey
 
-client = SeedApi(
+client = SeedInferredAuthImplicitApiKey(
+    api_key="X-Api-Key",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.simple.getsomething()
+client.simple.get_something()
 
 ```
 </dd>

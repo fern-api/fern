@@ -4,9 +4,9 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.organization import Organization
-from ..types.user import User
+from ..user.types.user import User
 from .raw_client import AsyncRawOrganizationsClient, RawOrganizationsClient
+from .types.organization import Organization
 
 
 class OrganizationsClient:
@@ -24,7 +24,7 @@ class OrganizationsClient:
         """
         return self._raw_client
 
-    def getorganization(
+    def get_organization(
         self, tenant_id: str, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Organization:
         """
@@ -41,23 +41,21 @@ class OrganizationsClient:
         -------
         Organization
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedPathParameters
 
-        client = SeedApi(
+        client = SeedPathParameters(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.organizations.getorganization(
-            tenant_id="tenant_id",
+        client.organizations.get_organization(
             organization_id="organization_id",
         )
         """
-        _response = self._raw_client.getorganization(tenant_id, organization_id, request_options=request_options)
+        _response = self._raw_client.get_organization(tenant_id, organization_id, request_options=request_options)
         return _response.data
 
-    def getorganizationuser(
+    def get_organization_user(
         self,
         tenant_id: str,
         organization_id: str,
@@ -81,26 +79,24 @@ class OrganizationsClient:
         -------
         User
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedPathParameters
 
-        client = SeedApi(
+        client = SeedPathParameters(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.organizations.getorganizationuser(
-            tenant_id="tenant_id",
+        client.organizations.get_organization_user(
             organization_id="organization_id",
             user_id="user_id",
         )
         """
-        _response = self._raw_client.getorganizationuser(
+        _response = self._raw_client.get_organization_user(
             tenant_id, organization_id, user_id, request_options=request_options
         )
         return _response.data
 
-    def searchorganizations(
+    def search_organizations(
         self,
         tenant_id: str,
         organization_id: str,
@@ -124,20 +120,19 @@ class OrganizationsClient:
         -------
         typing.List[Organization]
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedPathParameters
 
-        client = SeedApi(
+        client = SeedPathParameters(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.organizations.searchorganizations(
-            tenant_id="tenant_id",
+        client.organizations.search_organizations(
             organization_id="organization_id",
+            limit=1,
         )
         """
-        _response = self._raw_client.searchorganizations(
+        _response = self._raw_client.search_organizations(
             tenant_id, organization_id, limit=limit, request_options=request_options
         )
         return _response.data
@@ -158,7 +153,7 @@ class AsyncOrganizationsClient:
         """
         return self._raw_client
 
-    async def getorganization(
+    async def get_organization(
         self, tenant_id: str, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Organization:
         """
@@ -175,31 +170,29 @@ class AsyncOrganizationsClient:
         -------
         Organization
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedPathParameters
 
-        client = AsyncSeedApi(
+        client = AsyncSeedPathParameters(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.organizations.getorganization(
-                tenant_id="tenant_id",
+            await client.organizations.get_organization(
                 organization_id="organization_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getorganization(tenant_id, organization_id, request_options=request_options)
+        _response = await self._raw_client.get_organization(tenant_id, organization_id, request_options=request_options)
         return _response.data
 
-    async def getorganizationuser(
+    async def get_organization_user(
         self,
         tenant_id: str,
         organization_id: str,
@@ -223,21 +216,19 @@ class AsyncOrganizationsClient:
         -------
         User
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedPathParameters
 
-        client = AsyncSeedApi(
+        client = AsyncSeedPathParameters(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.organizations.getorganizationuser(
-                tenant_id="tenant_id",
+            await client.organizations.get_organization_user(
                 organization_id="organization_id",
                 user_id="user_id",
             )
@@ -245,12 +236,12 @@ class AsyncOrganizationsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getorganizationuser(
+        _response = await self._raw_client.get_organization_user(
             tenant_id, organization_id, user_id, request_options=request_options
         )
         return _response.data
 
-    async def searchorganizations(
+    async def search_organizations(
         self,
         tenant_id: str,
         organization_id: str,
@@ -274,28 +265,27 @@ class AsyncOrganizationsClient:
         -------
         typing.List[Organization]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedPathParameters
 
-        client = AsyncSeedApi(
+        client = AsyncSeedPathParameters(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.organizations.searchorganizations(
-                tenant_id="tenant_id",
+            await client.organizations.search_organizations(
                 organization_id="organization_id",
+                limit=1,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.searchorganizations(
+        _response = await self._raw_client.search_organizations(
             tenant_id, organization_id, limit=limit, request_options=request_options
         )
         return _response.data

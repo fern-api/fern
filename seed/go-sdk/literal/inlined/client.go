@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Send(
 	ctx context.Context,
-	request *fern.InlinedSendRequest,
+	request *fern.SendLiteralsInlinedRequest,
 	opts ...option.RequestOption,
 ) (*fern.SendResponse, error) {
 	response, err := c.WithRawResponse.Send(

@@ -45,7 +45,7 @@ class RawServiceClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.contextmanager
-    def downloadfile(
+    def download_file(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -57,7 +57,6 @@ class RawServiceClient:
         Returns
         -------
         typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
-
         """
         with self._client_wrapper.httpx_client.stream(
             method="POST",
@@ -122,7 +121,7 @@ class AsyncRawServiceClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.asynccontextmanager
-    async def downloadfile(
+    async def download_file(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -134,7 +133,6 @@ class AsyncRawServiceClient:
         Returns
         -------
         typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
-
         """
         async with self._client_wrapper.httpx_client.stream(
             method="POST",

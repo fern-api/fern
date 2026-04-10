@@ -72,9 +72,23 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithAPIKey sets the apiKey request header.
-func WithAPIKey(apiKey string) *core.APIKeyOption {
-	return &core.APIKeyOption{
-		APIKey: apiKey,
+// WithXAPIKey sets the xAPIKey auth request parameter.
+func WithXAPIKey(xAPIKey string) *core.XAPIKeyOption {
+	return &core.XAPIKeyOption{
+		XAPIKey: xAPIKey,
+	}
+}
+
+// WithClientID sets the clientID auth request parameter.
+func WithClientID(clientID string) *core.ClientIDOption {
+	return &core.ClientIDOption{
+		ClientID: clientID,
+	}
+}
+
+// WithClientSecret sets the clientSecret auth request parameter.
+func WithClientSecret(clientSecret string) *core.ClientSecretOption {
+	return &core.ClientSecretOption{
+		ClientSecret: clientSecret,
 	}
 }

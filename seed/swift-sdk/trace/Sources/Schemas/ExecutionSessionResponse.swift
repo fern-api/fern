@@ -2,7 +2,7 @@ import Foundation
 
 public struct ExecutionSessionResponse: Codable, Hashable, Sendable {
     public let sessionId: String
-    public let executionSessionUrl: Nullable<String>?
+    public let executionSessionUrl: String?
     public let language: Language
     public let status: ExecutionSessionStatus
     /// Additional properties that are not explicitly defined in the schema
@@ -10,7 +10,7 @@ public struct ExecutionSessionResponse: Codable, Hashable, Sendable {
 
     public init(
         sessionId: String,
-        executionSessionUrl: Nullable<String>? = nil,
+        executionSessionUrl: String? = nil,
         language: Language,
         status: ExecutionSessionStatus,
         additionalProperties: [String: JSONValue] = .init()
@@ -25,7 +25,7 @@ public struct ExecutionSessionResponse: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.sessionId = try container.decode(String.self, forKey: .sessionId)
-        self.executionSessionUrl = try container.decodeNullableIfPresent(String.self, forKey: .executionSessionUrl)
+        self.executionSessionUrl = try container.decodeIfPresent(String.self, forKey: .executionSessionUrl)
         self.language = try container.decode(Language.self, forKey: .language)
         self.status = try container.decode(ExecutionSessionStatus.self, forKey: .status)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
@@ -35,7 +35,7 @@ public struct ExecutionSessionResponse: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.sessionId, forKey: .sessionId)
-        try container.encodeNullableIfPresent(self.executionSessionUrl, forKey: .executionSessionUrl)
+        try container.encodeIfPresent(self.executionSessionUrl, forKey: .executionSessionUrl)
         try container.encode(self.language, forKey: .language)
         try container.encode(self.status, forKey: .status)
     }

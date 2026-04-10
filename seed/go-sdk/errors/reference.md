@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.Simple.Foowithoutendpointerror(request) -> *fern.FooResponse</code></summary>
+<details><summary><code>client.Simple.FooWithoutEndpointError(request) -> *fern.FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -16,7 +16,7 @@
 request := &fern.FooRequest{
         Bar: "bar",
     }
-client.Simple.Foowithoutendpointerror(
+client.Simple.FooWithoutEndpointError(
         context.TODO(),
         request,
     )
@@ -94,7 +94,7 @@ client.Simple.Foo(
 </dl>
 </details>
 
-<details><summary><code>client.Simple.Foowithexamples(request) -> *fern.FooResponse</code></summary>
+<details><summary><code>client.Simple.FooWithExamples(request) -> *fern.FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -108,9 +108,9 @@ client.Simple.Foo(
 
 ```go
 request := &fern.FooRequest{
-        Bar: "bar",
+        Bar: "hello",
     }
-client.Simple.Foowithexamples(
+client.Simple.FooWithExamples(
         context.TODO(),
         request,
     )

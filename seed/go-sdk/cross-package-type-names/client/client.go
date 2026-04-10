@@ -4,17 +4,17 @@ package client
 
 import (
 	core "github.com/cross-package-type-names/fern/core"
-	folderaservice "github.com/cross-package-type-names/fern/folderaservice"
-	folderdservice "github.com/cross-package-type-names/fern/folderdservice"
+	client "github.com/cross-package-type-names/fern/foldera/client"
+	folderdclient "github.com/cross-package-type-names/fern/folderd/client"
 	foo "github.com/cross-package-type-names/fern/foo"
 	internal "github.com/cross-package-type-names/fern/internal"
 	option "github.com/cross-package-type-names/fern/option"
 )
 
 type Client struct {
-	FolderAService *folderaservice.Client
-	FolderDService *folderdservice.Client
-	Foo            *foo.Client
+	FolderA *client.Client
+	FolderD *folderdclient.Client
+	Foo     *foo.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -24,11 +24,11 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		FolderAService: folderaservice.NewClient(options),
-		FolderDService: folderdservice.NewClient(options),
-		Foo:            foo.NewClient(options),
-		options:        options,
-		baseURL:        options.BaseURL,
+		FolderA: client.NewClient(options),
+		FolderD: folderdclient.NewClient(options),
+		Foo:     foo.NewClient(options),
+		options: options,
+		baseURL: options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

@@ -43,10 +43,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.Ec2BootInstanceRequest{
+    request := &fern.BootInstanceRequest{
         Size: "size",
     }
-    client.Ec2.Bootinstance(
+    client.Ec2.BootInstance(
         context.TODO(),
         request,
     )
@@ -60,7 +60,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL("https://example.com"),
+    option.WithBaseURL(multiurlenvironment.Environments.Production),
 )
 ```
 
@@ -70,7 +70,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.Ec2.Bootinstance(...)
+response, err := client.Ec2.BootInstance(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -104,7 +104,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.Ec2.Bootinstance(
+response, err := client.Ec2.BootInstance(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -119,7 +119,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.Ec2.WithRawResponse.Bootinstance(...)
+response, err := client.Ec2.WithRawResponse.BootInstance(...)
 if err != nil {
     return err
 }
@@ -149,7 +149,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.Ec2.Bootinstance(
+response, err := client.Ec2.BootInstance(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -163,7 +163,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Ec2.Bootinstance(ctx, ...)
+response, err := client.Ec2.BootInstance(ctx, ...)
 ```
 
 ### Explicit Null
@@ -185,7 +185,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.Ec2.Bootinstance(ctx, request, ...)
+response, err := client.Ec2.BootInstance(ctx, request, ...)
 ```
 
 ## Contributing

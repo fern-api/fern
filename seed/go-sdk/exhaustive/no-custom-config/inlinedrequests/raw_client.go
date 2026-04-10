@@ -10,6 +10,7 @@ import (
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
+	types "github.com/exhaustive/fern/types"
 )
 
 type RawClient struct {
@@ -31,11 +32,11 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Postwithobjectbodyandresponse(
+func (r *RawClient) PostWithObjectBodyandResponse(
 	ctx context.Context,
-	request *fern.InlinedRequestsPostWithObjectBodyandResponseRequest,
+	request *fern.PostWithObjectBody,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.TypesObjectWithOptionalField], error) {
+) (*core.Response[*types.ObjectWithOptionalField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -47,8 +48,7 @@ func (r *RawClient) Postwithobjectbodyandresponse(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
-	var response *fern.TypesObjectWithOptionalField
+	var response *types.ObjectWithOptionalField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -67,7 +67,7 @@ func (r *RawClient) Postwithobjectbodyandresponse(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.TypesObjectWithOptionalField]{
+	return &core.Response[*types.ObjectWithOptionalField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

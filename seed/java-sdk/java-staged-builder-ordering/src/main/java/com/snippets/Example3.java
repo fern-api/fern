@@ -1,20 +1,19 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.service.requests.MediumStaged;
+import com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;
+import com.seed.stagedBuilderOrdering.resources.types.types.SimpleStaged;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
         client.service()
-                .createmedium(MediumStaged.builder()
-                        .alpha("alpha")
-                        .beta(1)
-                        .gamma("gamma")
-                        .delta(true)
-                        .optional("optional")
+                .createSimple(SimpleStaged.builder()
+                        .first("first")
+                        .second("second")
+                        .third("third")
                         .build());
     }
 }

@@ -15,10 +15,38 @@ func do() {
         ),
     )
     request := &fern.UpdateUserRequest{
-        UserID: "userId",
+        Username: fern.String(
+            "username",
+        ),
+        Email: fern.String(
+            "email",
+        ),
+        Phone: fern.String(
+            "phone",
+        ),
+        Address: &fern.Address{
+            Street: "street",
+            City: fern.String(
+                "city",
+            ),
+            State: fern.String(
+                "state",
+            ),
+            ZipCode: "zipCode",
+            Country: fern.String(
+                "country",
+            ),
+            BuildingID: fern.String(
+                "buildingId",
+            ),
+            TenantID: fern.String(
+                "tenantId",
+            ),
+        },
     }
-    client.Nullableoptional.Updateuser(
+    client.NullableOptional.UpdateUser(
         context.TODO(),
+        "userId",
         request,
     )
 }

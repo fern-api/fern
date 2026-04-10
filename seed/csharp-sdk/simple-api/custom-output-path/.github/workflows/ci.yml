@@ -26,27 +26,27 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore custom-src/SeedApi/SeedApi.csproj
+        run: dotnet restore custom-src/SeedSimpleApi/SeedSimpleApi.csproj
 
       - name: Build
-        run: dotnet build custom-src/SeedApi/SeedApi.csproj --no-restore -c Release
+        run: dotnet build custom-src/SeedSimpleApi/SeedSimpleApi.csproj --no-restore -c Release
 
       - name: Restore test dependencies
-        run: dotnet restore custom-src/SeedApi.Test/SeedApi.Test.csproj
+        run: dotnet restore custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj
 
       - name: Build tests
-        run: dotnet build custom-src/SeedApi.Test/SeedApi.Test.csproj --no-restore -c Release
+        run: dotnet build custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj --no-restore -c Release
 
       - name: Test
-        run: dotnet test custom-src/SeedApi.Test/SeedApi.Test.csproj --no-restore --no-build -c Release
+        run: dotnet test custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj --no-restore --no-build -c Release
 
       - name: Pack
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-        run: dotnet pack custom-src/SeedApi/SeedApi.csproj --no-build --no-restore -c Release
+        run: dotnet pack custom-src/SeedSimpleApi/SeedSimpleApi.csproj --no-build --no-restore -c Release
 
       - name: Publish to NuGet.org
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
-        run: dotnet nuget push custom-src/SeedApi/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
+        run: dotnet nuget push custom-src/SeedSimpleApi/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 

@@ -10,37 +10,37 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.FooAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.FooAsync();\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/a/b",
+                "path": "/",
                 "method": "POST",
-                "identifier_override": "endpoint_ab.a_b_foo"
+                "identifier_override": "endpoint_a/b.foo"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Ab.ABFooAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.A.B.FooAsync();\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/a/c",
+                "path": "/",
                 "method": "POST",
-                "identifier_override": "endpoint_ac.a_c_foo"
+                "identifier_override": "endpoint_a/c.foo"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Ac.ACFooAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.A.C.FooAsync();\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/folder",
+                "path": "/",
                 "method": "POST",
                 "identifier_override": "endpoint_folder.foo"
             },
@@ -54,11 +54,11 @@
             "id": {
                 "path": "/service",
                 "method": "GET",
-                "identifier_override": "endpoint_folderService.folder_service_endpoint"
+                "identifier_override": "endpoint_folder/service.endpoint"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.FolderService.FolderServiceEndpointAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Folder.Service.EndpointAsync();\n"
             }
         },
         {
@@ -66,11 +66,11 @@
             "id": {
                 "path": "/service",
                 "method": "POST",
-                "identifier_override": "endpoint_folderService.folder_service_unknownRequest"
+                "identifier_override": "endpoint_folder/service.unknownRequest"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\nusing global::System.Collections.Generic;\n\nvar client = new SeedApiClient();\nawait client.FolderService.FolderServiceUnknownRequestAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
+                "client": "using SeedApi;\nusing global::System.Collections.Generic;\n\nvar client = new SeedApiClient();\nawait client.Folder.Service.UnknownRequestAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
             }
         }
     ]

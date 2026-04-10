@@ -1,24 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.types.TypesDocumentedUnknownType;
-import java.util.HashMap;
+import com.seed.exhaustive.SeedExhaustiveClient;
 
 public class Example47 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpointsObject().endpointsObjectGetAndReturnMapOfDocumentedUnknownType(new HashMap<String, Object>() {
-            {
-                put("string", TypesDocumentedUnknownType.of(new HashMap<String, Object>() {
-                    {
-                        put("key", "value");
-                    }
-                }));
-            }
-        });
+        client.endpoints().primitive().getAndReturnLong(1000000L);
     }
 }

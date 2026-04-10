@@ -1,6 +1,6 @@
 # Reference
-## EndpointsContainer
-<details><summary><code>client.endpointsContainer.<a href="/Sources/Resources/EndpointsContainer/EndpointsContainerClient.swift">endpointsContainerGetAndReturnListOfPrimitives</a>(request: [String], requestOptions: RequestOptions?) -> [String]</code></summary>
+## Endpoints Container
+<details><summary><code>client.endpoints.container.<a href="/Sources/Resources/Endpoints/Container/ContainerClient.swift">getAndReturnListOfPrimitives</a>(request: [String], requestOptions: RequestOptions?) -> [String]</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,13 @@
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsContainer.endpointsContainerGetAndReturnListOfPrimitives(request: [
+    _ = try await client.endpoints.container.getAndReturnListOfPrimitives(request: [
+        "string",
         "string"
     ])
 }
@@ -59,7 +60,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsContainer.<a href="/Sources/Resources/EndpointsContainer/EndpointsContainerClient.swift">endpointsContainerGetAndReturnListOfObjects</a>(request: [TypesObjectWithRequiredField], requestOptions: RequestOptions?) -> [TypesObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/Sources/Resources/Endpoints/Container/ContainerClient.swift">getAndReturnListOfObjects</a>(request: [ObjectWithRequiredField], requestOptions: RequestOptions?) -> [ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -73,13 +74,16 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsContainer.endpointsContainerGetAndReturnListOfObjects(request: [
-        TypesObjectWithRequiredField(
+    _ = try await client.endpoints.container.getAndReturnListOfObjects(request: [
+        ObjectWithRequiredField(
+            string: "string"
+        ),
+        ObjectWithRequiredField(
             string: "string"
         )
     ])
@@ -100,7 +104,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `[TypesObjectWithRequiredField]` 
+**request:** `[ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -120,7 +124,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsContainer.<a href="/Sources/Resources/EndpointsContainer/EndpointsContainerClient.swift">endpointsContainerGetAndReturnSetOfPrimitives</a>(request: [String], requestOptions: RequestOptions?) -> [String]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/Sources/Resources/Endpoints/Container/ContainerClient.swift">getAndReturnSetOfPrimitives</a>(request: JSONValue, requestOptions: RequestOptions?) -> JSONValue</code></summary>
 <dl>
 <dd>
 
@@ -134,14 +138,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsContainer.endpointsContainerGetAndReturnSetOfPrimitives(request: [
-        "string"
-    ])
+    _ = try await client.endpoints.container.getAndReturnSetOfPrimitives()
 }
 
 try await main()
@@ -159,7 +161,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `[String]` 
+**request:** `JSONValue` 
     
 </dd>
 </dl>
@@ -179,7 +181,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsContainer.<a href="/Sources/Resources/EndpointsContainer/EndpointsContainerClient.swift">endpointsContainerGetAndReturnSetOfObjects</a>(request: [TypesObjectWithRequiredField], requestOptions: RequestOptions?) -> [TypesObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/Sources/Resources/Endpoints/Container/ContainerClient.swift">getAndReturnSetOfObjects</a>(request: JSONValue, requestOptions: RequestOptions?) -> JSONValue</code></summary>
 <dl>
 <dd>
 
@@ -193,16 +195,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsContainer.endpointsContainerGetAndReturnSetOfObjects(request: [
-        TypesObjectWithRequiredField(
-            string: "string"
-        )
-    ])
+    _ = try await client.endpoints.container.getAndReturnSetOfObjects()
 }
 
 try await main()
@@ -220,7 +218,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `[TypesObjectWithRequiredField]` 
+**request:** `JSONValue` 
     
 </dd>
 </dl>
@@ -240,7 +238,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsContainer.<a href="/Sources/Resources/EndpointsContainer/EndpointsContainerClient.swift">endpointsContainerGetAndReturnMapPrimToPrim</a>(request: [String: String], requestOptions: RequestOptions?) -> [String: String]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/Sources/Resources/Endpoints/Container/ContainerClient.swift">getAndReturnMapPrimToPrim</a>(request: [String: String], requestOptions: RequestOptions?) -> [String: String]</code></summary>
 <dl>
 <dd>
 
@@ -254,13 +252,13 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsContainer.endpointsContainerGetAndReturnMapPrimToPrim(request: [
-        "key": "value"
+    _ = try await client.endpoints.container.getAndReturnMapPrimToPrim(request: [
+        "string": "string"
     ])
 }
 
@@ -299,7 +297,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsContainer.<a href="/Sources/Resources/EndpointsContainer/EndpointsContainerClient.swift">endpointsContainerGetAndReturnMapOfPrimToObject</a>(request: [String: TypesObjectWithRequiredField], requestOptions: RequestOptions?) -> [String: TypesObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/Sources/Resources/Endpoints/Container/ContainerClient.swift">getAndReturnMapOfPrimToObject</a>(request: [String: ObjectWithRequiredField], requestOptions: RequestOptions?) -> [String: ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -313,13 +311,13 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsContainer.endpointsContainerGetAndReturnMapOfPrimToObject(request: [
-        "key": TypesObjectWithRequiredField(
+    _ = try await client.endpoints.container.getAndReturnMapOfPrimToObject(request: [
+        "string": ObjectWithRequiredField(
             string: "string"
         )
     ])
@@ -340,7 +338,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `[String: TypesObjectWithRequiredField]` 
+**request:** `[String: ObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -360,7 +358,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsContainer.<a href="/Sources/Resources/EndpointsContainer/EndpointsContainerClient.swift">endpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion</a>(request: [String: TypesMixedType], requestOptions: RequestOptions?) -> [String: TypesMixedType]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/Sources/Resources/Endpoints/Container/ContainerClient.swift">getAndReturnMapOfPrimToUndiscriminatedUnion</a>(request: [String: MixedType], requestOptions: RequestOptions?) -> [String: MixedType]</code></summary>
 <dl>
 <dd>
 
@@ -374,13 +372,13 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsContainer.endpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(request: [
-        "key": TypesMixedType.double(
+    _ = try await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion(request: [
+        "string": MixedType.double(
             1.1
         )
     ])
@@ -401,7 +399,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `[String: TypesMixedType]` 
+**request:** `[String: MixedType]` 
     
 </dd>
 </dl>
@@ -421,7 +419,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsContainer.<a href="/Sources/Resources/EndpointsContainer/EndpointsContainerClient.swift">endpointsContainerGetAndReturnOptional</a>(request: TypesObjectWithRequiredField, requestOptions: RequestOptions?) -> TypesObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/Sources/Resources/Endpoints/Container/ContainerClient.swift">getAndReturnOptional</a>(request: ObjectWithRequiredField?, requestOptions: RequestOptions?) -> ObjectWithRequiredField?</code></summary>
 <dl>
 <dd>
 
@@ -435,12 +433,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsContainer.endpointsContainerGetAndReturnOptional(request: TypesObjectWithRequiredField(
+    _ = try await client.endpoints.container.getAndReturnOptional(request: ObjectWithRequiredField(
         string: "string"
     ))
 }
@@ -460,7 +458,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesObjectWithRequiredField` 
+**request:** `ObjectWithRequiredField?` 
     
 </dd>
 </dl>
@@ -480,8 +478,8 @@ try await main()
 </dl>
 </details>
 
-## EndpointsContentType
-<details><summary><code>client.endpointsContentType.<a href="/Sources/Resources/EndpointsContentType/EndpointsContentTypeClient.swift">endpointsContentTypePostJsonPatchContentType</a>(request: TypesObjectWithOptionalField, requestOptions: RequestOptions?) -> Void</code></summary>
+## Endpoints ContentType
+<details><summary><code>client.endpoints.contentType.<a href="/Sources/Resources/Endpoints/ContentType/ContentTypeClient.swift">postJsonPatchContentType</a>(request: ObjectWithOptionalField, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -495,624 +493,684 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsContentType.endpointsContentTypePostJsonPatchContentType(request: TypesObjectWithOptionalField(
-
-    ))
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithOptionalField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpointsContentType.<a href="/Sources/Resources/EndpointsContentType/EndpointsContentTypeClient.swift">endpointsContentTypePostJsonPatchContentWithCharsetType</a>(request: TypesObjectWithOptionalField, requestOptions: RequestOptions?) -> Void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsContentType.endpointsContentTypePostJsonPatchContentWithCharsetType(request: TypesObjectWithOptionalField(
-
-    ))
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithOptionalField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## EndpointsEnum
-<details><summary><code>client.endpointsEnum.<a href="/Sources/Resources/EndpointsEnum/EndpointsEnumClient.swift">endpointsEnumGetAndReturnEnum</a>(request: TypesWeatherReport, requestOptions: RequestOptions?) -> TypesWeatherReport</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsEnum.endpointsEnumGetAndReturnEnum(request: .sunny)
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `TypesWeatherReport` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## EndpointsHttpMethods
-<details><summary><code>client.endpointsHttpMethods.<a href="/Sources/Resources/EndpointsHttpMethods/EndpointsHttpMethodsClient.swift">endpointsHttpMethodsTestGet</a>(id: String, requestOptions: RequestOptions?) -> String</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsHttpMethods.endpointsHttpMethodsTestGet(id: "id")
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpointsHttpMethods.<a href="/Sources/Resources/EndpointsHttpMethods/EndpointsHttpMethodsClient.swift">endpointsHttpMethodsTestPut</a>(id: String, request: TypesObjectWithRequiredField, requestOptions: RequestOptions?) -> TypesObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsHttpMethods.endpointsHttpMethodsTestPut(
-        id: "id",
-        request: .init(body: TypesObjectWithRequiredField(
-            string: "string"
-        ))
-    )
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithRequiredField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpointsHttpMethods.<a href="/Sources/Resources/EndpointsHttpMethods/EndpointsHttpMethodsClient.swift">endpointsHttpMethodsTestDelete</a>(id: String, requestOptions: RequestOptions?) -> Bool</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsHttpMethods.endpointsHttpMethodsTestDelete(id: "id")
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpointsHttpMethods.<a href="/Sources/Resources/EndpointsHttpMethods/EndpointsHttpMethodsClient.swift">endpointsHttpMethodsTestPatch</a>(id: String, request: TypesObjectWithOptionalField, requestOptions: RequestOptions?) -> TypesObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsHttpMethods.endpointsHttpMethodsTestPatch(
-        id: "id",
-        request: .init(body: TypesObjectWithOptionalField(
-
-        ))
-    )
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithOptionalField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpointsHttpMethods.<a href="/Sources/Resources/EndpointsHttpMethods/EndpointsHttpMethodsClient.swift">endpointsHttpMethodsTestPost</a>(request: TypesObjectWithRequiredField, requestOptions: RequestOptions?) -> TypesObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsHttpMethods.endpointsHttpMethodsTestPost(request: TypesObjectWithRequiredField(
-        string: "string"
-    ))
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithRequiredField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## EndpointsObject
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnWithOptionalField</a>(request: TypesObjectWithOptionalField, requestOptions: RequestOptions?) -> TypesObjectWithOptionalField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithOptionalField(request: TypesObjectWithOptionalField(
-
-    ))
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithOptionalField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnWithRequiredField</a>(request: TypesObjectWithRequiredField, requestOptions: RequestOptions?) -> TypesObjectWithRequiredField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithRequiredField(request: TypesObjectWithRequiredField(
-        string: "string"
-    ))
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `TypesObjectWithRequiredField` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnWithMapOfMap</a>(request: TypesObjectWithMapOfMap, requestOptions: RequestOptions?) -> TypesObjectWithMapOfMap</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithMapOfMap(request: TypesObjectWithMapOfMap(
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.contentType.postJsonPatchContentType(request: ObjectWithOptionalField(
+        string: "string",
+        integer: 1,
+        long: 1000000,
+        double: 1.1,
+        bool: true,
+        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+        date: CalendarDate("2023-01-15")!,
+        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        base64: "SGVsbG8gd29ybGQh",
+        list: [
+            "list",
+            "list"
+        ],
         map: [
-            "key": [
-                "key": "value"
+            1: "map"
+        ]
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.contentType.<a href="/Sources/Resources/Endpoints/ContentType/ContentTypeClient.swift">postJsonPatchContentWithCharsetType</a>(request: ObjectWithOptionalField, requestOptions: RequestOptions?) -> Void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.contentType.postJsonPatchContentWithCharsetType(request: ObjectWithOptionalField(
+        string: "string",
+        integer: 1,
+        long: 1000000,
+        double: 1.1,
+        bool: true,
+        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+        date: CalendarDate("2023-01-15")!,
+        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        base64: "SGVsbG8gd29ybGQh",
+        list: [
+            "list",
+            "list"
+        ],
+        map: [
+            1: "map"
+        ]
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Enum
+<details><summary><code>client.endpoints.enum.<a href="/Sources/Resources/Endpoints/Enum/EnumClient.swift">getAndReturnEnum</a>(request: WeatherReport, requestOptions: RequestOptions?) -> WeatherReport</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.enum.getAndReturnEnum(request: .sunny)
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `WeatherReport` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints HttpMethods
+<details><summary><code>client.endpoints.httpMethods.<a href="/Sources/Resources/Endpoints/HttpMethods/HttpMethodsClient.swift">testGet</a>(id: String, requestOptions: RequestOptions?) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.httpMethods.testGet(id: "id")
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.httpMethods.<a href="/Sources/Resources/Endpoints/HttpMethods/HttpMethodsClient.swift">testPost</a>(request: ObjectWithRequiredField, requestOptions: RequestOptions?) -> ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.httpMethods.testPost(request: ObjectWithRequiredField(
+        string: "string"
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.httpMethods.<a href="/Sources/Resources/Endpoints/HttpMethods/HttpMethodsClient.swift">testPut</a>(id: String, request: ObjectWithRequiredField, requestOptions: RequestOptions?) -> ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.httpMethods.testPut(
+        id: "id",
+        request: ObjectWithRequiredField(
+            string: "string"
+        )
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.httpMethods.<a href="/Sources/Resources/Endpoints/HttpMethods/HttpMethodsClient.swift">testPatch</a>(id: String, request: ObjectWithOptionalField, requestOptions: RequestOptions?) -> ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.httpMethods.testPatch(
+        id: "id",
+        request: ObjectWithOptionalField(
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            date: CalendarDate("2023-01-15")!,
+            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+            base64: "SGVsbG8gd29ybGQh",
+            list: [
+                "list",
+                "list"
+            ],
+            map: [
+                1: "map"
+            ]
+        )
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.httpMethods.<a href="/Sources/Resources/Endpoints/HttpMethods/HttpMethodsClient.swift">testDelete</a>(id: String, requestOptions: RequestOptions?) -> Bool</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.httpMethods.testDelete(id: "id")
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Object
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithOptionalField</a>(request: ObjectWithOptionalField, requestOptions: RequestOptions?) -> ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.object.getAndReturnWithOptionalField(request: ObjectWithOptionalField(
+        string: "string",
+        integer: 1,
+        long: 1000000,
+        double: 1.1,
+        bool: true,
+        datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+        date: CalendarDate("2023-01-15")!,
+        uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        base64: "SGVsbG8gd29ybGQh",
+        list: [
+            "list",
+            "list"
+        ],
+        map: [
+            1: "map"
+        ]
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithOptionalField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithRequiredField</a>(request: ObjectWithRequiredField, requestOptions: RequestOptions?) -> ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.object.getAndReturnWithRequiredField(request: ObjectWithRequiredField(
+        string: "string"
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithMapOfMap</a>(request: ObjectWithMapOfMap, requestOptions: RequestOptions?) -> ObjectWithMapOfMap</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.object.getAndReturnWithMapOfMap(request: ObjectWithMapOfMap(
+        map: [
+            "map": [
+                "map": "map"
             ]
         ]
     ))
@@ -1133,7 +1191,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesObjectWithMapOfMap` 
+**request:** `ObjectWithMapOfMap` 
     
 </dd>
 </dl>
@@ -1153,7 +1211,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnNestedWithOptionalField</a>(request: TypesNestedObjectWithOptionalField, requestOptions: RequestOptions?) -> TypesNestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnNestedWithOptionalField</a>(request: NestedObjectWithOptionalField, requestOptions: RequestOptions?) -> NestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1167,13 +1225,31 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnNestedWithOptionalField(request: TypesNestedObjectWithOptionalField(
-
+    _ = try await client.endpoints.object.getAndReturnNestedWithOptionalField(request: NestedObjectWithOptionalField(
+        string: "string",
+        nestedObject: ObjectWithOptionalField(
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            date: CalendarDate("2023-01-15")!,
+            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+            base64: "SGVsbG8gd29ybGQh",
+            list: [
+                "list",
+                "list"
+            ],
+            map: [
+                1: "map"
+            ]
+        )
     ))
 }
 
@@ -1192,7 +1268,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesNestedObjectWithOptionalField` 
+**request:** `NestedObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -1212,7 +1288,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnNestedWithRequiredField</a>(string: String, request: TypesNestedObjectWithRequiredField, requestOptions: RequestOptions?) -> TypesNestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnNestedWithRequiredField</a>(string: String, request: NestedObjectWithRequiredField, requestOptions: RequestOptions?) -> NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1226,19 +1302,34 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnNestedWithRequiredField(
+    _ = try await client.endpoints.object.getAndReturnNestedWithRequiredField(
         string: "string",
-        request: .init(body: TypesNestedObjectWithRequiredField(
+        request: NestedObjectWithRequiredField(
             string: "string",
-            nestedObject: TypesObjectWithOptionalField(
-
+            nestedObject: ObjectWithOptionalField(
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                date: CalendarDate("2023-01-15")!,
+                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                base64: "SGVsbG8gd29ybGQh",
+                list: [
+                    "list",
+                    "list"
+                ],
+                map: [
+                    1: "map"
+                ]
             )
-        ))
+        )
     )
 }
 
@@ -1265,7 +1356,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesNestedObjectWithRequiredField` 
+**request:** `NestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1285,7 +1376,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnNestedWithRequiredFieldAsList</a>(request: [TypesNestedObjectWithRequiredField], requestOptions: RequestOptions?) -> TypesNestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnNestedWithRequiredFieldAsList</a>(request: [NestedObjectWithRequiredField], requestOptions: RequestOptions?) -> NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1299,16 +1390,52 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnNestedWithRequiredFieldAsList(request: [
-        TypesNestedObjectWithRequiredField(
+    _ = try await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(request: [
+        NestedObjectWithRequiredField(
             string: "string",
-            nestedObject: TypesObjectWithOptionalField(
-
+            nestedObject: ObjectWithOptionalField(
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                date: CalendarDate("2023-01-15")!,
+                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                base64: "SGVsbG8gd29ybGQh",
+                list: [
+                    "list",
+                    "list"
+                ],
+                map: [
+                    1: "map"
+                ]
+            )
+        ),
+        NestedObjectWithRequiredField(
+            string: "string",
+            nestedObject: ObjectWithOptionalField(
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                date: CalendarDate("2023-01-15")!,
+                uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                base64: "SGVsbG8gd29ybGQh",
+                list: [
+                    "list",
+                    "list"
+                ],
+                map: [
+                    1: "map"
+                ]
             )
         )
     ])
@@ -1329,7 +1456,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `[TypesNestedObjectWithRequiredField]` 
+**request:** `[NestedObjectWithRequiredField]` 
     
 </dd>
 </dl>
@@ -1349,7 +1476,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnWithUnknownField</a>(request: TypesObjectWithUnknownField, requestOptions: RequestOptions?) -> TypesObjectWithUnknownField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithUnknownField</a>(request: ObjectWithUnknownField, requestOptions: RequestOptions?) -> ObjectWithUnknownField</code></summary>
 <dl>
 <dd>
 
@@ -1363,14 +1490,14 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithUnknownField(request: TypesObjectWithUnknownField(
+    _ = try await client.endpoints.object.getAndReturnWithUnknownField(request: ObjectWithUnknownField(
         unknown: .object([
-            "key": .string("value")
+            "$ref": .string("https://example.com/schema")
         ])
     ))
 }
@@ -1390,7 +1517,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesObjectWithUnknownField` 
+**request:** `ObjectWithUnknownField` 
     
 </dd>
 </dl>
@@ -1410,7 +1537,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnWithDocumentedUnknownType</a>(request: TypesObjectWithDocumentedUnknownType, requestOptions: RequestOptions?) -> TypesObjectWithDocumentedUnknownType</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithDocumentedUnknownType</a>(request: ObjectWithDocumentedUnknownType, requestOptions: RequestOptions?) -> ObjectWithDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1424,12 +1551,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithDocumentedUnknownType(request: TypesObjectWithDocumentedUnknownType(
+    _ = try await client.endpoints.object.getAndReturnWithDocumentedUnknownType(request: ObjectWithDocumentedUnknownType(
         documentedUnknownType: .object([
             "key": .string("value")
         ])
@@ -1451,7 +1578,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesObjectWithDocumentedUnknownType` 
+**request:** `ObjectWithDocumentedUnknownType` 
     
 </dd>
 </dl>
@@ -1471,7 +1598,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnMapOfDocumentedUnknownType</a>(request: TypesMapOfDocumentedUnknownType, requestOptions: RequestOptions?) -> TypesMapOfDocumentedUnknownType</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnMapOfDocumentedUnknownType</a>(request: MapOfDocumentedUnknownType, requestOptions: RequestOptions?) -> MapOfDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1485,12 +1612,16 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnMapOfDocumentedUnknownType(request: [:])
+    _ = try await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(request: [
+        "string": .object([
+            "key": .string("value")
+        ])
+    ])
 }
 
 try await main()
@@ -1508,7 +1639,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesMapOfDocumentedUnknownType` 
+**request:** `MapOfDocumentedUnknownType` 
     
 </dd>
 </dl>
@@ -1528,7 +1659,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnWithMixedRequiredAndOptionalFields</a>(request: TypesObjectWithMixedRequiredAndOptionalFields, requestOptions: RequestOptions?) -> TypesObjectWithMixedRequiredAndOptionalFields</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithMixedRequiredAndOptionalFields</a>(request: ObjectWithMixedRequiredAndOptionalFields, requestOptions: RequestOptions?) -> ObjectWithMixedRequiredAndOptionalFields</code></summary>
 <dl>
 <dd>
 
@@ -1557,15 +1688,16 @@ object initializer, even when the example omits some required fields.
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithMixedRequiredAndOptionalFields(request: TypesObjectWithMixedRequiredAndOptionalFields(
-        requiredString: "requiredString",
-        requiredInteger: 1,
-        requiredLong: 1000000
+    _ = try await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(request: ObjectWithMixedRequiredAndOptionalFields(
+        requiredString: "hello",
+        requiredInteger: 0,
+        optionalString: "world",
+        requiredLong: 0
     ))
 }
 
@@ -1584,7 +1716,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesObjectWithMixedRequiredAndOptionalFields` 
+**request:** `ObjectWithMixedRequiredAndOptionalFields` 
     
 </dd>
 </dl>
@@ -1604,7 +1736,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnWithRequiredNestedObject</a>(request: TypesObjectWithRequiredNestedObject, requestOptions: RequestOptions?) -> TypesObjectWithRequiredNestedObject</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithRequiredNestedObject</a>(request: ObjectWithRequiredNestedObject, requestOptions: RequestOptions?) -> ObjectWithRequiredNestedObject</code></summary>
 <dl>
 <dd>
 
@@ -1635,16 +1767,16 @@ initializer with the nested object's required properties filled in.
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithRequiredNestedObject(request: TypesObjectWithRequiredNestedObject(
-        requiredString: "requiredString",
-        requiredObject: TypesNestedObjectWithRequiredField(
-            string: "string",
-            nestedObject: TypesObjectWithOptionalField(
+    _ = try await client.endpoints.object.getAndReturnWithRequiredNestedObject(request: ObjectWithRequiredNestedObject(
+        requiredString: "hello",
+        requiredObject: NestedObjectWithRequiredField(
+            string: "nested",
+            nestedObject: ObjectWithOptionalField(
 
             )
         )
@@ -1666,7 +1798,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesObjectWithRequiredNestedObject` 
+**request:** `ObjectWithRequiredNestedObject` 
     
 </dd>
 </dl>
@@ -1686,7 +1818,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsObject.<a href="/Sources/Resources/EndpointsObject/EndpointsObjectClient.swift">endpointsObjectGetAndReturnWithDatetimeLikeString</a>(request: TypesObjectWithDatetimeLikeString, requestOptions: RequestOptions?) -> TypesObjectWithDatetimeLikeString</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/Sources/Resources/Endpoints/Object/ObjectClient.swift">getAndReturnWithDatetimeLikeString</a>(request: ObjectWithDatetimeLikeString, requestOptions: RequestOptions?) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
 
@@ -1716,14 +1848,14 @@ without being converted to "2023-08-31T14:15:22.000Z".
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithDatetimeLikeString(request: TypesObjectWithDatetimeLikeString(
-        datetimeLikeString: "datetimeLikeString",
-        actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
+    _ = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(request: ObjectWithDatetimeLikeString(
+        datetimeLikeString: "2023-08-31T14:15:22Z",
+        actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
     ))
 }
 
@@ -1742,7 +1874,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesObjectWithDatetimeLikeString` 
+**request:** `ObjectWithDatetimeLikeString` 
     
 </dd>
 </dl>
@@ -1762,8 +1894,8 @@ try await main()
 </dl>
 </details>
 
-## EndpointsPagination
-<details><summary><code>client.endpointsPagination.<a href="/Sources/Resources/EndpointsPagination/EndpointsPaginationClient.swift">endpointsPaginationListItems</a>(cursor: Nullable&lt;String&gt;?, limit: Nullable&lt;Int&gt;?, requestOptions: RequestOptions?) -> EndpointsPaginatedResponse</code></summary>
+## Endpoints Pagination
+<details><summary><code>client.endpoints.pagination.<a href="/Sources/Resources/Endpoints/Pagination/PaginationClient.swift">listItems</a>(cursor: String?, limit: Int?, requestOptions: RequestOptions?) -> PaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1791,12 +1923,15 @@ List items with cursor pagination
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsPagination.endpointsPaginationListItems()
+    _ = try await client.endpoints.pagination.listItems(
+        cursor: "cursor",
+        limit: 1
+    )
 }
 
 try await main()
@@ -1814,7 +1949,7 @@ try await main()
 <dl>
 <dd>
 
-**cursor:** `Nullable<String>?` — The cursor for pagination
+**cursor:** `String?` — The cursor for pagination
     
 </dd>
 </dl>
@@ -1822,7 +1957,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `Nullable<Int>?` — Maximum number of items to return
+**limit:** `Int?` — Maximum number of items to return
     
 </dd>
 </dl>
@@ -1842,8 +1977,8 @@ try await main()
 </dl>
 </details>
 
-## EndpointsParams
-<details><summary><code>client.endpointsParams.<a href="/Sources/Resources/EndpointsParams/EndpointsParamsClient.swift">endpointsParamsGetWithPath</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
+## Endpoints Params
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithPath</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1871,12 +2006,12 @@ GET with path param
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsParams.endpointsParamsGetWithPath(param: "param")
+    _ = try await client.endpoints.params.getWithPath(param: "param")
 }
 
 try await main()
@@ -1914,89 +2049,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsParams.<a href="/Sources/Resources/EndpointsParams/EndpointsParamsClient.swift">endpointsParamsModifyWithPath</a>(param: String, request: String, requestOptions: RequestOptions?) -> String</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsParams.endpointsParamsModifyWithPath(
-        param: "param",
-        request: .init(body: "string")
-    )
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpointsParams.<a href="/Sources/Resources/EndpointsParams/EndpointsParamsClient.swift">endpointsParamsGetWithInlinePath</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithInlinePath</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2024,12 +2077,12 @@ GET with path param
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsParams.endpointsParamsGetWithInlinePath(param: "param")
+    _ = try await client.endpoints.params.getWithPath(param: "param")
 }
 
 try await main()
@@ -2067,89 +2120,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsParams.<a href="/Sources/Resources/EndpointsParams/EndpointsParamsClient.swift">endpointsParamsModifyWithInlinePath</a>(param: String, request: String, requestOptions: RequestOptions?) -> String</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsParams.endpointsParamsModifyWithInlinePath(
-        param: "param",
-        request: .init(body: "string")
-    )
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.endpointsParams.<a href="/Sources/Resources/EndpointsParams/EndpointsParamsClient.swift">endpointsParamsGetWithQuery</a>(query: String, number: Int, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithQuery</a>(query: String, number: Int, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -2177,12 +2148,12 @@ GET with query param
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsParams.endpointsParamsGetWithQuery(
+    _ = try await client.endpoints.params.getWithQuery(
         query: "query",
         number: 1
     )
@@ -2231,7 +2202,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsParams.<a href="/Sources/Resources/EndpointsParams/EndpointsParamsClient.swift">endpointsParamsGetWithAllowMultipleQuery</a>(query: String?, number: Int?, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithAllowMultipleQuery</a>(query: String, number: Int, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -2259,12 +2230,15 @@ GET with multiple of same query param
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsParams.endpointsParamsGetWithAllowMultipleQuery()
+    _ = try await client.endpoints.params.getWithQuery(
+        query: "query",
+        number: 1
+    )
 }
 
 try await main()
@@ -2282,7 +2256,7 @@ try await main()
 <dl>
 <dd>
 
-**query:** `String?` 
+**query:** `String` 
     
 </dd>
 </dl>
@@ -2290,7 +2264,7 @@ try await main()
 <dl>
 <dd>
 
-**number:** `Int?` 
+**number:** `Int` 
     
 </dd>
 </dl>
@@ -2310,7 +2284,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsParams.<a href="/Sources/Resources/EndpointsParams/EndpointsParamsClient.swift">endpointsParamsGetWithPathAndQuery</a>(param: String, query: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithPathAndQuery</a>(param: String, query: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -2338,12 +2312,12 @@ GET with path and query params
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsParams.endpointsParamsGetWithPathAndQuery(
+    _ = try await client.endpoints.params.getWithPathAndQuery(
         param: "param",
         query: "query"
     )
@@ -2392,7 +2366,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsParams.<a href="/Sources/Resources/EndpointsParams/EndpointsParamsClient.swift">endpointsParamsGetWithInlinePathAndQuery</a>(param: String, query: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithInlinePathAndQuery</a>(param: String, query: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -2420,12 +2394,12 @@ GET with path and query params
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsParams.endpointsParamsGetWithInlinePathAndQuery(
+    _ = try await client.endpoints.params.getWithPathAndQuery(
         param: "param",
         query: "query"
     )
@@ -2474,7 +2448,253 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsParams.<a href="/Sources/Resources/EndpointsParams/EndpointsParamsClient.swift">endpointsParamsGetWithBooleanPath</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">modifyWithPath</a>(param: String, request: String, requestOptions: RequestOptions?) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.params.modifyWithPath(
+        param: "param",
+        request: "string"
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">modifyWithInlinePath</a>(param: String, request: String, requestOptions: RequestOptions?) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.params.modifyWithPath(
+        param: "param",
+        request: "string"
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">uploadWithPath</a>(param: String, request: Data, requestOptions: RequestOptions?) -> ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.params.uploadWithPath(
+        param: "upload-path",
+        request: Data("data".utf8)
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Data` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithBooleanPath</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2502,12 +2722,12 @@ GET with boolean path param
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsParams.endpointsParamsGetWithBooleanPath(param: true)
+    _ = try await client.endpoints.params.getWithBooleanPath(param: true)
 }
 
 try await main()
@@ -2545,7 +2765,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsParams.<a href="/Sources/Resources/EndpointsParams/EndpointsParamsClient.swift">endpointsParamsGetWithPathAndErrors</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">getWithPathAndErrors</a>(param: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2573,12 +2793,12 @@ GET with path param that can throw errors
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsParams.endpointsParamsGetWithPathAndErrors(param: "param")
+    _ = try await client.endpoints.params.getWithPath(param: "param")
 }
 
 try await main()
@@ -2616,8 +2836,8 @@ try await main()
 </dl>
 </details>
 
-## EndpointsPrimitive
-<details><summary><code>client.endpointsPrimitive.<a href="/Sources/Resources/EndpointsPrimitive/EndpointsPrimitiveClient.swift">endpointsPrimitiveGetAndReturnString</a>(request: String, requestOptions: RequestOptions?) -> String</code></summary>
+## Endpoints Primitive
+<details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnString</a>(request: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2631,12 +2851,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsPrimitive.endpointsPrimitiveGetAndReturnString(request: "string")
+    _ = try await client.endpoints.primitive.getAndReturnString(request: "string")
 }
 
 try await main()
@@ -2674,7 +2894,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsPrimitive.<a href="/Sources/Resources/EndpointsPrimitive/EndpointsPrimitiveClient.swift">endpointsPrimitiveGetAndReturnInt</a>(request: Int, requestOptions: RequestOptions?) -> Int</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnInt</a>(request: Int, requestOptions: RequestOptions?) -> Int</code></summary>
 <dl>
 <dd>
 
@@ -2688,12 +2908,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsPrimitive.endpointsPrimitiveGetAndReturnInt(request: 1)
+    _ = try await client.endpoints.primitive.getAndReturnInt(request: 1)
 }
 
 try await main()
@@ -2731,7 +2951,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsPrimitive.<a href="/Sources/Resources/EndpointsPrimitive/EndpointsPrimitiveClient.swift">endpointsPrimitiveGetAndReturnLong</a>(request: Int64, requestOptions: RequestOptions?) -> Int64</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnLong</a>(request: Int64, requestOptions: RequestOptions?) -> Int64</code></summary>
 <dl>
 <dd>
 
@@ -2745,12 +2965,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsPrimitive.endpointsPrimitiveGetAndReturnLong(request: 1000000)
+    _ = try await client.endpoints.primitive.getAndReturnLong(request: 1000000)
 }
 
 try await main()
@@ -2788,7 +3008,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsPrimitive.<a href="/Sources/Resources/EndpointsPrimitive/EndpointsPrimitiveClient.swift">endpointsPrimitiveGetAndReturnDouble</a>(request: Double, requestOptions: RequestOptions?) -> Double</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnDouble</a>(request: Double, requestOptions: RequestOptions?) -> Double</code></summary>
 <dl>
 <dd>
 
@@ -2802,12 +3022,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsPrimitive.endpointsPrimitiveGetAndReturnDouble(request: 1.1)
+    _ = try await client.endpoints.primitive.getAndReturnDouble(request: 1.1)
 }
 
 try await main()
@@ -2845,7 +3065,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsPrimitive.<a href="/Sources/Resources/EndpointsPrimitive/EndpointsPrimitiveClient.swift">endpointsPrimitiveGetAndReturnBool</a>(request: Bool, requestOptions: RequestOptions?) -> Bool</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnBool</a>(request: Bool, requestOptions: RequestOptions?) -> Bool</code></summary>
 <dl>
 <dd>
 
@@ -2859,12 +3079,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsPrimitive.endpointsPrimitiveGetAndReturnBool(request: true)
+    _ = try await client.endpoints.primitive.getAndReturnBool(request: true)
 }
 
 try await main()
@@ -2902,7 +3122,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsPrimitive.<a href="/Sources/Resources/EndpointsPrimitive/EndpointsPrimitiveClient.swift">endpointsPrimitiveGetAndReturnDatetime</a>(request: Date, requestOptions: RequestOptions?) -> Date</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnDatetime</a>(request: Date, requestOptions: RequestOptions?) -> Date</code></summary>
 <dl>
 <dd>
 
@@ -2916,12 +3136,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsPrimitive.endpointsPrimitiveGetAndReturnDatetime(request: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))
+    _ = try await client.endpoints.primitive.getAndReturnDatetime(request: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601))
 }
 
 try await main()
@@ -2959,7 +3179,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsPrimitive.<a href="/Sources/Resources/EndpointsPrimitive/EndpointsPrimitiveClient.swift">endpointsPrimitiveGetAndReturnDate</a>(request: CalendarDate, requestOptions: RequestOptions?) -> CalendarDate</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnDate</a>(request: CalendarDate, requestOptions: RequestOptions?) -> CalendarDate</code></summary>
 <dl>
 <dd>
 
@@ -2973,12 +3193,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsPrimitive.endpointsPrimitiveGetAndReturnDate(request: CalendarDate("2023-01-15")!)
+    _ = try await client.endpoints.primitive.getAndReturnDate(request: CalendarDate("2023-01-15")!)
 }
 
 try await main()
@@ -3016,7 +3236,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsPrimitive.<a href="/Sources/Resources/EndpointsPrimitive/EndpointsPrimitiveClient.swift">endpointsPrimitiveGetAndReturnUuid</a>(request: String, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnUuid</a>(request: UUID, requestOptions: RequestOptions?) -> UUID</code></summary>
 <dl>
 <dd>
 
@@ -3030,12 +3250,69 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsPrimitive.endpointsPrimitiveGetAndReturnUuid(request: "string")
+    _ = try await client.endpoints.primitive.getAndReturnUuid(request: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UUID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnBase64</a>(request: String, requestOptions: RequestOptions?) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.primitive.getAndReturnBase64(request: "SGVsbG8gd29ybGQh")
 }
 
 try await main()
@@ -3073,7 +3350,8 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsPrimitive.<a href="/Sources/Resources/EndpointsPrimitive/EndpointsPrimitiveClient.swift">endpointsPrimitiveGetAndReturnBase64</a>(request: String, requestOptions: RequestOptions?) -> String</code></summary>
+## Endpoints Put
+<details><summary><code>client.endpoints.put.<a href="/Sources/Resources/Endpoints/Put/PutClient.swift">add</a>(id: String, requestOptions: RequestOptions?) -> PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -3087,70 +3365,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsPrimitive.endpointsPrimitiveGetAndReturnBase64(request: "string")
-}
-
-try await main()
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## EndpointsPut
-<details><summary><code>client.endpointsPut.<a href="/Sources/Resources/EndpointsPut/EndpointsPutClient.swift">endpointsPutAdd</a>(id: String, requestOptions: RequestOptions?) -> EndpointsPutResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```swift
-import Foundation
-import Api
-
-private func main() async throws {
-    let client = ApiClient(token: "<token>")
-
-    _ = try await client.endpointsPut.endpointsPutAdd(id: "id")
+    _ = try await client.endpoints.put.add(id: "id")
 }
 
 try await main()
@@ -3188,8 +3408,8 @@ try await main()
 </dl>
 </details>
 
-## EndpointsUnion
-<details><summary><code>client.endpointsUnion.<a href="/Sources/Resources/EndpointsUnion/EndpointsUnionClient.swift">endpointsUnionGetAndReturnUnion</a>(request: TypesAnimal, requestOptions: RequestOptions?) -> TypesAnimal</code></summary>
+## Endpoints Union
+<details><summary><code>client.endpoints.union.<a href="/Sources/Resources/Endpoints/Union/UnionClient.swift">getAndReturnUnion</a>(request: Animal, requestOptions: RequestOptions?) -> Animal</code></summary>
 <dl>
 <dd>
 
@@ -3203,16 +3423,15 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsUnion.endpointsUnionGetAndReturnUnion(request: TypesAnimal.typesAnimalZero(
-        TypesAnimalZero(
+    _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
+        Dog(
             name: "name",
-            likesToWoof: true,
-            animal: .dog
+            likesToWoof: true
         )
     ))
 }
@@ -3232,7 +3451,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `TypesAnimal` 
+**request:** `Animal` 
     
 </dd>
 </dl>
@@ -3252,8 +3471,8 @@ try await main()
 </dl>
 </details>
 
-## EndpointsUrLs
-<details><summary><code>client.endpointsUrLs.<a href="/Sources/Resources/EndpointsUrLs/EndpointsUrLsClient.swift">endpointsUrlsWithMixedCase</a>(requestOptions: RequestOptions?) -> String</code></summary>
+## Endpoints Urls
+<details><summary><code>client.endpoints.urls.<a href="/Sources/Resources/Endpoints/Urls/UrlsClient.swift">withMixedCase</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -3267,12 +3486,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsUrLs.endpointsUrlsWithMixedCase()
+    _ = try await client.endpoints.urls.withMixedCase()
 }
 
 try await main()
@@ -3302,7 +3521,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsUrLs.<a href="/Sources/Resources/EndpointsUrLs/EndpointsUrLsClient.swift">endpointsUrlsNoEndingSlash</a>(requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/Sources/Resources/Endpoints/Urls/UrlsClient.swift">noEndingSlash</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -3316,12 +3535,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsUrLs.endpointsUrlsNoEndingSlash()
+    _ = try await client.endpoints.urls.noEndingSlash()
 }
 
 try await main()
@@ -3351,7 +3570,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsUrLs.<a href="/Sources/Resources/EndpointsUrLs/EndpointsUrLsClient.swift">endpointsUrlsWithEndingSlash</a>(requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/Sources/Resources/Endpoints/Urls/UrlsClient.swift">withEndingSlash</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -3365,12 +3584,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsUrLs.endpointsUrlsWithEndingSlash()
+    _ = try await client.endpoints.urls.withEndingSlash()
 }
 
 try await main()
@@ -3400,7 +3619,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.endpointsUrLs.<a href="/Sources/Resources/EndpointsUrLs/EndpointsUrLsClient.swift">endpointsUrlsWithUnderscores</a>(requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/Sources/Resources/Endpoints/Urls/UrlsClient.swift">withUnderscores</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -3414,12 +3633,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.endpointsUrLs.endpointsUrlsWithUnderscores()
+    _ = try await client.endpoints.urls.withUnderscores()
 }
 
 try await main()
@@ -3449,8 +3668,8 @@ try await main()
 </dl>
 </details>
 
-## Inlinedrequests
-<details><summary><code>client.inlinedrequests.<a href="/Sources/Resources/Inlinedrequests/InlinedrequestsClient.swift">postwithobjectbodyandresponse</a>(request: Requests.InlinedRequestsPostWithObjectBodyandResponseRequest, requestOptions: RequestOptions?) -> TypesObjectWithOptionalField</code></summary>
+## InlinedRequests
+<details><summary><code>client.inlinedRequests.<a href="/Sources/Resources/InlinedRequests/InlinedRequestsClient.swift">postWithObjectBodyandResponse</a>(request: Requests.PostWithObjectBody, requestOptions: RequestOptions?) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -3478,16 +3697,31 @@ POST with custom object in request body, response is an object
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.inlinedrequests.postwithobjectbodyandresponse(request: .init(
+    _ = try await client.inlinedRequests.postWithObjectBodyandResponse(request: .init(
         string: "string",
         integer: 1,
-        nestedObject: TypesObjectWithOptionalField(
-
+        nestedObject: ObjectWithOptionalField(
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            date: CalendarDate("2023-01-15")!,
+            uuid: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+            base64: "SGVsbG8gd29ybGQh",
+            list: [
+                "list",
+                "list"
+            ],
+            map: [
+                1: "map"
+            ]
         )
     ))
 }
@@ -3507,7 +3741,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.InlinedRequestsPostWithObjectBodyandResponseRequest` 
+**request:** `Requests.PostWithObjectBody` 
     
 </dd>
 </dl>
@@ -3527,8 +3761,8 @@ try await main()
 </dl>
 </details>
 
-## Noauth
-<details><summary><code>client.noauth.<a href="/Sources/Resources/Noauth/NoauthClient.swift">postwithnoauth</a>(request: JSONValue, requestOptions: RequestOptions?) -> Bool</code></summary>
+## NoAuth
+<details><summary><code>client.noAuth.<a href="/Sources/Resources/NoAuth/NoAuthClient.swift">postWithNoAuth</a>(request: JSONValue, requestOptions: RequestOptions?) -> Bool</code></summary>
 <dl>
 <dd>
 
@@ -3556,12 +3790,12 @@ POST request with no auth
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.noauth.postwithnoauth(request: .object([
+    _ = try await client.noAuth.postWithNoAuth(request: .object([
         "key": .string("value")
     ]))
 }
@@ -3601,8 +3835,8 @@ try await main()
 </dl>
 </details>
 
-## Noreqbody
-<details><summary><code>client.noreqbody.<a href="/Sources/Resources/Noreqbody/NoreqbodyClient.swift">getwithnorequestbody</a>(requestOptions: RequestOptions?) -> TypesObjectWithOptionalField</code></summary>
+## NoReqBody
+<details><summary><code>client.noReqBody.<a href="/Sources/Resources/NoReqBody/NoReqBodyClient.swift">getWithNoRequestBody</a>(requestOptions: RequestOptions?) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -3616,12 +3850,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.noreqbody.getwithnorequestbody()
+    _ = try await client.noReqBody.getWithNoRequestBody()
 }
 
 try await main()
@@ -3651,7 +3885,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.noreqbody.<a href="/Sources/Resources/Noreqbody/NoreqbodyClient.swift">postwithnorequestbody</a>(requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.noReqBody.<a href="/Sources/Resources/NoReqBody/NoReqBodyClient.swift">postWithNoRequestBody</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -3665,12 +3899,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.noreqbody.postwithnorequestbody()
+    _ = try await client.noReqBody.postWithNoRequestBody()
 }
 
 try await main()
@@ -3700,8 +3934,8 @@ try await main()
 </dl>
 </details>
 
-## Reqwithheaders
-<details><summary><code>client.reqwithheaders.<a href="/Sources/Resources/Reqwithheaders/ReqwithheadersClient.swift">getwithcustomheader</a>(testEndpointHeader: String, request: String, requestOptions: RequestOptions?) -> Void</code></summary>
+## ReqWithHeaders
+<details><summary><code>client.reqWithHeaders.<a href="/Sources/Resources/ReqWithHeaders/ReqWithHeadersClient.swift">getWithCustomHeader</a>(xTestServiceHeader: String, xTestEndpointHeader: String, request: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -3715,12 +3949,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = ExhaustiveClient(token: "<token>")
 
-    _ = try await client.reqwithheaders.getwithcustomheader(request: .init(body: "string"))
+    _ = try await client.reqWithHeaders.getWithCustomHeader(request: .init(body: "string"))
 }
 
 try await main()
@@ -3738,7 +3972,15 @@ try await main()
 <dl>
 <dd>
 
-**testEndpointHeader:** `String` 
+**xTestServiceHeader:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xTestEndpointHeader:** `String` 
     
 </dd>
 </dl>

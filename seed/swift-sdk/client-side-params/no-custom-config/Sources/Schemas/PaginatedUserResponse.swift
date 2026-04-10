@@ -6,7 +6,7 @@ public struct PaginatedUserResponse: Codable, Hashable, Sendable {
     public let start: Int
     public let limit: Int
     public let length: Int
-    public let total: Nullable<Int>?
+    public let total: Int?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -15,7 +15,7 @@ public struct PaginatedUserResponse: Codable, Hashable, Sendable {
         start: Int,
         limit: Int,
         length: Int,
-        total: Nullable<Int>? = nil,
+        total: Int? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.users = users
@@ -32,7 +32,7 @@ public struct PaginatedUserResponse: Codable, Hashable, Sendable {
         self.start = try container.decode(Int.self, forKey: .start)
         self.limit = try container.decode(Int.self, forKey: .limit)
         self.length = try container.decode(Int.self, forKey: .length)
-        self.total = try container.decodeNullableIfPresent(Int.self, forKey: .total)
+        self.total = try container.decodeIfPresent(Int.self, forKey: .total)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -43,7 +43,7 @@ public struct PaginatedUserResponse: Codable, Hashable, Sendable {
         try container.encode(self.start, forKey: .start)
         try container.encode(self.limit, forKey: .limit)
         try container.encode(self.length, forKey: .length)
-        try container.encodeNullableIfPresent(self.total, forKey: .total)
+        try container.encodeIfPresent(self.total, forKey: .total)
     }
 
     /// Keys for encoding/decoding struct properties.

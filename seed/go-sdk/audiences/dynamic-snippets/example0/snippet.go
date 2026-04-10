@@ -3,8 +3,8 @@ package example
 import (
     context "context"
 
-    fern "github.com/audiences/fern"
     client "github.com/audiences/fern/client"
+    foldera "github.com/audiences/fern/foldera"
     option "github.com/audiences/fern/option"
 )
 
@@ -14,19 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.FolderAServiceGetDirectThreadRequest{
-        IDs: []*string{
-            fern.String(
-                "ids",
-            ),
+    request := &foldera.GetDirectThreadRequest{
+        IDs: []string{
+            "ids",
         },
-        Tags: []*string{
-            fern.String(
-                "tags",
-            ),
+        Tags: []string{
+            "tags",
         },
     }
-    client.FolderAService.FolderAServiceGetDirectThread(
+    client.FolderA.Service.GetDirectThread(
         context.TODO(),
         request,
     )

@@ -1,24 +1,24 @@
-//! # streaming-parameter SDK
+//! # Streaming SDK
 //!
-//! The official Rust SDK for the streaming-parameter.
+//! The official Rust SDK for the Streaming.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_streaming::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = StreamingClient::new(config).expect("Failed to build client");
 //!     client
 //!         .dummy
 //!         .generate(
-//!             &DummyGenerateRequest {
-//!                 stream: true,
-//!                 num_events: 1,
+//!             &GenerateRequest {
+//!                 stream: false,
+//!                 num_events: 5,
 //!             },
 //!             None,
 //!         )

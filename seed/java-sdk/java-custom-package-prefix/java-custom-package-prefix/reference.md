@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.createmovie(request) -> String</code></summary>
+<details><summary><code>client.imdb.createMovie(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Add a movie to the database
 <dd>
 
 ```java
-client.imdb().createmovie(
+client.imdb().createMovie(
     CreateMovieRequest
         .builder()
         .title("title")
@@ -48,15 +48,7 @@ client.imdb().createmovie(
 <dl>
 <dd>
 
-**title:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**rating:** `Double` 
+**request:** `CreateMovieRequest` 
     
 </dd>
 </dl>
@@ -68,7 +60,7 @@ client.imdb().createmovie(
 </dl>
 </details>
 
-<details><summary><code>client.imdb.getmovie(movieId) -> Movie</code></summary>
+<details><summary><code>client.imdb.getMovie(movieId) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -81,12 +73,7 @@ client.imdb().createmovie(
 <dd>
 
 ```java
-client.imdb().getmovie(
-    "movieId",
-    ImdbGetMovieRequest
-        .builder()
-        .build()
-);
+client.imdb().getMovie("movieId");
 ```
 </dd>
 </dl>

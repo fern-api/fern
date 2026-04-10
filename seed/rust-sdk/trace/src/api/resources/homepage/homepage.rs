@@ -13,16 +13,16 @@ impl HomepageClient {
         })
     }
 
-    pub async fn gethomepageproblems(
+    pub async fn get_homepage_problems(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<ProblemId>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "homepage-problems", None, None, options)
+            .execute_request(Method::GET, "/homepage-problems", None, None, options)
             .await
     }
 
-    pub async fn sethomepageproblems(
+    pub async fn set_homepage_problems(
         &self,
         request: &Vec<ProblemId>,
         options: Option<RequestOptions>,
@@ -30,7 +30,7 @@ impl HomepageClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "homepage-problems",
+                "/homepage-problems",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

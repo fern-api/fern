@@ -56,10 +56,7 @@ client.Echo(
 <dd>
 
 ```go
-request := &pleaseinhere.Type{
-        BasicType: pleaseinhere.BasicTypePrimitive,
-    }
-client.CreateType(
+client.Echo(
         context.TODO(),
         request,
     )

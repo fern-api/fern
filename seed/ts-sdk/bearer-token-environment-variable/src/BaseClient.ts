@@ -8,6 +8,8 @@ export type BaseClientOptions = {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
+    /** Override the X-API-Version header */
+    version?: "1.0.0";
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -27,6 +29,8 @@ export interface BaseRequestOptions {
     maxRetries?: number;
     /** A hook to abort the request. */
     abortSignal?: AbortSignal;
+    /** Override the X-API-Version header */
+    version?: "1.0.0";
     /** Additional query string parameters to include in the request. */
     queryParams?: Record<string, unknown>;
     /** Additional headers to include in the request. */
@@ -54,6 +58,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
             "User-Agent": "@fern/bearer-token-environment-variable/0.0.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
+            "X-API-Version": options?.version ?? "1.0.0",
         },
         options?.headers,
     );

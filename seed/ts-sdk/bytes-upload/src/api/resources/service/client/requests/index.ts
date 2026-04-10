@@ -1,1 +1,1 @@
-export type { ServiceUploadWithQueryParamsRequest } from "./ServiceUploadWithQueryParamsRequest.js";
+export type { UploadWithQueryParamsRequest } from "./UploadWithQueryParamsRequest.js";

@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.post(endpoint_param: "endpointParam")
+client.service.post
 ```
 </dd>
 </dl>

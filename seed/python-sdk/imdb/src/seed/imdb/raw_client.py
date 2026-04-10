@@ -10,9 +10,9 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..errors.not_found_error import NotFoundError
-from ..types.movie import Movie
-from ..types.movie_id import MovieId
+from .errors.movie_does_not_exist_error import MovieDoesNotExistError
+from .types.movie import Movie
+from .types.movie_id import MovieId
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -23,7 +23,7 @@ class RawImdbClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def createmovie(
+    def create_movie(
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[MovieId]:
         """
@@ -41,7 +41,6 @@ class RawImdbClient:
         Returns
         -------
         HttpResponse[MovieId]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "movies/create-movie",
@@ -49,9 +48,6 @@ class RawImdbClient:
             json={
                 "title": title,
                 "rating": rating,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -75,7 +71,7 @@ class RawImdbClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getmovie(
+    def get_movie(
         self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Movie]:
         """
@@ -89,7 +85,6 @@ class RawImdbClient:
         Returns
         -------
         HttpResponse[Movie]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"movies/{encode_path_param(movie_id)}",
@@ -107,7 +102,7 @@ class RawImdbClient:
                 )
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
-                raise NotFoundError(
+                raise MovieDoesNotExistError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         MovieId,
@@ -131,7 +126,7 @@ class AsyncRawImdbClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def createmovie(
+    async def create_movie(
         self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[MovieId]:
         """
@@ -149,7 +144,6 @@ class AsyncRawImdbClient:
         Returns
         -------
         AsyncHttpResponse[MovieId]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "movies/create-movie",
@@ -157,9 +151,6 @@ class AsyncRawImdbClient:
             json={
                 "title": title,
                 "rating": rating,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -183,7 +174,7 @@ class AsyncRawImdbClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getmovie(
+    async def get_movie(
         self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Movie]:
         """
@@ -197,7 +188,6 @@ class AsyncRawImdbClient:
         Returns
         -------
         AsyncHttpResponse[Movie]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"movies/{encode_path_param(movie_id)}",
@@ -215,7 +205,7 @@ class AsyncRawImdbClient:
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
-                raise NotFoundError(
+                raise MovieDoesNotExistError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         MovieId,

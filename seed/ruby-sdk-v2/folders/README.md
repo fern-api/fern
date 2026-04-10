@@ -30,7 +30,7 @@ require "seed"
 
 client = Seed::Client.new
 
-client..foo
+client.foo
 ```
 
 ## Environments
@@ -58,7 +58,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client..foo
+    result = client.foo
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -103,7 +103,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client..foo(
+response = client.foo(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -116,7 +116,7 @@ If you would like to send additional headers as part of the request, use the `ad
 ```ruby
 require "seed"
 
-response = client..foo(
+response = client.foo(
     ...,
     request_options: {
         additional_headers: {
@@ -133,7 +133,7 @@ If you would like to send additional query parameters as part of the request, us
 ```ruby
 require "seed"
 
-response = client..foo(
+response = client.foo(
     ...,
     request_options: {
         additional_query_parameters: {

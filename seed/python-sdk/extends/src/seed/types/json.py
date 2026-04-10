@@ -8,6 +8,17 @@ from .docs import Docs
 
 
 class Json(Docs):
+    """
+    Examples
+    --------
+    from seed import Json
+
+    Json(
+        docs="Types extend this type to include a docs and json property.",
+        raw='{"docs": true, "json": true}',
+    )
+    """
+
     raw: str
 
     if IS_PYDANTIC_V2:

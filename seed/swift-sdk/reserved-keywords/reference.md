@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import Api
+import NurseryApi
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NurseryApiClient()
 
     _ = try await client.package.test(for: "for")
 }

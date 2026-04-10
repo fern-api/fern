@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getwithbearertoken</a>() -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_with_bearer_token</a>() -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_header_token::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -35,8 +35,8 @@ async fn main() {
         api_key: Some("<value>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.service.getwithbearertoken(None).await;
+    let client = HeaderTokenClient::new(config).expect("Failed to build client");
+    client.service.get_with_bearer_token(None).await;
 }
 ```
 </dd>

@@ -1,18 +1,20 @@
 package com.snippets;
 
-import com.fern.sdk.SeedApiClient;
-import java.util.Arrays;
+import com.fern.sdk.SeedExhaustiveClient;
+import java.util.HashMap;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpointsContainer().endpointsContainerGetAndReturnSetOfPrimitives(
-            Arrays.asList("string")
+        client.endpoints().container().getAndReturnMapPrimToPrim(
+            new HashMap<String, String>() {{
+                put("string", "string");
+            }}
         );
     }
 }

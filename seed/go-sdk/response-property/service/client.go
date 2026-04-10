@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Getmovie(
+func (c *Client) GetMovie(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*fern.Response, error) {
-	response, err := c.WithRawResponse.Getmovie(
+) (*fern.Movie, error) {
+	response, err := c.WithRawResponse.GetMovie(
 		ctx,
 		request,
 		opts...,
@@ -49,12 +49,44 @@ func (c *Client) Getmovie(
 	return response.Body, nil
 }
 
-func (c *Client) Getmoviedocs(
+func (c *Client) GetMovieDocs(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*fern.Response, error) {
-	response, err := c.WithRawResponse.Getmoviedocs(
+) (string, error) {
+	response, err := c.WithRawResponse.GetMovieDocs(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) GetMovieName(
+	ctx context.Context,
+	request string,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.GetMovieName(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) GetMovieMetadata(
+	ctx context.Context,
+	request string,
+	opts ...option.RequestOption,
+) (map[string]string, error) {
+	response, err := c.WithRawResponse.GetMovieMetadata(
 		ctx,
 		request,
 		opts...,
@@ -65,12 +97,12 @@ func (c *Client) Getmoviedocs(
 	return response.Body, nil
 }
 
-func (c *Client) Getmoviename(
+func (c *Client) GetOptionalMovie(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*fern.StringResponse, error) {
-	response, err := c.WithRawResponse.Getmoviename(
+) (*fern.Movie, error) {
+	response, err := c.WithRawResponse.GetOptionalMovie(
 		ctx,
 		request,
 		opts...,
@@ -81,66 +113,34 @@ func (c *Client) Getmoviename(
 	return response.Body, nil
 }
 
-func (c *Client) Getmoviemetadata(
+func (c *Client) GetOptionalMovieDocs(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*fern.Response, error) {
-	response, err := c.WithRawResponse.Getmoviemetadata(
+) (string, error) {
+	response, err := c.WithRawResponse.GetOptionalMovieDocs(
 		ctx,
 		request,
 		opts...,
 	)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	return response.Body, nil
 }
 
-func (c *Client) Getoptionalmovie(
+func (c *Client) GetOptionalMovieName(
 	ctx context.Context,
 	request string,
 	opts ...option.RequestOption,
-) (*fern.Response, error) {
-	response, err := c.WithRawResponse.Getoptionalmovie(
+) (string, error) {
+	response, err := c.WithRawResponse.GetOptionalMovieName(
 		ctx,
 		request,
 		opts...,
 	)
 	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-func (c *Client) Getoptionalmoviedocs(
-	ctx context.Context,
-	request string,
-	opts ...option.RequestOption,
-) (fern.OptionalWithDocs, error) {
-	response, err := c.WithRawResponse.Getoptionalmoviedocs(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-func (c *Client) Getoptionalmoviename(
-	ctx context.Context,
-	request string,
-	opts ...option.RequestOption,
-) (fern.OptionalStringResponse, error) {
-	response, err := c.WithRawResponse.Getoptionalmoviename(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
+		return "", err
 	}
 	return response.Body, nil
 }

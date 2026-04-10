@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/Sources/Resources/Dummy/DummyClient.swift">generate</a>(request: Requests.DummyGenerateRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.dummy.<a href="/Sources/Resources/Dummy/DummyClient.swift">generate</a>(request: Requests.GenerateRequest, requestOptions: RequestOptions?) -> JSONValue</code></summary>
 <dl>
 <dd>
 
@@ -14,14 +14,14 @@
 
 ```swift
 import Foundation
-import Api
+import Streaming
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = StreamingClient()
 
     _ = try await client.dummy.generate(request: .init(
-        stream: true,
-        numEvents: 1
+        stream: false,
+        numEvents: 5
     ))
 }
 
@@ -40,7 +40,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.DummyGenerateRequest` 
+**request:** `Requests.GenerateRequest` 
     
 </dd>
 </dl>

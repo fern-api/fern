@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.ec2.bootinstance(request)</code></summary>
+<details><summary><code>client.ec2.bootInstance(request)</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 <dd>
 
 ```java
-client.ec2().bootinstance(
-    Ec2BootInstanceRequest
+client.ec2().bootInstance(
+    BootInstanceRequest
         .builder()
         .size("size")
         .build()
@@ -46,7 +46,7 @@ client.ec2().bootinstance(
 </details>
 
 ## S3
-<details><summary><code>client.s3.getpresignedurl(request) -> String</code></summary>
+<details><summary><code>client.s3.getPresignedUrl(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -59,8 +59,8 @@ client.ec2().bootinstance(
 <dd>
 
 ```java
-client.s3().getpresignedurl(
-    S3GetPresignedUrlRequest
+client.s3().getPresignedUrl(
+    GetPresignedUrlRequest
         .builder()
         .s3Key("s3Key")
         .build()

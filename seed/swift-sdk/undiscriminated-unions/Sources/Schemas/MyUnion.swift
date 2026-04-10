@@ -5,6 +5,7 @@ public enum MyUnion: Codable, Hashable, Sendable {
     case int(Int)
     case intArray([Int])
     case intArrayArray([[Int]])
+    case jsonValue(JSONValue)
     case string(String)
     case stringArray([String])
 
@@ -16,6 +17,8 @@ public enum MyUnion: Codable, Hashable, Sendable {
             self = .intArray(value)
         } else if let value = try? container.decode([[Int]].self) {
             self = .intArrayArray(value)
+        } else if let value = try? container.decode(JSONValue.self) {
+            self = .jsonValue(value)
         } else if let value = try? container.decode(String.self) {
             self = .string(value)
         } else if let value = try? container.decode([String].self) {
@@ -36,6 +39,8 @@ public enum MyUnion: Codable, Hashable, Sendable {
         case .intArray(let value):
             try container.encode(value)
         case .intArrayArray(let value):
+            try container.encode(value)
+        case .jsonValue(let value):
             try container.encode(value)
         case .string(let value):
             try container.encode(value)

@@ -1,4 +1,4 @@
-//! API client and types for the examples
+//! API client and types for the Examples
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,6 +11,7 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{Client, FileNotificationServiceClient, FileServiceClient, HealthServiceClient, ServiceClient, ApiClient};
-pub use types::{*};
-
+pub use resources::{
+    CommonsClient, ExamplesClient, FileClient, HealthClient, ServiceClient4, TypesClient2,
+};
+pub use types::*;

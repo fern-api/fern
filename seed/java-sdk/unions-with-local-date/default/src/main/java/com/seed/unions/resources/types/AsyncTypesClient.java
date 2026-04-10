@@ -5,8 +5,7 @@ package com.seed.unions.resources.types;
 
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.RequestOptions;
-import com.seed.unions.resources.types.requests.TypesGetRequest;
-import com.seed.unions.types.UnionWithTime;
+import com.seed.unions.resources.types.types.UnionWithTime;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncTypesClient {
@@ -32,14 +31,6 @@ public class AsyncTypesClient {
 
     public CompletableFuture<UnionWithTime> get(String id, RequestOptions requestOptions) {
         return this.rawClient.get(id, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<UnionWithTime> get(String id, TypesGetRequest request) {
-        return this.rawClient.get(id, request).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<UnionWithTime> get(String id, TypesGetRequest request, RequestOptions requestOptions) {
-        return this.rawClient.get(id, request, requestOptions).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Boolean> update(UnionWithTime request) {

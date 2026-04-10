@@ -1,4 +1,4 @@
-import Api
+import RequestParameters
 import Foundation
 import Testing
 
@@ -14,17 +14,21 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -45,17 +49,21 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -76,17 +84,21 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -106,17 +118,21 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -135,17 +151,21 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -165,17 +185,21 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -195,17 +219,21 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -229,18 +257,22 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -274,18 +306,22 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -315,18 +351,22 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -368,17 +408,21 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
@@ -394,17 +438,21 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
@@ -424,17 +472,21 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = RequestParametersClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.user.createusername(
+            _ = try await client.user.createUsername(
+                tags: [
+                    "tags",
+                    "tags"
+                ],
                 request: .init(
                     username: "username",
                     password: "password",
-                    name: "name"
+                    name: "test"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

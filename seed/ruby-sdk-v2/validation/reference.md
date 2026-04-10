@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/lib/seed/client.rb">create</a>(request) -> Seed::Types::Type</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create</a>(request) -> Seed::Types::Type</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +12,10 @@
 <dd>
 
 ```ruby
-client..create(
-  decimal: 1.1,
-  even: 1,
-  name: "name",
+client.create(
+  decimal: 2.2,
+  even: 100,
+  name: "fern",
   shape: "SQUARE"
 )
 ```
@@ -65,7 +64,7 @@ client..create(
 <dl>
 <dd>
 
-**request_options:** `Seed::::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>
@@ -77,7 +76,7 @@ client..create(
 </dl>
 </details>
 
-<details><summary><code>client..<a href="/lib/seed/client.rb">get</a>() -> Seed::Types::Type</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get</a>() -> Seed::Types::Type</code></summary>
 <dl>
 <dd>
 
@@ -90,10 +89,10 @@ client..create(
 <dd>
 
 ```ruby
-client..get(
-  decimal: 1.1,
-  even: 1,
-  name: "name"
+client.get(
+  decimal: 2.2,
+  even: 100,
+  name: "fern"
 )
 ```
 </dd>
@@ -133,7 +132,7 @@ client..get(
 <dl>
 <dd>
 
-**request_options:** `Seed::::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

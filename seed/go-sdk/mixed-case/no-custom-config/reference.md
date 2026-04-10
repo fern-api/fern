@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.Getresource(ResourceID) -> *fern.Resource</code></summary>
+<details><summary><code>client.Service.GetResource(ResourceID) -> *fern.Resource</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,9 @@
 <dd>
 
 ```go
-request := &fern.ServiceGetResourceRequest{
-        ResourceID: "ResourceID",
-    }
-client.Service.Getresource(
+client.Service.GetResource(
         context.TODO(),
-        request,
+        "rsc-xyz",
     )
 }
 ```
@@ -47,7 +44,7 @@ client.Service.Getresource(
 </dl>
 </details>
 
-<details><summary><code>client.Service.Listresources() -> []*fern.Resource</code></summary>
+<details><summary><code>client.Service.ListResources() -> []*fern.Resource</code></summary>
 <dl>
 <dd>
 
@@ -60,13 +57,13 @@ client.Service.Getresource(
 <dd>
 
 ```go
-request := &fern.ServiceListResourcesRequest{
-        PageLimit: 1,
+request := &fern.ListResourcesRequest{
+        PageLimit: 10,
         BeforeDate: fern.MustParseDate(
-            "2023-01-15",
+            "2023-01-01",
         ),
     }
-client.Service.Listresources(
+client.Service.ListResources(
         context.TODO(),
         request,
     )

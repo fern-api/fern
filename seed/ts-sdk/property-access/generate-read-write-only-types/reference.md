@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">createUser</a>({ ...params }) -> SeedApi.User</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">createUser</a>({ ...params }) -> SeedPropertyAccess.User.Response</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +12,11 @@
 <dd>
 
 ```typescript
-await client..createUser({
-    id: "id",
-    email: "email",
+await client.createUser({
     password: "password",
     profile: {
         name: "name",
-        verification: {
-            verified: "verified"
-        },
+        verification: {},
         ssn: "ssn"
     }
 });
@@ -40,7 +35,7 @@ await client..createUser({
 <dl>
 <dd>
 
-**request:** `SeedApi.User` 
+**request:** `SeedPropertyAccess.User.Request` 
     
 </dd>
 </dl>
@@ -48,7 +43,7 @@ await client..createUser({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `SeedPropertyAccessClient.RequestOptions` 
     
 </dd>
 </dl>

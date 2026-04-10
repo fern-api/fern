@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "EndpointSecurityAuth",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "EndpointSecurityAuth",
+            targets: ["EndpointSecurityAuth"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "EndpointSecurityAuth",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "EndpointSecurityAuthTests",
+            dependencies: ["EndpointSecurityAuth"],
             path: "Tests"
         )
     ]

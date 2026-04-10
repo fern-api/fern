@@ -1,13 +1,13 @@
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExhaustiveClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpointsPagination.endpointsPaginationListItems()
+    _ = try await client.endpoints.put.add(id: "id")
 }
 
 try await main()

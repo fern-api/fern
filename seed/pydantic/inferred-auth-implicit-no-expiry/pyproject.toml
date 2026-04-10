@@ -32,7 +32,7 @@ classifiers = [
     "Typing :: Typed"
 ]
 packages = [
-    { include = "seed/api", from = "src"}
+    { include = "seed/inferred_auth_implicit_no_expiry", from = "src"}
 ]
 
 [tool.poetry.urls]

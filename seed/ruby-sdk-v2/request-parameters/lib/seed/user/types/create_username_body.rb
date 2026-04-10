@@ -4,7 +4,6 @@ module Seed
   module User
     module Types
       class CreateUsernameBody < Internal::Types::Model
-        field :tags, -> { String }, optional: true, nullable: false
         field :username, -> { String }, optional: false, nullable: false
         field :password, -> { String }, optional: false, nullable: false
         field :name, -> { String }, optional: false, nullable: false

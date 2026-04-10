@@ -1,6 +1,6 @@
 # Reference
-## Propertybasederror
-<details><summary><code>client.propertybasederror.<a href="src/seed/propertybasederror/client.py">throwerror</a>() -> str</code></summary>
+## PropertyBasedError
+<details><summary><code>client.property_based_error.<a href="src/seed/property_based_error/client.py">throw_error</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -27,13 +27,13 @@ GET request that always throws an error
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedErrorProperty
 
-client = SeedApi(
+client = SeedErrorProperty(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.propertybasederror.throwerror()
+client.property_based_error.throw_error()
 
 ```
 </dd>

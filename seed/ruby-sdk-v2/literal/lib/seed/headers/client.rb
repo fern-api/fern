@@ -11,19 +11,19 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Headers::Types::HeadersSendRequest]
+      # @param params [Seed::Headers::Types::SendLiteralsInHeadersRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Headers::Types::HeadersSendRequestXEndpointVersion] :endpoint_version
+      # @option params [String] :endpoint_version
       # @option params [Boolean] :async
       #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::Headers::Types::HeadersSendRequest.new(params).to_h
+        request_data = Seed::Headers::Types::SendLiteralsInHeadersRequest.new(params).to_h
         non_body_param_names = %w[X-Endpoint-Version X-Async]
         body = request_data.except(*non_body_param_names)
 

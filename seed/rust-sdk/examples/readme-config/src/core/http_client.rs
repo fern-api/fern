@@ -1,10 +1,12 @@
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
+use base64::Engine;
 use futures::{Stream, StreamExt};
 use reqwest::{
     header::{HeaderName, HeaderValue},
     Client, Method, Request, Response,
 };
 use serde::de::DeserializeOwned;
+use serde::de::Error as SerdeError;
 
 use std::{
     pin::Pin,
@@ -255,7 +257,10 @@ impl HttpClient {
 
         if let Some(key) = api_key {
             let header_value = key.to_string();
-            headers.insert("api_key", header_value.parse().map_err(|_| ApiError::InvalidHeader)?);
+            headers.insert(
+                "api_key",
+                header_value.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
         }
 
         // Apply bearer token - priority: request options > OAuth > config
@@ -342,10 +347,8 @@ impl HttpClient {
         }
 
         // Parse the token response
-        let token_response: OAuthTokenResponse = response
-            .json()
-            .await
-            .map_err(ApiError::Network)?;
+        let token_response: OAuthTokenResponse =
+            response.json().await.map_err(ApiError::Network)?;
 
         let expires_in = token_response.expires_in.unwrap_or(3600) as u64;
         Ok((token_response.access_token, expires_in))
@@ -432,6 +435,58 @@ impl HttpClient {
         serde_json::from_str(&text).map_err(ApiError::Serialization)
     }
 
+    /// Execute a request that returns a base64-encoded string and decode it to bytes
+    ///
+    /// This method is used for endpoints that return raw base64-encoded data as a JSON string.
+    /// The response is expected to be a JSON string (e.g., `"SGVsbG8gd29ybGQh"`) which is
+    /// decoded from base64 to raw bytes.
+    pub async fn execute_request_base64(
+        &self,
+        method: Method,
+        path: &str,
+        body: Option<serde_json::Value>,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<Vec<u8>, ApiError> {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        // Apply body if provided
+        if let Some(body) = body {
+            request = request.json(&body);
+        }
+
+        // Build the request
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        // Apply authentication and headers
+        self.apply_auth_headers(&mut req, &options).await?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        // Execute with retries
+        let response = self.execute_with_retries(req, &options).await?;
+
+        // Parse response as JSON string and decode base64
+        let text = response.text().await.map_err(ApiError::Network)?;
+        let base64_string: String = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
+        base64::engine::general_purpose::STANDARD
+            .decode(&base64_string)
+            .map_err(|e| {
+                ApiError::Serialization(SerdeError::custom(format!("base64 decode error: {}", e)))
+            })
+    }
 
     /// Execute a request and return a streaming response (for large file downloads)
     ///
@@ -566,5 +621,4 @@ impl HttpClient {
 
         Ok(ByteStream::new(response))
     }
-
 }

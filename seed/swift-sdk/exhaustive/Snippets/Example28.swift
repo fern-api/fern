@@ -1,18 +1,21 @@
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExhaustiveClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpointsHttpMethods.endpointsHttpMethodsTestPatch(
-        id: "id",
-        request: .init(body: TypesObjectWithOptionalField(
+    _ = try await client.endpoints.object.getAndReturnWithRequiredNestedObject(request: ObjectWithRequiredNestedObject(
+        requiredString: "hello",
+        requiredObject: NestedObjectWithRequiredField(
+            string: "nested",
+            nestedObject: ObjectWithOptionalField(
 
-        ))
-    )
+            )
+        )
+    ))
 }
 
 try await main()

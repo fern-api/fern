@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.Getuser(UserID) -> *fern.User</code></summary>
+<details><summary><code>client.User.GetUser(UserID) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,9 @@
 <dd>
 
 ```go
-request := &fern.UserGetUserRequest{
-        UserID: "userId",
-    }
-client.User.Getuser(
+client.User.GetUser(
         context.TODO(),
-        request,
+        "userId",
     )
 }
 ```

@@ -4,13 +4,13 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.client import Client
-from ..types.connection import Connection
-from ..types.paginated_client_response import PaginatedClientResponse
-from ..types.paginated_user_response import PaginatedUserResponse
-from ..types.resource import Resource
-from ..types.search_response import SearchResponse
-from ..types.user import User
+from ..types.types.client import Client
+from ..types.types.connection import Connection
+from ..types.types.paginated_client_response import PaginatedClientResponse
+from ..types.types.paginated_user_response import PaginatedUserResponse
+from ..types.types.resource import Resource
+from ..types.types.search_response import SearchResponse
+from ..types.types.user import User
 from .raw_client import AsyncRawServiceClient, RawServiceClient
 
 # this is used as the default value for optional parameters
@@ -32,7 +32,7 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def listresources(
+    def list_resources(
         self,
         *,
         page: int,
@@ -77,24 +77,25 @@ class ServiceClient:
         -------
         typing.List[Resource]
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedClientSideParams
 
-        client = SeedApi(
+        client = SeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.listresources(
+        client.service.list_resources(
             page=1,
             per_page=1,
-            sort="sort",
-            order="order",
+            sort="created_at",
+            order="desc",
             include_totals=True,
+            fields="fields",
+            search="search",
         )
         """
-        _response = self._raw_client.listresources(
+        _response = self._raw_client.list_resources(
             page=page,
             per_page=per_page,
             sort=sort,
@@ -106,7 +107,7 @@ class ServiceClient:
         )
         return _response.data
 
-    def getresource(
+    def get_resource(
         self,
         resource_id: str,
         *,
@@ -134,27 +135,26 @@ class ServiceClient:
         -------
         Resource
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedClientSideParams
 
-        client = SeedApi(
+        client = SeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.getresource(
+        client.service.get_resource(
             resource_id="resourceId",
             include_metadata=True,
-            format="format",
+            format="json",
         )
         """
-        _response = self._raw_client.getresource(
+        _response = self._raw_client.get_resource(
             resource_id, include_metadata=include_metadata, format=format, request_options=request_options
         )
         return _response.data
 
-    def searchresources(
+    def search_resources(
         self,
         *,
         limit: int,
@@ -186,26 +186,27 @@ class ServiceClient:
         -------
         SearchResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedClientSideParams
 
-        client = SeedApi(
+        client = SeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.searchresources(
+        client.service.search_resources(
             limit=1,
             offset=1,
+            query="query",
+            filters={"filters": {"key": "value"}},
         )
         """
-        _response = self._raw_client.searchresources(
+        _response = self._raw_client.search_resources(
             limit=limit, offset=offset, query=query, filters=filters, request_options=request_options
         )
         return _response.data
 
-    def listusers(
+    def list_users(
         self,
         *,
         page: typing.Optional[int] = None,
@@ -257,15 +258,24 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedClientSideParams
 
-        client = SeedApi(
+        client = SeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.listusers()
+        client.service.list_users(
+            page=1,
+            per_page=1,
+            include_totals=True,
+            sort="sort",
+            connection="connection",
+            q="q",
+            search_engine="search_engine",
+            fields="fields",
+        )
         """
-        _response = self._raw_client.listusers(
+        _response = self._raw_client.list_users(
             page=page,
             per_page=per_page,
             include_totals=include_totals,
@@ -278,7 +288,54 @@ class ServiceClient:
         )
         return _response.data
 
-    def createuser(
+    def get_user_by_id(
+        self,
+        user_id: str,
+        *,
+        fields: typing.Optional[str] = None,
+        include_fields: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> User:
+        """
+        Get a user by ID
+
+        Parameters
+        ----------
+        user_id : str
+
+        fields : typing.Optional[str]
+            Comma-separated list of fields to include or exclude
+
+        include_fields : typing.Optional[bool]
+            true to include the fields specified, false to exclude them
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
+        from seed import SeedClientSideParams
+
+        client = SeedClientSideParams(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_user_by_id(
+            user_id="userId",
+            fields="fields",
+            include_fields=True,
+        )
+        """
+        _response = self._raw_client.get_user_by_id(
+            user_id, fields=fields, include_fields=include_fields, request_options=request_options
+        )
+        return _response.data
+
+    def create_user(
         self,
         *,
         email: str,
@@ -322,21 +379,27 @@ class ServiceClient:
         -------
         User
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedClientSideParams
 
-        client = SeedApi(
+        client = SeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.createuser(
+        client.service.create_user(
             email="email",
+            email_verified=True,
+            username="username",
+            password="password",
+            phone_number="phone_number",
+            phone_verified=True,
+            user_metadata={"user_metadata": {"key": "value"}},
+            app_metadata={"app_metadata": {"key": "value"}},
             connection="connection",
         )
         """
-        _response = self._raw_client.createuser(
+        _response = self._raw_client.create_user(
             email=email,
             connection=connection,
             email_verified=email_verified,
@@ -350,83 +413,7 @@ class ServiceClient:
         )
         return _response.data
 
-    def getuserbyid(
-        self,
-        user_id: str,
-        *,
-        fields: typing.Optional[str] = None,
-        include_fields: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> User:
-        """
-        Get a user by ID
-
-        Parameters
-        ----------
-        user_id : str
-
-        fields : typing.Optional[str]
-            Comma-separated list of fields to include or exclude
-
-        include_fields : typing.Optional[bool]
-            true to include the fields specified, false to exclude them
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        User
-
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.getuserbyid(
-            user_id="userId",
-        )
-        """
-        _response = self._raw_client.getuserbyid(
-            user_id, fields=fields, include_fields=include_fields, request_options=request_options
-        )
-        return _response.data
-
-    def deleteuser(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete a user
-
-        Parameters
-        ----------
-        user_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from seed import SeedApi
-
-        client = SeedApi(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-        client.service.deleteuser(
-            user_id="userId",
-        )
-        """
-        _response = self._raw_client.deleteuser(user_id, request_options=request_options)
-        return _response.data
-
-    def updateuser(
+    def update_user(
         self,
         user_id: str,
         *,
@@ -473,20 +460,28 @@ class ServiceClient:
         -------
         User
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedClientSideParams
 
-        client = SeedApi(
+        client = SeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.updateuser(
+        client.service.update_user(
             user_id="userId",
+            email="email",
+            email_verified=True,
+            username="username",
+            phone_number="phone_number",
+            phone_verified=True,
+            user_metadata={"user_metadata": {"key": "value"}},
+            app_metadata={"app_metadata": {"key": "value"}},
+            password="password",
+            blocked=True,
         )
         """
-        _response = self._raw_client.updateuser(
+        _response = self._raw_client.update_user(
             user_id,
             email=email,
             email_verified=email_verified,
@@ -501,7 +496,37 @@ class ServiceClient:
         )
         return _response.data
 
-    def listconnections(
+    def delete_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a user
+
+        Parameters
+        ----------
+        user_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedClientSideParams
+
+        client = SeedClientSideParams(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.delete_user(
+            user_id="userId",
+        )
+        """
+        _response = self._raw_client.delete_user(user_id, request_options=request_options)
+        return _response.data
+
+    def list_connections(
         self,
         *,
         strategy: typing.Optional[str] = None,
@@ -530,23 +555,26 @@ class ServiceClient:
         -------
         typing.List[Connection]
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedClientSideParams
 
-        client = SeedApi(
+        client = SeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.listconnections()
+        client.service.list_connections(
+            strategy="strategy",
+            name="name",
+            fields="fields",
+        )
         """
-        _response = self._raw_client.listconnections(
+        _response = self._raw_client.list_connections(
             strategy=strategy, name=name, fields=fields, request_options=request_options
         )
         return _response.data
 
-    def getconnection(
+    def get_connection(
         self,
         connection_id: str,
         *,
@@ -570,23 +598,23 @@ class ServiceClient:
         -------
         Connection
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedClientSideParams
 
-        client = SeedApi(
+        client = SeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.getconnection(
+        client.service.get_connection(
             connection_id="connectionId",
+            fields="fields",
         )
         """
-        _response = self._raw_client.getconnection(connection_id, fields=fields, request_options=request_options)
+        _response = self._raw_client.get_connection(connection_id, fields=fields, request_options=request_options)
         return _response.data
 
-    def listclients(
+    def list_clients(
         self,
         *,
         fields: typing.Optional[str] = None,
@@ -635,18 +663,26 @@ class ServiceClient:
         -------
         PaginatedClientResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedClientSideParams
 
-        client = SeedApi(
+        client = SeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.listclients()
+        client.service.list_clients(
+            fields="fields",
+            include_fields=True,
+            page=1,
+            per_page=1,
+            include_totals=True,
+            is_global=True,
+            is_first_party=True,
+            app_type=["app_type", "app_type"],
+        )
         """
-        _response = self._raw_client.listclients(
+        _response = self._raw_client.list_clients(
             fields=fields,
             include_fields=include_fields,
             page=page,
@@ -659,7 +695,7 @@ class ServiceClient:
         )
         return _response.data
 
-    def getclient(
+    def get_client(
         self,
         client_id: str,
         *,
@@ -687,20 +723,21 @@ class ServiceClient:
         -------
         Client
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedClientSideParams
 
-        client = SeedApi(
+        client = SeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.getclient(
+        client.service.get_client(
             client_id="clientId",
+            fields="fields",
+            include_fields=True,
         )
         """
-        _response = self._raw_client.getclient(
+        _response = self._raw_client.get_client(
             client_id, fields=fields, include_fields=include_fields, request_options=request_options
         )
         return _response.data
@@ -721,7 +758,7 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def listresources(
+    async def list_resources(
         self,
         *,
         page: int,
@@ -766,32 +803,33 @@ class AsyncServiceClient:
         -------
         typing.List[Resource]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedClientSideParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.listresources(
+            await client.service.list_resources(
                 page=1,
                 per_page=1,
-                sort="sort",
-                order="order",
+                sort="created_at",
+                order="desc",
                 include_totals=True,
+                fields="fields",
+                search="search",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.listresources(
+        _response = await self._raw_client.list_resources(
             page=page,
             per_page=per_page,
             sort=sort,
@@ -803,7 +841,7 @@ class AsyncServiceClient:
         )
         return _response.data
 
-    async def getresource(
+    async def get_resource(
         self,
         resource_id: str,
         *,
@@ -831,35 +869,34 @@ class AsyncServiceClient:
         -------
         Resource
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedClientSideParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.getresource(
+            await client.service.get_resource(
                 resource_id="resourceId",
                 include_metadata=True,
-                format="format",
+                format="json",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getresource(
+        _response = await self._raw_client.get_resource(
             resource_id, include_metadata=include_metadata, format=format, request_options=request_options
         )
         return _response.data
 
-    async def searchresources(
+    async def search_resources(
         self,
         *,
         limit: int,
@@ -891,34 +928,35 @@ class AsyncServiceClient:
         -------
         SearchResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedClientSideParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.searchresources(
+            await client.service.search_resources(
                 limit=1,
                 offset=1,
+                query="query",
+                filters={"filters": {"key": "value"}},
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.searchresources(
+        _response = await self._raw_client.search_resources(
             limit=limit, offset=offset, query=query, filters=filters, request_options=request_options
         )
         return _response.data
 
-    async def listusers(
+    async def list_users(
         self,
         *,
         page: typing.Optional[int] = None,
@@ -972,21 +1010,30 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedClientSideParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.listusers()
+            await client.service.list_users(
+                page=1,
+                per_page=1,
+                include_totals=True,
+                sort="sort",
+                connection="connection",
+                q="q",
+                search_engine="search_engine",
+                fields="fields",
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.listusers(
+        _response = await self._raw_client.list_users(
             page=page,
             per_page=per_page,
             include_totals=include_totals,
@@ -999,7 +1046,62 @@ class AsyncServiceClient:
         )
         return _response.data
 
-    async def createuser(
+    async def get_user_by_id(
+        self,
+        user_id: str,
+        *,
+        fields: typing.Optional[str] = None,
+        include_fields: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> User:
+        """
+        Get a user by ID
+
+        Parameters
+        ----------
+        user_id : str
+
+        fields : typing.Optional[str]
+            Comma-separated list of fields to include or exclude
+
+        include_fields : typing.Optional[bool]
+            true to include the fields specified, false to exclude them
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedClientSideParams
+
+        client = AsyncSeedClientSideParams(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.get_user_by_id(
+                user_id="userId",
+                fields="fields",
+                include_fields=True,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_user_by_id(
+            user_id, fields=fields, include_fields=include_fields, request_options=request_options
+        )
+        return _response.data
+
+    async def create_user(
         self,
         *,
         email: str,
@@ -1043,29 +1145,35 @@ class AsyncServiceClient:
         -------
         User
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedClientSideParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.createuser(
+            await client.service.create_user(
                 email="email",
+                email_verified=True,
+                username="username",
+                password="password",
+                phone_number="phone_number",
+                phone_verified=True,
+                user_metadata={"user_metadata": {"key": "value"}},
+                app_metadata={"app_metadata": {"key": "value"}},
                 connection="connection",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.createuser(
+        _response = await self._raw_client.create_user(
             email=email,
             connection=connection,
             email_verified=email_verified,
@@ -1079,99 +1187,7 @@ class AsyncServiceClient:
         )
         return _response.data
 
-    async def getuserbyid(
-        self,
-        user_id: str,
-        *,
-        fields: typing.Optional[str] = None,
-        include_fields: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> User:
-        """
-        Get a user by ID
-
-        Parameters
-        ----------
-        user_id : str
-
-        fields : typing.Optional[str]
-            Comma-separated list of fields to include or exclude
-
-        include_fields : typing.Optional[bool]
-            true to include the fields specified, false to exclude them
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        User
-
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.getuserbyid(
-                user_id="userId",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.getuserbyid(
-            user_id, fields=fields, include_fields=include_fields, request_options=request_options
-        )
-        return _response.data
-
-    async def deleteuser(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete a user
-
-        Parameters
-        ----------
-        user_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from seed import AsyncSeedApi
-
-        client = AsyncSeedApi(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
-        )
-
-
-        async def main() -> None:
-            await client.service.deleteuser(
-                user_id="userId",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.deleteuser(user_id, request_options=request_options)
-        return _response.data
-
-    async def updateuser(
+    async def update_user(
         self,
         user_id: str,
         *,
@@ -1218,28 +1234,36 @@ class AsyncServiceClient:
         -------
         User
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedClientSideParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.updateuser(
+            await client.service.update_user(
                 user_id="userId",
+                email="email",
+                email_verified=True,
+                username="username",
+                phone_number="phone_number",
+                phone_verified=True,
+                user_metadata={"user_metadata": {"key": "value"}},
+                app_metadata={"app_metadata": {"key": "value"}},
+                password="password",
+                blocked=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.updateuser(
+        _response = await self._raw_client.update_user(
             user_id,
             email=email,
             email_verified=email_verified,
@@ -1254,7 +1278,45 @@ class AsyncServiceClient:
         )
         return _response.data
 
-    async def listconnections(
+    async def delete_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a user
+
+        Parameters
+        ----------
+        user_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedClientSideParams
+
+        client = AsyncSeedClientSideParams(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.delete_user(
+                user_id="userId",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_user(user_id, request_options=request_options)
+        return _response.data
+
+    async def list_connections(
         self,
         *,
         strategy: typing.Optional[str] = None,
@@ -1283,31 +1345,34 @@ class AsyncServiceClient:
         -------
         typing.List[Connection]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedClientSideParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.listconnections()
+            await client.service.list_connections(
+                strategy="strategy",
+                name="name",
+                fields="fields",
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.listconnections(
+        _response = await self._raw_client.list_connections(
             strategy=strategy, name=name, fields=fields, request_options=request_options
         )
         return _response.data
 
-    async def getconnection(
+    async def get_connection(
         self,
         connection_id: str,
         *,
@@ -1331,31 +1396,31 @@ class AsyncServiceClient:
         -------
         Connection
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedClientSideParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.getconnection(
+            await client.service.get_connection(
                 connection_id="connectionId",
+                fields="fields",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getconnection(connection_id, fields=fields, request_options=request_options)
+        _response = await self._raw_client.get_connection(connection_id, fields=fields, request_options=request_options)
         return _response.data
 
-    async def listclients(
+    async def list_clients(
         self,
         *,
         fields: typing.Optional[str] = None,
@@ -1404,26 +1469,34 @@ class AsyncServiceClient:
         -------
         PaginatedClientResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedClientSideParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.listclients()
+            await client.service.list_clients(
+                fields="fields",
+                include_fields=True,
+                page=1,
+                per_page=1,
+                include_totals=True,
+                is_global=True,
+                is_first_party=True,
+                app_type=["app_type", "app_type"],
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.listclients(
+        _response = await self._raw_client.list_clients(
             fields=fields,
             include_fields=include_fields,
             page=page,
@@ -1436,7 +1509,7 @@ class AsyncServiceClient:
         )
         return _response.data
 
-    async def getclient(
+    async def get_client(
         self,
         client_id: str,
         *,
@@ -1464,28 +1537,29 @@ class AsyncServiceClient:
         -------
         Client
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedClientSideParams
 
-        client = AsyncSeedApi(
+        client = AsyncSeedClientSideParams(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.getclient(
+            await client.service.get_client(
                 client_id="clientId",
+                fields="fields",
+                include_fields=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getclient(
+        _response = await self._raw_client.get_client(
             client_id, fields=fields, include_fields=include_fields, request_options=request_options
         )
         return _response.data

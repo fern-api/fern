@@ -5,7 +5,7 @@ info:
 paths:
   /token:
     post:
-      operationId: auth_gettoken
+      operationId: auth_getToken
       tags:
         - Auth
       parameters: []
@@ -20,23 +20,13 @@ paths:
                 Example1:
                   value:
                     access_token: access_token
-                    expires_in: 1
+                    expires_in: 3600
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                client_id:
-                  type: string
-                  example: client_id
-                client_secret:
-                  type: string
-                  example: client_secret
-              required:
-                - client_id
-                - client_secret
+              $ref: '#/components/schemas/GetTokenRequest'
             examples:
               Example1:
                 value:
@@ -44,7 +34,7 @@ paths:
                   client_secret: client_secret
   /get-something:
     get:
-      operationId: simple_getsomething
+      operationId: simple_getSomething
       tags:
         - Simple
       parameters: []
@@ -52,7 +42,7 @@ paths:
         '204':
           description: ''
       security:
-        - BearerAuth: []
+        - OAuthScheme: []
 components:
   schemas:
     TokenResponse:
@@ -65,11 +55,25 @@ components:
           example: access_token
         expires_in:
           type: integer
-          example: 1
+          example: 3600
       required:
         - access_token
         - expires_in
+    GetTokenRequest:
+      title: GetTokenRequest
+      type: object
+      description: The request body for getting an OAuth token.
+      properties:
+        client_id:
+          type: string
+          example: client_id
+        client_secret:
+          type: string
+          example: client_secret
+      required:
+        - client_id
+        - client_secret
   securitySchemes:
-    BearerAuth:
+    OAuthScheme:
       type: http
       scheme: bearer

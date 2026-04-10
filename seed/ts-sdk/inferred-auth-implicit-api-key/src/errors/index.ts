@@ -1,2 +1,2 @@
-export { SeedApiError } from "./SeedApiError.js";
-export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";
+export { SeedInferredAuthImplicitApiKeyError } from "./SeedInferredAuthImplicitApiKeyError.js";
+export { SeedInferredAuthImplicitApiKeyTimeoutError } from "./SeedInferredAuthImplicitApiKeyTimeoutError.js";

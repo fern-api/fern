@@ -9,10 +9,10 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
-    from .propertybasederror.client import AsyncPropertybasederrorClient, PropertybasederrorClient
+    from .property_based_error.client import AsyncPropertyBasedErrorClient, PropertyBasedErrorClient
 
 
-class SeedApi:
+class SeedErrorProperty:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedErrorProperty
 
-    client = SeedApi(
+    client = SeedErrorProperty(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -69,15 +69,15 @@ class SeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._propertybasederror: typing.Optional[PropertybasederrorClient] = None
+        self._property_based_error: typing.Optional[PropertyBasedErrorClient] = None
 
     @property
-    def propertybasederror(self):
-        if self._propertybasederror is None:
-            from .propertybasederror.client import PropertybasederrorClient  # noqa: E402
+    def property_based_error(self):
+        if self._property_based_error is None:
+            from .property_based_error.client import PropertyBasedErrorClient  # noqa: E402
 
-            self._propertybasederror = PropertybasederrorClient(client_wrapper=self._client_wrapper)
-        return self._propertybasederror
+            self._property_based_error = PropertyBasedErrorClient(client_wrapper=self._client_wrapper)
+        return self._property_based_error
 
 
 def _make_default_async_client(
@@ -98,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedErrorProperty:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -124,9 +124,9 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedErrorProperty
 
-    client = AsyncSeedApi(
+    client = AsyncSeedErrorProperty(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -153,12 +153,12 @@ class AsyncSeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._propertybasederror: typing.Optional[AsyncPropertybasederrorClient] = None
+        self._property_based_error: typing.Optional[AsyncPropertyBasedErrorClient] = None
 
     @property
-    def propertybasederror(self):
-        if self._propertybasederror is None:
-            from .propertybasederror.client import AsyncPropertybasederrorClient  # noqa: E402
+    def property_based_error(self):
+        if self._property_based_error is None:
+            from .property_based_error.client import AsyncPropertyBasedErrorClient  # noqa: E402
 
-            self._propertybasederror = AsyncPropertybasederrorClient(client_wrapper=self._client_wrapper)
-        return self._propertybasederror
+            self._property_based_error = AsyncPropertyBasedErrorClient(client_wrapper=self._client_wrapper)
+        return self._property_based_error

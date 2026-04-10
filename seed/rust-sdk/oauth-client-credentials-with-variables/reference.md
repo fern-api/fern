@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">gettokenwithclientcredentials</a>(request: AuthGetTokenWithClientCredentialsRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token_with_client_credentials</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,24 +13,24 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client =
+        OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
     client
         .auth
-        .gettokenwithclientcredentials(
-            &AuthGetTokenWithClientCredentialsRequest {
+        .get_token_with_client_credentials(
+            &GetTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
-                audience: AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom,
-                grant_type: AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials,
-                scope: None,
+                audience: "https://api.example.com".to_string(),
+                grant_type: "client_credentials".to_string(),
+                scope: Some("scope".to_string()),
             },
             None,
         )
@@ -66,7 +66,7 @@ async fn main() {
 <dl>
 <dd>
 
-**audience:** `AuthGetTokenWithClientCredentialsRequestAudience` 
+**audience:** `String` 
     
 </dd>
 </dl>
@@ -74,7 +74,7 @@ async fn main() {
 <dl>
 <dd>
 
-**grant_type:** `AuthGetTokenWithClientCredentialsRequestGrantType` 
+**grant_type:** `String` 
     
 </dd>
 </dl>
@@ -82,7 +82,7 @@ async fn main() {
 <dl>
 <dd>
 
-**scope:** `Option<Option<String>>` 
+**scope:** `Option<String>` 
     
 </dd>
 </dl>
@@ -94,7 +94,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">refreshtoken</a>(request: AuthRefreshTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">refresh_token</a>(request: RefreshTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -107,25 +107,25 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client =
+        OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
     client
         .auth
-        .refreshtoken(
-            &AuthRefreshTokenRequest {
+        .refresh_token(
+            &RefreshTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
                 refresh_token: "refresh_token".to_string(),
-                audience: AuthRefreshTokenRequestAudience::HttpsApiExampleCom,
-                grant_type: AuthRefreshTokenRequestGrantType::RefreshToken,
-                scope: None,
+                audience: "https://api.example.com".to_string(),
+                grant_type: "refresh_token".to_string(),
+                scope: Some("scope".to_string()),
             },
             None,
         )
@@ -169,7 +169,7 @@ async fn main() {
 <dl>
 <dd>
 
-**audience:** `AuthRefreshTokenRequestAudience` 
+**audience:** `String` 
     
 </dd>
 </dl>
@@ -177,7 +177,7 @@ async fn main() {
 <dl>
 <dd>
 
-**grant_type:** `AuthRefreshTokenRequestGrantType` 
+**grant_type:** `String` 
     
 </dd>
 </dl>
@@ -185,7 +185,7 @@ async fn main() {
 <dl>
 <dd>
 
-**scope:** `Option<Option<String>>` 
+**scope:** `Option<String>` 
     
 </dd>
 </dl>
@@ -197,8 +197,8 @@ async fn main() {
 </dl>
 </details>
 
-## NestedNoAuthApi
-<details><summary><code>client.nested_no_auth_api.<a href="/src/api/resources/nested_no_auth_api/client.rs">nested_no_auth_api_get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+## NestedNoAuth Api
+<details><summary><code>client.nested_no_auth().api.<a href="/src/api/resources/nested_no_auth/api/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -211,19 +211,16 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .nested_no_auth_api
-        .nested_no_auth_api_get_something(None)
-        .await;
+    let client =
+        OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
+    client.nested_no_auth.api.get_something(None).await;
 }
 ```
 </dd>
@@ -236,8 +233,8 @@ async fn main() {
 </dl>
 </details>
 
-## NestedApi
-<details><summary><code>client.nested_api.<a href="/src/api/resources/nested_api/client.rs">nested_api_get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+## Nested Api
+<details><summary><code>client.nested().api.<a href="/src/api/resources/nested/api/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -250,16 +247,16 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.nested_api.nested_api_get_something(None).await;
+    let client =
+        OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
+    client.nested.api.get_something(None).await;
 }
 ```
 </dd>
@@ -286,19 +283,16 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .post(&"endpointParam".to_string(), None)
-        .await;
+    let client =
+        OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
+    client.service.post(None).await;
 }
 ```
 </dd>
@@ -327,7 +321,7 @@ async fn main() {
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">getsomething</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -340,16 +334,16 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.simple.getsomething(None).await;
+    let client =
+        OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
+    client.simple.get_something(None).await;
 }
 ```
 </dd>

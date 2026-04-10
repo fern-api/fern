@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.Retries.Getusers() -> []*fern.User</code></summary>
+<details><summary><code>client.Retries.GetUsers() -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Retries.Getusers(
+client.Retries.GetUsers(
         context.TODO(),
     )
 }

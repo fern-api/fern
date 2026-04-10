@@ -8,14 +8,14 @@ use Seed\Core\Json\JsonProperty;
 class Failure extends JsonSerializableType
 {
     /**
-     * @var value-of<FailureStatus> $status
+     * @var 'failure' $status
      */
     #[JsonProperty('status')]
     public string $status;
 
     /**
      * @param array{
-     *   status: value-of<FailureStatus>,
+     *   status: 'failure',
      * } $values
      */
     public function __construct(

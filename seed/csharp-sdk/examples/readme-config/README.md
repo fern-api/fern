@@ -63,19 +63,31 @@ Generator Invocation Custom Content for Fernexamples
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedExamples;
 
-var client = new SeedApiClient("TOKEN");
-await client.Service.CreatemovieAsync(
+var client = new SeedExamplesClient("TOKEN");
+await client.Service.CreateMovieAsync(
     new Movie
     {
-        Id = "id",
-        Title = "title",
-        From = "from",
-        Rating = 1.1,
-        Type = MovieType.Movie,
-        Tag = "tag",
-        Metadata = new Dictionary<string, object?>() { { "key", "value" } },
+        Id = "movie-c06a4ad7",
+        Prequel = "movie-cv9b914f",
+        Title = "The Boy and the Heron",
+        From = "Hayao Miyazaki",
+        Rating = 8,
+        Type = "movie",
+        Tag = "tag-wf9as23d",
+        Metadata = new Dictionary<string, object?>()
+        {
+            {
+                "actors",
+                new List<object?>() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
+            },
+            { "releaseDate", "2023-12-08" },
+            {
+                "ratings",
+                new Dictionary<object, object?>() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
+            },
+        },
         Revenue = 1000000,
     }
 );
@@ -86,11 +98,11 @@ await client.Service.CreatemovieAsync(
 This SDK allows you to configure different environments for API requests.
 
 ```csharp
-using SeedApi;
+using SeedExamples;
 
-var client = new SeedApiClient(new ClientOptions
+var client = new SeedExamplesClient(new ClientOptions
 {
-    BaseUrl = SeedApiEnvironment.Production
+    BaseUrl = SeedExamplesEnvironment.Production
 });
 ```
 
@@ -100,11 +112,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedExamples;
 
 try {
-    var response = await client.Service.CreatemovieAsync(...);
-} catch (SeedApiApiException e) {
+    var response = await client.Service.CreateMovieAsync(...);
+} catch (SeedExamplesApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -127,7 +139,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Service.CreatemovieAsync(
+var response = await client.Service.CreateMovieAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -140,7 +152,7 @@ var response = await client.Service.CreatemovieAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Service.GetmovieAsync(
+var response = await client.Service.GetMovieAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -149,7 +161,7 @@ var response = await client.Service.GetmovieAsync(
 ```
 
 ```csharp
-var response = await client.Service.CreatemovieAsync(
+var response = await client.Service.CreateMovieAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -162,10 +174,10 @@ var response = await client.Service.CreatemovieAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedExamples;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Service.CreatemovieAsync(...).WithRawResponse();
+var result = await client.Service.CreateMovieAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -182,7 +194,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Service.CreatemovieAsync(...);
+var data = await client.Service.CreateMovieAsync(...);
 ```
 
 ### Additional Headers
@@ -190,7 +202,7 @@ var data = await client.Service.CreatemovieAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Service.CreatemovieAsync(
+var response = await client.Service.CreateMovieAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -206,7 +218,7 @@ var response = await client.Service.CreatemovieAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.Service.CreatemovieAsync(
+var response = await client.Service.CreateMovieAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>
@@ -222,7 +234,7 @@ var response = await client.Service.CreatemovieAsync(
 This SDK uses forward-compatible enums that can handle unknown values gracefully.
 
 ```csharp
-using SeedApi;
+using SeedExamples;
 
 // Using a built-in value
 var basicType = BasicType.Primitive;

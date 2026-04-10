@@ -1,7 +1,7 @@
 # Seed Rust Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
-[![crates.io shield](https://img.shields.io/crates/v/seed_api)](https://crates.io/crates/seed_api)
+[![crates.io shield](https://img.shields.io/crates/v/seed_multi_line_docs)](https://crates.io/crates/seed_multi_line_docs)
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
@@ -25,13 +25,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_api = "0.0.1"
+seed_multi_line_docs = "0.0.1"
 ```
 
 Or install via cargo:
 
 ```sh
-cargo add seed_api
+cargo add seed_multi_line_docs
 ```
 
 ## Reference
@@ -43,20 +43,20 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use seed_api::prelude::*;
+use seed_multi_line_docs::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = MultiLineDocsClient::new(config).expect("Failed to build client");
     client
         .user
-        .createuser(
-            &UserCreateUserRequest {
+        .create_user(
+            &CreateUserRequest {
                 name: "name".to_string(),
-                age: None,
+                age: Some(1),
             },
             None,
         )
@@ -69,7 +69,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.user.createuser(None)?.await {
+match client.user.create_user(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -87,9 +87,9 @@ match client.user.createuser(None)?.await {
 The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
 
 ```rust
-use seed_api::prelude::{*};
+use seed_multi_line_docs::prelude::{*};
 
-let request = UserCreateUserRequest {
+let request = CreateUserRequest {
     ...
 };
 ```
@@ -111,7 +111,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.user.createuser(
+let response = client.user.create_user(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -121,7 +121,7 @@ let response = client.user.createuser(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.user.createuser(
+let response = client.user.create_user(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -131,7 +131,7 @@ let response = client.user.createuser(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.user.createuser(
+let response = client.user.create_user(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -146,7 +146,7 @@ let response = client.user.createuser(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.user.createuser(
+let response = client.user.create_user(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

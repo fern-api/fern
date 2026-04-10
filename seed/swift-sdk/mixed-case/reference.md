@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getresource</a>(resourceId: String, requestOptions: RequestOptions?) -> Resource</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getResource</a>(resourceId: String, requestOptions: RequestOptions?) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import MixedCase
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = MixedCaseClient()
 
-    _ = try await client.service.getresource(resourceId: "ResourceID")
+    _ = try await client.service.getResource(resourceId: "rsc-xyz")
 }
 
 try await main()
@@ -57,7 +57,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">listresources</a>(pageLimit: Int, beforeDate: CalendarDate, requestOptions: RequestOptions?) -> [Resource]</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">listResources</a>(pageLimit: Int, beforeDate: CalendarDate, requestOptions: RequestOptions?) -> [Resource]</code></summary>
 <dl>
 <dd>
 
@@ -71,14 +71,14 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import MixedCase
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = MixedCaseClient()
 
-    _ = try await client.service.listresources(
-        pageLimit: 1,
-        beforeDate: CalendarDate("2023-01-15")!
+    _ = try await client.service.listResources(
+        pageLimit: 10,
+        beforeDate: CalendarDate("2023-01-01")!
     )
 }
 

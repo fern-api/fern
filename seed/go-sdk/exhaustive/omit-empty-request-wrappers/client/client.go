@@ -4,17 +4,7 @@ package client
 
 import (
 	core "github.com/exhaustive/fern/core"
-	endpointscontainer "github.com/exhaustive/fern/endpointscontainer"
-	endpointscontenttype "github.com/exhaustive/fern/endpointscontenttype"
-	endpointsenum "github.com/exhaustive/fern/endpointsenum"
-	endpointshttpmethods "github.com/exhaustive/fern/endpointshttpmethods"
-	endpointsobject "github.com/exhaustive/fern/endpointsobject"
-	endpointspagination "github.com/exhaustive/fern/endpointspagination"
-	endpointsparams "github.com/exhaustive/fern/endpointsparams"
-	endpointsprimitive "github.com/exhaustive/fern/endpointsprimitive"
-	endpointsput "github.com/exhaustive/fern/endpointsput"
-	endpointsunion "github.com/exhaustive/fern/endpointsunion"
-	endpointsurls "github.com/exhaustive/fern/endpointsurls"
+	client "github.com/exhaustive/fern/endpoints/client"
 	inlinedrequests "github.com/exhaustive/fern/inlinedrequests"
 	internal "github.com/exhaustive/fern/internal"
 	noauth "github.com/exhaustive/fern/noauth"
@@ -24,21 +14,11 @@ import (
 )
 
 type Client struct {
-	EndpointsContainer   *endpointscontainer.Client
-	EndpointsContentType *endpointscontenttype.Client
-	EndpointsEnum        *endpointsenum.Client
-	EndpointsHTTPMethods *endpointshttpmethods.Client
-	EndpointsObject      *endpointsobject.Client
-	EndpointsPagination  *endpointspagination.Client
-	EndpointsParams      *endpointsparams.Client
-	EndpointsPrimitive   *endpointsprimitive.Client
-	EndpointsPut         *endpointsput.Client
-	EndpointsUnion       *endpointsunion.Client
-	EndpointsUrLs        *endpointsurls.Client
-	Inlinedrequests      *inlinedrequests.Client
-	Noauth               *noauth.Client
-	Noreqbody            *noreqbody.Client
-	Reqwithheaders       *reqwithheaders.Client
+	Endpoints       *client.Client
+	InlinedRequests *inlinedrequests.Client
+	NoAuth          *noauth.Client
+	NoReqBody       *noreqbody.Client
+	ReqWithHeaders  *reqwithheaders.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -48,23 +28,13 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		EndpointsContainer:   endpointscontainer.NewClient(options),
-		EndpointsContentType: endpointscontenttype.NewClient(options),
-		EndpointsEnum:        endpointsenum.NewClient(options),
-		EndpointsHTTPMethods: endpointshttpmethods.NewClient(options),
-		EndpointsObject:      endpointsobject.NewClient(options),
-		EndpointsPagination:  endpointspagination.NewClient(options),
-		EndpointsParams:      endpointsparams.NewClient(options),
-		EndpointsPrimitive:   endpointsprimitive.NewClient(options),
-		EndpointsPut:         endpointsput.NewClient(options),
-		EndpointsUnion:       endpointsunion.NewClient(options),
-		EndpointsUrLs:        endpointsurls.NewClient(options),
-		Inlinedrequests:      inlinedrequests.NewClient(options),
-		Noauth:               noauth.NewClient(options),
-		Noreqbody:            noreqbody.NewClient(options),
-		Reqwithheaders:       reqwithheaders.NewClient(options),
-		options:              options,
-		baseURL:              options.BaseURL,
+		Endpoints:       client.NewClient(options),
+		InlinedRequests: inlinedrequests.NewClient(options),
+		NoAuth:          noauth.NewClient(options),
+		NoReqBody:       noreqbody.NewClient(options),
+		ReqWithHeaders:  reqwithheaders.NewClient(options),
+		options:         options,
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

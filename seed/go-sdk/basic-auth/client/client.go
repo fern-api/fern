@@ -10,7 +10,7 @@ import (
 )
 
 type Client struct {
-	Basicauth *basicauth.Client
+	BasicAuth *basicauth.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -20,7 +20,7 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Basicauth: basicauth.NewClient(options),
+		BasicAuth: basicauth.NewClient(options),
 		options:   options,
 		baseURL:   options.BaseURL,
 		caller: internal.NewCaller(

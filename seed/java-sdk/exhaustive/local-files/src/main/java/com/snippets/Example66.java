@@ -1,26 +1,22 @@
 package com.snippets;
 
-import com.fern.sdk.SeedApiClient;
-import com.fern.sdk.resources.endpointsparams.requests.EndpointsParamsGetWithAllowMultipleQueryRequest;
-import java.util.Arrays;
+import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
 
 public class Example66 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedExhaustiveClient client = SeedExhaustiveClient
             .builder()
             .token("<token>")
             .url("https://api.fern.com")
             .build();
 
-        client.endpointsParams().endpointsParamsGetWithAllowMultipleQuery(
-            EndpointsParamsGetWithAllowMultipleQueryRequest
+        client.reqWithHeaders().getWithCustomHeader(
+            ReqWithHeaders
                 .builder()
-                .query(
-                    Arrays.asList("query")
-                )
-                .number(
-                    Arrays.asList(1)
-                )
+                .xTestServiceHeader("X-TEST-SERVICE-HEADER")
+                .xTestEndpointHeader("X-TEST-ENDPOINT-HEADER")
+                .body("string")
                 .build()
         );
     }

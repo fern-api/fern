@@ -1,1 +1,1 @@
-export type { InlinedRequestSendRequest } from "./InlinedRequestSendRequest.js";
+export type { SendEnumInlinedRequest } from "./SendEnumInlinedRequest.js";

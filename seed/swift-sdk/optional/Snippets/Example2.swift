@@ -1,10 +1,16 @@
 import Foundation
-import Api
+import ObjectsWithImports
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = ObjectsWithImportsClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.optional.sendoptionaltypedbody(request: .init(message: "message"))
+    _ = try await client.optional.sendOptionalNullableWithAllOptionalProperties(
+        actionId: "actionId",
+        id: "id",
+        request: .value(DeployParams(
+            updateDraft: true
+        ))
+    )
 }
 
 try await main()

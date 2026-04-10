@@ -2,13 +2,13 @@ import Foundation
 
 public struct UserPage: Codable, Hashable, Sendable {
     public let data: UserListContainer
-    public let next: Nullable<String>?
+    public let next: UUID?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         data: UserListContainer,
-        next: Nullable<String>? = nil,
+        next: UUID? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.data = data
@@ -19,7 +19,7 @@ public struct UserPage: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.data = try container.decode(UserListContainer.self, forKey: .data)
-        self.next = try container.decodeNullableIfPresent(String.self, forKey: .next)
+        self.next = try container.decodeIfPresent(UUID.self, forKey: .next)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -27,7 +27,7 @@ public struct UserPage: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.data, forKey: .data)
-        try container.encodeNullableIfPresent(self.next, forKey: .next)
+        try container.encodeIfPresent(self.next, forKey: .next)
     }
 
     /// Keys for encoding/decoding struct properties.

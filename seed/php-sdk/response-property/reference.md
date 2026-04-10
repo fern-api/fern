@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-&gt;service-&gt;getmovie($request) -> ?Response</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getMovie($request) -> ?Response</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->service->getmovie(
+$client->service->getMovie(
     'string',
 );
 ```
@@ -42,7 +42,7 @@ $client->service->getmovie(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getmoviedocs($request) -> ?Response</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getMovieDocs($request) -> ?Response</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +55,7 @@ $client->service->getmovie(
 <dd>
 
 ```php
-$client->service->getmoviedocs(
+$client->service->getMovie(
     'string',
 );
 ```
@@ -84,7 +84,7 @@ $client->service->getmoviedocs(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getmoviename($request) -> ?StringResponse</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getMovieName($request) -> ?StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -97,7 +97,7 @@ $client->service->getmoviedocs(
 <dd>
 
 ```php
-$client->service->getmoviename(
+$client->service->getMovie(
     'string',
 );
 ```
@@ -126,7 +126,7 @@ $client->service->getmoviename(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getmoviemetadata($request) -> ?Response</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getMovieMetadata($request) -> ?Response</code></summary>
 <dl>
 <dd>
 
@@ -139,7 +139,7 @@ $client->service->getmoviename(
 <dd>
 
 ```php
-$client->service->getmoviemetadata(
+$client->service->getMovie(
     'string',
 );
 ```
@@ -168,7 +168,7 @@ $client->service->getmoviemetadata(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getoptionalmovie($request) -> ?Response</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getOptionalMovie($request) -> ?Response</code></summary>
 <dl>
 <dd>
 
@@ -181,7 +181,7 @@ $client->service->getmoviemetadata(
 <dd>
 
 ```php
-$client->service->getoptionalmovie(
+$client->service->getMovie(
     'string',
 );
 ```
@@ -210,7 +210,7 @@ $client->service->getoptionalmovie(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getoptionalmoviedocs($request) -> ?WithDocs</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getOptionalMovieDocs($request) -> ?WithDocs</code></summary>
 <dl>
 <dd>
 
@@ -223,7 +223,7 @@ $client->service->getoptionalmovie(
 <dd>
 
 ```php
-$client->service->getoptionalmoviedocs(
+$client->service->getMovie(
     'string',
 );
 ```
@@ -252,7 +252,7 @@ $client->service->getoptionalmoviedocs(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;getoptionalmoviename($request) -> ?StringResponse</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getOptionalMovieName($request) -> ?StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -265,7 +265,7 @@ $client->service->getoptionalmoviedocs(
 <dd>
 
 ```php
-$client->service->getoptionalmoviename(
+$client->service->getMovie(
     'string',
 );
 ```

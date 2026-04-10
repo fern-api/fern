@@ -39,10 +39,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedStreaming;
 
-var client = new SeedApiClient();
-await client.Dummy.GenerateAsync(new DummyGenerateRequest { Stream = true, NumEvents = 1 });
+var client = new SeedStreamingClient();
+client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });
 ```
 
 ## Exception Handling
@@ -51,11 +51,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedStreaming;
 
 try {
     var response = await client.Dummy.GenerateAsync(...);
-} catch (SeedApiApiException e) {
+} catch (SeedStreamingApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -104,7 +104,7 @@ var response = await client.Dummy.GenerateAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedStreaming;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Dummy.GenerateAsync(...).WithRawResponse();

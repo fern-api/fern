@@ -14,10 +14,6 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/Operand'
-          example: '>'
-          examples:
-            Example1:
-              value: '>'
         - name: maybeOperand
           in: header
           required: false
@@ -29,10 +25,6 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ColorOrOperand'
-          example: red
-          examples:
-            Example1:
-              value: red
         - name: maybeOperandOrColor
           in: header
           required: false
@@ -44,9 +36,9 @@ paths:
           description: ''
   /inlined:
     post:
-      operationId: inlinedrequest_send
+      operationId: inlinedRequest_send
       tags:
-        - Inlinedrequest
+        - InlinedRequest
       parameters: []
       responses:
         '204':
@@ -78,9 +70,9 @@ paths:
                   operandOrColor: red
   /multipart:
     post:
-      operationId: multipartform_multipartform
+      operationId: multipartForm_multipartForm
       tags:
-        - Multipartform
+        - MultipartForm
       parameters: []
       responses:
         '204':
@@ -94,7 +86,6 @@ paths:
               properties:
                 color:
                   $ref: '#/components/schemas/Color'
-                  nullable: true
                 maybeColor:
                   $ref: '#/components/schemas/Color'
                   nullable: true
@@ -102,7 +93,6 @@ paths:
                   type: array
                   items:
                     $ref: '#/components/schemas/Color'
-                  nullable: true
                 maybeColorList:
                   type: array
                   items:
@@ -110,9 +100,9 @@ paths:
                   nullable: true
   /path/{operand}/{operandOrColor}:
     post:
-      operationId: pathparam_send
+      operationId: pathParam_send
       tags:
-        - Pathparam
+        - PathParam
       parameters:
         - name: operand
           in: path
@@ -137,9 +127,9 @@ paths:
           description: ''
   /query:
     post:
-      operationId: queryparam_send
+      operationId: queryParam_send
       tags:
-        - Queryparam
+        - QueryParam
       parameters:
         - name: operand
           in: query
@@ -160,7 +150,7 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/Color'
+            $ref: '#/components/schemas/ColorOrOperand'
           example: red
           examples:
             Example1:
@@ -176,18 +166,17 @@ paths:
           description: ''
   /query-list:
     post:
-      operationId: queryparam_sendlist
+      operationId: queryParam_sendList
       tags:
-        - Queryparam
+        - QueryParam
       parameters:
         - name: operand
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
               $ref: '#/components/schemas/Operand'
-              nullable: true
         - name: maybeOperand
           in: query
           required: false
@@ -198,12 +187,11 @@ paths:
               nullable: true
         - name: operandOrColor
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
               $ref: '#/components/schemas/ColorOrOperand'
-              nullable: true
         - name: maybeOperandOrColor
           in: query
           required: false
@@ -265,6 +253,8 @@ components:
       enum:
         - ''
         - Hello \"World\"
+        - Hello 'World'
+        - Hello\\World
         - Hello\nWorld
         - Hello\rWorld
         - Hello\tWorld
@@ -292,6 +282,7 @@ components:
         - \\d{3}-\\d{2}-\\d{4}
         - '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'
         - transcript[transcriptType="final"]
+        - transcript[transcriptType='final']
     Status:
       title: Status
       type: string

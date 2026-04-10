@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>$client-&gt;-&gt;createUser($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;createUser($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```php
-$client->_->createUser(
+$client->createUser(
     new User([
         'id' => 'id',
         'email' => 'email',

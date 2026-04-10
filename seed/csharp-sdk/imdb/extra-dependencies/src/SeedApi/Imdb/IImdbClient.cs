@@ -5,14 +5,14 @@ public partial interface IImdbClient
     /// <summary>
     /// Add a movie to the database using the movies/* /... path.
     /// </summary>
-    WithRawResponseTask<string> CreatemovieAsync(
+    WithRawResponseTask<string> CreateMovieAsync(
         CreateMovieRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );
 
-    WithRawResponseTask<Movie> GetmovieAsync(
-        ImdbGetMovieRequest request,
+    WithRawResponseTask<Movie> GetMovieAsync(
+        string movieId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

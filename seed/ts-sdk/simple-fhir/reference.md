@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">getAccount</a>({ ...params }) -> SeedApi.Account</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">getAccount</a>(account_id) -> SeedApi.Account</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +12,7 @@
 <dd>
 
 ```typescript
-await client..getAccount({
-    account_id: "account_id"
-});
+await client.getAccount("account_id");
 
 ```
 </dd>
@@ -31,7 +28,7 @@ await client..getAccount({
 <dl>
 <dd>
 
-**request:** `SeedApi.GetAccountRequest` 
+**account_id:** `string` 
     
 </dd>
 </dl>
@@ -39,7 +36,7 @@ await client..getAccount({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `SeedApiClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">gettoken</a>(apiKey: String, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">getToken</a>(apiKey: String, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import InferredAuthImplicitApiKey
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = InferredAuthImplicitApiKeyClient()
 
-    _ = try await client.auth.gettoken()
+    _ = try await client.auth.getToken()
 }
 
 try await main()
@@ -57,8 +57,8 @@ try await main()
 </dl>
 </details>
 
-## NestedNoAuthApi
-<details><summary><code>client.nestedNoAuthApi.<a href="/Sources/Resources/NestedNoAuthApi/NestedNoAuthApiClient.swift">nestedNoAuthApiGetSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+## NestedNoAuth Api
+<details><summary><code>client.nestedNoAuth.api.<a href="/Sources/Resources/NestedNoAuth/Api/ApiClient.swift">getSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -72,12 +72,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import InferredAuthImplicitApiKey
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = InferredAuthImplicitApiKeyClient()
 
-    _ = try await client.nestedNoAuthApi.nestedNoAuthApiGetSomething()
+    _ = try await client.nestedNoAuth.api.getSomething()
 }
 
 try await main()
@@ -107,8 +107,8 @@ try await main()
 </dl>
 </details>
 
-## NestedApi
-<details><summary><code>client.nestedApi.<a href="/Sources/Resources/NestedApi/NestedApiClient.swift">nestedApiGetSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+## Nested Api
+<details><summary><code>client.nested.api.<a href="/Sources/Resources/Nested/Api/NestedApiClient.swift">getSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -122,12 +122,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import InferredAuthImplicitApiKey
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = InferredAuthImplicitApiKeyClient()
 
-    _ = try await client.nestedApi.nestedApiGetSomething()
+    _ = try await client.nested.api.getSomething()
 }
 
 try await main()
@@ -158,7 +158,7 @@ try await main()
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">getsomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.simple.<a href="/Sources/Resources/Simple/SimpleClient.swift">getSomething</a>(requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -172,12 +172,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import InferredAuthImplicitApiKey
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = InferredAuthImplicitApiKeyClient()
 
-    _ = try await client.simple.getsomething()
+    _ = try await client.simple.getSomething()
 }
 
 try await main()

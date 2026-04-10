@@ -38,18 +38,14 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Admin\Requests\AdminUpdateTestSubmissionStatusRequest;
-use Seed\Types\TestSubmissionStatus;
-use Seed\Types\TestSubmissionStatusStopped;
+use Seed\Submission\Types\TestSubmissionStatus;
 
 $client = new SeedClient(
     token: '<token>',
 );
-$client->admin->updatetestsubmissionstatus(
-    'submissionId',
-    new AdminUpdateTestSubmissionStatusRequest([
-        'body' => TestSubmissionStatus::stopped(new TestSubmissionStatusStopped([])),
-    ]),
+$client->admin->updateTestSubmissionStatus(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    TestSubmissionStatus::stopped(),
 );
 
 ```
@@ -59,7 +55,7 @@ $client->admin->updatetestsubmissionstatus(
 This SDK allows you to configure different environments for API requests.
 
 ```php
-The SDK defaults to the `Default_` environment. To use a different environment, pass it to the client constructor:
+The SDK defaults to the `Prod` environment. To use a different environment, pass it to the client constructor:
 
 ```php
 use Seed\SeedClient;
@@ -74,7 +70,7 @@ $client = new SeedClient(
 ```
 
 Available environments:
-- `Environments::Default_`
+- `Environments::Prod`
 ```
 
 ## Exception Handling
@@ -86,7 +82,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->admin->updatetestsubmissionstatus(...);
+    $response = $client->admin->updateTestSubmissionStatus(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -140,7 +136,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->admin->updatetestsubmissionstatus(
+$response = $client->admin->updateTestSubmissionStatus(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -153,7 +149,7 @@ $response = $client->admin->updatetestsubmissionstatus(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->admin->updatetestsubmissionstatus(
+$response = $client->admin->updateTestSubmissionStatus(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

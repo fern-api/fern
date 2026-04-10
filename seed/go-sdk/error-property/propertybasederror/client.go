@@ -33,11 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET request that always throws an error
-func (c *Client) Throwerror(
+func (c *Client) ThrowError(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Throwerror(
+	response, err := c.WithRawResponse.ThrowError(
 		ctx,
 		opts...,
 	)

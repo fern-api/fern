@@ -8,13 +8,15 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import ec2, s3
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedMultiUrlEnvironment, SeedMultiUrlEnvironment
+    from .environment import SeedMultiUrlEnvironmentEnvironment
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedMultiUrlEnvironment": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedApi": ".client",
+    "SeedMultiUrlEnvironment": ".client",
+    "SeedMultiUrlEnvironmentEnvironment": ".environment",
     "__version__": ".version",
     "ec2": ".ec2",
     "s3": ".s3",
@@ -42,4 +44,13 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedApi", "DefaultAioHttpClient", "DefaultAsyncHttpxClient", "SeedApi", "__version__", "ec2", "s3"]
+__all__ = [
+    "AsyncSeedMultiUrlEnvironment",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
+    "SeedMultiUrlEnvironment",
+    "SeedMultiUrlEnvironmentEnvironment",
+    "__version__",
+    "ec2",
+    "s3",
+]

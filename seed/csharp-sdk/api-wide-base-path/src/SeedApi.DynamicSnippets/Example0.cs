@@ -1,23 +1,21 @@
-using SeedApi;
+using SeedApiWideBasePath;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedApiWideBasePathClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Service.PostAsync(
-            new ServicePostRequest {
-                PathParam = "pathParam",
-                ServiceParam = "serviceParam",
-                EndpointParam = 1,
-                ResourceParam = "resourceParam"
-            }
+            "pathParam",
+            "serviceParam",
+            1,
+            "resourceParam"
         );
     }
 

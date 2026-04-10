@@ -13,12 +13,12 @@
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.v2.test()
@@ -50,7 +50,7 @@ client.v2.test()
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">updatetestsubmissionstatus</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">update_test_submission_status</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -63,16 +63,18 @@ client.v2.test()
 <dd>
 
 ```python
-from seed import SeedApi, TestSubmissionStatus_Stopped
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+import uuid
+from seed.submission import TestSubmissionStatus_Stopped
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.admin.updatetestsubmissionstatus(
-    submission_id="submissionId",
+client.admin.update_test_submission_status(
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     request=TestSubmissionStatus_Stopped(),
 )
 
@@ -118,7 +120,7 @@ client.admin.updatetestsubmissionstatus(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">sendtestsubmissionupdate</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">send_test_submission_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -131,20 +133,22 @@ client.admin.updatetestsubmissionstatus(
 <dd>
 
 ```python
-from seed import SeedApi, TestSubmissionUpdateInfoZero
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+import uuid
 import datetime
+from seed.submission import TestSubmissionUpdateInfo_Running
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.admin.sendtestsubmissionupdate(
-    submission_id="submissionId",
+client.admin.send_test_submission_update(
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     update_time=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    update_info=TestSubmissionUpdateInfoZero(
-        type="running",
+    update_info=TestSubmissionUpdateInfo_Running(
+        running=,
     ),
 )
 
@@ -190,7 +194,7 @@ client.admin.sendtestsubmissionupdate(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">updateworkspacesubmissionstatus</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">update_workspace_submission_status</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -203,19 +207,19 @@ client.admin.sendtestsubmissionupdate(
 <dd>
 
 ```python
-from seed import SeedApi, WorkspaceSubmissionStatusZero
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+import uuid
+from seed.submission import WorkspaceSubmissionStatus_Stopped
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.admin.updateworkspacesubmissionstatus(
-    submission_id="submissionId",
-    request=WorkspaceSubmissionStatusZero(
-        type="stopped",
-    ),
+client.admin.update_workspace_submission_status(
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    request=WorkspaceSubmissionStatus_Stopped(),
 )
 
 ```
@@ -260,7 +264,7 @@ client.admin.updateworkspacesubmissionstatus(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">sendworkspacesubmissionupdate</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">send_workspace_submission_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -273,20 +277,22 @@ client.admin.updateworkspacesubmissionstatus(
 <dd>
 
 ```python
-from seed import SeedApi, WorkspaceSubmissionUpdateInfoZero
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+import uuid
 import datetime
+from seed.submission import WorkspaceSubmissionUpdateInfo_Running
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.admin.sendworkspacesubmissionupdate(
-    submission_id="submissionId",
+client.admin.send_workspace_submission_update(
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     update_time=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    update_info=WorkspaceSubmissionUpdateInfoZero(
-        type="running",
+    update_info=WorkspaceSubmissionUpdateInfo_Running(
+        running=,
     ),
 )
 
@@ -332,7 +338,7 @@ client.admin.sendworkspacesubmissionupdate(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">storetracedtestcase</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_test_case</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -345,24 +351,29 @@ client.admin.sendworkspacesubmissionupdate(
 <dd>
 
 ```python
-from seed import SeedApi, TestCaseResultWithStdout, TestCaseResult, VariableValueZero, ActualResultZero, TraceResponse, StackInformation
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+import uuid
+from seed.submission import TestCaseResultWithStdout, TestCaseResult, ActualResult_Value, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed.commons import VariableValue_IntegerValue, DebugVariableValue_IntegerValue
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.admin.storetracedtestcase(
-    submission_id="submissionId",
+client.admin.store_traced_test_case(
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     test_case_id="testCaseId",
     result=TestCaseResultWithStdout(
         result=TestCaseResult(
-            expected_result=VariableValueZero(
-                type="integerValue",
+            expected_result=VariableValue_IntegerValue(
+                integer_value=,
             ),
-            actual_result=ActualResultZero(
-                type="value",
+            actual_result=ActualResult_Value(
+                value=VariableValue_IntegerValue(
+                    integer_value=,
+                ),
             ),
             passed=True,
         ),
@@ -370,11 +381,74 @@ client.admin.storetracedtestcase(
     ),
     trace_responses=[
         TraceResponse(
-            submission_id="submissionId",
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        )
+                    ],
+                ),
             ),
+            stdout="stdout",
+        ),
+        TraceResponse(
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
         )
     ],
 )
@@ -437,7 +511,7 @@ client.admin.storetracedtestcase(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">storetracedtestcasev2</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_test_case_v2</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -450,28 +524,98 @@ client.admin.storetracedtestcase(
 <dd>
 
 ```python
-from seed import SeedApi, TraceResponseV2, TracedFile, StackInformation
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+import uuid
+from seed.submission import TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed.commons import DebugVariableValue_IntegerValue
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.admin.storetracedtestcasev2(
-    submission_id="submissionId",
+client.admin.store_traced_test_case_v2(
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     test_case_id="testCaseId",
     request=[
         TraceResponseV2(
-            submission_id="submissionId",
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
             file=TracedFile(
                 filename="filename",
                 directory="directory",
             ),
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        )
+                    ],
+                ),
             ),
+            stdout="stdout",
+        ),
+        TraceResponseV2(
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            file=TracedFile(
+                filename="filename",
+                directory="directory",
+            ),
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
         )
     ],
 )
@@ -498,7 +642,7 @@ client.admin.storetracedtestcasev2(
 <dl>
 <dd>
 
-**test_case_id:** `V2TestCaseId` 
+**test_case_id:** `TestCaseId` 
     
 </dd>
 </dl>
@@ -526,7 +670,7 @@ client.admin.storetracedtestcasev2(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">storetracedworkspace</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_workspace</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -539,26 +683,102 @@ client.admin.storetracedtestcasev2(
 <dd>
 
 ```python
-from seed import SeedApi, WorkspaceRunDetails, TraceResponse, StackInformation
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+import uuid
+from seed.submission import WorkspaceRunDetails, ExceptionV2_Generic, ExceptionInfo, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed.commons import DebugVariableValue_IntegerValue
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.admin.storetracedworkspace(
-    submission_id="submissionId",
+client.admin.store_traced_workspace(
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     workspace_run_details=WorkspaceRunDetails(
+        exception_v2=ExceptionV2_Generic(
+            exception_type="exceptionType",
+            exception_message="exceptionMessage",
+            exception_stacktrace="exceptionStacktrace",
+        ),
+        exception=ExceptionInfo(
+            exception_type="exceptionType",
+            exception_message="exceptionMessage",
+            exception_stacktrace="exceptionStacktrace",
+        ),
         stdout="stdout",
     ),
     trace_responses=[
         TraceResponse(
-            submission_id="submissionId",
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        )
+                    ],
+                ),
             ),
+            stdout="stdout",
+        ),
+        TraceResponse(
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
         )
     ],
 )
@@ -613,7 +833,7 @@ client.admin.storetracedworkspace(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">storetracedworkspacev2</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_workspace_v2</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -626,27 +846,97 @@ client.admin.storetracedworkspace(
 <dd>
 
 ```python
-from seed import SeedApi, TraceResponseV2, TracedFile, StackInformation
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+import uuid
+from seed.submission import TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed.commons import DebugVariableValue_IntegerValue
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.admin.storetracedworkspacev2(
-    submission_id="submissionId",
+client.admin.store_traced_workspace_v2(
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     request=[
         TraceResponseV2(
-            submission_id="submissionId",
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
             file=TracedFile(
                 filename="filename",
                 directory="directory",
             ),
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
             stack=StackInformation(
                 num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        )
+                    ],
+                ),
             ),
+            stdout="stdout",
+        ),
+        TraceResponseV2(
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            file=TracedFile(
+                filename="filename",
+                directory="directory",
+            ),
+            return_value=DebugVariableValue_IntegerValue(
+                integer_value=,
+            ),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        ),
+                        Scope(
+                            variables={
+                                "variables": DebugVariableValue_IntegerValue(
+                                    integer_value=,
+                                )
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
         )
     ],
 )
@@ -694,7 +984,7 @@ client.admin.storetracedworkspacev2(
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py">gethomepageproblems</a>() -> typing.List[ProblemId]</code></summary>
+<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py">get_homepage_problems</a>() -> typing.List[ProblemId]</code></summary>
 <dl>
 <dd>
 
@@ -707,15 +997,15 @@ client.admin.storetracedworkspacev2(
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.homepage.gethomepageproblems()
+client.homepage.get_homepage_problems()
 
 ```
 </dd>
@@ -743,7 +1033,7 @@ client.homepage.gethomepageproblems()
 </dl>
 </details>
 
-<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py">sethomepageproblems</a>(...)</code></summary>
+<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py">set_homepage_problems</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -756,16 +1046,17 @@ client.homepage.gethomepageproblems()
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.homepage.sethomepageproblems(
+client.homepage.set_homepage_problems(
     request=[
+        "string",
         "string"
     ],
 )
@@ -805,7 +1096,7 @@ client.homepage.sethomepageproblems(
 </details>
 
 ## Migration
-<details><summary><code>client.migration.<a href="src/seed/migration/client.py">getattemptedmigrations</a>(...) -> typing.List[Migration]</code></summary>
+<details><summary><code>client.migration.<a href="src/seed/migration/client.py">get_attempted_migrations</a>(...) -> typing.List[Migration]</code></summary>
 <dl>
 <dd>
 
@@ -818,15 +1109,15 @@ client.homepage.sethomepageproblems(
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.migration.getattemptedmigrations(
+client.migration.get_attempted_migrations(
     admin_key_header="admin-key-header",
 )
 
@@ -865,7 +1156,7 @@ client.migration.getattemptedmigrations(
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">createplaylist</a>(...) -> Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">create_playlist</a>(...) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -892,20 +1183,22 @@ Create a new playlist
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 import datetime
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.playlist.createplaylist(
+client.playlist.create_playlist(
     service_param=1,
     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    optional_datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     name="name",
     problems=[
+        "problems",
         "problems"
     ],
 )
@@ -968,7 +1261,7 @@ client.playlist.createplaylist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">getplaylists</a>(...) -> typing.List[Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">get_playlists</a>(...) -> typing.List[Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -995,15 +1288,15 @@ Returns the user's playlists
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.playlist.getplaylists(
+client.playlist.get_playlists(
     service_param=1,
     limit=1,
     other_field="otherField",
@@ -1057,6 +1350,14 @@ description
 <dl>
 <dd>
 
+**multiple_field:** `typing.Union[str, typing.Sequence[str]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **limit:** `typing.Optional[int]` 
     
 </dd>
@@ -1065,15 +1366,7 @@ description
 <dl>
 <dd>
 
-**optional_multiple_field:** `typing.Optional[typing.Union[typing.Optional[str], typing.Sequence[typing.Optional[str]]]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**multiple_field:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**optional_multiple_field:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
     
 </dd>
 </dl>
@@ -1093,7 +1386,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">getplaylist</a>(...) -> Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">get_playlist</a>(...) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1120,15 +1413,15 @@ Returns a playlist
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.playlist.getplaylist(
+client.playlist.get_playlist(
     service_param=1,
     playlist_id="playlistId",
 )
@@ -1175,7 +1468,7 @@ client.playlist.getplaylist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">updateplaylist</a>(...) -> Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">update_playlist</a>(...) -> typing.Optional[Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -1202,21 +1495,25 @@ Updates a playlist
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+from seed.playlist import UpdatePlaylistRequest
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.playlist.updateplaylist(
+client.playlist.update_playlist(
     service_param=1,
     playlist_id="playlistId",
-    name="name",
-    problems=[
-        "problems"
-    ],
+    request=UpdatePlaylistRequest(
+        name="name",
+        problems=[
+            "problems",
+            "problems"
+        ],
+    ),
 )
 
 ```
@@ -1249,15 +1546,7 @@ client.playlist.updateplaylist(
 <dl>
 <dd>
 
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**problems:** `typing.List[ProblemId]` — The problems that make up the playlist.
+**request:** `typing.Optional[UpdatePlaylistRequest]` 
     
 </dd>
 </dl>
@@ -1277,7 +1566,7 @@ client.playlist.updateplaylist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">deleteplaylist</a>(...)</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">delete_playlist</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1304,15 +1593,15 @@ Deletes a playlist
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.playlist.deleteplaylist(
+client.playlist.delete_playlist(
     service_param=1,
     playlist_id="playlist_id",
 )
@@ -1360,7 +1649,7 @@ client.playlist.deleteplaylist(
 </details>
 
 ## Problem
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">createproblem</a>(...) -> CreateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py">create_problem</a>(...) -> CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1387,28 +1676,39 @@ Creates a problem
 <dd>
 
 ```python
-from seed import SeedApi, ProblemDescription, ProblemDescriptionBoard_Html, ProblemFiles, FileInfo, VariableTypeAndName, VariableTypeZero, TestCaseWithExpectedResult, TestCase, VariableValueZero
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+from seed.problem import ProblemDescription, ProblemDescriptionBoard_Html, ProblemFiles, VariableTypeAndName
+from seed.commons import FileInfo, VariableType_IntegerType, TestCaseWithExpectedResult, TestCase, VariableValue_IntegerValue
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.problem.createproblem(
+client.problem.create_problem(
     problem_name="problemName",
     problem_description=ProblemDescription(
         boards=[
-            ProblemDescriptionBoard_Html()
+            ProblemDescriptionBoard_Html(
+                html=,
+            ),
+            ProblemDescriptionBoard_Html(
+                html=,
+            )
         ],
     ),
     files={
-        "key": ProblemFiles(
+        "JAVA": ProblemFiles(
             solution_file=FileInfo(
                 filename="filename",
                 contents="contents",
             ),
             read_only_files=[
+                FileInfo(
+                    filename="filename",
+                    contents="contents",
+                ),
                 FileInfo(
                     filename="filename",
                     contents="contents",
@@ -1418,27 +1718,46 @@ client.problem.createproblem(
     },
     input_params=[
         VariableTypeAndName(
-            variable_type=VariableTypeZero(
-                type="integerType",
-            ),
+            variable_type=VariableType_IntegerType(),
+            name="name",
+        ),
+        VariableTypeAndName(
+            variable_type=VariableType_IntegerType(),
             name="name",
         )
     ],
-    output_type=VariableTypeZero(
-        type="integerType",
-    ),
+    output_type=VariableType_IntegerType(),
     testcases=[
         TestCaseWithExpectedResult(
             test_case=TestCase(
                 id="id",
                 params=[
-                    VariableValueZero(
-                        type="integerValue",
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    ),
+                    VariableValue_IntegerValue(
+                        integer_value=,
                     )
                 ],
             ),
-            expected_result=VariableValueZero(
-                type="integerValue",
+            expected_result=VariableValue_IntegerValue(
+                integer_value=,
+            ),
+        ),
+        TestCaseWithExpectedResult(
+            test_case=TestCase(
+                id="id",
+                params=[
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    ),
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    )
+                ],
+            ),
+            expected_result=VariableValue_IntegerValue(
+                integer_value=,
             ),
         )
     ],
@@ -1479,7 +1798,7 @@ client.problem.createproblem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">updateproblem</a>(...) -> UpdateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py">update_problem</a>(...) -> UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1506,29 +1825,40 @@ Updates a problem
 <dd>
 
 ```python
-from seed import SeedApi, ProblemDescription, ProblemDescriptionBoard_Html, ProblemFiles, FileInfo, VariableTypeAndName, VariableTypeZero, TestCaseWithExpectedResult, TestCase, VariableValueZero
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+from seed.problem import ProblemDescription, ProblemDescriptionBoard_Html, ProblemFiles, VariableTypeAndName
+from seed.commons import FileInfo, VariableType_IntegerType, TestCaseWithExpectedResult, TestCase, VariableValue_IntegerValue
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.problem.updateproblem(
+client.problem.update_problem(
     problem_id="problemId",
     problem_name="problemName",
     problem_description=ProblemDescription(
         boards=[
-            ProblemDescriptionBoard_Html()
+            ProblemDescriptionBoard_Html(
+                html=,
+            ),
+            ProblemDescriptionBoard_Html(
+                html=,
+            )
         ],
     ),
     files={
-        "key": ProblemFiles(
+        "JAVA": ProblemFiles(
             solution_file=FileInfo(
                 filename="filename",
                 contents="contents",
             ),
             read_only_files=[
+                FileInfo(
+                    filename="filename",
+                    contents="contents",
+                ),
                 FileInfo(
                     filename="filename",
                     contents="contents",
@@ -1538,27 +1868,46 @@ client.problem.updateproblem(
     },
     input_params=[
         VariableTypeAndName(
-            variable_type=VariableTypeZero(
-                type="integerType",
-            ),
+            variable_type=VariableType_IntegerType(),
+            name="name",
+        ),
+        VariableTypeAndName(
+            variable_type=VariableType_IntegerType(),
             name="name",
         )
     ],
-    output_type=VariableTypeZero(
-        type="integerType",
-    ),
+    output_type=VariableType_IntegerType(),
     testcases=[
         TestCaseWithExpectedResult(
             test_case=TestCase(
                 id="id",
                 params=[
-                    VariableValueZero(
-                        type="integerValue",
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    ),
+                    VariableValue_IntegerValue(
+                        integer_value=,
                     )
                 ],
             ),
-            expected_result=VariableValueZero(
-                type="integerValue",
+            expected_result=VariableValue_IntegerValue(
+                integer_value=,
+            ),
+        ),
+        TestCaseWithExpectedResult(
+            test_case=TestCase(
+                id="id",
+                params=[
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    ),
+                    VariableValue_IntegerValue(
+                        integer_value=,
+                    )
+                ],
+            ),
+            expected_result=VariableValue_IntegerValue(
+                integer_value=,
             ),
         )
     ],
@@ -1607,7 +1956,7 @@ client.problem.updateproblem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">deleteproblem</a>(...)</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py">delete_problem</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1634,15 +1983,15 @@ Soft deletes a problem
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.problem.deleteproblem(
+client.problem.delete_problem(
     problem_id="problemId",
 )
 
@@ -1680,7 +2029,7 @@ client.problem.deleteproblem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">getdefaultstarterfiles</a>(...) -> GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py">get_default_starter_files</a>(...) -> GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1707,26 +2056,28 @@ Returns default starter files for problem
 <dd>
 
 ```python
-from seed import SeedApi, VariableTypeAndName, VariableTypeZero
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+from seed.problem import VariableTypeAndName
+from seed.commons import VariableType_IntegerType
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.problem.getdefaultstarterfiles(
+client.problem.get_default_starter_files(
     input_params=[
         VariableTypeAndName(
-            variable_type=VariableTypeZero(
-                type="integerType",
-            ),
+            variable_type=VariableType_IntegerType(),
+            name="name",
+        ),
+        VariableTypeAndName(
+            variable_type=VariableType_IntegerType(),
             name="name",
         )
     ],
-    output_type=VariableTypeZero(
-        type="integerType",
-    ),
+    output_type=VariableType_IntegerType(),
     method_name="methodName",
 )
 
@@ -1788,7 +2139,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">createexecutionsession</a>(...) -> ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py">create_execution_session</a>(...) -> ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1815,15 +2166,15 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.submission.createexecutionsession(
+client.submission.create_execution_session(
     language="JAVA",
 )
 
@@ -1861,7 +2212,7 @@ client.submission.createexecutionsession(
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">getexecutionsession</a>(...) -> ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py">get_execution_session</a>(...) -> typing.Optional[ExecutionSessionResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1888,15 +2239,15 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.submission.getexecutionsession(
+client.submission.get_execution_session(
     session_id="sessionId",
 )
 
@@ -1934,7 +2285,7 @@ client.submission.getexecutionsession(
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">stopexecutionsession</a>(...)</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py">stop_execution_session</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1961,15 +2312,15 @@ Stops execution session.
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.submission.stopexecutionsession(
+client.submission.stop_execution_session(
     session_id="sessionId",
 )
 
@@ -2007,7 +2358,7 @@ client.submission.stopexecutionsession(
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">getexecutionsessionsstate</a>() -> GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py">get_execution_sessions_state</a>() -> GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -2020,15 +2371,15 @@ client.submission.stopexecutionsession(
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.submission.getexecutionsessionsstate()
+client.submission.get_execution_sessions_state()
 
 ```
 </dd>
@@ -2057,7 +2408,7 @@ client.submission.getexecutionsessionsstate()
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py">setnumwarminstances</a>(...)</code></summary>
+<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py">set_num_warm_instances</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2070,15 +2421,15 @@ client.submission.getexecutionsessionsstate()
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.sysprop.setnumwarminstances(
+client.sysprop.set_num_warm_instances(
     language="JAVA",
     num_warm_instances=1,
 )
@@ -2125,7 +2476,7 @@ client.sysprop.setnumwarminstances(
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py">getnumwarminstances</a>() -> typing.Dict[str, int]</code></summary>
+<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py">get_num_warm_instances</a>() -> typing.Dict[Language, int]</code></summary>
 <dl>
 <dd>
 
@@ -2138,15 +2489,15 @@ client.sysprop.setnumwarminstances(
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.sysprop.getnumwarminstances()
+client.sysprop.get_num_warm_instances()
 
 ```
 </dd>
@@ -2174,8 +2525,8 @@ client.sysprop.getnumwarminstances()
 </dl>
 </details>
 
-## V2Problem
-<details><summary><code>client.v2problem.<a href="src/seed/v2problem/client.py">v2problem_get_lightweight_problems</a>() -> typing.List[V2LightweightProblemInfoV2]</code></summary>
+## V2 Problem
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_lightweight_problems</a>() -> typing.List[LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2202,15 +2553,15 @@ Returns lightweight versions of all problems
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2problem.v2problem_get_lightweight_problems()
+client.v2.problem.get_lightweight_problems()
 
 ```
 </dd>
@@ -2238,7 +2589,7 @@ client.v2problem.v2problem_get_lightweight_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v2problem.<a href="src/seed/v2problem/client.py">v2problem_get_problems</a>() -> typing.List[V2ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_problems</a>() -> typing.List[ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2265,15 +2616,15 @@ Returns latest versions of all problems
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2problem.v2problem_get_problems()
+client.v2.problem.get_problems()
 
 ```
 </dd>
@@ -2301,7 +2652,7 @@ client.v2problem.v2problem_get_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v2problem.<a href="src/seed/v2problem/client.py">v2problem_get_latest_problem</a>(...) -> V2ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_latest_problem</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2328,15 +2679,15 @@ Returns latest version of a problem
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2problem.v2problem_get_latest_problem(
+client.v2.problem.get_latest_problem(
     problem_id="problemId",
 )
 
@@ -2374,7 +2725,7 @@ client.v2problem.v2problem_get_latest_problem(
 </dl>
 </details>
 
-<details><summary><code>client.v2problem.<a href="src/seed/v2problem/client.py">v2problem_get_problem_version</a>(...) -> V2ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_problem_version</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2401,15 +2752,15 @@ Returns requested version of a problem
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2problem.v2problem_get_problem_version(
+client.v2.problem.get_problem_version(
     problem_id="problemId",
     problem_version=1,
 )
@@ -2456,8 +2807,8 @@ client.v2problem.v2problem_get_problem_version(
 </dl>
 </details>
 
-## V2V3Problem
-<details><summary><code>client.v2v3problem.<a href="src/seed/v2v3problem/client.py">v2v3problem_get_lightweight_problems</a>() -> typing.List[V2V3LightweightProblemInfoV2]</code></summary>
+## V2 V3 Problem
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_lightweight_problems</a>() -> typing.List[LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2484,15 +2835,15 @@ Returns lightweight versions of all problems
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2v3problem.v2v3problem_get_lightweight_problems()
+client.v2.problem.get_lightweight_problems()
 
 ```
 </dd>
@@ -2520,7 +2871,7 @@ client.v2v3problem.v2v3problem_get_lightweight_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v2v3problem.<a href="src/seed/v2v3problem/client.py">v2v3problem_get_problems</a>() -> typing.List[V2V3ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_problems</a>() -> typing.List[ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2547,15 +2898,15 @@ Returns latest versions of all problems
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2v3problem.v2v3problem_get_problems()
+client.v2.problem.get_problems()
 
 ```
 </dd>
@@ -2583,7 +2934,7 @@ client.v2v3problem.v2v3problem_get_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v2v3problem.<a href="src/seed/v2v3problem/client.py">v2v3problem_get_latest_problem</a>(...) -> V2V3ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_latest_problem</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2610,15 +2961,15 @@ Returns latest version of a problem
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2v3problem.v2v3problem_get_latest_problem(
+client.v2.problem.get_latest_problem(
     problem_id="problemId",
 )
 
@@ -2656,7 +3007,7 @@ client.v2v3problem.v2v3problem_get_latest_problem(
 </dl>
 </details>
 
-<details><summary><code>client.v2v3problem.<a href="src/seed/v2v3problem/client.py">v2v3problem_get_problem_version</a>(...) -> V2V3ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_problem_version</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2683,15 +3034,15 @@ Returns requested version of a problem
 <dd>
 
 ```python
-from seed import SeedApi
-from seed.environment import SeedApiEnvironment
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
-client = SeedApi(
+client = SeedTrace(
     token="<token>",
-    environment=SeedApiEnvironment.DEFAULT,
+    environment=SeedTraceEnvironment.PROD,
 )
 
-client.v2v3problem.v2v3problem_get_problem_version(
+client.v2.problem.get_problem_version(
     problem_id="problemId",
     problem_version=1,
 )

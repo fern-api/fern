@@ -56,10 +56,7 @@ client.Echo(
 <dd>
 
 ```go
-request := &fern.Type{
-        BasicType: fern.BasicTypePrimitive,
-    }
-client.CreateType(
+client.Echo(
         context.TODO(),
         request,
     )

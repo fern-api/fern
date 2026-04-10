@@ -1,2 +1,2 @@
-export { AuthGetTokenWithClientCredentialsRequest } from "./AuthGetTokenWithClientCredentialsRequest.js";
-export { AuthRefreshTokenRequest } from "./AuthRefreshTokenRequest.js";
+export { GetTokenRequest } from "./GetTokenRequest.js";
+export { RefreshTokenRequest } from "./RefreshTokenRequest.js";

@@ -2,10 +2,10 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedTrace from "../../../index.js";
 
 export declare namespace SyspropClient {
     export type Options = BaseClientOptions;
@@ -21,34 +21,41 @@ export class SyspropClient {
     }
 
     /**
-     * @param {SeedApi.SyspropSetNumWarmInstancesRequest} request
+     * @param {SeedTrace.Language} language
+     * @param {number} numWarmInstances
      * @param {SyspropClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.sysprop.setnumwarminstances({
-     *         language: "JAVA",
-     *         numWarmInstances: 1
-     *     })
+     *     await client.sysprop.setNumWarmInstances("JAVA", 1)
      */
-    public setnumwarminstances(
-        request: SeedApi.SyspropSetNumWarmInstancesRequest,
+    public setNumWarmInstances(
+        language: SeedTrace.Language,
+        numWarmInstances: number,
         requestOptions?: SyspropClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.sysprop.setnumwarminstances.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__setnumwarminstances(request, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__setNumWarmInstances(language, numWarmInstances, requestOptions),
+        );
     }
 
-    private async __setnumwarminstances(
-        request: SeedApi.SyspropSetNumWarmInstancesRequest,
+    private async __setNumWarmInstances(
+        language: SeedTrace.Language,
+        numWarmInstances: number,
         requestOptions?: SyspropClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.sysprop.setnumwarminstances.Error>>> {
-        const { language, numWarmInstances } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `sysprop/num-warm-instances/${core.url.encodePathParam(language)}/${core.url.encodePathParam(numWarmInstances)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/sysprop/num-warm-instances/${core.url.encodePathParam(language)}/${core.url.encodePathParam(numWarmInstances)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -80,7 +87,7 @@ export class SyspropClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.sysprop.setnumwarminstances.Error._unknown(_response.error),
+                error: SeedTrace.sysprop.setNumWarmInstances.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -91,26 +98,36 @@ export class SyspropClient {
      * @param {SyspropClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.sysprop.getnumwarminstances()
+     *     await client.sysprop.getNumWarmInstances()
      */
-    public getnumwarminstances(
+    public getNumWarmInstances(
         requestOptions?: SyspropClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<Record<string, number>, SeedApi.sysprop.getnumwarminstances.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__getnumwarminstances(requestOptions));
+    ): core.HttpResponsePromise<
+        core.APIResponse<Partial<Record<SeedTrace.Language, number>>, SeedTrace.sysprop.getNumWarmInstances.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getNumWarmInstances(requestOptions));
     }
 
-    private async __getnumwarminstances(
+    private async __getNumWarmInstances(
         requestOptions?: SyspropClient.RequestOptions,
     ): Promise<
-        core.WithRawResponse<core.APIResponse<Record<string, number>, SeedApi.sysprop.getnumwarminstances.Error>>
+        core.WithRawResponse<
+            core.APIResponse<Partial<Record<SeedTrace.Language, number>>, SeedTrace.sysprop.getNumWarmInstances.Error>
+        >
     > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                "sysprop/num-warm-instances",
+                    environments.SeedTraceEnvironment.Prod,
+                "/sysprop/num-warm-instances",
             ),
             method: "GET",
             headers: _headers,
@@ -131,7 +148,7 @@ export class SyspropClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as Record<string, number>,
+                    body: _response.body as Partial<Record<SeedTrace.Language, number>>,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -142,7 +159,7 @@ export class SyspropClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.sysprop.getnumwarminstances.Error._unknown(_response.error),
+                error: SeedTrace.sysprop.getNumWarmInstances.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

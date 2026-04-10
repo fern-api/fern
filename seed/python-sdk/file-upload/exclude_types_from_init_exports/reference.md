@@ -13,19 +13,7 @@
 <dd>
 
 ```python
-from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.post(
-    file="example_file",
-    file_list="example_file_list",
-    maybe_file="example_maybe_file",
-    maybe_file_list="example_maybe_file_list",
-)
-
+client.service.post(...)
 ```
 </dd>
 </dl>
@@ -40,31 +28,63 @@ client.service.post(
 <dl>
 <dd>
 
+**integer:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `core.File` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_list:** `typing.List[core.File]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**list_of_objects:** `typing.List[MyObject]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_object:** `MyAliasObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**list_of_alias_object:** `typing.List[MyAliasObject]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_list_of_object:** `MyCollectionAliasObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **maybe_string:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**integer:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `typing.Optional[core.File]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file_list:** `typing.Optional[core.File]` 
     
 </dd>
 </dl>
@@ -80,7 +100,7 @@ client.service.post(
 <dl>
 <dd>
 
-**maybe_file_list:** `typing.Optional[core.File]` 
+**maybe_file_list:** `typing.Optional[typing.List[core.File]]` 
     
 </dd>
 </dl>
@@ -97,14 +117,6 @@ client.service.post(
 <dd>
 
 **optional_list_of_strings:** `typing.Optional[typing.List[str]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**list_of_objects:** `typing.Optional[typing.List[MyObject]]` 
     
 </dd>
 </dl>
@@ -136,30 +148,6 @@ client.service.post(
 <dl>
 <dd>
 
-**alias_object:** `typing.Optional[MyAliasObject]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**list_of_alias_object:** `typing.Optional[typing.List[MyAliasObject]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**alias_list_of_object:** `typing.Optional[MyCollectionAliasObject]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -172,7 +160,7 @@ client.service.post(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">justfile</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">just_file</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -185,13 +173,13 @@ client.service.post(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedFileUpload
 
-client = SeedApi(
+client = SeedFileUpload(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.justfile(
+client.service.just_file(
     file="example_file",
 )
 
@@ -209,7 +197,7 @@ client.service.justfile(
 <dl>
 <dd>
 
-**file:** `typing.Optional[core.File]` 
+**file:** `core.File` 
     
 </dd>
 </dl>
@@ -229,7 +217,7 @@ client.service.justfile(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">justfilewithqueryparams</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">just_file_with_query_params</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -242,7 +230,7 @@ client.service.justfile(
 <dd>
 
 ```python
-client.service.justfilewithqueryparams(...)
+client.service.just_file_with_query_params(...)
 ```
 </dd>
 </dl>
@@ -265,7 +253,7 @@ client.service.justfilewithqueryparams(...)
 <dl>
 <dd>
 
-**maybe_string:** `typing.Optional[str]` 
+**list_of_strings:** `typing.Union[str, typing.Sequence[str]]` 
     
 </dd>
 </dl>
@@ -273,83 +261,10 @@ client.service.justfilewithqueryparams(...)
 <dl>
 <dd>
 
-**maybe_integer:** `typing.Optional[int]` 
+**file:** `core.File` 
     
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**list_of_strings:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**optional_list_of_strings:** `typing.Optional[typing.Union[typing.Optional[str], typing.Sequence[typing.Optional[str]]]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `typing.Optional[core.File]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.service.<a href="src/seed/service/client.py">justfilewithoptionalqueryparams</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.justfilewithoptionalqueryparams(
-    file="example_file",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
 
 <dl>
 <dd>
@@ -370,7 +285,7 @@ client.service.justfilewithoptionalqueryparams(
 <dl>
 <dd>
 
-**file:** `typing.Optional[core.File]` 
+**optional_list_of_strings:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
     
 </dd>
 </dl>
@@ -390,7 +305,7 @@ client.service.justfilewithoptionalqueryparams(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">withcontenttype</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">just_file_with_optional_query_params</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -403,16 +318,7 @@ client.service.justfilewithoptionalqueryparams(
 <dd>
 
 ```python
-from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.withcontenttype(
-    file="example_file",
-)
-
+client.service.just_file_with_optional_query_params(...)
 ```
 </dd>
 </dl>
@@ -427,7 +333,7 @@ client.service.withcontenttype(
 <dl>
 <dd>
 
-**file:** `typing.Optional[core.File]` 
+**file:** `core.File` 
     
 </dd>
 </dl>
@@ -435,7 +341,7 @@ client.service.withcontenttype(
 <dl>
 <dd>
 
-**foo:** `typing.Optional[str]` 
+**maybe_string:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -443,7 +349,71 @@ client.service.withcontenttype(
 <dl>
 <dd>
 
-**bar:** `typing.Optional[MyObject]` 
+**maybe_integer:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.<a href="src/seed/service/client.py">with_content_type</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+client.service.with_content_type(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `core.File` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**foo:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bar:** `MyObject` 
     
 </dd>
 </dl>
@@ -471,7 +441,7 @@ client.service.withcontenttype(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">withformencoding</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">with_form_encoding</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -484,16 +454,7 @@ client.service.withcontenttype(
 <dd>
 
 ```python
-from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.withformencoding(
-    file="example_file",
-)
-
+client.service.with_form_encoding(...)
 ```
 </dd>
 </dl>
@@ -508,7 +469,7 @@ client.service.withformencoding(
 <dl>
 <dd>
 
-**file:** `typing.Optional[core.File]` 
+**file:** `core.File` 
     
 </dd>
 </dl>
@@ -516,7 +477,7 @@ client.service.withformencoding(
 <dl>
 <dd>
 
-**foo:** `typing.Optional[str]` 
+**foo:** `str` 
     
 </dd>
 </dl>
@@ -524,7 +485,7 @@ client.service.withformencoding(
 <dl>
 <dd>
 
-**bar:** `typing.Optional[MyObject]` 
+**bar:** `MyObject` 
     
 </dd>
 </dl>
@@ -544,7 +505,7 @@ client.service.withformencoding(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">withformencodedcontainers</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">with_form_encoded_containers</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -557,19 +518,7 @@ client.service.withformencoding(
 <dd>
 
 ```python
-from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.withformencodedcontainers(
-    file="example_file",
-    file_list="example_file_list",
-    maybe_file="example_maybe_file",
-    maybe_file_list="example_maybe_file_list",
-)
-
+client.service.with_form_encoded_containers(...)
 ```
 </dd>
 </dl>
@@ -584,31 +533,71 @@ client.service.withformencodedcontainers(
 <dl>
 <dd>
 
+**integer:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `core.File` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_list:** `typing.List[core.File]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**list_of_objects:** `typing.List[MyObject]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**list_of_objects_with_optionals:** `typing.List[MyObjectWithOptional]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_object:** `MyAliasObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**list_of_alias_object:** `typing.List[MyAliasObject]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_list_of_object:** `MyCollectionAliasObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **maybe_string:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**integer:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `typing.Optional[core.File]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file_list:** `typing.Optional[core.File]` 
     
 </dd>
 </dl>
@@ -624,7 +613,7 @@ client.service.withformencodedcontainers(
 <dl>
 <dd>
 
-**maybe_file_list:** `typing.Optional[core.File]` 
+**maybe_file_list:** `typing.Optional[typing.List[core.File]]` 
     
 </dd>
 </dl>
@@ -641,14 +630,6 @@ client.service.withformencodedcontainers(
 <dd>
 
 **optional_list_of_strings:** `typing.Optional[typing.List[str]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**list_of_objects:** `typing.Optional[typing.List[MyObject]]` 
     
 </dd>
 </dl>
@@ -680,38 +661,6 @@ client.service.withformencodedcontainers(
 <dl>
 <dd>
 
-**list_of_objects_with_optionals:** `typing.Optional[typing.List[MyObjectWithOptional]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**alias_object:** `typing.Optional[MyAliasObject]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**list_of_alias_object:** `typing.Optional[typing.List[MyAliasObject]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**alias_list_of_object:** `typing.Optional[MyCollectionAliasObject]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -724,7 +673,7 @@ client.service.withformencodedcontainers(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">optionalargs</a>(...) -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">optional_args</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -737,13 +686,13 @@ client.service.withformencodedcontainers(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedFileUpload
 
-client = SeedApi(
+client = SeedFileUpload(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.optionalargs(
+client.service.optional_args(
     image_file="example_image_file",
 )
 
@@ -789,7 +738,7 @@ client.service.optionalargs(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">withinlinetype</a>(...) -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">with_inline_type</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -802,16 +751,7 @@ client.service.optionalargs(
 <dd>
 
 ```python
-from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.withinlinetype(
-    file="example_file",
-)
-
+client.service.with_inline_type(...)
 ```
 </dd>
 </dl>
@@ -826,7 +766,7 @@ client.service.withinlinetype(
 <dl>
 <dd>
 
-**file:** `typing.Optional[core.File]` 
+**file:** `core.File` 
     
 </dd>
 </dl>
@@ -834,7 +774,7 @@ client.service.withinlinetype(
 <dl>
 <dd>
 
-**request:** `typing.Optional[MyInlineType]` 
+**request:** `MyInlineType` 
     
 </dd>
 </dl>
@@ -854,7 +794,7 @@ client.service.withinlinetype(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">withjsonproperty</a>(...) -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">with_json_property</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -867,16 +807,7 @@ client.service.withinlinetype(
 <dd>
 
 ```python
-from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.withjsonproperty(
-    file="example_file",
-)
-
+client.service.with_json_property(...)
 ```
 </dd>
 </dl>
@@ -891,7 +822,7 @@ client.service.withjsonproperty(
 <dl>
 <dd>
 
-**file:** `typing.Optional[core.File]` 
+**file:** `core.File` 
     
 </dd>
 </dl>
@@ -932,9 +863,9 @@ client.service.withjsonproperty(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedFileUpload
 
-client = SeedApi(
+client = SeedFileUpload(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -966,7 +897,7 @@ client.service.simple()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">withliteralandenumtypes</a>(...) -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">with_literal_and_enum_types</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -979,16 +910,7 @@ client.service.simple()
 <dd>
 
 ```python
-from seed import SeedApi
-
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.service.withliteralandenumtypes(
-    file="example_file",
-)
-
+client.service.with_literal_and_enum_types(...)
 ```
 </dd>
 </dl>
@@ -1003,7 +925,7 @@ client.service.withliteralandenumtypes(
 <dl>
 <dd>
 
-**file:** `typing.Optional[core.File]` 
+**file:** `core.File` 
     
 </dd>
 </dl>

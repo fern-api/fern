@@ -60,9 +60,10 @@ impl GetFooQueryRequestBuilder {
         Ok(GetFooQueryRequest {
             optional_baz: self.optional_baz,
             optional_nullable_baz: self.optional_nullable_baz,
-            required_baz: self.required_baz.ok_or_else(|| BuildError::missing_field("required_baz"))?,
+            required_baz: self
+                .required_baz
+                .ok_or_else(|| BuildError::missing_field("required_baz"))?,
             required_nullable_baz: self.required_nullable_baz,
         })
     }
 }
-

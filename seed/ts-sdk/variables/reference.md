@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">post</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">post</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,7 @@
 <dd>
 
 ```typescript
-await client.service.post({
-    endpointParam: "endpointParam"
-});
+await client.service.post();
 
 ```
 </dd>
@@ -27,14 +25,6 @@ await client.service.post({
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.ServicePostRequest` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>

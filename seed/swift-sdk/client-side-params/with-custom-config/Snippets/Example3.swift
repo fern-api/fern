@@ -7,10 +7,15 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.service.getresource(
-        resourceId: "resourceId",
-        includeMetadata: true,
-        format: "format"
+    _ = try await client.service.listUsers(
+        page: 1,
+        perPage: 1,
+        includeTotals: true,
+        sort: "sort",
+        connection: "connection",
+        q: "q",
+        searchEngine: "search_engine",
+        fields: "fields"
     )
 }
 

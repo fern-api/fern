@@ -3,12 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Admin\Requests\AdminSendWorkspaceSubmissionUpdateRequest;
-use Seed\Types\WorkspaceSubmissionUpdate;
-use DateTime;
-use Seed\Types\WorkspaceSubmissionUpdateInfoZero;
-use Seed\Types\WorkspaceSubmissionUpdateInfoZeroType;
-use Seed\Types\RunningSubmissionState;
 
 $client = new SeedClient(
     token: '<token>',
@@ -16,15 +10,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->admin->sendworkspacesubmissionupdate(
-    'submissionId',
-    new AdminSendWorkspaceSubmissionUpdateRequest([
-        'body' => new WorkspaceSubmissionUpdate([
-            'updateTime' => new DateTime('2024-01-15T09:30:00Z'),
-            'updateInfo' => new WorkspaceSubmissionUpdateInfoZero([
-                'type' => WorkspaceSubmissionUpdateInfoZeroType::Running->value,
-                'value' => RunningSubmissionState::QueueingSubmission->value,
-            ]),
-        ]),
-    ]),
-);
+$client->homepage->getHomepageProblems();

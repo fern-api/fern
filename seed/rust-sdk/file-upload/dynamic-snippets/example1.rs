@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_file_upload::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,12 +6,13 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = FileUploadClient::new(config).expect("Failed to build client");
     client
         .service
-        .justfile(
-            &JustfileRequest {
-                file: b"test file content".to_vec(),
+        .optional_args(
+            &OptionalArgsRequest {
+                image_file: b"test file content".to_vec(),
+                request: None,
             },
             None,
         )

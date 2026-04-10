@@ -1,20 +1,20 @@
 {
   "mappings": [
     {
-      "id": "853cf8e1-6d2f-4d7e-91e3-743e1f44d390",
+      "id": "726fdf0f-2f43-496f-ba21-8f2c85cdb4bd",
       "name": "echo - default",
       "request": {
-        "urlPathTemplate": "/echo",
+        "urlPathTemplate": "/",
         "method": "POST"
       },
       "response": {
         "status": 200,
-        "body": "\"string\"",
+        "body": "\"Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines\"",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "853cf8e1-6d2f-4d7e-91e3-743e1f44d390",
+      "uuid": "726fdf0f-2f43-496f-ba21-8f2c85cdb4bd",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -27,10 +27,10 @@
       }
     },
     {
-      "id": "8eb4cbcf-9a1e-479c-ab83-8c01ae57130f",
+      "id": "84443a97-a042-44d9-b597-c9c4943af730",
       "name": "createType - default",
       "request": {
-        "urlPathTemplate": "/type",
+        "urlPathTemplate": "/",
         "method": "POST"
       },
       "response": {
@@ -40,7 +40,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "8eb4cbcf-9a1e-479c-ab83-8c01ae57130f",
+      "uuid": "84443a97-a042-44d9-b597-c9c4943af730",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -53,8 +53,8 @@
       }
     },
     {
-      "id": "ec814afd-ab49-4307-80be-f2e52fefbb29",
-      "name": "file_notification_service_getException - default",
+      "id": "b764adc3-65e9-40d2-8ca4-d300ff7fdc99",
+      "name": "getException - default",
       "request": {
         "urlPathTemplate": "/file/notification/{notificationId}",
         "method": "GET",
@@ -62,21 +62,16 @@
           "Authorization": {
             "matches": "Bearer .+"
           }
-        },
-        "pathParameters": {
-          "notificationId": {
-            "equalTo": "notificationId"
-          }
         }
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"exceptionType\": \"exceptionType\",\n  \"exceptionMessage\": \"exceptionMessage\",\n  \"exceptionStacktrace\": \"exceptionStacktrace\",\n  \"type\": \"generic\"\n}",
+        "body": "{\n  \"type\": \"generic\",\n  \"exceptionType\": \"Unavailable\",\n  \"exceptionMessage\": \"This component is unavailable!\",\n  \"exceptionStacktrace\": \"<logs>\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "ec814afd-ab49-4307-80be-f2e52fefbb29",
+      "uuid": "b764adc3-65e9-40d2-8ca4-d300ff7fdc99",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -86,11 +81,12 @@
             "via": "SYSTEM"
           }
         }
-      }
+      },
+      "postServeActions": []
     },
     {
-      "id": "5cfe691d-7e2c-4c6d-991c-04b394acc9ab",
-      "name": "file_service_getFile - default",
+      "id": "a430abe8-03a0-48c9-97d3-345f8f18e526",
+      "name": "getFile - default",
       "request": {
         "urlPathTemplate": "/file/{filename}",
         "method": "GET",
@@ -101,18 +97,18 @@
         },
         "pathParameters": {
           "filename": {
-            "equalTo": "filename"
+            "equalTo": "file.txt"
           }
         }
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"name\": \"name\",\n  \"contents\": \"contents\"\n}",
+        "body": "\"A file with that name was not found!\"",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "5cfe691d-7e2c-4c6d-991c-04b394acc9ab",
+      "uuid": "a430abe8-03a0-48c9-97d3-345f8f18e526",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -125,8 +121,8 @@
       }
     },
     {
-      "id": "89fd10c9-686c-4da6-a525-00cb3fbd88e4",
-      "name": "health_service_check - default",
+      "id": "ce3bbb3f-b9ec-4f36-801c-f2a047201463",
+      "name": "check - Example0",
       "request": {
         "urlPathTemplate": "/check/{id}",
         "method": "GET",
@@ -137,7 +133,7 @@
         },
         "pathParameters": {
           "id": {
-            "equalTo": "id"
+            "equalTo": "id-2sdx82h"
           }
         }
       },
@@ -148,7 +144,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "89fd10c9-686c-4da6-a525-00cb3fbd88e4",
+      "uuid": "ce3bbb3f-b9ec-4f36-801c-f2a047201463",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -161,8 +157,8 @@
       }
     },
     {
-      "id": "56f31169-39ce-4790-9f99-11052f4671a3",
-      "name": "health_service_ping - default",
+      "id": "693eae56-0081-4c61-9b8b-1bacf7598867",
+      "name": "ping - Example0",
       "request": {
         "urlPathTemplate": "/ping",
         "method": "GET",
@@ -179,7 +175,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "56f31169-39ce-4790-9f99-11052f4671a3",
+      "uuid": "693eae56-0081-4c61-9b8b-1bacf7598867",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -193,25 +189,25 @@
       "postServeActions": []
     },
     {
-      "id": "1afa8d12-6b0d-4e73-b62c-ea58496426ad",
-      "name": "getmovie - default",
+      "id": "bab1035b-5611-44e7-8b08-2fd0498e4f58",
+      "name": "getMovie - default",
       "request": {
         "urlPathTemplate": "/movie/{movieId}",
         "method": "GET",
         "pathParameters": {
           "movieId": {
-            "equalTo": "movieId"
+            "equalTo": "movie-c06a4ad7"
           }
         }
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"prequel\": \"prequel\",\n  \"title\": \"title\",\n  \"from\": \"from\",\n  \"rating\": 1.1,\n  \"type\": \"movie\",\n  \"tag\": \"tag\",\n  \"book\": \"book\",\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"revenue\": 1000000\n}",
+        "body": "{\n  \"id\": \"movie-c06a4ad7\",\n  \"prequel\": \"movie-cv9b914f\",\n  \"title\": \"The Boy and the Heron\",\n  \"from\": \"Hayao Miyazaki\",\n  \"rating\": 8,\n  \"type\": \"movie\",\n  \"tag\": \"tag-wf9as23d\",\n  \"metadata\": {\n    \"actors\": [\n      \"Christian Bale\",\n      \"Florence Pugh\",\n      \"Willem Dafoe\"\n    ],\n    \"releaseDate\": \"2023-12-08\",\n    \"ratings\": {\n      \"rottenTomatoes\": 97,\n      \"imdb\": 7.6\n    }\n  },\n  \"revenue\": 1000000\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "1afa8d12-6b0d-4e73-b62c-ea58496426ad",
+      "uuid": "bab1035b-5611-44e7-8b08-2fd0498e4f58",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -224,20 +220,20 @@
       }
     },
     {
-      "id": "1e577792-aa58-490f-92d4-d98fb2614d6a",
-      "name": "createmovie - default",
+      "id": "d6fce3a2-5f5b-4d72-93c8-bc46ea0e4b75",
+      "name": "createMovie - default",
       "request": {
         "urlPathTemplate": "/movie",
         "method": "POST"
       },
       "response": {
         "status": 200,
-        "body": "\"string\"",
+        "body": "\"movie-c06a4ad7\"",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "1e577792-aa58-490f-92d4-d98fb2614d6a",
+      "uuid": "d6fce3a2-5f5b-4d72-93c8-bc46ea0e4b75",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -250,20 +246,20 @@
       }
     },
     {
-      "id": "604e46cb-b279-4c37-a514-cb1f61b5f624",
-      "name": "getmetadata - default",
+      "id": "1934d1b2-cc01-43f6-bc9e-e259c71b7b63",
+      "name": "getMetadata - default",
       "request": {
         "urlPathTemplate": "/metadata",
         "method": "GET"
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"value\": \"value\",\n  \"type\": \"html\",\n  \"extra\": {\n    \"key\": \"value\"\n  },\n  \"tags\": [\n    \"string\"\n  ]\n}",
+        "body": "{\n  \"type\": \"html\",\n  \"extra\": {\n    \"version\": \"0.0.1\",\n    \"tenancy\": \"test\"\n  },\n  \"tags\": [\n    \"development\",\n    \"public\"\n  ],\n  \"value\": \"<head>...</head>\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "604e46cb-b279-4c37-a514-cb1f61b5f624",
+      "uuid": "1934d1b2-cc01-43f6-bc9e-e259c71b7b63",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -277,20 +273,20 @@
       "postServeActions": []
     },
     {
-      "id": "533966d1-bde3-4907-8650-804ef08b915d",
-      "name": "createbigentity - default",
+      "id": "b527ed65-aa21-448e-8e5a-409ba88bd508",
+      "name": "createBigEntity - default",
       "request": {
         "urlPathTemplate": "/big-entity",
         "method": "POST"
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"response\": {\n    \"key\": \"value\"\n  },\n  \"identifiers\": [\n    {\n      \"type\": \"primitive\",\n      \"value\": \"value\",\n      \"label\": \"label\"\n    }\n  ]\n}",
+        "body": "{\n  \"response\": {\n    \"key\": \"value\"\n  },\n  \"identifiers\": [\n    {\n      \"type\": \"primitive\",\n      \"value\": \"value\",\n      \"label\": \"label\"\n    },\n    {\n      \"type\": \"primitive\",\n      \"value\": \"value\",\n      \"label\": \"label\"\n    }\n  ]\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "533966d1-bde3-4907-8650-804ef08b915d",
+      "uuid": "b527ed65-aa21-448e-8e5a-409ba88bd508",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -303,8 +299,8 @@
       }
     },
     {
-      "id": "d9655ce8-2dd7-42f3-82ec-10c0253cea8b",
-      "name": "refreshtoken - default",
+      "id": "531b3100-306f-4751-866a-f36e8408e770",
+      "name": "refreshToken - default",
       "request": {
         "urlPathTemplate": "/refresh-token",
         "method": "POST"
@@ -316,7 +312,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "d9655ce8-2dd7-42f3-82ec-10c0253cea8b",
+      "uuid": "531b3100-306f-4751-866a-f36e8408e770",
       "persistent": true,
       "priority": 3,
       "metadata": {

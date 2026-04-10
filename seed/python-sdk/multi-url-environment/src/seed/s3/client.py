@@ -25,7 +25,7 @@ class S3Client:
         """
         return self._raw_client
 
-    def getpresignedurl(self, *, s3key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def get_presigned_url(self, *, s3key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -38,20 +38,18 @@ class S3Client:
         -------
         str
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedMultiUrlEnvironment
 
-        client = SeedApi(
+        client = SeedMultiUrlEnvironment(
             token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
         )
-        client.s3.getpresignedurl(
+        client.s3.get_presigned_url(
             s3key="s3Key",
         )
         """
-        _response = self._raw_client.getpresignedurl(s3key=s3key, request_options=request_options)
+        _response = self._raw_client.get_presigned_url(s3key=s3key, request_options=request_options)
         return _response.data
 
 
@@ -70,7 +68,7 @@ class AsyncS3Client:
         """
         return self._raw_client
 
-    async def getpresignedurl(self, *, s3key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
+    async def get_presigned_url(self, *, s3key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters
         ----------
@@ -83,26 +81,24 @@ class AsyncS3Client:
         -------
         str
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedMultiUrlEnvironment
 
-        client = AsyncSeedApi(
+        client = AsyncSeedMultiUrlEnvironment(
             token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.s3.getpresignedurl(
+            await client.s3.get_presigned_url(
                 s3key="s3Key",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getpresignedurl(s3key=s3key, request_options=request_options)
+        _response = await self._raw_client.get_presigned_url(s3key=s3key, request_options=request_options)
         return _response.data

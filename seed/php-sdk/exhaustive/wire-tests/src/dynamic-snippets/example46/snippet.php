@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsObject->endpointsObjectGetAndReturnMapOfDocumentedUnknownType(
-    [],
+$client->endpoints->primitive->getAndReturnInt(
+    1,
 );

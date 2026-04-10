@@ -3,6 +3,8 @@
 package client
 
 import (
+	os "os"
+
 	core "github.com/bearer-token-environment-variable/fern/core"
 	internal "github.com/bearer-token-environment-variable/fern/internal"
 	option "github.com/bearer-token-environment-variable/fern/option"
@@ -19,6 +21,9 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.APIKey == "" {
+		options.APIKey = os.Getenv("COURIER_API_KEY")
+	}
 	return &Client{
 		Service: service.NewClient(options),
 		options: options,

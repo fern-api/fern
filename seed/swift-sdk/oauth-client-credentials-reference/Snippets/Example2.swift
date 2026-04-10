@@ -1,13 +1,10 @@
 import Foundation
-import Api
+import OauthClientCredentialsReference
 
 private func main() async throws {
-    let client = ApiClient(
-        baseURL: "https://api.fern.com",
-        token: "<token>"
-    )
+    let client = OauthClientCredentialsReferenceClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.simple.getsomething()
+    _ = try await client.simple.getSomething()
 }
 
 try await main()

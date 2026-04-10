@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">getresource</a>(...) -> Resource</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_resource</a>(...) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,14 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedMixedCase
 
-client = SeedApi(
+client = SeedMixedCase(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.getresource(
-    resource_id="ResourceID",
+client.service.get_resource(
+    resource_id="rsc-xyz",
 )
 
 ```
@@ -57,7 +57,7 @@ client.service.getresource(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">listresources</a>(...) -> typing.List[Resource]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_resources</a>(...) -> typing.List[Resource]</code></summary>
 <dl>
 <dd>
 
@@ -70,16 +70,16 @@ client.service.getresource(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedMixedCase
 import datetime
 
-client = SeedApi(
+client = SeedMixedCase(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.listresources(
-    page_limit=1,
-    before_date=datetime.date.fromisoformat("2023-01-15"),
+client.service.list_resources(
+    page_limit=10,
+    before_date=datetime.date.fromisoformat("2023-01-01"),
 )
 
 ```

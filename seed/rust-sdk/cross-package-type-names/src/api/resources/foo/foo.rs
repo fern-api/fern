@@ -15,7 +15,7 @@ impl FooClient {
 
     pub async fn find(
         &self,
-        request: &FooFindRequest,
+        request: &FindRequest,
         options: Option<RequestOptions>,
     ) -> Result<ImportingType, ApiError> {
         self.http_client
@@ -24,7 +24,7 @@ impl FooClient {
                 "",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 QueryBuilder::new()
-                    .serialize("optionalString", request.optional_string.clone())
+                    .serialize("optionalString", Some(request.optional_string.clone()))
                     .build(),
                 options,
             )

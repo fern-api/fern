@@ -9,6 +9,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->union->get(
-    'string',
-);
+$client->union->getMetadata();

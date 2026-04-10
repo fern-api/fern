@@ -37,10 +37,10 @@ func NewClient(options *core.RequestOptions) *Client {
 func (c *Client) Post(
 	ctx context.Context,
 	file io.Reader,
-	fileList io.Reader,
+	fileList []io.Reader,
 	maybeFile io.Reader,
-	maybeFileList io.Reader,
-	request *fern.ServicePostRequest,
+	maybeFileList []io.Reader,
+	request *fern.MyRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Post(
@@ -58,12 +58,12 @@ func (c *Client) Post(
 	return nil
 }
 
-func (c *Client) Justfile(
+func (c *Client) JustFile(
 	ctx context.Context,
 	file io.Reader,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Justfile(
+	_, err := c.WithRawResponse.JustFile(
 		ctx,
 		file,
 		opts...,
@@ -74,31 +74,13 @@ func (c *Client) Justfile(
 	return nil
 }
 
-func (c *Client) Justfilewithqueryparams(
+func (c *Client) JustFileWithQueryParams(
 	ctx context.Context,
 	file io.Reader,
-	request *fern.ServiceJustFileWithQueryParamsRequest,
+	request *fern.JustFileWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Justfilewithqueryparams(
-		ctx,
-		file,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func (c *Client) Justfilewithoptionalqueryparams(
-	ctx context.Context,
-	file io.Reader,
-	request *fern.ServiceJustFileWithOptionalQueryParamsRequest,
-	opts ...option.RequestOption,
-) error {
-	_, err := c.WithRawResponse.Justfilewithoptionalqueryparams(
+	_, err := c.WithRawResponse.JustFileWithQueryParams(
 		ctx,
 		file,
 		request,
@@ -110,13 +92,13 @@ func (c *Client) Justfilewithoptionalqueryparams(
 	return nil
 }
 
-func (c *Client) Withcontenttype(
+func (c *Client) JustFileWithOptionalQueryParams(
 	ctx context.Context,
 	file io.Reader,
-	request *fern.ServiceWithContentTypeRequest,
+	request *fern.JustFileWithOptionalQueryParamsRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Withcontenttype(
+	_, err := c.WithRawResponse.JustFileWithOptionalQueryParams(
 		ctx,
 		file,
 		request,
@@ -128,13 +110,13 @@ func (c *Client) Withcontenttype(
 	return nil
 }
 
-func (c *Client) Withformencoding(
+func (c *Client) WithContentType(
 	ctx context.Context,
 	file io.Reader,
-	request *fern.ServiceWithFormEncodingRequest,
+	request *fern.WithContentTypeRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Withformencoding(
+	_, err := c.WithRawResponse.WithContentType(
 		ctx,
 		file,
 		request,
@@ -146,16 +128,34 @@ func (c *Client) Withformencoding(
 	return nil
 }
 
-func (c *Client) Withformencodedcontainers(
+func (c *Client) WithFormEncoding(
 	ctx context.Context,
 	file io.Reader,
-	fileList io.Reader,
+	request *fern.WithFormEncodingRequest,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.WithFormEncoding(
+		ctx,
+		file,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *Client) WithFormEncodedContainers(
+	ctx context.Context,
+	file io.Reader,
+	fileList []io.Reader,
 	maybeFile io.Reader,
-	maybeFileList io.Reader,
-	request *fern.ServiceWithFormEncodedContainersRequest,
+	maybeFileList []io.Reader,
+	request *fern.MyOtherRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Withformencodedcontainers(
+	_, err := c.WithRawResponse.WithFormEncodedContainers(
 		ctx,
 		file,
 		fileList,
@@ -170,13 +170,13 @@ func (c *Client) Withformencodedcontainers(
 	return nil
 }
 
-func (c *Client) Optionalargs(
+func (c *Client) OptionalArgs(
 	ctx context.Context,
 	imageFile io.Reader,
-	request *fern.ServiceOptionalArgsRequest,
+	request *fern.OptionalArgsRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Optionalargs(
+	response, err := c.WithRawResponse.OptionalArgs(
 		ctx,
 		imageFile,
 		request,
@@ -188,13 +188,13 @@ func (c *Client) Optionalargs(
 	return response.Body, nil
 }
 
-func (c *Client) Withinlinetype(
+func (c *Client) WithInlineType(
 	ctx context.Context,
 	file io.Reader,
-	request *fern.ServiceWithInlineTypeRequest,
+	request *fern.InlineTypeRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Withinlinetype(
+	response, err := c.WithRawResponse.WithInlineType(
 		ctx,
 		file,
 		request,
@@ -206,13 +206,13 @@ func (c *Client) Withinlinetype(
 	return response.Body, nil
 }
 
-func (c *Client) Withjsonproperty(
+func (c *Client) WithJSONProperty(
 	ctx context.Context,
 	file io.Reader,
-	request *fern.ServiceWithJSONPropertyRequest,
+	request *fern.WithJSONPropertyRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Withjsonproperty(
+	response, err := c.WithRawResponse.WithJSONProperty(
 		ctx,
 		file,
 		request,
@@ -238,13 +238,13 @@ func (c *Client) Simple(
 	return nil
 }
 
-func (c *Client) Withliteralandenumtypes(
+func (c *Client) WithLiteralAndEnumTypes(
 	ctx context.Context,
 	file io.Reader,
-	request *fern.ServiceWithLiteralAndEnumTypesRequest,
+	request *fern.LiteralEnumRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Withliteralandenumtypes(
+	response, err := c.WithRawResponse.WithLiteralAndEnumTypes(
 		ctx,
 		file,
 		request,

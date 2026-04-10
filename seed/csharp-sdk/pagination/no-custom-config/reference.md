@@ -1,6 +1,6 @@
 # Reference
-## Complex
-<details><summary><code>client.Complex.<a href="/src/SeedApi/Complex/ComplexClient.cs">SearchAsync</a>(SearchRequest { ... }) -> WithRawResponseTask&lt;PaginatedConversationResponse&gt;</code></summary>
+## Conversations
+<details><summary><code>client.Complex.<a href="/src/SeedPagination/Complex/ComplexClient.cs">SearchAsync</a>(index, SearchRequest { ... }) -> Pager&lt;Conversation&gt;</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,17 @@
 
 ```csharp
 await client.Complex.SearchAsync(
-    new SearchRequest { Index = "index", Query = new SingleFilterSearchRequest() }
+    "index",
+    new SearchRequest
+    {
+        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
+        Query = new SingleFilterSearchRequest
+        {
+            Field = "field",
+            Operator = SingleFilterSearchRequestOperator.Equals_,
+            Value = "value",
+        },
+    }
 );
 ```
 </dd>
@@ -26,6 +36,14 @@ await client.Complex.SearchAsync(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**index:** `string` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -42,8 +60,8 @@ await client.Complex.SearchAsync(
 </dl>
 </details>
 
-## InlineUsersInlineUsers
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithCursorPaginationAsync</a>(InlineUsersInlineUsersListWithCursorPaginationRequest { ... }) -> WithRawResponseTask&lt;InlineUsersListUsersPaginationResponse&gt;</code></summary>
+## InlineUsers InlineUsers
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithCursorPaginationAsync</a>(ListUsersCursorPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -56,8 +74,14 @@ await client.Complex.SearchAsync(
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithCursorPaginationAsync(
-    new InlineUsersInlineUsersListWithCursorPaginationRequest()
+await client.InlineUsers.InlineUsers.ListWithCursorPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersCursorPaginationRequest
+    {
+        Page = 1,
+        PerPage = 1,
+        Order = SeedPagination.InlineUsers.Order.Asc,
+        StartingAfter = "starting_after",
+    }
 );
 ```
 </dd>
@@ -73,7 +97,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithCursorPaginati
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithCursorPaginationRequest` 
+**request:** `ListUsersCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -85,7 +109,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithCursorPaginati
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithMixedTypeCursorPaginationAsync</a>(InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest { ... }) -> WithRawResponseTask&lt;InlineUsersListUsersMixedTypePaginationResponse&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithMixedTypeCursorPaginationAsync</a>(ListUsersMixedTypeCursorPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -98,8 +122,8 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithCursorPaginati
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithMixedTypeCursorPaginationAsync(
-    new InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest()
+await client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
 );
 ```
 </dd>
@@ -115,7 +139,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithMixedTypeCurso
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest` 
+**request:** `ListUsersMixedTypeCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -127,7 +151,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithMixedTypeCurso
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithBodyCursorPaginationAsync</a>(InlineUsersInlineUsersListWithBodyCursorPaginationRequest { ... }) -> WithRawResponseTask&lt;InlineUsersListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithBodyCursorPaginationAsync</a>(ListUsersBodyCursorPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -140,8 +164,11 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithMixedTypeCurso
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyCursorPaginationAsync(
-    new InlineUsersInlineUsersListWithBodyCursorPaginationRequest()
+await client.InlineUsers.InlineUsers.ListWithBodyCursorPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersBodyCursorPaginationRequest
+    {
+        Pagination = new SeedPagination.InlineUsers.WithCursor { Cursor = "cursor" },
+    }
 );
 ```
 </dd>
@@ -157,7 +184,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyCursorPagi
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithBodyCursorPaginationRequest` 
+**request:** `ListUsersBodyCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -169,7 +196,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyCursorPagi
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithOffsetPaginationAsync</a>(InlineUsersInlineUsersListWithOffsetPaginationRequest { ... }) -> WithRawResponseTask&lt;InlineUsersListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithOffsetPaginationAsync</a>(ListUsersOffsetPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -182,8 +209,14 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyCursorPagi
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginationAsync(
-    new InlineUsersInlineUsersListWithOffsetPaginationRequest()
+await client.InlineUsers.InlineUsers.ListWithOffsetPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersOffsetPaginationRequest
+    {
+        Page = 1,
+        PerPage = 1,
+        Order = SeedPagination.InlineUsers.Order.Asc,
+        StartingAfter = "starting_after",
+    }
 );
 ```
 </dd>
@@ -199,7 +232,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginati
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithOffsetPaginationRequest` 
+**request:** `ListUsersOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -211,7 +244,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginati
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithDoubleOffsetPaginationAsync</a>(InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest { ... }) -> WithRawResponseTask&lt;InlineUsersListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithDoubleOffsetPaginationAsync</a>(ListUsersDoubleOffsetPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -224,8 +257,14 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginati
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithDoubleOffsetPaginationAsync(
-    new InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest()
+await client.InlineUsers.InlineUsers.ListWithDoubleOffsetPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersDoubleOffsetPaginationRequest
+    {
+        Page = 1.1,
+        PerPage = 1.1,
+        Order = SeedPagination.InlineUsers.Order.Asc,
+        StartingAfter = "starting_after",
+    }
 );
 ```
 </dd>
@@ -241,7 +280,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithDoubleOffsetPa
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest` 
+**request:** `ListUsersDoubleOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -253,7 +292,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithDoubleOffsetPa
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithBodyOffsetPaginationAsync</a>(InlineUsersInlineUsersListWithBodyOffsetPaginationRequest { ... }) -> WithRawResponseTask&lt;InlineUsersListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithBodyOffsetPaginationAsync</a>(ListUsersBodyOffsetPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -266,8 +305,11 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithDoubleOffsetPa
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyOffsetPaginationAsync(
-    new InlineUsersInlineUsersListWithBodyOffsetPaginationRequest()
+await client.InlineUsers.InlineUsers.ListWithBodyOffsetPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersBodyOffsetPaginationRequest
+    {
+        Pagination = new SeedPagination.InlineUsers.WithPage { Page = 1 },
+    }
 );
 ```
 </dd>
@@ -283,7 +325,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyOffsetPagi
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithBodyOffsetPaginationRequest` 
+**request:** `ListUsersBodyOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -295,7 +337,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyOffsetPagi
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithOffsetStepPaginationAsync</a>(InlineUsersInlineUsersListWithOffsetStepPaginationRequest { ... }) -> WithRawResponseTask&lt;InlineUsersListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithOffsetStepPaginationAsync</a>(ListUsersOffsetStepPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -308,8 +350,13 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyOffsetPagi
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetStepPaginationAsync(
-    new InlineUsersInlineUsersListWithOffsetStepPaginationRequest()
+await client.InlineUsers.InlineUsers.ListWithOffsetStepPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersOffsetStepPaginationRequest
+    {
+        Page = 1,
+        Limit = 1,
+        Order = SeedPagination.InlineUsers.Order.Asc,
+    }
 );
 ```
 </dd>
@@ -325,7 +372,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetStepPagi
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithOffsetStepPaginationRequest` 
+**request:** `ListUsersOffsetStepPaginationRequest` 
     
 </dd>
 </dl>
@@ -337,7 +384,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetStepPagi
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithOffsetPaginationHasNextPageAsync</a>(InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest { ... }) -> WithRawResponseTask&lt;InlineUsersListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithOffsetPaginationHasNextPageAsync</a>(ListWithOffsetPaginationHasNextPageRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -350,8 +397,13 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetStepPagi
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginationHasNextPageAsync(
-    new InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest()
+await client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPageAsync(
+    new SeedPagination.InlineUsers.ListWithOffsetPaginationHasNextPageRequest
+    {
+        Page = 1,
+        Limit = 1,
+        Order = SeedPagination.InlineUsers.Order.Asc,
+    }
 );
 ```
 </dd>
@@ -367,7 +419,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginati
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest` 
+**request:** `ListWithOffsetPaginationHasNextPageRequest` 
     
 </dd>
 </dl>
@@ -379,7 +431,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginati
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithExtendedResultsAsync</a>(InlineUsersInlineUsersListWithExtendedResultsRequest { ... }) -> WithRawResponseTask&lt;InlineUsersListUsersExtendedResponse&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithExtendedResultsAsync</a>(ListUsersExtendedRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -392,8 +444,11 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginati
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResultsAsync(
-    new InlineUsersInlineUsersListWithExtendedResultsRequest()
+await client.InlineUsers.InlineUsers.ListWithExtendedResultsAsync(
+    new SeedPagination.InlineUsers.ListUsersExtendedRequest
+    {
+        Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    }
 );
 ```
 </dd>
@@ -409,7 +464,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResult
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithExtendedResultsRequest` 
+**request:** `ListUsersExtendedRequest` 
     
 </dd>
 </dl>
@@ -421,7 +476,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResult
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataAsync</a>(InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest { ... }) -> WithRawResponseTask&lt;InlineUsersListUsersExtendedOptionalListResponse&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithExtendedResultsAndOptionalDataAsync</a>(ListUsersExtendedRequestForOptionalData { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -434,8 +489,11 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResult
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataAsync(
-    new InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest()
+await client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalDataAsync(
+    new SeedPagination.InlineUsers.ListUsersExtendedRequestForOptionalData
+    {
+        Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    }
 );
 ```
 </dd>
@@ -451,7 +509,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResult
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest` 
+**request:** `ListUsersExtendedRequestForOptionalData` 
     
 </dd>
 </dl>
@@ -463,7 +521,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResult
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListUsernamesAsync</a>(InlineUsersInlineUsersListUsernamesRequest { ... }) -> WithRawResponseTask&lt;UsernameCursor&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListUsernamesAsync</a>(ListUsernamesRequest { ... }) -> Pager&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -476,8 +534,8 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResult
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListUsernamesAsync(
-    new InlineUsersInlineUsersListUsernamesRequest()
+await client.InlineUsers.InlineUsers.ListUsernamesAsync(
+    new SeedPagination.InlineUsers.ListUsernamesRequest { StartingAfter = "starting_after" }
 );
 ```
 </dd>
@@ -493,7 +551,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListUsernamesAsync(
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListUsernamesRequest` 
+**request:** `ListUsernamesRequest` 
     
 </dd>
 </dl>
@@ -505,7 +563,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListUsernamesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsersInlineUsers.<a href="/src/SeedApi/InlineUsersInlineUsers/InlineUsersInlineUsersClient.cs">InlineUsersInlineUsersListWithGlobalConfigAsync</a>(InlineUsersInlineUsersListWithGlobalConfigRequest { ... }) -> WithRawResponseTask&lt;InlineUsersUsernameContainer&gt;</code></summary>
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient_.cs">ListWithGlobalConfigAsync</a>(ListWithGlobalConfigRequest { ... }) -> Pager&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -518,8 +576,8 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListUsernamesAsync(
 <dd>
 
 ```csharp
-await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithGlobalConfigAsync(
-    new InlineUsersInlineUsersListWithGlobalConfigRequest()
+await client.InlineUsers.InlineUsers.ListWithGlobalConfigAsync(
+    new SeedPagination.InlineUsers.ListWithGlobalConfigRequest { Offset = 1 }
 );
 ```
 </dd>
@@ -535,7 +593,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithGlobalConfigAs
 <dl>
 <dd>
 
-**request:** `InlineUsersInlineUsersListWithGlobalConfigRequest` 
+**request:** `ListWithGlobalConfigRequest` 
     
 </dd>
 </dl>
@@ -548,7 +606,7 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithGlobalConfigAs
 </details>
 
 ## Users
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithcursorpaginationAsync</a>(UsersListWithCursorPaginationRequest { ... }) -> WithRawResponseTask&lt;ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithCursorPaginationAsync</a>(ListUsersCursorPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -561,48 +619,14 @@ await client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithGlobalConfigAs
 <dd>
 
 ```csharp
-await client.Users.ListwithcursorpaginationAsync(new UsersListWithCursorPaginationRequest());
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `UsersListWithCursorPaginationRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithmixedtypecursorpaginationAsync</a>(UsersListWithMixedTypeCursorPaginationRequest { ... }) -> WithRawResponseTask&lt;ListUsersMixedTypePaginationResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Users.ListwithmixedtypecursorpaginationAsync(
-    new UsersListWithMixedTypeCursorPaginationRequest()
+await client.Users.ListWithCursorPaginationAsync(
+    new SeedPagination.ListUsersCursorPaginationRequest
+    {
+        Page = 1,
+        PerPage = 1,
+        Order = SeedPagination.Order.Asc,
+        StartingAfter = "starting_after",
+    }
 );
 ```
 </dd>
@@ -618,7 +642,7 @@ await client.Users.ListwithmixedtypecursorpaginationAsync(
 <dl>
 <dd>
 
-**request:** `UsersListWithMixedTypeCursorPaginationRequest` 
+**request:** `ListUsersCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -630,7 +654,7 @@ await client.Users.ListwithmixedtypecursorpaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithbodycursorpaginationAsync</a>(UsersListWithBodyCursorPaginationRequest { ... }) -> WithRawResponseTask&lt;ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithMixedTypeCursorPaginationAsync</a>(ListUsersMixedTypeCursorPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -643,8 +667,8 @@ await client.Users.ListwithmixedtypecursorpaginationAsync(
 <dd>
 
 ```csharp
-await client.Users.ListwithbodycursorpaginationAsync(
-    new UsersListWithBodyCursorPaginationRequest()
+await client.Users.ListWithMixedTypeCursorPaginationAsync(
+    new SeedPagination.ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
 );
 ```
 </dd>
@@ -660,7 +684,7 @@ await client.Users.ListwithbodycursorpaginationAsync(
 <dl>
 <dd>
 
-**request:** `UsersListWithBodyCursorPaginationRequest` 
+**request:** `ListUsersMixedTypeCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -672,7 +696,52 @@ await client.Users.ListwithbodycursorpaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithtoplevelbodycursorpaginationAsync</a>(UsersListWithTopLevelBodyCursorPaginationRequest { ... }) -> WithRawResponseTask&lt;ListUsersTopLevelCursorPaginationResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithBodyCursorPaginationAsync</a>(ListUsersBodyCursorPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Users.ListWithBodyCursorPaginationAsync(
+    new SeedPagination.ListUsersBodyCursorPaginationRequest
+    {
+        Pagination = new SeedPagination.WithCursor { Cursor = "cursor" },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListUsersBodyCursorPaginationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithTopLevelBodyCursorPaginationAsync</a>(ListUsersTopLevelBodyCursorPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -701,8 +770,12 @@ when getNextPage() is called with a different cursor value.
 <dd>
 
 ```csharp
-await client.Users.ListwithtoplevelbodycursorpaginationAsync(
-    new UsersListWithTopLevelBodyCursorPaginationRequest()
+await client.Users.ListWithTopLevelBodyCursorPaginationAsync(
+    new ListUsersTopLevelBodyCursorPaginationRequest
+    {
+        Cursor = "initial_cursor",
+        Filter = "active",
+    }
 );
 ```
 </dd>
@@ -718,7 +791,7 @@ await client.Users.ListwithtoplevelbodycursorpaginationAsync(
 <dl>
 <dd>
 
-**request:** `UsersListWithTopLevelBodyCursorPaginationRequest` 
+**request:** `ListUsersTopLevelBodyCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -730,7 +803,7 @@ await client.Users.ListwithtoplevelbodycursorpaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithoffsetpaginationAsync</a>(UsersListWithOffsetPaginationRequest { ... }) -> WithRawResponseTask&lt;ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetPaginationAsync</a>(ListUsersOffsetPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -743,48 +816,14 @@ await client.Users.ListwithtoplevelbodycursorpaginationAsync(
 <dd>
 
 ```csharp
-await client.Users.ListwithoffsetpaginationAsync(new UsersListWithOffsetPaginationRequest());
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `UsersListWithOffsetPaginationRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithdoubleoffsetpaginationAsync</a>(UsersListWithDoubleOffsetPaginationRequest { ... }) -> WithRawResponseTask&lt;ListUsersPaginationResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Users.ListwithdoubleoffsetpaginationAsync(
-    new UsersListWithDoubleOffsetPaginationRequest()
+await client.Users.ListWithOffsetPaginationAsync(
+    new SeedPagination.ListUsersOffsetPaginationRequest
+    {
+        Page = 1,
+        PerPage = 1,
+        Order = SeedPagination.Order.Asc,
+        StartingAfter = "starting_after",
+    }
 );
 ```
 </dd>
@@ -800,7 +839,7 @@ await client.Users.ListwithdoubleoffsetpaginationAsync(
 <dl>
 <dd>
 
-**request:** `UsersListWithDoubleOffsetPaginationRequest` 
+**request:** `ListUsersOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -812,7 +851,7 @@ await client.Users.ListwithdoubleoffsetpaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithbodyoffsetpaginationAsync</a>(UsersListWithBodyOffsetPaginationRequest { ... }) -> WithRawResponseTask&lt;ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithDoubleOffsetPaginationAsync</a>(ListUsersDoubleOffsetPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -825,8 +864,14 @@ await client.Users.ListwithdoubleoffsetpaginationAsync(
 <dd>
 
 ```csharp
-await client.Users.ListwithbodyoffsetpaginationAsync(
-    new UsersListWithBodyOffsetPaginationRequest()
+await client.Users.ListWithDoubleOffsetPaginationAsync(
+    new SeedPagination.ListUsersDoubleOffsetPaginationRequest
+    {
+        Page = 1.1,
+        PerPage = 1.1,
+        Order = SeedPagination.Order.Asc,
+        StartingAfter = "starting_after",
+    }
 );
 ```
 </dd>
@@ -842,7 +887,7 @@ await client.Users.ListwithbodyoffsetpaginationAsync(
 <dl>
 <dd>
 
-**request:** `UsersListWithBodyOffsetPaginationRequest` 
+**request:** `ListUsersDoubleOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -854,7 +899,7 @@ await client.Users.ListwithbodyoffsetpaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithoffsetsteppaginationAsync</a>(UsersListWithOffsetStepPaginationRequest { ... }) -> WithRawResponseTask&lt;ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithBodyOffsetPaginationAsync</a>(ListUsersBodyOffsetPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -867,8 +912,11 @@ await client.Users.ListwithbodyoffsetpaginationAsync(
 <dd>
 
 ```csharp
-await client.Users.ListwithoffsetsteppaginationAsync(
-    new UsersListWithOffsetStepPaginationRequest()
+await client.Users.ListWithBodyOffsetPaginationAsync(
+    new SeedPagination.ListUsersBodyOffsetPaginationRequest
+    {
+        Pagination = new SeedPagination.WithPage { Page = 1 },
+    }
 );
 ```
 </dd>
@@ -884,7 +932,7 @@ await client.Users.ListwithoffsetsteppaginationAsync(
 <dl>
 <dd>
 
-**request:** `UsersListWithOffsetStepPaginationRequest` 
+**request:** `ListUsersBodyOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -896,7 +944,7 @@ await client.Users.ListwithoffsetsteppaginationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithoffsetpaginationhasnextpageAsync</a>(UsersListWithOffsetPaginationHasNextPageRequest { ... }) -> WithRawResponseTask&lt;ListUsersPaginationResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetStepPaginationAsync</a>(ListUsersOffsetStepPaginationRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -909,8 +957,13 @@ await client.Users.ListwithoffsetsteppaginationAsync(
 <dd>
 
 ```csharp
-await client.Users.ListwithoffsetpaginationhasnextpageAsync(
-    new UsersListWithOffsetPaginationHasNextPageRequest()
+await client.Users.ListWithOffsetStepPaginationAsync(
+    new SeedPagination.ListUsersOffsetStepPaginationRequest
+    {
+        Page = 1,
+        Limit = 1,
+        Order = SeedPagination.Order.Asc,
+    }
 );
 ```
 </dd>
@@ -926,7 +979,7 @@ await client.Users.ListwithoffsetpaginationhasnextpageAsync(
 <dl>
 <dd>
 
-**request:** `UsersListWithOffsetPaginationHasNextPageRequest` 
+**request:** `ListUsersOffsetStepPaginationRequest` 
     
 </dd>
 </dl>
@@ -938,7 +991,7 @@ await client.Users.ListwithoffsetpaginationhasnextpageAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithextendedresultsAsync</a>(UsersListWithExtendedResultsRequest { ... }) -> WithRawResponseTask&lt;ListUsersExtendedResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOffsetPaginationHasNextPageAsync</a>(ListWithOffsetPaginationHasNextPageRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -951,48 +1004,13 @@ await client.Users.ListwithoffsetpaginationhasnextpageAsync(
 <dd>
 
 ```csharp
-await client.Users.ListwithextendedresultsAsync(new UsersListWithExtendedResultsRequest());
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `UsersListWithExtendedResultsRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithextendedresultsandoptionaldataAsync</a>(UsersListWithExtendedResultsAndOptionalDataRequest { ... }) -> WithRawResponseTask&lt;ListUsersExtendedOptionalListResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Users.ListwithextendedresultsandoptionaldataAsync(
-    new UsersListWithExtendedResultsAndOptionalDataRequest()
+await client.Users.ListWithOffsetPaginationHasNextPageAsync(
+    new SeedPagination.ListWithOffsetPaginationHasNextPageRequest
+    {
+        Page = 1,
+        Limit = 3,
+        Order = SeedPagination.Order.Asc,
+    }
 );
 ```
 </dd>
@@ -1008,7 +1026,7 @@ await client.Users.ListwithextendedresultsandoptionaldataAsync(
 <dl>
 <dd>
 
-**request:** `UsersListWithExtendedResultsAndOptionalDataRequest` 
+**request:** `ListWithOffsetPaginationHasNextPageRequest` 
     
 </dd>
 </dl>
@@ -1020,7 +1038,7 @@ await client.Users.ListwithextendedresultsandoptionaldataAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListusernamesAsync</a>(UsersListUsernamesRequest { ... }) -> WithRawResponseTask&lt;UsernameCursor&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithExtendedResultsAsync</a>(ListUsersExtendedRequest { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1033,48 +1051,8 @@ await client.Users.ListwithextendedresultsandoptionaldataAsync(
 <dd>
 
 ```csharp
-await client.Users.ListusernamesAsync(new UsersListUsernamesRequest());
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `UsersListUsernamesRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListusernameswithoptionalresponseAsync</a>(UsersListUsernamesWithOptionalResponseRequest { ... }) -> WithRawResponseTask&lt;UsernameCursor&gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Users.ListusernameswithoptionalresponseAsync(
-    new UsersListUsernamesWithOptionalResponseRequest()
+await client.Users.ListWithExtendedResultsAsync(
+    new SeedPagination.ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
 );
 ```
 </dd>
@@ -1090,7 +1068,7 @@ await client.Users.ListusernameswithoptionalresponseAsync(
 <dl>
 <dd>
 
-**request:** `UsersListUsernamesWithOptionalResponseRequest` 
+**request:** `ListUsersExtendedRequest` 
     
 </dd>
 </dl>
@@ -1102,7 +1080,7 @@ await client.Users.ListusernameswithoptionalresponseAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithglobalconfigAsync</a>(UsersListWithGlobalConfigRequest { ... }) -> WithRawResponseTask&lt;UsernameContainer&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithExtendedResultsAndOptionalDataAsync</a>(ListUsersExtendedRequestForOptionalData { ... }) -> Pager&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1115,7 +1093,12 @@ await client.Users.ListusernameswithoptionalresponseAsync(
 <dd>
 
 ```csharp
-await client.Users.ListwithglobalconfigAsync(new UsersListWithGlobalConfigRequest());
+await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
+    new SeedPagination.ListUsersExtendedRequestForOptionalData
+    {
+        Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    }
+);
 ```
 </dd>
 </dl>
@@ -1130,7 +1113,7 @@ await client.Users.ListwithglobalconfigAsync(new UsersListWithGlobalConfigReques
 <dl>
 <dd>
 
-**request:** `UsersListWithGlobalConfigRequest` 
+**request:** `ListUsersExtendedRequestForOptionalData` 
     
 </dd>
 </dl>
@@ -1142,7 +1125,7 @@ await client.Users.ListwithglobalconfigAsync(new UsersListWithGlobalConfigReques
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithoptionaldataAsync</a>(UsersListWithOptionalDataRequest { ... }) -> WithRawResponseTask&lt;ListUsersOptionalDataPaginationResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListUsernamesAsync</a>(ListUsernamesRequest { ... }) -> Pager&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1155,7 +1138,9 @@ await client.Users.ListwithglobalconfigAsync(new UsersListWithGlobalConfigReques
 <dd>
 
 ```csharp
-await client.Users.ListwithoptionaldataAsync(new UsersListWithOptionalDataRequest());
+await client.Users.ListUsernamesAsync(
+    new SeedPagination.ListUsernamesRequest { StartingAfter = "starting_after" }
+);
 ```
 </dd>
 </dl>
@@ -1170,7 +1155,7 @@ await client.Users.ListwithoptionaldataAsync(new UsersListWithOptionalDataReques
 <dl>
 <dd>
 
-**request:** `UsersListWithOptionalDataRequest` 
+**request:** `ListUsernamesRequest` 
     
 </dd>
 </dl>
@@ -1182,7 +1167,7 @@ await client.Users.ListwithoptionaldataAsync(new UsersListWithOptionalDataReques
 </dl>
 </details>
 
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithaliaseddataAsync</a>(UsersListWithAliasedDataRequest { ... }) -> WithRawResponseTask&lt;ListUsersAliasedDataPaginationResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListUsernamesWithOptionalResponseAsync</a>(ListUsernamesWithOptionalResponseRequest { ... }) -> Pager&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1195,7 +1180,9 @@ await client.Users.ListwithoptionaldataAsync(new UsersListWithOptionalDataReques
 <dd>
 
 ```csharp
-await client.Users.ListwithaliaseddataAsync(new UsersListWithAliasedDataRequest());
+await client.Users.ListUsernamesWithOptionalResponseAsync(
+    new ListUsernamesWithOptionalResponseRequest { StartingAfter = "starting_after" }
+);
 ```
 </dd>
 </dl>
@@ -1210,7 +1197,136 @@ await client.Users.ListwithaliaseddataAsync(new UsersListWithAliasedDataRequest(
 <dl>
 <dd>
 
-**request:** `UsersListWithAliasedDataRequest` 
+**request:** `ListUsernamesWithOptionalResponseRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithGlobalConfigAsync</a>(ListWithGlobalConfigRequest { ... }) -> Pager&lt;string&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Users.ListWithGlobalConfigAsync(
+    new SeedPagination.ListWithGlobalConfigRequest { Offset = 1 }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListWithGlobalConfigRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOptionalDataAsync</a>(ListUsersOptionalDataRequest { ... }) -> Pager&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Users.ListWithOptionalDataAsync(new ListUsersOptionalDataRequest { Page = 1 });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListUsersOptionalDataRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithAliasedDataAsync</a>(ListUsersAliasedDataRequest { ... }) -> Pager&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Users.ListWithAliasedDataAsync(
+    new ListUsersAliasedDataRequest
+    {
+        Page = 1,
+        PerPage = 1,
+        StartingAfter = "starting_after",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListUsersAliasedDataRequest` 
     
 </dd>
 </dl>

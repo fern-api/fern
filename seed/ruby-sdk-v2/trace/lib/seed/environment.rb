@@ -2,6 +2,6 @@
 
 module Seed
   class Environment
-    DEFAULT = "https://api.trace.come"
+    PROD = "https://api.trace.come"
   end
 end

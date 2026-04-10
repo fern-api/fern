@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import Api
+import OauthClientCredentialsMandatoryAuth
 
 @Suite("AuthClient Wire Tests") struct AuthClientWireTests {
-    @Test func gettokenwithclientcredentials1() async throws -> Void {
+    @Test func getTokenWithClientCredentials1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -16,29 +16,29 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = OauthClientCredentialsMandatoryAuthClient(
             baseURL: "https://api.fern.com",
-            token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: Optional(Nullable<String>.value("refresh_token"))
+            refreshToken: Optional("refresh_token")
         )
-        let response = try await client.auth.gettokenwithclientcredentials(
+        let response = try await client.auth.getTokenWithClientCredentials(
             request: .init(
-                clientId: "client_id",
-                clientSecret: "client_secret",
+                clientId: "my_oauth_app_123",
+                clientSecret: "sk_live_abcdef123456789",
                 audience: .httpsApiExampleCom,
-                grantType: .clientCredentials
+                grantType: .clientCredentials,
+                scope: "read:users"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func gettokenwithclientcredentials2() async throws -> Void {
+    @Test func getTokenWithClientCredentials2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -51,30 +51,29 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = OauthClientCredentialsMandatoryAuthClient(
             baseURL: "https://api.fern.com",
-            token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: Optional(Nullable<String>.value("refresh_token"))
+            refreshToken: Optional("refresh_token")
         )
-        let response = try await client.auth.gettokenwithclientcredentials(
+        let response = try await client.auth.getTokenWithClientCredentials(
             request: .init(
                 clientId: "client_id",
                 clientSecret: "client_secret",
                 audience: .httpsApiExampleCom,
                 grantType: .clientCredentials,
-                scope: .value("scope")
+                scope: "scope"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func refreshtoken1() async throws -> Void {
+    @Test func refreshToken1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -87,30 +86,30 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = OauthClientCredentialsMandatoryAuthClient(
             baseURL: "https://api.fern.com",
-            token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: Optional(Nullable<String>.value("refresh_token"))
+            refreshToken: Optional("refresh_token")
         )
-        let response = try await client.auth.refreshtoken(
+        let response = try await client.auth.refreshToken(
             request: .init(
-                clientId: "client_id",
-                clientSecret: "client_secret",
+                clientId: "my_oauth_app_123",
+                clientSecret: "sk_live_abcdef123456789",
                 refreshToken: "refresh_token",
                 audience: .httpsApiExampleCom,
-                grantType: .refreshToken
+                grantType: .refreshToken,
+                scope: "read:users"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func refreshtoken2() async throws -> Void {
+    @Test func refreshToken2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -123,24 +122,23 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = OauthClientCredentialsMandatoryAuthClient(
             baseURL: "https://api.fern.com",
-            token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = TokenResponse(
             accessToken: "access_token",
             expiresIn: 1,
-            refreshToken: Optional(Nullable<String>.value("refresh_token"))
+            refreshToken: Optional("refresh_token")
         )
-        let response = try await client.auth.refreshtoken(
+        let response = try await client.auth.refreshToken(
             request: .init(
                 clientId: "client_id",
                 clientSecret: "client_secret",
                 refreshToken: "refresh_token",
                 audience: .httpsApiExampleCom,
                 grantType: .refreshToken,
-                scope: .value("scope")
+                scope: "scope"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

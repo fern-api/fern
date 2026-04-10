@@ -9,9 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.token_response import TokenResponse
-from .types.auth_get_token_request_audience import AuthGetTokenRequestAudience
-from .types.auth_get_token_request_grant_type import AuthGetTokenRequestGrantType
+from .types.token_response import TokenResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -22,14 +20,8 @@ class RawAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def gettoken(
-        self,
-        *,
-        client_id: str,
-        client_secret: str,
-        audience: AuthGetTokenRequestAudience,
-        grant_type: AuthGetTokenRequestGrantType,
-        request_options: typing.Optional[RequestOptions] = None,
+    def get_token(
+        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[TokenResponse]:
         """
         Parameters
@@ -38,17 +30,12 @@ class RawAuthClient:
 
         client_secret : str
 
-        audience : AuthGetTokenRequestAudience
-
-        grant_type : AuthGetTokenRequestGrantType
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         HttpResponse[TokenResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "token",
@@ -56,11 +43,8 @@ class RawAuthClient:
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
-                "audience": audience,
-                "grant_type": grant_type,
-            },
-            headers={
-                "content-type": "application/json",
+                "audience": "https://api.example.com",
+                "grant_type": "client_credentials",
             },
             request_options=request_options,
             omit=OMIT,
@@ -89,14 +73,8 @@ class AsyncRawAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def gettoken(
-        self,
-        *,
-        client_id: str,
-        client_secret: str,
-        audience: AuthGetTokenRequestAudience,
-        grant_type: AuthGetTokenRequestGrantType,
-        request_options: typing.Optional[RequestOptions] = None,
+    async def get_token(
+        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[TokenResponse]:
         """
         Parameters
@@ -105,17 +83,12 @@ class AsyncRawAuthClient:
 
         client_secret : str
 
-        audience : AuthGetTokenRequestAudience
-
-        grant_type : AuthGetTokenRequestGrantType
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         AsyncHttpResponse[TokenResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "token",
@@ -123,11 +96,8 @@ class AsyncRawAuthClient:
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
-                "audience": audience,
-                "grant_type": grant_type,
-            },
-            headers={
-                "content-type": "application/json",
+                "audience": "https://api.example.com",
+                "grant_type": "client_credentials",
             },
             request_options=request_options,
             omit=OMIT,

@@ -36,7 +36,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "snippet",
+                "/snippet",
             ),
             method: "POST",
             headers: _headers,
@@ -52,7 +52,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedFileDownloadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -62,15 +62,15 @@ export class ServiceClient {
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/snippet");
     }
 
-    public downloadfile(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<{
+    public downloadFile(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<{
         data: core.BinaryResponse;
         contentLengthInBytes?: number;
         contentType?: string;
     }> {
-        return core.HttpResponsePromise.fromPromise(this.__downloadfile(requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__downloadFile(requestOptions));
     }
 
-    private async __downloadfile(requestOptions?: ServiceClient.RequestOptions): Promise<
+    private async __downloadFile(requestOptions?: ServiceClient.RequestOptions): Promise<
         core.WithRawResponse<{
             data: core.BinaryResponse;
             contentLengthInBytes?: number;
@@ -105,7 +105,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedFileDownloadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

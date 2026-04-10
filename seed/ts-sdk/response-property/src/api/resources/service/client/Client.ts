@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedResponseProperty from "../../../index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -26,19 +26,19 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getmovie("string")
+     *     await client.service.getMovie("string")
      */
-    public getmovie(
+    public getMovie(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Response> {
-        return core.HttpResponsePromise.fromPromise(this.__getmovie(request, requestOptions));
+    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovie(request, requestOptions));
     }
 
-    private async __getmovie(
+    private async __getMovie(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Response>> {
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -59,11 +59,11 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.Response, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -78,25 +78,25 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getmoviedocs("string")
+     *     await client.service.getMovieDocs("string")
      */
-    public getmoviedocs(
+    public getMovieDocs(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Response> {
-        return core.HttpResponsePromise.fromPromise(this.__getmoviedocs(request, requestOptions));
+    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovieDocs(request, requestOptions));
     }
 
-    private async __getmoviedocs(
+    private async __getMovieDocs(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Response>> {
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie/docs",
+                "movie",
             ),
             method: "POST",
             headers: _headers,
@@ -111,18 +111,18 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.Response, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/docs");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
     }
 
     /**
@@ -130,25 +130,25 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getmoviename("string")
+     *     await client.service.getMovieName("string")
      */
-    public getmoviename(
+    public getMovieName(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.StringResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getmoviename(request, requestOptions));
+    ): core.HttpResponsePromise<SeedResponseProperty.StringResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovieName(request, requestOptions));
     }
 
-    private async __getmoviename(
+    private async __getMovieName(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.StringResponse>> {
+    ): Promise<core.WithRawResponse<SeedResponseProperty.StringResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie/name",
+                "movie",
             ),
             method: "POST",
             headers: _headers,
@@ -163,18 +163,18 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.StringResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedResponseProperty.StringResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/name");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
     }
 
     /**
@@ -182,25 +182,25 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getmoviemetadata("string")
+     *     await client.service.getMovieMetadata("string")
      */
-    public getmoviemetadata(
+    public getMovieMetadata(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Response> {
-        return core.HttpResponsePromise.fromPromise(this.__getmoviemetadata(request, requestOptions));
+    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__getMovieMetadata(request, requestOptions));
     }
 
-    private async __getmoviemetadata(
+    private async __getMovieMetadata(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Response>> {
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie/metadata",
+                "movie",
             ),
             method: "POST",
             headers: _headers,
@@ -215,18 +215,18 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.Response, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/metadata");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
     }
 
     /**
@@ -234,25 +234,25 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getoptionalmovie("string")
+     *     await client.service.getOptionalMovie("string")
      */
-    public getoptionalmovie(
+    public getOptionalMovie(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Response> {
-        return core.HttpResponsePromise.fromPromise(this.__getoptionalmovie(request, requestOptions));
+    ): core.HttpResponsePromise<SeedResponseProperty.Response | undefined> {
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovie(request, requestOptions));
     }
 
-    private async __getoptionalmovie(
+    private async __getOptionalMovie(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Response>> {
+    ): Promise<core.WithRawResponse<SeedResponseProperty.Response | undefined>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie/optional",
+                "movie",
             ),
             method: "POST",
             headers: _headers,
@@ -267,18 +267,21 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.Response, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedResponseProperty.Response | undefined,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/optional");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
     }
 
     /**
@@ -286,25 +289,25 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getoptionalmoviedocs("string")
+     *     await client.service.getOptionalMovieDocs("string")
      */
-    public getoptionalmoviedocs(
+    public getOptionalMovieDocs(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.OptionalWithDocs> {
-        return core.HttpResponsePromise.fromPromise(this.__getoptionalmoviedocs(request, requestOptions));
+    ): core.HttpResponsePromise<SeedResponseProperty.OptionalWithDocs | undefined> {
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieDocs(request, requestOptions));
     }
 
-    private async __getoptionalmoviedocs(
+    private async __getOptionalMovieDocs(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.OptionalWithDocs>> {
+    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalWithDocs | undefined>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie/optional/docs",
+                "movie",
             ),
             method: "POST",
             headers: _headers,
@@ -319,18 +322,21 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.OptionalWithDocs, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedResponseProperty.OptionalWithDocs | undefined,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/optional/docs");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
     }
 
     /**
@@ -338,25 +344,25 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getoptionalmoviename("string")
+     *     await client.service.getOptionalMovieName("string")
      */
-    public getoptionalmoviename(
+    public getOptionalMovieName(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.OptionalStringResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getoptionalmoviename(request, requestOptions));
+    ): core.HttpResponsePromise<SeedResponseProperty.OptionalStringResponse | undefined> {
+        return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieName(request, requestOptions));
     }
 
-    private async __getoptionalmoviename(
+    private async __getOptionalMovieName(
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.OptionalStringResponse>> {
+    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalStringResponse | undefined>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "movie/optional/name",
+                "movie",
             ),
             method: "POST",
             headers: _headers,
@@ -371,17 +377,20 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.OptionalStringResponse, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as SeedResponseProperty.OptionalStringResponse | undefined,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie/optional/name");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movie");
     }
 }

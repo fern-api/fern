@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client-&gt;user-&gt;createusername($request)</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUsername($request)</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,15 @@
 <dd>
 
 ```php
-$client->user->createusername(
-    new UserCreateUsernameRequest([
+$client->user->createUsername(
+    new CreateUsernameRequest([
         'tags' => [
+            'tags',
             'tags',
         ],
         'username' => 'username',
         'password' => 'password',
-        'name' => 'name',
+        'name' => 'test',
     ]),
 );
 ```
@@ -37,7 +38,7 @@ $client->user->createusername(
 <dl>
 <dd>
 
-**$tags:** `?string` 
+**$tags:** `array` 
     
 </dd>
 </dl>
@@ -73,7 +74,7 @@ $client->user->createusername(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;createusernamewithreferencedtype($request)</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUsernameWithReferencedType($request)</code></summary>
 <dl>
 <dd>
 
@@ -86,14 +87,17 @@ $client->user->createusername(
 <dd>
 
 ```php
-$client->user->createusernamewithreferencedtype(
-    new CreateUsernameBody([
+$client->user->createUsernameWithReferencedType(
+    new CreateUsernameReferencedRequest([
         'tags' => [
             'tags',
+            'tags',
         ],
-        'username' => 'username',
-        'password' => 'password',
-        'name' => 'name',
+        'body' => new CreateUsernameBody([
+            'username' => 'username',
+            'password' => 'password',
+            'name' => 'test',
+        ]),
     ]),
 );
 ```
@@ -110,7 +114,7 @@ $client->user->createusernamewithreferencedtype(
 <dl>
 <dd>
 
-**$tags:** `?string` 
+**$tags:** `array` 
     
 </dd>
 </dl>
@@ -118,23 +122,7 @@ $client->user->createusernamewithreferencedtype(
 <dl>
 <dd>
 
-**$username:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$password:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$name:** `string` 
+**$request:** `CreateUsernameBody` 
     
 </dd>
 </dl>
@@ -146,7 +134,7 @@ $client->user->createusernamewithreferencedtype(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;createusernameoptional($request)</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUsernameOptional($request)</code></summary>
 <dl>
 <dd>
 
@@ -159,7 +147,7 @@ $client->user->createusernamewithreferencedtype(
 <dd>
 
 ```php
-$client->user->createusernameoptional(
+$client->user->createUsernameOptional(
     new CreateUsernameBodyOptionalProperties([]),
 );
 ```
@@ -176,23 +164,7 @@ $client->user->createusernameoptional(
 <dl>
 <dd>
 
-**$username:** `?string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$password:** `?string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$name:** `?string` 
+**$request:** `?CreateUsernameBodyOptionalProperties` 
     
 </dd>
 </dl>
@@ -204,7 +176,7 @@ $client->user->createusernameoptional(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getusername($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUsername($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -217,13 +189,13 @@ $client->user->createusernameoptional(
 <dd>
 
 ```php
-$client->user->getusername(
-    new UserGetUsernameRequest([
+$client->user->getUsername(
+    new GetUsersRequest([
         'limit' => 1,
-        'id' => 'id',
+        'id' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
         'date' => new DateTime('2023-01-15'),
         'deadline' => new DateTime('2024-01-15T09:30:00Z'),
-        'bytes' => 'bytes',
+        'bytes' => 'SGVsbG8gd29ybGQh',
         'user' => new User([
             'name' => 'name',
             'tags' => [
@@ -232,6 +204,13 @@ $client->user->getusername(
             ],
         ]),
         'userList' => [
+            new User([
+                'name' => 'name',
+                'tags' => [
+                    'tags',
+                    'tags',
+                ],
+            ]),
             new User([
                 'name' => 'name',
                 'tags' => [
@@ -275,7 +254,7 @@ $client->user->getusername(
             'filter',
         ],
         'longParam' => 1000000,
-        'bigIntParam' => 1,
+        'bigIntParam' => '1000000',
     ]),
 );
 ```
@@ -340,7 +319,7 @@ $client->user->getusername(
 <dl>
 <dd>
 
-**$userList:** `?User` 
+**$userList:** `array` 
     
 </dd>
 </dl>
@@ -388,7 +367,7 @@ $client->user->getusername(
 <dl>
 <dd>
 
-**$excludeUser:** `?User` 
+**$excludeUser:** `User` 
     
 </dd>
 </dl>
@@ -396,7 +375,7 @@ $client->user->getusername(
 <dl>
 <dd>
 
-**$filter:** `?string` 
+**$filter:** `string` 
     
 </dd>
 </dl>
@@ -412,7 +391,7 @@ $client->user->getusername(
 <dl>
 <dd>
 
-**$bigIntParam:** `int` 
+**$bigIntParam:** `string` 
     
 </dd>
 </dl>

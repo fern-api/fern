@@ -2,6 +2,8 @@
 
 namespace Seed\Folder;
 
+use Seed\Folder\Service\ServiceClientInterface;
+
 interface FolderClientInterface
 {
     /**
@@ -15,4 +17,9 @@ interface FolderClientInterface
      * } $options
      */
     public function foo(?array $options = null): void;
+
+    /**
+     * @return ServiceClientInterface
+     */
+    public function getService(): ServiceClientInterface;
 }

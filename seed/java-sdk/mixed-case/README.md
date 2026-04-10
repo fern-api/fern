@@ -55,21 +55,15 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.service.requests.ServiceGetResourceRequest;
+import com.seed.mixedCase.SeedMixedCaseClient;
 
 public class Example {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedMixedCaseClient client = SeedMixedCaseClient
             .builder()
             .build();
 
-        client.service().getresource(
-            "ResourceID",
-            ServiceGetResourceRequest
-                .builder()
-                .build()
-        );
+        client.service().getResource("ResourceID");
     }
 }
 ```
@@ -79,9 +73,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.mixedCase.SeedMixedCaseClient;
 
-SeedApiClient client = SeedApiClient
+SeedMixedCaseClient client = SeedMixedCaseClient
     .builder()
     .url("https://example.com")
     .build();
@@ -92,11 +86,11 @@ SeedApiClient client = SeedApiClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.api.core.SeedApiApiException;
+import com.seed.mixedCase.core.SeedMixedCaseApiException;
 
 try{
-    client.service().getresource(...);
-} catch (SeedApiApiException e){
+    client.service().getResource(...);
+} catch (SeedMixedCaseApiException e){
     // Do something with the API exception...
 }
 ```
@@ -109,12 +103,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.mixedCase.SeedMixedCaseClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient
+SeedMixedCaseClient client = SeedMixedCaseClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -137,9 +131,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.mixedCase.SeedMixedCaseClient;
 
-SeedApiClient client = SeedApiClient
+SeedMixedCaseClient client = SeedMixedCaseClient
     .builder()
     .maxRetries(1)
     .build();
@@ -149,17 +143,17 @@ SeedApiClient client = SeedApiClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.mixedCase.SeedMixedCaseClient;
+import com.seed.mixedCase.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedMixedCaseClient client = SeedMixedCaseClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.service().getresource(
+client.service().getResource(
     ...,
     RequestOptions
         .builder()
@@ -173,11 +167,11 @@ client.service().getresource(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.mixedCase.SeedMixedCaseClient;
+import com.seed.mixedCase.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedMixedCaseClient client = SeedMixedCaseClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -185,7 +179,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.service().getresource(
+client.service().getResource(
     ...,
     RequestOptions
         .builder()
@@ -201,7 +195,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.service().withRawResponse().getresource(...);
+SeedMixedCaseHttpResponse response = client.service().withRawResponse().getResource(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

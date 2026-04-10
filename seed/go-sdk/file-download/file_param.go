@@ -1,4 +1,4 @@
-package api
+package filedownload
 
 import (
 	"io"

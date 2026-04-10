@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>$client-&gt;-&gt;foo()</code></summary>
+<details><summary><code>$client-&gt;foo()</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```php
-$client->_->foo();
+$client->foo();
 ```
 </dd>
 </dl>
@@ -25,8 +24,8 @@ $client->_->foo();
 </dl>
 </details>
 
-## Ab
-<details><summary><code>$client-&gt;ab-&gt;aBFoo()</code></summary>
+## A B
+<details><summary><code>$client-&gt;a-&gt;b-&gt;foo()</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +38,7 @@ $client->_->foo();
 <dd>
 
 ```php
-$client->ab->aBFoo();
+$client->foo();
 ```
 </dd>
 </dl>
@@ -51,8 +50,8 @@ $client->ab->aBFoo();
 </dl>
 </details>
 
-## Ac
-<details><summary><code>$client-&gt;ac-&gt;aCFoo()</code></summary>
+## A C
+<details><summary><code>$client-&gt;a-&gt;c-&gt;foo()</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +64,7 @@ $client->ab->aBFoo();
 <dd>
 
 ```php
-$client->ac->aCFoo();
+$client->foo();
 ```
 </dd>
 </dl>
@@ -91,7 +90,7 @@ $client->ac->aCFoo();
 <dd>
 
 ```php
-$client->folder->foo();
+$client->foo();
 ```
 </dd>
 </dl>
@@ -103,8 +102,8 @@ $client->folder->foo();
 </dl>
 </details>
 
-## FolderService
-<details><summary><code>$client-&gt;folderService-&gt;folderServiceEndpoint()</code></summary>
+## Folder Service
+<details><summary><code>$client-&gt;folder-&gt;service-&gt;endpoint()</code></summary>
 <dl>
 <dd>
 
@@ -117,7 +116,7 @@ $client->folder->foo();
 <dd>
 
 ```php
-$client->folderService->folderServiceEndpoint();
+$client->folder->service->endpoint();
 ```
 </dd>
 </dl>
@@ -129,7 +128,7 @@ $client->folderService->folderServiceEndpoint();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;folderService-&gt;folderServiceUnknownRequest($request)</code></summary>
+<details><summary><code>$client-&gt;folder-&gt;service-&gt;unknownRequest($request)</code></summary>
 <dl>
 <dd>
 
@@ -142,7 +141,7 @@ $client->folderService->folderServiceEndpoint();
 <dd>
 
 ```php
-$client->folderService->folderServiceUnknownRequest(
+$client->folder->service->unknownRequest(
     [
         'key' => "value",
     ],

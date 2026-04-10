@@ -1,21 +1,21 @@
-using SeedApi;
+using SeedPackageYml;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedPackageYmlClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client._.EchoAsync(
+        await client.EchoAsync(
+            "id-ksfd9c1",
             new EchoRequest {
-                Id = "id",
-                Name = "name",
-                Size = 1
+                Name = "Hello world!",
+                Size = 20
             }
         );
     }

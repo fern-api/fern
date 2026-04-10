@@ -6,34 +6,33 @@ package com.fern.sdk.resources.reqwithheaders;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeadersGetWithCustomHeaderRequest;
+import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
 import java.lang.Void;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncReqwithheadersClient {
+public class AsyncReqWithHeadersClient {
   protected final ClientOptions clientOptions;
 
-  private final AsyncRawReqwithheadersClient rawClient;
+  private final AsyncRawReqWithHeadersClient rawClient;
 
-  public AsyncReqwithheadersClient(ClientOptions clientOptions) {
+  public AsyncReqWithHeadersClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new AsyncRawReqwithheadersClient(clientOptions);
+    this.rawClient = new AsyncRawReqWithHeadersClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public AsyncRawReqwithheadersClient withRawResponse() {
+  public AsyncRawReqWithHeadersClient withRawResponse() {
     return this.rawClient;
   }
 
-  public CompletableFuture<Void> getwithcustomheader(
-      ReqWithHeadersGetWithCustomHeaderRequest request) {
-    return this.rawClient.getwithcustomheader(request).thenApply(response -> response.body());
+  public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request) {
+    return this.rawClient.getWithCustomHeader(request).thenApply(response -> response.body());
   }
 
-  public CompletableFuture<Void> getwithcustomheader(
-      ReqWithHeadersGetWithCustomHeaderRequest request, RequestOptions requestOptions) {
-    return this.rawClient.getwithcustomheader(request, requestOptions).thenApply(response -> response.body());
+  public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request,
+      RequestOptions requestOptions) {
+    return this.rawClient.getWithCustomHeader(request, requestOptions).thenApply(response -> response.body());
   }
 }

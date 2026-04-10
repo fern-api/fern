@@ -4,6 +4,7 @@ package service
 
 import (
 	context "context"
+	os "os"
 
 	core "github.com/header-auth-environment-variable/fern/core"
 	internal "github.com/header-auth-environment-variable/fern/internal"
@@ -19,6 +20,9 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
+	if options.HeaderTokenAuth == "" {
+		options.HeaderTokenAuth = os.Getenv("HEADER_TOKEN_ENV_VAR")
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
@@ -33,11 +37,11 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET request with custom api key
-func (c *Client) Getwithbearertoken(
+func (c *Client) GetWithBearerToken(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Getwithbearertoken(
+	response, err := c.WithRawResponse.GetWithBearerToken(
 		ctx,
 		opts...,
 	)

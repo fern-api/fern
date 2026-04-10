@@ -13,9 +13,7 @@
 <dd>
 
 ```php
-$client->service->post(
-    'endpointParam',
-);
+$client->service->post();
 ```
 </dd>
 </dl>

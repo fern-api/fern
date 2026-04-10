@@ -5,7 +5,8 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.service.createuser(
-  email: "email",
-  connection: "connection"
+client.service.list_connections(
+  strategy: "strategy",
+  name: "name",
+  fields: "fields"
 )

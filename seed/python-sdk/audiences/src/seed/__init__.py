@@ -6,38 +6,29 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        FilteredType,
-        FolderAResponse,
-        FolderBFoo,
-        FolderCFolderCFoo,
-        FolderDResponse,
-        Imported,
-        ImportingType,
-        OptionalString,
-    )
-    from . import folder_a_service, folder_d_service, foo
+    from . import commons, folder_a, folder_b, folder_c, folder_d, foo
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
-    from .environment import SeedApiEnvironment
+    from .client import AsyncSeedAudiences, SeedAudiences
+    from .commons import Imported
+    from .environment import SeedAudiencesEnvironment
+    from .foo import FilteredType, ImportingType, OptionalString
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedAudiences": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "FilteredType": ".types",
-    "FolderAResponse": ".types",
-    "FolderBFoo": ".types",
-    "FolderCFolderCFoo": ".types",
-    "FolderDResponse": ".types",
-    "Imported": ".types",
-    "ImportingType": ".types",
-    "OptionalString": ".types",
-    "SeedApi": ".client",
-    "SeedApiEnvironment": ".environment",
+    "FilteredType": ".foo",
+    "Imported": ".commons",
+    "ImportingType": ".foo",
+    "OptionalString": ".foo",
+    "SeedAudiences": ".client",
+    "SeedAudiencesEnvironment": ".environment",
     "__version__": ".version",
-    "folder_a_service": ".folder_a_service",
-    "folder_d_service": ".folder_d_service",
+    "commons": ".commons",
+    "folder_a": ".folder_a",
+    "folder_b": ".folder_b",
+    "folder_c": ".folder_c",
+    "folder_d": ".folder_d",
     "foo": ".foo",
 }
 
@@ -64,21 +55,20 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedAudiences",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "FilteredType",
-    "FolderAResponse",
-    "FolderBFoo",
-    "FolderCFolderCFoo",
-    "FolderDResponse",
     "Imported",
     "ImportingType",
     "OptionalString",
-    "SeedApi",
-    "SeedApiEnvironment",
+    "SeedAudiences",
+    "SeedAudiencesEnvironment",
     "__version__",
-    "folder_a_service",
-    "folder_d_service",
+    "commons",
+    "folder_a",
+    "folder_b",
+    "folder_c",
+    "folder_d",
     "foo",
 ]

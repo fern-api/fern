@@ -18,7 +18,6 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
-  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -40,17 +39,18 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedCsharpSystemCollision;
 
-var client = new SeedApi.System();
-await client._.CreateUserAsync(
+var client = new SeedCsharpSystemCollision.System();
+await client.CreateUserAsync(
     new User
     {
         Line1 = "line1",
+        Line2 = "line2",
         City = "city",
         State = "state",
         Zip = "zip",
-        Country = UserCountry.Usa,
+        Country = "USA",
     }
 );
 ```
@@ -61,10 +61,10 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedCsharpSystemCollision;
 
 try {
-    var response = await client._.CreateUserAsync(...);
+    var response = await client.CreateUserAsync(...);
 } catch (SystemApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -88,7 +88,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client._.CreateUserAsync(
+var response = await client.CreateUserAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -101,7 +101,7 @@ var response = await client._.CreateUserAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client._.CreateUserAsync(
+var response = await client.CreateUserAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -114,10 +114,10 @@ var response = await client._.CreateUserAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedCsharpSystemCollision;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client._.CreateUserAsync(...).WithRawResponse();
+var result = await client.CreateUserAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -134,7 +134,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client._.CreateUserAsync(...);
+var data = await client.CreateUserAsync(...);
 ```
 
 ### Additional Headers
@@ -142,7 +142,7 @@ var data = await client._.CreateUserAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client._.CreateUserAsync(
+var response = await client.CreateUserAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -158,7 +158,7 @@ var response = await client._.CreateUserAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client._.CreateUserAsync(
+var response = await client.CreateUserAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>
@@ -167,35 +167,6 @@ var response = await client._.CreateUserAsync(
         }
     }
 );
-```
-
-### Forward Compatible Enums
-
-This SDK uses forward-compatible enums that can handle unknown values gracefully.
-
-```csharp
-using SeedApi;
-
-// Using a built-in value
-var userCountry = UserCountry.Usa;
-
-// Using a custom value
-var customUserCountry = UserCountry.FromCustom("custom-value");
-
-// Using in a switch statement
-switch (userCountry.Value)
-{
-    case UserCountry.Values.Usa:
-        Console.WriteLine("Usa");
-        break;
-    default:
-        Console.WriteLine($"Unknown value: {userCountry.Value}");
-        break;
-}
-
-// Explicit casting
-string userCountryString = (string)UserCountry.Usa;
-UserCountry userCountryFromString = (UserCountry)"USA";
 ```
 
 ## Contributing

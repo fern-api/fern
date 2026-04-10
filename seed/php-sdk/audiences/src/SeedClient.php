@@ -2,28 +2,28 @@
 
 namespace Seed;
 
-use Seed\FolderAService\FolderAServiceClient;
+use Seed\FolderA\FolderAClient;
+use Seed\FolderD\FolderDClient;
 use Seed\Foo\FooClient;
-use Seed\FolderDService\FolderDServiceClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
     /**
-     * @var FolderAServiceClient $folderAService
+     * @var FolderAClient $folderA
      */
-    public FolderAServiceClient $folderAService;
+    public FolderAClient $folderA;
+
+    /**
+     * @var FolderDClient $folderD
+     */
+    public FolderDClient $folderD;
 
     /**
      * @var FooClient $foo
      */
     public FooClient $foo;
-
-    /**
-     * @var FolderDServiceClient $folderDService
-     */
-    public FolderDServiceClient $folderDService;
 
     /**
      * @var array{
@@ -71,8 +71,8 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->folderAService = new FolderAServiceClient($this->client, $this->options);
+        $this->folderA = new FolderAClient($this->client, $this->options);
+        $this->folderD = new FolderDClient($this->client, $this->options);
         $this->foo = new FooClient($this->client, $this->options);
-        $this->folderDService = new FolderDServiceClient($this->client, $this->options);
     }
 }

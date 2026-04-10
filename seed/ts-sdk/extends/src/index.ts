@@ -1,5 +1,5 @@
-export * as SeedApi from "./api/index.js";
+export * as SeedExtends from "./api/index.js";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-export { SeedApiClient } from "./Client.js";
-export { SeedApiError, SeedApiTimeoutError } from "./errors/index.js";
+export { SeedExtendsClient } from "./Client.js";
+export { SeedExtendsError, SeedExtendsTimeoutError } from "./errors/index.js";
 export * from "./exports.js";

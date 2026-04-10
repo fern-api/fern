@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_streaming::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,13 +6,13 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = StreamingClient::new(config).expect("Failed to build client");
     client
         .dummy
         .generate(
-            &DummyGenerateRequest {
-                stream: true,
-                num_events: 1,
+            &Generateequest {
+                stream: false,
+                num_events: 5,
             },
             None,
         )

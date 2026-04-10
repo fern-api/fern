@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.gettokenwithclientcredentials(request) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.getTokenWithClientCredentials(request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```java
-client.auth().gettokenwithclientcredentials(
-    AuthGetTokenWithClientCredentialsRequest
+client.auth().getTokenWithClientCredentials(
+    GetTokenRequest
         .builder()
+        .xApiKey("X-Api-Key")
         .clientId("client_id")
         .clientSecret("client_secret")
-        .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)
-        .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)
+        .scope("scope")
         .build()
 );
 ```
@@ -32,6 +32,14 @@ client.auth().gettokenwithclientcredentials(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**xApiKey:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -52,7 +60,7 @@ client.auth().gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**audience:** `AuthGetTokenWithClientCredentialsRequestAudience` 
+**audience:** `String` 
     
 </dd>
 </dl>
@@ -60,7 +68,7 @@ client.auth().gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**grantType:** `AuthGetTokenWithClientCredentialsRequestGrantType` 
+**grantType:** `String` 
     
 </dd>
 </dl>
@@ -80,7 +88,7 @@ client.auth().gettokenwithclientcredentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.refreshtoken(request) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.refreshToken(request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -93,14 +101,14 @@ client.auth().gettokenwithclientcredentials(
 <dd>
 
 ```java
-client.auth().refreshtoken(
-    AuthRefreshTokenRequest
+client.auth().refreshToken(
+    RefreshTokenRequest
         .builder()
+        .xApiKey("X-Api-Key")
         .clientId("client_id")
         .clientSecret("client_secret")
         .refreshToken("refresh_token")
-        .audience(AuthRefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)
-        .grantType(AuthRefreshTokenRequestGrantType.REFRESH_TOKEN)
+        .scope("scope")
         .build()
 );
 ```
@@ -113,6 +121,14 @@ client.auth().refreshtoken(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**xApiKey:** `String` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -141,7 +157,7 @@ client.auth().refreshtoken(
 <dl>
 <dd>
 
-**audience:** `AuthRefreshTokenRequestAudience` 
+**audience:** `String` 
     
 </dd>
 </dl>
@@ -149,7 +165,7 @@ client.auth().refreshtoken(
 <dl>
 <dd>
 
-**grantType:** `AuthRefreshTokenRequestGrantType` 
+**grantType:** `String` 
     
 </dd>
 </dl>

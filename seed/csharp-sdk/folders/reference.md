@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">FooAsync</a>()</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">FooAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```csharp
-await client._.FooAsync();
+await client.FooAsync();
 ```
 </dd>
 </dl>
@@ -25,8 +24,8 @@ await client._.FooAsync();
 </dl>
 </details>
 
-## Ab
-<details><summary><code>client.Ab.<a href="/src/SeedApi/Ab/AbClient.cs">ABFooAsync</a>()</code></summary>
+## A B
+<details><summary><code>client.A.B.<a href="/src/SeedApi/A/B/BClient.cs">FooAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +38,7 @@ await client._.FooAsync();
 <dd>
 
 ```csharp
-await client.Ab.ABFooAsync();
+await client.A.B.FooAsync();
 ```
 </dd>
 </dl>
@@ -51,8 +50,8 @@ await client.Ab.ABFooAsync();
 </dl>
 </details>
 
-## Ac
-<details><summary><code>client.Ac.<a href="/src/SeedApi/Ac/AcClient.cs">ACFooAsync</a>()</code></summary>
+## A C
+<details><summary><code>client.A.C.<a href="/src/SeedApi/A/C/CClient.cs">FooAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +64,7 @@ await client.Ab.ABFooAsync();
 <dd>
 
 ```csharp
-await client.Ac.ACFooAsync();
+await client.A.C.FooAsync();
 ```
 </dd>
 </dl>
@@ -103,8 +102,8 @@ await client.Folder.FooAsync();
 </dl>
 </details>
 
-## FolderService
-<details><summary><code>client.FolderService.<a href="/src/SeedApi/FolderService/FolderServiceClient.cs">FolderServiceEndpointAsync</a>()</code></summary>
+## Folder Service
+<details><summary><code>client.Folder.Service.<a href="/src/SeedApi/Folder/Service/ServiceClient.cs">EndpointAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -117,7 +116,7 @@ await client.Folder.FooAsync();
 <dd>
 
 ```csharp
-await client.FolderService.FolderServiceEndpointAsync();
+await client.Folder.Service.EndpointAsync();
 ```
 </dd>
 </dl>
@@ -129,7 +128,7 @@ await client.FolderService.FolderServiceEndpointAsync();
 </dl>
 </details>
 
-<details><summary><code>client.FolderService.<a href="/src/SeedApi/FolderService/FolderServiceClient.cs">FolderServiceUnknownRequestAsync</a>(object { ... })</code></summary>
+<details><summary><code>client.Folder.Service.<a href="/src/SeedApi/Folder/Service/ServiceClient.cs">UnknownRequestAsync</a>(object { ... })</code></summary>
 <dl>
 <dd>
 
@@ -142,7 +141,7 @@ await client.FolderService.FolderServiceEndpointAsync();
 <dd>
 
 ```csharp
-await client.FolderService.FolderServiceUnknownRequestAsync(
+await client.Folder.Service.UnknownRequestAsync(
     new Dictionary<object, object?>() { { "key", "value" } }
 );
 ```

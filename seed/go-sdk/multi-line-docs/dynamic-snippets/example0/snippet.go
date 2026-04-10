@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/multi-line-docs/fern"
     client "github.com/multi-line-docs/fern/client"
     option "github.com/multi-line-docs/fern/option"
 )
@@ -14,11 +13,8 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.UserGetUserRequest{
-        UserID: "userId",
-    }
-    client.User.Getuser(
+    client.User.GetUser(
         context.TODO(),
-        request,
+        "userId",
     )
 }

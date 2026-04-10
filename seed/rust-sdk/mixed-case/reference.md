@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getresource</a>(resource_id: String) -> Result&lt;Resource, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_resource</a>(resource_id: String) -> Result&lt;Resource, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,17 +13,17 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_mixed_case::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = MixedCaseClient::new(config).expect("Failed to build client");
     client
         .service
-        .getresource(&"ResourceID".to_string(), None)
+        .get_resource(&"rsc-xyz".to_string(), None)
         .await;
 }
 ```
@@ -52,7 +52,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">listresources</a>(page_limit: Option&lt;i64&gt;, before_date: Option&lt;String&gt;) -> Result&lt;Vec&lt;Resource&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">list_resources</a>(page_limit: Option&lt;i64&gt;, before_date: Option&lt;String&gt;) -> Result&lt;Vec&lt;Resource&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -65,20 +65,20 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_mixed_case::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = MixedCaseClient::new(config).expect("Failed to build client");
     client
         .service
-        .listresources(
-            &ListresourcesQueryRequest {
-                page_limit: 1,
-                before_date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
+        .list_resources(
+            &ListResourcesQueryRequest {
+                page_limit: 10,
+                before_date: NaiveDate::parse_from_str("2023-01-01", "%Y-%m-%d").unwrap(),
             },
             None,
         )

@@ -47,7 +47,7 @@ client.Union.Get(
 </dl>
 </details>
 
-<details><summary><code>client.Union.Getmetadata() -> fern.Metadata</code></summary>
+<details><summary><code>client.Union.GetMetadata() -> fern.Metadata</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +60,7 @@ client.Union.Get(
 <dd>
 
 ```go
-client.Union.Getmetadata(
+client.Union.GetMetadata(
         context.TODO(),
     )
 }
@@ -75,7 +75,7 @@ client.Union.Getmetadata(
 </dl>
 </details>
 
-<details><summary><code>client.Union.Updatemetadata(request) -> bool</code></summary>
+<details><summary><code>client.Union.UpdateMetadata(request) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -89,11 +89,13 @@ client.Union.Getmetadata(
 
 ```go
 request := &fern.MetadataUnion{
-        OptionalMetadataOptional: map[string]any{
-            "key": "value",
+        OptionalMetadata: map[string]any{
+            "string": map[string]any{
+                "key": "value",
+            },
         },
     }
-client.Union.Updatemetadata(
+client.Union.UpdateMetadata(
         context.TODO(),
         request,
     )
@@ -137,7 +139,15 @@ client.Union.Updatemetadata(
 <dd>
 
 ```go
-request := &fern.Request{}
+request := &fern.Request{
+        Union: &fern.MetadataUnion{
+            OptionalMetadata: map[string]any{
+                "string": map[string]any{
+                    "key": "value",
+                },
+            },
+        },
+    }
 client.Union.Call(
         context.TODO(),
         request,
@@ -157,7 +167,7 @@ client.Union.Call(
 <dl>
 <dd>
 
-**union:** `*fern.MetadataUnion` 
+**request:** `*fern.Request` 
     
 </dd>
 </dl>
@@ -169,7 +179,7 @@ client.Union.Call(
 </dl>
 </details>
 
-<details><summary><code>client.Union.Duplicatetypesunion(request) -> *fern.UnionWithDuplicateTypes</code></summary>
+<details><summary><code>client.Union.DuplicateTypesUnion(request) -> *fern.UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -185,7 +195,7 @@ client.Union.Call(
 request := &fern.UnionWithDuplicateTypes{
         String: "string",
     }
-client.Union.Duplicatetypesunion(
+client.Union.DuplicateTypesUnion(
         context.TODO(),
         request,
     )
@@ -216,7 +226,7 @@ client.Union.Duplicatetypesunion(
 </dl>
 </details>
 
-<details><summary><code>client.Union.Nestedunions(request) -> string</code></summary>
+<details><summary><code>client.Union.NestedUnions(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -232,7 +242,7 @@ client.Union.Duplicatetypesunion(
 request := &fern.NestedUnionRoot{
         String: "string",
     }
-client.Union.Nestedunions(
+client.Union.NestedUnions(
         context.TODO(),
         request,
     )
@@ -263,7 +273,7 @@ client.Union.Nestedunions(
 </dl>
 </details>
 
-<details><summary><code>client.Union.Testcamelcaseproperties(request) -> string</code></summary>
+<details><summary><code>client.Union.TestCamelCaseProperties(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -276,15 +286,15 @@ client.Union.Nestedunions(
 <dd>
 
 ```go
-request := &fern.UnionTestCamelCasePropertiesRequest{
+request := &fern.PaymentRequest{
         PaymentMethod: &fern.PaymentMethodUnion{
             TokenizeCard: &fern.TokenizeCard{
-                Method: "method",
-                CardNumber: "cardNumber",
+                Method: "card",
+                CardNumber: "1234567890123456",
             },
         },
     }
-client.Union.Testcamelcaseproperties(
+client.Union.TestCamelCaseProperties(
         context.TODO(),
         request,
     )

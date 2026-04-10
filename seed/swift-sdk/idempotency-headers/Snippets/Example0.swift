@@ -1,8 +1,8 @@
 import Foundation
-import Api
+import IdempotencyHeaders
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = IdempotencyHeadersClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )

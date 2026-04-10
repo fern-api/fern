@@ -41,7 +41,7 @@ client.v2.test
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">updatetestsubmissionstatus</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">update_test_submission_status</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,10 @@ client.v2.test
 <dd>
 
 ```ruby
-client.admin.updatetestsubmissionstatus(submission_id: "submissionId")
+client.admin.update_test_submission_status(
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  request: {}
+)
 ```
 </dd>
 </dl>
@@ -77,7 +80,7 @@ client.admin.updatetestsubmissionstatus(submission_id: "submissionId")
 <dl>
 <dd>
 
-**request:** `Seed::Types::TestSubmissionStatus` 
+**request:** `Seed::Submission::Types::TestSubmissionStatus` 
     
 </dd>
 </dl>
@@ -97,7 +100,7 @@ client.admin.updatetestsubmissionstatus(submission_id: "submissionId")
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">sendtestsubmissionupdate</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">send_test_submission_update</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -110,12 +113,10 @@ client.admin.updatetestsubmissionstatus(submission_id: "submissionId")
 <dd>
 
 ```ruby
-client.admin.sendtestsubmissionupdate(
-  submission_id: "submissionId",
+client.admin.send_test_submission_update(
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   update_time: "2024-01-15T09:30:00Z",
-  update_info: {
-    type: "running"
-  }
+  update_info: {}
 )
 ```
 </dd>
@@ -139,7 +140,7 @@ client.admin.sendtestsubmissionupdate(
 <dl>
 <dd>
 
-**request:** `Seed::Types::TestSubmissionUpdate` 
+**request:** `Seed::Submission::Types::TestSubmissionUpdate` 
     
 </dd>
 </dl>
@@ -159,7 +160,7 @@ client.admin.sendtestsubmissionupdate(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">updateworkspacesubmissionstatus</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">update_workspace_submission_status</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -172,9 +173,9 @@ client.admin.sendtestsubmissionupdate(
 <dd>
 
 ```ruby
-client.admin.updateworkspacesubmissionstatus(
-  submission_id: "submissionId",
-  type: "stopped"
+client.admin.update_workspace_submission_status(
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  request: {}
 )
 ```
 </dd>
@@ -198,7 +199,7 @@ client.admin.updateworkspacesubmissionstatus(
 <dl>
 <dd>
 
-**request:** `Seed::Types::WorkspaceSubmissionStatus` 
+**request:** `Seed::Submission::Types::WorkspaceSubmissionStatus` 
     
 </dd>
 </dl>
@@ -218,7 +219,7 @@ client.admin.updateworkspacesubmissionstatus(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">sendworkspacesubmissionupdate</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">send_workspace_submission_update</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -231,12 +232,10 @@ client.admin.updateworkspacesubmissionstatus(
 <dd>
 
 ```ruby
-client.admin.sendworkspacesubmissionupdate(
-  submission_id: "submissionId",
+client.admin.send_workspace_submission_update(
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   update_time: "2024-01-15T09:30:00Z",
-  update_info: {
-    type: "running"
-  }
+  update_info: {}
 )
 ```
 </dd>
@@ -260,7 +259,7 @@ client.admin.sendworkspacesubmissionupdate(
 <dl>
 <dd>
 
-**request:** `Seed::Types::WorkspaceSubmissionUpdate` 
+**request:** `Seed::Submission::Types::WorkspaceSubmissionUpdate` 
     
 </dd>
 </dl>
@@ -280,7 +279,7 @@ client.admin.sendworkspacesubmissionupdate(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">storetracedtestcase</a>(submission_id, test_case_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_test_case</a>(submission_id, test_case_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -293,27 +292,69 @@ client.admin.sendworkspacesubmissionupdate(
 <dd>
 
 ```ruby
-client.admin.storetracedtestcase(
-  submission_id: "submissionId",
+client.admin.store_traced_test_case(
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   test_case_id: "testCaseId",
   result: {
     result: {
-      expected_result: {
-        type: "integerValue"
-      },
+      expected_result: {},
       actual_result: {
-        type: "value"
+        value: {}
       },
       passed: true
     },
     stdout: "stdout"
   },
   trace_responses: [{
-    submission_id: "submissionId",
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
+    return_value: {},
+    expression_location: {
+      start: 1,
+      offset: 1
+    },
     stack: {
-      num_stack_frames: 1
-    }
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: "methodName",
+        line_number: 1,
+        scopes: [{
+          variables: {
+            variables: {}
+          }
+        }, {
+          variables: {
+            variables: {}
+          }
+        }]
+      }
+    },
+    stdout: "stdout"
+  }, {
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    line_number: 1,
+    return_value: {},
+    expression_location: {
+      start: 1,
+      offset: 1
+    },
+    stack: {
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: "methodName",
+        line_number: 1,
+        scopes: [{
+          variables: {
+            variables: {}
+          }
+        }, {
+          variables: {
+            variables: {}
+          }
+        }]
+      }
+    },
+    stdout: "stdout"
   }]
 )
 ```
@@ -346,7 +387,7 @@ client.admin.storetracedtestcase(
 <dl>
 <dd>
 
-**result:** `Seed::Types::TestCaseResultWithStdout` 
+**result:** `Seed::Submission::Types::TestCaseResultWithStdout` 
     
 </dd>
 </dl>
@@ -354,7 +395,7 @@ client.admin.storetracedtestcase(
 <dl>
 <dd>
 
-**trace_responses:** `Internal::Types::Array[Seed::Types::TraceResponse]` 
+**trace_responses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
     
 </dd>
 </dl>
@@ -374,7 +415,7 @@ client.admin.storetracedtestcase(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">storetracedtestcasev2</a>(submission_id, test_case_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_test_case_v2</a>(submission_id, test_case_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -387,19 +428,67 @@ client.admin.storetracedtestcase(
 <dd>
 
 ```ruby
-client.admin.storetracedtestcasev2(
-  submission_id: "submissionId",
+client.admin.store_traced_test_case_v2(
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   test_case_id: "testCaseId",
-  body: [{
-    submission_id: "submissionId",
+  request: [{
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
     file: {
       filename: "filename",
       directory: "directory"
     },
+    return_value: {},
+    expression_location: {
+      start: 1,
+      offset: 1
+    },
     stack: {
-      num_stack_frames: 1
-    }
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: "methodName",
+        line_number: 1,
+        scopes: [{
+          variables: {
+            variables: {}
+          }
+        }, {
+          variables: {
+            variables: {}
+          }
+        }]
+      }
+    },
+    stdout: "stdout"
+  }, {
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    line_number: 1,
+    file: {
+      filename: "filename",
+      directory: "directory"
+    },
+    return_value: {},
+    expression_location: {
+      start: 1,
+      offset: 1
+    },
+    stack: {
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: "methodName",
+        line_number: 1,
+        scopes: [{
+          variables: {
+            variables: {}
+          }
+        }, {
+          variables: {
+            variables: {}
+          }
+        }]
+      }
+    },
+    stdout: "stdout"
   }]
 )
 ```
@@ -432,7 +521,7 @@ client.admin.storetracedtestcasev2(
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Seed::Types::TraceResponseV2]` 
+**request:** `Internal::Types::Array[Seed::Submission::Types::TraceResponseV2]` 
     
 </dd>
 </dl>
@@ -452,7 +541,7 @@ client.admin.storetracedtestcasev2(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">storetracedworkspace</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_workspace</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -465,17 +554,66 @@ client.admin.storetracedtestcasev2(
 <dd>
 
 ```ruby
-client.admin.storetracedworkspace(
-  submission_id: "submissionId",
+client.admin.store_traced_workspace(
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   workspace_run_details: {
+    exception: {
+      exception_type: "exceptionType",
+      exception_message: "exceptionMessage",
+      exception_stacktrace: "exceptionStacktrace"
+    },
     stdout: "stdout"
   },
   trace_responses: [{
-    submission_id: "submissionId",
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
+    return_value: {},
+    expression_location: {
+      start: 1,
+      offset: 1
+    },
     stack: {
-      num_stack_frames: 1
-    }
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: "methodName",
+        line_number: 1,
+        scopes: [{
+          variables: {
+            variables: {}
+          }
+        }, {
+          variables: {
+            variables: {}
+          }
+        }]
+      }
+    },
+    stdout: "stdout"
+  }, {
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    line_number: 1,
+    return_value: {},
+    expression_location: {
+      start: 1,
+      offset: 1
+    },
+    stack: {
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: "methodName",
+        line_number: 1,
+        scopes: [{
+          variables: {
+            variables: {}
+          }
+        }, {
+          variables: {
+            variables: {}
+          }
+        }]
+      }
+    },
+    stdout: "stdout"
   }]
 )
 ```
@@ -500,7 +638,7 @@ client.admin.storetracedworkspace(
 <dl>
 <dd>
 
-**workspace_run_details:** `Seed::Types::WorkspaceRunDetails` 
+**workspace_run_details:** `Seed::Submission::Types::WorkspaceRunDetails` 
     
 </dd>
 </dl>
@@ -508,7 +646,7 @@ client.admin.storetracedworkspace(
 <dl>
 <dd>
 
-**trace_responses:** `Internal::Types::Array[Seed::Types::TraceResponse]` 
+**trace_responses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
     
 </dd>
 </dl>
@@ -528,7 +666,7 @@ client.admin.storetracedworkspace(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">storetracedworkspacev2</a>(submission_id, request) -> </code></summary>
+<details><summary><code>client.admin.<a href="/lib/seed/admin/client.rb">store_traced_workspace_v2</a>(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -541,18 +679,66 @@ client.admin.storetracedworkspace(
 <dd>
 
 ```ruby
-client.admin.storetracedworkspacev2(
-  submission_id: "submissionId",
-  body: [{
-    submission_id: "submissionId",
+client.admin.store_traced_workspace_v2(
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  request: [{
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
     file: {
       filename: "filename",
       directory: "directory"
     },
+    return_value: {},
+    expression_location: {
+      start: 1,
+      offset: 1
+    },
     stack: {
-      num_stack_frames: 1
-    }
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: "methodName",
+        line_number: 1,
+        scopes: [{
+          variables: {
+            variables: {}
+          }
+        }, {
+          variables: {
+            variables: {}
+          }
+        }]
+      }
+    },
+    stdout: "stdout"
+  }, {
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    line_number: 1,
+    file: {
+      filename: "filename",
+      directory: "directory"
+    },
+    return_value: {},
+    expression_location: {
+      start: 1,
+      offset: 1
+    },
+    stack: {
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: "methodName",
+        line_number: 1,
+        scopes: [{
+          variables: {
+            variables: {}
+          }
+        }, {
+          variables: {
+            variables: {}
+          }
+        }]
+      }
+    },
+    stdout: "stdout"
   }]
 )
 ```
@@ -577,7 +763,7 @@ client.admin.storetracedworkspacev2(
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Seed::Types::TraceResponseV2]` 
+**request:** `Internal::Types::Array[Seed::Submission::Types::TraceResponseV2]` 
     
 </dd>
 </dl>
@@ -598,7 +784,7 @@ client.admin.storetracedworkspacev2(
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.<a href="/lib/seed/homepage/client.rb">gethomepageproblems</a>() -> Internal::Types::Array[String]</code></summary>
+<details><summary><code>client.homepage.<a href="/lib/seed/homepage/client.rb">get_homepage_problems</a>() -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -611,7 +797,7 @@ client.admin.storetracedworkspacev2(
 <dd>
 
 ```ruby
-client.homepage.gethomepageproblems
+client.homepage.get_homepage_problems
 ```
 </dd>
 </dl>
@@ -638,7 +824,7 @@ client.homepage.gethomepageproblems
 </dl>
 </details>
 
-<details><summary><code>client.homepage.<a href="/lib/seed/homepage/client.rb">sethomepageproblems</a>(request) -> </code></summary>
+<details><summary><code>client.homepage.<a href="/lib/seed/homepage/client.rb">set_homepage_problems</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -651,7 +837,7 @@ client.homepage.gethomepageproblems
 <dd>
 
 ```ruby
-client.homepage.sethomepageproblems(request: ["string"])
+client.homepage.set_homepage_problems(request: %w[string string])
 ```
 </dd>
 </dl>
@@ -687,7 +873,7 @@ client.homepage.sethomepageproblems(request: ["string"])
 </details>
 
 ## Migration
-<details><summary><code>client.migration.<a href="/lib/seed/migration/client.rb">getattemptedmigrations</a>() -> Internal::Types::Array[Seed::Types::Migration]</code></summary>
+<details><summary><code>client.migration.<a href="/lib/seed/migration/client.rb">get_attempted_migrations</a>() -> Internal::Types::Array[Seed::Migration::Types::Migration]</code></summary>
 <dl>
 <dd>
 
@@ -700,7 +886,7 @@ client.homepage.sethomepageproblems(request: ["string"])
 <dd>
 
 ```ruby
-client.migration.getattemptedmigrations(admin_key_header: "admin-key-header")
+client.migration.get_attempted_migrations(admin_key_header: "admin-key-header")
 ```
 </dd>
 </dl>
@@ -736,7 +922,7 @@ client.migration.getattemptedmigrations(admin_key_header: "admin-key-header")
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">createplaylist</a>(service_param, request) -> Seed::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">create_playlist</a>(service_param, request) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -763,11 +949,12 @@ Create a new playlist
 <dd>
 
 ```ruby
-client.playlist.createplaylist(
+client.playlist.create_playlist(
   service_param: 1,
   datetime: "2024-01-15T09:30:00Z",
+  optional_datetime: "2024-01-15T09:30:00Z",
   name: "name",
-  problems: ["problems"]
+  problems: %w[problems problems]
 )
 ```
 </dd>
@@ -807,7 +994,7 @@ client.playlist.createplaylist(
 <dl>
 <dd>
 
-**request:** `Seed::Types::PlaylistCreateRequest` 
+**request:** `Seed::Playlist::Types::PlaylistCreateRequest` 
     
 </dd>
 </dl>
@@ -827,7 +1014,7 @@ client.playlist.createplaylist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">getplaylists</a>(service_param) -> Internal::Types::Array[Seed::Types::Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">get_playlists</a>(service_param) -> Internal::Types::Array[Seed::Playlist::Types::Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -854,7 +1041,7 @@ Returns the user's playlists
 <dd>
 
 ```ruby
-client.playlist.getplaylists(
+client.playlist.get_playlists(
   service_param: 1,
   limit: 1,
   other_field: "otherField",
@@ -937,7 +1124,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">getplaylist</a>(service_param, playlist_id) -> Seed::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">get_playlist</a>(service_param, playlist_id) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -964,7 +1151,7 @@ Returns a playlist
 <dd>
 
 ```ruby
-client.playlist.getplaylist(
+client.playlist.get_playlist(
   service_param: 1,
   playlist_id: "playlistId"
 )
@@ -1010,7 +1197,7 @@ client.playlist.getplaylist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">updateplaylist</a>(service_param, playlist_id, request) -> Seed::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">update_playlist</a>(service_param, playlist_id, request) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1037,11 +1224,13 @@ Updates a playlist
 <dd>
 
 ```ruby
-client.playlist.updateplaylist(
+client.playlist.update_playlist(
   service_param: 1,
   playlist_id: "playlistId",
-  name: "name",
-  problems: ["problems"]
+  request: {
+    name: "name",
+    problems: %w[problems problems]
+  }
 )
 ```
 </dd>
@@ -1073,15 +1262,7 @@ client.playlist.updateplaylist(
 <dl>
 <dd>
 
-**name:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**problems:** `Internal::Types::Array[String]` — The problems that make up the playlist.
+**request:** `Seed::Playlist::Types::UpdatePlaylistRequest` 
     
 </dd>
 </dl>
@@ -1101,7 +1282,7 @@ client.playlist.updateplaylist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">deleteplaylist</a>(service_param, playlist_id) -> </code></summary>
+<details><summary><code>client.playlist.<a href="/lib/seed/playlist/client.rb">delete_playlist</a>(service_param, playlist_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1128,7 +1309,7 @@ Deletes a playlist
 <dd>
 
 ```ruby
-client.playlist.deleteplaylist(
+client.playlist.delete_playlist(
   service_param: 1,
   playlist_id: "playlist_id"
 )
@@ -1175,7 +1356,7 @@ client.playlist.deleteplaylist(
 </details>
 
 ## Problem
-<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">createproblem</a>(request) -> Seed::Types::CreateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">create_problem</a>(request) -> Seed::Problem::Types::CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1202,13 +1383,13 @@ Creates a problem
 <dd>
 
 ```ruby
-client.problem.createproblem(
+client.problem.create_problem(
   problem_name: "problemName",
   problem_description: {
-    boards: []
+    boards: [{}, {}]
   },
   files: {
-    key: {
+    JAVA: {
       solution_file: {
         filename: "filename",
         contents: "contents"
@@ -1216,28 +1397,32 @@ client.problem.createproblem(
       read_only_files: [{
         filename: "filename",
         contents: "contents"
+      }, {
+        filename: "filename",
+        contents: "contents"
       }]
     }
   },
   input_params: [{
-    variable_type: {
-      type: "integerType"
-    },
+    variable_type: {},
+    name: "name"
+  }, {
+    variable_type: {},
     name: "name"
   }],
-  output_type: {
-    type: "integerType"
-  },
+  output_type: {},
   testcases: [{
     test_case: {
       id: "id",
-      params: [{
-        type: "integerValue"
-      }]
+      params: [{}, {}]
     },
-    expected_result: {
-      type: "integerValue"
-    }
+    expected_result: {}
+  }, {
+    test_case: {
+      id: "id",
+      params: [{}, {}]
+    },
+    expected_result: {}
   }],
   method_name: "methodName"
 )
@@ -1255,7 +1440,7 @@ client.problem.createproblem(
 <dl>
 <dd>
 
-**request:** `Seed::Types::CreateProblemRequest` 
+**request:** `Seed::Problem::Types::CreateProblemRequest` 
     
 </dd>
 </dl>
@@ -1275,7 +1460,7 @@ client.problem.createproblem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">updateproblem</a>(problem_id, request) -> Seed::Types::UpdateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">update_problem</a>(problem_id, request) -> Seed::Problem::Types::UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1302,14 +1487,14 @@ Updates a problem
 <dd>
 
 ```ruby
-client.problem.updateproblem(
+client.problem.update_problem(
   problem_id: "problemId",
   problem_name: "problemName",
   problem_description: {
-    boards: []
+    boards: [{}, {}]
   },
   files: {
-    key: {
+    JAVA: {
       solution_file: {
         filename: "filename",
         contents: "contents"
@@ -1317,28 +1502,32 @@ client.problem.updateproblem(
       read_only_files: [{
         filename: "filename",
         contents: "contents"
+      }, {
+        filename: "filename",
+        contents: "contents"
       }]
     }
   },
   input_params: [{
-    variable_type: {
-      type: "integerType"
-    },
+    variable_type: {},
+    name: "name"
+  }, {
+    variable_type: {},
     name: "name"
   }],
-  output_type: {
-    type: "integerType"
-  },
+  output_type: {},
   testcases: [{
     test_case: {
       id: "id",
-      params: [{
-        type: "integerValue"
-      }]
+      params: [{}, {}]
     },
-    expected_result: {
-      type: "integerValue"
-    }
+    expected_result: {}
+  }, {
+    test_case: {
+      id: "id",
+      params: [{}, {}]
+    },
+    expected_result: {}
   }],
   method_name: "methodName"
 )
@@ -1364,7 +1553,7 @@ client.problem.updateproblem(
 <dl>
 <dd>
 
-**request:** `Seed::Types::CreateProblemRequest` 
+**request:** `Seed::Problem::Types::CreateProblemRequest` 
     
 </dd>
 </dl>
@@ -1384,7 +1573,7 @@ client.problem.updateproblem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">deleteproblem</a>(problem_id) -> </code></summary>
+<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">delete_problem</a>(problem_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1411,7 +1600,7 @@ Soft deletes a problem
 <dd>
 
 ```ruby
-client.problem.deleteproblem(problem_id: "problemId")
+client.problem.delete_problem(problem_id: "problemId")
 ```
 </dd>
 </dl>
@@ -1446,7 +1635,7 @@ client.problem.deleteproblem(problem_id: "problemId")
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">getdefaultstarterfiles</a>(request) -> Seed::Types::GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.problem.<a href="/lib/seed/problem/client.rb">get_default_starter_files</a>(request) -> Seed::Problem::Types::GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1473,16 +1662,15 @@ Returns default starter files for problem
 <dd>
 
 ```ruby
-client.problem.getdefaultstarterfiles(
+client.problem.get_default_starter_files(
   input_params: [{
-    variable_type: {
-      type: "integerType"
-    },
+    variable_type: {},
+    name: "name"
+  }, {
+    variable_type: {},
     name: "name"
   }],
-  output_type: {
-    type: "integerType"
-  },
+  output_type: {},
   method_name: "methodName"
 )
 ```
@@ -1499,7 +1687,7 @@ client.problem.getdefaultstarterfiles(
 <dl>
 <dd>
 
-**input_params:** `Internal::Types::Array[Seed::Types::VariableTypeAndName]` 
+**input_params:** `Internal::Types::Array[Seed::Problem::Types::VariableTypeAndName]` 
     
 </dd>
 </dl>
@@ -1507,7 +1695,7 @@ client.problem.getdefaultstarterfiles(
 <dl>
 <dd>
 
-**output_type:** `Seed::Types::VariableType` 
+**output_type:** `Seed::Commons::Types::VariableType` 
     
 </dd>
 </dl>
@@ -1543,7 +1731,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">createexecutionsession</a>(language) -> Seed::Types::ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">create_execution_session</a>(language) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1570,7 +1758,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```ruby
-client.submission.createexecutionsession(language: "JAVA")
+client.submission.create_execution_session(language: "JAVA")
 ```
 </dd>
 </dl>
@@ -1585,7 +1773,7 @@ client.submission.createexecutionsession(language: "JAVA")
 <dl>
 <dd>
 
-**language:** `Seed::Types::Language` 
+**language:** `Seed::Commons::Types::Language` 
     
 </dd>
 </dl>
@@ -1605,7 +1793,7 @@ client.submission.createexecutionsession(language: "JAVA")
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">getexecutionsession</a>(session_id) -> Seed::Types::ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">get_execution_session</a>(session_id) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1632,7 +1820,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```ruby
-client.submission.getexecutionsession(session_id: "sessionId")
+client.submission.get_execution_session(session_id: "sessionId")
 ```
 </dd>
 </dl>
@@ -1667,7 +1855,7 @@ client.submission.getexecutionsession(session_id: "sessionId")
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">stopexecutionsession</a>(session_id) -> </code></summary>
+<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">stop_execution_session</a>(session_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1694,7 +1882,7 @@ Stops execution session.
 <dd>
 
 ```ruby
-client.submission.stopexecutionsession(session_id: "sessionId")
+client.submission.stop_execution_session(session_id: "sessionId")
 ```
 </dd>
 </dl>
@@ -1729,7 +1917,7 @@ client.submission.stopexecutionsession(session_id: "sessionId")
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">getexecutionsessionsstate</a>() -> Seed::Types::GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.submission.<a href="/lib/seed/submission/client.rb">get_execution_sessions_state</a>() -> Seed::Submission::Types::GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -1742,7 +1930,7 @@ client.submission.stopexecutionsession(session_id: "sessionId")
 <dd>
 
 ```ruby
-client.submission.getexecutionsessionsstate
+client.submission.get_execution_sessions_state
 ```
 </dd>
 </dl>
@@ -1770,7 +1958,7 @@ client.submission.getexecutionsessionsstate
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="/lib/seed/sysprop/client.rb">setnumwarminstances</a>(language, num_warm_instances) -> </code></summary>
+<details><summary><code>client.sysprop.<a href="/lib/seed/sysprop/client.rb">set_num_warm_instances</a>(language, num_warm_instances) -> </code></summary>
 <dl>
 <dd>
 
@@ -1783,7 +1971,7 @@ client.submission.getexecutionsessionsstate
 <dd>
 
 ```ruby
-client.sysprop.setnumwarminstances(
+client.sysprop.set_num_warm_instances(
   language: "JAVA",
   num_warm_instances: 1
 )
@@ -1801,7 +1989,7 @@ client.sysprop.setnumwarminstances(
 <dl>
 <dd>
 
-**language:** `Seed::Types::Language` 
+**language:** `Seed::Commons::Types::Language` 
     
 </dd>
 </dl>
@@ -1829,7 +2017,7 @@ client.sysprop.setnumwarminstances(
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="/lib/seed/sysprop/client.rb">getnumwarminstances</a>() -> Internal::Types::Hash[String, Integer]</code></summary>
+<details><summary><code>client.sysprop.<a href="/lib/seed/sysprop/client.rb">get_num_warm_instances</a>() -> Internal::Types::Hash[Seed::Commons::Types::Language, Integer]</code></summary>
 <dl>
 <dd>
 
@@ -1842,7 +2030,7 @@ client.sysprop.setnumwarminstances(
 <dd>
 
 ```ruby
-client.sysprop.getnumwarminstances
+client.sysprop.get_num_warm_instances
 ```
 </dd>
 </dl>
@@ -1869,8 +2057,8 @@ client.sysprop.getnumwarminstances
 </dl>
 </details>
 
-## V2Problem
-<details><summary><code>client.v2problem.<a href="/lib/seed/v2problem/client.rb">v2problem_get_lightweight_problems</a>() -> Internal::Types::Array[Seed::Types::V2LightweightProblemInfoV2]</code></summary>
+## V2 Problem
+<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_lightweight_problems</a>() -> Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -1897,7 +2085,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```ruby
-client.v2problem.v2problem_get_lightweight_problems
+client.v2.problem.get_lightweight_problems
 ```
 </dd>
 </dl>
@@ -1912,7 +2100,7 @@ client.v2problem.v2problem_get_lightweight_problems
 <dl>
 <dd>
 
-**request_options:** `Seed::V2Problem::RequestOptions` 
+**request_options:** `Seed::V2::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -1924,7 +2112,7 @@ client.v2problem.v2problem_get_lightweight_problems
 </dl>
 </details>
 
-<details><summary><code>client.v2problem.<a href="/lib/seed/v2problem/client.rb">v2problem_get_problems</a>() -> Internal::Types::Array[Seed::Types::V2ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_problems</a>() -> Internal::Types::Array[Seed::V2::Problem::Types::ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -1951,7 +2139,7 @@ Returns latest versions of all problems
 <dd>
 
 ```ruby
-client.v2problem.v2problem_get_problems
+client.v2.problem.get_problems
 ```
 </dd>
 </dl>
@@ -1966,7 +2154,7 @@ client.v2problem.v2problem_get_problems
 <dl>
 <dd>
 
-**request_options:** `Seed::V2Problem::RequestOptions` 
+**request_options:** `Seed::V2::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -1978,7 +2166,7 @@ client.v2problem.v2problem_get_problems
 </dl>
 </details>
 
-<details><summary><code>client.v2problem.<a href="/lib/seed/v2problem/client.rb">v2problem_get_latest_problem</a>(problem_id) -> Seed::Types::V2ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_latest_problem</a>(problem_id) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2005,7 +2193,7 @@ Returns latest version of a problem
 <dd>
 
 ```ruby
-client.v2problem.v2problem_get_latest_problem(problem_id: "problemId")
+client.v2.problem.get_latest_problem(problem_id: "problemId")
 ```
 </dd>
 </dl>
@@ -2028,7 +2216,7 @@ client.v2problem.v2problem_get_latest_problem(problem_id: "problemId")
 <dl>
 <dd>
 
-**request_options:** `Seed::V2Problem::RequestOptions` 
+**request_options:** `Seed::V2::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2040,7 +2228,7 @@ client.v2problem.v2problem_get_latest_problem(problem_id: "problemId")
 </dl>
 </details>
 
-<details><summary><code>client.v2problem.<a href="/lib/seed/v2problem/client.rb">v2problem_get_problem_version</a>(problem_id, problem_version) -> Seed::Types::V2ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="/lib/seed/v2/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2067,7 +2255,7 @@ Returns requested version of a problem
 <dd>
 
 ```ruby
-client.v2problem.v2problem_get_problem_version(
+client.v2.problem.get_problem_version(
   problem_id: "problemId",
   problem_version: 1
 )
@@ -2101,7 +2289,7 @@ client.v2problem.v2problem_get_problem_version(
 <dl>
 <dd>
 
-**request_options:** `Seed::V2Problem::RequestOptions` 
+**request_options:** `Seed::V2::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2113,8 +2301,8 @@ client.v2problem.v2problem_get_problem_version(
 </dl>
 </details>
 
-## V2V3Problem
-<details><summary><code>client.v2v3problem.<a href="/lib/seed/v2v3problem/client.rb">v2v3problem_get_lightweight_problems</a>() -> Internal::Types::Array[Seed::Types::V2V3LightweightProblemInfoV2]</code></summary>
+## V2 V3 Problem
+<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_lightweight_problems</a>() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2141,7 +2329,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```ruby
-client.v2v3problem.v2v3problem_get_lightweight_problems
+client.v2.problem.get_lightweight_problems
 ```
 </dd>
 </dl>
@@ -2156,7 +2344,7 @@ client.v2v3problem.v2v3problem_get_lightweight_problems
 <dl>
 <dd>
 
-**request_options:** `Seed::V2V3Problem::RequestOptions` 
+**request_options:** `Seed::V2::V3::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2168,7 +2356,7 @@ client.v2v3problem.v2v3problem_get_lightweight_problems
 </dl>
 </details>
 
-<details><summary><code>client.v2v3problem.<a href="/lib/seed/v2v3problem/client.rb">v2v3problem_get_problems</a>() -> Internal::Types::Array[Seed::Types::V2V3ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_problems</a>() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2195,7 +2383,7 @@ Returns latest versions of all problems
 <dd>
 
 ```ruby
-client.v2v3problem.v2v3problem_get_problems
+client.v2.problem.get_problems
 ```
 </dd>
 </dl>
@@ -2210,7 +2398,7 @@ client.v2v3problem.v2v3problem_get_problems
 <dl>
 <dd>
 
-**request_options:** `Seed::V2V3Problem::RequestOptions` 
+**request_options:** `Seed::V2::V3::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2222,7 +2410,7 @@ client.v2v3problem.v2v3problem_get_problems
 </dl>
 </details>
 
-<details><summary><code>client.v2v3problem.<a href="/lib/seed/v2v3problem/client.rb">v2v3problem_get_latest_problem</a>(problem_id) -> Seed::Types::V2V3ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_latest_problem</a>(problem_id) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2249,7 +2437,7 @@ Returns latest version of a problem
 <dd>
 
 ```ruby
-client.v2v3problem.v2v3problem_get_latest_problem(problem_id: "problemId")
+client.v2.problem.get_latest_problem(problem_id: "problemId")
 ```
 </dd>
 </dl>
@@ -2272,7 +2460,7 @@ client.v2v3problem.v2v3problem_get_latest_problem(problem_id: "problemId")
 <dl>
 <dd>
 
-**request_options:** `Seed::V2V3Problem::RequestOptions` 
+**request_options:** `Seed::V2::V3::Problem::RequestOptions` 
     
 </dd>
 </dl>
@@ -2284,7 +2472,7 @@ client.v2v3problem.v2v3problem_get_latest_problem(problem_id: "problemId")
 </dl>
 </details>
 
-<details><summary><code>client.v2v3problem.<a href="/lib/seed/v2v3problem/client.rb">v2v3problem_get_problem_version</a>(problem_id, problem_version) -> Seed::Types::V2V3ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/lib/seed/v2/v3/problem/client.rb">get_problem_version</a>(problem_id, problem_version) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2311,7 +2499,7 @@ Returns requested version of a problem
 <dd>
 
 ```ruby
-client.v2v3problem.v2v3problem_get_problem_version(
+client.v2.problem.get_problem_version(
   problem_id: "problemId",
   problem_version: 1
 )
@@ -2345,7 +2533,7 @@ client.v2v3problem.v2v3problem_get_problem_version(
 <dl>
 <dd>
 
-**request_options:** `Seed::V2V3Problem::RequestOptions` 
+**request_options:** `Seed::V2::V3::Problem::RequestOptions` 
     
 </dd>
 </dl>

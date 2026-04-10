@@ -6,19 +6,19 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ListUsersPathPaginationResponse, ListUsersUriPaginationResponse, User
     from . import users
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedPaginationUriPath, SeedPaginationUriPath
+    from .users import ListUsersPathPaginationResponse, ListUsersUriPaginationResponse, User
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedPaginationUriPath": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "ListUsersPathPaginationResponse": ".types",
-    "ListUsersUriPaginationResponse": ".types",
-    "SeedApi": ".client",
-    "User": ".types",
+    "ListUsersPathPaginationResponse": ".users",
+    "ListUsersUriPaginationResponse": ".users",
+    "SeedPaginationUriPath": ".client",
+    "User": ".users",
     "__version__": ".version",
     "users": ".users",
 }
@@ -46,12 +46,12 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedPaginationUriPath",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "ListUsersPathPaginationResponse",
     "ListUsersUriPaginationResponse",
-    "SeedApi",
+    "SeedPaginationUriPath",
     "User",
     "__version__",
     "users",

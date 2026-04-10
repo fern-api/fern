@@ -3,13 +3,6 @@
 import type * as SeedApi from "../index.js";
 
 export interface Script extends SeedApi.BaseResource {
-    resource_type: Script.ResourceType;
+    resource_type: "Script";
     name: string;
-}
-
-export namespace Script {
-    export const ResourceType = {
-        Script: "Script",
-    } as const;
-    export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType];
 }

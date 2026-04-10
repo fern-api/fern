@@ -10,7 +10,7 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.user import User
+from .types.user import User
 from pydantic import ValidationError
 
 
@@ -42,7 +42,6 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"users/{encode_path_param(id)}",
@@ -100,7 +99,6 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"users/{encode_path_param(id)}",

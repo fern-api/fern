@@ -2,10 +2,11 @@ openapi: 3.0.1
 info:
   title: alias-extends
   version: ''
+  description: A Test Definition for extending an alias
 paths:
   /extends/extended-inline-request-body:
     post:
-      operationId: _extendedInlineRequestBody
+      operationId: extendedInlineRequestBody
       tags:
         - ''
       parameters: []
@@ -21,16 +22,10 @@ paths:
               properties:
                 child:
                   type: string
-                  example: child
               required:
                 - child
               allOf:
                 - $ref: '#/components/schemas/AliasType'
-            examples:
-              Example1:
-                value:
-                  parent: parent
-                  child: child
 components:
   schemas:
     AliasType:
@@ -42,6 +37,7 @@ components:
       properties:
         parent:
           type: string
+          example: Property from the parent
       required:
         - parent
     Child:
@@ -50,6 +46,7 @@ components:
       properties:
         child:
           type: string
+          example: Property from the child
       required:
         - child
       allOf:

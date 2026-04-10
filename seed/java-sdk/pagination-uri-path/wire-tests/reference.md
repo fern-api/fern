@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.listwithuripagination() -> ListUsersUriPaginationResponse</code></summary>
+<details><summary><code>client.users.listWithUriPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.users().listwithuripagination();
+client.users().listWithUriPagination();
 ```
 </dd>
 </dl>
@@ -25,7 +25,7 @@ client.users().listwithuripagination();
 </dl>
 </details>
 
-<details><summary><code>client.users.listwithpathpagination() -> ListUsersPathPaginationResponse</code></summary>
+<details><summary><code>client.users.listWithPathPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ client.users().listwithuripagination();
 <dd>
 
 ```java
-client.users().listwithpathpagination();
+client.users().listWithPathPagination();
 ```
 </dd>
 </dl>

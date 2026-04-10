@@ -1,4 +1,4 @@
-import Api
+import ServerSentEvents
 import Foundation
 
 final class HTTPStub {

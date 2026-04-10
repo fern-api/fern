@@ -14,45 +14,22 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.ServicePatchComplexRequest{
-        ID: "id",
-        Name: fern.String(
-            "name",
+    request := &fern.OptionalMergePatchRequest{
+        RequiredField: "requiredField",
+        OptionalString: fern.String(
+            "optionalString",
         ),
-        Age: fern.Int(
+        OptionalInteger: fern.Int(
             1,
         ),
-        Active: fern.Bool(
+        OptionalBoolean: fern.Bool(
             true,
         ),
-        Metadata: map[string]any{
-            "metadata": map[string]any{
-                "key": "value",
-            },
-        },
-        Tags: []string{
-            "tags",
-            "tags",
-        },
-        Email: fern.String(
-            "email",
+        NullableString: fern.String(
+            "nullableString",
         ),
-        Nickname: fern.String(
-            "nickname",
-        ),
-        Bio: fern.String(
-            "bio",
-        ),
-        ProfileImageURL: fern.String(
-            "profileImageUrl",
-        ),
-        Settings: map[string]any{
-            "settings": map[string]any{
-                "key": "value",
-            },
-        },
     }
-    client.Service.Patchcomplex(
+    client.Service.OptionalMergePatchTest(
         context.TODO(),
         request,
     )

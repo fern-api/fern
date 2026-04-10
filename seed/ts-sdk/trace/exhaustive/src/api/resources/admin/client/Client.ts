@@ -2,10 +2,10 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedTrace from "../../../index.js";
 
 export declare namespace AdminClient {
     export type Options = BaseClientOptions;
@@ -21,43 +21,50 @@ export class AdminClient {
     }
 
     /**
-     * @param {SeedApi.AdminUpdateTestSubmissionStatusRequest} request
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.TestSubmissionStatus} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.updatetestsubmissionstatus({
-     *         submissionId: SeedApi.SubmissionId("submissionId"),
-     *         body: {
-     *             type: "stopped"
-     *         }
+     *     await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+     *         type: "stopped"
      *     })
      */
-    public updatetestsubmissionstatus(
-        request: SeedApi.AdminUpdateTestSubmissionStatusRequest,
+    public updateTestSubmissionStatus(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TestSubmissionStatus,
         requestOptions?: AdminClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.admin.updatetestsubmissionstatus.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__updatetestsubmissionstatus(request, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.updateTestSubmissionStatus.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateTestSubmissionStatus(submissionId, request, requestOptions),
+        );
     }
 
-    private async __updatetestsubmissionstatus(
-        request: SeedApi.AdminUpdateTestSubmissionStatusRequest,
+    private async __updateTestSubmissionStatus(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TestSubmissionStatus,
         requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.admin.updatetestsubmissionstatus.Error>>> {
-        const { submissionId, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateTestSubmissionStatus.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `admin/store-test-submission-status/${core.url.encodePathParam(submissionId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-submission-status/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -85,7 +92,7 @@ export class AdminClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.admin.updatetestsubmissionstatus.Error._unknown(_response.error),
+                error: SeedTrace.admin.updateTestSubmissionStatus.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -93,46 +100,54 @@ export class AdminClient {
     }
 
     /**
-     * @param {SeedApi.AdminSendTestSubmissionUpdateRequest} request
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.TestSubmissionUpdate} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.sendtestsubmissionupdate({
-     *         submissionId: SeedApi.SubmissionId("submissionId"),
-     *         body: {
-     *             updateTime: "2024-01-15T09:30:00Z",
-     *             updateInfo: {
-     *                 type: "running"
-     *             }
+     *     await client.admin.sendTestSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+     *         updateTime: "2024-01-15T09:30:00Z",
+     *         updateInfo: {
+     *             type: "running",
+     *             value: "QUEUEING_SUBMISSION"
      *         }
      *     })
      */
-    public sendtestsubmissionupdate(
-        request: SeedApi.AdminSendTestSubmissionUpdateRequest,
+    public sendTestSubmissionUpdate(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TestSubmissionUpdate,
         requestOptions?: AdminClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.admin.sendtestsubmissionupdate.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__sendtestsubmissionupdate(request, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.sendTestSubmissionUpdate.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendTestSubmissionUpdate(submissionId, request, requestOptions),
+        );
     }
 
-    private async __sendtestsubmissionupdate(
-        request: SeedApi.AdminSendTestSubmissionUpdateRequest,
+    private async __sendTestSubmissionUpdate(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TestSubmissionUpdate,
         requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.admin.sendtestsubmissionupdate.Error>>> {
-        const { submissionId, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendTestSubmissionUpdate.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `admin/store-test-submission-status-v2/${core.url.encodePathParam(submissionId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-submission-status-v2/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -160,7 +175,7 @@ export class AdminClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.admin.sendtestsubmissionupdate.Error._unknown(_response.error),
+                error: SeedTrace.admin.sendTestSubmissionUpdate.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -168,43 +183,50 @@ export class AdminClient {
     }
 
     /**
-     * @param {SeedApi.AdminUpdateWorkspaceSubmissionStatusRequest} request
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.WorkspaceSubmissionStatus} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.updateworkspacesubmissionstatus({
-     *         submissionId: SeedApi.SubmissionId("submissionId"),
-     *         body: {
-     *             type: "stopped"
-     *         }
+     *     await client.admin.updateWorkspaceSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+     *         type: "stopped"
      *     })
      */
-    public updateworkspacesubmissionstatus(
-        request: SeedApi.AdminUpdateWorkspaceSubmissionStatusRequest,
+    public updateWorkspaceSubmissionStatus(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.WorkspaceSubmissionStatus,
         requestOptions?: AdminClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.admin.updateworkspacesubmissionstatus.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__updateworkspacesubmissionstatus(request, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateWorkspaceSubmissionStatus(submissionId, request, requestOptions),
+        );
     }
 
-    private async __updateworkspacesubmissionstatus(
-        request: SeedApi.AdminUpdateWorkspaceSubmissionStatusRequest,
+    private async __updateWorkspaceSubmissionStatus(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.WorkspaceSubmissionStatus,
         requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.admin.updateworkspacesubmissionstatus.Error>>> {
-        const { submissionId, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `admin/store-workspace-submission-status/${core.url.encodePathParam(submissionId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-submission-status/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -232,7 +254,7 @@ export class AdminClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.admin.updateworkspacesubmissionstatus.Error._unknown(_response.error),
+                error: SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -240,46 +262,54 @@ export class AdminClient {
     }
 
     /**
-     * @param {SeedApi.AdminSendWorkspaceSubmissionUpdateRequest} request
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.WorkspaceSubmissionUpdate} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.sendworkspacesubmissionupdate({
-     *         submissionId: SeedApi.SubmissionId("submissionId"),
-     *         body: {
-     *             updateTime: "2024-01-15T09:30:00Z",
-     *             updateInfo: {
-     *                 type: "running"
-     *             }
+     *     await client.admin.sendWorkspaceSubmissionUpdate(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
+     *         updateTime: "2024-01-15T09:30:00Z",
+     *         updateInfo: {
+     *             type: "running",
+     *             value: "QUEUEING_SUBMISSION"
      *         }
      *     })
      */
-    public sendworkspacesubmissionupdate(
-        request: SeedApi.AdminSendWorkspaceSubmissionUpdateRequest,
+    public sendWorkspaceSubmissionUpdate(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.WorkspaceSubmissionUpdate,
         requestOptions?: AdminClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.admin.sendworkspacesubmissionupdate.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__sendworkspacesubmissionupdate(request, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions),
+        );
     }
 
-    private async __sendworkspacesubmissionupdate(
-        request: SeedApi.AdminSendWorkspaceSubmissionUpdateRequest,
+    private async __sendWorkspaceSubmissionUpdate(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.WorkspaceSubmissionUpdate,
         requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.admin.sendworkspacesubmissionupdate.Error>>> {
-        const { submissionId, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `admin/store-workspace-submission-status-v2/${core.url.encodePathParam(submissionId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-submission-status-v2/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -307,7 +337,7 @@ export class AdminClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.admin.sendworkspacesubmissionupdate.Error._unknown(_response.error),
+                error: SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -315,141 +345,138 @@ export class AdminClient {
     }
 
     /**
-     * @param {SeedApi.AdminStoreTracedTestCaseRequest} request
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {string} testCaseId
+     * @param {SeedTrace.StoreTracedTestCaseRequest} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.storetracedtestcase({
-     *         submissionId: SeedApi.SubmissionId("submissionId"),
-     *         testCaseId: "testCaseId",
+     *     await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), "testCaseId", {
      *         result: {
      *             result: {
      *                 expectedResult: {
-     *                     type: "integerValue"
+     *                     type: "integerValue",
+     *                     value: 1
      *                 },
      *                 actualResult: {
-     *                     type: "value"
+     *                     type: "value",
+     *                     value: {
+     *                         type: "integerValue",
+     *                         value: 1
+     *                     }
      *                 },
      *                 passed: true
      *             },
      *             stdout: "stdout"
      *         },
      *         traceResponses: [{
-     *                 submissionId: SeedApi.SubmissionId("submissionId"),
+     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *                 lineNumber: 1,
-     *                 stack: {
-     *                     numStackFrames: 1
-     *                 }
-     *             }]
-     *     })
-     */
-    public storetracedtestcase(
-        request: SeedApi.AdminStoreTracedTestCaseRequest,
-        requestOptions?: AdminClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.admin.storetracedtestcase.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__storetracedtestcase(request, requestOptions));
-    }
-
-    private async __storetracedtestcase(
-        request: SeedApi.AdminStoreTracedTestCaseRequest,
-        requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.admin.storetracedtestcase.Error>>> {
-        const { submissionId, testCaseId, ..._body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `admin/store-test-trace/submission/${core.url.encodePathParam(submissionId)}/testCase/${core.url.encodePathParam(testCaseId)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: _body,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: {
-                    ok: true,
-                    body: undefined,
-                    headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        return {
-            data: {
-                ok: false,
-                error: SeedApi.admin.storetracedtestcase.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
-    }
-
-    /**
-     * @param {SeedApi.AdminStoreTracedTestCaseV2Request} request
-     * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.admin.storetracedtestcasev2({
-     *         submissionId: SeedApi.SubmissionId("submissionId"),
-     *         testCaseId: SeedApi.V2TestCaseId("testCaseId"),
-     *         body: [{
-     *                 submissionId: SeedApi.SubmissionId("submissionId"),
-     *                 lineNumber: 1,
-     *                 file: {
-     *                     filename: "filename",
-     *                     directory: "directory"
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
      *                 },
      *                 stack: {
-     *                     numStackFrames: 1
-     *                 }
+     *                     numStackFrames: 1,
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
+     *                 },
+     *                 stdout: "stdout"
+     *             }, {
+     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *                 lineNumber: 1,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
+     *                 },
+     *                 stdout: "stdout"
      *             }]
      *     })
      */
-    public storetracedtestcasev2(
-        request: SeedApi.AdminStoreTracedTestCaseV2Request,
+    public storeTracedTestCase(
+        submissionId: SeedTrace.SubmissionId,
+        testCaseId: string,
+        request: SeedTrace.StoreTracedTestCaseRequest,
         requestOptions?: AdminClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.admin.storetracedtestcasev2.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__storetracedtestcasev2(request, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.storeTracedTestCase.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedTestCase(submissionId, testCaseId, request, requestOptions),
+        );
     }
 
-    private async __storetracedtestcasev2(
-        request: SeedApi.AdminStoreTracedTestCaseV2Request,
+    private async __storeTracedTestCase(
+        submissionId: SeedTrace.SubmissionId,
+        testCaseId: string,
+        request: SeedTrace.StoreTracedTestCaseRequest,
         requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.admin.storetracedtestcasev2.Error>>> {
-        const { submissionId, testCaseId, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCase.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `admin/store-test-trace-v2/submission/${core.url.encodePathParam(submissionId)}/testCase/${core.url.encodePathParam(testCaseId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-trace/submission/${core.url.encodePathParam(submissionId)}/testCase/${core.url.encodePathParam(testCaseId)}`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -477,7 +504,7 @@ export class AdminClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.admin.storetracedtestcasev2.Error._unknown(_response.error),
+                error: SeedTrace.admin.storeTracedTestCase.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -485,50 +512,286 @@ export class AdminClient {
     }
 
     /**
-     * @param {SeedApi.AdminStoreTracedWorkspaceRequest} request
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.v2.TestCaseId} testCaseId
+     * @param {SeedTrace.TraceResponseV2[]} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.storetracedworkspace({
-     *         submissionId: SeedApi.SubmissionId("submissionId"),
+     *     await client.admin.storeTracedTestCaseV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.v2.TestCaseId("testCaseId"), [{
+     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
+     *             },
+     *             stdout: "stdout"
+     *         }, {
+     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
+     *             },
+     *             stdout: "stdout"
+     *         }])
+     */
+    public storeTracedTestCaseV2(
+        submissionId: SeedTrace.SubmissionId,
+        testCaseId: SeedTrace.v2.TestCaseId,
+        request: SeedTrace.TraceResponseV2[],
+        requestOptions?: AdminClient.RequestOptions,
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.storeTracedTestCaseV2.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions),
+        );
+    }
+
+    private async __storeTracedTestCaseV2(
+        submissionId: SeedTrace.SubmissionId,
+        testCaseId: SeedTrace.v2.TestCaseId,
+        request: SeedTrace.TraceResponseV2[],
+        requestOptions?: AdminClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCaseV2.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-test-trace-v2/submission/${core.url.encodePathParam(submissionId)}/testCase/${core.url.encodePathParam(testCaseId)}`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs:
+                requestOptions?.timeoutInSeconds != null
+                    ? requestOptions.timeoutInSeconds * 1000
+                    : this._options?.timeoutInSeconds != null
+                      ? this._options?.timeoutInSeconds * 1000
+                      : undefined,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: SeedTrace.admin.storeTracedTestCaseV2.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
+
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.StoreTracedWorkspaceRequest} request
+     * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
      *         workspaceRunDetails: {
+     *             exceptionV2: {
+     *                 type: "generic",
+     *                 exceptionType: "exceptionType",
+     *                 exceptionMessage: "exceptionMessage",
+     *                 exceptionStacktrace: "exceptionStacktrace"
+     *             },
+     *             exception: {
+     *                 exceptionType: "exceptionType",
+     *                 exceptionMessage: "exceptionMessage",
+     *                 exceptionStacktrace: "exceptionStacktrace"
+     *             },
      *             stdout: "stdout"
      *         },
      *         traceResponses: [{
-     *                 submissionId: SeedApi.SubmissionId("submissionId"),
+     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *                 lineNumber: 1,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
      *                 stack: {
-     *                     numStackFrames: 1
-     *                 }
+     *                     numStackFrames: 1,
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
+     *                 },
+     *                 stdout: "stdout"
+     *             }, {
+     *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *                 lineNumber: 1,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: {
+     *                         methodName: "methodName",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }, {
+     *                                 variables: {
+     *                                     "variables": {
+     *                                         type: "integerValue",
+     *                                         value: 1
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
+     *                 },
+     *                 stdout: "stdout"
      *             }]
      *     })
      */
-    public storetracedworkspace(
-        request: SeedApi.AdminStoreTracedWorkspaceRequest,
+    public storeTracedWorkspace(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.StoreTracedWorkspaceRequest,
         requestOptions?: AdminClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.admin.storetracedworkspace.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__storetracedworkspace(request, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspace.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__storeTracedWorkspace(submissionId, request, requestOptions));
     }
 
-    private async __storetracedworkspace(
-        request: SeedApi.AdminStoreTracedWorkspaceRequest,
+    private async __storeTracedWorkspace(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.StoreTracedWorkspaceRequest,
         requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.admin.storetracedworkspace.Error>>> {
-        const { submissionId, ..._body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspace.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `admin/store-workspace-trace/submission/${core.url.encodePathParam(submissionId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-trace/submission/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -556,7 +819,7 @@ export class AdminClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.admin.storetracedworkspace.Error._unknown(_response.error),
+                error: SeedTrace.admin.storeTracedWorkspace.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,
@@ -564,51 +827,124 @@ export class AdminClient {
     }
 
     /**
-     * @param {SeedApi.AdminStoreTracedWorkspaceV2Request} request
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.TraceResponseV2[]} request
      * @param {AdminClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.admin.storetracedworkspacev2({
-     *         submissionId: SeedApi.SubmissionId("submissionId"),
-     *         body: [{
-     *                 submissionId: SeedApi.SubmissionId("submissionId"),
-     *                 lineNumber: 1,
-     *                 file: {
-     *                     filename: "filename",
-     *                     directory: "directory"
-     *                 },
-     *                 stack: {
-     *                     numStackFrames: 1
+     *     await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), [{
+     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }]
      *                 }
-     *             }]
-     *     })
+     *             },
+     *             stdout: "stdout"
+     *         }, {
+     *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *             lineNumber: 1,
+     *             file: {
+     *                 filename: "filename",
+     *                 directory: "directory"
+     *             },
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: {
+     *                     methodName: "methodName",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }, {
+     *                             variables: {
+     *                                 "variables": {
+     *                                     type: "integerValue",
+     *                                     value: 1
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
+     *             },
+     *             stdout: "stdout"
+     *         }])
      */
-    public storetracedworkspacev2(
-        request: SeedApi.AdminStoreTracedWorkspaceV2Request,
+    public storeTracedWorkspaceV2(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TraceResponseV2[],
         requestOptions?: AdminClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedApi.admin.storetracedworkspacev2.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__storetracedworkspacev2(request, requestOptions));
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspaceV2.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedWorkspaceV2(submissionId, request, requestOptions),
+        );
     }
 
-    private async __storetracedworkspacev2(
-        request: SeedApi.AdminStoreTracedWorkspaceV2Request,
+    private async __storeTracedWorkspaceV2(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TraceResponseV2[],
         requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedApi.admin.storetracedworkspacev2.Error>>> {
-        const { submissionId, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspaceV2.Error>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
+            requestOptions?.headers,
+        );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                `admin/store-workspace-trace-v2/submission/${core.url.encodePathParam(submissionId)}`,
+                    environments.SeedTraceEnvironment.Prod,
+                `/admin/store-workspace-trace-v2/submission/${core.url.encodePathParam(submissionId)}`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs:
                 requestOptions?.timeoutInSeconds != null
                     ? requestOptions.timeoutInSeconds * 1000
@@ -636,7 +972,7 @@ export class AdminClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.admin.storetracedworkspacev2.Error._unknown(_response.error),
+                error: SeedTrace.admin.storeTracedWorkspaceV2.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

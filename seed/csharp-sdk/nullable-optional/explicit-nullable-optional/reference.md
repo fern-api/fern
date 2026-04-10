@@ -1,6 +1,6 @@
 # Reference
-## Nullableoptional
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">GetuserAsync</a>(NullableOptionalGetUserRequest { ... }) -> WithRawResponseTask&lt;UserResponse&gt;</code></summary>
+## NullableOptional
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetUserAsync</a>(userId) -> WithRawResponseTask&lt;UserResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,9 +27,7 @@ Get a user by ID
 <dd>
 
 ```csharp
-await client.Nullableoptional.GetuserAsync(
-    new NullableOptionalGetUserRequest { UserId = "userId" }
-);
+await client.NullableOptional.GetUserAsync("userId");
 ```
 </dd>
 </dl>
@@ -44,7 +42,7 @@ await client.Nullableoptional.GetuserAsync(
 <dl>
 <dd>
 
-**request:** `NullableOptionalGetUserRequest` 
+**userId:** `string` 
     
 </dd>
 </dl>
@@ -56,115 +54,7 @@ await client.Nullableoptional.GetuserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">UpdateuserAsync</a>(UpdateUserRequest { ... }) -> WithRawResponseTask&lt;UserResponse&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a user (partial update)
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Nullableoptional.UpdateuserAsync(new UpdateUserRequest { UserId = "userId" });
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `UpdateUserRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">ListusersAsync</a>(NullableOptionalListUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;UserResponse&gt;&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List all users
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Nullableoptional.ListusersAsync(new NullableOptionalListUsersRequest());
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `NullableOptionalListUsersRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">CreateuserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;UserResponse&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;UserResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -191,7 +81,24 @@ Create a new user
 <dd>
 
 ```csharp
-await client.Nullableoptional.CreateuserAsync(new CreateUserRequest { Username = "username" });
+await client.NullableOptional.CreateUserAsync(
+    new CreateUserRequest
+    {
+        Username = "username",
+        Email = "email",
+        Phone = "phone",
+        Address = new Address
+        {
+            Street = "street",
+            City = "city",
+            State = "state",
+            ZipCode = "zipCode",
+            Country = "country",
+            BuildingId = "buildingId",
+            TenantId = "tenantId",
+        },
+    }
+);
 ```
 </dd>
 </dl>
@@ -218,7 +125,149 @@ await client.Nullableoptional.CreateuserAsync(new CreateUserRequest { Username =
 </dl>
 </details>
 
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">SearchusersAsync</a>(NullableOptionalSearchUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;UserResponse&gt;&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateUserAsync</a>(userId, UpdateUserRequest { ... }) -> WithRawResponseTask&lt;UserResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user (partial update)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.NullableOptional.UpdateUserAsync(
+    "userId",
+    new UpdateUserRequest
+    {
+        Username = "username",
+        Email = "email",
+        Phone = "phone",
+        Address = new Address
+        {
+            Street = "street",
+            City = "city",
+            State = "state",
+            ZipCode = "zipCode",
+            Country = "country",
+            BuildingId = "buildingId",
+            TenantId = "tenantId",
+        },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateUserRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">ListUsersAsync</a>(ListUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;UserResponse&gt;&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all users
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.NullableOptional.ListUsersAsync(
+    new ListUsersRequest
+    {
+        Limit = 1,
+        Offset = 1,
+        IncludeDeleted = true,
+        SortBy = "sortBy",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListUsersRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">SearchUsersAsync</a>(SearchUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;UserResponse&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -245,8 +294,14 @@ Search users
 <dd>
 
 ```csharp
-await client.Nullableoptional.SearchusersAsync(
-    new NullableOptionalSearchUsersRequest { Query = "query", Department = "department" }
+await client.NullableOptional.SearchUsersAsync(
+    new SearchUsersRequest
+    {
+        Query = "query",
+        Department = "department",
+        Role = "role",
+        IsActive = true,
+    }
 );
 ```
 </dd>
@@ -262,7 +317,7 @@ await client.Nullableoptional.SearchusersAsync(
 <dl>
 <dd>
 
-**request:** `NullableOptionalSearchUsersRequest` 
+**request:** `SearchUsersRequest` 
     
 </dd>
 </dl>
@@ -274,7 +329,7 @@ await client.Nullableoptional.SearchusersAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">CreatecomplexprofileAsync</a>(ComplexProfile { ... }) -> WithRawResponseTask&lt;ComplexProfile&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">CreateComplexProfileAsync</a>(ComplexProfile { ... }) -> WithRawResponseTask&lt;ComplexProfile&gt;</code></summary>
 <dl>
 <dd>
 
@@ -301,24 +356,146 @@ Create a complex profile to test nullable enums and unions
 <dd>
 
 ```csharp
-await client.Nullableoptional.CreatecomplexprofileAsync(
+await client.NullableOptional.CreateComplexProfileAsync(
     new ComplexProfile
     {
         Id = "id",
         NullableRole = UserRole.Admin,
+        OptionalRole = UserRole.Admin,
+        OptionalNullableRole = UserRole.Admin,
         NullableStatus = UserStatus.Active,
-        NullableNotification = new NotificationMethodZero
+        OptionalStatus = UserStatus.Active,
+        OptionalNullableStatus = UserStatus.Active,
+        NullableNotification = new NotificationMethod(
+            new NotificationMethod.Email(
+                new EmailNotification
+                {
+                    EmailAddress = "emailAddress",
+                    Subject = "subject",
+                    HtmlContent = "htmlContent",
+                }
+            )
+        ),
+        OptionalNotification = new NotificationMethod(
+            new NotificationMethod.Email(
+                new EmailNotification
+                {
+                    EmailAddress = "emailAddress",
+                    Subject = "subject",
+                    HtmlContent = "htmlContent",
+                }
+            )
+        ),
+        OptionalNullableNotification = new NotificationMethod(
+            new NotificationMethod.Email(
+                new EmailNotification
+                {
+                    EmailAddress = "emailAddress",
+                    Subject = "subject",
+                    HtmlContent = "htmlContent",
+                }
+            )
+        ),
+        NullableSearchResult = new SearchResult(
+            new SearchResult.User(
+                new UserResponse
+                {
+                    Id = "id",
+                    Username = "username",
+                    Email = "email",
+                    Phone = "phone",
+                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    Address = new Address
+                    {
+                        Street = "street",
+                        City = "city",
+                        State = "state",
+                        ZipCode = "zipCode",
+                        Country = "country",
+                        BuildingId = "buildingId",
+                        TenantId = "tenantId",
+                    },
+                }
+            )
+        ),
+        OptionalSearchResult = new SearchResult(
+            new SearchResult.User(
+                new UserResponse
+                {
+                    Id = "id",
+                    Username = "username",
+                    Email = "email",
+                    Phone = "phone",
+                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    Address = new Address
+                    {
+                        Street = "street",
+                        City = "city",
+                        State = "state",
+                        ZipCode = "zipCode",
+                        Country = "country",
+                        BuildingId = "buildingId",
+                        TenantId = "tenantId",
+                    },
+                }
+            )
+        ),
+        NullableArray = new List<string>() { "nullableArray", "nullableArray" },
+        OptionalArray = new List<string>() { "optionalArray", "optionalArray" },
+        OptionalNullableArray = new List<string>()
         {
-            EmailAddress = "emailAddress",
-            Subject = "subject",
-            Type = NotificationMethodZeroType.Email,
+            "optionalNullableArray",
+            "optionalNullableArray",
         },
-        NullableSearchResult = new SearchResultZero
+        NullableListOfNullables = new List<string?>()
         {
-            Id = "id",
-            Username = "username",
-            CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-            Type = SearchResultZeroType.User,
+            "nullableListOfNullables",
+            "nullableListOfNullables",
+        },
+        NullableMapOfNullables = new Dictionary<string, Address?>()
+        {
+            {
+                "nullableMapOfNullables",
+                new Address
+                {
+                    Street = "street",
+                    City = "city",
+                    State = "state",
+                    ZipCode = "zipCode",
+                    Country = "country",
+                    BuildingId = "buildingId",
+                    TenantId = "tenantId",
+                }
+            },
+        },
+        NullableListOfUnions = new List<NotificationMethod>()
+        {
+            new NotificationMethod(
+                new NotificationMethod.Email(
+                    new EmailNotification
+                    {
+                        EmailAddress = "emailAddress",
+                        Subject = "subject",
+                        HtmlContent = "htmlContent",
+                    }
+                )
+            ),
+            new NotificationMethod(
+                new NotificationMethod.Email(
+                    new EmailNotification
+                    {
+                        EmailAddress = "emailAddress",
+                        Subject = "subject",
+                        HtmlContent = "htmlContent",
+                    }
+                )
+            ),
+        },
+        OptionalMapOfEnums = new Dictionary<string, UserRole>()
+        {
+            { "optionalMapOfEnums", UserRole.Admin },
         },
     }
 );
@@ -348,7 +525,7 @@ await client.Nullableoptional.CreatecomplexprofileAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">GetcomplexprofileAsync</a>(NullableOptionalGetComplexProfileRequest { ... }) -> WithRawResponseTask&lt;ComplexProfile&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetComplexProfileAsync</a>(profileId) -> WithRawResponseTask&lt;ComplexProfile&gt;</code></summary>
 <dl>
 <dd>
 
@@ -375,9 +552,7 @@ Get a complex profile by ID
 <dd>
 
 ```csharp
-await client.Nullableoptional.GetcomplexprofileAsync(
-    new NullableOptionalGetComplexProfileRequest { ProfileId = "profileId" }
-);
+await client.NullableOptional.GetComplexProfileAsync("profileId");
 ```
 </dd>
 </dl>
@@ -392,7 +567,7 @@ await client.Nullableoptional.GetcomplexprofileAsync(
 <dl>
 <dd>
 
-**request:** `NullableOptionalGetComplexProfileRequest` 
+**profileId:** `string` 
     
 </dd>
 </dl>
@@ -404,7 +579,7 @@ await client.Nullableoptional.GetcomplexprofileAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">UpdatecomplexprofileAsync</a>(NullableOptionalUpdateComplexProfileRequest { ... }) -> WithRawResponseTask&lt;ComplexProfile&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateComplexProfileAsync</a>(profileId, UpdateComplexProfileRequest { ... }) -> WithRawResponseTask&lt;ComplexProfile&gt;</code></summary>
 <dl>
 <dd>
 
@@ -431,8 +606,47 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```csharp
-await client.Nullableoptional.UpdatecomplexprofileAsync(
-    new NullableOptionalUpdateComplexProfileRequest { ProfileId = "profileId" }
+await client.NullableOptional.UpdateComplexProfileAsync(
+    "profileId",
+    new UpdateComplexProfileRequest
+    {
+        NullableRole = UserRole.Admin,
+        NullableStatus = UserStatus.Active,
+        NullableNotification = new NotificationMethod(
+            new NotificationMethod.Email(
+                new EmailNotification
+                {
+                    EmailAddress = "emailAddress",
+                    Subject = "subject",
+                    HtmlContent = "htmlContent",
+                }
+            )
+        ),
+        NullableSearchResult = new SearchResult(
+            new SearchResult.User(
+                new UserResponse
+                {
+                    Id = "id",
+                    Username = "username",
+                    Email = "email",
+                    Phone = "phone",
+                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    Address = new Address
+                    {
+                        Street = "street",
+                        City = "city",
+                        State = "state",
+                        ZipCode = "zipCode",
+                        Country = "country",
+                        BuildingId = "buildingId",
+                        TenantId = "tenantId",
+                    },
+                }
+            )
+        ),
+        NullableArray = new List<string>() { "nullableArray", "nullableArray" },
+    }
 );
 ```
 </dd>
@@ -448,7 +662,15 @@ await client.Nullableoptional.UpdatecomplexprofileAsync(
 <dl>
 <dd>
 
-**request:** `NullableOptionalUpdateComplexProfileRequest` 
+**profileId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateComplexProfileRequest` 
     
 </dd>
 </dl>
@@ -460,7 +682,7 @@ await client.Nullableoptional.UpdatecomplexprofileAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">TestdeserializationAsync</a>(DeserializationTestRequest { ... }) -> WithRawResponseTask&lt;DeserializationTestResponse&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">TestDeserializationAsync</a>(DeserializationTestRequest { ... }) -> WithRawResponseTask&lt;DeserializationTestResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -487,18 +709,67 @@ Test endpoint for validating null deserialization
 <dd>
 
 ```csharp
-await client.Nullableoptional.TestdeserializationAsync(
+await client.NullableOptional.TestDeserializationAsync(
     new DeserializationTestRequest
     {
         RequiredString = "requiredString",
+        NullableString = "nullableString",
+        OptionalString = "optionalString",
+        OptionalNullableString = "optionalNullableString",
         NullableEnum = UserRole.Admin,
-        NullableUnion = new NotificationMethodZero
+        OptionalEnum = UserStatus.Active,
+        NullableUnion = new NotificationMethod(
+            new NotificationMethod.Email(
+                new EmailNotification
+                {
+                    EmailAddress = "emailAddress",
+                    Subject = "subject",
+                    HtmlContent = "htmlContent",
+                }
+            )
+        ),
+        OptionalUnion = new SearchResult(
+            new SearchResult.User(
+                new UserResponse
+                {
+                    Id = "id",
+                    Username = "username",
+                    Email = "email",
+                    Phone = "phone",
+                    CreatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    UpdatedAt = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    Address = new Address
+                    {
+                        Street = "street",
+                        City = "city",
+                        State = "state",
+                        ZipCode = "zipCode",
+                        Country = "country",
+                        BuildingId = "buildingId",
+                        TenantId = "tenantId",
+                    },
+                }
+            )
+        ),
+        NullableList = new List<string>() { "nullableList", "nullableList" },
+        NullableMap = new Dictionary<string, int>() { { "nullableMap", 1 } },
+        NullableObject = new Address
         {
-            EmailAddress = "emailAddress",
-            Subject = "subject",
-            Type = NotificationMethodZeroType.Email,
+            Street = "street",
+            City = "city",
+            State = "state",
+            ZipCode = "zipCode",
+            Country = "country",
+            BuildingId = "buildingId",
+            TenantId = "tenantId",
         },
-        NullableObject = new Address { Street = "street", ZipCode = "zipCode" },
+        OptionalObject = new Organization
+        {
+            Id = "id",
+            Name = "name",
+            Domain = "domain",
+            EmployeeCount = 1,
+        },
     }
 );
 ```
@@ -527,7 +798,7 @@ await client.Nullableoptional.TestdeserializationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">FilterbyroleAsync</a>(NullableOptionalFilterByRoleRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;UserResponse&gt;&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">FilterByRoleAsync</a>(FilterByRoleRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;UserResponse&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -554,8 +825,13 @@ Filter users by role with nullable enum
 <dd>
 
 ```csharp
-await client.Nullableoptional.FilterbyroleAsync(
-    new NullableOptionalFilterByRoleRequest { Role = UserRole.Admin }
+await client.NullableOptional.FilterByRoleAsync(
+    new FilterByRoleRequest
+    {
+        Role = UserRole.Admin,
+        Status = UserStatus.Active,
+        SecondaryRole = UserRole.Admin,
+    }
 );
 ```
 </dd>
@@ -571,7 +847,7 @@ await client.Nullableoptional.FilterbyroleAsync(
 <dl>
 <dd>
 
-**request:** `NullableOptionalFilterByRoleRequest` 
+**request:** `FilterByRoleRequest` 
     
 </dd>
 </dl>
@@ -583,7 +859,7 @@ await client.Nullableoptional.FilterbyroleAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">GetnotificationsettingsAsync</a>(NullableOptionalGetNotificationSettingsRequest { ... }) -> WithRawResponseTask&lt;OneOf&lt;NotificationMethodZero, NotificationMethodOne, NotificationMethodTwo&gt;&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetNotificationSettingsAsync</a>(userId) -> WithRawResponseTask&lt;NotificationMethod?&gt;</code></summary>
 <dl>
 <dd>
 
@@ -610,9 +886,7 @@ Get notification settings which may be null
 <dd>
 
 ```csharp
-await client.Nullableoptional.GetnotificationsettingsAsync(
-    new NullableOptionalGetNotificationSettingsRequest { UserId = "userId" }
-);
+await client.NullableOptional.GetNotificationSettingsAsync("userId");
 ```
 </dd>
 </dl>
@@ -627,7 +901,7 @@ await client.Nullableoptional.GetnotificationsettingsAsync(
 <dl>
 <dd>
 
-**request:** `NullableOptionalGetNotificationSettingsRequest` 
+**userId:** `string` 
     
 </dd>
 </dl>
@@ -639,7 +913,7 @@ await client.Nullableoptional.GetnotificationsettingsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">UpdatetagsAsync</a>(NullableOptionalUpdateTagsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;string&gt;&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateTagsAsync</a>(userId, UpdateTagsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;string&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -666,8 +940,14 @@ Update tags to test array handling
 <dd>
 
 ```csharp
-await client.Nullableoptional.UpdatetagsAsync(
-    new NullableOptionalUpdateTagsRequest { UserId = "userId" }
+await client.NullableOptional.UpdateTagsAsync(
+    "userId",
+    new UpdateTagsRequest
+    {
+        Tags = new List<string>() { "tags", "tags" },
+        Categories = new List<string>() { "categories", "categories" },
+        Labels = new List<string>() { "labels", "labels" },
+    }
 );
 ```
 </dd>
@@ -683,7 +963,15 @@ await client.Nullableoptional.UpdatetagsAsync(
 <dl>
 <dd>
 
-**request:** `NullableOptionalUpdateTagsRequest` 
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateTagsRequest` 
     
 </dd>
 </dl>
@@ -695,7 +983,7 @@ await client.Nullableoptional.UpdatetagsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Nullableoptional.<a href="/src/SeedApi/Nullableoptional/NullableoptionalClient.cs">GetsearchresultsAsync</a>(NullableOptionalGetSearchResultsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;OneOf&lt;SearchResultZero, SearchResultOne, SearchResultTwo&gt;&gt;?&gt;</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetSearchResultsAsync</a>(SearchRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;SearchResult&gt;?&gt;</code></summary>
 <dl>
 <dd>
 
@@ -722,8 +1010,13 @@ Get search results with nullable unions
 <dd>
 
 ```csharp
-await client.Nullableoptional.GetsearchresultsAsync(
-    new NullableOptionalGetSearchResultsRequest { Query = "query" }
+await client.NullableOptional.GetSearchResultsAsync(
+    new SearchRequest
+    {
+        Query = "query",
+        Filters = new Dictionary<string, string?>() { { "filters", "filters" } },
+        IncludeTypes = new List<string>() { "includeTypes", "includeTypes" },
+    }
 );
 ```
 </dd>
@@ -739,7 +1032,7 @@ await client.Nullableoptional.GetsearchresultsAsync(
 <dl>
 <dd>
 
-**request:** `NullableOptionalGetSearchResultsRequest` 
+**request:** `SearchRequest` 
     
 </dd>
 </dl>

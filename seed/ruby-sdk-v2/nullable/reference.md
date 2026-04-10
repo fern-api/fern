@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">getusers</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">get_users</a>() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,10 @@
 <dd>
 
 ```ruby
-client.nullable.getusers
+client.nullable.get_users(
+  avatar: "avatar",
+  extra: true
+)
 ```
 </dd>
 </dl>
@@ -80,7 +83,7 @@ client.nullable.getusers
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">createuser</a>(request) -> Seed::Types::User</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">create_user</a>(request) -> Seed::Nullable::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +96,21 @@ client.nullable.getusers
 <dd>
 
 ```ruby
-client.nullable.createuser(username: "username")
+client.nullable.create_user(
+  username: "username",
+  tags: %w[tags tags],
+  metadata: {
+    created_at: "2024-01-15T09:30:00Z",
+    updated_at: "2024-01-15T09:30:00Z",
+    avatar: "avatar",
+    activated: true,
+    status: {},
+    values: {
+      values: "values"
+    }
+  },
+  avatar: "avatar"
+)
 ```
 </dd>
 </dl>
@@ -124,7 +141,7 @@ client.nullable.createuser(username: "username")
 <dl>
 <dd>
 
-**metadata:** `Seed::Types::Metadata` 
+**metadata:** `Seed::Nullable::Types::Metadata` 
     
 </dd>
 </dl>
@@ -152,7 +169,7 @@ client.nullable.createuser(username: "username")
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">deleteuser</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">delete_user</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -165,7 +182,7 @@ client.nullable.createuser(username: "username")
 <dd>
 
 ```ruby
-client.nullable.deleteuser
+client.nullable.delete_user(username: "xy")
 ```
 </dd>
 </dl>

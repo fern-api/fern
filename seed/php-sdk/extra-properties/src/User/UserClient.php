@@ -4,8 +4,8 @@ namespace Seed\User;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\User\Requests\UserCreateUserRequest;
-use Seed\Types\User;
+use Seed\User\Requests\CreateUserRequest;
+use Seed\User\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -50,7 +50,7 @@ class UserClient
     }
 
     /**
-     * @param UserCreateUserRequest $request
+     * @param CreateUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,14 +63,14 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createuser(UserCreateUserRequest $request, ?array $options = null): ?User
+    public function createUser(CreateUserRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "user",
+                    path: "/user",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

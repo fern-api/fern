@@ -1,23 +1,23 @@
 import Foundation
 
 public enum TestSubmissionStatus: Codable, Hashable, Sendable {
-    case errored(TestSubmissionStatusErrored)
-    case running(TestSubmissionStatusRunning)
-    case stopped(TestSubmissionStatusStopped)
-    case testCaseIdToState(TestSubmissionStatusTestCaseIdToState)
+    case errored(ErrorInfo)
+    case running(RunningSubmissionState)
+    case stopped
+    case testCaseIdToState([String: SubmissionStatusForTestCase])
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "errored":
-            self = .errored(try TestSubmissionStatusErrored(from: decoder))
+            self = .errored(try container.decode(ErrorInfo.self, forKey: .value))
         case "running":
-            self = .running(try TestSubmissionStatusRunning(from: decoder))
+            self = .running(try container.decode(RunningSubmissionState.self, forKey: .value))
         case "stopped":
-            self = .stopped(try TestSubmissionStatusStopped(from: decoder))
+            self = .stopped
         case "testCaseIdToState":
-            self = .testCaseIdToState(try TestSubmissionStatusTestCaseIdToState(from: decoder))
+            self = .testCaseIdToState(try container.decode([String: SubmissionStatusForTestCase].self, forKey: .value))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -33,20 +33,20 @@ public enum TestSubmissionStatus: Codable, Hashable, Sendable {
         switch self {
         case .errored(let data):
             try container.encode("errored", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         case .running(let data):
             try container.encode("running", forKey: .type)
-            try data.encode(to: encoder)
-        case .stopped(let data):
+            try container.encode(data, forKey: .value)
+        case .stopped:
             try container.encode("stopped", forKey: .type)
-            try data.encode(to: encoder)
         case .testCaseIdToState(let data):
             try container.encode("testCaseIdToState", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
+        case value
     }
 }

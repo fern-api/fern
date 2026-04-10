@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,11 +7,16 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_content_type
-        .endpoints_content_type_post_json_patch_content_with_charset_type(
-            &TypesObjectWithOptionalField {
+        .endpoints
+        .object
+        .get_and_return_with_map_of_map(
+            &ObjectWithMapOfMap {
+                map: HashMap::from([(
+                    "map".to_string(),
+                    HashMap::from([("map".to_string(), "map".to_string())]),
+                )]),
                 ..Default::default()
             },
             None,

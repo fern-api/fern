@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="src/seed/_/client.py">create_user</a>(...) -> User</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +12,13 @@
 <dd>
 
 ```python
-from seed import SeedApi, UserProfile, UserProfileVerification
+from seed import SeedPropertyAccess, UserProfile, UserProfileVerification
 
-client = SeedApi(
+client = SeedPropertyAccess(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client._.create_user(
+client.create_user(
     id="id",
     email="email",
     password="password",

@@ -29,15 +29,15 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn listresources(
+    pub async fn list_resources(
         &self,
-        request: &ListresourcesQueryRequest,
+        request: &ListResourcesQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<Resource>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "api/resources",
+                "/api/resources",
                 None,
                 QueryBuilder::new()
                     .int("page", request.page.clone())
@@ -45,8 +45,8 @@ impl ServiceClient {
                     .string("sort", request.sort.clone())
                     .string("order", request.order.clone())
                     .bool("include_totals", request.include_totals.clone())
-                    .serialize("fields", request.fields.clone())
-                    .serialize("search", request.search.clone())
+                    .string("fields", request.fields.clone())
+                    .string("search", request.search.clone())
                     .build(),
                 options,
             )
@@ -64,16 +64,16 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn getresource(
+    pub async fn get_resource(
         &self,
         resource_id: &str,
-        request: &GetresourceQueryRequest,
+        request: &GetResourceQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Resource, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("api/resources/{}", resource_id),
+                &format!("/api/resources/{}", resource_id),
                 None,
                 QueryBuilder::new()
                     .bool("include_metadata", request.include_metadata.clone())
@@ -95,15 +95,15 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn searchresources(
+    pub async fn search_resources(
         &self,
-        request: &ServiceSearchResourcesRequest,
+        request: &SearchResourcesRequest,
         options: Option<RequestOptions>,
     ) -> Result<SearchResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "api/resources/search",
+                "/api/resources/search",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 QueryBuilder::new()
                     .int("limit", request.limit.clone())
@@ -131,51 +131,26 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn listusers(
+    pub async fn list_users(
         &self,
-        request: &ListusersQueryRequest,
+        request: &ListUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<PaginatedUserResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "api/users",
+                "/api/users",
                 None,
                 QueryBuilder::new()
-                    .serialize("page", request.page.clone())
-                    .serialize("per_page", request.per_page.clone())
-                    .serialize("include_totals", request.include_totals.clone())
-                    .serialize("sort", request.sort.clone())
-                    .serialize("connection", request.connection.clone())
-                    .serialize("q", request.q.clone())
-                    .serialize("search_engine", request.search_engine.clone())
-                    .serialize("fields", request.fields.clone())
+                    .int("page", request.page.clone())
+                    .int("per_page", request.per_page.clone())
+                    .bool("include_totals", request.include_totals.clone())
+                    .string("sort", request.sort.clone())
+                    .string("connection", request.connection.clone())
+                    .string("q", request.q.clone())
+                    .string("search_engine", request.search_engine.clone())
+                    .string("fields", request.fields.clone())
                     .build(),
-                options,
-            )
-            .await
-    }
-
-    /// Create a new user
-    ///
-    /// # Arguments
-    ///
-    /// * `options` - Additional request options such as headers, timeout, etc.
-    ///
-    /// # Returns
-    ///
-    /// JSON response from the API
-    pub async fn createuser(
-        &self,
-        request: &CreateUserRequest,
-        options: Option<RequestOptions>,
-    ) -> Result<User, ApiError> {
-        self.http_client
-            .execute_request(
-                Method::POST,
-                "api/users",
-                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
-                None,
                 options,
             )
             .await
@@ -192,27 +167,27 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn getuserbyid(
+    pub async fn get_user_by_id(
         &self,
         user_id: &str,
-        request: &GetuserbyidQueryRequest,
+        request: &GetUserByIdQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("api/users/{}", user_id),
+                &format!("/api/users/{}", user_id),
                 None,
                 QueryBuilder::new()
-                    .serialize("fields", request.fields.clone())
-                    .serialize("include_fields", request.include_fields.clone())
+                    .string("fields", request.fields.clone())
+                    .bool("include_fields", request.include_fields.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    /// Delete a user
+    /// Create a new user
     ///
     /// # Arguments
     ///
@@ -220,17 +195,17 @@ impl ServiceClient {
     ///
     /// # Returns
     ///
-    /// Empty response
-    pub async fn deleteuser(
+    /// JSON response from the API
+    pub async fn create_user(
         &self,
-        user_id: &str,
+        request: &CreateUserRequest,
         options: Option<RequestOptions>,
-    ) -> Result<(), ApiError> {
+    ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
-                Method::DELETE,
-                &format!("api/users/{}", user_id),
-                None,
+                Method::POST,
+                "/api/users",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -246,7 +221,7 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn updateuser(
+    pub async fn update_user(
         &self,
         user_id: &str,
         request: &UpdateUserRequest,
@@ -255,8 +230,33 @@ impl ServiceClient {
         self.http_client
             .execute_request(
                 Method::PATCH,
-                &format!("api/users/{}", user_id),
+                &format!("/api/users/{}", user_id),
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Delete a user
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
+    pub async fn delete_user(
+        &self,
+        user_id: &str,
+        options: Option<RequestOptions>,
+    ) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(
+                Method::DELETE,
+                &format!("/api/users/{}", user_id),
+                None,
                 None,
                 options,
             )
@@ -275,20 +275,20 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn listconnections(
+    pub async fn list_connections(
         &self,
-        request: &ListconnectionsQueryRequest,
+        request: &ListConnectionsQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<Connection>, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "api/connections",
+                "/api/connections",
                 None,
                 QueryBuilder::new()
-                    .serialize("strategy", request.strategy.clone())
-                    .serialize("name", request.name.clone())
-                    .serialize("fields", request.fields.clone())
+                    .string("strategy", request.strategy.clone())
+                    .string("name", request.name.clone())
+                    .string("fields", request.fields.clone())
                     .build(),
                 options,
             )
@@ -305,19 +305,19 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn getconnection(
+    pub async fn get_connection(
         &self,
         connection_id: &str,
-        request: &GetconnectionQueryRequest,
+        request: &GetConnectionQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Connection, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("api/connections/{}", connection_id),
+                &format!("/api/connections/{}", connection_id),
                 None,
                 QueryBuilder::new()
-                    .serialize("fields", request.fields.clone())
+                    .string("fields", request.fields.clone())
                     .build(),
                 options,
             )
@@ -341,24 +341,24 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn listclients(
+    pub async fn list_clients(
         &self,
-        request: &ListclientsQueryRequest,
+        request: &ListClientsQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<PaginatedClientResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "api/clients",
+                "/api/clients",
                 None,
                 QueryBuilder::new()
-                    .serialize("fields", request.fields.clone())
-                    .serialize("include_fields", request.include_fields.clone())
-                    .serialize("page", request.page.clone())
-                    .serialize("per_page", request.per_page.clone())
-                    .serialize("include_totals", request.include_totals.clone())
-                    .serialize("is_global", request.is_global.clone())
-                    .serialize("is_first_party", request.is_first_party.clone())
+                    .string("fields", request.fields.clone())
+                    .bool("include_fields", request.include_fields.clone())
+                    .int("page", request.page.clone())
+                    .int("per_page", request.per_page.clone())
+                    .bool("include_totals", request.include_totals.clone())
+                    .bool("is_global", request.is_global.clone())
+                    .bool("is_first_party", request.is_first_party.clone())
                     .serialize("app_type", request.app_type.clone())
                     .build(),
                 options,
@@ -377,20 +377,20 @@ impl ServiceClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn getclient(
+    pub async fn get_client(
         &self,
         client_id: &str,
-        request: &GetclientQueryRequest,
+        request: &GetClientQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Client, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                &format!("api/clients/{}", client_id),
+                &format!("/api/clients/{}", client_id),
                 None,
                 QueryBuilder::new()
-                    .serialize("fields", request.fields.clone())
-                    .serialize("include_fields", request.include_fields.clone())
+                    .string("fields", request.fields.clone())
+                    .bool("include_fields", request.include_fields.clone())
                     .build(),
                 options,
             )

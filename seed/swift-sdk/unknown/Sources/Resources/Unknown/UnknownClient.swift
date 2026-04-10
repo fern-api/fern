@@ -17,7 +17,7 @@ public final class UnknownClient: Sendable {
         )
     }
 
-    public func postobject(request: Requests.MyObject, requestOptions: RequestOptions? = nil) async throws -> [JSONValue] {
+    public func postObject(request: MyObject, requestOptions: RequestOptions? = nil) async throws -> [JSONValue] {
         return try await httpClient.performRequest(
             method: .post,
             path: "/with-object",

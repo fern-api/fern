@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">gettoken</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> SeedAnyAuth.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,9 @@
 <dd>
 
 ```typescript
-await client.auth.gettoken({
+await client.auth.getToken({
     client_id: "client_id",
-    client_secret: "client_secret",
-    audience: "https://api.example.com",
-    grant_type: "client_credentials"
+    client_secret: "client_secret"
 });
 
 ```
@@ -34,7 +32,7 @@ await client.auth.gettoken({
 <dl>
 <dd>
 
-**request:** `SeedApi.AuthGetTokenRequest` 
+**request:** `SeedAnyAuth.GetTokenRequest` 
     
 </dd>
 </dl>
@@ -55,7 +53,7 @@ await client.auth.gettoken({
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">get</a>() -> SeedApi.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">get</a>() -> SeedAnyAuth.User[]</code></summary>
 <dl>
 <dd>
 
@@ -96,7 +94,7 @@ await client.user.get();
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getadmins</a>() -> SeedApi.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getAdmins</a>() -> SeedAnyAuth.User[]</code></summary>
 <dl>
 <dd>
 
@@ -109,7 +107,7 @@ await client.user.get();
 <dd>
 
 ```typescript
-await client.user.getadmins();
+await client.user.getAdmins();
 
 ```
 </dd>

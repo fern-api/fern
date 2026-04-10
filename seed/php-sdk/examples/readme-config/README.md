@@ -60,22 +60,31 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Movie;
-use Seed\Types\MovieType;
+use Seed\Types\Types\Movie;
 
 $client = new SeedClient(
     token: '<token>',
 );
-$client->service->createmovie(
+$client->service->createMovie(
     new Movie([
-        'id' => 'id',
-        'title' => 'title',
-        'from' => 'from',
-        'rating' => 1.1,
-        'type' => MovieType::Movie->value,
-        'tag' => 'tag',
+        'id' => 'movie-c06a4ad7',
+        'prequel' => 'movie-cv9b914f',
+        'title' => 'The Boy and the Heron',
+        'from' => 'Hayao Miyazaki',
+        'rating' => 8,
+        'type' => 'movie',
+        'tag' => 'tag-wf9as23d',
         'metadata' => [
-            'key' => "value",
+            'actors' => [
+                "Christian Bale",
+                "Florence Pugh",
+                "Willem Dafoe",
+            ],
+            'releaseDate' => "2023-12-08",
+            'ratings' => [
+                'rottenTomatoes' => 97,
+                'imdb' => 7.6,
+            ],
         ],
         'revenue' => 1000000,
     ]),
@@ -104,6 +113,7 @@ $client = new SeedClient(
 
 Available environments:
 - `Environments::Production`
+- `Environments::Staging`
 ```
 
 ## Exception Handling
@@ -115,7 +125,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->service->createmovie(...);
+    $response = $client->service->createMovie(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -169,7 +179,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->service->createmovie(
+$response = $client->service->createMovie(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -182,7 +192,7 @@ $response = $client->service->createmovie(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->service->getmovie(
+$response = $client->service->getMovie(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level
@@ -191,7 +201,7 @@ $response = $client->service->getmovie(
 ```
 
 ```php
-$response = $client->service->createmovie(
+$response = $client->service->createMovie(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

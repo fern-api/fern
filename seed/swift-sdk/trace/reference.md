@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
     _ = try await client.v2.test()
 }
@@ -50,7 +50,7 @@ try await main()
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">updatetestsubmissionstatus</a>(submissionId: String, request: TestSubmissionStatus, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">updateTestSubmissionStatus</a>(submissionId: String, request: TestSubmissionStatus, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -64,18 +64,14 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.admin.updatetestsubmissionstatus(
-        submissionId: "submissionId",
-        request: .init(body: TestSubmissionStatus.stopped(
-            TestSubmissionStatusStopped(
-
-            )
-        ))
+    _ = try await client.admin.updateTestSubmissionStatus(
+        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        request: TestSubmissionStatus.stopped
     )
 }
 
@@ -122,7 +118,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">sendtestsubmissionupdate</a>(submissionId: String, request: TestSubmissionUpdate, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">sendTestSubmissionUpdate</a>(submissionId: String, request: TestSubmissionUpdate, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -136,21 +132,19 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.admin.sendtestsubmissionupdate(
-        submissionId: "submissionId",
-        request: .init(body: TestSubmissionUpdate(
+    _ = try await client.admin.sendTestSubmissionUpdate(
+        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        request: TestSubmissionUpdate(
             updateTime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            updateInfo: TestSubmissionUpdateInfo.testSubmissionUpdateInfoZero(
-                TestSubmissionUpdateInfoZero(
-                    type: .running
-                )
+            updateInfo: TestSubmissionUpdateInfo.running(
+
             )
-        ))
+        )
     )
 }
 
@@ -197,7 +191,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">updateworkspacesubmissionstatus</a>(submissionId: String, request: WorkspaceSubmissionStatus, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">updateWorkspaceSubmissionStatus</a>(submissionId: String, request: WorkspaceSubmissionStatus, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -211,18 +205,14 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.admin.updateworkspacesubmissionstatus(
-        submissionId: "submissionId",
-        request: .init(body: WorkspaceSubmissionStatus.workspaceSubmissionStatusZero(
-            WorkspaceSubmissionStatusZero(
-                type: .stopped
-            )
-        ))
+    _ = try await client.admin.updateWorkspaceSubmissionStatus(
+        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        request: WorkspaceSubmissionStatus.stopped
     )
 }
 
@@ -269,7 +259,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">sendworkspacesubmissionupdate</a>(submissionId: String, request: WorkspaceSubmissionUpdate, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">sendWorkspaceSubmissionUpdate</a>(submissionId: String, request: WorkspaceSubmissionUpdate, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -283,21 +273,19 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.admin.sendworkspacesubmissionupdate(
-        submissionId: "submissionId",
-        request: .init(body: WorkspaceSubmissionUpdate(
+    _ = try await client.admin.sendWorkspaceSubmissionUpdate(
+        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        request: WorkspaceSubmissionUpdate(
             updateTime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            updateInfo: WorkspaceSubmissionUpdateInfo.workspaceSubmissionUpdateInfoZero(
-                WorkspaceSubmissionUpdateInfoZero(
-                    type: .running
-                )
+            updateInfo: WorkspaceSubmissionUpdateInfo.running(
+
             )
-        ))
+        )
     )
 }
 
@@ -344,7 +332,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">storetracedtestcase</a>(submissionId: String, testCaseId: String, request: Requests.AdminStoreTracedTestCaseRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">storeTracedTestCase</a>(submissionId: String, testCaseId: String, request: Requests.StoreTracedTestCaseRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -358,25 +346,23 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.admin.storetracedtestcase(
-        submissionId: "submissionId",
+    _ = try await client.admin.storeTracedTestCase(
+        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
         testCaseId: "testCaseId",
         request: .init(
             result: TestCaseResultWithStdout(
                 result: TestCaseResult(
-                    expectedResult: VariableValue.variableValueZero(
-                        VariableValueZero(
-                            type: .integerValue
-                        )
+                    expectedResult: VariableValue.integerValue(
+
                     ),
-                    actualResult: ActualResult.actualResultZero(
-                        ActualResultZero(
-                            type: .value
+                    actualResult: ActualResult.value(
+                        VariableValue.integerValue(
+
                         )
                     ),
                     passed: true
@@ -385,11 +371,74 @@ private func main() async throws {
             ),
             traceResponses: [
                 TraceResponse(
-                    submissionId: "submissionId",
+                    submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                     lineNumber: 1,
+                    returnValue: DebugVariableValue.integerValue(
+
+                    ),
+                    expressionLocation: ExpressionLocation(
+                        start: 1,
+                        offset: 1
+                    ),
                     stack: StackInformation(
-                        numStackFrames: 1
-                    )
+                        numStackFrames: 1,
+                        topStackFrame: StackFrame(
+                            methodName: "methodName",
+                            lineNumber: 1,
+                            scopes: [
+                                Scope(
+                                    variables: [
+                                        "variables": DebugVariableValue.integerValue(
+
+                                        )
+                                    ]
+                                ),
+                                Scope(
+                                    variables: [
+                                        "variables": DebugVariableValue.integerValue(
+
+                                        )
+                                    ]
+                                )
+                            ]
+                        )
+                    ),
+                    stdout: "stdout"
+                ),
+                TraceResponse(
+                    submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                    lineNumber: 1,
+                    returnValue: DebugVariableValue.integerValue(
+
+                    ),
+                    expressionLocation: ExpressionLocation(
+                        start: 1,
+                        offset: 1
+                    ),
+                    stack: StackInformation(
+                        numStackFrames: 1,
+                        topStackFrame: StackFrame(
+                            methodName: "methodName",
+                            lineNumber: 1,
+                            scopes: [
+                                Scope(
+                                    variables: [
+                                        "variables": DebugVariableValue.integerValue(
+
+                                        )
+                                    ]
+                                ),
+                                Scope(
+                                    variables: [
+                                        "variables": DebugVariableValue.integerValue(
+
+                                        )
+                                    ]
+                                )
+                            ]
+                        )
+                    ),
+                    stdout: "stdout"
                 )
             ]
         )
@@ -427,7 +476,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.AdminStoreTracedTestCaseRequest` 
+**request:** `Requests.StoreTracedTestCaseRequest` 
     
 </dd>
 </dl>
@@ -447,7 +496,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">storetracedtestcasev2</a>(submissionId: String, testCaseId: String, request: [TraceResponseV2], requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">storeTracedTestCaseV2</a>(submissionId: String, testCaseId: String, request: [TraceResponseV2], requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -461,27 +510,94 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.admin.storetracedtestcasev2(
-        submissionId: "submissionId",
+    _ = try await client.admin.storeTracedTestCaseV2(
+        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
         testCaseId: "testCaseId",
-        request: .init(body: [
+        request: [
             TraceResponseV2(
-                submissionId: "submissionId",
+                submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                 lineNumber: 1,
                 file: TracedFile(
                     filename: "filename",
                     directory: "directory"
                 ),
+                returnValue: DebugVariableValue.integerValue(
+
+                ),
+                expressionLocation: ExpressionLocation(
+                    start: 1,
+                    offset: 1
+                ),
                 stack: StackInformation(
-                    numStackFrames: 1
-                )
+                    numStackFrames: 1,
+                    topStackFrame: StackFrame(
+                        methodName: "methodName",
+                        lineNumber: 1,
+                        scopes: [
+                            Scope(
+                                variables: [
+                                    "variables": DebugVariableValue.integerValue(
+
+                                    )
+                                ]
+                            ),
+                            Scope(
+                                variables: [
+                                    "variables": DebugVariableValue.integerValue(
+
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ),
+                stdout: "stdout"
+            ),
+            TraceResponseV2(
+                submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                lineNumber: 1,
+                file: TracedFile(
+                    filename: "filename",
+                    directory: "directory"
+                ),
+                returnValue: DebugVariableValue.integerValue(
+
+                ),
+                expressionLocation: ExpressionLocation(
+                    start: 1,
+                    offset: 1
+                ),
+                stack: StackInformation(
+                    numStackFrames: 1,
+                    topStackFrame: StackFrame(
+                        methodName: "methodName",
+                        lineNumber: 1,
+                        scopes: [
+                            Scope(
+                                variables: [
+                                    "variables": DebugVariableValue.integerValue(
+
+                                    )
+                                ]
+                            ),
+                            Scope(
+                                variables: [
+                                    "variables": DebugVariableValue.integerValue(
+
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ),
+                stdout: "stdout"
             )
-        ])
+        ]
     )
 }
 
@@ -536,7 +652,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">storetracedworkspace</a>(submissionId: String, request: Requests.AdminStoreTracedWorkspaceRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">storeTracedWorkspace</a>(submissionId: String, request: Requests.StoreTracedWorkspaceRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -550,24 +666,99 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.admin.storetracedworkspace(
-        submissionId: "submissionId",
+    _ = try await client.admin.storeTracedWorkspace(
+        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
         request: .init(
             workspaceRunDetails: WorkspaceRunDetails(
+                exceptionV2: ExceptionV2.generic(
+                    ExceptionInfo(
+                        exceptionType: "exceptionType",
+                        exceptionMessage: "exceptionMessage",
+                        exceptionStacktrace: "exceptionStacktrace"
+                    )
+                ),
+                exception: ExceptionInfo(
+                    exceptionType: "exceptionType",
+                    exceptionMessage: "exceptionMessage",
+                    exceptionStacktrace: "exceptionStacktrace"
+                ),
                 stdout: "stdout"
             ),
             traceResponses: [
                 TraceResponse(
-                    submissionId: "submissionId",
+                    submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                     lineNumber: 1,
+                    returnValue: DebugVariableValue.integerValue(
+
+                    ),
+                    expressionLocation: ExpressionLocation(
+                        start: 1,
+                        offset: 1
+                    ),
                     stack: StackInformation(
-                        numStackFrames: 1
-                    )
+                        numStackFrames: 1,
+                        topStackFrame: StackFrame(
+                            methodName: "methodName",
+                            lineNumber: 1,
+                            scopes: [
+                                Scope(
+                                    variables: [
+                                        "variables": DebugVariableValue.integerValue(
+
+                                        )
+                                    ]
+                                ),
+                                Scope(
+                                    variables: [
+                                        "variables": DebugVariableValue.integerValue(
+
+                                        )
+                                    ]
+                                )
+                            ]
+                        )
+                    ),
+                    stdout: "stdout"
+                ),
+                TraceResponse(
+                    submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                    lineNumber: 1,
+                    returnValue: DebugVariableValue.integerValue(
+
+                    ),
+                    expressionLocation: ExpressionLocation(
+                        start: 1,
+                        offset: 1
+                    ),
+                    stack: StackInformation(
+                        numStackFrames: 1,
+                        topStackFrame: StackFrame(
+                            methodName: "methodName",
+                            lineNumber: 1,
+                            scopes: [
+                                Scope(
+                                    variables: [
+                                        "variables": DebugVariableValue.integerValue(
+
+                                        )
+                                    ]
+                                ),
+                                Scope(
+                                    variables: [
+                                        "variables": DebugVariableValue.integerValue(
+
+                                        )
+                                    ]
+                                )
+                            ]
+                        )
+                    ),
+                    stdout: "stdout"
                 )
             ]
         )
@@ -597,7 +788,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.AdminStoreTracedWorkspaceRequest` 
+**request:** `Requests.StoreTracedWorkspaceRequest` 
     
 </dd>
 </dl>
@@ -617,7 +808,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">storetracedworkspacev2</a>(submissionId: String, request: [TraceResponseV2], requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.admin.<a href="/Sources/Resources/Admin/AdminClient.swift">storeTracedWorkspaceV2</a>(submissionId: String, request: [TraceResponseV2], requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -631,26 +822,93 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.admin.storetracedworkspacev2(
-        submissionId: "submissionId",
-        request: .init(body: [
+    _ = try await client.admin.storeTracedWorkspaceV2(
+        submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+        request: [
             TraceResponseV2(
-                submissionId: "submissionId",
+                submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
                 lineNumber: 1,
                 file: TracedFile(
                     filename: "filename",
                     directory: "directory"
                 ),
+                returnValue: DebugVariableValue.integerValue(
+
+                ),
+                expressionLocation: ExpressionLocation(
+                    start: 1,
+                    offset: 1
+                ),
                 stack: StackInformation(
-                    numStackFrames: 1
-                )
+                    numStackFrames: 1,
+                    topStackFrame: StackFrame(
+                        methodName: "methodName",
+                        lineNumber: 1,
+                        scopes: [
+                            Scope(
+                                variables: [
+                                    "variables": DebugVariableValue.integerValue(
+
+                                    )
+                                ]
+                            ),
+                            Scope(
+                                variables: [
+                                    "variables": DebugVariableValue.integerValue(
+
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ),
+                stdout: "stdout"
+            ),
+            TraceResponseV2(
+                submissionId: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
+                lineNumber: 1,
+                file: TracedFile(
+                    filename: "filename",
+                    directory: "directory"
+                ),
+                returnValue: DebugVariableValue.integerValue(
+
+                ),
+                expressionLocation: ExpressionLocation(
+                    start: 1,
+                    offset: 1
+                ),
+                stack: StackInformation(
+                    numStackFrames: 1,
+                    topStackFrame: StackFrame(
+                        methodName: "methodName",
+                        lineNumber: 1,
+                        scopes: [
+                            Scope(
+                                variables: [
+                                    "variables": DebugVariableValue.integerValue(
+
+                                    )
+                                ]
+                            ),
+                            Scope(
+                                variables: [
+                                    "variables": DebugVariableValue.integerValue(
+
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                ),
+                stdout: "stdout"
             )
-        ])
+        ]
     )
 }
 
@@ -698,7 +956,7 @@ try await main()
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.<a href="/Sources/Resources/Homepage/HomepageClient.swift">gethomepageproblems</a>(requestOptions: RequestOptions?) -> [ProblemId]</code></summary>
+<details><summary><code>client.homepage.<a href="/Sources/Resources/Homepage/HomepageClient.swift">getHomepageProblems</a>(requestOptions: RequestOptions?) -> [ProblemId]</code></summary>
 <dl>
 <dd>
 
@@ -712,12 +970,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.homepage.gethomepageproblems()
+    _ = try await client.homepage.getHomepageProblems()
 }
 
 try await main()
@@ -747,7 +1005,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.homepage.<a href="/Sources/Resources/Homepage/HomepageClient.swift">sethomepageproblems</a>(request: [ProblemId], requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.homepage.<a href="/Sources/Resources/Homepage/HomepageClient.swift">setHomepageProblems</a>(request: [ProblemId], requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -761,12 +1019,13 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.homepage.sethomepageproblems(request: [
+    _ = try await client.homepage.setHomepageProblems(request: [
+        "string",
         "string"
     ])
 }
@@ -807,7 +1066,7 @@ try await main()
 </details>
 
 ## Migration
-<details><summary><code>client.migration.<a href="/Sources/Resources/Migration/MigrationClient.swift">getattemptedmigrations</a>(adminKeyHeader: String, requestOptions: RequestOptions?) -> [Migration]</code></summary>
+<details><summary><code>client.migration.<a href="/Sources/Resources/Migration/MigrationClient.swift">getAttemptedMigrations</a>(adminKeyHeader: String, requestOptions: RequestOptions?) -> [Migration]</code></summary>
 <dl>
 <dd>
 
@@ -821,12 +1080,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.migration.getattemptedmigrations()
+    _ = try await client.migration.getAttemptedMigrations()
 }
 
 try await main()
@@ -865,7 +1124,7 @@ try await main()
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">createplaylist</a>(serviceParam: String, datetime: Date, optionalDatetime: Nullable&lt;Date&gt;?, request: PlaylistCreateRequest, requestOptions: RequestOptions?) -> Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">createPlaylist</a>(serviceParam: String, datetime: Date, optionalDatetime: Date?, request: PlaylistCreateRequest, requestOptions: RequestOptions?) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -893,17 +1152,19 @@ Create a new playlist
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.playlist.createplaylist(
+    _ = try await client.playlist.createPlaylist(
         serviceParam: 1,
         datetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+        optionalDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         request: .init(body: PlaylistCreateRequest(
             name: "name",
             problems: [
+                "problems",
                 "problems"
             ]
         ))
@@ -941,7 +1202,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalDatetime:** `Nullable<Date>?` 
+**optionalDatetime:** `Date?` 
     
 </dd>
 </dl>
@@ -969,7 +1230,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">getplaylists</a>(serviceParam: String, limit: Nullable&lt;Int&gt;?, otherField: String, multiLineDocs: String, optionalMultipleField: Nullable&lt;String&gt;?, multipleField: String?, requestOptions: RequestOptions?) -> [Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">getPlaylists</a>(serviceParam: String, limit: Int?, otherField: String, multiLineDocs: String, optionalMultipleField: String?, multipleField: String, requestOptions: RequestOptions?) -> [Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -997,14 +1258,14 @@ Returns the user's playlists
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.playlist.getplaylists(
+    _ = try await client.playlist.getPlaylists(
         serviceParam: 1,
-        limit: .value(1),
+        limit: 1,
         otherField: "otherField",
         multiLineDocs: "multiLineDocs"
     )
@@ -1033,7 +1294,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `Nullable<Int>?` 
+**limit:** `Int?` 
     
 </dd>
 </dl>
@@ -1060,7 +1321,7 @@ description
 <dl>
 <dd>
 
-**optionalMultipleField:** `Nullable<String>?` 
+**optionalMultipleField:** `String?` 
     
 </dd>
 </dl>
@@ -1068,7 +1329,7 @@ description
 <dl>
 <dd>
 
-**multipleField:** `String?` 
+**multipleField:** `String` 
     
 </dd>
 </dl>
@@ -1088,7 +1349,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">getplaylist</a>(serviceParam: String, playlistId: String, requestOptions: RequestOptions?) -> Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">getPlaylist</a>(serviceParam: String, playlistId: String, requestOptions: RequestOptions?) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1116,12 +1377,12 @@ Returns a playlist
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.playlist.getplaylist(
+    _ = try await client.playlist.getPlaylist(
         serviceParam: 1,
         playlistId: "playlistId"
     )
@@ -1170,7 +1431,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">updateplaylist</a>(serviceParam: String, playlistId: String, request: Requests.UpdatePlaylistRequest, requestOptions: RequestOptions?) -> Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">updatePlaylist</a>(serviceParam: String, playlistId: String, request: UpdatePlaylistRequest?, requestOptions: RequestOptions?) -> Playlist?</code></summary>
 <dl>
 <dd>
 
@@ -1198,17 +1459,18 @@ Updates a playlist
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.playlist.updateplaylist(
+    _ = try await client.playlist.updatePlaylist(
         serviceParam: 1,
         playlistId: "playlistId",
-        request: .init(
+        request: UpdatePlaylistRequest(
             name: "name",
             problems: [
+                "problems",
                 "problems"
             ]
         )
@@ -1246,7 +1508,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.UpdatePlaylistRequest` 
+**request:** `UpdatePlaylistRequest?` 
     
 </dd>
 </dl>
@@ -1266,7 +1528,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">deleteplaylist</a>(serviceParam: String, playlistId: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.playlist.<a href="/Sources/Resources/Playlist/PlaylistClient.swift">deletePlaylist</a>(serviceParam: String, playlistId: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -1294,12 +1556,12 @@ Deletes a playlist
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.playlist.deleteplaylist(
+    _ = try await client.playlist.deletePlaylist(
         serviceParam: 1,
         playlistId: "playlist_id"
     )
@@ -1349,7 +1611,7 @@ try await main()
 </details>
 
 ## Problem
-<details><summary><code>client.problem.<a href="/Sources/Resources/Problem/ProblemClient.swift">createproblem</a>(request: CreateProblemRequest, requestOptions: RequestOptions?) -> CreateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="/Sources/Resources/Problem/ProblemClient.swift">createProblem</a>(request: CreateProblemRequest, requestOptions: RequestOptions?) -> CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1377,29 +1639,34 @@ Creates a problem
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.problem.createproblem(request: CreateProblemRequest(
+    _ = try await client.problem.createProblem(request: CreateProblemRequest(
         problemName: "problemName",
         problemDescription: ProblemDescription(
             boards: [
                 ProblemDescriptionBoard.html(
-                    ProblemDescriptionBoardHtml(
 
-                    )
+                ),
+                ProblemDescriptionBoard.html(
+
                 )
             ]
         ),
         files: [
-            "key": ProblemFiles(
+            .java: ProblemFiles(
                 solutionFile: FileInfo(
                     filename: "filename",
                     contents: "contents"
                 ),
                 readOnlyFiles: [
+                    FileInfo(
+                        filename: "filename",
+                        contents: "contents"
+                    ),
                     FileInfo(
                         filename: "filename",
                         contents: "contents"
@@ -1409,35 +1676,46 @@ private func main() async throws {
         ],
         inputParams: [
             VariableTypeAndName(
-                variableType: VariableType.variableTypeZero(
-                    VariableTypeZero(
-                        type: .integerType
-                    )
-                ),
+                variableType: VariableType.integerType,
+                name: "name"
+            ),
+            VariableTypeAndName(
+                variableType: VariableType.integerType,
                 name: "name"
             )
         ],
-        outputType: VariableType.variableTypeZero(
-            VariableTypeZero(
-                type: .integerType
-            )
-        ),
+        outputType: VariableType.integerType,
         testcases: [
             TestCaseWithExpectedResult(
                 testCase: TestCase(
                     id: "id",
                     params: [
-                        VariableValue.variableValueZero(
-                            VariableValueZero(
-                                type: .integerValue
-                            )
+                        VariableValue.integerValue(
+
+                        ),
+                        VariableValue.integerValue(
+
                         )
                     ]
                 ),
-                expectedResult: VariableValue.variableValueZero(
-                    VariableValueZero(
-                        type: .integerValue
-                    )
+                expectedResult: VariableValue.integerValue(
+
+                )
+            ),
+            TestCaseWithExpectedResult(
+                testCase: TestCase(
+                    id: "id",
+                    params: [
+                        VariableValue.integerValue(
+
+                        ),
+                        VariableValue.integerValue(
+
+                        )
+                    ]
+                ),
+                expectedResult: VariableValue.integerValue(
+
                 )
             )
         ],
@@ -1480,7 +1758,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/Sources/Resources/Problem/ProblemClient.swift">updateproblem</a>(problemId: String, request: CreateProblemRequest, requestOptions: RequestOptions?) -> UpdateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="/Sources/Resources/Problem/ProblemClient.swift">updateProblem</a>(problemId: String, request: CreateProblemRequest, requestOptions: RequestOptions?) -> UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1508,31 +1786,36 @@ Updates a problem
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.problem.updateproblem(
+    _ = try await client.problem.updateProblem(
         problemId: "problemId",
-        request: .init(body: CreateProblemRequest(
+        request: CreateProblemRequest(
             problemName: "problemName",
             problemDescription: ProblemDescription(
                 boards: [
                     ProblemDescriptionBoard.html(
-                        ProblemDescriptionBoardHtml(
 
-                        )
+                    ),
+                    ProblemDescriptionBoard.html(
+
                     )
                 ]
             ),
             files: [
-                "key": ProblemFiles(
+                .java: ProblemFiles(
                     solutionFile: FileInfo(
                         filename: "filename",
                         contents: "contents"
                     ),
                     readOnlyFiles: [
+                        FileInfo(
+                            filename: "filename",
+                            contents: "contents"
+                        ),
                         FileInfo(
                             filename: "filename",
                             contents: "contents"
@@ -1542,40 +1825,51 @@ private func main() async throws {
             ],
             inputParams: [
                 VariableTypeAndName(
-                    variableType: VariableType.variableTypeZero(
-                        VariableTypeZero(
-                            type: .integerType
-                        )
-                    ),
+                    variableType: VariableType.integerType,
+                    name: "name"
+                ),
+                VariableTypeAndName(
+                    variableType: VariableType.integerType,
                     name: "name"
                 )
             ],
-            outputType: VariableType.variableTypeZero(
-                VariableTypeZero(
-                    type: .integerType
-                )
-            ),
+            outputType: VariableType.integerType,
             testcases: [
                 TestCaseWithExpectedResult(
                     testCase: TestCase(
                         id: "id",
                         params: [
-                            VariableValue.variableValueZero(
-                                VariableValueZero(
-                                    type: .integerValue
-                                )
+                            VariableValue.integerValue(
+
+                            ),
+                            VariableValue.integerValue(
+
                             )
                         ]
                     ),
-                    expectedResult: VariableValue.variableValueZero(
-                        VariableValueZero(
-                            type: .integerValue
-                        )
+                    expectedResult: VariableValue.integerValue(
+
+                    )
+                ),
+                TestCaseWithExpectedResult(
+                    testCase: TestCase(
+                        id: "id",
+                        params: [
+                            VariableValue.integerValue(
+
+                            ),
+                            VariableValue.integerValue(
+
+                            )
+                        ]
+                    ),
+                    expectedResult: VariableValue.integerValue(
+
                     )
                 )
             ],
             methodName: "methodName"
-        ))
+        )
     )
 }
 
@@ -1622,7 +1916,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/Sources/Resources/Problem/ProblemClient.swift">deleteproblem</a>(problemId: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.problem.<a href="/Sources/Resources/Problem/ProblemClient.swift">deleteProblem</a>(problemId: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -1650,12 +1944,12 @@ Soft deletes a problem
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.problem.deleteproblem(problemId: "problemId")
+    _ = try await client.problem.deleteProblem(problemId: "problemId")
 }
 
 try await main()
@@ -1693,7 +1987,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/Sources/Resources/Problem/ProblemClient.swift">getdefaultstarterfiles</a>(request: Requests.ProblemGetDefaultStarterFilesRequest, requestOptions: RequestOptions?) -> GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.problem.<a href="/Sources/Resources/Problem/ProblemClient.swift">getDefaultStarterFiles</a>(request: Requests.GetDefaultStarterFilesRequest, requestOptions: RequestOptions?) -> GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1721,27 +2015,23 @@ Returns default starter files for problem
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.problem.getdefaultstarterfiles(request: .init(
+    _ = try await client.problem.getDefaultStarterFiles(request: .init(
         inputParams: [
             VariableTypeAndName(
-                variableType: VariableType.variableTypeZero(
-                    VariableTypeZero(
-                        type: .integerType
-                    )
-                ),
+                variableType: VariableType.integerType,
+                name: "name"
+            ),
+            VariableTypeAndName(
+                variableType: VariableType.integerType,
                 name: "name"
             )
         ],
-        outputType: VariableType.variableTypeZero(
-            VariableTypeZero(
-                type: .integerType
-            )
-        ),
+        outputType: VariableType.integerType,
         methodName: "methodName"
     ))
 }
@@ -1761,7 +2051,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ProblemGetDefaultStarterFilesRequest` 
+**request:** `Requests.GetDefaultStarterFilesRequest` 
     
 </dd>
 </dl>
@@ -1782,7 +2072,7 @@ try await main()
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="/Sources/Resources/Submission/SubmissionClient.swift">createexecutionsession</a>(language: String, requestOptions: RequestOptions?) -> ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="/Sources/Resources/Submission/SubmissionClient.swift">createExecutionSession</a>(language: String, requestOptions: RequestOptions?) -> ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1810,12 +2100,12 @@ Returns sessionId and execution server URL for session. Spins up server.
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.submission.createexecutionsession(language: .java)
+    _ = try await client.submission.createExecutionSession(language: .java)
 }
 
 try await main()
@@ -1853,7 +2143,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/Sources/Resources/Submission/SubmissionClient.swift">getexecutionsession</a>(sessionId: String, requestOptions: RequestOptions?) -> ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="/Sources/Resources/Submission/SubmissionClient.swift">getExecutionSession</a>(sessionId: String, requestOptions: RequestOptions?) -> ExecutionSessionResponse?</code></summary>
 <dl>
 <dd>
 
@@ -1881,12 +2171,12 @@ Returns execution server URL for session. Returns empty if session isn't registe
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.submission.getexecutionsession(sessionId: "sessionId")
+    _ = try await client.submission.getExecutionSession(sessionId: "sessionId")
 }
 
 try await main()
@@ -1924,7 +2214,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/Sources/Resources/Submission/SubmissionClient.swift">stopexecutionsession</a>(sessionId: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.submission.<a href="/Sources/Resources/Submission/SubmissionClient.swift">stopExecutionSession</a>(sessionId: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -1952,12 +2242,12 @@ Stops execution session.
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.submission.stopexecutionsession(sessionId: "sessionId")
+    _ = try await client.submission.stopExecutionSession(sessionId: "sessionId")
 }
 
 try await main()
@@ -1995,7 +2285,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/Sources/Resources/Submission/SubmissionClient.swift">getexecutionsessionsstate</a>(requestOptions: RequestOptions?) -> GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.submission.<a href="/Sources/Resources/Submission/SubmissionClient.swift">getExecutionSessionsState</a>(requestOptions: RequestOptions?) -> GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -2009,12 +2299,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.submission.getexecutionsessionsstate()
+    _ = try await client.submission.getExecutionSessionsState()
 }
 
 try await main()
@@ -2045,7 +2335,7 @@ try await main()
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="/Sources/Resources/Sysprop/SyspropClient.swift">setnumwarminstances</a>(language: String, numWarmInstances: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.sysprop.<a href="/Sources/Resources/Sysprop/SyspropClient.swift">setNumWarmInstances</a>(language: String, numWarmInstances: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -2059,12 +2349,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.sysprop.setnumwarminstances(
+    _ = try await client.sysprop.setNumWarmInstances(
         language: .java,
         numWarmInstances: 1
     )
@@ -2113,7 +2403,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="/Sources/Resources/Sysprop/SyspropClient.swift">getnumwarminstances</a>(requestOptions: RequestOptions?) -> [String: Int]</code></summary>
+<details><summary><code>client.sysprop.<a href="/Sources/Resources/Sysprop/SyspropClient.swift">getNumWarmInstances</a>(requestOptions: RequestOptions?) -> [Language: Int]</code></summary>
 <dl>
 <dd>
 
@@ -2127,12 +2417,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.sysprop.getnumwarminstances()
+    _ = try await client.sysprop.getNumWarmInstances()
 }
 
 try await main()
@@ -2162,8 +2452,8 @@ try await main()
 </dl>
 </details>
 
-## V2Problem
-<details><summary><code>client.v2Problem.<a href="/Sources/Resources/V2Problem/V2ProblemClient.swift">v2ProblemGetLightweightProblems</a>(requestOptions: RequestOptions?) -> [V2LightweightProblemInfoV2]</code></summary>
+## V2 Problem
+<details><summary><code>client.v2.problem.<a href="/Sources/Resources/V2/Problem/V2ProblemClient.swift">getLightweightProblems</a>(requestOptions: RequestOptions?) -> [LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2191,12 +2481,12 @@ Returns lightweight versions of all problems
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2Problem.v2ProblemGetLightweightProblems()
+    _ = try await client.v2.v3.problem.getLightweightProblems()
 }
 
 try await main()
@@ -2226,7 +2516,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.v2Problem.<a href="/Sources/Resources/V2Problem/V2ProblemClient.swift">v2ProblemGetProblems</a>(requestOptions: RequestOptions?) -> [V2ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.problem.<a href="/Sources/Resources/V2/Problem/V2ProblemClient.swift">getProblems</a>(requestOptions: RequestOptions?) -> [ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2254,12 +2544,12 @@ Returns latest versions of all problems
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2Problem.v2ProblemGetProblems()
+    _ = try await client.v2.v3.problem.getProblems()
 }
 
 try await main()
@@ -2289,7 +2579,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.v2Problem.<a href="/Sources/Resources/V2Problem/V2ProblemClient.swift">v2ProblemGetLatestProblem</a>(problemId: String, requestOptions: RequestOptions?) -> V2ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="/Sources/Resources/V2/Problem/V2ProblemClient.swift">getLatestProblem</a>(problemId: String, requestOptions: RequestOptions?) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2317,12 +2607,12 @@ Returns latest version of a problem
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2Problem.v2ProblemGetLatestProblem(problemId: "problemId")
+    _ = try await client.v2.v3.problem.getLatestProblem(problemId: "problemId")
 }
 
 try await main()
@@ -2360,7 +2650,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.v2Problem.<a href="/Sources/Resources/V2Problem/V2ProblemClient.swift">v2ProblemGetProblemVersion</a>(problemId: String, problemVersion: String, requestOptions: RequestOptions?) -> V2ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="/Sources/Resources/V2/Problem/V2ProblemClient.swift">getProblemVersion</a>(problemId: String, problemVersion: String, requestOptions: RequestOptions?) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2388,12 +2678,12 @@ Returns requested version of a problem
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2Problem.v2ProblemGetProblemVersion(
+    _ = try await client.v2.v3.problem.getProblemVersion(
         problemId: "problemId",
         problemVersion: 1
     )
@@ -2442,8 +2732,8 @@ try await main()
 </dl>
 </details>
 
-## V2V3Problem
-<details><summary><code>client.v2V3Problem.<a href="/Sources/Resources/V2V3Problem/V2V3ProblemClient.swift">v2V3ProblemGetLightweightProblems</a>(requestOptions: RequestOptions?) -> [V2V3LightweightProblemInfoV2]</code></summary>
+## V2 V3 Problem
+<details><summary><code>client.v2.v3.problem.<a href="/Sources/Resources/V2/V3/Problem/V3ProblemClient.swift">getLightweightProblems</a>(requestOptions: RequestOptions?) -> [LightweightProblemInfoV2Type]</code></summary>
 <dl>
 <dd>
 
@@ -2471,12 +2761,12 @@ Returns lightweight versions of all problems
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2V3Problem.v2V3ProblemGetLightweightProblems()
+    _ = try await client.v2.v3.problem.getLightweightProblems()
 }
 
 try await main()
@@ -2506,7 +2796,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.v2V3Problem.<a href="/Sources/Resources/V2V3Problem/V2V3ProblemClient.swift">v2V3ProblemGetProblems</a>(requestOptions: RequestOptions?) -> [V2V3ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/Sources/Resources/V2/V3/Problem/V3ProblemClient.swift">getProblems</a>(requestOptions: RequestOptions?) -> [ProblemInfoV2Type]</code></summary>
 <dl>
 <dd>
 
@@ -2534,12 +2824,12 @@ Returns latest versions of all problems
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2V3Problem.v2V3ProblemGetProblems()
+    _ = try await client.v2.v3.problem.getProblems()
 }
 
 try await main()
@@ -2569,7 +2859,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.v2V3Problem.<a href="/Sources/Resources/V2V3Problem/V2V3ProblemClient.swift">v2V3ProblemGetLatestProblem</a>(problemId: String, requestOptions: RequestOptions?) -> V2V3ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/Sources/Resources/V2/V3/Problem/V3ProblemClient.swift">getLatestProblem</a>(problemId: String, requestOptions: RequestOptions?) -> ProblemInfoV2Type</code></summary>
 <dl>
 <dd>
 
@@ -2597,12 +2887,12 @@ Returns latest version of a problem
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2V3Problem.v2V3ProblemGetLatestProblem(problemId: "problemId")
+    _ = try await client.v2.v3.problem.getLatestProblem(problemId: "problemId")
 }
 
 try await main()
@@ -2640,7 +2930,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.v2V3Problem.<a href="/Sources/Resources/V2V3Problem/V2V3ProblemClient.swift">v2V3ProblemGetProblemVersion</a>(problemId: String, problemVersion: String, requestOptions: RequestOptions?) -> V2V3ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/Sources/Resources/V2/V3/Problem/V3ProblemClient.swift">getProblemVersion</a>(problemId: String, problemVersion: String, requestOptions: RequestOptions?) -> ProblemInfoV2Type</code></summary>
 <dl>
 <dd>
 
@@ -2668,12 +2958,12 @@ Returns requested version of a problem
 
 ```swift
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2V3Problem.v2V3ProblemGetProblemVersion(
+    _ = try await client.v2.v3.problem.getProblemVersion(
         problemId: "problemId",
         problemVersion: 1
     )

@@ -39,9 +39,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/accept-header";
+import { SeedAcceptClient } from "@fern/accept-header";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedAcceptClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.service.endpoint();
 ```
 
@@ -51,12 +51,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/accept-header";
+import { SeedAcceptError } from "@fern/accept-header";
 
 try {
     await client.service.endpoint(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedAcceptError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -82,9 +82,9 @@ const client = new ServiceClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/accept-header";
+import { SeedAcceptClient } from "@fern/accept-header";
 
-const client = new SeedApiClient({
+const client = new SeedAcceptClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -169,9 +169,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/accept-header";
+import { SeedAcceptClient, logging } from "@fern/accept-header";
 
-const client = new SeedApiClient({
+const client = new SeedAcceptClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

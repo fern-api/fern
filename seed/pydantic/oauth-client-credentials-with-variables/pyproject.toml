@@ -32,7 +32,7 @@ classifiers = [
     "Typing :: Typed"
 ]
 packages = [
-    { include = "seed/api", from = "src"}
+    { include = "seed/oauth_client_credentials_with_variables", from = "src"}
 ]
 
 [tool.poetry.urls]

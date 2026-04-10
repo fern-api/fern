@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
-    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,13 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]*fern.TypesMixedType{
-        "string": &fern.TypesMixedType{
-            Double: 1.1,
-        },
+    request := &types.ObjectWithRequiredField{
+        FieldString: "string",
     }
-    client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(
+    client.Endpoints.HTTPMethods.TestPut(
         context.TODO(),
+        "id",
         request,
     )
 }

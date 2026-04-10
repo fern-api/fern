@@ -13,16 +13,16 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithToken(
-            "<token>",
+        option.WithClientCredentials(
+            "<clientId>",
+            "<clientSecret>",
         ),
     )
-    request := &fern.AuthGetTokenRequest{
+    request := &fern.GetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
-        GrantType: fern.AuthGetTokenRequestGrantTypeClientCredentials,
     }
-    client.Auth.Gettoken(
+    client.Auth.GetToken(
         context.TODO(),
         request,
     )

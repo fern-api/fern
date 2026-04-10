@@ -4,7 +4,8 @@ namespace Seed\S3;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\S3\Requests\S3GetPresignedUrlRequest;
+use Seed\Environments;
+use Seed\S3\Requests\GetPresignedUrlRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -17,7 +18,6 @@ class S3Client
 {
     /**
      * @var array{
-     *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
      *   timeout?: float,
@@ -32,27 +32,26 @@ class S3Client
     private RawClient $client;
 
     /**
+     * @var Environments $environment
+     */
+    private Environments $environment;
+
+    /**
      * @param RawClient $client
-     * @param ?array{
-     *   baseUrl?: string,
-     *   client?: ClientInterface,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     * } $options
+     * @param Environments $environment
      */
     public function __construct(
         RawClient $client,
-        ?array $options = null,
+        Environments $environment,
     ) {
         $this->client = $client;
-        $this->options = $options ?? [];
+        $this->environment = $environment;
+        $this->options = [];
     }
 
     /**
-     * @param S3GetPresignedUrlRequest $request
+     * @param GetPresignedUrlRequest $request
      * @param ?array{
-     *   baseUrl?: string,
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
@@ -63,14 +62,14 @@ class S3Client
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getpresignedurl(S3GetPresignedUrlRequest $request, ?array $options = null): ?string
+    public function getPresignedUrl(GetPresignedUrlRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "s3/presigned-url",
+                    baseUrl: $this->environment->s3,
+                    path: "/s3/presigned-url",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

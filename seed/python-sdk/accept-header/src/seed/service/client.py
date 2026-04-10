@@ -35,9 +35,9 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedAccept
 
-        client = SeedApi(
+        client = SeedAccept(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -77,9 +77,9 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedAccept
 
-        client = AsyncSeedApi(
+        client = AsyncSeedAccept(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

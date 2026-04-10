@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import Unions
 
 @Suite("UnionClient Wire Tests") struct UnionClientWireTests {
     @Test func get1() async throws -> Void {
@@ -9,49 +9,24 @@ import Api
             body: Data(
                 """
                 {
-                  "radius": 1.1,
-                  "type": "circle"
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = Shape.shapeZero(
-            ShapeZero(
-                radius: 1.1,
-                type: .circle
-            )
-        )
-        let response = try await client.union.get(
-            id: "id",
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func get2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
                   "type": "circle",
-                  "radius": 1.1
+                  "radius": 1.1,
+                  "id": "id"
                 }
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = UnionsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = Shape.shapeZero(
-            ShapeZero(
-                type: .circle,
-                radius: 1.1
+        let expectedResponse = Shape.circle(
+            .init(
+                radius: 1.1,
+                additionalProperties: [
+                    "type": JSONValue.string("circle"), 
+                    "id": JSONValue.string("id")
+                ]
             )
         )
         let response = try await client.union.get(
@@ -70,42 +45,15 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = UnionsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = true
         let response = try await client.union.update(
-            request: Shape.shapeZero(
-                ShapeZero(
-                    radius: 1.1,
-                    type: .circle
-                )
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func update2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                true
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = true
-        let response = try await client.union.update(
-            request: Shape.shapeZero(
-                ShapeZero(
-                    radius: 1.1,
-                    type: .circle
+            request: Shape.circle(
+                Circle(
+                    radius: 1.1
                 )
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)

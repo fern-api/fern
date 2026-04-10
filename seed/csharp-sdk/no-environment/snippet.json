@@ -6,11 +6,11 @@
             "id": {
                 "path": "/dummy",
                 "method": "GET",
-                "identifier_override": "endpoint_dummy.getdummy"
+                "identifier_override": "endpoint_dummy.getDummy"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.Dummy.GetdummyAsync();\n"
+                "client": "using SeedNoEnvironment;\n\nvar client = new SeedNoEnvironmentClient(\"TOKEN\");\nawait client.Dummy.GetDummyAsync();\n"
             }
         }
     ]

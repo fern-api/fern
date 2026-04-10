@@ -30,7 +30,6 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.test.sdk.SeedApiClient;
-import com.test.sdk.resources.service.requests.ServiceGetUserRequest;
 
 public class Example {
     public static void main(String[] args) {
@@ -38,12 +37,7 @@ public class Example {
             .builder()
             .build();
 
-        client.service().getuser(
-            "userId",
-            ServiceGetUserRequest
-                .builder()
-                .build()
-        );
+        client.service().getUser("userId");
     }
 }
 ```
@@ -69,7 +63,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.test.sdk.core.SeedApiApiException;
 
 try{
-    client.service().getuser(...);
+    client.service().getUser(...);
 } catch (SeedApiApiException e){
     // Do something with the API exception...
 }
@@ -133,7 +127,7 @@ SeedApiClient client = SeedApiClient
     .build();
 
 // Request level
-client.service().getuser(
+client.service().getUser(
     ...,
     RequestOptions
         .builder()
@@ -159,7 +153,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.service().getuser(
+client.service().getUser(
     ...,
     RequestOptions
         .builder()
@@ -175,7 +169,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.service().withRawResponse().getuser(...);
+SeedApiHttpResponse response = client.service().withRawResponse().getUser(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

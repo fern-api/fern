@@ -22,7 +22,7 @@ class SimpleClient:
         """
         return self._raw_client
 
-    def getsomething(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def get_something(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -35,14 +35,17 @@ class SimpleClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedInferredAuthExplicit
 
-        client = SeedApi(
+        client = SeedInferredAuthExplicit(
             base_url="https://yourhost.com/path/to/api",
+            x_api_key="YOUR_X_API_KEY",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
-        client.simple.getsomething()
+        client.simple.get_something()
         """
-        _response = self._raw_client.getsomething(request_options=request_options)
+        _response = self._raw_client.get_something(request_options=request_options)
         return _response.data
 
 
@@ -61,7 +64,7 @@ class AsyncSimpleClient:
         """
         return self._raw_client
 
-    async def getsomething(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def get_something(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -76,18 +79,21 @@ class AsyncSimpleClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedInferredAuthExplicit
 
-        client = AsyncSeedApi(
+        client = AsyncSeedInferredAuthExplicit(
             base_url="https://yourhost.com/path/to/api",
+            x_api_key="YOUR_X_API_KEY",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
         async def main() -> None:
-            await client.simple.getsomething()
+            await client.simple.get_something()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getsomething(request_options=request_options)
+        _response = await self._raw_client.get_something(request_options=request_options)
         return _response.data

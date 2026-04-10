@@ -15,7 +15,7 @@ class RawSimpleClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def getsomething(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def get_something(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
         Parameters
         ----------
@@ -48,7 +48,9 @@ class AsyncRawSimpleClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def getsomething(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[None]:
+    async def get_something(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------

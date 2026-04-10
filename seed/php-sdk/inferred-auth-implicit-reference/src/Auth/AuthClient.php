@@ -4,15 +4,15 @@ namespace Seed\Auth;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Auth\Requests\GetTokenRequest;
-use Seed\Types\TokenResponse;
+use Seed\Auth\Types\GetTokenRequest;
+use Seed\Auth\Types\TokenResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Auth\Requests\RefreshTokenRequest;
+use Seed\Auth\Types\RefreshTokenRequest;
 
 class AuthClient
 {
@@ -64,14 +64,14 @@ class AuthClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function gettokenwithclientcredentials(GetTokenRequest $request, ?array $options = null): ?TokenResponse
+    public function getTokenWithClientCredentials(GetTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "token",
+                    path: "/token",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -111,14 +111,14 @@ class AuthClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function refreshtoken(RefreshTokenRequest $request, ?array $options = null): ?TokenResponse
+    public function refreshToken(RefreshTokenRequest $request, ?array $options = null): ?TokenResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "token/refresh",
+                    path: "/token/refresh",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

@@ -1,4 +1,4 @@
-import Api
+import BasicAuthPwOmitted
 import Foundation
 import Testing
 
@@ -14,7 +14,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -22,7 +22,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -40,7 +40,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -48,7 +48,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -66,7 +66,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -74,7 +74,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -91,7 +91,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -99,7 +99,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -115,7 +115,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -123,7 +123,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -140,7 +140,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -148,7 +148,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -165,7 +165,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -173,7 +173,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -194,7 +194,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -203,7 +203,7 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -234,7 +234,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -243,7 +243,7 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -270,7 +270,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -279,7 +279,7 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -318,7 +318,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -326,7 +326,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers))
 
         } catch {
         }
@@ -339,7 +339,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -347,7 +347,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers))
 
             Issue.record("Expected error to be thrown")
         } catch {
@@ -364,7 +364,7 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = BasicAuthPwOmittedClient(
             baseURL: "https://api.fern.com",
             username: "<username>",
             password: "<password>",
@@ -372,7 +372,7 @@ import Testing
         )
 
         do {
-            _ = try await client.basicauth.getwithbasicauth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+            _ = try await client.basicAuth.getWithBasicAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
 
         } catch {
         }

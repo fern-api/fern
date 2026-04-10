@@ -7,13 +7,12 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
+from .core.request_options import RequestOptions
+from .raw_client import AsyncRawSeedApi, RawSeedApi
 
 if typing.TYPE_CHECKING:
-    from ._.client import AsyncClient, Client
-    from .ab.client import AbClient, AsyncAbClient
-    from .ac.client import AcClient, AsyncAcClient
+    from .a.client import AClient, AsyncAClient
     from .folder.client import AsyncFolderClient, FolderClient
-    from .folder_service.client import AsyncFolderServiceClient, FolderServiceClient
 
 
 class SeedApi:
@@ -73,35 +72,51 @@ class SeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self.__: typing.Optional[Client] = None
-        self._ab: typing.Optional[AbClient] = None
-        self._ac: typing.Optional[AcClient] = None
+        self._raw_client = RawSeedApi(client_wrapper=self._client_wrapper)
+        self._a: typing.Optional[AClient] = None
         self._folder: typing.Optional[FolderClient] = None
-        self._folder_service: typing.Optional[FolderServiceClient] = None
 
     @property
-    def _(self):
-        if self.__ is None:
-            from ._.client import Client  # noqa: E402
+    def with_raw_response(self) -> RawSeedApi:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
 
-            self.__ = Client(client_wrapper=self._client_wrapper)
-        return self.__
+        Returns
+        -------
+        RawSeedApi
+        """
+        return self._raw_client
+
+    def foo(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.foo()
+        """
+        _response = self._raw_client.foo(request_options=request_options)
+        return _response.data
 
     @property
-    def ab(self):
-        if self._ab is None:
-            from .ab.client import AbClient  # noqa: E402
+    def a(self):
+        if self._a is None:
+            from .a.client import AClient  # noqa: E402
 
-            self._ab = AbClient(client_wrapper=self._client_wrapper)
-        return self._ab
-
-    @property
-    def ac(self):
-        if self._ac is None:
-            from .ac.client import AcClient  # noqa: E402
-
-            self._ac = AcClient(client_wrapper=self._client_wrapper)
-        return self._ac
+            self._a = AClient(client_wrapper=self._client_wrapper)
+        return self._a
 
     @property
     def folder(self):
@@ -110,14 +125,6 @@ class SeedApi:
 
             self._folder = FolderClient(client_wrapper=self._client_wrapper)
         return self._folder
-
-    @property
-    def folder_service(self):
-        if self._folder_service is None:
-            from .folder_service.client import FolderServiceClient  # noqa: E402
-
-            self._folder_service = FolderServiceClient(client_wrapper=self._client_wrapper)
-        return self._folder_service
 
 
 def _make_default_async_client(
@@ -193,35 +200,59 @@ class AsyncSeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self.__: typing.Optional[AsyncClient] = None
-        self._ab: typing.Optional[AsyncAbClient] = None
-        self._ac: typing.Optional[AsyncAcClient] = None
+        self._raw_client = AsyncRawSeedApi(client_wrapper=self._client_wrapper)
+        self._a: typing.Optional[AsyncAClient] = None
         self._folder: typing.Optional[AsyncFolderClient] = None
-        self._folder_service: typing.Optional[AsyncFolderServiceClient] = None
 
     @property
-    def _(self):
-        if self.__ is None:
-            from ._.client import AsyncClient  # noqa: E402
+    def with_raw_response(self) -> AsyncRawSeedApi:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
 
-            self.__ = AsyncClient(client_wrapper=self._client_wrapper)
-        return self.__
+        Returns
+        -------
+        AsyncRawSeedApi
+        """
+        return self._raw_client
+
+    async def foo(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.foo()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.foo(request_options=request_options)
+        return _response.data
 
     @property
-    def ab(self):
-        if self._ab is None:
-            from .ab.client import AsyncAbClient  # noqa: E402
+    def a(self):
+        if self._a is None:
+            from .a.client import AsyncAClient  # noqa: E402
 
-            self._ab = AsyncAbClient(client_wrapper=self._client_wrapper)
-        return self._ab
-
-    @property
-    def ac(self):
-        if self._ac is None:
-            from .ac.client import AsyncAcClient  # noqa: E402
-
-            self._ac = AsyncAcClient(client_wrapper=self._client_wrapper)
-        return self._ac
+            self._a = AsyncAClient(client_wrapper=self._client_wrapper)
+        return self._a
 
     @property
     def folder(self):
@@ -230,11 +261,3 @@ class AsyncSeedApi:
 
             self._folder = AsyncFolderClient(client_wrapper=self._client_wrapper)
         return self._folder
-
-    @property
-    def folder_service(self):
-        if self._folder_service is None:
-            from .folder_service.client import AsyncFolderServiceClient  # noqa: E402
-
-            self._folder_service = AsyncFolderServiceClient(client_wrapper=self._client_wrapper)
-        return self._folder_service

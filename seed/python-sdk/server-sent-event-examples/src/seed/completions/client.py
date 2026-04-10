@@ -5,6 +5,9 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawCompletionsClient, RawCompletionsClient
+from .types.stream_event import StreamEvent
+from .types.stream_event_context_protocol import StreamEventContextProtocol
+from .types.streamed_completion import StreamedCompletion
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -25,92 +28,97 @@ class CompletionsClient:
         """
         return self._raw_client
 
-    def stream(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
+    def stream(
+        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[StreamedCompletion]:
         """
         Parameters
         ----------
         query : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Returns
-        -------
-        typing.Iterator[bytes]
-
+        Yields
+        ------
+        typing.Iterator[StreamedCompletion]
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedServerSentEvents
 
-        client = SeedApi(
+        client = SeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.completions.stream(
-            query="query",
+        response = client.completions.stream(
+            query="foo",
         )
+        for chunk in response:
+            yield chunk
         """
         with self._raw_client.stream(query=query, request_options=request_options) as r:
             yield from r.data
 
-    def streamevents(
+    def stream_events(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[bytes]:
+    ) -> typing.Iterator[StreamEvent]:
         """
         Parameters
         ----------
         query : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Returns
-        -------
-        typing.Iterator[bytes]
-
+        Yields
+        ------
+        typing.Iterator[StreamEvent]
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedServerSentEvents
 
-        client = SeedApi(
+        client = SeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.completions.streamevents(
+        response = client.completions.stream_events(
             query="query",
         )
+        for chunk in response:
+            yield chunk
         """
-        with self._raw_client.streamevents(query=query, request_options=request_options) as r:
+        with self._raw_client.stream_events(query=query, request_options=request_options) as r:
             yield from r.data
 
-    def streameventscontextprotocol(
+    def stream_events_context_protocol(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[bytes]:
+    ) -> typing.Iterator[StreamEventContextProtocol]:
         """
         Parameters
         ----------
         query : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Returns
-        -------
-        typing.Iterator[bytes]
-
+        Yields
+        ------
+        typing.Iterator[StreamEventContextProtocol]
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedServerSentEvents
 
-        client = SeedApi(
+        client = SeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.completions.streameventscontextprotocol(
+        response = client.completions.stream_events_context_protocol(
             query="query",
         )
+        for chunk in response:
+            yield chunk
         """
-        with self._raw_client.streameventscontextprotocol(query=query, request_options=request_options) as r:
+        with self._raw_client.stream_events_context_protocol(query=query, request_options=request_options) as r:
             yield from r.data
 
 
@@ -131,35 +139,36 @@ class AsyncCompletionsClient:
 
     async def stream(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> typing.AsyncIterator[StreamedCompletion]:
         """
         Parameters
         ----------
         query : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Returns
-        -------
-        typing.AsyncIterator[bytes]
-
+        Yields
+        ------
+        typing.AsyncIterator[StreamedCompletion]
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedServerSentEvents
 
-        client = AsyncSeedApi(
+        client = AsyncSeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.completions.stream(
-                query="query",
+            response = await client.completions.stream(
+                query="foo",
             )
+            async for chunk in response:
+                yield chunk
 
 
         asyncio.run(main())
@@ -168,80 +177,82 @@ class AsyncCompletionsClient:
             async for _chunk in r.data:
                 yield _chunk
 
-    async def streamevents(
+    async def stream_events(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> typing.AsyncIterator[StreamEvent]:
         """
         Parameters
         ----------
         query : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Returns
-        -------
-        typing.AsyncIterator[bytes]
-
+        Yields
+        ------
+        typing.AsyncIterator[StreamEvent]
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedServerSentEvents
 
-        client = AsyncSeedApi(
+        client = AsyncSeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.completions.streamevents(
+            response = await client.completions.stream_events(
                 query="query",
             )
+            async for chunk in response:
+                yield chunk
 
 
         asyncio.run(main())
         """
-        async with self._raw_client.streamevents(query=query, request_options=request_options) as r:
+        async with self._raw_client.stream_events(query=query, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk
 
-    async def streameventscontextprotocol(
+    async def stream_events_context_protocol(
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> typing.AsyncIterator[StreamEventContextProtocol]:
         """
         Parameters
         ----------
         query : str
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
-        Returns
-        -------
-        typing.AsyncIterator[bytes]
-
+        Yields
+        ------
+        typing.AsyncIterator[StreamEventContextProtocol]
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedServerSentEvents
 
-        client = AsyncSeedApi(
+        client = AsyncSeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.completions.streameventscontextprotocol(
+            response = await client.completions.stream_events_context_protocol(
                 query="query",
             )
+            async for chunk in response:
+                yield chunk
 
 
         asyncio.run(main())
         """
-        async with self._raw_client.streameventscontextprotocol(query=query, request_options=request_options) as r:
+        async with self._raw_client.stream_events_context_protocol(query=query, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk

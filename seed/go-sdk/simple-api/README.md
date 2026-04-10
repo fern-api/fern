@@ -32,7 +32,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/simple-api/fern"
     client "github.com/simple-api/fern/client"
     option "github.com/simple-api/fern/option"
 )
@@ -43,12 +42,9 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.UserGetRequest{
-        ID: "id",
-    }
     client.User.Get(
         context.TODO(),
-        request,
+        "id",
     )
 }
 ```
@@ -60,7 +56,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(api.Environments.Production),
+    option.WithBaseURL(simpleapi.Environments.Production),
 )
 ```
 

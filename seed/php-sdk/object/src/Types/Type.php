@@ -117,7 +117,7 @@ class Type extends JsonSerializableType
     public array $seventeen;
 
     /**
-     * @var value-of<TypeEighteen> $eighteen
+     * @var 'eighteen' $eighteen
      */
     #[JsonProperty('eighteen')]
     public string $eighteen;
@@ -147,10 +147,10 @@ class Type extends JsonSerializableType
     public float $twentytwo;
 
     /**
-     * @var int $twentythree
+     * @var string $twentythree
      */
     #[JsonProperty('twentythree')]
-    public int $twentythree;
+    public string $twentythree;
 
     /**
      * @var ?DateTime $twentyfour
@@ -182,12 +182,12 @@ class Type extends JsonSerializableType
      *   fifteen: array<array<int>>,
      *   sixteen: array<array<string, int>>,
      *   seventeen: array<?string>,
-     *   eighteen: value-of<TypeEighteen>,
+     *   eighteen: 'eighteen',
      *   nineteen: Name,
      *   twenty: int,
      *   twentyone: int,
      *   twentytwo: float,
-     *   twentythree: int,
+     *   twentythree: string,
      *   thirteen?: ?int,
      *   twentyfour?: ?DateTime,
      *   twentyfive?: ?DateTime,

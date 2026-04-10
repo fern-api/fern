@@ -49,11 +49,11 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-func (c *Client) Getmetadata(
+func (c *Client) GetMetadata(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (fern.Metadata, error) {
-	response, err := c.WithRawResponse.Getmetadata(
+	response, err := c.WithRawResponse.GetMetadata(
 		ctx,
 		opts...,
 	)
@@ -63,12 +63,12 @@ func (c *Client) Getmetadata(
 	return response.Body, nil
 }
 
-func (c *Client) Updatemetadata(
+func (c *Client) UpdateMetadata(
 	ctx context.Context,
 	request *fern.MetadataUnion,
 	opts ...option.RequestOption,
 ) (bool, error) {
-	response, err := c.WithRawResponse.Updatemetadata(
+	response, err := c.WithRawResponse.UpdateMetadata(
 		ctx,
 		request,
 		opts...,
@@ -95,12 +95,12 @@ func (c *Client) Call(
 	return response.Body, nil
 }
 
-func (c *Client) Duplicatetypesunion(
+func (c *Client) DuplicateTypesUnion(
 	ctx context.Context,
 	request *fern.UnionWithDuplicateTypes,
 	opts ...option.RequestOption,
 ) (*fern.UnionWithDuplicateTypes, error) {
-	response, err := c.WithRawResponse.Duplicatetypesunion(
+	response, err := c.WithRawResponse.DuplicateTypesUnion(
 		ctx,
 		request,
 		opts...,
@@ -111,12 +111,12 @@ func (c *Client) Duplicatetypesunion(
 	return response.Body, nil
 }
 
-func (c *Client) Nestedunions(
+func (c *Client) NestedUnions(
 	ctx context.Context,
 	request *fern.NestedUnionRoot,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Nestedunions(
+	response, err := c.WithRawResponse.NestedUnions(
 		ctx,
 		request,
 		opts...,
@@ -127,12 +127,12 @@ func (c *Client) Nestedunions(
 	return response.Body, nil
 }
 
-func (c *Client) Testcamelcaseproperties(
+func (c *Client) TestCamelCaseProperties(
 	ctx context.Context,
-	request *fern.UnionTestCamelCasePropertiesRequest,
+	request *fern.PaymentRequest,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Testcamelcaseproperties(
+	response, err := c.WithRawResponse.TestCamelCaseProperties(
 		ctx,
 		request,
 		opts...,

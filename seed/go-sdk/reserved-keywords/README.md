@@ -38,7 +38,7 @@ import (
 
 func do() {
     client := client.NewClient()
-    request := &fern.PackageTestRequest{
+    request := &fern.TestRequest{
         For: "for",
     }
     client.Package.Test(

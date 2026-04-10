@@ -33,14 +33,14 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Find(
 	ctx context.Context,
-	request *fern.FooFindRequest,
+	request *fern.FindRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.ImportingType], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"https://api.example.a.com",
+		"",
 	)
 	endpointURL := baseURL
 	queryParams, err := internal.QueryValues(request)
@@ -54,7 +54,6 @@ func (r *RawClient) Find(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response *fern.ImportingType
 	raw, err := r.caller.Call(
 		ctx,

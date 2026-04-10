@@ -7,41 +7,41 @@ import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedEnum from "../../../index.js";
 
-export declare namespace InlinedrequestClient {
+export declare namespace InlinedRequestClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class InlinedrequestClient {
-    protected readonly _options: NormalizedClientOptions<InlinedrequestClient.Options>;
+export class InlinedRequestClient {
+    protected readonly _options: NormalizedClientOptions<InlinedRequestClient.Options>;
 
-    constructor(options: InlinedrequestClient.Options) {
+    constructor(options: InlinedRequestClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
-     * @param {SeedApi.InlinedRequestSendRequest} request
-     * @param {InlinedrequestClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedEnum.SendEnumInlinedRequest} request
+     * @param {InlinedRequestClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.inlinedrequest.send({
+     *     await client.inlinedRequest.send({
      *         operand: ">",
      *         operandOrColor: "red"
      *     })
      */
     public send(
-        request: SeedApi.InlinedRequestSendRequest,
-        requestOptions?: InlinedrequestClient.RequestOptions,
+        request: SeedEnum.SendEnumInlinedRequest,
+        requestOptions?: InlinedRequestClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedApi.InlinedRequestSendRequest,
-        requestOptions?: InlinedrequestClient.RequestOptions,
+        request: SeedEnum.SendEnumInlinedRequest,
+        requestOptions?: InlinedRequestClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -55,7 +55,7 @@ export class InlinedrequestClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.InlinedRequestSendRequest.jsonOrThrow(request, {
+            body: serializers.SendEnumInlinedRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
@@ -70,7 +70,7 @@ export class InlinedrequestClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

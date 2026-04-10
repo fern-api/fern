@@ -38,7 +38,14 @@ import (
 
 func do() {
     client := client.NewClient()
-    request := &fern.ServicePatchRequest{}
+    request := &fern.PatchProxyRequest{
+        Application: fern.String(
+            "application",
+        ),
+        RequireAuth: fern.Bool(
+            true,
+        ),
+    }
     client.Service.Patch(
         context.TODO(),
         request,

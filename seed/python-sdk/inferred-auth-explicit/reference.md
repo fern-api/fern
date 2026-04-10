@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">gettokenwithclientcredentials</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,18 +13,21 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthExplicit
 
-client = SeedApi(
+client = SeedInferredAuthExplicit(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.gettokenwithclientcredentials(
-    api_key="X-Api-Key",
+client.auth.get_token_with_client_credentials(
+    x_api_key="X-Api-Key",
     client_id="client_id",
     client_secret="client_secret",
-    audience="https://api.example.com",
-    grant_type="client_credentials",
+    scope="scope",
 )
 
 ```
@@ -41,7 +44,7 @@ client.auth.gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**api_key:** `str` 
+**x_api_key:** `str` 
     
 </dd>
 </dl>
@@ -65,7 +68,7 @@ client.auth.gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**audience:** `AuthGetTokenWithClientCredentialsRequestAudience` 
+**audience:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -73,7 +76,7 @@ client.auth.gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**grant_type:** `AuthGetTokenWithClientCredentialsRequestGrantType` 
+**grant_type:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -101,7 +104,7 @@ client.auth.gettokenwithclientcredentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refreshtoken</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -114,19 +117,22 @@ client.auth.gettokenwithclientcredentials(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthExplicit
 
-client = SeedApi(
+client = SeedInferredAuthExplicit(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.refreshtoken(
-    api_key="X-Api-Key",
+client.auth.refresh_token(
+    x_api_key="X-Api-Key",
     client_id="client_id",
     client_secret="client_secret",
     refresh_token="refresh_token",
-    audience="https://api.example.com",
-    grant_type="refresh_token",
+    scope="scope",
 )
 
 ```
@@ -143,7 +149,7 @@ client.auth.refreshtoken(
 <dl>
 <dd>
 
-**api_key:** `str` 
+**x_api_key:** `str` 
     
 </dd>
 </dl>
@@ -175,7 +181,7 @@ client.auth.refreshtoken(
 <dl>
 <dd>
 
-**audience:** `AuthRefreshTokenRequestAudience` 
+**audience:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -183,7 +189,7 @@ client.auth.refreshtoken(
 <dl>
 <dd>
 
-**grant_type:** `AuthRefreshTokenRequestGrantType` 
+**grant_type:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -211,8 +217,8 @@ client.auth.refreshtoken(
 </dl>
 </details>
 
-## NestedNoAuthApi
-<details><summary><code>client.nested_no_auth_api.<a href="src/seed/nested_no_auth_api/client.py">nested_no_auth_api_get_something</a>()</code></summary>
+## NestedNoAuth Api
+<details><summary><code>client.nested_no_auth.api.<a href="src/seed/nested_no_auth/api/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -225,13 +231,17 @@ client.auth.refreshtoken(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthExplicit
 
-client = SeedApi(
+client = SeedInferredAuthExplicit(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nested_no_auth_api.nested_no_auth_api_get_something()
+client.nested_no_auth.api.get_something()
 
 ```
 </dd>
@@ -259,8 +269,8 @@ client.nested_no_auth_api.nested_no_auth_api_get_something()
 </dl>
 </details>
 
-## NestedApi
-<details><summary><code>client.nested_api.<a href="src/seed/nested_api/client.py">nested_api_get_something</a>()</code></summary>
+## Nested Api
+<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -273,13 +283,17 @@ client.nested_no_auth_api.nested_no_auth_api_get_something()
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthExplicit
 
-client = SeedApi(
+client = SeedInferredAuthExplicit(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nested_api.nested_api_get_something()
+client.nested.api.get_something()
 
 ```
 </dd>
@@ -308,7 +322,7 @@ client.nested_api.nested_api_get_something()
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">getsomething</a>()</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -321,13 +335,17 @@ client.nested_api.nested_api_get_something()
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedInferredAuthExplicit
 
-client = SeedApi(
+client = SeedInferredAuthExplicit(
+    x_api_key="X-Api-Key",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.simple.getsomething()
+client.simple.get_something()
 
 ```
 </dd>

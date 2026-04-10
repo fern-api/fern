@@ -6,20 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .commons_metadata import CommonsMetadata
-    from .file import File
-    from .file_directory import FileDirectory
-    from .file_info import FileInfo
     from .node import Node
     from .tree import Tree
-_dynamic_imports: typing.Dict[str, str] = {
-    "CommonsMetadata": ".commons_metadata",
-    "File": ".file",
-    "FileDirectory": ".file_directory",
-    "FileInfo": ".file_info",
-    "Node": ".node",
-    "Tree": ".tree",
-}
+_dynamic_imports: typing.Dict[str, str] = {"Node": ".node", "Tree": ".tree"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -43,4 +32,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CommonsMetadata", "File", "FileDirectory", "FileInfo", "Node", "Tree"]
+__all__ = ["Node", "Tree"]

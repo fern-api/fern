@@ -1,4 +1,4 @@
-import Api
+import QueryParameters
 import Foundation
 
 final class HTTPStub {

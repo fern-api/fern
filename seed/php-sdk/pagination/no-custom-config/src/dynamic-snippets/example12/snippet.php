@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\InlineUsersInlineUsers\Requests\InlineUsersInlineUsersListWithBodyOffsetPaginationRequest;
+use Seed\InlineUsers\InlineUsers\Requests\ListWithGlobalConfigRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,6 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithBodyOffsetPagination(
-    new InlineUsersInlineUsersListWithBodyOffsetPaginationRequest([]),
+$client->inlineUsers->inlineUsers->listWithGlobalConfig(
+    new ListWithGlobalConfigRequest([
+        'offset' => 1,
+    ]),
 );

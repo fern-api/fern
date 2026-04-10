@@ -5,9 +5,10 @@ namespace Example;
 use Seed\SeedClient;
 
 $client = new SeedClient(
-    token: '<token>',
+    clientId: '<clientId>',
+    clientSecret: '<clientSecret>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->simple->getsomething();
+$client->simple->getSomething();

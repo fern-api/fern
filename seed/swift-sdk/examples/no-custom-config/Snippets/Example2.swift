@@ -1,13 +1,13 @@
 import Foundation
-import Api
+import Examples
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExamplesClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client..createType(request: `Type`.basicType(
+    _ = try await client.createType(request: `Type`.basicType(
         .primitive
     ))
 }

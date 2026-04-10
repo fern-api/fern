@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->fileService->fileServiceGetFile(
-    'filename',
+$client->health->service->check(
+    'id-2sdx82h',
 );

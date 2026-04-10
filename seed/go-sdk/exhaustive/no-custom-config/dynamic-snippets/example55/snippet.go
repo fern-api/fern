@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
-    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,15 +17,13 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.EndpointsPaginationListItemsRequest{
-        Cursor: fern.String(
-            "cursor",
-        ),
-        Limit: fern.Int(
-            1,
-        ),
+    request := &types.Animal{
+        Dog: &types.Dog{
+            Name: "name",
+            LikesToWoof: true,
+        },
     }
-    client.EndpointsPagination.EndpointsPaginationListItems(
+    client.Endpoints.Union.GetAndReturnUnion(
         context.TODO(),
         request,
     )

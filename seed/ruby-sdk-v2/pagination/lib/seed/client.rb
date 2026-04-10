@@ -22,9 +22,9 @@ module Seed
       @complex ||= Seed::Complex::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::InlineUsersInlineUsers::Client]
-    def inline_users_inline_users
-      @inline_users_inline_users ||= Seed::InlineUsersInlineUsers::Client.new(client: @raw_client)
+    # @return [Seed::InlineUsers::Client]
+    def inline_users
+      @inline_users ||= Seed::InlineUsers::Client.new(client: @raw_client)
     end
 
     # @return [Seed::Users::Client]

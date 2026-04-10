@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.token_response import TokenResponse
 from .raw_client import AsyncRawAuthClient, RawAuthClient
+from .types.token_response import TokenResponse
 
 
 class AuthClient:
@@ -23,7 +23,7 @@ class AuthClient:
         """
         return self._raw_client
 
-    def gettoken(self, *, api_key: str, request_options: typing.Optional[RequestOptions] = None) -> TokenResponse:
+    def get_token(self, *, api_key: str, request_options: typing.Optional[RequestOptions] = None) -> TokenResponse:
         """
         Parameters
         ----------
@@ -36,19 +36,19 @@ class AuthClient:
         -------
         TokenResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedInferredAuthImplicitApiKey
 
-        client = SeedApi(
+        client = SeedInferredAuthImplicitApiKey(
             base_url="https://yourhost.com/path/to/api",
+            api_key="YOUR_API_KEY",
         )
-        client.auth.gettoken(
-            api_key="X-Api-Key",
+        client.auth.get_token(
+            api_key="api_key",
         )
         """
-        _response = self._raw_client.gettoken(api_key=api_key, request_options=request_options)
+        _response = self._raw_client.get_token(api_key=api_key, request_options=request_options)
         return _response.data
 
 
@@ -67,7 +67,9 @@ class AsyncAuthClient:
         """
         return self._raw_client
 
-    async def gettoken(self, *, api_key: str, request_options: typing.Optional[RequestOptions] = None) -> TokenResponse:
+    async def get_token(
+        self, *, api_key: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TokenResponse:
         """
         Parameters
         ----------
@@ -80,25 +82,25 @@ class AsyncAuthClient:
         -------
         TokenResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedInferredAuthImplicitApiKey
 
-        client = AsyncSeedApi(
+        client = AsyncSeedInferredAuthImplicitApiKey(
             base_url="https://yourhost.com/path/to/api",
+            api_key="YOUR_API_KEY",
         )
 
 
         async def main() -> None:
-            await client.auth.gettoken(
-                api_key="X-Api-Key",
+            await client.auth.get_token(
+                api_key="api_key",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.gettoken(api_key=api_key, request_options=request_options)
+        _response = await self._raw_client.get_token(api_key=api_key, request_options=request_options)
         return _response.data

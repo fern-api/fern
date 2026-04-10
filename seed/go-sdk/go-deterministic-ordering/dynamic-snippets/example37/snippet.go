@@ -17,13 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.EndpointsDuplicateNamesCGetRequest{
-        ID: "id",
-        Verbose: fern.Bool(
-            true,
-        ),
+    request := &fern.GetWithInlinePath{
+        Param: "param",
     }
-    client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCGet(
+    client.Endpoints.Params.GetWithInlinePath(
         context.TODO(),
         request,
     )

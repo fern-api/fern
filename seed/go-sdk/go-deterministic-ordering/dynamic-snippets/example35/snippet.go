@@ -17,11 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.EndpointsDuplicateNamesCCreateRequest{
-        Label: "label",
-        Priority: 1,
+    request := &fern.ListItemsRequest{
+        Cursor: fern.String(
+            "cursor",
+        ),
+        Limit: fern.Int(
+            1,
+        ),
     }
-    client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCCreate(
+    client.Endpoints.Pagination.ListItems(
         context.TODO(),
         request,
     )

@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.token_response import TokenResponse
+from .types.token_response import TokenResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -20,7 +20,7 @@ class RawAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def gettoken(
+    def get_token(
         self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[TokenResponse]:
         """
@@ -36,7 +36,6 @@ class RawAuthClient:
         Returns
         -------
         HttpResponse[TokenResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "token",
@@ -44,9 +43,6 @@ class RawAuthClient:
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -75,7 +71,7 @@ class AsyncRawAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def gettoken(
+    async def get_token(
         self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[TokenResponse]:
         """
@@ -91,7 +87,6 @@ class AsyncRawAuthClient:
         Returns
         -------
         AsyncHttpResponse[TokenResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "token",
@@ -99,9 +94,6 @@ class AsyncRawAuthClient:
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

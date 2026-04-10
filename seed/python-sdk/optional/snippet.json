@@ -6,11 +6,11 @@
             "id": {
                 "path": "/send-optional-body",
                 "method": "POST",
-                "identifier_override": "endpoint_optional.sendoptionalbody"
+                "identifier_override": "endpoint_optional.sendOptionalBody"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.optional.sendoptionalbody(\n    request={\"key\": \"value\"},\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.optional.sendoptionalbody(\n        request={\"key\": \"value\"},\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedObjectsWithImports\n\nclient = SeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.optional.send_optional_body(\n    request={\"string\": {\"key\": \"value\"}},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedObjectsWithImports\n\nclient = AsyncSeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.optional.send_optional_body(\n        request={\"string\": {\"key\": \"value\"}},\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -19,11 +19,11 @@
             "id": {
                 "path": "/send-optional-typed-body",
                 "method": "POST",
-                "identifier_override": "endpoint_optional.sendoptionaltypedbody"
+                "identifier_override": "endpoint_optional.sendOptionalTypedBody"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.optional.sendoptionaltypedbody(\n    message=\"message\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.optional.sendoptionaltypedbody(\n        message=\"message\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedObjectsWithImports\nfrom seed.optional import SendOptionalBodyRequest\n\nclient = SeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.optional.send_optional_typed_body(\n    request=SendOptionalBodyRequest(\n        message=\"message\",\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedObjectsWithImports\nfrom seed.optional import SendOptionalBodyRequest\n\nclient = AsyncSeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.optional.send_optional_typed_body(\n        request=SendOptionalBodyRequest(\n            message=\"message\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -32,11 +32,11 @@
             "id": {
                 "path": "/deploy/{actionId}/versions/{id}",
                 "method": "POST",
-                "identifier_override": "endpoint_optional.sendoptionalnullablewithalloptionalproperties"
+                "identifier_override": "endpoint_optional.sendOptionalNullableWithAllOptionalProperties"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.optional.sendoptionalnullablewithalloptionalproperties(\n    action_id=\"actionId\",\n    id=\"id\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.optional.sendoptionalnullablewithalloptionalproperties(\n        action_id=\"actionId\",\n        id=\"id\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedObjectsWithImports\nfrom seed.optional import DeployParams\n\nclient = SeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.optional.send_optional_nullable_with_all_optional_properties(\n    action_id=\"actionId\",\n    id=\"id\",\n    request=DeployParams(\n        update_draft=True,\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedObjectsWithImports\nfrom seed.optional import DeployParams\n\nclient = AsyncSeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.optional.send_optional_nullable_with_all_optional_properties(\n        action_id=\"actionId\",\n        id=\"id\",\n        request=DeployParams(\n            update_draft=True,\n        ),\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

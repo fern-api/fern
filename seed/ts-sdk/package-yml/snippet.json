@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/package-yml\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client..echo({\n    id: \"id\",\n    name: \"name\",\n    size: 1\n});\n"
+                "client": "import { SeedPackageYmlClient } from \"@fern/package-yml\";\n\nconst client = new SeedPackageYmlClient({ environment: \"YOUR_BASE_URL\" });\nawait client.echo({\n    name: \"Hello world!\",\n    size: 20\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/package-yml\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.nop({\n    id: \"id\",\n    nestedId: \"nestedId\"\n});\n"
+                "client": "import { SeedPackageYmlClient } from \"@fern/package-yml\";\n\nconst client = new SeedPackageYmlClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.nop(\"id-219xca8\");\n"
             }
         }
     ],

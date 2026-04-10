@@ -1,14 +1,14 @@
 import Foundation
-import Api
+import BasicAuthPwOmitted
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = BasicAuthPwOmittedClient(
         baseURL: "https://api.fern.com",
         username: "<username>",
         password: "<password>"
     )
 
-    _ = try await client.basicauth.getwithbasicauth()
+    _ = try await client.basicAuth.getWithBasicAuth()
 }
 
 try await main()

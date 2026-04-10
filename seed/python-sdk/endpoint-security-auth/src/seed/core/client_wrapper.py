@@ -11,15 +11,21 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
         api_key: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        self._api_key = api_key
+        self._auth_headers = auth_headers
+        self.api_key = api_key
         self._token = token
+        self._username = username
+        self._password = password
         self._headers = headers
         self._base_url = base_url
         self._timeout = timeout
@@ -37,10 +43,16 @@ class BaseClientWrapper:
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }
-        headers["X-API-Key"] = self._api_key
+        username = self._get_username()
+        password = self._get_password()
+        if username is not None and password is not None:
+            headers["Authorization"] = httpx.BasicAuth(username, password)._auth_header
+        headers["X-API-Key"] = self.api_key
         token = self._get_token()
         if token is not None:
             headers["Authorization"] = f"Bearer {token}"
+        if self._auth_headers is not None:
+            headers.update(self._auth_headers())
         return headers
 
     def _get_token(self) -> typing.Optional[str]:
@@ -48,6 +60,18 @@ class BaseClientWrapper:
             return self._token
         else:
             return self._token()
+
+    def _get_username(self) -> typing.Optional[str]:
+        if isinstance(self._username, str) or self._username is None:
+            return self._username
+        else:
+            return self._username()
+
+    def _get_password(self) -> typing.Optional[str]:
+        if isinstance(self._password, str) or self._password is None:
+            return self._password
+        else:
+            return self._password()
 
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
         return self._headers
@@ -63,8 +87,11 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
         api_key: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
@@ -72,7 +99,15 @@ class SyncClientWrapper(BaseClientWrapper):
         httpx_client: httpx.Client,
     ):
         super().__init__(
-            api_key=api_key, token=token, headers=headers, base_url=base_url, timeout=timeout, logging=logging
+            auth_headers=auth_headers,
+            api_key=api_key,
+            token=token,
+            username=username,
+            password=password,
+            headers=headers,
+            base_url=base_url,
+            timeout=timeout,
+            logging=logging,
         )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
@@ -87,19 +122,32 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
+        auth_headers: typing.Optional[typing.Callable[[], typing.Dict[str, str]]] = None,
         api_key: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
+        async_auth_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
         super().__init__(
-            api_key=api_key, token=token, headers=headers, base_url=base_url, timeout=timeout, logging=logging
+            auth_headers=auth_headers,
+            api_key=api_key,
+            token=token,
+            username=username,
+            password=password,
+            headers=headers,
+            base_url=base_url,
+            timeout=timeout,
+            logging=logging,
         )
         self._async_token = async_token
+        self._async_auth_headers = async_auth_headers
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -114,4 +162,6 @@ class AsyncClientWrapper(BaseClientWrapper):
         if self._async_token is not None:
             token = await self._async_token()
             headers["Authorization"] = f"Bearer {token}"
+        if self._async_auth_headers is not None:
+            headers.update(await self._async_auth_headers())
         return headers

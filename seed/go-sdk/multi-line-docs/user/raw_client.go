@@ -31,9 +31,11 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Getuser(
+func (r *RawClient) GetUser(
 	ctx context.Context,
-	request *fern.UserGetUserRequest,
+	// The ID of the user to retrieve.
+	// This ID is unique to each user.
+	userID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +46,7 @@ func (r *RawClient) Getuser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v",
-		request.UserID,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -72,9 +74,9 @@ func (r *RawClient) Getuser(
 	}, nil
 }
 
-func (r *RawClient) Createuser(
+func (r *RawClient) CreateUser(
 	ctx context.Context,
-	request *fern.UserCreateUserRequest,
+	request *fern.CreateUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -88,7 +90,6 @@ func (r *RawClient) Createuser(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response *fern.User
 	raw, err := r.caller.Call(
 		ctx,

@@ -17,7 +17,7 @@ func do() {
     request := &fern.FooRequest{
         Bar: "bar",
     }
-    client.Simple.Foowithoutendpointerror(
+    client.Simple.Foo(
         context.TODO(),
         request,
     )

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.Getuser(UserID) -> error</code></summary>
+<details><summary><code>client.User.GetUser(UserID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -28,12 +28,9 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```go
-request := &fern.UserGetUserRequest{
-        UserID: "userId",
-    }
-client.User.Getuser(
+client.User.GetUser(
         context.TODO(),
-        request,
+        "userId",
     )
 }
 ```
@@ -65,7 +62,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.User.Createuser(request) -> *fern.User</code></summary>
+<details><summary><code>client.User.CreateUser(request) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -93,10 +90,13 @@ This endpoint is used to create a new user.
 <dd>
 
 ```go
-request := &fern.UserCreateUserRequest{
+request := &fern.CreateUserRequest{
         Name: "name",
+        Age: fern.Int(
+            1,
+        ),
     }
-client.User.Createuser(
+client.User.CreateUser(
         context.TODO(),
         request,
     )

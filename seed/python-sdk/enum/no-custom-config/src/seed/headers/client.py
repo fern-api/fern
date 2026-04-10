@@ -53,13 +53,14 @@ class HeadersClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedEnum
 
-        client = SeedApi(
+        client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
         client.headers.send(
             operand=">",
+            maybe_operand=">",
             operand_or_color="red",
         )
         """
@@ -119,9 +120,9 @@ class AsyncHeadersClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedEnum
 
-        client = AsyncSeedApi(
+        client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -129,6 +130,7 @@ class AsyncHeadersClient:
         async def main() -> None:
             await client.headers.send(
                 operand=">",
+                maybe_operand=">",
                 operand_or_color="red",
             )
 

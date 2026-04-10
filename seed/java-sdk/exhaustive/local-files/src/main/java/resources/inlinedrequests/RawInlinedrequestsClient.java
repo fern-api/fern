@@ -9,13 +9,13 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedApiApiException;
-import com.fern.sdk.core.SeedApiException;
-import com.fern.sdk.core.SeedApiHttpResponse;
-import com.fern.sdk.errors.BadRequestError;
-import com.fern.sdk.resources.inlinedrequests.requests.InlinedRequestsPostWithObjectBodyandResponseRequest;
-import com.fern.sdk.types.BadObjectRequestInfo;
-import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.core.SeedExhaustiveApiException;
+import com.fern.sdk.core.SeedExhaustiveException;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
+import com.fern.sdk.resources.generalerrors.errors.BadRequestBody;
+import com.fern.sdk.resources.generalerrors.types.BadObjectRequestInfo;
+import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
+import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
@@ -27,29 +27,29 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class RawInlinedrequestsClient {
+public class RawInlinedRequestsClient {
   protected final ClientOptions clientOptions;
 
-  public RawInlinedrequestsClient(ClientOptions clientOptions) {
+  public RawInlinedRequestsClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
   }
 
   /**
    * POST with custom object in request body, response is an object
    */
-  public SeedApiHttpResponse<TypesObjectWithOptionalField> postwithobjectbodyandresponse(
-      InlinedRequestsPostWithObjectBodyandResponseRequest request) {
-    return postwithobjectbodyandresponse(request,null);
+  public SeedExhaustiveHttpResponse<ObjectWithOptionalField> postWithObjectBodyandResponse(
+      PostWithObjectBody request) {
+    return postWithObjectBodyandResponse(request,null);
   }
 
   /**
    * POST with custom object in request body, response is an object
    */
-  public SeedApiHttpResponse<TypesObjectWithOptionalField> postwithobjectbodyandresponse(
-      InlinedRequestsPostWithObjectBodyandResponseRequest request, RequestOptions requestOptions) {
+  public SeedExhaustiveHttpResponse<ObjectWithOptionalField> postWithObjectBodyandResponse(
+      PostWithObjectBody request, RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-
-      .addPathSegments("req-bodies/object");if (requestOptions != null) {
+      .addPathSegments("req-bodies")
+      .addPathSegments("object");if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
@@ -59,7 +59,7 @@ public class RawInlinedrequestsClient {
         body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
       }
       catch(JsonProcessingException e) {
-        throw new SeedApiException("Failed to serialize request", e);
+        throw new SeedExhaustiveException("Failed to serialize request", e);
       }
       Request okhttpRequest = new Request.Builder()
         .url(httpUrl.build())
@@ -76,21 +76,21 @@ public class RawInlinedrequestsClient {
         ResponseBody responseBody = response.body();
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         if (response.isSuccessful()) {
-          return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TypesObjectWithOptionalField.class), response);
+          return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithOptionalField.class), response);
         }
         try {
           if (response.code() == 400) {
-            throw new BadRequestError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class), response);
+            throw new BadRequestBody(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BadObjectRequestInfo.class), response);
           }
         }
         catch (JsonProcessingException ignored) {
           // unable to map error response, throwing generic error
         }
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
       }
       catch (IOException e) {
-        throw new SeedApiException("Network error executing HTTP request", e);
+        throw new SeedExhaustiveException("Network error executing HTTP request", e);
       }
     }
   }

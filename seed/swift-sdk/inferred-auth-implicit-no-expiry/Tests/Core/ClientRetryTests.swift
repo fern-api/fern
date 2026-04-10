@@ -1,4 +1,4 @@
-import Api
+import InferredAuthImplicitNoExpiry
 import Foundation
 import Testing
 
@@ -14,18 +14,19 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -46,18 +47,19 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -78,18 +80,19 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -109,18 +112,19 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -139,18 +143,19 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -170,18 +175,19 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -201,18 +207,19 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -236,19 +243,20 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -282,19 +290,20 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -324,19 +333,20 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         let startTime = Date()
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -378,18 +388,19 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
@@ -405,18 +416,19 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
@@ -436,18 +448,19 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = InferredAuthImplicitNoExpiryClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client.auth.gettokenwithclientcredentials(
+            _ = try await client.auth.getTokenWithClientCredentials(
                 request: .init(
                     clientId: "client_id",
                     clientSecret: "client_secret",
                     audience: .httpsApiExampleCom,
-                    grantType: .clientCredentials
+                    grantType: .clientCredentials,
+                    scope: "scope"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

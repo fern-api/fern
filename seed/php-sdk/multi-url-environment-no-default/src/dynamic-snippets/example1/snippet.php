@@ -3,16 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Ec2\Requests\Ec2BootInstanceRequest;
+use Seed\Environments;
+use Seed\S3\Requests\GetPresignedUrlRequest;
 
 $client = new SeedClient(
     token: '<token>',
-    options: [
-        'baseUrl' => 'https://api.fern.com',
-    ],
+    environment: Environments::Production(),
 );
-$client->ec2->bootinstance(
-    new Ec2BootInstanceRequest([
-        'size' => 'size',
+$client->s3->getPresignedUrl(
+    new GetPresignedUrlRequest([
+        's3Key' => 's3Key',
     ]),
 );

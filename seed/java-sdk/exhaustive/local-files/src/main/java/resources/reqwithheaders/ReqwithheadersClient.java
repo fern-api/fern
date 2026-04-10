@@ -6,31 +6,30 @@ package com.fern.sdk.resources.reqwithheaders;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeadersGetWithCustomHeaderRequest;
+import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
 
-public class ReqwithheadersClient {
+public class ReqWithHeadersClient {
   protected final ClientOptions clientOptions;
 
-  private final RawReqwithheadersClient rawClient;
+  private final RawReqWithHeadersClient rawClient;
 
-  public ReqwithheadersClient(ClientOptions clientOptions) {
+  public ReqWithHeadersClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new RawReqwithheadersClient(clientOptions);
+    this.rawClient = new RawReqWithHeadersClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawReqwithheadersClient withRawResponse() {
+  public RawReqWithHeadersClient withRawResponse() {
     return this.rawClient;
   }
 
-  public void getwithcustomheader(ReqWithHeadersGetWithCustomHeaderRequest request) {
-    this.rawClient.getwithcustomheader(request).body();
+  public void getWithCustomHeader(ReqWithHeaders request) {
+    this.rawClient.getWithCustomHeader(request).body();
   }
 
-  public void getwithcustomheader(ReqWithHeadersGetWithCustomHeaderRequest request,
-      RequestOptions requestOptions) {
-    this.rawClient.getwithcustomheader(request, requestOptions).body();
+  public void getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
+    this.rawClient.getWithCustomHeader(request, requestOptions).body();
   }
 }

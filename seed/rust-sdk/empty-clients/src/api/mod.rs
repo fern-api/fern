@@ -1,4 +1,4 @@
-//! API client and types for the empty-clients
+//! API client and types for the EmptyClients
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::ApiClient;
+pub use resources::{EmptyClientsClient, Level1Client};
 pub use types::*;

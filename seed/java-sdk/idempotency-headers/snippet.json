@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "cb42d99c",
+            "example_identifier": "ec3c18c2",
             "id": {
                 "method": "POST",
                 "path": "/payment",
@@ -9,34 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.payment.requests.PaymentCreateRequest;\nimport com.seed.api.types.Currency;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().create(\n            PaymentCreateRequest\n                .builder()\n                .amount(1)\n                .currency(Currency.USD)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.payment.requests.PaymentCreateRequest;\nimport com.seed.api.types.Currency;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().create(\n            PaymentCreateRequest\n                .builder()\n                .amount(1)\n                .currency(Currency.USD)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "478c3971",
-            "id": {
-                "method": "POST",
-                "path": "/payment",
-                "identifier_override": "endpoint_payment.create"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.payment.requests.PaymentCreateRequest;\nimport com.seed.api.types.Currency;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().create(\n            PaymentCreateRequest\n                .builder()\n                .amount(1)\n                .currency(Currency.USD)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.payment.requests.PaymentCreateRequest;\nimport com.seed.api.types.Currency;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().create(\n            PaymentCreateRequest\n                .builder()\n                .amount(1)\n                .currency(Currency.USD)\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "5d9a7dd9",
-            "id": {
-                "method": "DELETE",
-                "path": "/payment/{paymentId}",
-                "identifier_override": "endpoint_payment.delete"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.payment.requests.PaymentDeleteRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().delete(\n            \"paymentId\",\n            PaymentDeleteRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.payment.requests.PaymentDeleteRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().delete(\n            \"paymentId\",\n            PaymentDeleteRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;\nimport com.seed.idempotencyHeaders.resources.payment.requests.CreatePaymentRequest;\nimport com.seed.idempotencyHeaders.resources.payment.types.Currency;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().create(\n            CreatePaymentRequest\n                .builder()\n                .amount(1)\n                .currency(Currency.USD)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;\nimport com.seed.idempotencyHeaders.resources.payment.requests.CreatePaymentRequest;\nimport com.seed.idempotencyHeaders.resources.payment.types.Currency;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().create(\n            CreatePaymentRequest\n                .builder()\n                .amount(1)\n                .currency(Currency.USD)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -48,8 +22,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.payment.requests.PaymentDeleteRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().delete(\n            \"paymentId\",\n            PaymentDeleteRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.payment.requests.PaymentDeleteRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().delete(\n            \"paymentId\",\n            PaymentDeleteRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().delete(\"paymentId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().delete(\"paymentId\");\n    }\n}\n"
             }
         }
     ],

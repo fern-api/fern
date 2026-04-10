@@ -6,40 +6,40 @@ package com.fern.sdk.resources.inlinedrequests;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.inlinedrequests.requests.InlinedRequestsPostWithObjectBodyandResponseRequest;
-import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
+import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncInlinedrequestsClient {
+public class AsyncInlinedRequestsClient {
   protected final ClientOptions clientOptions;
 
-  private final AsyncRawInlinedrequestsClient rawClient;
+  private final AsyncRawInlinedRequestsClient rawClient;
 
-  public AsyncInlinedrequestsClient(ClientOptions clientOptions) {
+  public AsyncInlinedRequestsClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new AsyncRawInlinedrequestsClient(clientOptions);
+    this.rawClient = new AsyncRawInlinedRequestsClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public AsyncRawInlinedrequestsClient withRawResponse() {
+  public AsyncRawInlinedRequestsClient withRawResponse() {
     return this.rawClient;
   }
 
   /**
    * POST with custom object in request body, response is an object
    */
-  public CompletableFuture<TypesObjectWithOptionalField> postwithobjectbodyandresponse(
-      InlinedRequestsPostWithObjectBodyandResponseRequest request) {
-    return this.rawClient.postwithobjectbodyandresponse(request).thenApply(response -> response.body());
+  public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
+      PostWithObjectBody request) {
+    return this.rawClient.postWithObjectBodyandResponse(request).thenApply(response -> response.body());
   }
 
   /**
    * POST with custom object in request body, response is an object
    */
-  public CompletableFuture<TypesObjectWithOptionalField> postwithobjectbodyandresponse(
-      InlinedRequestsPostWithObjectBodyandResponseRequest request, RequestOptions requestOptions) {
-    return this.rawClient.postwithobjectbodyandresponse(request, requestOptions).thenApply(response -> response.body());
+  public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
+      PostWithObjectBody request, RequestOptions requestOptions) {
+    return this.rawClient.postWithObjectBodyandResponse(request, requestOptions).thenApply(response -> response.body());
   }
 }

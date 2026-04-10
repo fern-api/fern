@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_undiscriminated_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,9 +6,18 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
     client
         .union_
-        .nestedunions(&NestedUnionRoot::String("string".to_string()), None)
+        .test_camel_case_properties(
+            &PaymentRequest {
+                payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
+                    method: "method".to_string(),
+                    card_number: "cardNumber".to_string(),
+                    ..Default::default()
+                }),
+            },
+            None,
+        )
         .await;
 }

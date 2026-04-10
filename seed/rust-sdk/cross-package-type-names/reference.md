@@ -1,6 +1,6 @@
 # Reference
-## FolderAService
-<details><summary><code>client.folder_a_service.<a href="/src/api/resources/folder_a_service/client.rs">folder_a_service_get_direct_thread</a>() -> Result&lt;FolderAResponse, ApiError&gt;</code></summary>
+## FolderA Service
+<details><summary><code>client.folder_a().service.<a href="/src/api/resources/folder_a/service/client.rs">get_direct_thread</a>() -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,18 +13,15 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_cross_package_type_names::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .folder_a_service
-        .folder_a_service_get_direct_thread(None)
-        .await;
+    let client = CrossPackageTypeNamesClient::new(config).expect("Failed to build client");
+    client.folder_a.service.get_direct_thread(None).await;
 }
 ```
 </dd>
@@ -37,8 +34,8 @@ async fn main() {
 </dl>
 </details>
 
-## FolderDService
-<details><summary><code>client.folder_d_service.<a href="/src/api/resources/folder_d_service/client.rs">folder_d_service_get_direct_thread</a>() -> Result&lt;FolderDResponse, ApiError&gt;</code></summary>
+## FolderD Service
+<details><summary><code>client.folder_d().service.<a href="/src/api/resources/folder_d/service/client.rs">get_direct_thread</a>() -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -51,18 +48,15 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_cross_package_type_names::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .folder_d_service
-        .folder_d_service_get_direct_thread(None)
-        .await;
+    let client = CrossPackageTypeNamesClient::new(config).expect("Failed to build client");
+    client.folder_a.service.get_direct_thread(None).await;
 }
 ```
 </dd>
@@ -76,7 +70,7 @@ async fn main() {
 </details>
 
 ## Foo
-<details><summary><code>client.foo.<a href="/src/api/resources/foo/client.rs">find</a>(request: FooFindRequest, optional_string: Option&lt;Option&lt;Option&lt;OptionalString&gt;&gt;&gt;) -> Result&lt;ImportingType, ApiError&gt;</code></summary>
+<details><summary><code>client.foo.<a href="/src/api/resources/foo/client.rs">find</a>(request: FindRequest, optional_string: Option&lt;OptionalString&gt;) -> Result&lt;ImportingType, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -89,19 +83,21 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_cross_package_type_names::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = CrossPackageTypeNamesClient::new(config).expect("Failed to build client");
     client
         .foo
         .find(
-            &FooFindRequest {
-                ..Default::default()
+            &FindRequest {
+                optional_string: OptionalString(Some("optionalString".to_string())),
+                public_property: Some("publicProperty".to_string()),
+                private_property: Some(1),
             },
             None,
         )
@@ -121,7 +117,7 @@ async fn main() {
 <dl>
 <dd>
 
-**public_property:** `Option<Option<String>>` 
+**public_property:** `Option<String>` 
     
 </dd>
 </dl>
@@ -129,7 +125,7 @@ async fn main() {
 <dl>
 <dd>
 
-**private_property:** `Option<Option<i64>>` 
+**private_property:** `Option<i64>` 
     
 </dd>
 </dl>
@@ -137,7 +133,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_string:** `Option<Option<OptionalString>>` 
+**optional_string:** `OptionalString` 
     
 </dd>
 </dl>

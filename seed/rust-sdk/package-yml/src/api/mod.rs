@@ -1,4 +1,4 @@
-//! API client and types for the package-yml
+//! API client and types for the PackageYml
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,6 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{Client, ServiceClient, ApiClient};
-pub use types::{*};
-
+pub use resources::{PackageYmlClient, ServiceClient};
+pub use types::*;

@@ -5,7 +5,7 @@ info:
 paths:
   /{typeId}:
     get:
-      operationId: _get
+      operationId: get
       tags:
         - ''
       parameters:
@@ -14,10 +14,6 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/TypeId'
-          example: typeId
-          examples:
-            Example1:
-              value: typeId
       responses:
         '204':
           description: ''
@@ -36,6 +32,7 @@ components:
           $ref: '#/components/schemas/TypeId'
         name:
           type: string
+          example: foo
       required:
         - id
         - name

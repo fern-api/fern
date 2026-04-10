@@ -32,7 +32,7 @@ await client.payment.create({
 <dl>
 <dd>
 
-**request:** `SeedApi.PaymentCreateRequest` 
+**request:** `SeedIdempotencyHeaders.CreatePaymentRequest` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ await client.payment.create({
 <dl>
 <dd>
 
-**requestOptions:** `PaymentClient.RequestOptions` 
+**requestOptions:** `PaymentClient.IdempotentRequestOptions` 
     
 </dd>
 </dl>
@@ -52,7 +52,7 @@ await client.payment.create({
 </dl>
 </details>
 
-<details><summary><code>client.payment.<a href="/src/api/resources/payment/client/Client.ts">delete</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.payment.<a href="/src/api/resources/payment/client/Client.ts">delete</a>(paymentId) -> void</code></summary>
 <dl>
 <dd>
 
@@ -65,9 +65,7 @@ await client.payment.create({
 <dd>
 
 ```typescript
-await client.payment.delete({
-    paymentId: "paymentId"
-});
+await client.payment.delete("paymentId");
 
 ```
 </dd>
@@ -83,7 +81,7 @@ await client.payment.delete({
 <dl>
 <dd>
 
-**request:** `SeedApi.PaymentDeleteRequest` 
+**paymentId:** `string` 
     
 </dd>
 </dl>

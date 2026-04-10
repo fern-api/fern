@@ -7,13 +7,13 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
-from .environment import SeedApiEnvironment
+from .environment import SeedSimpleApiEnvironment
 
 if typing.TYPE_CHECKING:
     from .user.client import AsyncUserClient, UserClient
 
 
-class SeedApi:
+class SeedSimpleApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -22,14 +22,8 @@ class SeedApi:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : SeedApiEnvironment
-        The environment to use for requests from the client. from .environment import SeedApiEnvironment
-
-
-
-        Defaults to SeedApiEnvironment.PRODUCTION
-
-
+    environment : typing.Optional[SeedSimpleApiEnvironment]
+        The environment to use for requests from the client.
 
     token : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
@@ -49,10 +43,12 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedSimpleApi
+    from seed.environment import SeedSimpleApiEnvironment
 
-    client = SeedApi(
+    client = SeedSimpleApi(
         token="YOUR_TOKEN",
+        environment=SeedSimpleApiEnvironment.PRODUCTION,
     )
     """
 
@@ -60,7 +56,7 @@ class SeedApi:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: SeedApiEnvironment = SeedApiEnvironment.PRODUCTION,
+        environment: typing.Optional[SeedSimpleApiEnvironment] = None,
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
@@ -112,7 +108,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedSimpleApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -121,14 +117,8 @@ class AsyncSeedApi:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : SeedApiEnvironment
-        The environment to use for requests from the client. from .environment import SeedApiEnvironment
-
-
-
-        Defaults to SeedApiEnvironment.PRODUCTION
-
-
+    environment : typing.Optional[SeedSimpleApiEnvironment]
+        The environment to use for requests from the client.
 
     token : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
@@ -151,10 +141,12 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedSimpleApi
+    from seed.environment import SeedSimpleApiEnvironment
 
-    client = AsyncSeedApi(
+    client = AsyncSeedSimpleApi(
         token="YOUR_TOKEN",
+        environment=SeedSimpleApiEnvironment.PRODUCTION,
     )
     """
 
@@ -162,7 +154,7 @@ class AsyncSeedApi:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: SeedApiEnvironment = SeedApiEnvironment.PRODUCTION,
+        environment: typing.Optional[SeedSimpleApiEnvironment] = None,
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
@@ -196,7 +188,9 @@ class AsyncSeedApi:
         return self._user
 
 
-def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SeedApiEnvironment) -> str:
+def _get_base_url(
+    *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedSimpleApiEnvironment] = None
+) -> str:
     if base_url is not None:
         return base_url
     elif environment is not None:

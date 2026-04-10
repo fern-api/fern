@@ -43,14 +43,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NoauthClient = void 0;
+exports.NoAuthClient = void 0;
 const BaseClient_js_1 = require("../../../../BaseClient.js");
 const headers_js_1 = require("../../../../core/headers.js");
 const core = __importStar(require("../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../errors/index.js"));
-const SeedApi = __importStar(require("../../../index.js"));
-class NoauthClient {
+const SeedExhaustive = __importStar(require("../../../index.js"));
+class NoAuthClient {
     constructor(options) {
         this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
@@ -58,24 +58,24 @@ class NoauthClient {
      * POST request with no auth
      *
      * @param {unknown} request
-     * @param {NoauthClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.BadRequestError}
+     * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
-     *     await client.noauth.postwithnoauth({
+     *     await client.noAuth.postWithNoAuth({
      *         "key": "value"
      *     })
      */
-    postwithnoauth(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__postwithnoauth(request, requestOptions));
+    postWithNoAuth(request, requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__postWithNoAuth(request, requestOptions));
     }
-    __postwithnoauth(request, requestOptions) {
+    __postWithNoAuth(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "no-auth"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/no-auth"),
                 method: "POST",
                 headers: _headers,
                 contentType: "application/json",
@@ -94,9 +94,9 @@ class NoauthClient {
             if (_response.error.reason === "status-code") {
                 switch (_response.error.statusCode) {
                     case 400:
-                        throw new SeedApi.BadRequestError(_response.error.body, _response.rawResponse);
+                        throw new SeedExhaustive.BadRequestBody(_response.error.body, _response.rawResponse);
                     default:
-                        throw new errors.SeedApiError({
+                        throw new errors.SeedExhaustiveError({
                             statusCode: _response.error.statusCode,
                             body: _response.error.body,
                             rawResponse: _response.rawResponse,
@@ -107,4 +107,4 @@ class NoauthClient {
         });
     }
 }
-exports.NoauthClient = NoauthClient;
+exports.NoAuthClient = NoAuthClient;

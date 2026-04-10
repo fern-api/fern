@@ -5,4 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_http_methods.endpoints_http_methods_test_get(id: "id")
+client.endpoints.object.get_and_return_with_unknown_field

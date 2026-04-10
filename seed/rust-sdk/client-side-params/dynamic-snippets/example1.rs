@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,18 +7,14 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ClientSideParamsClient::new(config).expect("Failed to build client");
     client
         .service
-        .listresources(
-            &ListresourcesQueryRequest {
-                page: 1,
-                per_page: 1,
-                sort: "sort".to_string(),
-                order: "order".to_string(),
-                include_totals: true,
-                fields: Some("fields".to_string()),
-                search: Some("search".to_string()),
+        .get_resource(
+            &"resourceId".to_string(),
+            &GetResourceQueryRequest {
+                include_metadata: true,
+                format: "json".to_string(),
             },
             None,
         )

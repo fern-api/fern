@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_pagination_uri_path::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,6 +7,6 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.users.listwithuripagination(None).await;
+    let client = PaginationUriPathClient::new(config).expect("Failed to build client");
+    client.users.list_with_path_pagination(None).await;
 }

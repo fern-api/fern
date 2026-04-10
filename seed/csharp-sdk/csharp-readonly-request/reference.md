@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">BatchCreateAsync</a>(CreateVendorRequest { ... }) -> WithRawResponseTask&lt;CreateVendorResponse&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpReadonlyRequest/SeedCsharpReadonlyRequestClient.cs">BatchCreateAsync</a>(CreateVendorRequest { ... }) -> WithRawResponseTask&lt;CreateVendorResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,19 +12,19 @@
 <dd>
 
 ```csharp
-await client._.BatchCreateAsync(
+await client.BatchCreateAsync(
     new CreateVendorRequest
     {
         Vendors = new Dictionary<string, Vendor>()
         {
             {
-                "key",
+                "vendor-1",
                 new Vendor
                 {
-                    Id = "id",
-                    Name = "name",
-                    CreatedAt = "created_at",
-                    UpdatedAt = "updated_at",
+                    Id = "vendor-1",
+                    Name = "Acme Corp",
+                    CreatedAt = "2024-01-01T00:00:00Z",
+                    UpdatedAt = "2024-01-01T00:00:00Z",
                 }
             },
         },

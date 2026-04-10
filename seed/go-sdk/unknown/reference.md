@@ -47,7 +47,7 @@ client.Unknown.Post(
 </dl>
 </details>
 
-<details><summary><code>client.Unknown.Postobject(request) -> []any</code></summary>
+<details><summary><code>client.Unknown.PostObject(request) -> []any</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ request := &fern.MyObject{
             "key": "value",
         },
     }
-client.Unknown.Postobject(
+client.Unknown.PostObject(
         context.TODO(),
         request,
     )
@@ -84,7 +84,7 @@ client.Unknown.Postobject(
 <dl>
 <dd>
 
-**unknown:** `any` 
+**request:** `*fern.MyObject` 
     
 </dd>
 </dl>

@@ -4,26 +4,27 @@ namespace Seed\Service;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Service\Requests\ServicePostRequest;
+use Seed\Service\Requests\MyRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Multipart\MultipartFormData;
+use Seed\Core\Json\JsonEncoder;
 use Seed\Core\Multipart\MultipartApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Service\Requests\ServiceJustFileRequest;
-use Seed\Service\Requests\ServiceJustFileWithQueryParamsRequest;
-use Seed\Service\Requests\ServiceJustFileWithOptionalQueryParamsRequest;
-use Seed\Service\Requests\ServiceWithContentTypeRequest;
-use Seed\Service\Requests\ServiceWithFormEncodingRequest;
-use Seed\Service\Requests\ServiceWithFormEncodedContainersRequest;
-use Seed\Service\Requests\ServiceOptionalArgsRequest;
+use Seed\Service\Requests\JustFileRequest;
+use Seed\Service\Requests\JustFileWithQueryParamsRequest;
+use Seed\Service\Requests\JustFileWithOptionalQueryParamsRequest;
+use Seed\Service\Requests\WithContentTypeRequest;
+use Seed\Service\Requests\WithFormEncodingRequest;
+use Seed\Service\Requests\MyOtherRequest;
+use Seed\Service\Requests\OptionalArgsRequest;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
-use Seed\Service\Requests\ServiceWithInlineTypeRequest;
-use Seed\Service\Requests\ServiceWithJsonPropertyRequest;
+use Seed\Service\Requests\InlineTypeRequest;
+use Seed\Service\Requests\WithJsonPropertyRequest;
 use Seed\Core\Json\JsonApiRequest;
-use Seed\Service\Requests\ServiceWithLiteralAndEnumTypesRequest;
+use Seed\Service\Requests\LiteralEnumRequest;
 
 class ServiceClient
 {
@@ -62,7 +63,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServicePostRequest $request
+     * @param MyRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -73,41 +74,39 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function post(ServicePostRequest $request = new ServicePostRequest(), ?array $options = null): void
+    public function post(MyRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         if ($request->maybeString != null) {
             $body->add(name: 'maybe_string', value: $request->maybeString);
         }
-        if ($request->integer != null) {
-            $body->add(name: 'integer', value: $request->integer);
-        }
-        if ($request->file != null) {
-            $body->addPart($request->file->toMultipartFormDataPart('file'));
-        }
-        if ($request->fileList != null) {
-            $body->addPart($request->fileList->toMultipartFormDataPart('file_list'));
+        $body->add(name: 'integer', value: $request->integer);
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        foreach ($request->fileList as $file) {
+            $body->addPart($file->toMultipartFormDataPart('file_list'));
         }
         if ($request->maybeFile != null) {
             $body->addPart($request->maybeFile->toMultipartFormDataPart('maybe_file'));
         }
         if ($request->maybeFileList != null) {
-            $body->addPart($request->maybeFileList->toMultipartFormDataPart('maybe_file_list'));
+            foreach ($request->maybeFileList as $file) {
+                $body->addPart($file->toMultipartFormDataPart('maybe_file_list'));
+            }
         }
         if ($request->maybeInteger != null) {
             $body->add(name: 'maybe_integer', value: $request->maybeInteger);
         }
         if ($request->optionalListOfStrings != null) {
-            $body->add(name: 'optional_list_of_strings', value: $request->optionalListOfStrings);
-        }
-        if ($request->listOfObjects != null) {
-            foreach ($request->listOfObjects as $element) {
-                $body->add(name: 'list_of_objects', value: $element->toJson());
+            foreach ($request->optionalListOfStrings as $element) {
+                $body->add(name: 'optional_list_of_strings', value: $element);
             }
         }
+        foreach ($request->listOfObjects as $element) {
+            $body->add(name: 'list_of_objects', value: $element->toJson());
+        }
         if ($request->optionalMetadata != null) {
-            $body->add(name: 'optional_metadata', value: $request->optionalMetadata);
+            $body->add(name: 'optional_metadata', value: JsonEncoder::encode($request->optionalMetadata));
         }
         if ($request->optionalObjectType != null) {
             $body->add(name: 'optional_object_type', value: $request->optionalObjectType);
@@ -115,18 +114,12 @@ class ServiceClient
         if ($request->optionalId != null) {
             $body->add(name: 'optional_id', value: $request->optionalId);
         }
-        if ($request->aliasObject != null) {
-            $body->add(name: 'alias_object', value: $request->aliasObject->toJson());
+        $body->add(name: 'alias_object', value: $request->aliasObject->toJson());
+        foreach ($request->listOfAliasObject as $element) {
+            $body->add(name: 'list_of_alias_object', value: $element->toJson());
         }
-        if ($request->listOfAliasObject != null) {
-            foreach ($request->listOfAliasObject as $element) {
-                $body->add(name: 'list_of_alias_object', value: $element->toJson());
-            }
-        }
-        if ($request->aliasListOfObject != null) {
-            foreach ($request->aliasListOfObject as $element) {
-                $body->add(name: 'alias_list_of_object', value: $element->toJson());
-            }
+        foreach ($request->aliasListOfObject as $element) {
+            $body->add(name: 'alias_list_of_object', value: $element->toJson());
         }
         try {
             $response = $this->client->sendRequest(
@@ -153,7 +146,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServiceJustFileRequest $request
+     * @param JustFileRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -164,18 +157,16 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function justfile(ServiceJustFileRequest $request = new ServiceJustFileRequest(), ?array $options = null): void
+    public function justFile(JustFileRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->file != null) {
-            $body->addPart($request->file->toMultipartFormDataPart('file'));
-        }
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "just-file",
+                    path: "/just-file",
                     method: HttpMethod::POST,
                     body: $body,
                 ),
@@ -196,7 +187,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServiceJustFileWithQueryParamsRequest $request
+     * @param JustFileWithQueryParamsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -207,32 +198,28 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function justfilewithqueryparams(ServiceJustFileWithQueryParamsRequest $request, ?array $options = null): void
+    public function justFileWithQueryParams(JustFileWithQueryParamsRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['integer'] = $request->integer;
+        $query['listOfStrings'] = $request->listOfStrings;
         if ($request->maybeString != null) {
             $query['maybeString'] = $request->maybeString;
         }
         if ($request->maybeInteger != null) {
             $query['maybeInteger'] = $request->maybeInteger;
-        }
-        if ($request->listOfStrings != null) {
-            $query['listOfStrings'] = $request->listOfStrings;
         }
         if ($request->optionalListOfStrings != null) {
             $query['optionalListOfStrings'] = $request->optionalListOfStrings;
         }
         $body = new MultipartFormData();
-        if ($request->file != null) {
-            $body->addPart($request->file->toMultipartFormDataPart('file'));
-        }
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "just-file-with-query-params",
+                    path: "/just-file-with-query-params",
                     method: HttpMethod::POST,
                     query: $query,
                     body: $body,
@@ -254,7 +241,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServiceJustFileWithOptionalQueryParamsRequest $request
+     * @param JustFileWithOptionalQueryParamsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -265,7 +252,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function justfilewithoptionalqueryparams(ServiceJustFileWithOptionalQueryParamsRequest $request = new ServiceJustFileWithOptionalQueryParamsRequest(), ?array $options = null): void
+    public function justFileWithOptionalQueryParams(JustFileWithOptionalQueryParamsRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -276,14 +263,12 @@ class ServiceClient
             $query['maybeInteger'] = $request->maybeInteger;
         }
         $body = new MultipartFormData();
-        if ($request->file != null) {
-            $body->addPart($request->file->toMultipartFormDataPart('file'));
-        }
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "just-file-with-optional-query-params",
+                    path: "/just-file-with-optional-query-params",
                     method: HttpMethod::POST,
                     query: $query,
                     body: $body,
@@ -305,7 +290,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServiceWithContentTypeRequest $request
+     * @param WithContentTypeRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -316,27 +301,34 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withcontenttype(ServiceWithContentTypeRequest $request = new ServiceWithContentTypeRequest(), ?array $options = null): void
+    public function withContentType(WithContentTypeRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->file != null) {
-            $body->addPart($request->file->toMultipartFormDataPart('file'));
-        }
-        if ($request->foo != null) {
-            $body->add(name: 'foo', value: $request->foo);
-        }
-        if ($request->bar != null) {
-            $body->add(name: 'bar', value: $request->bar->toJson());
-        }
+        $body->addPart(
+            $request->file->toMultipartFormDataPart(
+                name: 'file',
+                contentType: 'application/octet-stream',
+            ),
+        );
+        $body->add(name: 'foo', value: $request->foo);
+        $body->add(
+            name: 'bar',
+            value: $request->bar->toJson(),
+            contentType: 'application/json',
+        );
         if ($request->fooBar != null) {
-            $body->add(name: 'foo_bar', value: $request->fooBar->toJson());
+            $body->add(
+                name: 'foo_bar',
+                value: $request->fooBar->toJson(),
+                contentType: 'application/json',
+            );
         }
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "with-content-type",
+                    path: "/with-content-type",
                     method: HttpMethod::POST,
                     body: $body,
                 ),
@@ -357,7 +349,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServiceWithFormEncodingRequest $request
+     * @param WithFormEncodingRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -368,24 +360,23 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withformencoding(ServiceWithFormEncodingRequest $request = new ServiceWithFormEncodingRequest(), ?array $options = null): void
+    public function withFormEncoding(WithFormEncodingRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->file != null) {
-            $body->addPart($request->file->toMultipartFormDataPart('file'));
-        }
-        if ($request->foo != null) {
-            $body->add(name: 'foo', value: $request->foo);
-        }
-        if ($request->bar != null) {
-            $body->add(name: 'bar', value: $request->bar->toJson());
-        }
+        $body->addPart(
+            $request->file->toMultipartFormDataPart(
+                name: 'file',
+                contentType: 'application/octet-stream',
+            ),
+        );
+        $body->add(name: 'foo', value: $request->foo);
+        $body->add(name: 'bar', value: $request->bar->toJson());
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "with-form-encoding",
+                    path: "/with-form-encoding",
                     method: HttpMethod::POST,
                     body: $body,
                 ),
@@ -406,7 +397,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServiceWithFormEncodedContainersRequest $request
+     * @param MyOtherRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -417,41 +408,39 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withformencodedcontainers(ServiceWithFormEncodedContainersRequest $request = new ServiceWithFormEncodedContainersRequest(), ?array $options = null): void
+    public function withFormEncodedContainers(MyOtherRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         if ($request->maybeString != null) {
             $body->add(name: 'maybe_string', value: $request->maybeString);
         }
-        if ($request->integer != null) {
-            $body->add(name: 'integer', value: $request->integer);
-        }
-        if ($request->file != null) {
-            $body->addPart($request->file->toMultipartFormDataPart('file'));
-        }
-        if ($request->fileList != null) {
-            $body->addPart($request->fileList->toMultipartFormDataPart('file_list'));
+        $body->add(name: 'integer', value: $request->integer);
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        foreach ($request->fileList as $file) {
+            $body->addPart($file->toMultipartFormDataPart('file_list'));
         }
         if ($request->maybeFile != null) {
             $body->addPart($request->maybeFile->toMultipartFormDataPart('maybe_file'));
         }
         if ($request->maybeFileList != null) {
-            $body->addPart($request->maybeFileList->toMultipartFormDataPart('maybe_file_list'));
+            foreach ($request->maybeFileList as $file) {
+                $body->addPart($file->toMultipartFormDataPart('maybe_file_list'));
+            }
         }
         if ($request->maybeInteger != null) {
             $body->add(name: 'maybe_integer', value: $request->maybeInteger);
         }
         if ($request->optionalListOfStrings != null) {
-            $body->add(name: 'optional_list_of_strings', value: $request->optionalListOfStrings);
-        }
-        if ($request->listOfObjects != null) {
-            foreach ($request->listOfObjects as $element) {
-                $body->add(name: 'list_of_objects', value: $element->toJson());
+            foreach ($request->optionalListOfStrings as $element) {
+                $body->add(name: 'optional_list_of_strings', value: $element);
             }
         }
+        foreach ($request->listOfObjects as $element) {
+            $body->add(name: 'list_of_objects', value: $element->toJson());
+        }
         if ($request->optionalMetadata != null) {
-            $body->add(name: 'optional_metadata', value: $request->optionalMetadata);
+            $body->add(name: 'optional_metadata', value: JsonEncoder::encode($request->optionalMetadata));
         }
         if ($request->optionalObjectType != null) {
             $body->add(name: 'optional_object_type', value: $request->optionalObjectType);
@@ -459,29 +448,21 @@ class ServiceClient
         if ($request->optionalId != null) {
             $body->add(name: 'optional_id', value: $request->optionalId);
         }
-        if ($request->listOfObjectsWithOptionals != null) {
-            foreach ($request->listOfObjectsWithOptionals as $element) {
-                $body->add(name: 'list_of_objects_with_optionals', value: $element->toJson());
-            }
+        foreach ($request->listOfObjectsWithOptionals as $element) {
+            $body->add(name: 'list_of_objects_with_optionals', value: $element->toJson());
         }
-        if ($request->aliasObject != null) {
-            $body->add(name: 'alias_object', value: $request->aliasObject->toJson());
+        $body->add(name: 'alias_object', value: $request->aliasObject->toJson());
+        foreach ($request->listOfAliasObject as $element) {
+            $body->add(name: 'list_of_alias_object', value: $element->toJson());
         }
-        if ($request->listOfAliasObject != null) {
-            foreach ($request->listOfAliasObject as $element) {
-                $body->add(name: 'list_of_alias_object', value: $element->toJson());
-            }
-        }
-        if ($request->aliasListOfObject != null) {
-            foreach ($request->aliasListOfObject as $element) {
-                $body->add(name: 'alias_list_of_object', value: $element->toJson());
-            }
+        foreach ($request->aliasListOfObject as $element) {
+            $body->add(name: 'alias_list_of_object', value: $element->toJson());
         }
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "form-encoded",
+                    path: "",
                     method: HttpMethod::POST,
                     body: $body,
                 ),
@@ -502,7 +483,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServiceOptionalArgsRequest $request
+     * @param OptionalArgsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -514,21 +495,30 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function optionalargs(ServiceOptionalArgsRequest $request = new ServiceOptionalArgsRequest(), ?array $options = null): ?string
+    public function optionalArgs(OptionalArgsRequest $request = new OptionalArgsRequest(), ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         if ($request->imageFile != null) {
-            $body->addPart($request->imageFile->toMultipartFormDataPart('image_file'));
+            $body->addPart(
+                $request->imageFile->toMultipartFormDataPart(
+                    name: 'image_file',
+                    contentType: 'image/jpeg',
+                ),
+            );
         }
         if ($request->request != null) {
-            $body->add(name: 'request', value: $request->request);
+            $body->add(
+                name: 'request',
+                value: JsonEncoder::encode($request->request),
+                contentType: 'application/json; charset=utf-8',
+            );
         }
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "optional-args",
+                    path: "/optional-args",
                     method: HttpMethod::POST,
                     body: $body,
                 ),
@@ -555,7 +545,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServiceWithInlineTypeRequest $request
+     * @param InlineTypeRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -567,21 +557,17 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withinlinetype(ServiceWithInlineTypeRequest $request = new ServiceWithInlineTypeRequest(), ?array $options = null): ?string
+    public function withInlineType(InlineTypeRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->file != null) {
-            $body->addPart($request->file->toMultipartFormDataPart('file'));
-        }
-        if ($request->request != null) {
-            $body->add(name: 'request', value: $request->request->toJson());
-        }
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
+        $body->add(name: 'request', value: $request->request->toJson());
         try {
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "inline-type",
+                    path: "/inline-type",
                     method: HttpMethod::POST,
                     body: $body,
                 ),
@@ -608,7 +594,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServiceWithJsonPropertyRequest $request
+     * @param WithJsonPropertyRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -620,13 +606,11 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withjsonproperty(ServiceWithJsonPropertyRequest $request = new ServiceWithJsonPropertyRequest(), ?array $options = null): ?string
+    public function withJsonProperty(WithJsonPropertyRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->file != null) {
-            $body->addPart($request->file->toMultipartFormDataPart('file'));
-        }
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
         if ($request->json != null) {
             $body->add(name: 'json', value: $request->json->toJson());
         }
@@ -634,7 +618,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "with-json-property",
+                    path: "/with-json-property",
                     method: HttpMethod::POST,
                     body: $body,
                 ),
@@ -679,7 +663,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "snippet",
+                    path: "/snippet",
                     method: HttpMethod::POST,
                 ),
                 $options,
@@ -699,7 +683,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServiceWithLiteralAndEnumTypesRequest $request
+     * @param LiteralEnumRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -711,15 +695,13 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withliteralandenumtypes(ServiceWithLiteralAndEnumTypesRequest $request = new ServiceWithLiteralAndEnumTypesRequest(), ?array $options = null): ?string
+    public function withLiteralAndEnumTypes(LiteralEnumRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
-        if ($request->file != null) {
-            $body->addPart($request->file->toMultipartFormDataPart('file'));
-        }
+        $body->addPart($request->file->toMultipartFormDataPart('file'));
         if ($request->modelType != null) {
-            $body->add(name: 'model_type', value: $request->modelType);
+            $body->add(name: 'model_type', value: $request->modelType->toJson());
         }
         if ($request->openEnum != null) {
             $body->add(name: 'open_enum', value: $request->openEnum);
@@ -731,7 +713,7 @@ class ServiceClient
             $response = $this->client->sendRequest(
                 new MultipartApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "with-literal-enum",
+                    path: "/with-literal-enum",
                     method: HttpMethod::POST,
                     body: $body,
                 ),

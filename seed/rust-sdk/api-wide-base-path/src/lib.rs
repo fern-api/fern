@@ -1,18 +1,18 @@
-//! # api-wide-base-path SDK
+//! # ApiWideBasePath SDK
 //!
-//! The official Rust SDK for the api-wide-base-path.
+//! The official Rust SDK for the ApiWideBasePath.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_api_wide_base_path::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = ApiWideBasePathClient::new(config).expect("Failed to build client");
 //!     client
 //!         .service
 //!         .post(

@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\TypesObjectWithOptionalField;
+use Seed\Endpoints\Pagination\Requests\ListItemsRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,6 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsObject->endpointsObjectGetAndReturnWithOptionalField(
-    new TypesObjectWithOptionalField([]),
+$client->endpoints->pagination->listItems(
+    new ListItemsRequest([
+        'cursor' => 'cursor',
+        'limit' => 1,
+    ]),
 );

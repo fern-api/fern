@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import Exhaustive
 
-@Suite("ReqwithheadersClient Wire Tests") struct ReqwithheadersClientWireTests {
+@Suite("ReqWithHeadersClient Wire Tests") struct ReqWithHeadersClientWireTests {
 }

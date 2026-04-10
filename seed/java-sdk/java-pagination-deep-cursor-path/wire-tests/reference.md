@@ -1,6 +1,6 @@
 # Reference
-## Deepcursorpath
-<details><summary><code>client.deepcursorpath.doThing(request) -> Response</code></summary>
+## Long Path
+<details><summary><code>client.deepCursorPath.doThing(request) -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,58 +13,22 @@
 <dd>
 
 ```java
-client.deepcursorpath().doThing(
+client.deepCursorPath().doThing(
     A
         .builder()
-        .build()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**b:** `Optional<B>` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.deepcursorpath.doThingRequired(request) -> Response</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.deepcursorpath().doThingRequired(
-    MainRequired
-        .builder()
-        .indirection(
-            IndirectionRequired
+        .b(
+            B
                 .builder()
-                .results(
-                    Arrays.asList("results")
+                .c(
+                    C
+                        .builder()
+                        .d(
+                            D
+                                .builder()
+                                .startingAfter("starting_after")
+                                .build()
+                        )
+                        .build()
                 )
                 .build()
         )
@@ -84,7 +48,7 @@ client.deepcursorpath().doThingRequired(
 <dl>
 <dd>
 
-**indirection:** `IndirectionRequired` 
+**request:** `A` 
     
 </dd>
 </dl>
@@ -96,7 +60,7 @@ client.deepcursorpath().doThingRequired(
 </dl>
 </details>
 
-<details><summary><code>client.deepcursorpath.doThingInline(request) -> Response</code></summary>
+<details><summary><code>client.deepCursorPath.doThingRequired(request) -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -109,9 +73,18 @@ client.deepcursorpath().doThingRequired(
 <dd>
 
 ```java
-client.deepcursorpath().doThingInline(
-    InlineA
+client.deepCursorPath().doThingRequired(
+    MainRequired
         .builder()
+        .indirection(
+            IndirectionRequired
+                .builder()
+                .results(
+                    Arrays.asList("results", "results")
+                )
+                .startingAfter("starting_after")
+                .build()
+        )
         .build()
 );
 ```
@@ -128,7 +101,67 @@ client.deepcursorpath().doThingInline(
 <dl>
 <dd>
 
-**b:** `Optional<InlineB>` 
+**request:** `MainRequired` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.deepCursorPath.doThingInline(request) -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.deepCursorPath().doThingInline(
+    InlineA
+        .builder()
+        .b(
+            InlineB
+                .builder()
+                .c(
+                    InlineC
+                        .builder()
+                        .b(
+                            InlineD
+                                .builder()
+                                .startingAfter("starting_after")
+                                .build()
+                        )
+                        .build()
+                )
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineA` 
     
 </dd>
 </dl>

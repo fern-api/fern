@@ -11,7 +11,7 @@ class Script extends JsonSerializableType
     use BaseResource;
 
     /**
-     * @var value-of<ScriptResourceType> $resourceType
+     * @var 'Script' $resourceType
      */
     #[JsonProperty('resource_type')]
     public string $resourceType;
@@ -25,9 +25,14 @@ class Script extends JsonSerializableType
     /**
      * @param array{
      *   id: string,
-     *   relatedResources: array<ResourceList>,
+     *   relatedResources: array<(
+     *    Account
+     *   |Patient
+     *   |Practitioner
+     *   |Script
+     * )>,
      *   memo: Memo,
-     *   resourceType: value-of<ScriptResourceType>,
+     *   resourceType: 'Script',
      *   name: string,
      * } $values
      */

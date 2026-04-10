@@ -1,6 +1,6 @@
 # Reference
-## Basicauth
-<details><summary><code>client.Basicauth.<a href="/src/SeedApi/Basicauth/BasicauthClient.cs">GetwithbasicauthAsync</a>() -> WithRawResponseTask&lt;bool&gt;</code></summary>
+## BasicAuth
+<details><summary><code>client.BasicAuth.<a href="/src/SeedBasicAuthEnvironmentVariables/BasicAuth/BasicAuthClient.cs">GetWithBasicAuthAsync</a>() -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```csharp
-await client.Basicauth.GetwithbasicauthAsync();
+await client.BasicAuth.GetWithBasicAuthAsync();
 ```
 </dd>
 </dl>
@@ -39,7 +39,7 @@ await client.Basicauth.GetwithbasicauthAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Basicauth.<a href="/src/SeedApi/Basicauth/BasicauthClient.cs">PostwithbasicauthAsync</a>(object { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
+<details><summary><code>client.BasicAuth.<a href="/src/SeedBasicAuthEnvironmentVariables/BasicAuth/BasicAuthClient.cs">PostWithBasicAuthAsync</a>(object { ... }) -> WithRawResponseTask&lt;bool&gt;</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ POST request with basic auth scheme
 <dd>
 
 ```csharp
-await client.Basicauth.PostwithbasicauthAsync(
+await client.BasicAuth.PostWithBasicAuthAsync(
     new Dictionary<object, object?>() { { "key", "value" } }
 );
 ```

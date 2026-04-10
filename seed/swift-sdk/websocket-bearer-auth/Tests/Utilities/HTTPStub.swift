@@ -1,4 +1,4 @@
-import Api
+import WebsocketBearerAuth
 import Foundation
 
 final class HTTPStub {

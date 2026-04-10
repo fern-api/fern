@@ -1,6 +1,6 @@
 # Reference
-## Basicauth
-<details><summary><code>client.basicauth.getwithbasicauth() -> Boolean</code></summary>
+## BasicAuth
+<details><summary><code>client.basicAuth.getWithBasicAuth() -> Boolean</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```java
-client.basicauth().getwithbasicauth();
+client.basicAuth().getWithBasicAuth();
 ```
 </dd>
 </dl>
@@ -39,7 +39,7 @@ client.basicauth().getwithbasicauth();
 </dl>
 </details>
 
-<details><summary><code>client.basicauth.postwithbasicauth(request) -> Boolean</code></summary>
+<details><summary><code>client.basicAuth.postWithBasicAuth(request) -> Boolean</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ POST request with basic auth scheme
 <dd>
 
 ```java
-client.basicauth().postwithbasicauth(new 
+client.basicAuth().postWithBasicAuth(new 
 HashMap<String, Object>() {{put("key", "value");
 }});
 ```

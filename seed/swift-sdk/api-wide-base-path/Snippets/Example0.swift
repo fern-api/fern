@@ -1,8 +1,8 @@
 import Foundation
-import Api
+import ApiWideBasePath
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = ApiWideBasePathClient(baseURL: "https://api.fern.com")
 
     _ = try await client.service.post(
         pathParam: "pathParam",

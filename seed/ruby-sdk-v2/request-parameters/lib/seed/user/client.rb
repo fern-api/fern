@@ -11,18 +11,18 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::User::Types::UserCreateUsernameRequest]
+      # @param params [Seed::User::Types::CreateUsernameRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String, nil] :tags
+      # @option params [Array[String]] :tags
       #
       # @return [untyped]
-      def createusername(request_options: {}, **params)
+      def create_username(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::User::Types::UserCreateUsernameRequest.new(params).to_h
+        request_data = Seed::User::Types::CreateUsernameRequest.new(params).to_h
         non_body_param_names = ["tags"]
         body = request_data.except(*non_body_param_names)
 
@@ -34,7 +34,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "user/username",
+          path: "/user/username",
           query: query_params,
           body: body,
           request_options: request_options
@@ -58,26 +58,22 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [String, nil] :tags
+      # @option params [Array[String]] :tags
       #
       # @return [untyped]
-      def createusernamewithreferencedtype(request_options: {}, **params)
+      def create_username_with_referenced_type(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        request_data = Seed::User::Types::CreateUsernameBody.new(params).to_h
-        non_body_param_names = ["tags"]
-        body = request_data.except(*non_body_param_names)
-
         query_param_names = %i[tags]
         query_params = {}
         query_params["tags"] = params[:tags] if params.key?(:tags)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "user/username-referenced",
+          path: "/user/username-referenced",
           query: query_params,
-          body: body,
+          body: Seed::User::Types::CreateUsernameBody.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -93,7 +89,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::User::Types::CreateUsernameBodyOptionalProperties]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -101,13 +97,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def createusernameoptional(request_options: {}, **params)
+      def create_username_optional(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "user/username-optional",
-          body: Seed::User::Types::CreateUsernameBodyOptionalProperties.new(params).to_h,
+          path: "/user/username-optional",
+          body: params,
           request_options: request_options
         )
         begin
@@ -134,20 +130,20 @@ module Seed
       # @option params [String] :date
       # @option params [String] :deadline
       # @option params [String] :bytes
-      # @option params [Seed::Types::User] :user
-      # @option params [Seed::Types::User, nil] :user_list
+      # @option params [Seed::User::Types::User] :user
+      # @option params [Array[Seed::User::Types::User]] :user_list
       # @option params [String, nil] :optional_deadline
       # @option params [Hash[String, String]] :key_value
       # @option params [String, nil] :optional_string
-      # @option params [Seed::Types::NestedUser] :nested_user
-      # @option params [Seed::Types::User, nil] :optional_user
-      # @option params [Seed::Types::User, nil] :exclude_user
-      # @option params [String, nil] :filter
+      # @option params [Seed::User::Types::NestedUser] :nested_user
+      # @option params [Seed::User::Types::User, nil] :optional_user
+      # @option params [Seed::User::Types::User] :exclude_user
+      # @option params [String] :filter
       # @option params [Integer] :long_param
-      # @option params [Integer] :big_int_param
+      # @option params [String] :big_int_param
       #
-      # @return [Seed::Types::User]
-      def getusername(request_options: {}, **params)
+      # @return [Seed::User::Types::User]
+      def get_username(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit id date deadline bytes user user_list optional_deadline key_value optional_string nested_user optional_user exclude_user filter long_param big_int_param]
         query_params = {}
@@ -172,7 +168,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "user",
+          path: "/user",
           query: query_params,
           request_options: request_options
         )
@@ -183,7 +179,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::User.load(response.body)
+          Seed::User::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

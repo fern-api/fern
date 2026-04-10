@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/simple-api/fern"
     client "github.com/simple-api/fern/client"
     option "github.com/simple-api/fern/option"
 )
@@ -17,11 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.UserGetRequest{
-        ID: "id",
-    }
     client.User.Get(
         context.TODO(),
-        request,
+        "id",
     )
 }

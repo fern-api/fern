@@ -7,9 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .failure import Failure
-    from .failure_status import FailureStatus
-    from .user import User
-_dynamic_imports: typing.Dict[str, str] = {"Failure": ".failure", "FailureStatus": ".failure_status", "User": ".user"}
+_dynamic_imports: typing.Dict[str, str] = {"Failure": ".failure"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -33,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["Failure", "FailureStatus", "User"]
+__all__ = ["Failure"]

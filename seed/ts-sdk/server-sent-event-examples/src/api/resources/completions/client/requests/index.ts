@@ -1,3 +1,3 @@
-export type { CompletionsStreamEventsContextProtocolRequest } from "./CompletionsStreamEventsContextProtocolRequest.js";
-export type { CompletionsStreamEventsRequest } from "./CompletionsStreamEventsRequest.js";
-export type { CompletionsStreamRequest } from "./CompletionsStreamRequest.js";
+export type { StreamCompletionRequest } from "./StreamCompletionRequest.js";
+export type { StreamEventsContextProtocolRequest } from "./StreamEventsContextProtocolRequest.js";
+export type { StreamEventsRequest } from "./StreamEventsRequest.js";

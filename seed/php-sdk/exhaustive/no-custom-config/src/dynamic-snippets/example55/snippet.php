@@ -3,7 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\EndpointsPagination\Requests\EndpointsPaginationListItemsRequest;
+use Seed\Types\Union\Types\Animal;
+use Seed\Types\Union\Types\Dog;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +12,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsPagination->endpointsPaginationListItems(
-    new EndpointsPaginationListItemsRequest([
-        'cursor' => 'cursor',
-        'limit' => 1,
-    ]),
+$client->endpoints->union->getAndReturnUnion(
+    Animal::dog(new Dog([
+        'name' => 'name',
+        'likesToWoof' => true,
+    ])),
 );

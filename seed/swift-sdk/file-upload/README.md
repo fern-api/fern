@@ -49,17 +49,12 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Api
+import FileUpload
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = FileUploadClient()
 
-    _ = try await client.service.post(request: .init(
-        file: .init(data: Data("".utf8)),
-        fileList: .init(data: Data("".utf8)),
-        maybeFile: .init(data: Data("".utf8)),
-        maybeFileList: .init(data: Data("".utf8))
-    ))
+    _ = try await client.service.justFile(request: .init(file: .init(data: Data("".utf8))))
 }
 
 try await main()
@@ -70,14 +65,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Api
+import FileUpload
 
-let client = ApiClient(...)
+let client = FileUploadClient(...)
 
 do {
-    let response = try await client.service.post(...)
+    let response = try await client.service.justFile(...)
     // Handle successful response
-} catch let error as ApiError {
+} catch let error as FileUploadError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -100,9 +95,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import Api
+import FileUpload
 
-let request = Requests.ServicePostRequest(
+let request = Requests.MyRequest(
     ...
 )
 ```
@@ -114,7 +109,7 @@ let request = Requests.ServicePostRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.service.post(..., requestOptions: .init(
+try await client.service.justFile(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -126,7 +121,7 @@ try await client.service.post(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.service.post(..., requestOptions: .init(
+try await client.service.justFile(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -138,7 +133,7 @@ try await client.service.post(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.service.post(..., requestOptions: .init(
+try await client.service.justFile(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -149,9 +144,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Api
+import FileUpload
 
-let client = ApiClient(
+let client = FileUploadClient(
     ...,
     urlSession: // Provide your implementation here
 )

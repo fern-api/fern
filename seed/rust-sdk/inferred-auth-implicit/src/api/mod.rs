@@ -1,4 +1,4 @@
-//! API client and types for the inferred-auth-implicit
+//! API client and types for the InferredAuthImplicit
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,7 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ApiClient, AuthClient, NestedApiClient, NestedNoAuthApiClient, SimpleClient};
+pub use resources::{
+    AuthClient, InferredAuthImplicitClient, NestedClient, NestedNoAuthClient, SimpleClient,
+};
 pub use types::*;

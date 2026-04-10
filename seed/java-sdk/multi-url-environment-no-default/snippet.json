@@ -1,42 +1,16 @@
 {
     "endpoints": [
         {
-            "example_identifier": "1c170c6a",
-            "id": {
-                "method": "POST",
-                "path": "/ec2/boot",
-                "identifier_override": "endpoint_ec2.bootinstance"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.ec2.requests.Ec2BootInstanceRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.ec2().bootinstance(\n            Ec2BootInstanceRequest\n                .builder()\n                .size(\"size\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.ec2.requests.Ec2BootInstanceRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.ec2().bootinstance(\n            Ec2BootInstanceRequest\n                .builder()\n                .size(\"size\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
             "example_identifier": "7d39b9b1",
             "id": {
                 "method": "POST",
                 "path": "/ec2/boot",
-                "identifier_override": "endpoint_ec2.bootinstance"
+                "identifier_override": "endpoint_ec2.bootInstance"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.ec2.requests.Ec2BootInstanceRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.ec2().bootinstance(\n            Ec2BootInstanceRequest\n                .builder()\n                .size(\"size\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.ec2.requests.Ec2BootInstanceRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.ec2().bootinstance(\n            Ec2BootInstanceRequest\n                .builder()\n                .size(\"size\")\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "368030ac",
-            "id": {
-                "method": "POST",
-                "path": "/s3/presigned-url",
-                "identifier_override": "endpoint_s3.getpresignedurl"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.s3.requests.S3GetPresignedUrlRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.s3().getpresignedurl(\n            S3GetPresignedUrlRequest\n                .builder()\n                .s3Key(\"s3Key\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.s3.requests.S3GetPresignedUrlRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.s3().getpresignedurl(\n            S3GetPresignedUrlRequest\n                .builder()\n                .s3Key(\"s3Key\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.multiUrlEnvironmentNoDefault.SeedMultiUrlEnvironmentNoDefaultClient;\nimport com.seed.multiUrlEnvironmentNoDefault.resources.ec2.requests.BootInstanceRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.ec2().bootInstance(\n            BootInstanceRequest\n                .builder()\n                .size(\"size\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.multiUrlEnvironmentNoDefault.SeedMultiUrlEnvironmentNoDefaultClient;\nimport com.seed.multiUrlEnvironmentNoDefault.resources.ec2.requests.BootInstanceRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.ec2().bootInstance(\n            BootInstanceRequest\n                .builder()\n                .size(\"size\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -44,12 +18,12 @@
             "id": {
                 "method": "POST",
                 "path": "/s3/presigned-url",
-                "identifier_override": "endpoint_s3.getpresignedurl"
+                "identifier_override": "endpoint_s3.getPresignedUrl"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.s3.requests.S3GetPresignedUrlRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.s3().getpresignedurl(\n            S3GetPresignedUrlRequest\n                .builder()\n                .s3Key(\"s3Key\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.s3.requests.S3GetPresignedUrlRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.s3().getpresignedurl(\n            S3GetPresignedUrlRequest\n                .builder()\n                .s3Key(\"s3Key\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.multiUrlEnvironmentNoDefault.SeedMultiUrlEnvironmentNoDefaultClient;\nimport com.seed.multiUrlEnvironmentNoDefault.resources.s3.requests.GetPresignedUrlRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.s3().getPresignedUrl(\n            GetPresignedUrlRequest\n                .builder()\n                .s3Key(\"s3Key\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.multiUrlEnvironmentNoDefault.SeedMultiUrlEnvironmentNoDefaultClient;\nimport com.seed.multiUrlEnvironmentNoDefault.resources.s3.requests.GetPresignedUrlRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.s3().getPresignedUrl(\n            GetPresignedUrlRequest\n                .builder()\n                .s3Key(\"s3Key\")\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

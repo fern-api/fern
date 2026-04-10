@@ -3,15 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Organization\Requests\CreateOrganizationRequest;
+use Seed\User\Requests\ListUsersRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->organization->create(
-    new CreateOrganizationRequest([
-        'name' => 'name',
+$client->user->list(
+    new ListUsersRequest([
+        'limit' => 1,
     ]),
 );

@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.<a href="/Sources/Resources/Payment/PaymentClient.swift">create</a>(request: Requests.PaymentCreateRequest, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.payment.<a href="/Sources/Resources/Payment/PaymentClient.swift">create</a>(request: Requests.CreatePaymentRequest, requestOptions: RequestOptions?) -> UUID</code></summary>
 <dl>
 <dd>
 
@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import Api
+import IdempotencyHeaders
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = IdempotencyHeadersClient(token: "<token>")
 
     _ = try await client.payment.create(request: .init(
         amount: 1,
@@ -40,7 +40,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.PaymentCreateRequest` 
+**request:** `Requests.CreatePaymentRequest` 
     
 </dd>
 </dl>
@@ -74,10 +74,10 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import IdempotencyHeaders
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = IdempotencyHeadersClient(token: "<token>")
 
     _ = try await client.payment.delete(paymentId: "paymentId")
 }

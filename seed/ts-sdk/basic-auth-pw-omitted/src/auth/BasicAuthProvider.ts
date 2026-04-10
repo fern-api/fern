@@ -4,7 +4,7 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 const USERNAME_PARAM = "username" as const;
-const PASSWORD_PARAM = "password" as const;
+const _PASSWORD_PARAM = "password" as const;
 
 export class BasicAuthProvider implements core.AuthProvider {
     private readonly options: BasicAuthProvider.Options;
@@ -14,7 +14,7 @@ export class BasicAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
-        return options?.[USERNAME_PARAM] != null && options?.[PASSWORD_PARAM] != null;
+        return options?.[USERNAME_PARAM] != null && true;
     }
 
     public async getAuthRequest({
@@ -24,12 +24,11 @@ export class BasicAuthProvider implements core.AuthProvider {
     } = {}): Promise<core.AuthRequest> {
         const username = await core.Supplier.get(this.options[USERNAME_PARAM]);
         if (username == null) {
-            throw new errors.SeedApiError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME });
+            throw new errors.SeedBasicAuthPwOmittedError({
+                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
+            });
         }
-        const password = await core.Supplier.get(this.options[PASSWORD_PARAM]);
-        if (password == null) {
-            throw new errors.SeedApiError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD });
-        }
+        const password = "";
 
         const authHeader = core.BasicAuth.toAuthorizationHeader({
             username: username,
@@ -43,15 +42,13 @@ export class BasicAuthProvider implements core.AuthProvider {
 }
 
 export namespace BasicAuthProvider {
-    export const AUTH_SCHEME = "BasicAuth" as const;
+    export const AUTH_SCHEME = "Basic" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
         "Please provide username and password when initializing the client" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string =
         `Please provide '${USERNAME_PARAM}' when initializing the client` as const;
-    export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string =
-        `Please provide '${PASSWORD_PARAM}' when initializing the client` as const;
     export type Options = AuthOptions;
-    export type AuthOptions = { [USERNAME_PARAM]: core.Supplier<string>; [PASSWORD_PARAM]: core.Supplier<string> };
+    export type AuthOptions = { [USERNAME_PARAM]: core.Supplier<string> };
 
     export function createInstance(options: Options): core.AuthProvider {
         return new BasicAuthProvider(options);

@@ -1,6 +1,6 @@
 # Reference
-## Propertybasederror
-<details><summary><code>client.propertybasederror.<a href="/lib/seed/propertybasederror/client.rb">throwerror</a>() -> String</code></summary>
+## PropertyBasedError
+<details><summary><code>client.property_based_error.<a href="/lib/seed/property_based_error/client.rb">throw_error</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```ruby
-client.propertybasederror.throwerror
+client.property_based_error.throw_error
 ```
 </dd>
 </dl>
@@ -42,7 +42,7 @@ client.propertybasederror.throwerror
 <dl>
 <dd>
 
-**request_options:** `Seed::Propertybasederror::RequestOptions` 
+**request_options:** `Seed::PropertyBasedError::RequestOptions` 
     
 </dd>
 </dl>

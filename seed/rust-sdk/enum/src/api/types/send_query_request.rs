@@ -8,7 +8,7 @@ pub struct SendQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub maybe_operand: Option<Operand>,
     #[serde(rename = "operandOrColor")]
-    pub operand_or_color: Color,
+    pub operand_or_color: ColorOrOperand,
     #[serde(rename = "maybeOperandOrColor")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub maybe_operand_or_color: Option<ColorOrOperand>,
@@ -25,7 +25,7 @@ impl SendQueryRequest {
 pub struct SendQueryRequestBuilder {
     operand: Option<Operand>,
     maybe_operand: Option<Operand>,
-    operand_or_color: Option<Color>,
+    operand_or_color: Option<ColorOrOperand>,
     maybe_operand_or_color: Option<ColorOrOperand>,
 }
 
@@ -40,7 +40,7 @@ impl SendQueryRequestBuilder {
         self
     }
 
-    pub fn operand_or_color(mut self, value: Color) -> Self {
+    pub fn operand_or_color(mut self, value: ColorOrOperand) -> Self {
         self.operand_or_color = Some(value);
         self
     }
@@ -56,11 +56,14 @@ impl SendQueryRequestBuilder {
     /// - [`operand_or_color`](SendQueryRequestBuilder::operand_or_color)
     pub fn build(self) -> Result<SendQueryRequest, BuildError> {
         Ok(SendQueryRequest {
-            operand: self.operand.ok_or_else(|| BuildError::missing_field("operand"))?,
+            operand: self
+                .operand
+                .ok_or_else(|| BuildError::missing_field("operand"))?,
             maybe_operand: self.maybe_operand,
-            operand_or_color: self.operand_or_color.ok_or_else(|| BuildError::missing_field("operand_or_color"))?,
+            operand_or_color: self
+                .operand_or_color
+                .ok_or_else(|| BuildError::missing_field("operand_or_color"))?,
             maybe_operand_or_color: self.maybe_operand_or_color,
         })
     }
 }
-

@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
@@ -26,19 +26,20 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getwithbearertoken()
+     *     await client.service.getWithBearerToken()
      */
-    public getwithbearertoken(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__getwithbearertoken(requestOptions));
+    public getWithBearerToken(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithBearerToken(requestOptions));
     }
 
-    private async __getwithbearertoken(
+    private async __getWithBearerToken(
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.version ?? "1.0.0" }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -61,7 +62,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedBearerTokenEnvironmentVariableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

@@ -7,13 +7,13 @@ public final class UsersClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func listwithcustompager(limit: Nullable<Int>? = nil, startingAfter: Nullable<String>? = nil, requestOptions: RequestOptions? = nil) async throws -> UsersListResponse {
+    public func listWithCustomPager(limit: Int? = nil, startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UsersListResponse {
         return try await httpClient.performRequest(
             method: .get,
             path: "/users",
             queryParams: [
-                "limit": limit?.wrappedValue.map { .int($0) }, 
-                "starting_after": startingAfter?.wrappedValue.map { .string($0) }
+                "limit": limit.map { .int($0) }, 
+                "starting_after": startingAfter.map { .string($0) }
             ],
             requestOptions: requestOptions,
             responseType: UsersListResponse.self

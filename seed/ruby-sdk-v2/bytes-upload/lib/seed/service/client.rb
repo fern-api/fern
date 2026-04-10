@@ -50,7 +50,7 @@ module Seed
       # @option params [String, nil] :language
       #
       # @return [untyped]
-      def uploadwithqueryparams(request_options: {}, **params)
+      def upload_with_query_params(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[model language]
         query_params = {}

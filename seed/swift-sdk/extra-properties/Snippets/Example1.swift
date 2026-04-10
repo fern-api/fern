@@ -1,10 +1,10 @@
 import Foundation
-import Api
+import ExtraProperties
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = ExtraPropertiesClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.user.createuser(request: .init(
+    _ = try await client.user.createUser(request: .init(
         type: .createUserRequest,
         version: .v1,
         name: "name"

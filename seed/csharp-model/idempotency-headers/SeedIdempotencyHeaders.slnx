@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedIdempotencyHeaders.Test/SeedIdempotencyHeaders.Test.csproj" />
+  <Project Path="src/SeedIdempotencyHeaders/SeedIdempotencyHeaders.csproj" />
+</Solution>

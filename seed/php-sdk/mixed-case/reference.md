@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-&gt;service-&gt;getresource($resourceId) -> ResourceZero|ResourceOne|null</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getResource($resourceId) -> ?Resource</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 <dd>
 
 ```php
-$client->service->getresource(
-    'ResourceID',
+$client->service->getResource(
+    'rsc-xyz',
 );
 ```
 </dd>
@@ -42,7 +42,7 @@ $client->service->getresource(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;listresources($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;service-&gt;listResources($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -55,10 +55,10 @@ $client->service->getresource(
 <dd>
 
 ```php
-$client->service->listresources(
-    new ServiceListResourcesRequest([
-        'pageLimit' => 1,
-        'beforeDate' => new DateTime('2023-01-15'),
+$client->service->listResources(
+    new ListResourcesRequest([
+        'pageLimit' => 10,
+        'beforeDate' => new DateTime('2023-01-01'),
     ]),
 );
 ```

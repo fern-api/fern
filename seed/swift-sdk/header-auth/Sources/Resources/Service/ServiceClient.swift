@@ -10,7 +10,7 @@ public final class ServiceClient: Sendable {
     /// GET request with custom api key
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getwithbearertoken(requestOptions: RequestOptions? = nil) async throws -> String {
+    public func getWithBearerToken(requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .get,
             path: "/apiKey",

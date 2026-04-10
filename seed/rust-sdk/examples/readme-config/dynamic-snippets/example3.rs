@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,6 +7,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client..create_type(&Type::BasicType(BasicType::Primitive), None).await;
+    let client = ExamplesClient::new(config).expect("Failed to build client");
+    client
+        .file
+        .notification
+        .service
+        .get_exception(&"notification-hsy129x".to_string(), None)
+        .await;
 }

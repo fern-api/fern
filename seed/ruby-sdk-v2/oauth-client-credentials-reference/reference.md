@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">gettoken</a>(request) -> Seed::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.auth.gettoken(
+client.auth.get_token(
   client_id: "client_id",
   client_secret: "client_secret"
 )
@@ -31,15 +31,7 @@ client.auth.gettoken(
 <dl>
 <dd>
 
-**client_id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `String` 
+**request:** `Seed::Auth::Types::GetTokenRequest` 
     
 </dd>
 </dl>
@@ -60,7 +52,7 @@ client.auth.gettoken(
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">getsomething</a>() -> </code></summary>
+<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -73,7 +65,7 @@ client.auth.gettoken(
 <dd>
 
 ```ruby
-client.simple.getsomething
+client.simple.get_something
 ```
 </dd>
 </dl>

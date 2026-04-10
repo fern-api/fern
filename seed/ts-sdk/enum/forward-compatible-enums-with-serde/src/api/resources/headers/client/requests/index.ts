@@ -1,1 +1,1 @@
-export type { HeadersSendRequest } from "./HeadersSendRequest.js";
+export type { SendEnumAsHeaderRequest } from "./SendEnumAsHeaderRequest.js";

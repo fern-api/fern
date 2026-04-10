@@ -2,4 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.foo.find
+client.folder_d.service.get_direct_thread

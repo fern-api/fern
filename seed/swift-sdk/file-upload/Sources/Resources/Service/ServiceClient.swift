@@ -7,7 +7,7 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func post(request: Requests.ServicePostRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func post(request: Requests.MyRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",
@@ -17,7 +17,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func justfile(request: Requests.ServiceJustFileRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func justFile(request: Requests.JustFileRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/just-file",
@@ -27,38 +27,38 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func justfilewithqueryparams(maybeString: Nullable<String>? = nil, integer: Int, maybeInteger: Nullable<Int>? = nil, listOfStrings: String? = nil, optionalListOfStrings: Nullable<String>? = nil, request: Requests.ServiceJustFileWithQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func justFileWithQueryParams(maybeString: String? = nil, integer: Int, maybeInteger: Int? = nil, listOfStrings: String, optionalListOfStrings: String? = nil, request: Requests.JustFileWithQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/just-file-with-query-params",
             contentType: .multipartFormData,
             queryParams: [
-                "maybeString": maybeString?.wrappedValue.map { .string($0) }, 
+                "maybeString": maybeString.map { .string($0) }, 
                 "integer": .int(integer), 
-                "maybeInteger": maybeInteger?.wrappedValue.map { .int($0) }, 
-                "listOfStrings": listOfStrings.map { .string($0) }, 
-                "optionalListOfStrings": optionalListOfStrings?.wrappedValue.map { .string($0) }
+                "maybeInteger": maybeInteger.map { .int($0) }, 
+                "listOfStrings": .string(listOfStrings), 
+                "optionalListOfStrings": optionalListOfStrings.map { .string($0) }
             ],
             body: request.asMultipartFormData(),
             requestOptions: requestOptions
         )
     }
 
-    public func justfilewithoptionalqueryparams(maybeString: Nullable<String>? = nil, maybeInteger: Nullable<Int>? = nil, request: Requests.ServiceJustFileWithOptionalQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func justFileWithOptionalQueryParams(maybeString: String? = nil, maybeInteger: Int? = nil, request: Requests.JustFileWithOptionalQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/just-file-with-optional-query-params",
             contentType: .multipartFormData,
             queryParams: [
-                "maybeString": maybeString?.wrappedValue.map { .string($0) }, 
-                "maybeInteger": maybeInteger?.wrappedValue.map { .int($0) }
+                "maybeString": maybeString.map { .string($0) }, 
+                "maybeInteger": maybeInteger.map { .int($0) }
             ],
             body: request.asMultipartFormData(),
             requestOptions: requestOptions
         )
     }
 
-    public func withcontenttype(request: Requests.ServiceWithContentTypeRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func withContentType(request: Requests.WithContentTypeRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/with-content-type",
@@ -68,7 +68,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func withformencoding(request: Requests.ServiceWithFormEncodingRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func withFormEncoding(request: Requests.WithFormEncodingRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/with-form-encoding",
@@ -78,17 +78,17 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func withformencodedcontainers(request: Requests.ServiceWithFormEncodedContainersRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func withFormEncodedContainers(request: Requests.MyOtherRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
-            path: "/form-encoded",
+            path: "/",
             contentType: .multipartFormData,
             body: request.asMultipartFormData(),
             requestOptions: requestOptions
         )
     }
 
-    public func optionalargs(request: Requests.ServiceOptionalArgsRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func optionalArgs(request: Requests.OptionalArgsRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/optional-args",
@@ -99,7 +99,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func withinlinetype(request: Requests.ServiceWithInlineTypeRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func withInlineType(request: Requests.InlineTypeRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/inline-type",
@@ -110,7 +110,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func withjsonproperty(request: Requests.ServiceWithJsonPropertyRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func withJsonProperty(request: Requests.WithJsonPropertyRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/with-json-property",
@@ -129,7 +129,7 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func withliteralandenumtypes(request: Requests.ServiceWithLiteralAndEnumTypesRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func withLiteralAndEnumTypes(request: Requests.LiteralEnumRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/with-literal-enum",

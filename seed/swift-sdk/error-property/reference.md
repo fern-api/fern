@@ -1,6 +1,6 @@
 # Reference
-## Propertybasederror
-<details><summary><code>client.propertybasederror.<a href="/Sources/Resources/Propertybasederror/PropertybasederrorClient.swift">throwerror</a>(requestOptions: RequestOptions?) -> String</code></summary>
+## PropertyBasedError
+<details><summary><code>client.propertyBasedError.<a href="/Sources/Resources/PropertyBasedError/PropertyBasedErrorClient.swift">throwError</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -28,12 +28,12 @@ GET request that always throws an error
 
 ```swift
 import Foundation
-import Api
+import ErrorProperty
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ErrorPropertyClient()
 
-    _ = try await client.propertybasederror.throwerror()
+    _ = try await client.propertyBasedError.throwError()
 }
 
 try await main()

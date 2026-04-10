@@ -3,19 +3,19 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Auth\Requests\AuthGetTokenRequest;
-use Seed\Auth\Types\AuthGetTokenRequestGrantType;
+use Seed\Auth\Requests\GetTokenRequest;
 
 $client = new SeedClient(
-    token: '<token>',
+    clientId: '<clientId>',
+    clientSecret: '<clientSecret>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->auth->gettoken(
-    new AuthGetTokenRequest([
+$client->auth->getToken(
+    new GetTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
-        'grantType' => AuthGetTokenRequestGrantType::ClientCredentials->value,
+        'grantType' => 'client_credentials',
     ]),
 );

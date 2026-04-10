@@ -1,24 +1,24 @@
-//! # optional SDK
+//! # ObjectsWithImports SDK
 //!
-//! The official Rust SDK for the optional.
+//! The official Rust SDK for the ObjectsWithImports.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_objects_with_imports::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = ObjectsWithImportsClient::new(config).expect("Failed to build client");
 //!     client
 //!         .optional
-//!         .sendoptionalbody(
+//!         .send_optional_body(
 //!             &Some(HashMap::from([(
-//!                 "key".to_string(),
-//!                 serde_json::json!("value"),
+//!                 "string".to_string(),
+//!                 serde_json::json!({"key":"value"}),
 //!             )])),
 //!             None,
 //!         )

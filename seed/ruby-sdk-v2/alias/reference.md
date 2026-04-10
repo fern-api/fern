@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/lib/seed/client.rb">get</a>(type_id) -> </code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get</a>(type_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```ruby
-client..get(type_id: "typeId")
+client.get(type_id: "typeId")
 ```
 </dd>
 </dl>
@@ -36,7 +35,7 @@ client..get(type_id: "typeId")
 <dl>
 <dd>
 
-**request_options:** `Seed::::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

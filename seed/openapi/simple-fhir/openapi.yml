@@ -1,11 +1,11 @@
 openapi: 3.0.1
 info:
-  title: simple-fhir
+  title: api
   version: ''
 paths:
   /account/{account_id}:
     get:
-      operationId: _getAccount
+      operationId: getAccount
       tags:
         - ''
       parameters:
@@ -14,10 +14,6 @@ paths:
           required: true
           schema:
             type: string
-          example: account_id
-          examples:
-            Example1:
-              value: account_id
       responses:
         '200':
           description: ''
@@ -25,74 +21,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Account'
-              examples:
-                Example1:
-                  value:
-                    id: id
-                    related_resources:
-                      - id: id
-                        related_resources: []
-                        memo:
-                          description: description
-                        resource_type: Patient
-                        name: name
-                        scripts:
-                          - id: id
-                            related_resources: []
-                            memo:
-                              description: description
-                            resource_type: Script
-                            name: name
-                    memo:
-                      description: description
-                    resource_type: Account
-                    name: name
-                    patient:
-                      id: id
-                      related_resources:
-                        - id: id
-                          related_resources: []
-                          memo:
-                            description: description
-                          resource_type: Practitioner
-                          name: name
-                      memo:
-                        description: description
-                      resource_type: Patient
-                      name: name
-                      scripts:
-                        - id: id
-                          related_resources:
-                            - id: id
-                              related_resources: []
-                              memo:
-                                description: description
-                              resource_type: Practitioner
-                              name: name
-                          memo:
-                            description: description
-                          resource_type: Script
-                          name: name
-                    practitioner:
-                      id: id
-                      related_resources:
-                        - id: id
-                          related_resources: []
-                          memo:
-                            description: description
-                          resource_type: Patient
-                          name: name
-                          scripts:
-                            - id: id
-                              related_resources: []
-                              memo:
-                                description: description
-                              resource_type: Script
-                              name: name
-                      memo:
-                        description: description
-                      resource_type: Practitioner
-                      name: name
 components:
   schemas:
     Memo:
@@ -125,64 +53,19 @@ components:
     ResourceList:
       title: ResourceList
       oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                resource_type:
-                  type: string
-                  enum:
-                    - Account
-            - $ref: '#/components/schemas/Account'
-          required:
-            - resource_type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                resource_type:
-                  type: string
-                  enum:
-                    - Patient
-            - $ref: '#/components/schemas/Patient'
-          required:
-            - resource_type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                resource_type:
-                  type: string
-                  enum:
-                    - Practitioner
-            - $ref: '#/components/schemas/Practitioner'
-          required:
-            - resource_type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                resource_type:
-                  type: string
-                  enum:
-                    - Script
-            - $ref: '#/components/schemas/Script'
-          required:
-            - resource_type
-    AccountResourceType:
-      title: AccountResourceType
-      type: string
-      enum:
-        - Account
+        - $ref: '#/components/schemas/Account'
+        - $ref: '#/components/schemas/Patient'
+        - $ref: '#/components/schemas/Practitioner'
+        - $ref: '#/components/schemas/Script'
     Account:
       title: Account
       type: object
       properties:
         resource_type:
-          $ref: '#/components/schemas/AccountResourceType'
+          type: string
+          const: Account
         name:
           type: string
-          example: name
         patient:
           $ref: '#/components/schemas/Patient'
           nullable: true
@@ -194,17 +77,13 @@ components:
         - name
       allOf:
         - $ref: '#/components/schemas/BaseResource'
-    PatientResourceType:
-      title: PatientResourceType
-      type: string
-      enum:
-        - Patient
     Patient:
       title: Patient
       type: object
       properties:
         resource_type:
-          $ref: '#/components/schemas/PatientResourceType'
+          type: string
+          const: Patient
         name:
           type: string
         scripts:
@@ -217,17 +96,13 @@ components:
         - scripts
       allOf:
         - $ref: '#/components/schemas/BaseResource'
-    PractitionerResourceType:
-      title: PractitionerResourceType
-      type: string
-      enum:
-        - Practitioner
     Practitioner:
       title: Practitioner
       type: object
       properties:
         resource_type:
-          $ref: '#/components/schemas/PractitionerResourceType'
+          type: string
+          const: Practitioner
         name:
           type: string
       required:
@@ -235,17 +110,13 @@ components:
         - name
       allOf:
         - $ref: '#/components/schemas/BaseResource'
-    ScriptResourceType:
-      title: ScriptResourceType
-      type: string
-      enum:
-        - Script
     Script:
       title: Script
       type: object
       properties:
         resource_type:
-          $ref: '#/components/schemas/ScriptResourceType'
+          type: string
+          const: Script
         name:
           type: string
       required:

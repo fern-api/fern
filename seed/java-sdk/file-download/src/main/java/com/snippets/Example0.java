@@ -1,11 +1,11 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
+import com.seed.fileDownload.SeedFileDownloadClient;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedFileDownloadClient client =
+                SeedFileDownloadClient.builder().url("https://api.fern.com").build();
 
         client.service().simple();
     }

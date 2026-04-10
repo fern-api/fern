@@ -16,7 +16,7 @@ class RawDummyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def getdummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[str]:
+    def get_dummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[str]:
         """
         Parameters
         ----------
@@ -26,7 +26,6 @@ class RawDummyClient:
         Returns
         -------
         HttpResponse[str]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "dummy",
@@ -57,7 +56,7 @@ class AsyncRawDummyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def getdummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[str]:
+    async def get_dummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[str]:
         """
         Parameters
         ----------
@@ -67,7 +66,6 @@ class AsyncRawDummyClient:
         Returns
         -------
         AsyncHttpResponse[str]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "dummy",

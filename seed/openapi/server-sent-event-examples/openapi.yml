@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: server-sent-event-examples
+  title: server-sent-events
   version: ''
 paths:
   /stream:
@@ -18,6 +18,9 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Bad request:
+                  value: bad request
       requestBody:
         required: true
         content:
@@ -27,11 +30,19 @@ paths:
               properties:
                 query:
                   type: string
+                  example: foo
               required:
                 - query
+            examples:
+              Stream completions:
+                value:
+                  query: foo
+              Bad request:
+                value:
+                  query: ''
   /stream-events:
     post:
-      operationId: completions_streamevents
+      operationId: completions_streamEvents
       tags:
         - Completions
       parameters: []
@@ -44,6 +55,9 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Bad request:
+                  value: bad request
       requestBody:
         required: true
         content:
@@ -53,11 +67,19 @@ paths:
               properties:
                 query:
                   type: string
+                  example: query
               required:
                 - query
+            examples:
+              Stream events:
+                value:
+                  query: query
+              Bad request:
+                value:
+                  query: ''
   /stream-events-context-protocol:
     post:
-      operationId: completions_streameventscontextprotocol
+      operationId: completions_streamEventsContextProtocol
       tags:
         - Completions
       parameters: []
@@ -70,6 +92,9 @@ paths:
             application/json:
               schema:
                 type: string
+              examples:
+                Bad request context protocol:
+                  value: bad request
       requestBody:
         required: true
         content:
@@ -79,8 +104,16 @@ paths:
               properties:
                 query:
                   type: string
+                  example: query
               required:
                 - query
+            examples:
+              Stream events context protocol:
+                value:
+                  query: query
+              Bad request context protocol:
+                value:
+                  query: ''
 components:
   schemas:
     StreamedCompletion:
@@ -124,91 +157,65 @@ components:
           nullable: true
       required:
         - error
-    StreamEventContextProtocolZeroEvent:
-      title: StreamEventContextProtocolZeroEvent
-      type: string
-      enum:
-        - completion
-    StreamEventContextProtocolZero:
-      title: StreamEventContextProtocolZero
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/StreamEventContextProtocolZeroEvent'
-      required:
-        - event
-      allOf:
-        - $ref: '#/components/schemas/CompletionEvent'
-    StreamEventContextProtocolOneEvent:
-      title: StreamEventContextProtocolOneEvent
-      type: string
-      enum:
-        - error
-    StreamEventContextProtocolOne:
-      title: StreamEventContextProtocolOne
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/StreamEventContextProtocolOneEvent'
-      required:
-        - event
-      allOf:
-        - $ref: '#/components/schemas/ErrorEvent'
-    StreamEventContextProtocolTwoEvent:
-      title: StreamEventContextProtocolTwoEvent
-      type: string
-      enum:
-        - event
-    StreamEventContextProtocolTwo:
-      title: StreamEventContextProtocolTwo
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/StreamEventContextProtocolTwoEvent'
-        name:
-          type: string
-      required:
-        - event
-        - name
     StreamEventContextProtocol:
       title: StreamEventContextProtocol
       oneOf:
-        - $ref: '#/components/schemas/StreamEventContextProtocolZero'
-        - $ref: '#/components/schemas/StreamEventContextProtocolOne'
-        - $ref: '#/components/schemas/StreamEventContextProtocolTwo'
-    StreamEventZeroEvent:
-      title: StreamEventZeroEvent
-      type: string
-      enum:
-        - completion
-    StreamEventZero:
-      title: StreamEventZero
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/StreamEventZeroEvent'
-      required:
-        - event
-      allOf:
-        - $ref: '#/components/schemas/CompletionEvent'
-    StreamEventOneEvent:
-      title: StreamEventOneEvent
-      type: string
-      enum:
-        - error
-    StreamEventOne:
-      title: StreamEventOne
-      type: object
-      properties:
-        event:
-          $ref: '#/components/schemas/StreamEventOneEvent'
-      required:
-        - event
-      allOf:
-        - $ref: '#/components/schemas/ErrorEvent'
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                event:
+                  type: string
+                  enum:
+                    - completion
+            - $ref: '#/components/schemas/CompletionEvent'
+          required:
+            - event
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                event:
+                  type: string
+                  enum:
+                    - error
+            - $ref: '#/components/schemas/ErrorEvent'
+          required:
+            - event
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                event:
+                  type: string
+                  enum:
+                    - event
+            - $ref: '#/components/schemas/EventEvent'
+          required:
+            - event
     StreamEvent:
       title: StreamEvent
       oneOf:
-        - $ref: '#/components/schemas/StreamEventZero'
-        - $ref: '#/components/schemas/StreamEventOne'
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                event:
+                  type: string
+                  enum:
+                    - completion
+            - $ref: '#/components/schemas/CompletionEvent'
+          required:
+            - event
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                event:
+                  type: string
+                  enum:
+                    - error
+            - $ref: '#/components/schemas/ErrorEvent'
+          required:
+            - event
   securitySchemes: {}

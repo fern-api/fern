@@ -5,8 +5,7 @@ package com.seed.unions.resources.types;
 
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.RequestOptions;
-import com.seed.unions.resources.types.requests.TypesGetRequest;
-import com.seed.unions.types.UnionWithTime;
+import com.seed.unions.resources.types.types.UnionWithTime;
 
 public class TypesClient {
     protected final ClientOptions clientOptions;
@@ -31,14 +30,6 @@ public class TypesClient {
 
     public UnionWithTime get(String id, RequestOptions requestOptions) {
         return this.rawClient.get(id, requestOptions).body();
-    }
-
-    public UnionWithTime get(String id, TypesGetRequest request) {
-        return this.rawClient.get(id, request).body();
-    }
-
-    public UnionWithTime get(String id, TypesGetRequest request, RequestOptions requestOptions) {
-        return this.rawClient.get(id, request, requestOptions).body();
     }
 
     public boolean update(UnionWithTime request) {

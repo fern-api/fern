@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedMultiUrlEnvironmentNoDefault from "../../../index.js";
 
 export declare namespace S3Client {
     export type Options = BaseClientOptions;
@@ -22,23 +22,23 @@ export class S3Client {
     }
 
     /**
-     * @param {SeedApi.S3GetPresignedUrlRequest} request
+     * @param {SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest} request
      * @param {S3Client.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.s3.getpresignedurl({
+     *     await client.s3.getPresignedUrl({
      *         s3Key: "s3Key"
      *     })
      */
-    public getpresignedurl(
-        request: SeedApi.S3GetPresignedUrlRequest,
+    public getPresignedUrl(
+        request: SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest,
         requestOptions?: S3Client.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__getpresignedurl(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getPresignedUrl(request, requestOptions));
     }
 
-    private async __getpresignedurl(
-        request: SeedApi.S3GetPresignedUrlRequest,
+    private async __getPresignedUrl(
+        request: SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest,
         requestOptions?: S3Client.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -50,8 +50,8 @@ export class S3Client {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "s3/presigned-url",
+                    (await core.Supplier.get(this._options.environment)).s3,
+                "/s3/presigned-url",
             ),
             method: "POST",
             headers: _headers,
@@ -70,7 +70,7 @@ export class S3Client {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

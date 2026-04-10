@@ -1,13 +1,13 @@
 import Foundation
-import Api
+import Examples
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExamplesClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.healthService.healthServicePing()
+    _ = try await client.health.service.ping()
 }
 
 try await main()

@@ -12,7 +12,6 @@ The Seed Swift library provides convenient access to the Seed APIs from Swift.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Errors](#errors)
-- [Request Types](#request-types)
 - [Advanced](#advanced)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
@@ -54,7 +53,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(token: "<token>")
 
-    _ = try await client.imdb.createmovie(request: .init(
+    _ = try await client.imdb.createMovie(request: CreateMovieRequest(
         title: "title",
         rating: 1.1
     ))
@@ -73,7 +72,7 @@ import Api
 let client = ApiClient(...)
 
 do {
-    let response = try await client.imdb.createmovie(...)
+    let response = try await client.imdb.createMovie(...)
     // Handle successful response
 } catch let error as ApiError {
     switch error {
@@ -93,18 +92,6 @@ do {
 }
 ```
 
-## Request Types
-
-The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
-
-```swift
-import Api
-
-let request = Requests.CreateMovieRequest(
-    ...
-)
-```
-
 ## Advanced
 
 ### Additional Headers
@@ -112,7 +99,7 @@ let request = Requests.CreateMovieRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.imdb.createmovie(..., requestOptions: .init(
+try await client.imdb.createMovie(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -124,7 +111,7 @@ try await client.imdb.createmovie(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.imdb.createmovie(..., requestOptions: .init(
+try await client.imdb.createMovie(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -136,7 +123,7 @@ try await client.imdb.createmovie(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.imdb.createmovie(..., requestOptions: .init(
+try await client.imdb.createMovie(..., requestOptions: .init(
     timeout: 30
 ))
 ```

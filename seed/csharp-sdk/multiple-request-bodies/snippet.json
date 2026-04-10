@@ -4,13 +4,13 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/documents/upload/json",
+                "path": "/documents/upload",
                 "method": "POST",
                 "identifier_override": "endpoint_.uploadJsonDocument"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client._.UploadJsonDocumentAsync(new UploadJsonDocumentRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"TOKEN\");\nawait client.UploadJsonDocumentAsync(new UploadDocumentRequest());\n"
             }
         }
     ]

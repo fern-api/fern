@@ -1,40 +1,78 @@
 pub use crate::prelude::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-#[serde(tag = "type")]
+#[serde(untagged)]
 pub enum MyUnion {
-        #[non_exhaustive]
-        A {
-            #[serde(rename = "valueA")]
-            #[serde(default)]
-            value_a: String,
-        },
+        VariantA(VariantA),
 
-        #[non_exhaustive]
-        B {
-            #[serde(rename = "valueB")]
-            #[serde(default)]
-            value_b: i64,
-        },
+        VariantB(VariantB),
 
-        #[non_exhaustive]
-        C {
-            #[serde(rename = "valueC")]
-            #[serde(default)]
-            value_c: bool,
-        },
+        VariantC(VariantC),
 }
 
 impl MyUnion {
-    pub fn a(value_a: String) -> Self {
-        Self::A { value_a }
+    pub fn is_variant_a(&self) -> bool {
+        matches!(self, Self::VariantA(_))
     }
 
-    pub fn b(value_b: i64) -> Self {
-        Self::B { value_b }
+    pub fn is_variant_b(&self) -> bool {
+        matches!(self, Self::VariantB(_))
     }
 
-    pub fn c(value_c: bool) -> Self {
-        Self::C { value_c }
+    pub fn is_variant_c(&self) -> bool {
+        matches!(self, Self::VariantC(_))
+    }
+
+
+    pub fn as_variant_a(&self) -> Option<&VariantA> {
+        match self {
+                    Self::VariantA(value) => Some(value),
+                    _ => None,
+                }
+    }
+
+    pub fn into_variant_a(self) -> Option<VariantA> {
+        match self {
+                    Self::VariantA(value) => Some(value),
+                    _ => None,
+                }
+    }
+
+    pub fn as_variant_b(&self) -> Option<&VariantB> {
+        match self {
+                    Self::VariantB(value) => Some(value),
+                    _ => None,
+                }
+    }
+
+    pub fn into_variant_b(self) -> Option<VariantB> {
+        match self {
+                    Self::VariantB(value) => Some(value),
+                    _ => None,
+                }
+    }
+
+    pub fn as_variant_c(&self) -> Option<&VariantC> {
+        match self {
+                    Self::VariantC(value) => Some(value),
+                    _ => None,
+                }
+    }
+
+    pub fn into_variant_c(self) -> Option<VariantC> {
+        match self {
+                    Self::VariantC(value) => Some(value),
+                    _ => None,
+                }
+    }
+}
+
+impl fmt::Display for MyUnion {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::VariantA(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::VariantB(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::VariantC(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+        }
     }
 }

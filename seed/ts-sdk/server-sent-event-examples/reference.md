@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="/src/api/resources/completions/client/Client.ts">stream</a>({ ...params }) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.completions.<a href="/src/api/resources/completions/client/Client.ts">stream</a>({ ...params }) -> core.Stream&lt;SeedServerSentEvents.StreamedCompletion&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,12 @@
 <dd>
 
 ```typescript
-await client.completions.stream({
-    query: "query"
+const response = await client.completions.stream({
+    query: "foo"
 });
+for await (const item of response) {
+    console.log(item);
+}
 
 ```
 </dd>
@@ -31,7 +34,7 @@ await client.completions.stream({
 <dl>
 <dd>
 
-**request:** `SeedApi.CompletionsStreamRequest` 
+**request:** `SeedServerSentEvents.StreamCompletionRequest` 
     
 </dd>
 </dl>
@@ -51,7 +54,7 @@ await client.completions.stream({
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/src/api/resources/completions/client/Client.ts">streamevents</a>({ ...params }) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.completions.<a href="/src/api/resources/completions/client/Client.ts">streamEvents</a>({ ...params }) -> core.Stream&lt;SeedServerSentEvents.StreamEvent&gt;</code></summary>
 <dl>
 <dd>
 
@@ -64,9 +67,12 @@ await client.completions.stream({
 <dd>
 
 ```typescript
-await client.completions.streamevents({
+const response = await client.completions.streamEvents({
     query: "query"
 });
+for await (const item of response) {
+    console.log(item);
+}
 
 ```
 </dd>
@@ -82,7 +88,7 @@ await client.completions.streamevents({
 <dl>
 <dd>
 
-**request:** `SeedApi.CompletionsStreamEventsRequest` 
+**request:** `SeedServerSentEvents.StreamEventsRequest` 
     
 </dd>
 </dl>
@@ -102,7 +108,7 @@ await client.completions.streamevents({
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/src/api/resources/completions/client/Client.ts">streameventscontextprotocol</a>({ ...params }) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.completions.<a href="/src/api/resources/completions/client/Client.ts">streamEventsContextProtocol</a>({ ...params }) -> core.Stream&lt;SeedServerSentEvents.StreamEventContextProtocol&gt;</code></summary>
 <dl>
 <dd>
 
@@ -115,9 +121,12 @@ await client.completions.streamevents({
 <dd>
 
 ```typescript
-await client.completions.streameventscontextprotocol({
+const response = await client.completions.streamEventsContextProtocol({
     query: "query"
 });
+for await (const item of response) {
+    console.log(item);
+}
 
 ```
 </dd>
@@ -133,7 +142,7 @@ await client.completions.streameventscontextprotocol({
 <dl>
 <dd>
 
-**request:** `SeedApi.CompletionsStreamEventsContextProtocolRequest` 
+**request:** `SeedServerSentEvents.StreamEventsContextProtocolRequest` 
     
 </dd>
 </dl>

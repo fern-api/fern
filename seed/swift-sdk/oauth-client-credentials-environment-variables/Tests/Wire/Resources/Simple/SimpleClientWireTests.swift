@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import OauthClientCredentialsEnvironmentVariables
 
 @Suite("SimpleClient Wire Tests") struct SimpleClientWireTests {
 }

@@ -4,7 +4,9 @@ namespace Seed\Users;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Users\Requests\UsersListWithCustomPagerRequest;
+use Seed\Users\Requests\ListWithCustomPagerRequest;
+use Seed\Core\Pagination\Pager;
+use Seed\Core\Pagination\CustomPager;
 use Seed\Types\UsersListResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -50,7 +52,25 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithCustomPagerRequest $request
+     * @param ListWithCustomPagerRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<string>
+     */
+    public function listWithCustomPager(ListWithCustomPagerRequest $request = new ListWithCustomPagerRequest(), ?array $options = null): Pager
+    {
+        $response = $this->_listWithCustomPager($request, $options);
+        return new CustomPager(response: $response, client: $this);
+    }
+
+    /**
+     * @param ListWithCustomPagerRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,7 +83,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithcustompager(UsersListWithCustomPagerRequest $request = new UsersListWithCustomPagerRequest(), ?array $options = null): ?UsersListResponse
+    private function _listWithCustomPager(ListWithCustomPagerRequest $request = new ListWithCustomPagerRequest(), ?array $options = null): ?UsersListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -77,7 +97,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

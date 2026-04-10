@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.Gettoken(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.GetToken(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,11 @@
 <dd>
 
 ```go
-request := &fern.AuthGetTokenRequest{
+request := &fern.GetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
-        Audience: fern.AuthGetTokenRequestAudienceHttpsApiExampleCom,
-        GrantType: fern.AuthGetTokenRequestGrantTypeClientCredentials,
     }
-client.Auth.Gettoken(
+client.Auth.GetToken(
         context.TODO(),
         request,
     )
@@ -54,7 +52,7 @@ client.Auth.Gettoken(
 <dl>
 <dd>
 
-**audience:** `*fern.AuthGetTokenRequestAudience` 
+**audience:** `string` 
     
 </dd>
 </dl>
@@ -62,7 +60,7 @@ client.Auth.Gettoken(
 <dl>
 <dd>
 
-**grantType:** `*fern.AuthGetTokenRequestGrantType` 
+**grantType:** `string` 
     
 </dd>
 </dl>
@@ -103,7 +101,7 @@ client.User.Get(
 </dl>
 </details>
 
-<details><summary><code>client.User.Getadmins() -> []*fern.User</code></summary>
+<details><summary><code>client.User.GetAdmins() -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -116,7 +114,7 @@ client.User.Get(
 <dd>
 
 ```go
-client.User.Getadmins(
+client.User.GetAdmins(
         context.TODO(),
     )
 }

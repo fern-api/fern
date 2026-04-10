@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 
 
 class VariantC(UniversalBaseModel):
+    type: typing.Literal["C"] = "C"
     value_c: typing_extensions.Annotated[bool, FieldMetadata(alias="valueC"), pydantic.Field(alias="valueC")]
 
     if IS_PYDANTIC_V2:

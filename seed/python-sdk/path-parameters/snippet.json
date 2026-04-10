@@ -6,11 +6,11 @@
             "id": {
                 "path": "/{tenant_id}/organizations/{organization_id}/",
                 "method": "GET",
-                "identifier_override": "endpoint_organizations.getorganization"
+                "identifier_override": "endpoint_organizations.getOrganization"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.organizations.getorganization(\n    tenant_id=\"tenant_id\",\n    organization_id=\"organization_id\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.organizations.getorganization(\n        tenant_id=\"tenant_id\",\n        organization_id=\"organization_id\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.organizations.get_organization(\n    organization_id=\"organization_id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.organizations.get_organization(\n        organization_id=\"organization_id\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -19,11 +19,11 @@
             "id": {
                 "path": "/{tenant_id}/organizations/{organization_id}/users/{user_id}",
                 "method": "GET",
-                "identifier_override": "endpoint_organizations.getorganizationuser"
+                "identifier_override": "endpoint_organizations.getOrganizationUser"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.organizations.getorganizationuser(\n    tenant_id=\"tenant_id\",\n    organization_id=\"organization_id\",\n    user_id=\"user_id\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.organizations.getorganizationuser(\n        tenant_id=\"tenant_id\",\n        organization_id=\"organization_id\",\n        user_id=\"user_id\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.organizations.get_organization_user(\n    organization_id=\"organization_id\",\n    user_id=\"user_id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.organizations.get_organization_user(\n        organization_id=\"organization_id\",\n        user_id=\"user_id\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -32,11 +32,11 @@
             "id": {
                 "path": "/{tenant_id}/organizations/{organization_id}/search",
                 "method": "GET",
-                "identifier_override": "endpoint_organizations.searchorganizations"
+                "identifier_override": "endpoint_organizations.searchOrganizations"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.organizations.searchorganizations(\n    tenant_id=\"tenant_id\",\n    organization_id=\"organization_id\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.organizations.searchorganizations(\n        tenant_id=\"tenant_id\",\n        organization_id=\"organization_id\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.organizations.search_organizations(\n    organization_id=\"organization_id\",\n    limit=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.organizations.search_organizations(\n        organization_id=\"organization_id\",\n        limit=1,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -45,24 +45,11 @@
             "id": {
                 "path": "/{tenant_id}/user/{user_id}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getuser"
+                "identifier_override": "endpoint_user.getUser"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.getuser(\n    tenant_id=\"tenant_id\",\n    user_id=\"user_id\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.getuser(\n        tenant_id=\"tenant_id\",\n        user_id=\"user_id\",\n    )\n\n\nasyncio.run(main())\n",
-                "type": "python"
-            }
-        },
-        {
-            "example_identifier": "default",
-            "id": {
-                "path": "/{tenant_id}/user/{user_id}",
-                "method": "PATCH",
-                "identifier_override": "endpoint_user.updateuser"
-            },
-            "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.updateuser(\n    tenant_id=\"tenant_id\",\n    user_id=\"user_id\",\n    name=\"name\",\n    tags=[\"tags\"],\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.updateuser(\n        tenant_id=\"tenant_id\",\n        user_id=\"user_id\",\n        name=\"name\",\n        tags=[\"tags\"],\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get_user(\n    user_id=\"user_id\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_user(\n        user_id=\"user_id\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -71,11 +58,24 @@
             "id": {
                 "path": "/{tenant_id}/user/",
                 "method": "POST",
-                "identifier_override": "endpoint_user.createuser"
+                "identifier_override": "endpoint_user.createUser"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.createuser(\n    tenant_id=\"tenant_id\",\n    name=\"name\",\n    tags=[\"tags\"],\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.createuser(\n        tenant_id=\"tenant_id\",\n        name=\"name\",\n        tags=[\"tags\"],\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.create_user(\n    name=\"name\",\n    tags=[\"tags\", \"tags\"],\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.create_user(\n        name=\"name\",\n        tags=[\"tags\", \"tags\"],\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_user.updateUser"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.update_user(\n    user_id=\"user_id\",\n    name=\"name\",\n    tags=[\"tags\", \"tags\"],\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.update_user(\n        user_id=\"user_id\",\n        name=\"name\",\n        tags=[\"tags\", \"tags\"],\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -84,11 +84,11 @@
             "id": {
                 "path": "/{tenant_id}/user/{user_id}/search",
                 "method": "GET",
-                "identifier_override": "endpoint_user.searchusers"
+                "identifier_override": "endpoint_user.searchUsers"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.searchusers(\n    tenant_id=\"tenant_id\",\n    user_id=\"user_id\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.searchusers(\n        tenant_id=\"tenant_id\",\n        user_id=\"user_id\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.search_users(\n    user_id=\"user_id\",\n    limit=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.search_users(\n        user_id=\"user_id\",\n        limit=1,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -97,11 +97,11 @@
             "id": {
                 "path": "/{tenant_id}/user/{user_id}/metadata/v{version}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getusermetadata"
+                "identifier_override": "endpoint_user.getUserMetadata"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.getusermetadata(\n    tenant_id=\"tenant_id\",\n    user_id=\"user_id\",\n    version=1,\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.getusermetadata(\n        tenant_id=\"tenant_id\",\n        user_id=\"user_id\",\n        version=1,\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get_user_metadata(\n    user_id=\"user_id\",\n    version=1,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_user_metadata(\n        user_id=\"user_id\",\n        version=1,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -110,11 +110,11 @@
             "id": {
                 "path": "/{tenant_id}/user/{user_id}/specifics/{version}/{thought}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getuserspecifics"
+                "identifier_override": "endpoint_user.getUserSpecifics"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.getuserspecifics(\n    tenant_id=\"tenant_id\",\n    user_id=\"user_id\",\n    version=1,\n    thought=\"thought\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.getuserspecifics(\n        tenant_id=\"tenant_id\",\n        user_id=\"user_id\",\n        version=1,\n        thought=\"thought\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get_user_specifics(\n    user_id=\"user_id\",\n    version=1,\n    thought=\"thought\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_user_specifics(\n        user_id=\"user_id\",\n        version=1,\n        thought=\"thought\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

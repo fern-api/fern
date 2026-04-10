@@ -9,6 +9,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->union->duplicatetypesunion(
+$client->union->nestedUnions(
     'string',
 );

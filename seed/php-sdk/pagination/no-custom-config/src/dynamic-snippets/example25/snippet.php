@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\InlineUsersInlineUsers\Requests\InlineUsersInlineUsersListWithGlobalConfigRequest;
+use Seed\Users\Requests\ListUsersExtendedRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,8 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->inlineUsersInlineUsers->inlineUsersInlineUsersListWithGlobalConfig(
-    new InlineUsersInlineUsersListWithGlobalConfigRequest([
-        'offset' => 1,
+$client->users->listWithExtendedResults(
+    new ListUsersExtendedRequest([
+        'cursor' => 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     ]),
 );

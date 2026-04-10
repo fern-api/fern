@@ -14,7 +14,7 @@
 
 ```php
 $client->payment->create(
-    new PaymentCreateRequest([
+    new CreatePaymentRequest([
         'amount' => 1,
         'currency' => Currency::Usd->value,
     ]),

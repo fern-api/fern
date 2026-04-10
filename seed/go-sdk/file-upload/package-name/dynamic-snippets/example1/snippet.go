@@ -15,12 +15,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &upload.ServiceJustFileRequest{
-        File: strings.NewReader(
+    request := &upload.OptionalArgsRequest{
+        ImageFile: strings.NewReader(
             "",
         ),
     }
-    client.Service.Justfile(
+    client.Service.OptionalArgs(
         context.TODO(),
         request,
     )

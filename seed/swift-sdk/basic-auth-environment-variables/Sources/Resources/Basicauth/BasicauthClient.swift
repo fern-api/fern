@@ -1,6 +1,6 @@
 import Foundation
 
-public final class BasicauthClient: Sendable {
+public final class BasicAuthClient: Sendable {
     private let httpClient: HTTPClient
 
     init(config: ClientConfig) {
@@ -10,7 +10,7 @@ public final class BasicauthClient: Sendable {
     /// GET request with basic auth scheme
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getwithbasicauth(requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func getWithBasicAuth(requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .get,
             path: "/basic-auth",
@@ -22,7 +22,7 @@ public final class BasicauthClient: Sendable {
     /// POST request with basic auth scheme
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func postwithbasicauth(request: JSONValue, requestOptions: RequestOptions? = nil) async throws -> Bool {
+    public func postWithBasicAuth(request: JSONValue, requestOptions: RequestOptions? = nil) async throws -> Bool {
         return try await httpClient.performRequest(
             method: .post,
             path: "/basic-auth",

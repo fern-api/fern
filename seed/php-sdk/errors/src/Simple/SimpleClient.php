@@ -4,8 +4,8 @@ namespace Seed\Simple;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\FooRequest;
-use Seed\Types\FooResponse;
+use Seed\Simple\Types\FooRequest;
+use Seed\Simple\Types\FooResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -63,7 +63,7 @@ class SimpleClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function foowithoutendpointerror(FooRequest $request, ?array $options = null): ?FooResponse
+    public function fooWithoutEndpointError(FooRequest $request, ?array $options = null): ?FooResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -157,7 +157,7 @@ class SimpleClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function foowithexamples(FooRequest $request, ?array $options = null): ?FooResponse
+    public function fooWithExamples(FooRequest $request, ?array $options = null): ?FooResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

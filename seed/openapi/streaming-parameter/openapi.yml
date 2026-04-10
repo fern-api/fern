@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: streaming-parameter
+  title: streaming
   version: ''
 paths:
   /generate:
@@ -21,18 +21,18 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  example: true
+                  example: false
                 num_events:
                   type: integer
-                  example: 1
+                  example: 5
               required:
                 - stream
                 - num_events
             examples:
-              Example1:
+              Default:
                 value:
-                  stream: true
-                  num_events: 1
+                  stream: false
+                  num_events: 5
 components:
   schemas:
     RegularResponse:

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-&gt;auth-&gt;gettokenwithclientcredentials($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;getTokenWithClientCredentials($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,15 @@
 <dd>
 
 ```php
-$client->auth->gettokenwithclientcredentials(
-    new AuthGetTokenWithClientCredentialsRequest([
+$client->auth->getTokenWithClientCredentials(
+    new GetTokenRequest([
         'cid' => 'cid',
         'csr' => 'csr',
         'scp' => 'scp',
         'entityId' => 'entity_id',
-        'audience' => AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom->value,
-        'grantType' => AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials->value,
+        'audience' => 'https://api.example.com',
+        'grantType' => 'client_credentials',
+        'scope' => 'scope',
     ]),
 );
 ```
@@ -97,7 +98,7 @@ $client->auth->gettokenwithclientcredentials(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;auth-&gt;refreshtoken($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;refreshToken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -110,13 +111,14 @@ $client->auth->gettokenwithclientcredentials(
 <dd>
 
 ```php
-$client->auth->refreshtoken(
-    new AuthRefreshTokenRequest([
+$client->auth->refreshToken(
+    new RefreshTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
         'refreshToken' => 'refresh_token',
-        'audience' => AuthRefreshTokenRequestAudience::HttpsApiExampleCom->value,
-        'grantType' => AuthRefreshTokenRequestGrantType::RefreshToken->value,
+        'audience' => 'https://api.example.com',
+        'grantType' => 'refresh_token',
+        'scope' => 'scope',
     ]),
 );
 ```
@@ -185,8 +187,8 @@ $client->auth->refreshtoken(
 </dl>
 </details>
 
-## NestedNoAuthApi
-<details><summary><code>$client-&gt;nestedNoAuthApi-&gt;nestedNoAuthApiGetSomething()</code></summary>
+## NestedNoAuth Api
+<details><summary><code>$client-&gt;nestedNoAuth-&gt;api-&gt;getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -199,7 +201,7 @@ $client->auth->refreshtoken(
 <dd>
 
 ```php
-$client->nestedNoAuthApi->nestedNoAuthApiGetSomething();
+$client->nestedNoAuth->api->getSomething();
 ```
 </dd>
 </dl>
@@ -211,8 +213,8 @@ $client->nestedNoAuthApi->nestedNoAuthApiGetSomething();
 </dl>
 </details>
 
-## NestedApi
-<details><summary><code>$client-&gt;nestedApi-&gt;nestedApiGetSomething()</code></summary>
+## Nested Api
+<details><summary><code>$client-&gt;nested-&gt;api-&gt;getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -225,7 +227,7 @@ $client->nestedNoAuthApi->nestedNoAuthApiGetSomething();
 <dd>
 
 ```php
-$client->nestedApi->nestedApiGetSomething();
+$client->nested->api->getSomething();
 ```
 </dd>
 </dl>
@@ -238,7 +240,7 @@ $client->nestedApi->nestedApiGetSomething();
 </details>
 
 ## Simple
-<details><summary><code>$client-&gt;simple-&gt;getsomething()</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -251,7 +253,7 @@ $client->nestedApi->nestedApiGetSomething();
 <dd>
 
 ```php
-$client->simple->getsomething();
+$client->simple->getSomething();
 ```
 </dd>
 </dl>

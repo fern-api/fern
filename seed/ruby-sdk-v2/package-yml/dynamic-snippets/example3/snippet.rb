@@ -2,7 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.service.nop(
-  id: "id",
-  nested_id: "nestedId"
-)
+client.service.nop(nested_id: "nestedId")

@@ -13,7 +13,10 @@
 <dd>
 
 ```ruby
-client.service.patch
+client.service.patch(
+  application: "application",
+  require_auth: true
+)
 ```
 </dd>
 </dl>
@@ -56,7 +59,7 @@ client.service.patch
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">patchcomplex</a>(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">patch_complex</a>(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -86,7 +89,19 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```ruby
-client.service.patchcomplex(id: "id")
+client.service.patch_complex(
+  id: "id",
+  name: "name",
+  age: 1,
+  active: true,
+  metadata: {},
+  tags: %w[tags tags],
+  email: "email",
+  nickname: "nickname",
+  bio: "bio",
+  profile_image_url: "profileImageUrl",
+  settings: {}
+)
 ```
 </dd>
 </dl>
@@ -201,7 +216,7 @@ client.service.patchcomplex(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">namedpatchwithmixed</a>(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">named_patch_with_mixed</a>(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -229,7 +244,12 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```ruby
-client.service.namedpatchwithmixed(id: "id")
+client.service.named_patch_with_mixed(
+  id: "id",
+  app_id: "appId",
+  instructions: "instructions",
+  active: true
+)
 ```
 </dd>
 </dl>
@@ -288,7 +308,7 @@ client.service.namedpatchwithmixed(id: "id")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">optionalmergepatchtest</a>(request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">optional_merge_patch_test</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -318,7 +338,13 @@ This endpoint should:
 <dd>
 
 ```ruby
-client.service.optionalmergepatchtest(required_field: "requiredField")
+client.service.optional_merge_patch_test(
+  required_field: "requiredField",
+  optional_string: "optionalString",
+  optional_integer: 1,
+  optional_boolean: true,
+  nullable_string: "nullableString"
+)
 ```
 </dd>
 </dl>
@@ -385,7 +411,7 @@ client.service.optionalmergepatchtest(required_field: "requiredField")
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">regularpatch</a>(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">regular_patch</a>(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -412,7 +438,11 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```ruby
-client.service.regularpatch(id: "id")
+client.service.regular_patch(
+  id: "id",
+  field1: "field1",
+  field2: 1
+)
 ```
 </dd>
 </dl>

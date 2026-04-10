@@ -10,6 +10,7 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Base Url](#base-url)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -55,18 +56,18 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.ec2.requests.Ec2BootInstanceRequest;
+import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
+import com.seed.multiUrlEnvironment.resources.ec2.requests.BootInstanceRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
             .builder()
             .token("<token>")
             .build();
 
-        client.ec2().bootinstance(
-            Ec2BootInstanceRequest
+        client.ec2().bootInstance(
+            BootInstanceRequest
                 .builder()
                 .size("size")
                 .build()
@@ -75,14 +76,28 @@ public class Example {
 }
 ```
 
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```java
+import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
+import com.seed.multiUrlEnvironment.core.Environment;
+
+SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
+    .builder()
+    .environment(Environment.Production)
+    .build();
+```
+
 ## Base Url
 
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
 
-SeedApiClient client = SeedApiClient
+SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
     .builder()
     .url("https://example.com")
     .build();
@@ -93,11 +108,11 @@ SeedApiClient client = SeedApiClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.api.core.SeedApiApiException;
+import com.seed.multiUrlEnvironment.core.SeedMultiUrlEnvironmentApiException;
 
 try{
-    client.ec2().bootinstance(...);
-} catch (SeedApiApiException e){
+    client.ec2().bootInstance(...);
+} catch (SeedMultiUrlEnvironmentApiException e){
     // Do something with the API exception...
 }
 ```
@@ -110,12 +125,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient
+SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -138,9 +153,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
 
-SeedApiClient client = SeedApiClient
+SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
     .builder()
     .maxRetries(1)
     .build();
@@ -150,17 +165,17 @@ SeedApiClient client = SeedApiClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
+import com.seed.multiUrlEnvironment.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.ec2().bootinstance(
+client.ec2().bootInstance(
     ...,
     RequestOptions
         .builder()
@@ -174,11 +189,11 @@ client.ec2().bootinstance(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.multiUrlEnvironment.SeedMultiUrlEnvironmentClient;
+import com.seed.multiUrlEnvironment.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedMultiUrlEnvironmentClient client = SeedMultiUrlEnvironmentClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -186,7 +201,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.ec2().bootinstance(
+client.ec2().bootInstance(
     ...,
     RequestOptions
         .builder()
@@ -202,7 +217,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.ec2().withRawResponse().bootinstance(...);
+SeedMultiUrlEnvironmentHttpResponse response = client.ec2().withRawResponse().bootInstance(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

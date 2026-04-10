@@ -4,8 +4,6 @@ namespace Seed;
 
 use Seed\Organization\OrganizationClient;
 use Seed\User\UserClient;
-use Seed\UserEvents\UserEventsClient;
-use Seed\UserEventsMetadata\UserEventsMetadataClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
@@ -20,16 +18,6 @@ class SeedClient
      * @var UserClient $user
      */
     public UserClient $user;
-
-    /**
-     * @var UserEventsClient $userEvents
-     */
-    public UserEventsClient $userEvents;
-
-    /**
-     * @var UserEventsMetadataClient $userEventsMetadata
-     */
-    public UserEventsMetadataClient $userEventsMetadata;
 
     /**
      * @var array{
@@ -79,7 +67,5 @@ class SeedClient
 
         $this->organization = new OrganizationClient($this->client, $this->options);
         $this->user = new UserClient($this->client, $this->options);
-        $this->userEvents = new UserEventsClient($this->client, $this->options);
-        $this->userEventsMetadata = new UserEventsMetadataClient($this->client, $this->options);
     }
 }

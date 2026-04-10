@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">ListresourcesAsync</a>(ServiceListResourcesRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Resource&gt;&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListResourcesAsync</a>(ListResourcesRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Resource&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,14 +27,16 @@ List resources with pagination
 <dd>
 
 ```csharp
-await client.Service.ListresourcesAsync(
-    new ServiceListResourcesRequest
+await client.Service.ListResourcesAsync(
+    new ListResourcesRequest
     {
         Page = 1,
         PerPage = 1,
-        Sort = "sort",
-        Order = "order",
+        Sort = "created_at",
+        Order = "desc",
         IncludeTotals = true,
+        Fields = "fields",
+        Search = "search",
     }
 );
 ```
@@ -51,7 +53,7 @@ await client.Service.ListresourcesAsync(
 <dl>
 <dd>
 
-**request:** `ServiceListResourcesRequest` 
+**request:** `ListResourcesRequest` 
     
 </dd>
 </dl>
@@ -63,7 +65,7 @@ await client.Service.ListresourcesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetresourceAsync</a>(ServiceGetResourceRequest { ... }) -> WithRawResponseTask&lt;Resource&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetResourceAsync</a>(resourceId, GetResourceRequest { ... }) -> WithRawResponseTask&lt;Resource&gt;</code></summary>
 <dl>
 <dd>
 
@@ -90,13 +92,9 @@ Get a single resource
 <dd>
 
 ```csharp
-await client.Service.GetresourceAsync(
-    new ServiceGetResourceRequest
-    {
-        ResourceId = "resourceId",
-        IncludeMetadata = true,
-        Format = "format",
-    }
+await client.Service.GetResourceAsync(
+    "resourceId",
+    new GetResourceRequest { IncludeMetadata = true, Format = "json" }
 );
 ```
 </dd>
@@ -112,7 +110,15 @@ await client.Service.GetresourceAsync(
 <dl>
 <dd>
 
-**request:** `ServiceGetResourceRequest` 
+**resourceId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GetResourceRequest` 
     
 </dd>
 </dl>
@@ -124,7 +130,7 @@ await client.Service.GetresourceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">SearchresourcesAsync</a>(ServiceSearchResourcesRequest { ... }) -> WithRawResponseTask&lt;SearchResponse&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">SearchResourcesAsync</a>(SearchResourcesRequest { ... }) -> WithRawResponseTask&lt;SearchResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -151,8 +157,20 @@ Search resources with complex parameters
 <dd>
 
 ```csharp
-await client.Service.SearchresourcesAsync(
-    new ServiceSearchResourcesRequest { Limit = 1, Offset = 1 }
+await client.Service.SearchResourcesAsync(
+    new SearchResourcesRequest
+    {
+        Limit = 1,
+        Offset = 1,
+        Query = "query",
+        Filters = new Dictionary<string, object?>()
+        {
+            {
+                "filters",
+                new Dictionary<object, object?>() { { "key", "value" } }
+            },
+        },
+    }
 );
 ```
 </dd>
@@ -168,7 +186,7 @@ await client.Service.SearchresourcesAsync(
 <dl>
 <dd>
 
-**request:** `ServiceSearchResourcesRequest` 
+**request:** `SearchResourcesRequest` 
     
 </dd>
 </dl>
@@ -180,7 +198,7 @@ await client.Service.SearchresourcesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">ListusersAsync</a>(ServiceListUsersRequest { ... }) -> WithRawResponseTask&lt;PaginatedUserResponse&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListUsersAsync</a>(ListUsersRequest { ... }) -> WithRawResponseTask&lt;PaginatedUserResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -207,7 +225,19 @@ List or search for users
 <dd>
 
 ```csharp
-await client.Service.ListusersAsync(new ServiceListUsersRequest());
+await client.Service.ListUsersAsync(
+    new ListUsersRequest
+    {
+        Page = 1,
+        PerPage = 1,
+        IncludeTotals = true,
+        Sort = "sort",
+        Connection = "connection",
+        Q = "q",
+        SearchEngine = "search_engine",
+        Fields = "fields",
+    }
+);
 ```
 </dd>
 </dl>
@@ -222,7 +252,7 @@ await client.Service.ListusersAsync(new ServiceListUsersRequest());
 <dl>
 <dd>
 
-**request:** `ServiceListUsersRequest` 
+**request:** `ListUsersRequest` 
     
 </dd>
 </dl>
@@ -234,7 +264,72 @@ await client.Service.ListusersAsync(new ServiceListUsersRequest());
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">CreateuserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetUserByIdAsync</a>(userId, GetUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a user by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Service.GetUserByIdAsync(
+    "userId",
+    new GetUserRequest { Fields = "fields", IncludeFields = true }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GetUserRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">CreateUserAsync</a>(CreateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -261,8 +356,31 @@ Create a new user
 <dd>
 
 ```csharp
-await client.Service.CreateuserAsync(
-    new CreateUserRequest { Email = "email", Connection = "connection" }
+await client.Service.CreateUserAsync(
+    new CreateUserRequest
+    {
+        Email = "email",
+        EmailVerified = true,
+        Username = "username",
+        Password = "password",
+        PhoneNumber = "phone_number",
+        PhoneVerified = true,
+        UserMetadata = new Dictionary<string, object?>()
+        {
+            {
+                "user_metadata",
+                new Dictionary<object, object?>() { { "key", "value" } }
+            },
+        },
+        AppMetadata = new Dictionary<string, object?>()
+        {
+            {
+                "app_metadata",
+                new Dictionary<object, object?>() { { "key", "value" } }
+            },
+        },
+        Connection = "connection",
+    }
 );
 ```
 </dd>
@@ -290,115 +408,7 @@ await client.Service.CreateuserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetuserbyidAsync</a>(ServiceGetUserByIdRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a user by ID
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Service.GetuserbyidAsync(new ServiceGetUserByIdRequest { UserId = "userId" });
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `ServiceGetUserByIdRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">DeleteuserAsync</a>(ServiceDeleteUserRequest { ... })</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```csharp
-await client.Service.DeleteuserAsync(new ServiceDeleteUserRequest { UserId = "userId" });
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `ServiceDeleteUserRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">UpdateuserAsync</a>(UpdateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">UpdateUserAsync</a>(userId, UpdateUserRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -425,7 +435,33 @@ Update a user
 <dd>
 
 ```csharp
-await client.Service.UpdateuserAsync(new UpdateUserRequest { UserId = "userId" });
+await client.Service.UpdateUserAsync(
+    "userId",
+    new UpdateUserRequest
+    {
+        Email = "email",
+        EmailVerified = true,
+        Username = "username",
+        PhoneNumber = "phone_number",
+        PhoneVerified = true,
+        UserMetadata = new Dictionary<string, object?>()
+        {
+            {
+                "user_metadata",
+                new Dictionary<object, object?>() { { "key", "value" } }
+            },
+        },
+        AppMetadata = new Dictionary<string, object?>()
+        {
+            {
+                "app_metadata",
+                new Dictionary<object, object?>() { { "key", "value" } }
+            },
+        },
+        Password = "password",
+        Blocked = true,
+    }
+);
 ```
 </dd>
 </dl>
@@ -436,6 +472,14 @@ await client.Service.UpdateuserAsync(new UpdateUserRequest { UserId = "userId" }
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -452,7 +496,61 @@ await client.Service.UpdateuserAsync(new UpdateUserRequest { UserId = "userId" }
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">ListconnectionsAsync</a>(ServiceListConnectionsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Connection&gt;&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">DeleteUserAsync</a>(userId)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Service.DeleteUserAsync("userId");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListConnectionsAsync</a>(ListConnectionsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Connection&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -479,7 +577,14 @@ List all connections
 <dd>
 
 ```csharp
-await client.Service.ListconnectionsAsync(new ServiceListConnectionsRequest());
+await client.Service.ListConnectionsAsync(
+    new ListConnectionsRequest
+    {
+        Strategy = "strategy",
+        Name = "name",
+        Fields = "fields",
+    }
+);
 ```
 </dd>
 </dl>
@@ -494,7 +599,7 @@ await client.Service.ListconnectionsAsync(new ServiceListConnectionsRequest());
 <dl>
 <dd>
 
-**request:** `ServiceListConnectionsRequest` 
+**request:** `ListConnectionsRequest` 
     
 </dd>
 </dl>
@@ -506,7 +611,7 @@ await client.Service.ListconnectionsAsync(new ServiceListConnectionsRequest());
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetconnectionAsync</a>(ServiceGetConnectionRequest { ... }) -> WithRawResponseTask&lt;Connection&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetConnectionAsync</a>(connectionId, GetConnectionRequest { ... }) -> WithRawResponseTask&lt;Connection&gt;</code></summary>
 <dl>
 <dd>
 
@@ -533,8 +638,9 @@ Get a connection by ID
 <dd>
 
 ```csharp
-await client.Service.GetconnectionAsync(
-    new ServiceGetConnectionRequest { ConnectionId = "connectionId" }
+await client.Service.GetConnectionAsync(
+    "connectionId",
+    new GetConnectionRequest { Fields = "fields" }
 );
 ```
 </dd>
@@ -550,7 +656,15 @@ await client.Service.GetconnectionAsync(
 <dl>
 <dd>
 
-**request:** `ServiceGetConnectionRequest` 
+**connectionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GetConnectionRequest` 
     
 </dd>
 </dl>
@@ -562,7 +676,7 @@ await client.Service.GetconnectionAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">ListclientsAsync</a>(ServiceListClientsRequest { ... }) -> WithRawResponseTask&lt;PaginatedClientResponse&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListClientsAsync</a>(ListClientsRequest { ... }) -> WithRawResponseTask&lt;PaginatedClientResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -589,7 +703,19 @@ List all clients/applications
 <dd>
 
 ```csharp
-await client.Service.ListclientsAsync(new ServiceListClientsRequest());
+await client.Service.ListClientsAsync(
+    new ListClientsRequest
+    {
+        Fields = "fields",
+        IncludeFields = true,
+        Page = 1,
+        PerPage = 1,
+        IncludeTotals = true,
+        IsGlobal = true,
+        IsFirstParty = true,
+        AppType = new List<string>() { "app_type", "app_type" },
+    }
+);
 ```
 </dd>
 </dl>
@@ -604,7 +730,7 @@ await client.Service.ListclientsAsync(new ServiceListClientsRequest());
 <dl>
 <dd>
 
-**request:** `ServiceListClientsRequest` 
+**request:** `ListClientsRequest` 
     
 </dd>
 </dl>
@@ -616,7 +742,7 @@ await client.Service.ListclientsAsync(new ServiceListClientsRequest());
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GetclientAsync</a>(ServiceGetClientRequest { ... }) -> WithRawResponseTask&lt;Client&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">GetClientAsync</a>(clientId, GetClientRequest { ... }) -> WithRawResponseTask&lt;Client&gt;</code></summary>
 <dl>
 <dd>
 
@@ -643,7 +769,10 @@ Get a client by ID
 <dd>
 
 ```csharp
-await client.Service.GetclientAsync(new ServiceGetClientRequest { ClientId = "clientId" });
+await client.Service.GetClientAsync(
+    "clientId",
+    new GetClientRequest { Fields = "fields", IncludeFields = true }
+);
 ```
 </dd>
 </dl>
@@ -658,7 +787,15 @@ await client.Service.GetclientAsync(new ServiceGetClientRequest { ClientId = "cl
 <dl>
 <dd>
 
-**request:** `ServiceGetClientRequest` 
+**clientId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GetClientRequest` 
     
 </dd>
 </dl>

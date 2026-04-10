@@ -1,12 +1,16 @@
 import Foundation
-import Api
+import Enum
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = EnumClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.inlinedrequest.send(request: .init(
+    _ = try await client.inlinedRequest.send(request: .init(
         operand: .greaterThan,
+        maybeOperand: .greaterThan,
         operandOrColor: ColorOrOperand.color(
+            .red
+        ),
+        maybeOperandOrColor: ColorOrOperand.color(
             .red
         )
     ))

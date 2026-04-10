@@ -20,10 +20,17 @@ func do() {
     request := &fern.RerankRequest{
         Documents: []*fern.DocumentItem{
             &fern.DocumentItem{
-                String: "documents",
+                DocumentObject: &fern.DocumentObject{
+                    Text: "Carson City is the capital city of the American state of Nevada.",
+                },
+            },
+            &fern.DocumentItem{
+                DocumentObject: &fern.DocumentObject{
+                    Text: "Washington, D.C. is the capital of the United States.",
+                },
             },
         },
-        Query: "query",
+        Query: "What is the capital of the United States?",
     }
     client.Service.Rerank(
         context.TODO(),

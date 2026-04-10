@@ -1,12 +1,12 @@
 openapi: 3.0.1
 info:
-  title: header-auth-environment-variable
+  title: header-token-environment-variable
   version: ''
 paths:
   /apiKey:
     get:
       description: GET request with custom api key
-      operationId: service_getwithbearertoken
+      operationId: service_getWithBearerToken
       tags:
         - Service
       parameters: []
@@ -17,15 +17,12 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Example1:
-                  value: string
       security:
-        - HeaderTokenAuthAuth: []
+        - Header: []
 components:
   schemas: {}
   securitySchemes:
-    HeaderTokenAuthAuth:
+    Header:
       type: apiKey
       in: header
       name: x-api-key

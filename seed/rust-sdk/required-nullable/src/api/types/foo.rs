@@ -56,7 +56,9 @@ impl FooBuilder {
             bar: self.bar,
             nullable_bar: self.nullable_bar,
             nullable_required_bar: self.nullable_required_bar,
-            required_bar: self.required_bar.ok_or_else(|| BuildError::missing_field("required_bar"))?,
+            required_bar: self
+                .required_bar
+                .ok_or_else(|| BuildError::missing_field("required_bar"))?,
         })
     }
 }

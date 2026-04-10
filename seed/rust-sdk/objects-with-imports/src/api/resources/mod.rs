@@ -1,17 +1,25 @@
 //! Service clients and API endpoints
 //!
-//! This module provides the client implementations for all available services.
+//! This module contains client implementations for:
+//!
+//! - **Commons**
+//! - **File**
 
 use crate::{ApiError, ClientConfig};
 
-pub struct ApiClient {
+pub mod commons;
+pub mod file;
+pub struct ObjectsWithImportsClient {
     pub config: ClientConfig,
 }
 
-impl ApiClient {
+impl ObjectsWithImportsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
         })
     }
 }
+
+pub use commons::CommonsClient;
+pub use file::FileClient;

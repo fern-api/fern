@@ -1,28 +1,28 @@
-//! # oauth-client-credentials-environment-variables SDK
+//! # OauthClientCredentialsEnvironmentVariables SDK
 //!
-//! The official Rust SDK for the oauth-client-credentials-environment-variables.
+//! The official Rust SDK for the OauthClientCredentialsEnvironmentVariables.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_oauth_client_credentials_environment_variables::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
-//!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = OauthClientCredentialsEnvironmentVariablesClient::new(config)
+//!         .expect("Failed to build client");
 //!     client
 //!         .auth
-//!         .gettokenwithclientcredentials(
-//!             &AuthGetTokenWithClientCredentialsRequest {
+//!         .get_token_with_client_credentials(
+//!             &GetTokenRequest {
 //!                 client_id: "client_id".to_string(),
 //!                 client_secret: "client_secret".to_string(),
-//!                 audience: AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom,
-//!                 grant_type: AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials,
-//!                 scope: None,
+//!                 audience: "https://api.example.com".to_string(),
+//!                 grant_type: "client_credentials".to_string(),
+//!                 scope: Some("scope".to_string()),
 //!             },
 //!             None,
 //!         )

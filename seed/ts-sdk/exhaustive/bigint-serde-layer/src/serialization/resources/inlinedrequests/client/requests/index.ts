@@ -1,1 +1,1 @@
-export { InlinedRequestsPostWithObjectBodyandResponseRequest } from "./InlinedRequestsPostWithObjectBodyandResponseRequest.js";
+export { PostWithObjectBody } from "./PostWithObjectBody.js";

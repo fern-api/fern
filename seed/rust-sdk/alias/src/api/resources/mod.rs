@@ -1,25 +1,31 @@
 //! Service clients and API endpoints
 //!
-//! This module contains client implementations for:
-//!
-//! - ****
+//! This module provides the client implementations for all available services.
 
-use crate::{ClientConfig, ApiError};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
-pub mod ;
-pub struct ApiClient {
+pub struct AliasClient {
     pub config: ClientConfig,
-    pub : Client,
+    pub http_client: HttpClient,
 }
 
-impl ApiClient {
+impl AliasClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            : Client::new(config.clone())?
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
+    pub async fn get(
+        &self,
+        type_id: &TypeId,
+        options: Option<RequestOptions>,
+    ) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(Method::GET, &format!("/{}", type_id.0), None, None, options)
+            .await
+    }
 }
-
-pub use ::Client;

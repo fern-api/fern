@@ -4,6 +4,7 @@ package service
 
 import (
 	context "context"
+	os "os"
 
 	core "github.com/bearer-token-environment-variable/fern/core"
 	internal "github.com/bearer-token-environment-variable/fern/internal"
@@ -19,6 +20,9 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
+	if options.APIKey == "" {
+		options.APIKey = os.Getenv("COURIER_API_KEY")
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
@@ -33,11 +37,11 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET request with custom api key
-func (c *Client) Getwithbearertoken(
+func (c *Client) GetWithBearerToken(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.Getwithbearertoken(
+	response, err := c.WithRawResponse.GetWithBearerToken(
 		ctx,
 		opts...,
 	)

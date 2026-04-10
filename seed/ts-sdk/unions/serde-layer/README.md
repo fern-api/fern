@@ -10,7 +10,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -40,25 +39,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/unions";
+import { SeedUnionsClient } from "@fern/unions";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client.bigunion.get({
-    id: "id"
-});
-```
-
-## Request and Response Types
-
-The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
-following namespace:
-
-```typescript
-import { SeedApi } from "@fern/unions";
-
-const request: SeedApi.BigunionGetRequest = {
-    ...
-};
+const client = new SeedUnionsClient({ environment: "YOUR_BASE_URL" });
+await client.bigunion.get("id");
 ```
 
 ## Exception Handling
@@ -67,12 +51,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/unions";
+import { SeedUnionsError } from "@fern/unions";
 
 try {
     await client.bigunion.get(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedUnionsError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -98,9 +82,9 @@ const client = new BigunionClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/unions";
+import { SeedUnionsClient } from "@fern/unions";
 
-const client = new SeedApiClient({
+const client = new SeedUnionsClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -185,9 +169,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/unions";
+import { SeedUnionsClient, logging } from "@fern/unions";
 
-const client = new SeedApiClient({
+const client = new SeedUnionsClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

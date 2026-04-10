@@ -5,8 +5,8 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.service.getuserbyid(
-  user_id: "userId",
+client.service.get_client(
+  client_id: "clientId",
   fields: "fields",
   include_fields: true
 )

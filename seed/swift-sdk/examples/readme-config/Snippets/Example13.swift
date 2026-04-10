@@ -1,13 +1,13 @@
 import Foundation
-import Api
+import Examples
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExamplesClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.service.getmovie(movieId: "movieId")
+    _ = try await client.service.getMovie(movieId: "movie-c06a4ad7")
 }
 
 try await main()

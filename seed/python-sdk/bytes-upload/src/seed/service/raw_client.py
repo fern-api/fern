@@ -58,7 +58,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def uploadwithqueryparams(
+    def upload_with_query_params(
         self,
         *,
         model: str,
@@ -155,7 +155,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def uploadwithqueryparams(
+    async def upload_with_query_params(
         self,
         *,
         model: str,

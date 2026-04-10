@@ -28,18 +28,15 @@ public final class Patient implements IBaseResource {
 
   private final Memo memo;
 
-  private final PatientResourceType resourceType;
-
   private final String name;
 
   private final List<Script> scripts;
 
-  private Patient(String id, List<ResourceList> relatedResources, Memo memo,
-      PatientResourceType resourceType, String name, List<Script> scripts) {
+  private Patient(String id, List<ResourceList> relatedResources, Memo memo, String name,
+      List<Script> scripts) {
     this.id = id;
     this.relatedResources = relatedResources;
     this.memo = memo;
-    this.resourceType = resourceType;
     this.name = name;
     this.scripts = scripts;
   }
@@ -63,8 +60,8 @@ public final class Patient implements IBaseResource {
   }
 
   @JsonProperty("resource_type")
-  public PatientResourceType getResourceType() {
-    return resourceType;
+  public String getResourceType() {
+    return "Patient";
   }
 
   @JsonProperty("name")
@@ -84,12 +81,12 @@ public final class Patient implements IBaseResource {
   }
 
   private boolean equalTo(Patient other) {
-    return id.equals(other.id) && relatedResources.equals(other.relatedResources) && memo.equals(other.memo) && resourceType.equals(other.resourceType) && name.equals(other.name) && scripts.equals(other.scripts);
+    return id.equals(other.id) && relatedResources.equals(other.relatedResources) && memo.equals(other.memo) && name.equals(other.name) && scripts.equals(other.scripts);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.id, this.relatedResources, this.memo, this.resourceType, this.name, this.scripts);
+    return Objects.hash(this.id, this.relatedResources, this.memo, this.name, this.scripts);
   }
 
   @java.lang.Override
@@ -108,11 +105,7 @@ public final class Patient implements IBaseResource {
   }
 
   public interface MemoStage {
-    ResourceTypeStage memo(Memo memo);
-  }
-
-  public interface ResourceTypeStage {
-    NameStage resourceType(PatientResourceType resourceType);
+    NameStage memo(Memo memo);
   }
 
   public interface NameStage {
@@ -138,12 +131,10 @@ public final class Patient implements IBaseResource {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, MemoStage, ResourceTypeStage, NameStage, _FinalStage {
+  public static final class Builder implements IdStage, MemoStage, NameStage, _FinalStage {
     private String id;
 
     private Memo memo;
-
-    private PatientResourceType resourceType;
 
     private String name;
 
@@ -159,7 +150,6 @@ public final class Patient implements IBaseResource {
       id(other.getId());
       relatedResources(other.getRelatedResources());
       memo(other.getMemo());
-      resourceType(other.getResourceType());
       name(other.getName());
       scripts(other.getScripts());
       return this;
@@ -174,15 +164,8 @@ public final class Patient implements IBaseResource {
 
     @java.lang.Override
     @JsonSetter("memo")
-    public ResourceTypeStage memo(Memo memo) {
+    public NameStage memo(Memo memo) {
       this.memo = Objects.requireNonNull(memo, "memo must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("resource_type")
-    public NameStage resourceType(PatientResourceType resourceType) {
-      this.resourceType = Objects.requireNonNull(resourceType, "resourceType must not be null");
       return this;
     }
 
@@ -249,7 +232,7 @@ public final class Patient implements IBaseResource {
 
     @java.lang.Override
     public Patient build() {
-      return new Patient(id, relatedResources, memo, resourceType, name, scripts);
+      return new Patient(id, relatedResources, memo, name, scripts);
     }
   }
 }

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-&gt;auth-&gt;gettoken($request) -> ?AuthTokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;getToken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,13 @@
 <dd>
 
 ```php
-$client->auth->gettoken(
-    new AuthGetTokenRequest([
+$client->auth->getToken(
+    new GetTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
-        'audience' => AuthGetTokenRequestAudience::HttpsApiExampleCom->value,
-        'grantType' => AuthGetTokenRequestGrantType::ClientCredentials->value,
+        'audience' => 'https://api.example.com',
+        'grantType' => 'client_credentials',
+        'scope' => 'scope',
     ]),
 );
 ```
@@ -79,8 +80,8 @@ $client->auth->gettoken(
 </dl>
 </details>
 
-## NestedNoAuthApi
-<details><summary><code>$client-&gt;nestedNoAuthApi-&gt;nestedNoAuthApiGetSomething()</code></summary>
+## NestedNoAuth Api
+<details><summary><code>$client-&gt;nestedNoAuth-&gt;api-&gt;getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +94,7 @@ $client->auth->gettoken(
 <dd>
 
 ```php
-$client->nestedNoAuthApi->nestedNoAuthApiGetSomething();
+$client->nestedNoAuth->api->getSomething();
 ```
 </dd>
 </dl>
@@ -105,8 +106,8 @@ $client->nestedNoAuthApi->nestedNoAuthApiGetSomething();
 </dl>
 </details>
 
-## NestedApi
-<details><summary><code>$client-&gt;nestedApi-&gt;nestedApiGetSomething()</code></summary>
+## Nested Api
+<details><summary><code>$client-&gt;nested-&gt;api-&gt;getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -119,7 +120,7 @@ $client->nestedNoAuthApi->nestedNoAuthApiGetSomething();
 <dd>
 
 ```php
-$client->nestedApi->nestedApiGetSomething();
+$client->nested->api->getSomething();
 ```
 </dd>
 </dl>
@@ -132,7 +133,7 @@ $client->nestedApi->nestedApiGetSomething();
 </details>
 
 ## Simple
-<details><summary><code>$client-&gt;simple-&gt;getsomething()</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -145,7 +146,7 @@ $client->nestedApi->nestedApiGetSomething();
 <dd>
 
 ```php
-$client->simple->getsomething();
+$client->simple->getSomething();
 ```
 </dd>
 </dl>

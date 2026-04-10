@@ -1,22 +1,26 @@
-using SeedApi;
+using SeedStreaming;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedStreamingClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Dummy.GenerateAsync(
-            new DummyGenerateRequest {
+        await foreach (var item in client.Dummy.GenerateStreamAsync(
+            new GenerateStreamRequest {
                 Stream = true,
                 NumEvents = 1
             }
-        );
+        ))
+        {
+            /* consume each item */
+        }
+        ;
     }
 
 }

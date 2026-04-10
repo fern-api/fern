@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,12 +7,14 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_nested_with_optional_field(
-            &TypesNestedObjectWithOptionalField {
-                ..Default::default()
+        .endpoints
+        .params
+        .get_with_inline_path_and_query(
+            &"param".to_string(),
+            &GetWithInlinePathAndQueryQueryRequest {
+                query: "query".to_string(),
             },
             None,
         )

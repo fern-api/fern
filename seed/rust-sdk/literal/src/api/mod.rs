@@ -1,7 +1,6 @@
-//! API client and types for the literal
+//! API client and types for the Literal
 //!
-//! This module contains all the API definitions including request/response types
-//! and client implementations for interacting with the API.
+//! Test definition for literal schemas.
 //!
 //! ## Modules
 //!
@@ -12,6 +11,6 @@ pub mod resources;
 pub mod types;
 
 pub use resources::{
-    ApiClient, HeadersClient, InlinedClient, PathClient, QueryClient, ReferenceClient,
+    HeadersClient, InlinedClient, LiteralClient, PathClient, QueryClient, ReferenceClient,
 };
 pub use types::*;

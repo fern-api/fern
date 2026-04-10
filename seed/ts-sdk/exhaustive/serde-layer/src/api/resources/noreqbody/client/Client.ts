@@ -7,36 +7,36 @@ import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedExhaustive from "../../../index.js";
 
-export declare namespace NoreqbodyClient {
+export declare namespace NoReqBodyClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class NoreqbodyClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<NoreqbodyClient.Options>;
+export class NoReqBodyClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<NoReqBodyClient.Options>;
 
-    constructor(options: NoreqbodyClient.Options) {
+    constructor(options: NoReqBodyClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
-     * @param {NoreqbodyClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.noreqbody.getwithnorequestbody()
+     *     await client.noReqBody.getWithNoRequestBody()
      */
-    public getwithnorequestbody(
-        requestOptions?: NoreqbodyClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromPromise(this.__getwithnorequestbody(requestOptions));
+    public getWithNoRequestBody(
+        requestOptions?: NoReqBodyClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
     }
 
-    private async __getwithnorequestbody(
-        requestOptions?: NoreqbodyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.TypesObjectWithOptionalField>> {
+    private async __getWithNoRequestBody(
+        requestOptions?: NoReqBodyClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -47,7 +47,7 @@ export class NoreqbodyClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "no-req-body",
+                "/no-req-body",
             ),
             method: "GET",
             headers: _headers,
@@ -60,7 +60,7 @@ export class NoreqbodyClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.TypesObjectWithOptionalField.parseOrThrow(_response.body, {
+                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -72,7 +72,7 @@ export class NoreqbodyClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -83,17 +83,17 @@ export class NoreqbodyClient {
     }
 
     /**
-     * @param {NoreqbodyClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.noreqbody.postwithnorequestbody()
+     *     await client.noReqBody.postWithNoRequestBody()
      */
-    public postwithnorequestbody(requestOptions?: NoreqbodyClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__postwithnorequestbody(requestOptions));
+    public postWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__postWithNoRequestBody(requestOptions));
     }
 
-    private async __postwithnorequestbody(
-        requestOptions?: NoreqbodyClient.RequestOptions,
+    private async __postWithNoRequestBody(
+        requestOptions?: NoReqBodyClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -105,7 +105,7 @@ export class NoreqbodyClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "no-req-body",
+                "/no-req-body",
             ),
             method: "POST",
             headers: _headers,
@@ -118,7 +118,7 @@ export class NoreqbodyClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.noreqbody.postwithnorequestbody.Response.parseOrThrow(_response.body, {
+                data: serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -130,7 +130,7 @@ export class NoreqbodyClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

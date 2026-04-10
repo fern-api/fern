@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Getwithcustomheader(
+func (r *RawClient) GetWithCustomHeader(
 	ctx context.Context,
-	request *fern.ReqWithHeadersGetWithCustomHeaderRequest,
+	request *fern.ReqWithHeaders,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,8 +47,7 @@ func (r *RawClient) Getwithcustomheader(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-TEST-ENDPOINT-HEADER", request.TestEndpointHeader)
-	headers.Add("Content-Type", "application/json")
+	headers.Add("X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader)
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{

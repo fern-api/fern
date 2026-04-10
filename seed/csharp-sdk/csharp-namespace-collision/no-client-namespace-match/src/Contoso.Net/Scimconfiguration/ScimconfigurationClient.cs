@@ -2,20 +2,20 @@ using Contoso.Net;
 using Contoso.Net.Core;
 using global::System.Text.Json;
 
-namespace Contoso.Net.Scimconfiguration;
+namespace Contoso.Net.ScimConfiguration;
 
-public partial class ScimconfigurationClient : IScimconfigurationClient
+public partial class ScimConfigurationClient : IScimConfigurationClient
 {
     private readonly RawClient _client;
 
-    internal ScimconfigurationClient(RawClient client)
+    internal ScimConfigurationClient(RawClient client)
     {
         _client = client;
     }
 
     private async global::System.Threading.Tasks.Task<
-        WithRawResponse<ScimConfigurationScimConfiguration>
-    > GetconfigurationAsyncCore(
+        WithRawResponse<ScimConfiguration>
+    > GetConfigurationAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -31,7 +31,7 @@ public partial class ScimconfigurationClient : IScimconfigurationClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "scim-configuration",
+                    Path = "/scim-configuration",
                     Headers = _headers,
                     Options = options,
                 },
@@ -45,10 +45,8 @@ public partial class ScimconfigurationClient : IScimconfigurationClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<ScimConfigurationScimConfiguration>(
-                    responseBody
-                )!;
-                return new WithRawResponse<ScimConfigurationScimConfiguration>()
+                var responseData = JsonUtils.Deserialize<ScimConfiguration>(responseBody)!;
+                return new WithRawResponse<ScimConfiguration>()
                 {
                     Data = responseData,
                     RawResponse = new RawResponse()
@@ -82,9 +80,9 @@ public partial class ScimconfigurationClient : IScimconfigurationClient
     }
 
     private async global::System.Threading.Tasks.Task<
-        WithRawResponse<ScimConfigurationScimToken>
-    > CreatetokenAsyncCore(
-        ScimConfigurationScimToken request,
+        WithRawResponse<ScimToken>
+    > CreateTokenAsyncCore(
+        ScimToken request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -100,10 +98,9 @@ public partial class ScimconfigurationClient : IScimconfigurationClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "scim-configuration/tokens",
+                    Path = "/scim-configuration/tokens",
                     Body = request,
                     Headers = _headers,
-                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -116,8 +113,8 @@ public partial class ScimconfigurationClient : IScimconfigurationClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<ScimConfigurationScimToken>(responseBody)!;
-                return new WithRawResponse<ScimConfigurationScimToken>()
+                var responseData = JsonUtils.Deserialize<ScimToken>(responseBody)!;
+                return new WithRawResponse<ScimToken>()
                 {
                     Data = responseData,
                     RawResponse = new RawResponse()
@@ -151,8 +148,8 @@ public partial class ScimconfigurationClient : IScimconfigurationClient
     }
 
     private async global::System.Threading.Tasks.Task<
-        WithRawResponse<IEnumerable<User>>
-    > ListusersAsyncCore(
+        WithRawResponse<IEnumerable<Contoso.Net.User>>
+    > ListUsersAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -168,7 +165,7 @@ public partial class ScimconfigurationClient : IScimconfigurationClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "scim-configuration/users",
+                    Path = "/scim-configuration/users",
                     Headers = _headers,
                     Options = options,
                 },
@@ -182,8 +179,10 @@ public partial class ScimconfigurationClient : IScimconfigurationClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<IEnumerable<User>>(responseBody)!;
-                return new WithRawResponse<IEnumerable<User>>()
+                var responseData = JsonUtils.Deserialize<IEnumerable<Contoso.Net.User>>(
+                    responseBody
+                )!;
+                return new WithRawResponse<IEnumerable<Contoso.Net.User>>()
                 {
                     Data = responseData,
                     RawResponse = new RawResponse()
@@ -217,44 +216,50 @@ public partial class ScimconfigurationClient : IScimconfigurationClient
     }
 
     /// <example><code>
-    /// await client.Scimconfiguration.GetconfigurationAsync();
+    /// await client.ScimConfiguration.GetConfigurationAsync();
     /// </code></example>
-    public WithRawResponseTask<ScimConfigurationScimConfiguration> GetconfigurationAsync(
+    public WithRawResponseTask<ScimConfiguration> GetConfigurationAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<ScimConfigurationScimConfiguration>(
-            GetconfigurationAsyncCore(options, cancellationToken)
+        return new WithRawResponseTask<ScimConfiguration>(
+            GetConfigurationAsyncCore(options, cancellationToken)
         );
     }
 
     /// <example><code>
-    /// await client.Scimconfiguration.CreatetokenAsync(
-    ///     new ScimConfigurationScimToken { TokenId = "tokenId", CreatedAt = "createdAt" }
+    /// await client.ScimConfiguration.CreateTokenAsync(
+    ///     new ScimToken
+    ///     {
+    ///         TokenId = "tokenId",
+    ///         Token = "token",
+    ///         Scopes = new List&lt;string&gt;() { "scopes", "scopes" },
+    ///         CreatedAt = "createdAt",
+    ///     }
     /// );
     /// </code></example>
-    public WithRawResponseTask<ScimConfigurationScimToken> CreatetokenAsync(
-        ScimConfigurationScimToken request,
+    public WithRawResponseTask<ScimToken> CreateTokenAsync(
+        ScimToken request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<ScimConfigurationScimToken>(
-            CreatetokenAsyncCore(request, options, cancellationToken)
+        return new WithRawResponseTask<ScimToken>(
+            CreateTokenAsyncCore(request, options, cancellationToken)
         );
     }
 
     /// <example><code>
-    /// await client.Scimconfiguration.ListusersAsync();
+    /// await client.ScimConfiguration.ListUsersAsync();
     /// </code></example>
-    public WithRawResponseTask<IEnumerable<User>> ListusersAsync(
+    public WithRawResponseTask<IEnumerable<Contoso.Net.User>> ListUsersAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<IEnumerable<User>>(
-            ListusersAsyncCore(options, cancellationToken)
+        return new WithRawResponseTask<IEnumerable<Contoso.Net.User>>(
+            ListUsersAsyncCore(options, cancellationToken)
         );
     }
 }

@@ -40,12 +40,11 @@ class UnknownClient:
         -------
         typing.List[typing.Any]
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUnknownAsAny
 
-        client = SeedApi(
+        client = SeedUnknownAsAny(
             base_url="https://yourhost.com/path/to/api",
         )
         client.unknown.post(
@@ -55,7 +54,7 @@ class UnknownClient:
         _response = self._raw_client.post(request=request, request_options=request_options)
         return _response.data
 
-    def postobject(
+    def post_object(
         self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[typing.Any]:
         """
@@ -70,19 +69,18 @@ class UnknownClient:
         -------
         typing.List[typing.Any]
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedUnknownAsAny
 
-        client = SeedApi(
+        client = SeedUnknownAsAny(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.unknown.postobject(
+        client.unknown.post_object(
             unknown={"key": "value"},
         )
         """
-        _response = self._raw_client.postobject(unknown=unknown, request_options=request_options)
+        _response = self._raw_client.post_object(unknown=unknown, request_options=request_options)
         return _response.data
 
 
@@ -116,14 +114,13 @@ class AsyncUnknownClient:
         -------
         typing.List[typing.Any]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUnknownAsAny
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUnknownAsAny(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -139,7 +136,7 @@ class AsyncUnknownClient:
         _response = await self._raw_client.post(request=request, request_options=request_options)
         return _response.data
 
-    async def postobject(
+    async def post_object(
         self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[typing.Any]:
         """
@@ -154,25 +151,24 @@ class AsyncUnknownClient:
         -------
         typing.List[typing.Any]
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedUnknownAsAny
 
-        client = AsyncSeedApi(
+        client = AsyncSeedUnknownAsAny(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.unknown.postobject(
+            await client.unknown.post_object(
                 unknown={"key": "value"},
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.postobject(unknown=unknown, request_options=request_options)
+        _response = await self._raw_client.post_object(unknown=unknown, request_options=request_options)
         return _response.data

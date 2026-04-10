@@ -1,4 +1,4 @@
-//! API client and types for the public-object
+//! API client and types for the PublicObject
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -9,4 +9,4 @@
 
 pub mod resources;
 
-pub use resources::{ApiClient, ServiceClient};
+pub use resources::{PublicObjectClient, ServiceClient};

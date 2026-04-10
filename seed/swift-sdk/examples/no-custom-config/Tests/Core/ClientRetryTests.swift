@@ -1,4 +1,4 @@
-import Api
+import Examples
 import Foundation
 import Testing
 
@@ -14,15 +14,15 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -42,15 +42,15 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -70,15 +70,15 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -97,15 +97,15 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -123,15 +123,15 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -150,15 +150,15 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -177,15 +177,15 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -208,7 +208,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -216,8 +216,8 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -250,7 +250,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -258,8 +258,8 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -288,7 +288,7 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
@@ -296,8 +296,8 @@ import Testing
 
         let startTime = Date()
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -338,15 +338,15 @@ import Testing
             ),
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(maxRetries: 5, additionalHeaders: stub.headers)
             )
 
@@ -361,15 +361,15 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(maxRetries: 0, additionalHeaders: stub.headers)
             )
 
@@ -388,15 +388,15 @@ import Testing
             )
         ])
 
-        let client = ApiClient(
+        let client = ExamplesClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
 
         do {
-            _ = try await client..echo(
-                request: "string",
+            _ = try await client.echo(
+                request: "Hello world!\n\nwith\n\tnewlines",
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 

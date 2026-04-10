@@ -14,11 +14,25 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.QueryParamSendRequest{
-        Operand: fern.OperandGreaterThan,
-        OperandOrColor: fern.ColorRed,
+    request := &fern.SendEnumListAsQueryParamRequest{
+        Operand: []fern.Operand{
+            fern.OperandGreaterThan,
+        },
+        MaybeOperand: []*fern.Operand{
+            fern.OperandGreaterThan.Ptr(),
+        },
+        OperandOrColor: []*fern.ColorOrOperand{
+            &fern.ColorOrOperand{
+                Color: fern.ColorRed,
+            },
+        },
+        MaybeOperandOrColor: []*fern.ColorOrOperand{
+            &fern.ColorOrOperand{
+                Color: fern.ColorRed,
+            },
+        },
     }
-    client.Queryparam.Send(
+    client.QueryParam.SendList(
         context.TODO(),
         request,
     )

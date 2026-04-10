@@ -6,30 +6,20 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import TokenResponse
-    from . import auth, nested_api, simple
+    from . import auth, nested, simple
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .auth import (
-        AuthGetTokenWithClientCredentialsRequestAudience,
-        AuthGetTokenWithClientCredentialsRequestGrantType,
-        AuthRefreshTokenRequestAudience,
-        AuthRefreshTokenRequestGrantType,
-    )
-    from .client import AsyncSeedApi, SeedApi
+    from .auth import TokenResponse
+    from .client import AsyncSeedOauthClientCredentialsMandatoryAuth, SeedOauthClientCredentialsMandatoryAuth
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
-    "AuthGetTokenWithClientCredentialsRequestAudience": ".auth",
-    "AuthGetTokenWithClientCredentialsRequestGrantType": ".auth",
-    "AuthRefreshTokenRequestAudience": ".auth",
-    "AuthRefreshTokenRequestGrantType": ".auth",
+    "AsyncSeedOauthClientCredentialsMandatoryAuth": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedApi": ".client",
-    "TokenResponse": ".types",
+    "SeedOauthClientCredentialsMandatoryAuth": ".client",
+    "TokenResponse": ".auth",
     "__version__": ".version",
     "auth": ".auth",
-    "nested_api": ".nested_api",
+    "nested": ".nested",
     "simple": ".simple",
 }
 
@@ -56,17 +46,13 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
-    "AuthGetTokenWithClientCredentialsRequestAudience",
-    "AuthGetTokenWithClientCredentialsRequestGrantType",
-    "AuthRefreshTokenRequestAudience",
-    "AuthRefreshTokenRequestGrantType",
+    "AsyncSeedOauthClientCredentialsMandatoryAuth",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedApi",
+    "SeedOauthClientCredentialsMandatoryAuth",
     "TokenResponse",
     "__version__",
     "auth",
-    "nested_api",
+    "nested",
     "simple",
 ]

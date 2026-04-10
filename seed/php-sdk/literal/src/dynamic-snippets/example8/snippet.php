@@ -3,14 +3,9 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Reference\Requests\SendRequest;
-use Seed\Reference\Types\SendRequestPrompt;
-use Seed\Reference\Types\SendRequestEnding;
-use Seed\Types\SomeLiteral;
-use Seed\Types\ContainerObject;
-use Seed\Types\NestedObjectWithLiterals;
-use Seed\Types\NestedObjectWithLiteralsLiteral1;
-use Seed\Types\NestedObjectWithLiteralsLiteral2;
+use Seed\Reference\Types\SendRequest;
+use Seed\Reference\Types\ContainerObject;
+use Seed\Reference\Types\NestedObjectWithLiterals;
 
 $client = new SeedClient(
     options: [
@@ -19,19 +14,19 @@ $client = new SeedClient(
 );
 $client->reference->send(
     new SendRequest([
-        'prompt' => SendRequestPrompt::YouAreAHelpfulAssistant->value,
-        'query' => 'query',
-        'stream' => true,
-        'ending' => SendRequestEnding::Ending->value,
-        'context' => SomeLiteral::YoureSuperWise->value,
+        'prompt' => 'You are a helpful assistant',
+        'stream' => false,
+        'context' => "You're super wise",
+        'query' => 'What is the weather today',
         'containerObject' => new ContainerObject([
             'nestedObjects' => [
                 new NestedObjectWithLiterals([
-                    'literal1' => NestedObjectWithLiteralsLiteral1::Literal1->value,
-                    'literal2' => NestedObjectWithLiteralsLiteral2::Literal2->value,
+                    'literal1' => 'literal1',
+                    'literal2' => 'literal2',
                     'strProp' => 'strProp',
                 ]),
             ],
         ]),
+        'ending' => '$ending',
     ]),
 );

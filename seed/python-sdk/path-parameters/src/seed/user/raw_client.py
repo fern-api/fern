@@ -10,7 +10,7 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.user import User
+from .types.user import User
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -21,7 +21,7 @@ class RawUserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def getuser(
+    def get_user(
         self, tenant_id: str, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[User]:
         """
@@ -37,7 +37,6 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
@@ -63,7 +62,60 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def updateuser(
+    def create_user(
+        self,
+        tenant_id: str,
+        *,
+        name: str,
+        tags: typing.Sequence[str],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[User]:
+        """
+        Parameters
+        ----------
+        tenant_id : str
+
+        name : str
+
+        tags : typing.Sequence[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[User]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"{encode_path_param(tenant_id)}/user/",
+            method="POST",
+            json={
+                "name": name,
+                "tags": tags,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    User,
+                    parse_obj_as(
+                        type_=User,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def update_user(
         self,
         tenant_id: str,
         user_id: str,
@@ -89,7 +141,6 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
@@ -98,9 +149,6 @@ class RawUserClient:
                 "name": name,
                 "tags": tags,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -123,64 +171,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def createuser(
-        self,
-        tenant_id: str,
-        *,
-        name: str,
-        tags: typing.Sequence[str],
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[User]:
-        """
-        Parameters
-        ----------
-        tenant_id : str
-
-        name : str
-
-        tags : typing.Sequence[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[User]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/",
-            method="POST",
-            json={
-                "name": name,
-                "tags": tags,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def searchusers(
+    def search_users(
         self,
         tenant_id: str,
         user_id: str,
@@ -203,7 +194,6 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/search",
@@ -232,7 +222,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getusermetadata(
+    def get_user_metadata(
         self, tenant_id: str, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[User]:
         """
@@ -252,7 +242,6 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/metadata/v{encode_path_param(version)}",
@@ -278,7 +267,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getuserspecifics(
+    def get_user_specifics(
         self,
         tenant_id: str,
         user_id: str,
@@ -306,7 +295,6 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/specifics/{encode_path_param(version)}/{encode_path_param(thought)}",
@@ -337,7 +325,7 @@ class AsyncRawUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def getuser(
+    async def get_user(
         self, tenant_id: str, user_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[User]:
         """
@@ -353,7 +341,6 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
@@ -379,7 +366,60 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def updateuser(
+    async def create_user(
+        self,
+        tenant_id: str,
+        *,
+        name: str,
+        tags: typing.Sequence[str],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[User]:
+        """
+        Parameters
+        ----------
+        tenant_id : str
+
+        name : str
+
+        tags : typing.Sequence[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[User]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"{encode_path_param(tenant_id)}/user/",
+            method="POST",
+            json={
+                "name": name,
+                "tags": tags,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    User,
+                    parse_obj_as(
+                        type_=User,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update_user(
         self,
         tenant_id: str,
         user_id: str,
@@ -405,7 +445,6 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}",
@@ -414,9 +453,6 @@ class AsyncRawUserClient:
                 "name": name,
                 "tags": tags,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -439,64 +475,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def createuser(
-        self,
-        tenant_id: str,
-        *,
-        name: str,
-        tags: typing.Sequence[str],
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[User]:
-        """
-        Parameters
-        ----------
-        tenant_id : str
-
-        name : str
-
-        tags : typing.Sequence[str]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[User]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(tenant_id)}/user/",
-            method="POST",
-            json={
-                "name": name,
-                "tags": tags,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    User,
-                    parse_obj_as(
-                        type_=User,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def searchusers(
+    async def search_users(
         self,
         tenant_id: str,
         user_id: str,
@@ -519,7 +498,6 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/search",
@@ -548,7 +526,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getusermetadata(
+    async def get_user_metadata(
         self, tenant_id: str, user_id: str, version: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[User]:
         """
@@ -568,7 +546,6 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/metadata/v{encode_path_param(version)}",
@@ -594,7 +571,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getuserspecifics(
+    async def get_user_specifics(
         self,
         tenant_id: str,
         user_id: str,
@@ -622,7 +599,6 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/user/{encode_path_param(user_id)}/specifics/{encode_path_param(version)}/{encode_path_param(thought)}",

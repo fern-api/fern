@@ -32,7 +32,6 @@ class ServiceClient:
         Returns
         -------
         typing.Iterator[bytes]
-
         """
         with self._raw_client.get(request_options=request_options) as r:
             yield from r.data
@@ -63,7 +62,6 @@ class AsyncServiceClient:
         Returns
         -------
         typing.AsyncIterator[bytes]
-
         """
         async with self._raw_client.get(request_options=request_options) as r:
             async for _chunk in r.data:

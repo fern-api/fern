@@ -1,11 +1,11 @@
 <?php
 
-namespace Seed\Inlinedrequests;
+namespace Seed\InlinedRequests;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Inlinedrequests\Requests\InlinedRequestsPostWithObjectBodyandResponseRequest;
-use Seed\Types\TypesObjectWithOptionalField;
+use Seed\InlinedRequests\Requests\PostWithObjectBody;
+use Seed\Types\Object\Types\ObjectWithOptionalField;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -13,7 +13,7 @@ use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class InlinedrequestsClient
+class InlinedRequestsClient
 {
     /**
      * @var array{
@@ -52,7 +52,7 @@ class InlinedrequestsClient
     /**
      * POST with custom object in request body, response is an object
      *
-     * @param InlinedRequestsPostWithObjectBodyandResponseRequest $request
+     * @param PostWithObjectBody $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -61,18 +61,18 @@ class InlinedrequestsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ?TypesObjectWithOptionalField
+     * @return ?ObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postwithobjectbodyandresponse(InlinedRequestsPostWithObjectBodyandResponseRequest $request, ?array $options = null): ?TypesObjectWithOptionalField
+    public function postWithObjectBodyandResponse(PostWithObjectBody $request, ?array $options = null): ?ObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "req-bodies/object",
+                    path: "/req-bodies/object",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -84,7 +84,7 @@ class InlinedrequestsClient
                 if (empty($json)) {
                     return null;
                 }
-                return TypesObjectWithOptionalField::fromJson($json);
+                return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

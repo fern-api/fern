@@ -3,20 +3,24 @@
 package client
 
 import (
+	context "context"
+	errors "errors"
+
+	fern "github.com/oauth-client-credentials-default/fern"
 	auth "github.com/oauth-client-credentials-default/fern/auth"
 	core "github.com/oauth-client-credentials-default/fern/core"
 	internal "github.com/oauth-client-credentials-default/fern/internal"
-	nestedapi "github.com/oauth-client-credentials-default/fern/nestedapi"
-	nestednoauthapi "github.com/oauth-client-credentials-default/fern/nestednoauthapi"
+	nestedclient "github.com/oauth-client-credentials-default/fern/nested/client"
+	client "github.com/oauth-client-credentials-default/fern/nestednoauth/client"
 	option "github.com/oauth-client-credentials-default/fern/option"
 	simple "github.com/oauth-client-credentials-default/fern/simple"
 )
 
 type Client struct {
-	Auth            *auth.Client
-	NestedNoAuthAPI *nestednoauthapi.Client
-	NestedAPI       *nestedapi.Client
-	Simple          *simple.Client
+	Auth         *auth.Client
+	NestedNoAuth *client.Client
+	Nested       *nestedclient.Client
+	Simple       *simple.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -25,13 +29,41 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	oauthTokenProvider := core.NewTokenProvider(
+		0,
+	)
+	authOptions := *options
+	authClient := auth.NewClient(
+		&authOptions,
+	)
+	options.SetTokenGetter(func() (string, error) {
+		return oauthTokenProvider.GetOrFetch(func() (string, int, error) {
+			response, err := authClient.GetToken(context.Background(), &fern.GetTokenRequest{
+				ClientID:     options.ClientID,
+				ClientSecret: options.ClientSecret,
+			})
+			if err != nil {
+				return "", 0, err
+			}
+			if response.AccessToken == "" {
+				return "", 0, errors.New(
+					"oauth response missing access token",
+				)
+			}
+			expiresIn := core.DefaultExpirySeconds
+			if response.ExpiresIn > 0 {
+				expiresIn = response.ExpiresIn
+			}
+			return response.AccessToken, expiresIn, nil
+		})
+	})
 	return &Client{
-		Auth:            auth.NewClient(options),
-		NestedNoAuthAPI: nestednoauthapi.NewClient(options),
-		NestedAPI:       nestedapi.NewClient(options),
-		Simple:          simple.NewClient(options),
-		options:         options,
-		baseURL:         options.BaseURL,
+		Auth:         auth.NewClient(options),
+		NestedNoAuth: client.NewClient(options),
+		Nested:       nestedclient.NewClient(options),
+		Simple:       simple.NewClient(options),
+		options:      options,
+		baseURL:      options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

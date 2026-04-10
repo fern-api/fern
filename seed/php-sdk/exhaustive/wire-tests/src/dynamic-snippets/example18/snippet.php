@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\TypesObjectWithOptionalField;
+use Seed\Types\Object\Types\ObjectWithMapOfMap;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,6 +11,12 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsContentType->endpointsContentTypePostJsonPatchContentWithCharsetType(
-    new TypesObjectWithOptionalField([]),
+$client->endpoints->object->getAndReturnWithMapOfMap(
+    new ObjectWithMapOfMap([
+        'map' => [
+            'map' => [
+                'map' => 'map',
+            ],
+        ],
+    ]),
 );

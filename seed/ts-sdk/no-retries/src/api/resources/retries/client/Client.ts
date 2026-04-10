@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedNoRetries from "../../../index.js";
 
 export declare namespace RetriesClient {
     export type Options = BaseClientOptions;
@@ -25,21 +25,21 @@ export class RetriesClient {
      * @param {RetriesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.retries.getusers()
+     *     await client.retries.getUsers()
      */
-    public getusers(requestOptions?: RetriesClient.RequestOptions): core.HttpResponsePromise<SeedApi.User[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getusers(requestOptions));
+    public getUsers(requestOptions?: RetriesClient.RequestOptions): core.HttpResponsePromise<SeedNoRetries.User[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getUsers(requestOptions));
     }
 
-    private async __getusers(
+    private async __getUsers(
         requestOptions?: RetriesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.User[]>> {
+    ): Promise<core.WithRawResponse<SeedNoRetries.User[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "users",
+                "/users",
             ),
             method: "GET",
             headers: _headers,
@@ -51,11 +51,11 @@ export class RetriesClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.User[], rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedNoRetries.User[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedNoRetriesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

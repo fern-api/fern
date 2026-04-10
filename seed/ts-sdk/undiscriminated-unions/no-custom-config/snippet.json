@@ -8,29 +8,29 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.get(\"string\");\n"
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.get(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/metadata",
                 "method": "GET",
-                "identifier_override": "endpoint_union.getmetadata"
+                "identifier_override": "endpoint_union.getMetadata"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.getmetadata();\n"
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.getMetadata();\n"
             }
         },
         {
             "id": {
                 "path": "/metadata",
                 "method": "PUT",
-                "identifier_override": "endpoint_union.updatemetadata"
+                "identifier_override": "endpoint_union.updateMetadata"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.updatemetadata({\n    \"key\": \"value\"\n});\n"
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.updateMetadata({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
             }
         },
         {
@@ -41,40 +41,40 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.call();\n"
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.call({\n    union: {\n        \"string\": {\n            \"key\": \"value\"\n        }\n    }\n});\n"
             }
         },
         {
             "id": {
                 "path": "/duplicate",
                 "method": "POST",
-                "identifier_override": "endpoint_union.duplicatetypesunion"
+                "identifier_override": "endpoint_union.duplicateTypesUnion"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.duplicatetypesunion(\"string\");\n"
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.duplicateTypesUnion(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/nested",
                 "method": "POST",
-                "identifier_override": "endpoint_union.nestedunions"
+                "identifier_override": "endpoint_union.nestedUnions"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.nestedunions(\"string\");\n"
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.nestedUnions(\"string\");\n"
             }
         },
         {
             "id": {
                 "path": "/camel-case",
                 "method": "POST",
-                "identifier_override": "endpoint_union.testcamelcaseproperties"
+                "identifier_override": "endpoint_union.testCamelCaseProperties"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.testcamelcaseproperties({\n    paymentMethod: {\n        method: \"method\",\n        cardNumber: \"cardNumber\"\n    }\n});\n"
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst client = new SeedUndiscriminatedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.union.testCamelCaseProperties({\n    paymentMethod: {\n        method: \"card\",\n        cardNumber: \"1234567890123456\"\n    }\n});\n"
             }
         }
     ],

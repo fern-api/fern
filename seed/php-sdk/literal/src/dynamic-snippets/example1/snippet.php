@@ -3,8 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Headers\Requests\HeadersSendRequest;
-use Seed\Headers\Types\HeadersSendRequestXEndpointVersion;
+use Seed\Headers\Requests\SendLiteralsInHeadersRequest;
 
 $client = new SeedClient(
     options: [
@@ -12,8 +11,8 @@ $client = new SeedClient(
     ],
 );
 $client->headers->send(
-    new HeadersSendRequest([
-        'endpointVersion' => HeadersSendRequestXEndpointVersion::Two122024->value,
+    new SendLiteralsInHeadersRequest([
+        'endpointVersion' => '02-12-2024',
         'async' => true,
         'query' => 'query',
     ]),

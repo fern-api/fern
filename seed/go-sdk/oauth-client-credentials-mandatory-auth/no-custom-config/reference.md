@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.Gettokenwithclientcredentials(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.GetTokenWithClientCredentials(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,14 @@
 <dd>
 
 ```go
-request := &fern.AuthGetTokenWithClientCredentialsRequest{
-        ClientID: "client_id",
-        ClientSecret: "client_secret",
-        Audience: fern.AuthGetTokenWithClientCredentialsRequestAudienceHttpsApiExampleCom,
-        GrantType: fern.AuthGetTokenWithClientCredentialsRequestGrantTypeClientCredentials,
+request := &fern.GetTokenRequest{
+        ClientID: "my_oauth_app_123",
+        ClientSecret: "sk_live_abcdef123456789",
+        Scope: fern.String(
+            "read:users",
+        ),
     }
-client.Auth.Gettokenwithclientcredentials(
+client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
         request,
     )
@@ -54,7 +55,7 @@ client.Auth.Gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**audience:** `*fern.AuthGetTokenWithClientCredentialsRequestAudience` 
+**audience:** `string` 
     
 </dd>
 </dl>
@@ -62,7 +63,7 @@ client.Auth.Gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**grantType:** `*fern.AuthGetTokenWithClientCredentialsRequestGrantType` 
+**grantType:** `string` 
     
 </dd>
 </dl>
@@ -82,7 +83,7 @@ client.Auth.Gettokenwithclientcredentials(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.Refreshtoken(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.RefreshToken(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -95,14 +96,15 @@ client.Auth.Gettokenwithclientcredentials(
 <dd>
 
 ```go
-request := &fern.AuthRefreshTokenRequest{
-        ClientID: "client_id",
-        ClientSecret: "client_secret",
+request := &fern.RefreshTokenRequest{
+        ClientID: "my_oauth_app_123",
+        ClientSecret: "sk_live_abcdef123456789",
         RefreshToken: "refresh_token",
-        Audience: fern.AuthRefreshTokenRequestAudienceHttpsApiExampleCom,
-        GrantType: fern.AuthRefreshTokenRequestGrantTypeRefreshToken,
+        Scope: fern.String(
+            "read:users",
+        ),
     }
-client.Auth.Refreshtoken(
+client.Auth.RefreshToken(
         context.TODO(),
         request,
     )
@@ -145,7 +147,7 @@ client.Auth.Refreshtoken(
 <dl>
 <dd>
 
-**audience:** `*fern.AuthRefreshTokenRequestAudience` 
+**audience:** `string` 
     
 </dd>
 </dl>
@@ -153,7 +155,7 @@ client.Auth.Refreshtoken(
 <dl>
 <dd>
 
-**grantType:** `*fern.AuthRefreshTokenRequestGrantType` 
+**grantType:** `string` 
     
 </dd>
 </dl>
@@ -173,8 +175,8 @@ client.Auth.Refreshtoken(
 </dl>
 </details>
 
-## NestedAPI
-<details><summary><code>client.NestedAPI.NestedAPIGetSomething() -> error</code></summary>
+## Nested API
+<details><summary><code>client.Nested.API.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -187,7 +189,7 @@ client.Auth.Refreshtoken(
 <dd>
 
 ```go
-client.NestedAPI.NestedAPIGetSomething(
+client.Nested.API.GetSomething(
         context.TODO(),
     )
 }
@@ -203,7 +205,7 @@ client.NestedAPI.NestedAPIGetSomething(
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.Getsomething() -> error</code></summary>
+<details><summary><code>client.Simple.GetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -216,7 +218,7 @@ client.NestedAPI.NestedAPIGetSomething(
 <dd>
 
 ```go
-client.Simple.Getsomething(
+client.Simple.GetSomething(
         context.TODO(),
     )
 }

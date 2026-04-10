@@ -17,8 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.TypesObjectWithOptionalField{}
-    client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentWithCharsetType(
+    request := &fern.ListRequestC{
+        Offset: fern.Int(
+            1,
+        ),
+        Count: fern.Int(
+            1,
+        ),
+    }
+    client.Endpoints.DuplicateNamesC.List(
         context.TODO(),
         request,
     )

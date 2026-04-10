@@ -2,4 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.completions.streamevents(query: "query")
+client.completions.stream(query: "")

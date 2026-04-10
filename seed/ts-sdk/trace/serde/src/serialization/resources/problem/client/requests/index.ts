@@ -1,1 +1,1 @@
-export { ProblemGetDefaultStarterFilesRequest } from "./ProblemGetDefaultStarterFilesRequest.js";
+export { GetDefaultStarterFilesRequest } from "./GetDefaultStarterFilesRequest.js";

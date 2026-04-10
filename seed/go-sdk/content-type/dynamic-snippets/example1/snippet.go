@@ -14,16 +14,46 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.ServicePatchRequest{
-        Application: fern.String(
-            "application",
+    request := &fern.PatchComplexRequest{
+        Name: fern.String(
+            "name",
         ),
-        RequireAuth: fern.Bool(
+        Age: fern.Int(
+            1,
+        ),
+        Active: fern.Bool(
             true,
         ),
+        Metadata: map[string]any{
+            "metadata": map[string]any{
+                "key": "value",
+            },
+        },
+        Tags: []string{
+            "tags",
+            "tags",
+        },
+        Email: fern.String(
+            "email",
+        ),
+        Nickname: fern.String(
+            "nickname",
+        ),
+        Bio: fern.String(
+            "bio",
+        ),
+        ProfileImageURL: fern.String(
+            "profileImageUrl",
+        ),
+        Settings: map[string]any{
+            "settings": map[string]any{
+                "key": "value",
+            },
+        },
     }
-    client.Service.Patch(
+    client.Service.PatchComplex(
         context.TODO(),
+        "id",
         request,
     )
 }

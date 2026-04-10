@@ -1,4 +1,4 @@
-//! Request and response types for the bytes-upload
+//! Request and response types for the BytesUpload
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -7,7 +7,7 @@
 //!
 //! - **Request/Response Types**: 1 types for API operations
 
-pub mod uploadwithqueryparams_request;
+pub mod upload_with_query_params_request;
 
-pub use uploadwithqueryparams_request::UploadwithqueryparamsRequest;
+pub use upload_with_query_params_request::UploadWithQueryParamsRequest;
 

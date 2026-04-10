@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "e1d9b2aa",
+            "example_identifier": "1e6d684c",
             "id": {
                 "method": "POST",
                 "path": "/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}",
@@ -9,21 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServicePostRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().post(\n            \"pathParam\",\n            \"serviceParam\",\n            1,\n            \"resourceParam\",\n            ServicePostRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServicePostRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().post(\n            \"pathParam\",\n            \"serviceParam\",\n            1,\n            \"resourceParam\",\n            ServicePostRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
-            }
-        },
-        {
-            "example_identifier": "75115e72",
-            "id": {
-                "method": "POST",
-                "path": "/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}",
-                "identifier_override": "endpoint_service.post"
-            },
-            "snippet": {
-                "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServicePostRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().post(\n            \"pathParam\",\n            \"serviceParam\",\n            1,\n            \"resourceParam\",\n            ServicePostRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.service.requests.ServicePostRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.service().post(\n            \"pathParam\",\n            \"serviceParam\",\n            1,\n            \"resourceParam\",\n            ServicePostRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.apiWideBasePath.SeedApiWideBasePathClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiWideBasePathClient client = SeedApiWideBasePathClient\n            .builder()\n            .pathParam(\"pathParam\")\n            .build();\n\n        client.service().post(\"serviceParam\", 1, \"resourceParam\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.apiWideBasePath.SeedApiWideBasePathClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiWideBasePathClient client = SeedApiWideBasePathClient\n            .builder()\n            .pathParam(\"pathParam\")\n            .build();\n\n        client.service().post(\"serviceParam\", 1, \"resourceParam\");\n    }\n}\n"
             }
         }
     ],

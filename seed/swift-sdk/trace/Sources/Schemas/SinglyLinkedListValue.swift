@@ -2,13 +2,13 @@ import Foundation
 
 public struct SinglyLinkedListValue: Codable, Hashable, Sendable {
     public let head: NodeId?
-    public let nodes: [String: SinglyLinkedListNodeValue]
+    public let nodes: [NodeId: SinglyLinkedListNodeValue]
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         head: NodeId? = nil,
-        nodes: [String: SinglyLinkedListNodeValue],
+        nodes: [NodeId: SinglyLinkedListNodeValue],
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.head = head
@@ -19,7 +19,7 @@ public struct SinglyLinkedListValue: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.head = try container.decodeIfPresent(NodeId.self, forKey: .head)
-        self.nodes = try container.decode([String: SinglyLinkedListNodeValue].self, forKey: .nodes)
+        self.nodes = try container.decode([NodeId: SinglyLinkedListNodeValue].self, forKey: .nodes)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

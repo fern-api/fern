@@ -6,47 +6,45 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
+    from . import service
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+    from .client import AsyncSeedFileUpload, SeedFileUpload
+    from .service import (
         Id,
         ModelType,
         MyAliasObject,
+        MyAliasObjectParams,
         MyCollectionAliasObject,
+        MyCollectionAliasObjectParams,
         MyInlineType,
+        MyInlineTypeParams,
         MyObject,
+        MyObjectParams,
         MyObjectWithOptional,
+        MyObjectWithOptionalParams,
         ObjectType,
         OpenEnumType,
     )
-    from . import service
-    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
-    from .requests import (
-        MyAliasObjectParams,
-        MyCollectionAliasObjectParams,
-        MyInlineTypeParams,
-        MyObjectParams,
-        MyObjectWithOptionalParams,
-    )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedFileUpload": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "Id": ".types",
-    "ModelType": ".types",
-    "MyAliasObject": ".types",
-    "MyAliasObjectParams": ".requests",
-    "MyCollectionAliasObject": ".types",
-    "MyCollectionAliasObjectParams": ".requests",
-    "MyInlineType": ".types",
-    "MyInlineTypeParams": ".requests",
-    "MyObject": ".types",
-    "MyObjectParams": ".requests",
-    "MyObjectWithOptional": ".types",
-    "MyObjectWithOptionalParams": ".requests",
-    "ObjectType": ".types",
-    "OpenEnumType": ".types",
-    "SeedApi": ".client",
+    "Id": ".service",
+    "ModelType": ".service",
+    "MyAliasObject": ".service",
+    "MyAliasObjectParams": ".service",
+    "MyCollectionAliasObject": ".service",
+    "MyCollectionAliasObjectParams": ".service",
+    "MyInlineType": ".service",
+    "MyInlineTypeParams": ".service",
+    "MyObject": ".service",
+    "MyObjectParams": ".service",
+    "MyObjectWithOptional": ".service",
+    "MyObjectWithOptionalParams": ".service",
+    "ObjectType": ".service",
+    "OpenEnumType": ".service",
+    "SeedFileUpload": ".client",
     "__version__": ".version",
     "service": ".service",
 }
@@ -74,7 +72,7 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedFileUpload",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Id",
@@ -91,7 +89,7 @@ __all__ = [
     "MyObjectWithOptionalParams",
     "ObjectType",
     "OpenEnumType",
-    "SeedApi",
+    "SeedFileUpload",
     "__version__",
     "service",
 ]

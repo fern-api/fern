@@ -6,11 +6,10 @@ import typing
 
 import pydantic
 from .core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
-from .practitioner_resource_type import PractitionerResourceType
 
 
 class Practitioner(UniversalBaseModel):
-    resource_type: PractitionerResourceType
+    resource_type: typing.Literal["Practitioner"] = "Practitioner"
     name: str
     id: str
     related_resources: typing.List["ResourceList"]

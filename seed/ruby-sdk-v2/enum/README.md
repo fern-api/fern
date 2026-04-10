@@ -32,6 +32,7 @@ client = Seed::Client.new
 
 client.headers.send_(
   operand: ">",
+  maybe_operand: ">",
   operand_or_color: "red"
 )
 ```

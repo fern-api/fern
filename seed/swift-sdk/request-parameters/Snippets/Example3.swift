@@ -1,14 +1,14 @@
 import Foundation
-import Api
+import RequestParameters
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = RequestParametersClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.user.createusernameoptional(request: .init(
-        username: .value("username"),
-        password: .value("password"),
-        name: .value("name")
-    ))
+    _ = try await client.user.createUsernameOptional(request: .value(CreateUsernameBodyOptionalProperties(
+        username: "username",
+        password: "password",
+        name: "test"
+    )))
 }
 
 try await main()

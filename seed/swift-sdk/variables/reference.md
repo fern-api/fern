@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import Variables
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = VariablesClient()
 
-    _ = try await client.service.post(endpointParam: "endpointParam")
+    _ = try await client.service.post()
 }
 
 try await main()

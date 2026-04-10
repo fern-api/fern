@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.Payment.<a href="/src/SeedApi/Payment/PaymentClient.cs">CreateAsync</a>(PaymentCreateRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<details><summary><code>client.Payment.<a href="/src/SeedIdempotencyHeaders/Payment/PaymentClient.cs">CreateAsync</a>(CreatePaymentRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Payment.CreateAsync(new PaymentCreateRequest { Amount = 1, Currency = Currency.Usd });
+await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
 ```
 </dd>
 </dl>
@@ -28,7 +28,7 @@ await client.Payment.CreateAsync(new PaymentCreateRequest { Amount = 1, Currency
 <dl>
 <dd>
 
-**request:** `PaymentCreateRequest` 
+**request:** `CreatePaymentRequest` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ await client.Payment.CreateAsync(new PaymentCreateRequest { Amount = 1, Currency
 </dl>
 </details>
 
-<details><summary><code>client.Payment.<a href="/src/SeedApi/Payment/PaymentClient.cs">DeleteAsync</a>(PaymentDeleteRequest { ... })</code></summary>
+<details><summary><code>client.Payment.<a href="/src/SeedIdempotencyHeaders/Payment/PaymentClient.cs">DeleteAsync</a>(paymentId)</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ await client.Payment.CreateAsync(new PaymentCreateRequest { Amount = 1, Currency
 <dd>
 
 ```csharp
-await client.Payment.DeleteAsync(new PaymentDeleteRequest { PaymentId = "paymentId" });
+await client.Payment.DeleteAsync("paymentId");
 ```
 </dd>
 </dl>
@@ -68,7 +68,7 @@ await client.Payment.DeleteAsync(new PaymentDeleteRequest { PaymentId = "payment
 <dl>
 <dd>
 
-**request:** `PaymentDeleteRequest` 
+**paymentId:** `string` 
     
 </dd>
 </dl>

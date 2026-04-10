@@ -5,9 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.playlist.getplaylists(
-  service_param: 1,
-  limit: 1,
-  other_field: "otherField",
-  multi_line_docs: "multiLineDocs"
-)
+client.submission.stop_execution_session(session_id: "sessionId")

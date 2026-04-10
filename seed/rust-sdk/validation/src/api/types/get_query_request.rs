@@ -49,10 +49,11 @@ impl GetQueryRequestBuilder {
     /// - [`name`](GetQueryRequestBuilder::name)
     pub fn build(self) -> Result<GetQueryRequest, BuildError> {
         Ok(GetQueryRequest {
-            decimal: self.decimal.ok_or_else(|| BuildError::missing_field("decimal"))?,
+            decimal: self
+                .decimal
+                .ok_or_else(|| BuildError::missing_field("decimal"))?,
             even: self.even.ok_or_else(|| BuildError::missing_field("even"))?,
             name: self.name.ok_or_else(|| BuildError::missing_field("name"))?,
         })
     }
 }
-

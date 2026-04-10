@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.Optional.Sendoptionalbody(request) -> string</code></summary>
+<details><summary><code>client.Optional.SendOptionalBody(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -14,9 +14,11 @@
 
 ```go
 request := map[string]any{
-        "key": "value",
+        "string": map[string]any{
+            "key": "value",
+        },
     }
-client.Optional.Sendoptionalbody(
+client.Optional.SendOptionalBody(
         context.TODO(),
         request,
     )
@@ -47,7 +49,7 @@ client.Optional.Sendoptionalbody(
 </dl>
 </details>
 
-<details><summary><code>client.Optional.Sendoptionaltypedbody(request) -> string</code></summary>
+<details><summary><code>client.Optional.SendOptionalTypedBody(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -63,7 +65,7 @@ client.Optional.Sendoptionalbody(
 request := &fern.SendOptionalBodyRequest{
         Message: "message",
     }
-client.Optional.Sendoptionaltypedbody(
+client.Optional.SendOptionalTypedBody(
         context.TODO(),
         request,
     )
@@ -82,7 +84,7 @@ client.Optional.Sendoptionaltypedbody(
 <dl>
 <dd>
 
-**message:** `string` 
+**request:** `*fern.SendOptionalBodyRequest` 
     
 </dd>
 </dl>
@@ -94,7 +96,7 @@ client.Optional.Sendoptionaltypedbody(
 </dl>
 </details>
 
-<details><summary><code>client.Optional.Sendoptionalnullablewithalloptionalproperties(ActionID, ID, request) -> *fern.DeployResponse</code></summary>
+<details><summary><code>client.Optional.SendOptionalNullableWithAllOptionalProperties(ActionID, ID, request) -> *fern.DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -123,11 +125,14 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 
 ```go
 request := &fern.DeployParams{
-        ActionID: "actionId",
-        ID: "id",
+        UpdateDraft: fern.Bool(
+            true,
+        ),
     }
-client.Optional.Sendoptionalnullablewithalloptionalproperties(
+client.Optional.SendOptionalNullableWithAllOptionalProperties(
         context.TODO(),
+        "actionId",
+        "id",
         request,
     )
 }
@@ -161,7 +166,7 @@ client.Optional.Sendoptionalnullablewithalloptionalproperties(
 <dl>
 <dd>
 
-**updateDraft:** `*bool` 
+**request:** `*fern.DeployParams` 
     
 </dd>
 </dl>

@@ -30,7 +30,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Getsomething(
+func (r *RawClient) GetSomething(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {

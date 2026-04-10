@@ -5,4 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_container.endpoints_container_get_and_return_optional(string: "string")
+client.endpoints.http_methods.test_delete(id: "id")

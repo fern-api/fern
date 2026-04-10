@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="/Sources/Resources/Completions/CompletionsClient.swift">stream</a>(request: Requests.CompletionsStreamRequest, requestOptions: RequestOptions?) -> Data</code></summary>
+<details><summary><code>client.completions.<a href="/Sources/Resources/Completions/CompletionsClient.swift">stream</a>(request: Requests.StreamCompletionRequest, requestOptions: RequestOptions?) -> JSONValue</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import ServerSentEvents
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ServerSentEventsClient()
 
-    _ = try await client.completions.stream(request: .init(query: "query"))
+    _ = try await client.completions.stream(request: .init(query: "foo"))
 }
 
 try await main()
@@ -37,7 +37,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.CompletionsStreamRequest` 
+**request:** `Requests.StreamCompletionRequest` 
     
 </dd>
 </dl>
@@ -57,7 +57,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/Sources/Resources/Completions/CompletionsClient.swift">streamevents</a>(request: Requests.CompletionsStreamEventsRequest, requestOptions: RequestOptions?) -> Data</code></summary>
+<details><summary><code>client.completions.<a href="/Sources/Resources/Completions/CompletionsClient.swift">streamEvents</a>(request: Requests.StreamEventsRequest, requestOptions: RequestOptions?) -> JSONValue</code></summary>
 <dl>
 <dd>
 
@@ -71,12 +71,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import ServerSentEvents
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ServerSentEventsClient()
 
-    _ = try await client.completions.streamevents(request: .init(query: "query"))
+    _ = try await client.completions.streamEvents(request: .init(query: "query"))
 }
 
 try await main()
@@ -94,7 +94,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.CompletionsStreamEventsRequest` 
+**request:** `Requests.StreamEventsRequest` 
     
 </dd>
 </dl>
@@ -114,7 +114,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="/Sources/Resources/Completions/CompletionsClient.swift">streameventscontextprotocol</a>(request: Requests.CompletionsStreamEventsContextProtocolRequest, requestOptions: RequestOptions?) -> Data</code></summary>
+<details><summary><code>client.completions.<a href="/Sources/Resources/Completions/CompletionsClient.swift">streamEventsContextProtocol</a>(request: Requests.StreamEventsContextProtocolRequest, requestOptions: RequestOptions?) -> JSONValue</code></summary>
 <dl>
 <dd>
 
@@ -128,12 +128,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import ServerSentEvents
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ServerSentEventsClient()
 
-    _ = try await client.completions.streameventscontextprotocol(request: .init(query: "query"))
+    _ = try await client.completions.streamEventsContextProtocol(request: .init(query: "query"))
 }
 
 try await main()
@@ -151,7 +151,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.CompletionsStreamEventsContextProtocolRequest` 
+**request:** `Requests.StreamEventsContextProtocolRequest` 
     
 </dd>
 </dl>

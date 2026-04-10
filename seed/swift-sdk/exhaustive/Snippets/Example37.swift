@@ -1,19 +1,16 @@
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExhaustiveClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpointsObject.endpointsObjectGetAndReturnWithMapOfMap(request: TypesObjectWithMapOfMap(
-        map: [
-            "map": [
-                "map": "map"
-            ]
-        ]
-    ))
+    _ = try await client.endpoints.params.getWithPathAndQuery(
+        param: "param",
+        query: "query"
+    )
 }
 
 try await main()

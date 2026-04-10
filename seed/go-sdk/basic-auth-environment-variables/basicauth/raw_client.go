@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Getwithbasicauth(
+func (r *RawClient) GetWithBasicAuth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[bool], error) {
@@ -71,7 +71,7 @@ func (r *RawClient) Getwithbasicauth(
 	}, nil
 }
 
-func (r *RawClient) Postwithbasicauth(
+func (r *RawClient) PostWithBasicAuth(
 	ctx context.Context,
 	request any,
 	opts ...option.RequestOption,

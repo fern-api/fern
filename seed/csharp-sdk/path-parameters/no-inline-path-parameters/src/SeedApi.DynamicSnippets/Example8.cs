@@ -1,28 +1,22 @@
-using SeedApi;
+using SeedPathParameters;
 
 namespace Usage;
 
 public class Example8
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedPathParametersClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.User.UpdateuserAsync(
+        await client.User.GetUserSpecificsAsync(
             "tenant_id",
             "user_id",
-            new UserUpdateUserRequest {
-                Body = new User {
-                    Name = "name",
-                    Tags = new List<string>(){
-                        "tags",
-                    }
-
-                }
-            }
+            1,
+            "thought",
+            new GetUserSpecificsRequest()
         );
     }
 

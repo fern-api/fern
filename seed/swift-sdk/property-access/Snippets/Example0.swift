@@ -1,10 +1,10 @@
 import Foundation
-import Api
+import PropertyAccess
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = PropertyAccessClient(baseURL: "https://api.fern.com")
 
-    _ = try await client..createUser(request: User(
+    _ = try await client.createUser(request: User(
         id: "id",
         email: "email",
         password: "password",

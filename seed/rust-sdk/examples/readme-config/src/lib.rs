@@ -1,11 +1,11 @@
-//! # examples SDK
+//! # Examples SDK
 //!
-//! The official Rust SDK for the examples.
+//! The official Rust SDK for the Examples.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_examples::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,8 +13,10 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client..echo(&"string".to_string(), None).await;
+//!     let client = ExamplesClient::new(config).expect("Failed to build client");
+//!     client
+//!         .echo(&"Hello world!\\n\\nwith\\n\\tnewlines".to_string(), None)
+//!         .await;
 //! }
 //! ```
 //!
@@ -28,17 +30,16 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
-pub mod prelude;
+pub mod config;
+pub mod core;
 pub mod environment;
+pub mod error;
+pub mod prelude;
 
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
+pub use environment::*;
 pub use error::{ApiError, BuildError};
-pub use environment::{*};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-

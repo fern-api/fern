@@ -3,10 +3,10 @@
 namespace Seed;
 
 use Seed\Headers\HeadersClient;
-use Seed\Inlinedrequest\InlinedrequestClient;
-use Seed\Multipartform\MultipartformClient;
-use Seed\Pathparam\PathparamClient;
-use Seed\Queryparam\QueryparamClient;
+use Seed\InlinedRequest\InlinedRequestClient;
+use Seed\MultipartForm\MultipartFormClient;
+use Seed\PathParam\PathParamClient;
+use Seed\QueryParam\QueryParamClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
@@ -18,24 +18,24 @@ class SeedClient
     public HeadersClient $headers;
 
     /**
-     * @var InlinedrequestClient $inlinedrequest
+     * @var InlinedRequestClient $inlinedRequest
      */
-    public InlinedrequestClient $inlinedrequest;
+    public InlinedRequestClient $inlinedRequest;
 
     /**
-     * @var MultipartformClient $multipartform
+     * @var MultipartFormClient $multipartForm
      */
-    public MultipartformClient $multipartform;
+    public MultipartFormClient $multipartForm;
 
     /**
-     * @var PathparamClient $pathparam
+     * @var PathParamClient $pathParam
      */
-    public PathparamClient $pathparam;
+    public PathParamClient $pathParam;
 
     /**
-     * @var QueryparamClient $queryparam
+     * @var QueryParamClient $queryParam
      */
-    public QueryparamClient $queryparam;
+    public QueryParamClient $queryParam;
 
     /**
      * @var array{
@@ -84,9 +84,9 @@ class SeedClient
         );
 
         $this->headers = new HeadersClient($this->client, $this->options);
-        $this->inlinedrequest = new InlinedrequestClient($this->client, $this->options);
-        $this->multipartform = new MultipartformClient($this->client, $this->options);
-        $this->pathparam = new PathparamClient($this->client, $this->options);
-        $this->queryparam = new QueryparamClient($this->client, $this->options);
+        $this->inlinedRequest = new InlinedRequestClient($this->client, $this->options);
+        $this->multipartForm = new MultipartFormClient($this->client, $this->options);
+        $this->pathParam = new PathParamClient($this->client, $this->options);
+        $this->queryParam = new QueryParamClient($this->client, $this->options);
     }
 }

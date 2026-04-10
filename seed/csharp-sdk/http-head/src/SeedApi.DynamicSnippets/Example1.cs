@@ -1,18 +1,18 @@
-using SeedApi;
+using SeedHttpHead;
 
 namespace Usage;
 
 public class Example1
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedHttpHeadClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.User.ListAsync(
-            new UserListRequest {
+            new ListUsersRequest {
                 Limit = 1
             }
         );

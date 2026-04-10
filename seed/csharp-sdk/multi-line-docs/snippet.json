@@ -6,11 +6,11 @@
             "id": {
                 "path": "/users/{userId}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getuser"
+                "identifier_override": "endpoint_user.getUser"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.User.GetuserAsync(new UserGetUserRequest { UserId = \"userId\" });\n"
+                "client": "using SeedMultiLineDocs;\n\nvar client = new SeedMultiLineDocsClient();\nawait client.User.GetUserAsync(\"userId\");\n"
             }
         },
         {
@@ -18,11 +18,11 @@
             "id": {
                 "path": "/users",
                 "method": "POST",
-                "identifier_override": "endpoint_user.createuser"
+                "identifier_override": "endpoint_user.createUser"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.User.CreateuserAsync(new UserCreateUserRequest { Name = \"name\" });\n"
+                "client": "using SeedMultiLineDocs;\n\nvar client = new SeedMultiLineDocsClient();\nawait client.User.CreateUserAsync(new CreateUserRequest { Name = \"name\", Age = 1 });\n"
             }
         }
     ]

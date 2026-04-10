@@ -6,18 +6,18 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
-export declare namespace SeedApiClient {
+export declare namespace SeedUnionsClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class SeedApiClient {
-    protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
+export class SeedUnionsClient {
+    protected readonly _options: NormalizedClientOptions<SeedUnionsClient.Options>;
     protected _bigunion: BigunionClient | undefined;
     protected _union: UnionClient | undefined;
 
-    constructor(options: SeedApiClient.Options) {
+    constructor(options: SeedUnionsClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 

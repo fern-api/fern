@@ -6,60 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .a_nested_literal import ANestedLiteral
-    from .a_nested_literal_my_literal import ANestedLiteralMyLiteral
-    from .a_top_level_literal import ATopLevelLiteral
-    from .alias_to_prompt import AliasToPrompt
-    from .alias_to_stream import AliasToStream
-    from .container_object import ContainerObject
-    from .discriminated_literal import (
-        DiscriminatedLiteral,
-        DiscriminatedLiteral_CustomName,
-        DiscriminatedLiteral_DefaultName,
-        DiscriminatedLiteral_George,
-        DiscriminatedLiteral_LiteralGeorge,
-    )
-    from .discriminated_literal_custom_name import DiscriminatedLiteralCustomName
-    from .discriminated_literal_default_name import DiscriminatedLiteralDefaultName
-    from .discriminated_literal_default_name_value import DiscriminatedLiteralDefaultNameValue
-    from .discriminated_literal_george import DiscriminatedLiteralGeorge
-    from .discriminated_literal_literal_george import DiscriminatedLiteralLiteralGeorge
-    from .nested_object_with_literals import NestedObjectWithLiterals
-    from .nested_object_with_literals_literal1 import NestedObjectWithLiteralsLiteral1
-    from .nested_object_with_literals_literal2 import NestedObjectWithLiteralsLiteral2
     from .send_response import SendResponse
-    from .some_aliased_literal import SomeAliasedLiteral
-    from .some_literal import SomeLiteral
-    from .undiscriminated_literal import UndiscriminatedLiteral
-    from .undiscriminated_literal_one import UndiscriminatedLiteralOne
-    from .undiscriminated_literal_two import UndiscriminatedLiteralTwo
-_dynamic_imports: typing.Dict[str, str] = {
-    "ANestedLiteral": ".a_nested_literal",
-    "ANestedLiteralMyLiteral": ".a_nested_literal_my_literal",
-    "ATopLevelLiteral": ".a_top_level_literal",
-    "AliasToPrompt": ".alias_to_prompt",
-    "AliasToStream": ".alias_to_stream",
-    "ContainerObject": ".container_object",
-    "DiscriminatedLiteral": ".discriminated_literal",
-    "DiscriminatedLiteralCustomName": ".discriminated_literal_custom_name",
-    "DiscriminatedLiteralDefaultName": ".discriminated_literal_default_name",
-    "DiscriminatedLiteralDefaultNameValue": ".discriminated_literal_default_name_value",
-    "DiscriminatedLiteralGeorge": ".discriminated_literal_george",
-    "DiscriminatedLiteralLiteralGeorge": ".discriminated_literal_literal_george",
-    "DiscriminatedLiteral_CustomName": ".discriminated_literal",
-    "DiscriminatedLiteral_DefaultName": ".discriminated_literal",
-    "DiscriminatedLiteral_George": ".discriminated_literal",
-    "DiscriminatedLiteral_LiteralGeorge": ".discriminated_literal",
-    "NestedObjectWithLiterals": ".nested_object_with_literals",
-    "NestedObjectWithLiteralsLiteral1": ".nested_object_with_literals_literal1",
-    "NestedObjectWithLiteralsLiteral2": ".nested_object_with_literals_literal2",
-    "SendResponse": ".send_response",
-    "SomeAliasedLiteral": ".some_aliased_literal",
-    "SomeLiteral": ".some_literal",
-    "UndiscriminatedLiteral": ".undiscriminated_literal",
-    "UndiscriminatedLiteralOne": ".undiscriminated_literal_one",
-    "UndiscriminatedLiteralTwo": ".undiscriminated_literal_two",
-}
+_dynamic_imports: typing.Dict[str, str] = {"SendResponse": ".send_response"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -83,30 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "ANestedLiteral",
-    "ANestedLiteralMyLiteral",
-    "ATopLevelLiteral",
-    "AliasToPrompt",
-    "AliasToStream",
-    "ContainerObject",
-    "DiscriminatedLiteral",
-    "DiscriminatedLiteralCustomName",
-    "DiscriminatedLiteralDefaultName",
-    "DiscriminatedLiteralDefaultNameValue",
-    "DiscriminatedLiteralGeorge",
-    "DiscriminatedLiteralLiteralGeorge",
-    "DiscriminatedLiteral_CustomName",
-    "DiscriminatedLiteral_DefaultName",
-    "DiscriminatedLiteral_George",
-    "DiscriminatedLiteral_LiteralGeorge",
-    "NestedObjectWithLiterals",
-    "NestedObjectWithLiteralsLiteral1",
-    "NestedObjectWithLiteralsLiteral2",
-    "SendResponse",
-    "SomeAliasedLiteral",
-    "SomeLiteral",
-    "UndiscriminatedLiteral",
-    "UndiscriminatedLiteralOne",
-    "UndiscriminatedLiteralTwo",
-]
+__all__ = ["SendResponse"]

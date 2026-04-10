@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/Sources/Resources//Client.swift">echo</a>(id: String, request: Requests.EchoRequest, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.<a href="/Sources/PackageYmlClient.swift">echo</a>(id: String, request: EchoRequest, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -14,16 +13,16 @@
 
 ```swift
 import Foundation
-import Api
+import PackageYml
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = PackageYmlClient()
 
-    _ = try await client..echo(
-        id: "id",
-        request: .init(
-            name: "name",
-            size: 1
+    _ = try await client.echo(
+        id: "id-ksfd9c1",
+        request: EchoRequest(
+            name: "Hello world!",
+            size: 20
         )
     )
 }
@@ -51,7 +50,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.EchoRequest` 
+**request:** `EchoRequest` 
     
 </dd>
 </dl>
@@ -86,14 +85,14 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import PackageYml
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = PackageYmlClient()
 
     _ = try await client.service.nop(
-        id: "id",
-        nestedId: "nestedId"
+        id: "id-a2ijs82",
+        nestedId: "id-219xca8"
     )
 }
 

@@ -5,7 +5,7 @@ namespace Seed\Tests;
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 
-class BasicauthWireTest extends WireMockTestCase
+class BasicAuthWireTest extends WireMockTestCase
 {
     /**
      * @var SeedClient $client
@@ -14,12 +14,12 @@ class BasicauthWireTest extends WireMockTestCase
 
     /**
      */
-    public function testGetwithbasicauth(): void {
-        $testId = 'basicauth.getwithbasicauth.0';
-        $this->client->basicauth->getwithbasicauth(
+    public function testGetWithBasicAuth(): void {
+        $testId = 'basic_auth.get_with_basic_auth.0';
+        $this->client->basicAuth->getWithBasicAuth(
             [
                 'headers' => [
-                    'X-Test-Id' => 'basicauth.getwithbasicauth.0',
+                    'X-Test-Id' => 'basic_auth.get_with_basic_auth.0',
                 ],
             ],
         );
@@ -34,15 +34,15 @@ class BasicauthWireTest extends WireMockTestCase
 
     /**
      */
-    public function testPostwithbasicauth(): void {
-        $testId = 'basicauth.postwithbasicauth.0';
-        $this->client->basicauth->postwithbasicauth(
+    public function testPostWithBasicAuth(): void {
+        $testId = 'basic_auth.post_with_basic_auth.0';
+        $this->client->basicAuth->postWithBasicAuth(
             [
                 'key' => "value",
             ],
             [
                 'headers' => [
-                    'X-Test-Id' => 'basicauth.postwithbasicauth.0',
+                    'X-Test-Id' => 'basic_auth.post_with_basic_auth.0',
                 ],
             ],
         );

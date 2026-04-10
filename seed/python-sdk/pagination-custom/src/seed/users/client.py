@@ -3,6 +3,7 @@
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.custom_pagination import AsyncCustomPager, SyncCustomPager
 from ..core.request_options import RequestOptions
 from ..types.users_list_response import UsersListResponse
 from .raw_client import AsyncRawUsersClient, RawUsersClient
@@ -23,13 +24,13 @@ class UsersClient:
         """
         return self._raw_client
 
-    def listwithcustompager(
+    def list_with_custom_pager(
         self,
         *,
         limit: typing.Optional[int] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> UsersListResponse:
+    ) -> SyncCustomPager[str, UsersListResponse]:
         """
         Parameters
         ----------
@@ -44,23 +45,29 @@ class UsersClient:
 
         Returns
         -------
-        UsersListResponse
-
+        SyncCustomPager[str, UsersListResponse]
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedPagination
 
-        client = SeedApi(
+        client = SeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.users.listwithcustompager()
+        response = client.users.list_with_custom_pager(
+            limit=1,
+            starting_after="starting_after",
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
-        _response = self._raw_client.listwithcustompager(
+        return self._raw_client.list_with_custom_pager(
             limit=limit, starting_after=starting_after, request_options=request_options
         )
-        return _response.data
 
 
 class AsyncUsersClient:
@@ -78,13 +85,13 @@ class AsyncUsersClient:
         """
         return self._raw_client
 
-    async def listwithcustompager(
+    async def list_with_custom_pager(
         self,
         *,
         limit: typing.Optional[int] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> UsersListResponse:
+    ) -> AsyncCustomPager[str, UsersListResponse]:
         """
         Parameters
         ----------
@@ -99,28 +106,35 @@ class AsyncUsersClient:
 
         Returns
         -------
-        UsersListResponse
-
+        AsyncCustomPager[str, UsersListResponse]
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedPagination
 
-        client = AsyncSeedApi(
+        client = AsyncSeedPagination(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.users.listwithcustompager()
+            response = await client.users.list_with_custom_pager(
+                limit=1,
+                starting_after="starting_after",
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.listwithcustompager(
+        return await self._raw_client.list_with_custom_pager(
             limit=limit, starting_after=starting_after, request_options=request_options
         )
-        return _response.data

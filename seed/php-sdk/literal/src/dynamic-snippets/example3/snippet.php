@@ -3,13 +3,9 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Inlined\Requests\InlinedSendRequest;
-use Seed\Inlined\Types\InlinedSendRequestPrompt;
-use Seed\Inlined\Types\InlinedSendRequestContext;
-use Seed\Types\SomeAliasedLiteral;
-use Seed\Types\ATopLevelLiteral;
-use Seed\Types\ANestedLiteral;
-use Seed\Types\ANestedLiteralMyLiteral;
+use Seed\Inlined\Requests\SendLiteralsInlinedRequest;
+use Seed\Inlined\Types\ATopLevelLiteral;
+use Seed\Inlined\Types\ANestedLiteral;
 
 $client = new SeedClient(
     options: [
@@ -17,17 +13,17 @@ $client = new SeedClient(
     ],
 );
 $client->inlined->send(
-    new InlinedSendRequest([
-        'prompt' => InlinedSendRequestPrompt::YouAreAHelpfulAssistant->value,
-        'context' => InlinedSendRequestContext::YoureSuperWise->value,
+    new SendLiteralsInlinedRequest([
+        'prompt' => 'You are a helpful assistant',
+        'context' => "You're super wise",
         'query' => 'query',
         'temperature' => 1.1,
-        'stream' => true,
-        'aliasedContext' => SomeAliasedLiteral::YoureSuperWise->value,
-        'maybeContext' => SomeAliasedLiteral::YoureSuperWise->value,
+        'stream' => false,
+        'aliasedContext' => "You're super wise",
+        'maybeContext' => "You're super wise",
         'objectWithLiteral' => new ATopLevelLiteral([
             'nestedLiteral' => new ANestedLiteral([
-                'myLiteral' => ANestedLiteralMyLiteral::HowSuperCool->value,
+                'myLiteral' => 'How super cool',
             ]),
         ]),
     ]),

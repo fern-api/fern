@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_errors::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,12 +6,12 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ErrorsClient::new(config).expect("Failed to build client");
     client
         .simple
-        .foowithexamples(
+        .foo_with_examples(
             &FooRequest {
-                bar: "bar".to_string(),
+                bar: "hello".to_string(),
                 ..Default::default()
             },
             None,

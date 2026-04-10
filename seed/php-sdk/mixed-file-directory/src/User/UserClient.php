@@ -2,10 +2,11 @@
 
 namespace Seed\User;
 
+use Seed\User\Events\EventsClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\User\Requests\UserListRequest;
-use Seed\Types\User;
+use Seed\User\Requests\ListUsersRequest;
+use Seed\User\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -16,6 +17,11 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class UserClient
 {
+    /**
+     * @var EventsClient $events
+     */
+    public EventsClient $events;
+
     /**
      * @var array{
      *   baseUrl?: string,
@@ -48,12 +54,13 @@ class UserClient
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+        $this->events = new EventsClient($this->client, $this->options);
     }
 
     /**
      * List all users.
      *
-     * @param UserListRequest $request
+     * @param ListUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -66,7 +73,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function list(UserListRequest $request = new UserListRequest(), ?array $options = null): ?array
+    public function list(ListUsersRequest $request = new ListUsersRequest(), ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -77,7 +84,7 @@ class UserClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/",
+                    path: "/users/",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

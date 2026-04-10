@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.gettokenwithclientcredentials(request) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.getTokenWithClientCredentials(request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,12 @@
 <dd>
 
 ```java
-client.auth().gettokenwithclientcredentials(
+client.auth().getTokenWithClientCredentials(
     GetTokenRequest
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
-        .audience(GetTokenRequestAudience.HTTPS_API_EXAMPLE_COM)
-        .grantType(GetTokenRequestGrantType.CLIENT_CREDENTIALS)
+        .scope("scope")
         .build()
 );
 ```
@@ -36,39 +35,7 @@ client.auth().gettokenwithclientcredentials(
 <dl>
 <dd>
 
-**clientId:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientSecret:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**audience:** `GetTokenRequestAudience` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**grantType:** `GetTokenRequestGrantType` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `Optional<String>` 
+**request:** `GetTokenRequest` 
     
 </dd>
 </dl>
@@ -80,7 +47,7 @@ client.auth().gettokenwithclientcredentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.refreshtoken(request) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.refreshToken(request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -93,14 +60,13 @@ client.auth().gettokenwithclientcredentials(
 <dd>
 
 ```java
-client.auth().refreshtoken(
+client.auth().refreshToken(
     RefreshTokenRequest
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
         .refreshToken("refresh_token")
-        .audience(RefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)
-        .grantType(RefreshTokenRequestGrantType.REFRESH_TOKEN)
+        .scope("scope")
         .build()
 );
 ```
@@ -117,47 +83,7 @@ client.auth().refreshtoken(
 <dl>
 <dd>
 
-**clientId:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**clientSecret:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**refreshToken:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**audience:** `RefreshTokenRequestAudience` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**grantType:** `RefreshTokenRequestGrantType` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `Optional<String>` 
+**request:** `RefreshTokenRequest` 
     
 </dd>
 </dl>
@@ -169,8 +95,8 @@ client.auth().refreshtoken(
 </dl>
 </details>
 
-## NestedNoAuthApi
-<details><summary><code>client.nestedNoAuthApi.nestedNoAuthApiGetSomething()</code></summary>
+## NestedNoAuth Api
+<details><summary><code>client.nestedNoAuth.api.getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -183,7 +109,7 @@ client.auth().refreshtoken(
 <dd>
 
 ```java
-client.nestedNoAuthApi().nestedNoAuthApiGetSomething();
+client.nestedNoAuth().api().getSomething();
 ```
 </dd>
 </dl>
@@ -195,8 +121,8 @@ client.nestedNoAuthApi().nestedNoAuthApiGetSomething();
 </dl>
 </details>
 
-## NestedApi
-<details><summary><code>client.nestedApi.nestedApiGetSomething()</code></summary>
+## Nested Api
+<details><summary><code>client.nested.api.getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -209,7 +135,7 @@ client.nestedNoAuthApi().nestedNoAuthApiGetSomething();
 <dd>
 
 ```java
-client.nestedApi().nestedApiGetSomething();
+client.nested().api().getSomething();
 ```
 </dd>
 </dl>
@@ -222,7 +148,7 @@ client.nestedApi().nestedApiGetSomething();
 </details>
 
 ## Simple
-<details><summary><code>client.simple.getsomething()</code></summary>
+<details><summary><code>client.simple.getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -235,7 +161,7 @@ client.nestedApi().nestedApiGetSomething();
 <dd>
 
 ```java
-client.simple().getsomething();
+client.simple().getSomething();
 ```
 </dd>
 </dl>

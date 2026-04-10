@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">gettokenwithclientcredentials</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> SeedOauthClientCredentialsWithVariables.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,10 @@
 <dd>
 
 ```typescript
-await client.auth.gettokenwithclientcredentials({
+await client.auth.getTokenWithClientCredentials({
     client_id: "client_id",
     client_secret: "client_secret",
-    audience: "https://api.example.com",
-    grant_type: "client_credentials"
+    scope: "scope"
 });
 
 ```
@@ -34,7 +33,7 @@ await client.auth.gettokenwithclientcredentials({
 <dl>
 <dd>
 
-**request:** `SeedApi.AuthGetTokenWithClientCredentialsRequest` 
+**request:** `SeedOauthClientCredentialsWithVariables.GetTokenRequest` 
     
 </dd>
 </dl>
@@ -54,7 +53,7 @@ await client.auth.gettokenwithclientcredentials({
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">refreshtoken</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> SeedOauthClientCredentialsWithVariables.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -67,12 +66,11 @@ await client.auth.gettokenwithclientcredentials({
 <dd>
 
 ```typescript
-await client.auth.refreshtoken({
+await client.auth.refreshToken({
     client_id: "client_id",
     client_secret: "client_secret",
     refresh_token: "refresh_token",
-    audience: "https://api.example.com",
-    grant_type: "refresh_token"
+    scope: "scope"
 });
 
 ```
@@ -89,7 +87,7 @@ await client.auth.refreshtoken({
 <dl>
 <dd>
 
-**request:** `SeedApi.AuthRefreshTokenRequest` 
+**request:** `SeedOauthClientCredentialsWithVariables.RefreshTokenRequest` 
     
 </dd>
 </dl>
@@ -109,8 +107,8 @@ await client.auth.refreshtoken({
 </dl>
 </details>
 
-## NestedNoAuthApi
-<details><summary><code>client.nestedNoAuthApi.<a href="/src/api/resources/nestedNoAuthApi/client/Client.ts">nestedNoAuthApiGetSomething</a>() -> void</code></summary>
+## NestedNoAuth Api
+<details><summary><code>client.nestedNoAuth.api.<a href="/src/api/resources/nestedNoAuth/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -123,7 +121,7 @@ await client.auth.refreshtoken({
 <dd>
 
 ```typescript
-await client.nestedNoAuthApi.nestedNoAuthApiGetSomething();
+await client.nestedNoAuth.api.getSomething();
 
 ```
 </dd>
@@ -139,7 +137,7 @@ await client.nestedNoAuthApi.nestedNoAuthApiGetSomething();
 <dl>
 <dd>
 
-**requestOptions:** `NestedNoAuthApiClient.RequestOptions` 
+**requestOptions:** `ApiClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -151,8 +149,8 @@ await client.nestedNoAuthApi.nestedNoAuthApiGetSomething();
 </dl>
 </details>
 
-## NestedApi
-<details><summary><code>client.nestedApi.<a href="/src/api/resources/nestedApi/client/Client.ts">nestedApiGetSomething</a>() -> void</code></summary>
+## Nested Api
+<details><summary><code>client.nested.api.<a href="/src/api/resources/nested/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -165,7 +163,7 @@ await client.nestedNoAuthApi.nestedNoAuthApiGetSomething();
 <dd>
 
 ```typescript
-await client.nestedApi.nestedApiGetSomething();
+await client.nested.api.getSomething();
 
 ```
 </dd>
@@ -181,7 +179,7 @@ await client.nestedApi.nestedApiGetSomething();
 <dl>
 <dd>
 
-**requestOptions:** `NestedApiClient.RequestOptions` 
+**requestOptions:** `ApiClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -194,7 +192,7 @@ await client.nestedApi.nestedApiGetSomething();
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">post</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">post</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -207,9 +205,7 @@ await client.nestedApi.nestedApiGetSomething();
 <dd>
 
 ```typescript
-await client.service.post({
-    endpointParam: "endpointParam"
-});
+await client.service.post();
 
 ```
 </dd>
@@ -221,14 +217,6 @@ await client.service.post({
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.ServicePostRequest` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -246,7 +234,7 @@ await client.service.post({
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getsomething</a>() -> void</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getSomething</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -259,7 +247,7 @@ await client.service.post({
 <dd>
 
 ```typescript
-await client.simple.getsomething();
+await client.simple.getSomething();
 
 ```
 </dd>

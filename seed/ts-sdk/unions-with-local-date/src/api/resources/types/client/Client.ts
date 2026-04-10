@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedUnions from "../../../index.js";
 
 export declare namespace TypesClient {
     export type Options = BaseClientOptions;
@@ -22,32 +22,32 @@ export class TypesClient {
     }
 
     /**
-     * @param {SeedApi.TypesGetRequest} request
+     * @param {string} id
      * @param {TypesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.types.get({
-     *         id: "id"
-     *     })
+     *     await client.types.get("date-example")
+     *
+     * @example
+     *     await client.types.get("datetime-example")
      */
     public get(
-        request: SeedApi.TypesGetRequest,
+        id: string,
         requestOptions?: TypesClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.UnionWithTime> {
-        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
+    ): core.HttpResponsePromise<SeedUnions.UnionWithTime> {
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
     private async __get(
-        request: SeedApi.TypesGetRequest,
+        id: string,
         requestOptions?: TypesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.UnionWithTime>> {
-        const { id } = request;
+    ): Promise<core.WithRawResponse<SeedUnions.UnionWithTime>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `time/${core.url.encodePathParam(id)}`,
+                `/time/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -59,11 +59,11 @@ export class TypesClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.UnionWithTime, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedUnions.UnionWithTime, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -74,23 +74,30 @@ export class TypesClient {
     }
 
     /**
-     * @param {SeedApi.UnionWithTime} request
+     * @param {SeedUnions.UnionWithTime} request
      * @param {TypesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.types.update({
-     *         type: "value"
+     *         type: "date",
+     *         value: "1994-01-01"
+     *     })
+     *
+     * @example
+     *     await client.types.update({
+     *         type: "datetime",
+     *         value: "1994-01-01T01:01:01Z"
      *     })
      */
     public update(
-        request: SeedApi.UnionWithTime,
+        request: SeedUnions.UnionWithTime,
         requestOptions?: TypesClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
     }
 
     private async __update(
-        request: SeedApi.UnionWithTime,
+        request: SeedUnions.UnionWithTime,
         requestOptions?: TypesClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -98,7 +105,7 @@ export class TypesClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "time",
+                "/time",
             ),
             method: "PATCH",
             headers: _headers,
@@ -117,7 +124,7 @@ export class TypesClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

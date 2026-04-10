@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.optional.sendoptionalbody(request) -> String</code></summary>
+<details><summary><code>client.optional.sendOptionalBody(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,14 @@
 <dd>
 
 ```java
-client.optional().sendoptionalbody(
-    new HashMap<String, Object>() {{
-        put("key", "value");
-    }}
+client.optional().sendOptionalBody(
+    Optional.of(
+        new HashMap<String, Object>() {{
+            put("string", new 
+            HashMap<String, Object>() {{put("key", "value");
+            }});
+        }}
+    )
 );
 ```
 </dd>
@@ -44,7 +48,7 @@ client.optional().sendoptionalbody(
 </dl>
 </details>
 
-<details><summary><code>client.optional.sendoptionaltypedbody(request) -> String</code></summary>
+<details><summary><code>client.optional.sendOptionalTypedBody(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -57,11 +61,13 @@ client.optional().sendoptionalbody(
 <dd>
 
 ```java
-client.optional().sendoptionaltypedbody(
-    SendOptionalBodyRequest
-        .builder()
-        .message("message")
-        .build()
+client.optional().sendOptionalTypedBody(
+    Optional.of(
+        SendOptionalBodyRequest
+            .builder()
+            .message("message")
+            .build()
+    )
 );
 ```
 </dd>
@@ -77,7 +83,7 @@ client.optional().sendoptionaltypedbody(
 <dl>
 <dd>
 
-**message:** `String` 
+**request:** `Optional<SendOptionalBodyRequest>` 
     
 </dd>
 </dl>
@@ -89,7 +95,7 @@ client.optional().sendoptionaltypedbody(
 </dl>
 </details>
 
-<details><summary><code>client.optional.sendoptionalnullablewithalloptionalproperties(actionId, id, request) -> DeployResponse</code></summary>
+<details><summary><code>client.optional.sendOptionalNullableWithAllOptionalProperties(actionId, id, request) -> DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -117,11 +123,12 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 <dd>
 
 ```java
-client.optional().sendoptionalnullablewithalloptionalproperties(
+client.optional().sendOptionalNullableWithAllOptionalProperties(
     "actionId",
     "id",
     DeployParams
         .builder()
+        .updateDraft(true)
         .build()
 );
 ```
@@ -154,7 +161,7 @@ client.optional().sendoptionalnullablewithalloptionalproperties(
 <dl>
 <dd>
 
-**updateDraft:** `Optional<Boolean>` 
+**request:** `Optional<DeployParams>` 
     
 </dd>
 </dl>

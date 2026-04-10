@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SeedApiTimeoutError = exports.SeedApiError = void 0;
-var SeedApiError_js_1 = require("./SeedApiError.js");
-Object.defineProperty(exports, "SeedApiError", { enumerable: true, get: function () { return SeedApiError_js_1.SeedApiError; } });
-var SeedApiTimeoutError_js_1 = require("./SeedApiTimeoutError.js");
-Object.defineProperty(exports, "SeedApiTimeoutError", { enumerable: true, get: function () { return SeedApiTimeoutError_js_1.SeedApiTimeoutError; } });
+exports.SeedExhaustiveTimeoutError = exports.SeedExhaustiveError = void 0;
+var SeedExhaustiveError_js_1 = require("./SeedExhaustiveError.js");
+Object.defineProperty(exports, "SeedExhaustiveError", { enumerable: true, get: function () { return SeedExhaustiveError_js_1.SeedExhaustiveError; } });
+var SeedExhaustiveTimeoutError_js_1 = require("./SeedExhaustiveTimeoutError.js");
+Object.defineProperty(exports, "SeedExhaustiveTimeoutError", { enumerable: true, get: function () { return SeedExhaustiveTimeoutError_js_1.SeedExhaustiveTimeoutError; } });

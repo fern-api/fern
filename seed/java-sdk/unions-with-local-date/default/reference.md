@@ -13,12 +13,7 @@
 <dd>
 
 ```java
-client.bigunion().get(
-    "id",
-    BigunionGetRequest
-        .builder()
-        .build()
-);
+client.bigunion().get("id");
 ```
 </dd>
 </dl>
@@ -59,11 +54,13 @@ client.bigunion().get(
 
 ```java
 client.bigunion().update(
-    BigUnion.of(
-        BigUnionZero
+    BigUnion.normalSweet(
+        NormalSweet
             .builder()
             .value("value")
-            .type(BigUnionZeroType.NORMAL_SWEET)
+            .additionalProperty("id", "id")
+            .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+            .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
             .build()
     )
 );
@@ -108,11 +105,22 @@ client.bigunion().update(
 ```java
 client.bigunion().updateMany(
     Arrays.asList(
-        BigUnion.of(
-            BigUnionZero
+        BigUnion.normalSweet(
+            NormalSweet
                 .builder()
                 .value("value")
-                .type(BigUnionZeroType.NORMAL_SWEET)
+                .additionalProperty("id", "id")
+                .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+                .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
+                .build()
+        ),
+        BigUnion.normalSweet(
+            NormalSweet
+                .builder()
+                .value("value")
+                .additionalProperty("id", "id")
+                .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+                .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
                 .build()
         )
     )
@@ -157,12 +165,7 @@ client.bigunion().updateMany(
 <dd>
 
 ```java
-client.types().get(
-    "id",
-    TypesGetRequest
-        .builder()
-        .build()
-);
+client.types().get("date-example");
 ```
 </dd>
 </dl>
@@ -203,11 +206,7 @@ client.types().get(
 
 ```java
 client.types().update(
-    UnionWithTime.value(
-        UnionWithTimeValue
-            .builder()
-            .build()
-    )
+    UnionWithTime.date(LocalDate.parse("1994-01-01"))
 );
 ```
 </dd>
@@ -249,12 +248,7 @@ client.types().update(
 <dd>
 
 ```java
-client.union().get(
-    "id",
-    UnionGetRequest
-        .builder()
-        .build()
-);
+client.bigunion().get("id");
 ```
 </dd>
 </dl>
@@ -295,11 +289,11 @@ client.union().get(
 
 ```java
 client.union().update(
-    Shape.of(
-        ShapeZero
+    Shape.circle(
+        Circle
             .builder()
             .radius(1.1)
-            .type(ShapeZeroType.CIRCLE)
+            .additionalProperty("id", "id")
             .build()
     )
 );

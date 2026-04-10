@@ -1,16 +1,18 @@
 import Foundation
-import Api
+import Exhaustive
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ExhaustiveClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.endpointsPagination.endpointsPaginationListItems(
-        cursor: .value("cursor"),
-        limit: .value(1)
-    )
+    _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
+        Dog(
+            name: "name",
+            likesToWoof: true
+        )
+    ))
 }
 
 try await main()

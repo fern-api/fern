@@ -4,7 +4,9 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 const USERNAME_PARAM = "username" as const;
-const PASSWORD_PARAM = "password" as const;
+const PASSWORD_PARAM = "accessToken" as const;
+const ENV_USERNAME = "USERNAME" as const;
+const ENV_PASSWORD = "PASSWORD" as const;
 
 export class BasicAuthProvider implements core.AuthProvider {
     private readonly options: BasicAuthProvider.Options;
@@ -14,7 +16,10 @@ export class BasicAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
-        return options?.[USERNAME_PARAM] != null && options?.[PASSWORD_PARAM] != null;
+        return (
+            (options?.[USERNAME_PARAM] != null || process.env?.[ENV_USERNAME] != null) &&
+            (options?.[PASSWORD_PARAM] != null || process.env?.[ENV_PASSWORD] != null)
+        );
     }
 
     public async getAuthRequest({
@@ -22,18 +27,22 @@ export class BasicAuthProvider implements core.AuthProvider {
     }: {
         endpointMetadata?: core.EndpointMetadata;
     } = {}): Promise<core.AuthRequest> {
-        const username = await core.Supplier.get(this.options[USERNAME_PARAM]);
+        const username = (await core.Supplier.get(this.options[USERNAME_PARAM])) ?? process.env?.[ENV_USERNAME];
         if (username == null) {
-            throw new errors.SeedApiError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME });
+            throw new errors.SeedBasicAuthEnvironmentVariablesError({
+                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
+            });
         }
-        const password = await core.Supplier.get(this.options[PASSWORD_PARAM]);
-        if (password == null) {
-            throw new errors.SeedApiError({ message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD });
+        const accessToken = (await core.Supplier.get(this.options[PASSWORD_PARAM])) ?? process.env?.[ENV_PASSWORD];
+        if (accessToken == null) {
+            throw new errors.SeedBasicAuthEnvironmentVariablesError({
+                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
+            });
         }
 
         const authHeader = core.BasicAuth.toAuthorizationHeader({
             username: username,
-            password: password,
+            password: accessToken,
         });
 
         return {
@@ -43,15 +52,18 @@ export class BasicAuthProvider implements core.AuthProvider {
 }
 
 export namespace BasicAuthProvider {
-    export const AUTH_SCHEME = "BasicAuth" as const;
+    export const AUTH_SCHEME = "Basic" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
         "Please provide username and password when initializing the client" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string =
-        `Please provide '${USERNAME_PARAM}' when initializing the client` as const;
+        `Please provide '${USERNAME_PARAM}' when initializing the client, or set the '${ENV_USERNAME}' environment variable` as const;
     export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string =
-        `Please provide '${PASSWORD_PARAM}' when initializing the client` as const;
+        `Please provide '${PASSWORD_PARAM}' when initializing the client, or set the '${ENV_PASSWORD}' environment variable` as const;
     export type Options = AuthOptions;
-    export type AuthOptions = { [USERNAME_PARAM]: core.Supplier<string>; [PASSWORD_PARAM]: core.Supplier<string> };
+    export type AuthOptions = {
+        [USERNAME_PARAM]?: core.Supplier<string> | undefined;
+        [PASSWORD_PARAM]?: core.Supplier<string> | undefined;
+    };
 
     export function createInstance(options: Options): core.AuthProvider {
         return new BasicAuthProvider(options);

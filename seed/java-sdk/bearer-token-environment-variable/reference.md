@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.getwithbearertoken() -> String</code></summary>
+<details><summary><code>client.service.getWithBearerToken() -> String</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```java
-client.service().getwithbearertoken();
+client.service().getWithBearerToken();
 ```
 </dd>
 </dl>

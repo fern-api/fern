@@ -4,6 +4,7 @@ package simple
 
 import (
 	context "context"
+	os "os"
 
 	core "github.com/oauth-client-credentials-environment-variables/fern/core"
 	internal "github.com/oauth-client-credentials-environment-variables/fern/internal"
@@ -19,6 +20,12 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
+	if options.ClientID == "" {
+		options.ClientID = os.Getenv("CLIENT_ID")
+	}
+	if options.ClientSecret == "" {
+		options.ClientSecret = os.Getenv("CLIENT_SECRET")
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
@@ -32,11 +39,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Getsomething(
+func (c *Client) GetSomething(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Getsomething(
+	_, err := c.WithRawResponse.GetSomething(
 		ctx,
 		opts...,
 	)

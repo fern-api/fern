@@ -8,41 +8,41 @@ import { toJson } from "../../../../core/json.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedEnum from "../../../index.js";
 
-export declare namespace QueryparamClient {
+export declare namespace QueryParamClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class QueryparamClient {
-    protected readonly _options: NormalizedClientOptions<QueryparamClient.Options>;
+export class QueryParamClient {
+    protected readonly _options: NormalizedClientOptions<QueryParamClient.Options>;
 
-    constructor(options: QueryparamClient.Options) {
+    constructor(options: QueryParamClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
-     * @param {SeedApi.QueryParamSendRequest} request
-     * @param {QueryparamClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedEnum.SendEnumAsQueryParamRequest} request
+     * @param {QueryParamClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.queryparam.send({
+     *     await client.queryParam.send({
      *         operand: ">",
      *         operandOrColor: "red"
      *     })
      */
     public send(
-        request: SeedApi.QueryParamSendRequest,
-        requestOptions?: QueryparamClient.RequestOptions,
+        request: SeedEnum.SendEnumAsQueryParamRequest,
+        requestOptions?: QueryParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedApi.QueryParamSendRequest,
-        requestOptions?: QueryparamClient.RequestOptions,
+        request: SeedEnum.SendEnumAsQueryParamRequest,
+        requestOptions?: QueryParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {
@@ -54,10 +54,13 @@ export class QueryparamClient {
                           omitUndefined: true,
                       })
                     : undefined,
-            operandOrColor: serializers.Color.jsonOrThrow(operandOrColor, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            operandOrColor: (() => {
+                const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                });
+                return typeof mapped === "string" ? mapped : toJson(mapped);
+            })(),
             maybeOperandOrColor:
                 maybeOperandOrColor != null
                     ? (() => {
@@ -90,7 +93,7 @@ export class QueryparamClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -101,27 +104,27 @@ export class QueryparamClient {
     }
 
     /**
-     * @param {SeedApi.QueryParamSendListRequest} request
-     * @param {QueryparamClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedEnum.SendEnumListAsQueryParamRequest} request
+     * @param {QueryParamClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.queryparam.sendlist({
+     *     await client.queryParam.sendList({
      *         operand: ">",
      *         maybeOperand: ">",
      *         operandOrColor: "red",
      *         maybeOperandOrColor: "red"
      *     })
      */
-    public sendlist(
-        request: SeedApi.QueryParamSendListRequest = {},
-        requestOptions?: QueryparamClient.RequestOptions,
+    public sendList(
+        request: SeedEnum.SendEnumListAsQueryParamRequest,
+        requestOptions?: QueryParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__sendlist(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__sendList(request, requestOptions));
     }
 
-    private async __sendlist(
-        request: SeedApi.QueryParamSendListRequest = {},
-        requestOptions?: QueryparamClient.RequestOptions,
+    private async __sendList(
+        request: SeedEnum.SendEnumListAsQueryParamRequest,
+        requestOptions?: QueryParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {
@@ -129,9 +132,7 @@ export class QueryparamClient {
                 ? operand.map((item) =>
                       serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
                   )
-                : operand != null
-                  ? serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip", omitUndefined: true })
-                  : undefined,
+                : serializers.Operand.jsonOrThrow(operand, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             maybeOperand: Array.isArray(maybeOperand)
                 ? maybeOperand.map((item) =>
                       serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
@@ -152,15 +153,13 @@ export class QueryparamClient {
                           return typeof mapped === "string" ? mapped : toJson(mapped);
                       })(),
                   )
-                : operandOrColor != null
-                  ? (() => {
-                        const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
-                            unrecognizedObjectKeys: "strip",
-                            omitUndefined: true,
-                        });
-                        return typeof mapped === "string" ? mapped : toJson(mapped);
-                    })()
-                  : undefined,
+                : (() => {
+                      const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
+                          unrecognizedObjectKeys: "strip",
+                          omitUndefined: true,
+                      });
+                      return typeof mapped === "string" ? mapped : toJson(mapped);
+                  })(),
             maybeOperandOrColor: Array.isArray(maybeOperandOrColor)
                 ? maybeOperandOrColor.map((item) =>
                       (() => {
@@ -202,7 +201,7 @@ export class QueryparamClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

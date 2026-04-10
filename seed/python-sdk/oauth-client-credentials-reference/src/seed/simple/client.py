@@ -22,7 +22,7 @@ class SimpleClient:
         """
         return self._raw_client
 
-    def getsomething(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def get_something(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -35,15 +35,16 @@ class SimpleClient:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedOauthClientCredentialsReference
 
-        client = SeedApi(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
+        client = SeedOauthClientCredentialsReference(
+            base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
-        client.simple.getsomething()
+        client.simple.get_something()
         """
-        _response = self._raw_client.getsomething(request_options=request_options)
+        _response = self._raw_client.get_something(request_options=request_options)
         return _response.data
 
 
@@ -62,7 +63,7 @@ class AsyncSimpleClient:
         """
         return self._raw_client
 
-    async def getsomething(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def get_something(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
@@ -77,19 +78,20 @@ class AsyncSimpleClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedOauthClientCredentialsReference
 
-        client = AsyncSeedApi(
-            token="YOUR_TOKEN",
-            base_url="https://yourhost.com/path/to/api",
+        client = AsyncSeedOauthClientCredentialsReference(
+            base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
         async def main() -> None:
-            await client.simple.getsomething()
+            await client.simple.get_something()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.getsomething(request_options=request_options)
+        _response = await self._raw_client.get_something(request_options=request_options)
         return _response.data

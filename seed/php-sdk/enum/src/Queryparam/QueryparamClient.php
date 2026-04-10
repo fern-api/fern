@@ -1,18 +1,18 @@
 <?php
 
-namespace Seed\Queryparam;
+namespace Seed\QueryParam;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Queryparam\Requests\QueryParamSendRequest;
+use Seed\QueryParam\Requests\SendEnumAsQueryParamRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Queryparam\Requests\QueryParamSendListRequest;
+use Seed\QueryParam\Requests\SendEnumListAsQueryParamRequest;
 
-class QueryparamClient
+class QueryParamClient
 {
     /**
      * @var array{
@@ -49,7 +49,7 @@ class QueryparamClient
     }
 
     /**
-     * @param QueryParamSendRequest $request
+     * @param SendEnumAsQueryParamRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -61,7 +61,7 @@ class QueryparamClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(QueryParamSendRequest $request, ?array $options = null): void
+    public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -98,7 +98,7 @@ class QueryparamClient
     }
 
     /**
-     * @param QueryParamSendListRequest $request
+     * @param SendEnumListAsQueryParamRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -110,18 +110,14 @@ class QueryparamClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sendlist(QueryParamSendListRequest $request = new QueryParamSendListRequest(), ?array $options = null): void
+    public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->operand != null) {
-            $query['operand'] = $request->operand;
-        }
+        $query['operand'] = $request->operand;
+        $query['operandOrColor'] = $request->operandOrColor;
         if ($request->maybeOperand != null) {
             $query['maybeOperand'] = $request->maybeOperand;
-        }
-        if ($request->operandOrColor != null) {
-            $query['operandOrColor'] = $request->operandOrColor;
         }
         if ($request->maybeOperandOrColor != null) {
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;

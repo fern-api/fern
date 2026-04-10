@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetAsync</a>(UserGetRequest { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedSimpleApi/User/UserClient.cs">GetAsync</a>(id) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.User.GetAsync(new UserGetRequest { Id = "id" });
+await client.User.GetAsync("id");
 ```
 </dd>
 </dl>
@@ -28,7 +28,7 @@ await client.User.GetAsync(new UserGetRequest { Id = "id" });
 <dl>
 <dd>
 
-**request:** `UserGetRequest` 
+**id:** `string` 
     
 </dd>
 </dl>

@@ -17,10 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.TypesObjectWithRequiredField{
-        FieldString: "string",
+    request := &fern.ListRequestB{
+        Cursor: fern.String(
+            "cursor",
+        ),
+        Size: fern.Int(
+            1,
+        ),
     }
-    client.EndpointsContainer.EndpointsContainerGetAndReturnOptional(
+    client.Endpoints.DuplicateNamesB.List(
         context.TODO(),
         request,
     )

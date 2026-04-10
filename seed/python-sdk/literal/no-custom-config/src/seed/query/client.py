@@ -4,12 +4,10 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.alias_to_prompt import AliasToPrompt
-from ..types.alias_to_stream import AliasToStream
 from ..types.send_response import SendResponse
 from .raw_client import AsyncRawQueryClient, RawQueryClient
-from .types.query_send_request_optional_prompt import QuerySendRequestOptionalPrompt
-from .types.query_send_request_prompt import QuerySendRequestPrompt
+from .types.alias_to_prompt import AliasToPrompt
+from .types.alias_to_stream import AliasToStream
 
 
 class QueryClient:
@@ -30,35 +28,23 @@ class QueryClient:
     def send(
         self,
         *,
-        prompt: QuerySendRequestPrompt,
-        alias_prompt: AliasToPrompt,
         query: str,
-        stream: bool,
-        alias_stream: AliasToStream,
-        optional_prompt: typing.Optional[QuerySendRequestOptionalPrompt] = None,
+        optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
-        optional_stream: typing.Optional[bool] = None,
+        optional_stream: typing.Optional[typing.Literal[False]] = None,
         alias_optional_stream: typing.Optional[AliasToStream] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendResponse:
         """
         Parameters
         ----------
-        prompt : QuerySendRequestPrompt
-
-        alias_prompt : AliasToPrompt
-
         query : str
 
-        stream : bool
-
-        alias_stream : AliasToStream
-
-        optional_prompt : typing.Optional[QuerySendRequestOptionalPrompt]
+        optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
 
         alias_optional_prompt : typing.Optional[AliasToPrompt]
 
-        optional_stream : typing.Optional[bool]
+        optional_stream : typing.Optional[typing.Literal[False]]
 
         alias_optional_stream : typing.Optional[AliasToStream]
 
@@ -69,28 +55,19 @@ class QueryClient:
         -------
         SendResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedLiteral
 
-        client = SeedApi(
+        client = SeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
         client.query.send(
-            prompt="You are a helpful assistant",
-            alias_prompt="You are a helpful assistant",
-            query="query",
-            stream=True,
-            alias_stream=True,
+            query="What is the weather today",
         )
         """
         _response = self._raw_client.send(
-            prompt=prompt,
-            alias_prompt=alias_prompt,
             query=query,
-            stream=stream,
-            alias_stream=alias_stream,
             optional_prompt=optional_prompt,
             alias_optional_prompt=alias_optional_prompt,
             optional_stream=optional_stream,
@@ -118,35 +95,23 @@ class AsyncQueryClient:
     async def send(
         self,
         *,
-        prompt: QuerySendRequestPrompt,
-        alias_prompt: AliasToPrompt,
         query: str,
-        stream: bool,
-        alias_stream: AliasToStream,
-        optional_prompt: typing.Optional[QuerySendRequestOptionalPrompt] = None,
+        optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
-        optional_stream: typing.Optional[bool] = None,
+        optional_stream: typing.Optional[typing.Literal[False]] = None,
         alias_optional_stream: typing.Optional[AliasToStream] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendResponse:
         """
         Parameters
         ----------
-        prompt : QuerySendRequestPrompt
-
-        alias_prompt : AliasToPrompt
-
         query : str
 
-        stream : bool
-
-        alias_stream : AliasToStream
-
-        optional_prompt : typing.Optional[QuerySendRequestOptionalPrompt]
+        optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
 
         alias_optional_prompt : typing.Optional[AliasToPrompt]
 
-        optional_stream : typing.Optional[bool]
+        optional_stream : typing.Optional[typing.Literal[False]]
 
         alias_optional_stream : typing.Optional[AliasToStream]
 
@@ -157,36 +122,27 @@ class AsyncQueryClient:
         -------
         SendResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedLiteral
 
-        client = AsyncSeedApi(
+        client = AsyncSeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.query.send(
-                prompt="You are a helpful assistant",
-                alias_prompt="You are a helpful assistant",
-                query="query",
-                stream=True,
-                alias_stream=True,
+                query="What is the weather today",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.send(
-            prompt=prompt,
-            alias_prompt=alias_prompt,
             query=query,
-            stream=stream,
-            alias_stream=alias_stream,
             optional_prompt=optional_prompt,
             alias_optional_prompt=alias_optional_prompt,
             optional_stream=optional_stream,

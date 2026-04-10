@@ -1,0 +1,36 @@
+using SeedMixedFileDirectory.Core;
+
+namespace SeedMixedFileDirectory;
+
+public partial class SeedMixedFileDirectoryClient : ISeedMixedFileDirectoryClient
+{
+    private readonly RawClient _client;
+
+    public SeedMixedFileDirectoryClient(ClientOptions? clientOptions = null)
+    {
+        clientOptions ??= new ClientOptions();
+        var platformHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedMixedFileDirectory" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernmixed-file-directory/0.0.1" },
+            }
+        );
+        foreach (var header in platformHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
+        Organization = new OrganizationClient(_client);
+        User = new UserClient(_client);
+    }
+
+    public IOrganizationClient Organization { get; }
+
+    public IUserClient User { get; }
+}

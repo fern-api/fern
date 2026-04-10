@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.service.getmovie(movie_id: "movieId")
+client.service.get_movie(movie_id: "movie-c06a4ad7")

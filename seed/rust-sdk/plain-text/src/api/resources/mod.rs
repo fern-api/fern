@@ -7,12 +7,12 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod service;
-pub struct ApiClient {
+pub struct PlainTextClient {
     pub config: ClientConfig,
     pub service: ServiceClient,
 }
 
-impl ApiClient {
+impl PlainTextClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

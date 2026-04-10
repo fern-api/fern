@@ -39,9 +39,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedFileDownload;
 
-var client = new SeedApiClient();
+var client = new SeedFileDownloadClient();
 await client.Service.SimpleAsync();
 ```
 
@@ -51,11 +51,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedFileDownload;
 
 try {
     var response = await client.Service.SimpleAsync(...);
-} catch (SeedApiApiException e) {
+} catch (SeedFileDownloadApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -104,7 +104,7 @@ var response = await client.Service.SimpleAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedFileDownload;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Service.SimpleAsync(...).WithRawResponse();

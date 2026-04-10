@@ -7,6 +7,8 @@ pub use crate::prelude::*;
 pub enum Operand {
     GreaterThan,
     EqualTo,
+    /// The name and value should be similar
+    /// are similar for less than.
     LessThan,
     /// This variant is used for forward compatibility.
     /// If the server sends a value not recognized by the current SDK version,

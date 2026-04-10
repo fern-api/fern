@@ -48,17 +48,17 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Api
+import QueryParameters
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = QueryParametersClient()
 
-    _ = try await client.user.getusername(
+    _ = try await client.user.getUsername(
         limit: 1,
-        id: "id",
+        id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
         date: CalendarDate("2023-01-15")!,
         deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-        bytes: "bytes",
+        bytes: "SGVsbG8gd29ybGQh",
         user: User(
             name: "name",
             tags: [
@@ -66,11 +66,27 @@ private func main() async throws {
                 "tags"
             ]
         ),
-        optionalDeadline: .value(try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)),
+        userList: [
+            User(
+                name: "name",
+                tags: [
+                    "tags",
+                    "tags"
+                ]
+            ),
+            User(
+                name: "name",
+                tags: [
+                    "tags",
+                    "tags"
+                ]
+            )
+        ],
+        optionalDeadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         keyValue: [
             "keyValue": "keyValue"
         ],
-        optionalString: .value("optionalString"),
+        optionalString: "optionalString",
         nestedUser: NestedUser(
             name: "name",
             user: User(
@@ -99,14 +115,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Api
+import QueryParameters
 
-let client = ApiClient(...)
+let client = QueryParametersClient(...)
 
 do {
-    let response = try await client.user.getusername(...)
+    let response = try await client.user.getUsername(...)
     // Handle successful response
-} catch let error as ApiError {
+} catch let error as QueryParametersError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -131,7 +147,7 @@ do {
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.user.getusername(..., requestOptions: .init(
+try await client.user.getUsername(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -143,7 +159,7 @@ try await client.user.getusername(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.user.getusername(..., requestOptions: .init(
+try await client.user.getUsername(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -155,7 +171,7 @@ try await client.user.getusername(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.user.getusername(..., requestOptions: .init(
+try await client.user.getUsername(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -166,9 +182,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Api
+import QueryParameters
 
-let client = ApiClient(
+let client = QueryParametersClient(
     ...,
     urlSession: // Provide your implementation here
 )

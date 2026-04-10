@@ -4,7 +4,7 @@ namespace Seed\Service;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\Response;
+use Seed\Service\Types\Response;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -12,7 +12,7 @@ use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Types\StringResponse;
-use Seed\Types\WithDocs;
+use Seed\Service\Types\WithDocs;
 
 class ServiceClient
 {
@@ -64,7 +64,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getmovie(string $request, ?array $options = null): ?Response
+    public function getMovie(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -111,14 +111,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getmoviedocs(string $request, ?array $options = null): ?Response
+    public function getMovieDocs(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie/docs",
+                    path: "movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -158,14 +158,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getmoviename(string $request, ?array $options = null): ?StringResponse
+    public function getMovieName(string $request, ?array $options = null): ?StringResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie/name",
+                    path: "movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -205,14 +205,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getmoviemetadata(string $request, ?array $options = null): ?Response
+    public function getMovieMetadata(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie/metadata",
+                    path: "movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -252,14 +252,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getoptionalmovie(string $request, ?array $options = null): ?Response
+    public function getOptionalMovie(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie/optional",
+                    path: "movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -299,14 +299,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getoptionalmoviedocs(string $request, ?array $options = null): ?WithDocs
+    public function getOptionalMovieDocs(string $request, ?array $options = null): ?WithDocs
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie/optional/docs",
+                    path: "movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -346,14 +346,14 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getoptionalmoviename(string $request, ?array $options = null): ?StringResponse
+    public function getOptionalMovieName(string $request, ?array $options = null): ?StringResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "movie/optional/name",
+                    path: "movie",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

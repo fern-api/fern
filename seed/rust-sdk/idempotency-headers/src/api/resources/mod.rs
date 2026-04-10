@@ -7,12 +7,12 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod payment;
-pub struct ApiClient {
+pub struct IdempotencyHeadersClient {
     pub config: ClientConfig,
     pub payment: PaymentClient,
 }
 
-impl ApiClient {
+impl IdempotencyHeadersClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

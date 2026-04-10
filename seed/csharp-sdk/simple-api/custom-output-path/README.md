@@ -40,10 +40,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedSimpleApi;
 
-var client = new SeedApiClient("TOKEN");
-await client.User.GetAsync(new UserGetRequest { Id = "id" });
+var client = new SeedSimpleApiClient("TOKEN");
+await client.User.GetAsync("id");
 ```
 
 ## Environments
@@ -51,11 +51,11 @@ await client.User.GetAsync(new UserGetRequest { Id = "id" });
 This SDK allows you to configure different environments for API requests.
 
 ```csharp
-using SeedApi;
+using SeedSimpleApi;
 
-var client = new SeedApiClient(new ClientOptions
+var client = new SeedSimpleApiClient(new ClientOptions
 {
-    BaseUrl = SeedApiEnvironment.Production
+    BaseUrl = SeedSimpleApiEnvironment.Production
 });
 ```
 
@@ -65,11 +65,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedSimpleApi;
 
 try {
     var response = await client.User.GetAsync(...);
-} catch (SeedApiApiException e) {
+} catch (SeedSimpleApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -118,7 +118,7 @@ var response = await client.User.GetAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedSimpleApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.User.GetAsync(...).WithRawResponse();

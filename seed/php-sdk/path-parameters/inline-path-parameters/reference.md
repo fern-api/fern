@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>$client-&gt;organizations-&gt;getorganization($request) -> ?Organization</code></summary>
+<details><summary><code>$client-&gt;organizations-&gt;getOrganization($tenantId, $organizationId) -> ?Organization</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,9 @@
 <dd>
 
 ```php
-$client->organizations->getorganization(
-    new OrganizationsGetOrganizationRequest([
-        'tenantId' => 'tenant_id',
-        'organizationId' => 'organization_id',
-    ]),
+$client->organizations->getOrganization(
+    'tenant_id',
+    'organization_id',
 );
 ```
 </dd>
@@ -53,7 +51,7 @@ $client->organizations->getorganization(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;organizations-&gt;getorganizationuser($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;organizations-&gt;getOrganizationUser($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -66,8 +64,8 @@ $client->organizations->getorganization(
 <dd>
 
 ```php
-$client->organizations->getorganizationuser(
-    new OrganizationsGetOrganizationUserRequest([
+$client->organizations->getOrganizationUser(
+    new GetOrganizationUserRequest([
         'tenantId' => 'tenant_id',
         'organizationId' => 'organization_id',
         'userId' => 'user_id',
@@ -115,7 +113,7 @@ $client->organizations->getorganizationuser(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;organizations-&gt;searchorganizations($request) -> ?array</code></summary>
+<details><summary><code>$client-&gt;organizations-&gt;searchOrganizations($tenantId, $organizationId, $request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -128,10 +126,11 @@ $client->organizations->getorganizationuser(
 <dd>
 
 ```php
-$client->organizations->searchorganizations(
-    new OrganizationsSearchOrganizationsRequest([
-        'tenantId' => 'tenant_id',
-        'organizationId' => 'organization_id',
+$client->organizations->searchOrganizations(
+    'tenant_id',
+    'organization_id',
+    new SearchOrganizationsRequest([
+        'limit' => 1,
     ]),
 );
 ```
@@ -177,7 +176,7 @@ $client->organizations->searchorganizations(
 </details>
 
 ## User
-<details><summary><code>$client-&gt;user-&gt;getuser($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUser($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -190,8 +189,8 @@ $client->organizations->searchorganizations(
 <dd>
 
 ```php
-$client->user->getuser(
-    new UserGetUserRequest([
+$client->user->getUser(
+    new GetUsersRequest([
         'tenantId' => 'tenant_id',
         'userId' => 'user_id',
     ]),
@@ -230,7 +229,7 @@ $client->user->getuser(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;updateuser($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUser($tenantId, $request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -243,13 +242,71 @@ $client->user->getuser(
 <dd>
 
 ```php
-$client->user->updateuser(
-    new UserUpdateUserRequest([
+$client->user->createUser(
+    'tenant_id',
+    new User([
+        'name' => 'name',
+        'tags' => [
+            'tags',
+            'tags',
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$request:** `User` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;user-&gt;updateUser($request) -> ?User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->user->updateUser(
+    new UpdateUserRequest([
         'tenantId' => 'tenant_id',
         'userId' => 'user_id',
         'body' => new User([
             'name' => 'name',
             'tags' => [
+                'tags',
                 'tags',
             ],
         ]),
@@ -297,7 +354,7 @@ $client->user->updateuser(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;createuser($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;searchUsers($request) -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -310,68 +367,11 @@ $client->user->updateuser(
 <dd>
 
 ```php
-$client->user->createuser(
-    new UserCreateUserRequest([
-        'tenantId' => 'tenant_id',
-        'body' => new User([
-            'name' => 'name',
-            'tags' => [
-                'tags',
-            ],
-        ]),
-    ]),
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**$tenantId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$request:** `User` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>$client-&gt;user-&gt;searchusers($request) -> ?array</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->user->searchusers(
-    new UserSearchUsersRequest([
+$client->user->searchUsers(
+    new SearchUsersRequest([
         'tenantId' => 'tenant_id',
         'userId' => 'user_id',
+        'limit' => 1,
     ]),
 );
 ```
@@ -416,7 +416,7 @@ $client->user->searchusers(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getusermetadata($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUserMetadata($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -443,8 +443,8 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```php
-$client->user->getusermetadata(
-    new UserGetUserMetadataRequest([
+$client->user->getUserMetadata(
+    new GetUserMetadataRequest([
         'tenantId' => 'tenant_id',
         'userId' => 'user_id',
         'version' => 1,
@@ -492,7 +492,7 @@ $client->user->getusermetadata(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getuserspecifics($request) -> ?User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUserSpecifics($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -519,8 +519,8 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```php
-$client->user->getuserspecifics(
-    new UserGetUserSpecificsRequest([
+$client->user->getUserSpecifics(
+    new GetUserSpecificsRequest([
         'tenantId' => 'tenant_id',
         'userId' => 'user_id',
         'version' => 1,

@@ -5,6 +5,7 @@ package payment
 import (
 	context "context"
 
+	uuid "github.com/google/uuid"
 	fern "github.com/idempotency-headers/fern"
 	core "github.com/idempotency-headers/fern/core"
 	internal "github.com/idempotency-headers/fern/internal"
@@ -35,28 +36,28 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Create(
 	ctx context.Context,
-	request *fern.PaymentCreateRequest,
-	opts ...option.RequestOption,
-) (string, error) {
+	request *fern.CreatePaymentRequest,
+	opts ...option.IdempotentRequestOption,
+) (uuid.UUID, error) {
 	response, err := c.WithRawResponse.Create(
 		ctx,
 		request,
 		opts...,
 	)
 	if err != nil {
-		return "", err
+		return uuid.UUID{}, err
 	}
 	return response.Body, nil
 }
 
 func (c *Client) Delete(
 	ctx context.Context,
-	request *fern.PaymentDeleteRequest,
+	paymentID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
-		request,
+		paymentID,
 		opts...,
 	)
 	if err != nil {

@@ -9,14 +9,14 @@ if typing.TYPE_CHECKING:
     from .types import Link, UsersListResponse
     from . import users
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedPagination, SeedPagination
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedPagination": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "Link": ".types",
-    "SeedApi": ".client",
+    "SeedPagination": ".client",
     "UsersListResponse": ".types",
     "__version__": ".version",
     "users": ".users",
@@ -45,11 +45,11 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedPagination",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Link",
-    "SeedApi",
+    "SeedPagination",
     "UsersListResponse",
     "__version__",
     "users",

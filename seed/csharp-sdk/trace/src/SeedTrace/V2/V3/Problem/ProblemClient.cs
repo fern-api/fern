@@ -31,7 +31,7 @@ public partial class ProblemClient : IProblemClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/problems-v2/v3/lightweight-problem-info",
+                    Path = "/problems-v2/lightweight-problem-info",
                     Headers = _headers,
                     Options = options,
                 },
@@ -97,7 +97,7 @@ public partial class ProblemClient : IProblemClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = "/problems-v2/v3/problem-info",
+                    Path = "/problems-v2/problem-info",
                     Headers = _headers,
                     Options = options,
                 },
@@ -163,7 +163,7 @@ public partial class ProblemClient : IProblemClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "/problems-v2/v3/problem-info/{0}",
+                        "/problems-v2/problem-info/{0}",
                         ValueConvert.ToPathParameterString(problemId)
                     ),
                     Headers = _headers,
@@ -232,7 +232,7 @@ public partial class ProblemClient : IProblemClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "/problems-v2/v3/problem-info/{0}/version/{1}",
+                        "/problems-v2/problem-info/{0}/version/{1}",
                         ValueConvert.ToPathParameterString(problemId),
                         ValueConvert.ToPathParameterString(problemVersion)
                     ),

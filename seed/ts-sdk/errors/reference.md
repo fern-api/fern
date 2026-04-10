@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">foowithoutendpointerror</a>({ ...params }) -> SeedApi.FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">fooWithoutEndpointError</a>({ ...params }) -> SeedErrors.FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.simple.foowithoutendpointerror({
+await client.simple.fooWithoutEndpointError({
     bar: "bar"
 });
 
@@ -31,7 +31,7 @@ await client.simple.foowithoutendpointerror({
 <dl>
 <dd>
 
-**request:** `SeedApi.FooRequest` 
+**request:** `SeedErrors.FooRequest` 
     
 </dd>
 </dl>
@@ -51,7 +51,7 @@ await client.simple.foowithoutendpointerror({
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">foo</a>({ ...params }) -> SeedApi.FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">foo</a>({ ...params }) -> SeedErrors.FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -82,7 +82,7 @@ await client.simple.foo({
 <dl>
 <dd>
 
-**request:** `SeedApi.FooRequest` 
+**request:** `SeedErrors.FooRequest` 
     
 </dd>
 </dl>
@@ -102,7 +102,7 @@ await client.simple.foo({
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">foowithexamples</a>({ ...params }) -> SeedApi.FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">fooWithExamples</a>({ ...params }) -> SeedErrors.FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -115,8 +115,8 @@ await client.simple.foo({
 <dd>
 
 ```typescript
-await client.simple.foowithexamples({
-    bar: "bar"
+await client.simple.fooWithExamples({
+    bar: "hello"
 });
 
 ```
@@ -133,7 +133,7 @@ await client.simple.foowithexamples({
 <dl>
 <dd>
 
-**request:** `SeedApi.FooRequest` 
+**request:** `SeedErrors.FooRequest` 
     
 </dd>
 </dl>

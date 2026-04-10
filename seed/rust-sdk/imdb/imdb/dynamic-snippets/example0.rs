@@ -10,10 +10,11 @@ async fn main() {
     let client = ApiClient::new(config).expect("Failed to build client");
     client
         .imdb
-        .createmovie(
+        .create_movie(
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
+                ..Default::default()
             },
             None,
         )

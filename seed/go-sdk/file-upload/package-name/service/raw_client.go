@@ -34,7 +34,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Post(
 	ctx context.Context,
-	request *upload.ServicePostRequest,
+	request *upload.MyRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -54,18 +54,14 @@ func (r *RawClient) Post(
 			return nil, err
 		}
 	}
-	if request.Integer != nil {
-		if err := writer.WriteField("integer", fmt.Sprintf("%v", *request.Integer)); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteField("integer", fmt.Sprintf("%v", request.Integer)); err != nil {
+		return nil, err
 	}
-	if request.File != nil {
-		if err := writer.WriteFile("file", request.File); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteFile("file", request.File); err != nil {
+		return nil, err
 	}
-	if request.FileList != nil {
-		if err := writer.WriteFile("file_list", request.FileList); err != nil {
+	for _, f := range request.FileList {
+		if err := writer.WriteFile("file_list", f); err != nil {
 			return nil, err
 		}
 	}
@@ -74,8 +70,8 @@ func (r *RawClient) Post(
 			return nil, err
 		}
 	}
-	if request.MaybeFileList != nil {
-		if err := writer.WriteFile("maybe_file_list", request.MaybeFileList); err != nil {
+	for _, f := range request.MaybeFileList {
+		if err := writer.WriteFile("maybe_file_list", f); err != nil {
 			return nil, err
 		}
 	}
@@ -109,10 +105,8 @@ func (r *RawClient) Post(
 			return nil, err
 		}
 	}
-	if request.AliasObject != nil {
-		if err := writer.WriteJSON("alias_object", request.AliasObject); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteJSON("alias_object", request.AliasObject); err != nil {
+		return nil, err
 	}
 	for _, part := range request.ListOfAliasObject {
 		if err := writer.WriteJSON("list_of_alias_object", part); err != nil {
@@ -152,9 +146,9 @@ func (r *RawClient) Post(
 	}, nil
 }
 
-func (r *RawClient) Justfile(
+func (r *RawClient) JustFile(
 	ctx context.Context,
-	request *upload.ServiceJustFileRequest,
+	request *upload.JustFileRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -169,10 +163,8 @@ func (r *RawClient) Justfile(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if request.File != nil {
-		if err := writer.WriteFile("file", request.File); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteFile("file", request.File); err != nil {
+		return nil, err
 	}
 	if err := writer.Close(); err != nil {
 		return nil, err
@@ -202,9 +194,9 @@ func (r *RawClient) Justfile(
 	}, nil
 }
 
-func (r *RawClient) Justfilewithqueryparams(
+func (r *RawClient) JustFileWithQueryParams(
 	ctx context.Context,
-	request *upload.ServiceJustFileWithQueryParamsRequest,
+	request *upload.JustFileWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -226,10 +218,8 @@ func (r *RawClient) Justfilewithqueryparams(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if request.File != nil {
-		if err := writer.WriteFile("file", request.File); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteFile("file", request.File); err != nil {
+		return nil, err
 	}
 	if err := writer.Close(); err != nil {
 		return nil, err
@@ -259,9 +249,9 @@ func (r *RawClient) Justfilewithqueryparams(
 	}, nil
 }
 
-func (r *RawClient) Justfilewithoptionalqueryparams(
+func (r *RawClient) JustFileWithOptionalQueryParams(
 	ctx context.Context,
-	request *upload.ServiceJustFileWithOptionalQueryParamsRequest,
+	request *upload.JustFileWithOptionalQueryParamsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -283,10 +273,8 @@ func (r *RawClient) Justfilewithoptionalqueryparams(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if request.File != nil {
-		if err := writer.WriteFile("file", request.File); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteFile("file", request.File); err != nil {
+		return nil, err
 	}
 	if err := writer.Close(); err != nil {
 		return nil, err
@@ -316,9 +304,9 @@ func (r *RawClient) Justfilewithoptionalqueryparams(
 	}, nil
 }
 
-func (r *RawClient) Withcontenttype(
+func (r *RawClient) WithContentType(
 	ctx context.Context,
-	request *upload.ServiceWithContentTypeRequest,
+	request *upload.WithContentTypeRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -333,23 +321,17 @@ func (r *RawClient) Withcontenttype(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if request.File != nil {
-		if err := writer.WriteFile("file", request.File); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteFile("file", request.File, internal.WithDefaultContentType("application/octet-stream")); err != nil {
+		return nil, err
 	}
-	if request.Foo != nil {
-		if err := writer.WriteField("foo", *request.Foo); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteField("foo", request.Foo); err != nil {
+		return nil, err
 	}
-	if request.Bar != nil {
-		if err := writer.WriteJSON("bar", request.Bar); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteJSON("bar", request.Bar, internal.WithDefaultContentType("application/json")); err != nil {
+		return nil, err
 	}
 	if request.FooBar != nil {
-		if err := writer.WriteJSON("foo_bar", request.FooBar); err != nil {
+		if err := writer.WriteJSON("foo_bar", request.FooBar, internal.WithDefaultContentType("application/json")); err != nil {
 			return nil, err
 		}
 	}
@@ -381,9 +363,9 @@ func (r *RawClient) Withcontenttype(
 	}, nil
 }
 
-func (r *RawClient) Withformencoding(
+func (r *RawClient) WithFormEncoding(
 	ctx context.Context,
-	request *upload.ServiceWithFormEncodingRequest,
+	request *upload.WithFormEncodingRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -398,20 +380,14 @@ func (r *RawClient) Withformencoding(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if request.File != nil {
-		if err := writer.WriteFile("file", request.File); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteFile("file", request.File, internal.WithDefaultContentType("application/octet-stream")); err != nil {
+		return nil, err
 	}
-	if request.Foo != nil {
-		if err := writer.WriteField("foo", *request.Foo); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteField("foo", request.Foo); err != nil {
+		return nil, err
 	}
-	if request.Bar != nil {
-		if err := writer.WriteJSON("bar", request.Bar); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteJSON("bar", request.Bar); err != nil {
+		return nil, err
 	}
 	if err := writer.Close(); err != nil {
 		return nil, err
@@ -441,9 +417,9 @@ func (r *RawClient) Withformencoding(
 	}, nil
 }
 
-func (r *RawClient) Withformencodedcontainers(
+func (r *RawClient) WithFormEncodedContainers(
 	ctx context.Context,
-	request *upload.ServiceWithFormEncodedContainersRequest,
+	request *upload.MyOtherRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -452,7 +428,7 @@ func (r *RawClient) Withformencodedcontainers(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/form-encoded"
+	endpointURL := baseURL
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -463,18 +439,14 @@ func (r *RawClient) Withformencodedcontainers(
 			return nil, err
 		}
 	}
-	if request.Integer != nil {
-		if err := writer.WriteField("integer", fmt.Sprintf("%v", *request.Integer)); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteField("integer", fmt.Sprintf("%v", request.Integer)); err != nil {
+		return nil, err
 	}
-	if request.File != nil {
-		if err := writer.WriteFile("file", request.File); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteFile("file", request.File); err != nil {
+		return nil, err
 	}
-	if request.FileList != nil {
-		if err := writer.WriteFile("file_list", request.FileList); err != nil {
+	for _, f := range request.FileList {
+		if err := writer.WriteFile("file_list", f); err != nil {
 			return nil, err
 		}
 	}
@@ -483,8 +455,8 @@ func (r *RawClient) Withformencodedcontainers(
 			return nil, err
 		}
 	}
-	if request.MaybeFileList != nil {
-		if err := writer.WriteFile("maybe_file_list", request.MaybeFileList); err != nil {
+	for _, f := range request.MaybeFileList {
+		if err := writer.WriteFile("maybe_file_list", f); err != nil {
 			return nil, err
 		}
 	}
@@ -523,10 +495,8 @@ func (r *RawClient) Withformencodedcontainers(
 			return nil, err
 		}
 	}
-	if request.AliasObject != nil {
-		if err := writer.WriteJSON("alias_object", request.AliasObject); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteJSON("alias_object", request.AliasObject); err != nil {
+		return nil, err
 	}
 	for _, part := range request.ListOfAliasObject {
 		if err := writer.WriteJSON("list_of_alias_object", part); err != nil {
@@ -566,9 +536,9 @@ func (r *RawClient) Withformencodedcontainers(
 	}, nil
 }
 
-func (r *RawClient) Optionalargs(
+func (r *RawClient) OptionalArgs(
 	ctx context.Context,
-	request *upload.ServiceOptionalArgsRequest,
+	request *upload.OptionalArgsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -584,12 +554,12 @@ func (r *RawClient) Optionalargs(
 	)
 	writer := internal.NewMultipartWriter()
 	if request.ImageFile != nil {
-		if err := writer.WriteFile("image_file", request.ImageFile); err != nil {
+		if err := writer.WriteFile("image_file", request.ImageFile, internal.WithDefaultContentType("image/jpeg")); err != nil {
 			return nil, err
 		}
 	}
 	if request.Request != nil {
-		if err := writer.WriteJSON("request", request.Request); err != nil {
+		if err := writer.WriteJSON("request", request.Request, internal.WithDefaultContentType("application/json; charset=utf-8")); err != nil {
 			return nil, err
 		}
 	}
@@ -623,9 +593,9 @@ func (r *RawClient) Optionalargs(
 	}, nil
 }
 
-func (r *RawClient) Withinlinetype(
+func (r *RawClient) WithInlineType(
 	ctx context.Context,
-	request *upload.ServiceWithInlineTypeRequest,
+	request *upload.InlineTypeRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -640,15 +610,11 @@ func (r *RawClient) Withinlinetype(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if request.File != nil {
-		if err := writer.WriteFile("file", request.File); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteFile("file", request.File); err != nil {
+		return nil, err
 	}
-	if request.Request != nil {
-		if err := writer.WriteJSON("request", request.Request); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteJSON("request", request.Request); err != nil {
+		return nil, err
 	}
 	if err := writer.Close(); err != nil {
 		return nil, err
@@ -680,9 +646,9 @@ func (r *RawClient) Withinlinetype(
 	}, nil
 }
 
-func (r *RawClient) Withjsonproperty(
+func (r *RawClient) WithJSONProperty(
 	ctx context.Context,
-	request *upload.ServiceWithJSONPropertyRequest,
+	request *upload.WithJSONPropertyRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -697,10 +663,8 @@ func (r *RawClient) Withjsonproperty(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if request.File != nil {
-		if err := writer.WriteFile("file", request.File); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteFile("file", request.File); err != nil {
+		return nil, err
 	}
 	if request.JSON != nil {
 		if err := writer.WriteJSON("json", request.JSON); err != nil {
@@ -774,9 +738,9 @@ func (r *RawClient) Simple(
 	}, nil
 }
 
-func (r *RawClient) Withliteralandenumtypes(
+func (r *RawClient) WithLiteralAndEnumTypes(
 	ctx context.Context,
-	request *upload.ServiceWithLiteralAndEnumTypesRequest,
+	request *upload.LiteralEnumRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -791,13 +755,11 @@ func (r *RawClient) Withliteralandenumtypes(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if request.File != nil {
-		if err := writer.WriteFile("file", request.File); err != nil {
-			return nil, err
-		}
+	if err := writer.WriteFile("file", request.File); err != nil {
+		return nil, err
 	}
 	if request.ModelType != nil {
-		if err := writer.WriteJSON("model_type", string(*request.ModelType)); err != nil {
+		if err := writer.WriteJSON("model_type", *request.ModelType); err != nil {
 			return nil, err
 		}
 	}

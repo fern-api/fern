@@ -5,7 +5,7 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.imdb.createmovie(
+client.imdb.create_movie(
   title: "title",
   rating: 1.1
 )

@@ -2,16 +2,23 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.user.getusername(
+client.user.get_username(
   limit: 1,
-  id: "id",
+  id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   date: "2023-01-15",
   deadline: "2024-01-15T09:30:00Z",
-  bytes: "bytes",
+  bytes: "SGVsbG8gd29ybGQh",
   user: {
     name: "name",
     tags: %w[tags tags]
   },
+  user_list: [{
+    name: "name",
+    tags: %w[tags tags]
+  }, {
+    name: "name",
+    tags: %w[tags tags]
+  }],
   optional_deadline: "2024-01-15T09:30:00Z",
   key_value: {
     keyValue: "keyValue"
@@ -29,5 +36,5 @@ client.user.getusername(
     tags: %w[tags tags]
   },
   long_param: 1000000,
-  big_int_param: 1
+  big_int_param: "1000000"
 )

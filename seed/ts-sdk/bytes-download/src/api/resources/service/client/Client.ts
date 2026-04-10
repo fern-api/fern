@@ -6,7 +6,6 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -53,7 +52,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedBytesDownloadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -64,17 +63,16 @@ export class ServiceClient {
     }
 
     public download(
-        request: SeedApi.ServiceDownloadRequest,
+        id: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<core.BinaryResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__download(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__download(id, requestOptions));
     }
 
     private async __download(
-        request: SeedApi.ServiceDownloadRequest,
+        id: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.BinaryResponse>> {
-        const { id } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<core.BinaryResponse>({
             url: core.url.join(
@@ -97,7 +95,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedBytesDownloadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

@@ -1,4 +1,4 @@
-package api
+package dollarstringexamples
 
 import (
 	"io"

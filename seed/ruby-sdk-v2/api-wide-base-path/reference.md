@@ -14,7 +14,6 @@
 
 ```ruby
 client.service.post(
-  path_param: "pathParam",
   service_param: "serviceParam",
   endpoint_param: 1,
   resource_param: "resourceParam"

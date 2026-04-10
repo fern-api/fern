@@ -3,6 +3,7 @@ import Foundation
 /// Duplicate types.
 public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
     case int(Int)
+    case jsonValue(JSONValue)
     case string(String)
     case stringArray([String])
 
@@ -10,6 +11,8 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
         let container = try decoder.singleValueContainer()
         if let value = try? container.decode(Int.self) {
             self = .int(value)
+        } else if let value = try? container.decode(JSONValue.self) {
+            self = .jsonValue(value)
         } else if let value = try? container.decode(String.self) {
             self = .string(value)
         } else if let value = try? container.decode([String].self) {
@@ -26,6 +29,8 @@ public enum UnionWithDuplicateTypes: Codable, Hashable, Sendable {
         var container = encoder.singleValueContainer()
         switch self {
         case .int(let value):
+            try container.encode(value)
+        case .jsonValue(let value):
             try container.encode(value)
         case .string(let value):
             try container.encode(value)

@@ -4,17 +4,14 @@ namespace Seed\Union;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\ShapeZero;
-use Seed\Types\ShapeOne;
+use Seed\Union\Types\Shape;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
-use Seed\Core\Json\JsonDecoder;
-use Seed\Core\Types\Union;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Core\Json\JsonSerializer;
+use Seed\Core\Json\JsonDecoder;
 
 class UnionClient
 {
@@ -62,21 +59,18 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return (
-     *    ShapeZero
-     *   |ShapeOne
-     * )|null
+     * @return ?Shape
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function get(string $id, ?array $options = null): ShapeZero|ShapeOne|null
+    public function get(string $id, ?array $options = null): ?Shape
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "{$id}",
+                    path: "/{$id}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -87,7 +81,7 @@ class UnionClient
                 if (empty($json)) {
                     return null;
                 }
-                return JsonDecoder::decodeUnion($json, new Union(ShapeZero::class, ShapeOne::class)); // @phpstan-ignore-line
+                return Shape::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -102,10 +96,7 @@ class UnionClient
     }
 
     /**
-     * @param (
-     *    ShapeZero
-     *   |ShapeOne
-     * ) $request
+     * @param Shape $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -118,7 +109,7 @@ class UnionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function update(ShapeZero|ShapeOne $request, ?array $options = null): ?bool
+    public function update(Shape $request, ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -127,7 +118,7 @@ class UnionClient
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
                     path: "",
                     method: HttpMethod::PATCH,
-                    body: JsonSerializer::serializeUnion($request, new Union(ShapeZero::class, ShapeOne::class)),
+                    body: $request,
                 ),
                 $options,
             );

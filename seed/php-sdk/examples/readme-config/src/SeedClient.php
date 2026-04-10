@@ -2,35 +2,33 @@
 
 namespace Seed;
 
-use Seed\\Client;
-use Seed\FileNotificationService\FileNotificationServiceClient;
-use Seed\FileService\FileServiceClient;
-use Seed\HealthService\HealthServiceClient;
+use Seed\File\FileClient;
+use Seed\Health\HealthClient;
 use Seed\Service\ServiceClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Exceptions\SeedException;
+use Seed\Exceptions\SeedApiException;
+use Seed\Core\Json\JsonApiRequest;
+use Seed\Core\Client\HttpMethod;
+use Seed\Core\Json\JsonDecoder;
+use JsonException;
+use Psr\Http\Client\ClientExceptionInterface;
+use Seed\Types\BasicType;
+use Seed\Types\ComplexType;
+use Seed\Types\Identifier;
 
-class SeedClient 
+class SeedClient
 {
     /**
-     * @var Client $
+     * @var FileClient $file
      */
-    public Client $;
+    public FileClient $file;
 
     /**
-     * @var FileNotificationServiceClient $fileNotificationService
+     * @var HealthClient $health
      */
-    public FileNotificationServiceClient $fileNotificationService;
-
-    /**
-     * @var FileServiceClient $fileService
-     */
-    public FileServiceClient $fileService;
-
-    /**
-     * @var HealthServiceClient $healthService
-     */
-    public HealthServiceClient $healthService;
+    public HealthClient $health;
 
     /**
      * @var ServiceClient $service
@@ -66,33 +64,127 @@ class SeedClient
     public function __construct(
         ?string $token = null,
         ?array $options = null,
-    )
-    {
+    ) {
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($token != null){
+        if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
         }
-        
+
         $this->options = $options ?? [];
-        
+
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-        
+
         $this->client = new RawClient(
             options: $this->options,
         );
-        
-        $this-> = new Client($this->client, $this->options);
-        $this->fileNotificationService = new FileNotificationServiceClient($this->client, $this->options);
-        $this->fileService = new FileServiceClient($this->client, $this->options);
-        $this->healthService = new HealthServiceClient($this->client, $this->options);
+
+        $this->file = new FileClient($this->client, $this->options);
+        $this->health = new HealthClient($this->client, $this->options);
         $this->service = new ServiceClient($this->client, $this->options);
+    }
+
+    /**
+     * @param string $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?string
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function echo_(string $request, ?array $options = null): ?string
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return JsonDecoder::decodeString($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param (
+     *    value-of<BasicType>
+     *   |value-of<ComplexType>
+     * ) $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?Identifier
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function createType(string $request, ?array $options = null): ?Identifier
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return Identifier::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 }

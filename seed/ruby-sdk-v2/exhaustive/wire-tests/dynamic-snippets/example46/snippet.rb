@@ -5,4 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_object.endpoints_object_get_and_return_map_of_documented_unknown_type(request: {})
+client.endpoints.primitive.get_and_return_int(request: 1)

@@ -12,7 +12,7 @@ impl DummyClient {
         })
     }
 
-    pub async fn getdummy(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
+    pub async fn get_dummy(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client
             .execute_request(Method::GET, "dummy", None, None, options)
             .await

@@ -6,43 +6,42 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedEnum from "../../../index.js";
 
-export declare namespace PathparamClient {
+export declare namespace PathParamClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class PathparamClient {
-    protected readonly _options: NormalizedClientOptions<PathparamClient.Options>;
+export class PathParamClient {
+    protected readonly _options: NormalizedClientOptions<PathParamClient.Options>;
 
-    constructor(options: PathparamClient.Options) {
+    constructor(options: PathParamClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
-     * @param {SeedApi.PathParamSendRequest} request
-     * @param {PathparamClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedEnum.Operand} operand
+     * @param {SeedEnum.ColorOrOperand} operandOrColor
+     * @param {PathParamClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.pathparam.send({
-     *         operand: ">",
-     *         operandOrColor: "red"
-     *     })
+     *     await client.pathParam.send(">", "red")
      */
     public send(
-        request: SeedApi.PathParamSendRequest,
-        requestOptions?: PathparamClient.RequestOptions,
+        operand: SeedEnum.Operand,
+        operandOrColor: SeedEnum.ColorOrOperand,
+        requestOptions?: PathParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__send(operand, operandOrColor, requestOptions));
     }
 
     private async __send(
-        request: SeedApi.PathParamSendRequest,
-        requestOptions?: PathparamClient.RequestOptions,
+        operand: SeedEnum.Operand,
+        operandOrColor: SeedEnum.ColorOrOperand,
+        requestOptions?: PathParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { operand, operandOrColor } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -64,7 +63,7 @@ export class PathparamClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

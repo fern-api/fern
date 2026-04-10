@@ -17,14 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.TypesObjectWithMapOfMap{
-        Map: map[string]map[string]string{
-            "key": map[string]string{
-                "key": "value",
-            },
-        },
+    request := &fern.PutRequest{
+        ID: "id",
     }
-    client.EndpointsObject.EndpointsObjectGetAndReturnWithMapOfMap(
+    client.Endpoints.Put.Add(
         context.TODO(),
         request,
     )

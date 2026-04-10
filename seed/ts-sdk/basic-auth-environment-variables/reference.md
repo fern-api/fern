@@ -1,6 +1,6 @@
 # Reference
-## Basicauth
-<details><summary><code>client.basicauth.<a href="/src/api/resources/basicauth/client/Client.ts">getwithbasicauth</a>() -> boolean</code></summary>
+## BasicAuth
+<details><summary><code>client.basicAuth.<a href="/src/api/resources/basicAuth/client/Client.ts">getWithBasicAuth</a>() -> boolean</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```typescript
-await client.basicauth.getwithbasicauth();
+await client.basicAuth.getWithBasicAuth();
 
 ```
 </dd>
@@ -43,7 +43,7 @@ await client.basicauth.getwithbasicauth();
 <dl>
 <dd>
 
-**requestOptions:** `BasicauthClient.RequestOptions` 
+**requestOptions:** `BasicAuthClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -55,7 +55,7 @@ await client.basicauth.getwithbasicauth();
 </dl>
 </details>
 
-<details><summary><code>client.basicauth.<a href="/src/api/resources/basicauth/client/Client.ts">postwithbasicauth</a>({ ...params }) -> boolean</code></summary>
+<details><summary><code>client.basicAuth.<a href="/src/api/resources/basicAuth/client/Client.ts">postWithBasicAuth</a>({ ...params }) -> boolean</code></summary>
 <dl>
 <dd>
 
@@ -82,7 +82,7 @@ POST request with basic auth scheme
 <dd>
 
 ```typescript
-await client.basicauth.postwithbasicauth({
+await client.basicAuth.postWithBasicAuth({
     "key": "value"
 });
 
@@ -108,7 +108,7 @@ await client.basicauth.postwithbasicauth({
 <dl>
 <dd>
 
-**requestOptions:** `BasicauthClient.RequestOptions` 
+**requestOptions:** `BasicAuthClient.RequestOptions` 
     
 </dd>
 </dl>

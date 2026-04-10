@@ -42,10 +42,13 @@ Instantiate and use the client with the following:
 
 ```typescript
 import { createReadStream } from "fs";
-import { SeedApiClient } from "@fern/file-upload";
+import * as fs from "fs";
+import { SeedFileUploadClient } from "@fern/file-upload";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client.service.post({});
+const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
+await client.service.justFile({
+    file: fs.createReadStream("/path/to/your/file")
+});
 ```
 
 ## Request and Response Types
@@ -54,9 +57,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedApi } from "@fern/file-upload";
+import { SeedFileUpload } from "@fern/file-upload";
 
-const request: SeedApi.ServicePostRequest = {
+const request: SeedFileUpload.MyRequest = {
     ...
 };
 ```
@@ -67,12 +70,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/file-upload";
+import { SeedFileUploadError } from "@fern/file-upload";
 
 try {
-    await client.service.post(...);
+    await client.service.justFile(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedFileUploadError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -87,10 +90,13 @@ You can upload files using the client:
 
 ```typescript
 import { createReadStream } from "fs";
-import { SeedApiClient } from "@fern/file-upload";
+import * as fs from "fs";
+import { SeedFileUploadClient } from "@fern/file-upload";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client.service.post({});
+const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
+await client.service.justFile({
+    file: fs.createReadStream("/path/to/your/file")
+});
 ```
 The client accepts a variety of types for file upload parameters:
 * Stream types: `fs.ReadStream`, `stream.Readable`, and `ReadableStream`
@@ -139,16 +145,16 @@ const client = new ServiceClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/file-upload";
+import { SeedFileUploadClient } from "@fern/file-upload";
 
-const client = new SeedApiClient({
+const client = new SeedFileUploadClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.service.post(..., {
+const response = await client.service.justFile(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -160,7 +166,7 @@ const response = await client.service.post(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.service.post(..., {
+const response = await client.service.justFile(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -182,7 +188,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.service.post(..., {
+const response = await client.service.justFile(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -192,7 +198,7 @@ const response = await client.service.post(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.service.post(..., {
+const response = await client.service.justFile(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -203,7 +209,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.service.post(..., {
+const response = await client.service.justFile(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -215,7 +221,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.service.post(...).withRawResponse();
+const { data, rawResponse } = await client.service.justFile(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -226,9 +232,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/file-upload";
+import { SeedFileUploadClient, logging } from "@fern/file-upload";
 
-const client = new SeedApiClient({
+const client = new SeedFileUploadClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

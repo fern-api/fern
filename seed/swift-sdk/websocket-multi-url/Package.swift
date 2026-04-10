@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "WebsocketMultiUrl",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "WebsocketMultiUrl",
+            targets: ["WebsocketMultiUrl"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "WebsocketMultiUrl",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "WebsocketMultiUrlTests",
+            dependencies: ["WebsocketMultiUrl"],
             path: "Tests"
         )
     ]

@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">getUnion</a>() -> SeedApi.UnionResponse</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">getUnion</a>() -> SeedUndiscriminatedUnionWithResponseProperty.UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```typescript
-await client..getUnion();
+await client.getUnion();
 
 ```
 </dd>
@@ -29,7 +28,7 @@ await client..getUnion();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -41,7 +40,7 @@ await client..getUnion();
 </dl>
 </details>
 
-<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">listUnions</a>() -> SeedApi.UnionListResponse</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">listUnions</a>() -> SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse</code></summary>
 <dl>
 <dd>
 
@@ -54,7 +53,7 @@ await client..getUnion();
 <dd>
 
 ```typescript
-await client..listUnions();
+await client.listUnions();
 
 ```
 </dd>
@@ -70,7 +69,7 @@ await client..listUnions();
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions` 
     
 </dd>
 </dl>

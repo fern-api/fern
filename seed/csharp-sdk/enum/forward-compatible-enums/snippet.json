@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Headers.SendAsync(\n    new HeadersSendRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }\n);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.Headers.SendAsync(\n    new SendEnumAsHeaderRequest\n    {\n        Operand = Operand.GreaterThan,\n        MaybeOperand = Operand.GreaterThan,\n        OperandOrColor = Color.Red,\n        MaybeOperandOrColor = null,\n    }\n);\n"
             }
         },
         {
@@ -18,23 +18,11 @@
             "id": {
                 "path": "/inlined",
                 "method": "POST",
-                "identifier_override": "endpoint_inlinedrequest.send"
+                "identifier_override": "endpoint_inlined-request.send"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Inlinedrequest.SendAsync(\n    new InlinedRequestSendRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }\n);\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/multipart",
-                "method": "POST",
-                "identifier_override": "endpoint_multipartform.multipartform"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Multipartform.MultipartformAsync(new MultipartFormMultipartFormRequest());\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.InlinedRequest.SendAsync(\n    new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }\n);\n"
             }
         },
         {
@@ -42,11 +30,11 @@
             "id": {
                 "path": "/path/{operand}/{operandOrColor}",
                 "method": "POST",
-                "identifier_override": "endpoint_pathparam.send"
+                "identifier_override": "endpoint_path-param.send"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Pathparam.SendAsync(\n    new PathParamSendRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }\n);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.PathParam.SendAsync(Operand.GreaterThan, Color.Red);\n"
             }
         },
         {
@@ -54,11 +42,11 @@
             "id": {
                 "path": "/query",
                 "method": "POST",
-                "identifier_override": "endpoint_queryparam.send"
+                "identifier_override": "endpoint_query-param.send"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Queryparam.SendAsync(\n    new QueryParamSendRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }\n);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendAsync(\n    new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }\n);\n"
             }
         },
         {
@@ -66,11 +54,11 @@
             "id": {
                 "path": "/query-list",
                 "method": "POST",
-                "identifier_override": "endpoint_queryparam.sendlist"
+                "identifier_override": "endpoint_query-param.sendList"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Queryparam.SendlistAsync(\n    new QueryParamSendListRequest\n    {\n        Operand = [Operand.GreaterThan],\n        MaybeOperand = [Operand.GreaterThan],\n        OperandOrColor = [Color.Red],\n        MaybeOperandOrColor = [Color.Red],\n    }\n);\n"
+                "client": "using SeedEnum;\n\nvar client = new SeedEnumClient();\nawait client.QueryParam.SendListAsync(\n    new SendEnumListAsQueryParamRequest\n    {\n        Operand = [Operand.GreaterThan],\n        MaybeOperand = [Operand.GreaterThan],\n        OperandOrColor = [Color.Red],\n        MaybeOperandOrColor = [Color.Red],\n    }\n);\n"
             }
         }
     ]

@@ -22,38 +22,38 @@
             },
             "default": "./dist/cjs/index.js"
         },
-        "./": {
+        "./a": {
             "import": {
-                "types": "./dist/esm/api/resources/exports.d.mts",
-                "default": "./dist/esm/api/resources/exports.mjs"
+                "types": "./dist/esm/api/resources/a/exports.d.mts",
+                "default": "./dist/esm/api/resources/a/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/exports.d.ts",
-                "default": "./dist/cjs/api/resources/exports.js"
+                "types": "./dist/cjs/api/resources/a/exports.d.ts",
+                "default": "./dist/cjs/api/resources/a/exports.js"
             },
-            "default": "./dist/cjs/api/resources/exports.js"
+            "default": "./dist/cjs/api/resources/a/exports.js"
         },
-        "./ab": {
+        "./a/b": {
             "import": {
-                "types": "./dist/esm/api/resources/ab/exports.d.mts",
-                "default": "./dist/esm/api/resources/ab/exports.mjs"
+                "types": "./dist/esm/api/resources/a/resources/b/exports.d.mts",
+                "default": "./dist/esm/api/resources/a/resources/b/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/ab/exports.d.ts",
-                "default": "./dist/cjs/api/resources/ab/exports.js"
+                "types": "./dist/cjs/api/resources/a/resources/b/exports.d.ts",
+                "default": "./dist/cjs/api/resources/a/resources/b/exports.js"
             },
-            "default": "./dist/cjs/api/resources/ab/exports.js"
+            "default": "./dist/cjs/api/resources/a/resources/b/exports.js"
         },
-        "./ac": {
+        "./a/c": {
             "import": {
-                "types": "./dist/esm/api/resources/ac/exports.d.mts",
-                "default": "./dist/esm/api/resources/ac/exports.mjs"
+                "types": "./dist/esm/api/resources/a/resources/c/exports.d.mts",
+                "default": "./dist/esm/api/resources/a/resources/c/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/ac/exports.d.ts",
-                "default": "./dist/cjs/api/resources/ac/exports.js"
+                "types": "./dist/cjs/api/resources/a/resources/c/exports.d.ts",
+                "default": "./dist/cjs/api/resources/a/resources/c/exports.js"
             },
-            "default": "./dist/cjs/api/resources/ac/exports.js"
+            "default": "./dist/cjs/api/resources/a/resources/c/exports.js"
         },
         "./folder": {
             "import": {
@@ -66,16 +66,27 @@
             },
             "default": "./dist/cjs/api/resources/folder/exports.js"
         },
-        "./folderService": {
+        "./a/d": {
             "import": {
-                "types": "./dist/esm/api/resources/folderService/exports.d.mts",
-                "default": "./dist/esm/api/resources/folderService/exports.mjs"
+                "types": "./dist/esm/api/resources/a/resources/d/exports.d.mts",
+                "default": "./dist/esm/api/resources/a/resources/d/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/folderService/exports.d.ts",
-                "default": "./dist/cjs/api/resources/folderService/exports.js"
+                "types": "./dist/cjs/api/resources/a/resources/d/exports.d.ts",
+                "default": "./dist/cjs/api/resources/a/resources/d/exports.js"
             },
-            "default": "./dist/cjs/api/resources/folderService/exports.js"
+            "default": "./dist/cjs/api/resources/a/resources/d/exports.js"
+        },
+        "./folder/service": {
+            "import": {
+                "types": "./dist/esm/api/resources/folder/resources/service/exports.d.mts",
+                "default": "./dist/esm/api/resources/folder/resources/service/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/folder/resources/service/exports.d.ts",
+                "default": "./dist/cjs/api/resources/folder/resources/service/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/folder/resources/service/exports.js"
         },
         "./package.json": "./package.json"
     },

@@ -1,18 +1,23 @@
-using SeedApi;
+using SeedUndiscriminatedUnions;
 
 namespace Usage;
 
 public class Example9
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedUndiscriminatedUnionsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Union.DuplicatetypesunionAsync(
-            "string"
+        await client.Union.TestCamelCasePropertiesAsync(
+            new PaymentRequest {
+                PaymentMethod = new TokenizeCard {
+                    Method = "card",
+                    CardNumber = "1234567890123456"
+                }
+            }
         );
     }
 

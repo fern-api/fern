@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.foo_response import FooResponse
 from .raw_client import AsyncRawSimpleClient, RawSimpleClient
+from .types.foo_response import FooResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,7 +26,7 @@ class SimpleClient:
         """
         return self._raw_client
 
-    def foowithoutendpointerror(
+    def foo_without_endpoint_error(
         self, *, bar: str, request_options: typing.Optional[RequestOptions] = None
     ) -> FooResponse:
         """
@@ -41,19 +41,18 @@ class SimpleClient:
         -------
         FooResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedErrors
 
-        client = SeedApi(
+        client = SeedErrors(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.simple.foowithoutendpointerror(
+        client.simple.foo_without_endpoint_error(
             bar="bar",
         )
         """
-        _response = self._raw_client.foowithoutendpointerror(bar=bar, request_options=request_options)
+        _response = self._raw_client.foo_without_endpoint_error(bar=bar, request_options=request_options)
         return _response.data
 
     def foo(self, *, bar: str, request_options: typing.Optional[RequestOptions] = None) -> FooResponse:
@@ -69,12 +68,11 @@ class SimpleClient:
         -------
         FooResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedErrors
 
-        client = SeedApi(
+        client = SeedErrors(
             base_url="https://yourhost.com/path/to/api",
         )
         client.simple.foo(
@@ -84,7 +82,7 @@ class SimpleClient:
         _response = self._raw_client.foo(bar=bar, request_options=request_options)
         return _response.data
 
-    def foowithexamples(self, *, bar: str, request_options: typing.Optional[RequestOptions] = None) -> FooResponse:
+    def foo_with_examples(self, *, bar: str, request_options: typing.Optional[RequestOptions] = None) -> FooResponse:
         """
         Parameters
         ----------
@@ -97,19 +95,18 @@ class SimpleClient:
         -------
         FooResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedErrors
 
-        client = SeedApi(
+        client = SeedErrors(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.simple.foowithexamples(
-            bar="bar",
+        client.simple.foo_with_examples(
+            bar="hello",
         )
         """
-        _response = self._raw_client.foowithexamples(bar=bar, request_options=request_options)
+        _response = self._raw_client.foo_with_examples(bar=bar, request_options=request_options)
         return _response.data
 
 
@@ -128,7 +125,7 @@ class AsyncSimpleClient:
         """
         return self._raw_client
 
-    async def foowithoutendpointerror(
+    async def foo_without_endpoint_error(
         self, *, bar: str, request_options: typing.Optional[RequestOptions] = None
     ) -> FooResponse:
         """
@@ -143,27 +140,26 @@ class AsyncSimpleClient:
         -------
         FooResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedErrors
 
-        client = AsyncSeedApi(
+        client = AsyncSeedErrors(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.simple.foowithoutendpointerror(
+            await client.simple.foo_without_endpoint_error(
                 bar="bar",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.foowithoutendpointerror(bar=bar, request_options=request_options)
+        _response = await self._raw_client.foo_without_endpoint_error(bar=bar, request_options=request_options)
         return _response.data
 
     async def foo(self, *, bar: str, request_options: typing.Optional[RequestOptions] = None) -> FooResponse:
@@ -179,14 +175,13 @@ class AsyncSimpleClient:
         -------
         FooResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedErrors
 
-        client = AsyncSeedApi(
+        client = AsyncSeedErrors(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -202,7 +197,7 @@ class AsyncSimpleClient:
         _response = await self._raw_client.foo(bar=bar, request_options=request_options)
         return _response.data
 
-    async def foowithexamples(
+    async def foo_with_examples(
         self, *, bar: str, request_options: typing.Optional[RequestOptions] = None
     ) -> FooResponse:
         """
@@ -217,25 +212,24 @@ class AsyncSimpleClient:
         -------
         FooResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedErrors
 
-        client = AsyncSeedApi(
+        client = AsyncSeedErrors(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.simple.foowithexamples(
-                bar="bar",
+            await client.simple.foo_with_examples(
+                bar="hello",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.foowithexamples(bar=bar, request_options=request_options)
+        _response = await self._raw_client.foo_with_examples(bar=bar, request_options=request_options)
         return _response.data

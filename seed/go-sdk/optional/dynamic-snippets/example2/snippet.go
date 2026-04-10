@@ -14,11 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.SendOptionalBodyRequest{
-        Message: "message",
+    request := &fern.DeployParams{
+        UpdateDraft: fern.Bool(
+            true,
+        ),
     }
-    client.Optional.Sendoptionaltypedbody(
+    client.Optional.SendOptionalNullableWithAllOptionalProperties(
         context.TODO(),
+        "actionId",
+        "id",
         request,
     )
 }

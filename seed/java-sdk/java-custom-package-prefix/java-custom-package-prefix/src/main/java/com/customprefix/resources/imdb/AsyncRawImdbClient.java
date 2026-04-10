@@ -10,10 +10,9 @@ import com.customprefix.core.RequestOptions;
 import com.customprefix.core.SeedApiApiException;
 import com.customprefix.core.SeedApiException;
 import com.customprefix.core.SeedApiHttpResponse;
-import com.customprefix.errors.NotFoundError;
-import com.customprefix.resources.imdb.requests.CreateMovieRequest;
-import com.customprefix.resources.imdb.requests.ImdbGetMovieRequest;
-import com.customprefix.types.Movie;
+import com.customprefix.resources.imdb.errors.MovieDoesNotExistError;
+import com.customprefix.resources.imdb.types.CreateMovieRequest;
+import com.customprefix.resources.imdb.types.Movie;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -38,18 +37,19 @@ public class AsyncRawImdbClient {
     /**
      * Add a movie to the database
      */
-    public CompletableFuture<SeedApiHttpResponse<String>> createmovie(CreateMovieRequest request) {
-        return createmovie(request, null);
+    public CompletableFuture<SeedApiHttpResponse<String>> createMovie(CreateMovieRequest request) {
+        return createMovie(request, null);
     }
 
     /**
      * Add a movie to the database
      */
-    public CompletableFuture<SeedApiHttpResponse<String>> createmovie(
+    public CompletableFuture<SeedApiHttpResponse<String>> createMovie(
             CreateMovieRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("movies/create-movie");
+                .addPathSegments("movies")
+                .addPathSegments("create-movie");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -101,20 +101,11 @@ public class AsyncRawImdbClient {
         return future;
     }
 
-    public CompletableFuture<SeedApiHttpResponse<Movie>> getmovie(String movieId) {
-        return getmovie(movieId, ImdbGetMovieRequest.builder().build());
+    public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(String movieId) {
+        return getMovie(movieId, null);
     }
 
-    public CompletableFuture<SeedApiHttpResponse<Movie>> getmovie(String movieId, RequestOptions requestOptions) {
-        return getmovie(movieId, ImdbGetMovieRequest.builder().build(), requestOptions);
-    }
-
-    public CompletableFuture<SeedApiHttpResponse<Movie>> getmovie(String movieId, ImdbGetMovieRequest request) {
-        return getmovie(movieId, request, null);
-    }
-
-    public CompletableFuture<SeedApiHttpResponse<Movie>> getmovie(
-            String movieId, ImdbGetMovieRequest request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedApiHttpResponse<Movie>> getMovie(String movieId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("movies")
@@ -124,12 +115,12 @@ public class AsyncRawImdbClient {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -147,7 +138,7 @@ public class AsyncRawImdbClient {
                     }
                     try {
                         if (response.code() == 404) {
-                            future.completeExceptionally(new NotFoundError(
+                            future.completeExceptionally(new MovieDoesNotExistError(
                                     ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response));
                             return;
                         }

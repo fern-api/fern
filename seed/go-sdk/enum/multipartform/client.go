@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Multipartform(
+func (c *Client) MultipartForm(
 	ctx context.Context,
-	request *fern.MultipartFormMultipartFormRequest,
+	request *fern.MultipartFormRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Multipartform(
+	_, err := c.WithRawResponse.MultipartForm(
 		ctx,
 		request,
 		opts...,

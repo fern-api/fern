@@ -7,10 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.service.searchresources(
-        limit: 1,
-        offset: 1,
-        request: .init()
+    _ = try await client.service.getUserById(
+        userId: "userId",
+        fields: "fields",
+        includeFields: true
     )
 }
 

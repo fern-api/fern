@@ -2,15 +2,15 @@ import Foundation
 
 public struct Node: Codable, Hashable, Sendable {
     public let name: String
-    public let nodes: Nullable<[Node]>?
-    public let trees: Nullable<[Tree]>?
+    public let nodes: [Node]?
+    public let trees: [Tree]?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         name: String,
-        nodes: Nullable<[Node]>? = nil,
-        trees: Nullable<[Tree]>? = nil,
+        nodes: [Node]? = nil,
+        trees: [Tree]? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.name = name
@@ -22,8 +22,8 @@ public struct Node: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
-        self.nodes = try container.decodeNullableIfPresent([Node].self, forKey: .nodes)
-        self.trees = try container.decodeNullableIfPresent([Tree].self, forKey: .trees)
+        self.nodes = try container.decodeIfPresent([Node].self, forKey: .nodes)
+        self.trees = try container.decodeIfPresent([Tree].self, forKey: .trees)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -31,8 +31,8 @@ public struct Node: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.name, forKey: .name)
-        try container.encodeNullableIfPresent(self.nodes, forKey: .nodes)
-        try container.encodeNullableIfPresent(self.trees, forKey: .trees)
+        try container.encodeIfPresent(self.nodes, forKey: .nodes)
+        try container.encodeIfPresent(self.trees, forKey: .trees)
     }
 
     /// Keys for encoding/decoding struct properties.

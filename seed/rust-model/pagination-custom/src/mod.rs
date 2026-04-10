@@ -1,4 +1,4 @@
-//! Request and response types for the pagination-custom
+//! Request and response types for the Pagination
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -10,9 +10,9 @@
 
 pub mod users_list_response;
 pub mod link;
-pub mod listwithcustompager_query_request;
+pub mod list_with_custom_pager_query_request;
 
 pub use users_list_response::UsersListResponse;
 pub use link::Link;
-pub use listwithcustompager_query_request::ListwithcustompagerQueryRequest;
+pub use list_with_custom_pager_query_request::ListWithCustomPagerQueryRequest;
 

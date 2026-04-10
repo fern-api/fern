@@ -5,7 +5,7 @@ namespace Seed\Tests;
 use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 
-class NoauthWireTest extends WireMockTestCase
+class NoAuthWireTest extends WireMockTestCase
 {
     /**
      * @var SeedClient $client
@@ -14,15 +14,15 @@ class NoauthWireTest extends WireMockTestCase
 
     /**
      */
-    public function testPostwithnoauth(): void {
-        $testId = 'noauth.postwithnoauth.0';
-        $this->client->noauth->postwithnoauth(
+    public function testPostWithNoAuth(): void {
+        $testId = 'no_auth.post_with_no_auth.0';
+        $this->client->noAuth->postWithNoAuth(
             [
                 'key' => "value",
             ],
             [
                 'headers' => [
-                    'X-Test-Id' => 'noauth.postwithnoauth.0',
+                    'X-Test-Id' => 'no_auth.post_with_no_auth.0',
                 ],
             ],
         );

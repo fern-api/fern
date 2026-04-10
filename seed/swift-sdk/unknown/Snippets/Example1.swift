@@ -1,12 +1,14 @@
 import Foundation
-import Api
+import UnknownAsAny
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = UnknownAsAnyClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.unknown.postobject(request: .init(unknown: .object([
-        "key": .string("value")
-    ])))
+    _ = try await client.unknown.postObject(request: MyObject(
+        unknown: .object([
+            "key": .string("value")
+        ])
+    ))
 }
 
 try await main()

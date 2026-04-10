@@ -8,7 +8,7 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        ..get_foo(
+        .get_foo(
             &GetFooQueryRequest {
                 required_baz: "required_baz".to_string(),
                 required_nullable_baz: Some("required_nullable_baz".to_string()),

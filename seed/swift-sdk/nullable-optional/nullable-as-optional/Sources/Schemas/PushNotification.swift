@@ -4,7 +4,7 @@ public struct PushNotification: Codable, Hashable, Sendable {
     public let deviceToken: String
     public let title: String
     public let body: String
-    public let badge: Nullable<Int>?
+    public let badge: Int?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -12,7 +12,7 @@ public struct PushNotification: Codable, Hashable, Sendable {
         deviceToken: String,
         title: String,
         body: String,
-        badge: Nullable<Int>? = nil,
+        badge: Int? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.deviceToken = deviceToken
@@ -27,7 +27,7 @@ public struct PushNotification: Codable, Hashable, Sendable {
         self.deviceToken = try container.decode(String.self, forKey: .deviceToken)
         self.title = try container.decode(String.self, forKey: .title)
         self.body = try container.decode(String.self, forKey: .body)
-        self.badge = try container.decodeNullableIfPresent(Int.self, forKey: .badge)
+        self.badge = try container.decodeIfPresent(Int.self, forKey: .badge)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -37,7 +37,7 @@ public struct PushNotification: Codable, Hashable, Sendable {
         try container.encode(self.deviceToken, forKey: .deviceToken)
         try container.encode(self.title, forKey: .title)
         try container.encode(self.body, forKey: .body)
-        try container.encodeNullableIfPresent(self.badge, forKey: .badge)
+        try container.encodeIfPresent(self.badge, forKey: .badge)
     }
 
     /// Keys for encoding/decoding struct properties.

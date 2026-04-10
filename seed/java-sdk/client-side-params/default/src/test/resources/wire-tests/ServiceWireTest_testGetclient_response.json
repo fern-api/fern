@@ -10,27 +10,42 @@
   "is_first_party": true,
   "oidc_conformant": true,
   "callbacks": [
+    "callbacks",
     "callbacks"
   ],
   "allowed_origins": [
+    "allowed_origins",
     "allowed_origins"
   ],
   "web_origins": [
+    "web_origins",
     "web_origins"
   ],
   "grant_types": [
+    "grant_types",
     "grant_types"
   ],
   "jwt_configuration": {
-    "key": "value"
+    "jwt_configuration": {
+      "key": "value"
+    }
   },
   "signing_keys": [
     {
-      "key": "value"
+      "signing_keys": {
+        "key": "value"
+      }
+    },
+    {
+      "signing_keys": {
+        "key": "value"
+      }
     }
   ],
   "encryption_key": {
-    "key": "value"
+    "encryption_key": {
+      "key": "value"
+    }
   },
   "sso": true,
   "sso_disabled": true,
@@ -42,13 +57,19 @@
   "form_template": "form_template",
   "is_heroku_app": true,
   "addons": {
-    "key": "value"
+    "addons": {
+      "key": "value"
+    }
   },
   "token_endpoint_auth_method": "token_endpoint_auth_method",
   "client_metadata": {
-    "key": "value"
+    "client_metadata": {
+      "key": "value"
+    }
   },
   "mobile": {
-    "key": "value"
+    "mobile": {
+      "key": "value"
+    }
   }
 }

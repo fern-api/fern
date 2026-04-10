@@ -4,37 +4,42 @@ namespace Seed\Users;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Users\Requests\UsersListWithCursorPaginationRequest;
-use Seed\Types\ListUsersPaginationResponse;
+use Seed\Users\Requests\ListUsersCursorPaginationRequest;
+use Seed\Core\Pagination\Pager;
+use Seed\Users\Types\User;
+use Seed\Core\Pagination\CursorPager;
+use Seed\Users\Types\ListUsersPaginationResponse;
+use Seed\Users\Requests\ListUsersMixedTypeCursorPaginationRequest;
+use Seed\Users\Types\ListUsersMixedTypePaginationResponse;
+use Seed\Users\Requests\ListUsersBodyCursorPaginationRequest;
+use Seed\Core\Pagination\PaginationHelper;
+use Seed\Users\Requests\ListUsersTopLevelBodyCursorPaginationRequest;
+use Seed\Users\Types\ListUsersTopLevelCursorPaginationResponse;
+use Seed\Users\Requests\ListUsersOffsetPaginationRequest;
+use Seed\Core\Pagination\OffsetPager;
+use Seed\Users\Requests\ListUsersDoubleOffsetPaginationRequest;
+use Seed\Users\Requests\ListUsersBodyOffsetPaginationRequest;
+use Seed\Users\Requests\ListUsersOffsetStepPaginationRequest;
+use Seed\Users\Requests\ListWithOffsetPaginationHasNextPageRequest;
+use Seed\Users\Requests\ListUsersExtendedRequest;
+use Seed\Users\Types\ListUsersExtendedResponse;
+use Seed\Users\Requests\ListUsersExtendedRequestForOptionalData;
+use Seed\Users\Types\ListUsersExtendedOptionalListResponse;
+use Seed\Users\Requests\ListUsernamesRequest;
+use Seed\Types\UsernameCursor;
+use Seed\Users\Requests\ListUsernamesWithOptionalResponseRequest;
+use Seed\Users\Requests\ListWithGlobalConfigRequest;
+use Seed\Users\Types\UsernameContainer;
+use Seed\Users\Requests\ListUsersOptionalDataRequest;
+use Seed\Users\Types\ListUsersOptionalDataPaginationResponse;
+use Seed\Users\Requests\ListUsersAliasedDataRequest;
+use Seed\Users\Types\ListUsersAliasedDataPaginationResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Users\Requests\UsersListWithMixedTypeCursorPaginationRequest;
-use Seed\Types\ListUsersMixedTypePaginationResponse;
-use Seed\Users\Requests\UsersListWithBodyCursorPaginationRequest;
-use Seed\Users\Requests\UsersListWithTopLevelBodyCursorPaginationRequest;
-use Seed\Types\ListUsersTopLevelCursorPaginationResponse;
-use Seed\Users\Requests\UsersListWithOffsetPaginationRequest;
-use Seed\Users\Requests\UsersListWithDoubleOffsetPaginationRequest;
-use Seed\Users\Requests\UsersListWithBodyOffsetPaginationRequest;
-use Seed\Users\Requests\UsersListWithOffsetStepPaginationRequest;
-use Seed\Users\Requests\UsersListWithOffsetPaginationHasNextPageRequest;
-use Seed\Users\Requests\UsersListWithExtendedResultsRequest;
-use Seed\Types\ListUsersExtendedResponse;
-use Seed\Users\Requests\UsersListWithExtendedResultsAndOptionalDataRequest;
-use Seed\Types\ListUsersExtendedOptionalListResponse;
-use Seed\Users\Requests\UsersListUsernamesRequest;
-use Seed\Types\UsernameCursor;
-use Seed\Users\Requests\UsersListUsernamesWithOptionalResponseRequest;
-use Seed\Users\Requests\UsersListWithGlobalConfigRequest;
-use Seed\Types\UsernameContainer;
-use Seed\Users\Requests\UsersListWithOptionalDataRequest;
-use Seed\Types\ListUsersOptionalDataPaginationResponse;
-use Seed\Users\Requests\UsersListWithAliasedDataRequest;
-use Seed\Types\ListUsersAliasedDataPaginationResponse;
 
 class UsersClient
 {
@@ -73,7 +78,466 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithCursorPaginationRequest $request
+     * @param ListUsersCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersCursorPaginationRequest $request) => $this->_listWithCursorPagination($request, $options),
+            setCursor: function (ListUsersCursorPaginationRequest $request, string $cursor) {
+                $request->setStartingAfter($cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsersMixedTypeCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersMixedTypeCursorPaginationRequest $request) => $this->_listWithMixedTypeCursorPagination($request, $options),
+            setCursor: function (ListUsersMixedTypeCursorPaginationRequest $request, string $cursor) {
+                $request->setCursor($cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->getNext() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersMixedTypePaginationResponse $response) => $response?->getData() ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsersBodyCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersBodyCursorPaginationRequest $request) => $this->_listWithBodyCursorPagination($request, $options),
+            setCursor: function (ListUsersBodyCursorPaginationRequest $request, string $cursor) {
+                PaginationHelper::setDeep($request, ["pagination", "cursor"], $cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?ListUsersPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+        );
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     *
+     * @param ListUsersTopLevelBodyCursorPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest $request = new ListUsersTopLevelBodyCursorPaginationRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersTopLevelBodyCursorPaginationRequest $request) => $this->_listWithTopLevelBodyCursorPagination($request, $options),
+            setCursor: function (ListUsersTopLevelBodyCursorPaginationRequest $request, ?string $cursor) {
+                $request->setCursor($cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?ListUsersTopLevelCursorPaginationResponse $response) => $response?->getNextCursor() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersTopLevelCursorPaginationResponse $response) => $response?->getData() ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsersOffsetPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            request: $request,
+            getNextPage: fn (ListUsersOffsetPaginationRequest $request) => $this->_listWithOffsetPagination($request, $options),
+            /* @phpstan-ignore-next-line */
+            getOffset: fn (ListUsersOffsetPaginationRequest $request) => $request?->getPage() ?? 0,
+            setOffset: function (ListUsersOffsetPaginationRequest $request, int $offset) {
+                $request->setPage($offset);
+            },
+            getStep: null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            /* @phpstan-ignore-next-line */
+            hasNextPage: null,
+        );
+    }
+
+    /**
+     * @param ListUsersDoubleOffsetPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            request: $request,
+            getNextPage: fn (ListUsersDoubleOffsetPaginationRequest $request) => $this->_listWithDoubleOffsetPagination($request, $options),
+            /* @phpstan-ignore-next-line */
+            getOffset: fn (ListUsersDoubleOffsetPaginationRequest $request) => $request?->getPage() ?? 0,
+            setOffset: function (ListUsersDoubleOffsetPaginationRequest $request, int $offset) {
+                $request->setPage($offset);
+            },
+            getStep: null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            /* @phpstan-ignore-next-line */
+            hasNextPage: null,
+        );
+    }
+
+    /**
+     * @param ListUsersBodyOffsetPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            request: $request,
+            getNextPage: fn (ListUsersBodyOffsetPaginationRequest $request) => $this->_listWithBodyOffsetPagination($request, $options),
+            /* @phpstan-ignore-next-line */
+            getOffset: fn (ListUsersBodyOffsetPaginationRequest $request) => $request?->getPagination()?->getPage() ?? 0,
+            setOffset: function (ListUsersBodyOffsetPaginationRequest $request, int $offset) {
+                PaginationHelper::setDeep($request, ["pagination", "page"], $offset);
+            },
+            getStep: null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            /* @phpstan-ignore-next-line */
+            hasNextPage: null,
+        );
+    }
+
+    /**
+     * @param ListUsersOffsetStepPaginationRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            request: $request,
+            getNextPage: fn (ListUsersOffsetStepPaginationRequest $request) => $this->_listWithOffsetStepPagination($request, $options),
+            /* @phpstan-ignore-next-line */
+            getOffset: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->getPage() ?? 0,
+            setOffset: function (ListUsersOffsetStepPaginationRequest $request, int $offset) {
+                $request->setPage($offset);
+            },
+            /* @phpstan-ignore-next-line */
+            getStep: fn (ListUsersOffsetStepPaginationRequest $request) => $request?->getLimit() ?? 0,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            /* @phpstan-ignore-next-line */
+            hasNextPage: null,
+        );
+    }
+
+    /**
+     * @param ListWithOffsetPaginationHasNextPageRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            request: $request,
+            getNextPage: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $this->_listWithOffsetPaginationHasNextPage($request, $options),
+            /* @phpstan-ignore-next-line */
+            getOffset: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->getPage() ?? 0,
+            setOffset: function (ListWithOffsetPaginationHasNextPageRequest $request, int $offset) {
+                $request->setPage($offset);
+            },
+            /* @phpstan-ignore-next-line */
+            getStep: fn (ListWithOffsetPaginationHasNextPageRequest $request) => $request?->getLimit() ?? 0,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersPaginationResponse $response) => $response?->getData() ?? [],
+            /* @phpstan-ignore-next-line */
+            hasNextPage: fn (?ListUsersPaginationResponse $response) => $response?->getHasNextPage(),
+        );
+    }
+
+    /**
+     * @param ListUsersExtendedRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersExtendedRequest $request) => $this->_listWithExtendedResults($request, $options),
+            setCursor: function (ListUsersExtendedRequest $request, ?string $cursor) {
+                $request->setCursor($cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?ListUsersExtendedResponse $response) => $response?->getNext() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersExtendedResponse $response) => $response?->getData()?->getUsers() ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsersExtendedRequestForOptionalData $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersExtendedRequestForOptionalData $request) => $this->_listWithExtendedResultsAndOptionalData($request, $options),
+            setCursor: function (ListUsersExtendedRequestForOptionalData $request, ?string $cursor) {
+                $request->setCursor($cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->getNext() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersExtendedOptionalListResponse $response) => $response?->getData()?->getUsers() ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsernamesRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<string>
+     */
+    public function listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsernamesRequest $request) => $this->_listUsernames($request, $options),
+            setCursor: function (ListUsernamesRequest $request, ?string $cursor) {
+                $request->setStartingAfter($cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?UsernameCursor $response) => $response?->getCursor()?->getAfter() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?UsernameCursor $response) => $response?->getCursor()?->getData() ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsernamesWithOptionalResponseRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<string>
+     */
+    public function listUsernamesWithOptionalResponse(ListUsernamesWithOptionalResponseRequest $request = new ListUsernamesWithOptionalResponseRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsernamesWithOptionalResponseRequest $request) => $this->_listUsernamesWithOptionalResponse($request, $options),
+            setCursor: function (ListUsernamesWithOptionalResponseRequest $request, ?string $cursor) {
+                $request->setStartingAfter($cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?UsernameCursor $response) => $response?->getCursor()?->getAfter() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?UsernameCursor $response) => $response?->getCursor()?->getData() ?? [],
+        );
+    }
+
+    /**
+     * @param ListWithGlobalConfigRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<string>
+     */
+    public function listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            request: $request,
+            getNextPage: fn (ListWithGlobalConfigRequest $request) => $this->_listWithGlobalConfig($request, $options),
+            /* @phpstan-ignore-next-line */
+            getOffset: fn (ListWithGlobalConfigRequest $request) => $request?->getOffset() ?? 0,
+            setOffset: function (ListWithGlobalConfigRequest $request, int $offset) {
+                $request->setOffset($offset);
+            },
+            getStep: null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?UsernameContainer $response) => $response?->getResults() ?? [],
+            /* @phpstan-ignore-next-line */
+            hasNextPage: null,
+        );
+    }
+
+    /**
+     * @param ListUsersOptionalDataRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithOptionalData(ListUsersOptionalDataRequest $request = new ListUsersOptionalDataRequest(), ?array $options = null): Pager
+    {
+        return new OffsetPager(
+            request: $request,
+            getNextPage: fn (ListUsersOptionalDataRequest $request) => $this->_listWithOptionalData($request, $options),
+            /* @phpstan-ignore-next-line */
+            getOffset: fn (ListUsersOptionalDataRequest $request) => $request?->getPage() ?? 0,
+            setOffset: function (ListUsersOptionalDataRequest $request, int $offset) {
+                $request->setPage($offset);
+            },
+            getStep: null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersOptionalDataPaginationResponse $response) => $response?->getData() ?? [],
+            /* @phpstan-ignore-next-line */
+            hasNextPage: null,
+        );
+    }
+
+    /**
+     * @param ListUsersAliasedDataRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<User>
+     */
+    public function listWithAliasedData(ListUsersAliasedDataRequest $request = new ListUsersAliasedDataRequest(), ?array $options = null): Pager
+    {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn (ListUsersAliasedDataRequest $request) => $this->_listWithAliasedData($request, $options),
+            setCursor: function (ListUsersAliasedDataRequest $request, string $cursor) {
+                $request->setStartingAfter($cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?ListUsersAliasedDataPaginationResponse $response) => $response?->getPage()?->getNext()?->getStartingAfter() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?ListUsersAliasedDataPaginationResponse $response) => $response?->getData() ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsersCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -86,7 +550,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithcursorpagination(UsersListWithCursorPaginationRequest $request = new UsersListWithCursorPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
+    private function _listWithCursorPagination(ListUsersCursorPaginationRequest $request = new ListUsersCursorPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -106,7 +570,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/cursor",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -133,7 +597,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithMixedTypeCursorPaginationRequest $request
+     * @param ListUsersMixedTypeCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -146,7 +610,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithmixedtypecursorpagination(UsersListWithMixedTypeCursorPaginationRequest $request = new UsersListWithMixedTypeCursorPaginationRequest(), ?array $options = null): ?ListUsersMixedTypePaginationResponse
+    private function _listWithMixedTypeCursorPagination(ListUsersMixedTypeCursorPaginationRequest $request = new ListUsersMixedTypeCursorPaginationRequest(), ?array $options = null): ?ListUsersMixedTypePaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -157,7 +621,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/mixed-type-cursor",
+                    path: "/users",
                     method: HttpMethod::POST,
                     query: $query,
                 ),
@@ -184,7 +648,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithBodyCursorPaginationRequest $request
+     * @param ListUsersBodyCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -197,14 +661,14 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithbodycursorpagination(UsersListWithBodyCursorPaginationRequest $request = new UsersListWithBodyCursorPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
+    private function _listWithBodyCursorPagination(ListUsersBodyCursorPaginationRequest $request = new ListUsersBodyCursorPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/body-cursor",
+                    path: "/users",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -235,7 +699,7 @@ class UsersClient
      * This tests that the mock server correctly ignores cursor mismatches
      * when getNextPage() is called with a different cursor value.
      *
-     * @param UsersListWithTopLevelBodyCursorPaginationRequest $request
+     * @param ListUsersTopLevelBodyCursorPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -248,14 +712,14 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithtoplevelbodycursorpagination(UsersListWithTopLevelBodyCursorPaginationRequest $request = new UsersListWithTopLevelBodyCursorPaginationRequest(), ?array $options = null): ?ListUsersTopLevelCursorPaginationResponse
+    private function _listWithTopLevelBodyCursorPagination(ListUsersTopLevelBodyCursorPaginationRequest $request = new ListUsersTopLevelBodyCursorPaginationRequest(), ?array $options = null): ?ListUsersTopLevelCursorPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/top-level-cursor",
+                    path: "/users/top-level-cursor",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -282,7 +746,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithOffsetPaginationRequest $request
+     * @param ListUsersOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -295,7 +759,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithoffsetpagination(UsersListWithOffsetPaginationRequest $request = new UsersListWithOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
+    private function _listWithOffsetPagination(ListUsersOffsetPaginationRequest $request = new ListUsersOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -315,7 +779,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/offset",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -342,7 +806,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithDoubleOffsetPaginationRequest $request
+     * @param ListUsersDoubleOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -355,7 +819,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithdoubleoffsetpagination(UsersListWithDoubleOffsetPaginationRequest $request = new UsersListWithDoubleOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
+    private function _listWithDoubleOffsetPagination(ListUsersDoubleOffsetPaginationRequest $request = new ListUsersDoubleOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -375,7 +839,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/double-offset",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -402,7 +866,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithBodyOffsetPaginationRequest $request
+     * @param ListUsersBodyOffsetPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -415,14 +879,14 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithbodyoffsetpagination(UsersListWithBodyOffsetPaginationRequest $request = new UsersListWithBodyOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
+    private function _listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest $request = new ListUsersBodyOffsetPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/body-offset",
+                    path: "/users",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -449,7 +913,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithOffsetStepPaginationRequest $request
+     * @param ListUsersOffsetStepPaginationRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -462,7 +926,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithoffsetsteppagination(UsersListWithOffsetStepPaginationRequest $request = new UsersListWithOffsetStepPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
+    private function _listWithOffsetStepPagination(ListUsersOffsetStepPaginationRequest $request = new ListUsersOffsetStepPaginationRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -479,7 +943,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/offset-step",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -506,7 +970,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithOffsetPaginationHasNextPageRequest $request
+     * @param ListWithOffsetPaginationHasNextPageRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -519,7 +983,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithoffsetpaginationhasnextpage(UsersListWithOffsetPaginationHasNextPageRequest $request = new UsersListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ?ListUsersPaginationResponse
+    private function _listWithOffsetPaginationHasNextPage(ListWithOffsetPaginationHasNextPageRequest $request = new ListWithOffsetPaginationHasNextPageRequest(), ?array $options = null): ?ListUsersPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -536,7 +1000,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/offset-has-next-page",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -563,7 +1027,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithExtendedResultsRequest $request
+     * @param ListUsersExtendedRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -576,7 +1040,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithextendedresults(UsersListWithExtendedResultsRequest $request = new UsersListWithExtendedResultsRequest(), ?array $options = null): ?ListUsersExtendedResponse
+    private function _listWithExtendedResults(ListUsersExtendedRequest $request = new ListUsersExtendedRequest(), ?array $options = null): ?ListUsersExtendedResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -587,7 +1051,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/extended",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -614,7 +1078,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithExtendedResultsAndOptionalDataRequest $request
+     * @param ListUsersExtendedRequestForOptionalData $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -627,7 +1091,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithextendedresultsandoptionaldata(UsersListWithExtendedResultsAndOptionalDataRequest $request = new UsersListWithExtendedResultsAndOptionalDataRequest(), ?array $options = null): ?ListUsersExtendedOptionalListResponse
+    private function _listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData $request = new ListUsersExtendedRequestForOptionalData(), ?array $options = null): ?ListUsersExtendedOptionalListResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -638,7 +1102,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/extended-optional",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -665,7 +1129,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListUsernamesRequest $request
+     * @param ListUsernamesRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -678,7 +1142,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listusernames(UsersListUsernamesRequest $request = new UsersListUsernamesRequest(), ?array $options = null): ?UsernameCursor
+    private function _listUsernames(ListUsernamesRequest $request = new ListUsernamesRequest(), ?array $options = null): ?UsernameCursor
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -689,7 +1153,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/usernames",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -716,7 +1180,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListUsernamesWithOptionalResponseRequest $request
+     * @param ListUsernamesWithOptionalResponseRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -729,7 +1193,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listusernameswithoptionalresponse(UsersListUsernamesWithOptionalResponseRequest $request = new UsersListUsernamesWithOptionalResponseRequest(), ?array $options = null): ?UsernameCursor
+    private function _listUsernamesWithOptionalResponse(ListUsernamesWithOptionalResponseRequest $request = new ListUsernamesWithOptionalResponseRequest(), ?array $options = null): ?UsernameCursor
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -740,7 +1204,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/usernames-optional",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -767,7 +1231,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithGlobalConfigRequest $request
+     * @param ListWithGlobalConfigRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -780,7 +1244,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithglobalconfig(UsersListWithGlobalConfigRequest $request = new UsersListWithGlobalConfigRequest(), ?array $options = null): ?UsernameContainer
+    private function _listWithGlobalConfig(ListWithGlobalConfigRequest $request = new ListWithGlobalConfigRequest(), ?array $options = null): ?UsernameContainer
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -791,7 +1255,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/global-config",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -818,7 +1282,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithOptionalDataRequest $request
+     * @param ListUsersOptionalDataRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -831,7 +1295,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithoptionaldata(UsersListWithOptionalDataRequest $request = new UsersListWithOptionalDataRequest(), ?array $options = null): ?ListUsersOptionalDataPaginationResponse
+    private function _listWithOptionalData(ListUsersOptionalDataRequest $request = new ListUsersOptionalDataRequest(), ?array $options = null): ?ListUsersOptionalDataPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -842,7 +1306,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/optional-data",
+                    path: "/users/optional-data",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -869,7 +1333,7 @@ class UsersClient
     }
 
     /**
-     * @param UsersListWithAliasedDataRequest $request
+     * @param ListUsersAliasedDataRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -882,7 +1346,7 @@ class UsersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listwithaliaseddata(UsersListWithAliasedDataRequest $request = new UsersListWithAliasedDataRequest(), ?array $options = null): ?ListUsersAliasedDataPaginationResponse
+    private function _listWithAliasedData(ListUsersAliasedDataRequest $request = new ListUsersAliasedDataRequest(), ?array $options = null): ?ListUsersAliasedDataPaginationResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -899,7 +1363,7 @@ class UsersClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users/aliased-data",
+                    path: "/users/aliased-data",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

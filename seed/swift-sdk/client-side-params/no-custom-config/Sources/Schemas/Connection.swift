@@ -7,32 +7,32 @@ public struct Connection: Codable, Hashable, Sendable {
     /// Connection name
     public let name: String
     /// Display name for the connection
-    public let displayName: Nullable<String>?
+    public let displayName: String?
     /// The identity provider identifier (auth0, google-oauth2, facebook, etc.)
     public let strategy: String
     /// Connection-specific configuration options
-    public let options: Nullable<[String: JSONValue]>?
+    public let options: [String: JSONValue]?
     /// List of client IDs that can use this connection
-    public let enabledClients: Nullable<[String]>?
+    public let enabledClients: [String]?
     /// Applicable realms for enterprise connections
-    public let realms: Nullable<[String]>?
+    public let realms: [String]?
     /// Whether this is a domain connection
-    public let isDomainConnection: Nullable<Bool>?
+    public let isDomainConnection: Bool?
     /// Additional metadata
-    public let metadata: Nullable<[String: JSONValue]>?
+    public let metadata: [String: JSONValue]?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         id: String,
         name: String,
-        displayName: Nullable<String>? = nil,
+        displayName: String? = nil,
         strategy: String,
-        options: Nullable<[String: JSONValue]>? = nil,
-        enabledClients: Nullable<[String]>? = nil,
-        realms: Nullable<[String]>? = nil,
-        isDomainConnection: Nullable<Bool>? = nil,
-        metadata: Nullable<[String: JSONValue]>? = nil,
+        options: [String: JSONValue]? = nil,
+        enabledClients: [String]? = nil,
+        realms: [String]? = nil,
+        isDomainConnection: Bool? = nil,
+        metadata: [String: JSONValue]? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.id = id
@@ -51,13 +51,13 @@ public struct Connection: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
-        self.displayName = try container.decodeNullableIfPresent(String.self, forKey: .displayName)
+        self.displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
         self.strategy = try container.decode(String.self, forKey: .strategy)
-        self.options = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .options)
-        self.enabledClients = try container.decodeNullableIfPresent([String].self, forKey: .enabledClients)
-        self.realms = try container.decodeNullableIfPresent([String].self, forKey: .realms)
-        self.isDomainConnection = try container.decodeNullableIfPresent(Bool.self, forKey: .isDomainConnection)
-        self.metadata = try container.decodeNullableIfPresent([String: JSONValue].self, forKey: .metadata)
+        self.options = try container.decodeIfPresent([String: JSONValue].self, forKey: .options)
+        self.enabledClients = try container.decodeIfPresent([String].self, forKey: .enabledClients)
+        self.realms = try container.decodeIfPresent([String].self, forKey: .realms)
+        self.isDomainConnection = try container.decodeIfPresent(Bool.self, forKey: .isDomainConnection)
+        self.metadata = try container.decodeIfPresent([String: JSONValue].self, forKey: .metadata)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -66,13 +66,13 @@ public struct Connection: Codable, Hashable, Sendable {
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.name, forKey: .name)
-        try container.encodeNullableIfPresent(self.displayName, forKey: .displayName)
+        try container.encodeIfPresent(self.displayName, forKey: .displayName)
         try container.encode(self.strategy, forKey: .strategy)
-        try container.encodeNullableIfPresent(self.options, forKey: .options)
-        try container.encodeNullableIfPresent(self.enabledClients, forKey: .enabledClients)
-        try container.encodeNullableIfPresent(self.realms, forKey: .realms)
-        try container.encodeNullableIfPresent(self.isDomainConnection, forKey: .isDomainConnection)
-        try container.encodeNullableIfPresent(self.metadata, forKey: .metadata)
+        try container.encodeIfPresent(self.options, forKey: .options)
+        try container.encodeIfPresent(self.enabledClients, forKey: .enabledClients)
+        try container.encodeIfPresent(self.realms, forKey: .realms)
+        try container.encodeIfPresent(self.isDomainConnection, forKey: .isDomainConnection)
+        try container.encodeIfPresent(self.metadata, forKey: .metadata)
     }
 
     /// Keys for encoding/decoding struct properties.

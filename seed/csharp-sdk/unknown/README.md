@@ -39,10 +39,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
-using global::System.Collections.Generic;
+using SeedUnknownAsAny;
 
-var client = new SeedApiClient();
+var client = new SeedUnknownAsAnyClient();
 await client.Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "value" } });
 ```
 
@@ -52,11 +51,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedUnknownAsAny;
 
 try {
     var response = await client.Unknown.PostAsync(...);
-} catch (SeedApiApiException e) {
+} catch (SeedUnknownAsAnyApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -105,7 +104,7 @@ var response = await client.Unknown.PostAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedUnknownAsAny;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Unknown.PostAsync(...).WithRawResponse();

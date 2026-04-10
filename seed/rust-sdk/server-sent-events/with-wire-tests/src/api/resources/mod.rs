@@ -7,12 +7,12 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod completions;
-pub struct ApiClient {
+pub struct ServerSentEventsClient {
     pub config: ClientConfig,
     pub completions: CompletionsClient,
 }
 
-impl ApiClient {
+impl ServerSentEventsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

@@ -11,7 +11,7 @@ use Seed\Core\Client\HttpMethod;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Unknown\Requests\MyObject;
+use Seed\Unknown\Types\MyObject;
 
 class UnknownClient
 {
@@ -110,14 +110,14 @@ class UnknownClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function postobject(MyObject $request, ?array $options = null): ?array
+    public function postObject(MyObject $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "with-object",
+                    path: "/with-object",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

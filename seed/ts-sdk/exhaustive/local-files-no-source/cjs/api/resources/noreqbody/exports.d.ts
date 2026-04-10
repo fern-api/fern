@@ -1,2 +1,2 @@
-export { NoreqbodyClient } from "./client/Client.js";
+export { NoReqBodyClient } from "./client/Client.js";
 export * from "./client/index.js";

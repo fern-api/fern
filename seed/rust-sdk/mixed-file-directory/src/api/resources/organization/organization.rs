@@ -30,7 +30,7 @@ impl OrganizationClient {
         self.http_client
             .execute_request(
                 Method::POST,
-                "organizations/",
+                "/organizations/",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

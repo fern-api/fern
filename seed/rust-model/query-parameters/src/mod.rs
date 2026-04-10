@@ -1,4 +1,4 @@
-//! Request and response types for the query-parameters
+//! Request and response types for the QueryParameters
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -8,11 +8,11 @@
 //! - **Request/Response Types**: 1 types for API operations
 //! - **Model Types**: 2 types for data representation
 
-pub mod user;
-pub mod nested_user;
-pub mod getusername_query_request;
+pub mod user_user;
+pub mod user_nested_user;
+pub mod get_username_query_request;
 
-pub use user::User;
-pub use nested_user::NestedUser;
-pub use getusername_query_request::GetusernameQueryRequest;
+pub use user_user::User;
+pub use user_nested_user::NestedUser;
+pub use get_username_query_request::GetUsernameQueryRequest;
 

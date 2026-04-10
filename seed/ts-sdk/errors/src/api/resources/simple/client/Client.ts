@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedErrors from "../../../index.js";
 
 export declare namespace SimpleClient {
     export type Options = BaseClientOptions;
@@ -22,29 +22,29 @@ export class SimpleClient {
     }
 
     /**
-     * @param {SeedApi.FooRequest} request
+     * @param {SeedErrors.FooRequest} request
      * @param {SimpleClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.BadRequestError}
-     * @throws {@link SeedApi.NotFoundError}
-     * @throws {@link SeedApi.InternalServerError}
+     * @throws {@link SeedErrors.NotFoundError}
+     * @throws {@link SeedErrors.BadRequestError}
+     * @throws {@link SeedErrors.InternalServerError}
      *
      * @example
-     *     await client.simple.foowithoutendpointerror({
+     *     await client.simple.fooWithoutEndpointError({
      *         bar: "bar"
      *     })
      */
-    public foowithoutendpointerror(
-        request: SeedApi.FooRequest,
+    public fooWithoutEndpointError(
+        request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.FooResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__foowithoutendpointerror(request, requestOptions));
+    ): core.HttpResponsePromise<SeedErrors.FooResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__fooWithoutEndpointError(request, requestOptions));
     }
 
-    private async __foowithoutendpointerror(
-        request: SeedApi.FooRequest,
+    private async __fooWithoutEndpointError(
+        request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.FooResponse>> {
+    ): Promise<core.WithRawResponse<SeedErrors.FooResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -65,22 +65,28 @@ export class SimpleClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.FooResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedErrors.FooResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 400:
-                    throw new SeedApi.BadRequestError(_response.error.body as SeedApi.ErrorBody, _response.rawResponse);
                 case 404:
-                    throw new SeedApi.NotFoundError(_response.error.body as SeedApi.ErrorBody, _response.rawResponse);
+                    throw new SeedErrors.NotFoundError(
+                        _response.error.body as SeedErrors.ErrorBody,
+                        _response.rawResponse,
+                    );
+                case 400:
+                    throw new SeedErrors.BadRequestError(
+                        _response.error.body as SeedErrors.ErrorBody,
+                        _response.rawResponse,
+                    );
                 case 500:
-                    throw new SeedApi.InternalServerError(
-                        _response.error.body as SeedApi.ErrorBody,
+                    throw new SeedErrors.InternalServerError(
+                        _response.error.body as SeedErrors.ErrorBody,
                         _response.rawResponse,
                     );
                 default:
-                    throw new errors.SeedApiError({
+                    throw new errors.SeedErrorsError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,
@@ -92,13 +98,14 @@ export class SimpleClient {
     }
 
     /**
-     * @param {SeedApi.FooRequest} request
+     * @param {SeedErrors.FooRequest} request
      * @param {SimpleClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.BadRequestError}
-     * @throws {@link SeedApi.NotFoundError}
-     * @throws {@link SeedApi.TooManyRequestsError}
-     * @throws {@link SeedApi.InternalServerError}
+     * @throws {@link SeedErrors.FooTooMuch}
+     * @throws {@link SeedErrors.FooTooLittle}
+     * @throws {@link SeedErrors.NotFoundError}
+     * @throws {@link SeedErrors.BadRequestError}
+     * @throws {@link SeedErrors.InternalServerError}
      *
      * @example
      *     await client.simple.foo({
@@ -106,16 +113,16 @@ export class SimpleClient {
      *     })
      */
     public foo(
-        request: SeedApi.FooRequest,
+        request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.FooResponse> {
+    ): core.HttpResponsePromise<SeedErrors.FooResponse> {
         return core.HttpResponsePromise.fromPromise(this.__foo(request, requestOptions));
     }
 
     private async __foo(
-        request: SeedApi.FooRequest,
+        request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.FooResponse>> {
+    ): Promise<core.WithRawResponse<SeedErrors.FooResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -136,27 +143,33 @@ export class SimpleClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.FooResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedErrors.FooResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 400:
-                    throw new SeedApi.BadRequestError(_response.error.body as SeedApi.ErrorBody, _response.rawResponse);
-                case 404:
-                    throw new SeedApi.NotFoundError(_response.error.body as SeedApi.ErrorBody, _response.rawResponse);
                 case 429:
-                    throw new SeedApi.TooManyRequestsError(
-                        _response.error.body as SeedApi.ErrorBody,
+                    throw new SeedErrors.FooTooMuch(
+                        _response.error.body as SeedErrors.ErrorBody,
                         _response.rawResponse,
                     );
                 case 500:
-                    throw new SeedApi.InternalServerError(
-                        _response.error.body as SeedApi.ErrorBody,
+                    throw new SeedErrors.FooTooLittle(
+                        _response.error.body as SeedErrors.ErrorBody,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new SeedErrors.NotFoundError(
+                        _response.error.body as SeedErrors.ErrorBody,
+                        _response.rawResponse,
+                    );
+                case 400:
+                    throw new SeedErrors.BadRequestError(
+                        _response.error.body as SeedErrors.ErrorBody,
                         _response.rawResponse,
                     );
                 default:
-                    throw new errors.SeedApiError({
+                    throw new errors.SeedErrorsError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,
@@ -168,30 +181,31 @@ export class SimpleClient {
     }
 
     /**
-     * @param {SeedApi.FooRequest} request
+     * @param {SeedErrors.FooRequest} request
      * @param {SimpleClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.BadRequestError}
-     * @throws {@link SeedApi.NotFoundError}
-     * @throws {@link SeedApi.TooManyRequestsError}
-     * @throws {@link SeedApi.InternalServerError}
+     * @throws {@link SeedErrors.FooTooMuch}
+     * @throws {@link SeedErrors.FooTooLittle}
+     * @throws {@link SeedErrors.NotFoundError}
+     * @throws {@link SeedErrors.BadRequestError}
+     * @throws {@link SeedErrors.InternalServerError}
      *
      * @example
-     *     await client.simple.foowithexamples({
-     *         bar: "bar"
+     *     await client.simple.fooWithExamples({
+     *         bar: "hello"
      *     })
      */
-    public foowithexamples(
-        request: SeedApi.FooRequest,
+    public fooWithExamples(
+        request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.FooResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__foowithexamples(request, requestOptions));
+    ): core.HttpResponsePromise<SeedErrors.FooResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__fooWithExamples(request, requestOptions));
     }
 
-    private async __foowithexamples(
-        request: SeedApi.FooRequest,
+    private async __fooWithExamples(
+        request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.FooResponse>> {
+    ): Promise<core.WithRawResponse<SeedErrors.FooResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -212,27 +226,33 @@ export class SimpleClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.FooResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedErrors.FooResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 400:
-                    throw new SeedApi.BadRequestError(_response.error.body as SeedApi.ErrorBody, _response.rawResponse);
-                case 404:
-                    throw new SeedApi.NotFoundError(_response.error.body as SeedApi.ErrorBody, _response.rawResponse);
                 case 429:
-                    throw new SeedApi.TooManyRequestsError(
-                        _response.error.body as SeedApi.ErrorBody,
+                    throw new SeedErrors.FooTooMuch(
+                        _response.error.body as SeedErrors.ErrorBody,
                         _response.rawResponse,
                     );
                 case 500:
-                    throw new SeedApi.InternalServerError(
-                        _response.error.body as SeedApi.ErrorBody,
+                    throw new SeedErrors.FooTooLittle(
+                        _response.error.body as SeedErrors.ErrorBody,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new SeedErrors.NotFoundError(
+                        _response.error.body as SeedErrors.ErrorBody,
+                        _response.rawResponse,
+                    );
+                case 400:
+                    throw new SeedErrors.BadRequestError(
+                        _response.error.body as SeedErrors.ErrorBody,
                         _response.rawResponse,
                     );
                 default:
-                    throw new errors.SeedApiError({
+                    throw new errors.SeedErrorsError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,

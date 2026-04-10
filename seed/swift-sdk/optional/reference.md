@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.optional.<a href="/Sources/Resources/Optional/OptionalClient.swift">sendoptionalbody</a>(request: Nullable&lt;[String: JSONValue]&gt;, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.optional.<a href="/Sources/Resources/Optional/OptionalClient.swift">sendOptionalBody</a>(request: [String: JSONValue]?, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -14,14 +14,16 @@
 
 ```swift
 import Foundation
-import Api
+import ObjectsWithImports
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ObjectsWithImportsClient()
 
-    _ = try await client.optional.sendoptionalbody(request: .value([
-        "key": .string("value")
-    ]))
+    _ = try await client.optional.sendOptionalBody(request: [
+        "string": .object([
+            "key": .string("value")
+        ])
+    ])
 }
 
 try await main()
@@ -39,7 +41,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Nullable<[String: JSONValue]>` 
+**request:** `[String: JSONValue]?` 
     
 </dd>
 </dl>
@@ -59,7 +61,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/Sources/Resources/Optional/OptionalClient.swift">sendoptionaltypedbody</a>(request: Requests.SendOptionalBodyRequest, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.optional.<a href="/Sources/Resources/Optional/OptionalClient.swift">sendOptionalTypedBody</a>(request: SendOptionalBodyRequest?, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -73,12 +75,14 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import ObjectsWithImports
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ObjectsWithImportsClient()
 
-    _ = try await client.optional.sendoptionaltypedbody(request: .init(message: "message"))
+    _ = try await client.optional.sendOptionalTypedBody(request: SendOptionalBodyRequest(
+        message: "message"
+    ))
 }
 
 try await main()
@@ -96,7 +100,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.SendOptionalBodyRequest` 
+**request:** `SendOptionalBodyRequest?` 
     
 </dd>
 </dl>
@@ -116,7 +120,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/Sources/Resources/Optional/OptionalClient.swift">sendoptionalnullablewithalloptionalproperties</a>(actionId: String, id: String, request: Requests.DeployParams, requestOptions: RequestOptions?) -> DeployResponse</code></summary>
+<details><summary><code>client.optional.<a href="/Sources/Resources/Optional/OptionalClient.swift">sendOptionalNullableWithAllOptionalProperties</a>(actionId: String, id: String, request: Nullable&lt;DeployParams&gt;?, requestOptions: RequestOptions?) -> DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -145,15 +149,17 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 
 ```swift
 import Foundation
-import Api
+import ObjectsWithImports
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ObjectsWithImportsClient()
 
-    _ = try await client.optional.sendoptionalnullablewithalloptionalproperties(
+    _ = try await client.optional.sendOptionalNullableWithAllOptionalProperties(
         actionId: "actionId",
         id: "id",
-        request: .init()
+        request: .value(DeployParams(
+            updateDraft: true
+        ))
     )
 }
 
@@ -188,7 +194,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.DeployParams` 
+**request:** `Nullable<DeployParams>?` 
     
 </dd>
 </dl>

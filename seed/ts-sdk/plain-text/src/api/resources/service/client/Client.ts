@@ -24,13 +24,13 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.gettext()
+     *     await client.service.getText()
      */
-    public gettext(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__gettext(requestOptions));
+    public getText(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getText(requestOptions));
     }
 
-    private async __gettext(requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<string>> {
+    private async __getText(requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -53,7 +53,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedPlainTextError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

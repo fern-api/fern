@@ -11,7 +11,7 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..types.big_union import BigUnion
+from .types.big_union import BigUnion
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -34,10 +34,9 @@ class RawBigunionClient:
         Returns
         -------
         HttpResponse[BigUnion]
-
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"bigunion/{encode_path_param(id)}",
+            f"{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -74,15 +73,10 @@ class RawBigunionClient:
         Returns
         -------
         HttpResponse[bool]
-
         """
         _response = self._client_wrapper.httpx_client.request(
-            "bigunion",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=BigUnion, direction="write"),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -119,17 +113,13 @@ class RawBigunionClient:
         Returns
         -------
         HttpResponse[typing.Dict[str, bool]]
-
         """
         _response = self._client_wrapper.httpx_client.request(
-            "bigunion/many",
+            "many",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[BigUnion], direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -171,10 +161,9 @@ class AsyncRawBigunionClient:
         Returns
         -------
         AsyncHttpResponse[BigUnion]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"bigunion/{encode_path_param(id)}",
+            f"{encode_path_param(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -211,15 +200,10 @@ class AsyncRawBigunionClient:
         Returns
         -------
         AsyncHttpResponse[bool]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "bigunion",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=BigUnion, direction="write"),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -256,17 +240,13 @@ class AsyncRawBigunionClient:
         Returns
         -------
         AsyncHttpResponse[typing.Dict[str, bool]]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "bigunion/many",
+            "many",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[BigUnion], direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )

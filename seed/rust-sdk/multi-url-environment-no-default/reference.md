@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.ec2.<a href="/src/api/resources/ec2/client.rs">bootinstance</a>(request: Ec2BootInstanceRequest) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.ec2.<a href="/src/api/resources/ec2/client.rs">boot_instance</a>(request: BootInstanceRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_multi_url_environment_no_default::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -21,11 +21,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = MultiUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
     client
         .ec2
-        .bootinstance(
-            &Ec2BootInstanceRequest {
+        .boot_instance(
+            &BootInstanceRequest {
                 size: "size".to_string(),
             },
             None,
@@ -59,7 +59,7 @@ async fn main() {
 </details>
 
 ## S3
-<details><summary><code>client.s3.<a href="/src/api/resources/s3/client.rs">getpresignedurl</a>(request: S3GetPresignedUrlRequest) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.s3.<a href="/src/api/resources/s3/client.rs">get_presigned_url</a>(request: GetPresignedUrlRequest) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +72,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_multi_url_environment_no_default::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -80,11 +80,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = MultiUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
     client
         .s3
-        .getpresignedurl(
-            &S3GetPresignedUrlRequest {
+        .get_presigned_url(
+            &GetPresignedUrlRequest {
                 s3key: "s3Key".to_string(),
             },
             None,

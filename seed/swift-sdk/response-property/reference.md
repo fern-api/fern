@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getmovie</a>(request: String, requestOptions: RequestOptions?) -> Response</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getMovie</a>(request: String, requestOptions: RequestOptions?) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import ResponseProperty
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ResponsePropertyClient()
 
-    _ = try await client.service.getmovie(request: "string")
+    _ = try await client.service.getMovie(request: "string")
 }
 
 try await main()
@@ -57,7 +57,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getmoviedocs</a>(request: String, requestOptions: RequestOptions?) -> Response</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getMovieDocs</a>(request: String, requestOptions: RequestOptions?) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -71,12 +71,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import ResponseProperty
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ResponsePropertyClient()
 
-    _ = try await client.service.getmoviedocs(request: "string")
+    _ = try await client.service.getMovie(request: "string")
 }
 
 try await main()
@@ -114,7 +114,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getmoviename</a>(request: String, requestOptions: RequestOptions?) -> StringResponse</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getMovieName</a>(request: String, requestOptions: RequestOptions?) -> StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -128,12 +128,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import ResponseProperty
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ResponsePropertyClient()
 
-    _ = try await client.service.getmoviename(request: "string")
+    _ = try await client.service.getMovie(request: "string")
 }
 
 try await main()
@@ -171,7 +171,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getmoviemetadata</a>(request: String, requestOptions: RequestOptions?) -> Response</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getMovieMetadata</a>(request: String, requestOptions: RequestOptions?) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -185,12 +185,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import ResponseProperty
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ResponsePropertyClient()
 
-    _ = try await client.service.getmoviemetadata(request: "string")
+    _ = try await client.service.getMovie(request: "string")
 }
 
 try await main()
@@ -228,7 +228,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getoptionalmovie</a>(request: String, requestOptions: RequestOptions?) -> Response</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getOptionalMovie</a>(request: String, requestOptions: RequestOptions?) -> Response?</code></summary>
 <dl>
 <dd>
 
@@ -242,12 +242,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import ResponseProperty
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ResponsePropertyClient()
 
-    _ = try await client.service.getoptionalmovie(request: "string")
+    _ = try await client.service.getMovie(request: "string")
 }
 
 try await main()
@@ -285,7 +285,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getoptionalmoviedocs</a>(request: String, requestOptions: RequestOptions?) -> OptionalWithDocs</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getOptionalMovieDocs</a>(request: String, requestOptions: RequestOptions?) -> OptionalWithDocs</code></summary>
 <dl>
 <dd>
 
@@ -299,12 +299,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import ResponseProperty
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ResponsePropertyClient()
 
-    _ = try await client.service.getoptionalmoviedocs(request: "string")
+    _ = try await client.service.getMovie(request: "string")
 }
 
 try await main()
@@ -342,7 +342,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getoptionalmoviename</a>(request: String, requestOptions: RequestOptions?) -> OptionalStringResponse</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getOptionalMovieName</a>(request: String, requestOptions: RequestOptions?) -> OptionalStringResponse</code></summary>
 <dl>
 <dd>
 
@@ -356,12 +356,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import ResponseProperty
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ResponsePropertyClient()
 
-    _ = try await client.service.getoptionalmoviename(request: "string")
+    _ = try await client.service.getMovie(request: "string")
 }
 
 try await main()

@@ -5,7 +5,7 @@ info:
 paths:
   /user:
     get:
-      operationId: user_getusername
+      operationId: user_getUsername
       tags:
         - User
       parameters:
@@ -45,12 +45,11 @@ paths:
             $ref: '#/components/schemas/User'
         - name: userList
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
               $ref: '#/components/schemas/User'
-              nullable: true
         - name: optionalDeadline
           in: query
           required: false
@@ -84,20 +83,18 @@ paths:
             nullable: true
         - name: excludeUser
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
               $ref: '#/components/schemas/User'
-              nullable: true
         - name: filter
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
               type: string
-              nullable: true
       responses:
         '200':
           description: ''

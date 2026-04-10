@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-/// Query parameters for inlineUsers_inlineUsers_listWithOffsetPaginationHasNextPage
+/// Query parameters for listWithOffsetPaginationHasNextPage
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
     /// Defaults to first page
@@ -12,7 +12,7 @@ pub struct InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest
     #[serde(skip_serializing_if = "Option::is_none")]
     pub limit: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub order: Option<InlineUsersOrder>,
+    pub order: Option<Order>,
 }
 
 impl InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
@@ -26,7 +26,7 @@ impl InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequest {
 pub struct InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequestBuilder {
     page: Option<i64>,
     limit: Option<i64>,
-    order: Option<InlineUsersOrder>,
+    order: Option<Order>,
 }
 
 impl InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequestBuilder {
@@ -40,7 +40,7 @@ impl InlineUsersInlineUsersListWithOffsetPaginationHasNextPageQueryRequestBuilde
         self
     }
 
-    pub fn order(mut self, value: InlineUsersOrder) -> Self {
+    pub fn order(mut self, value: Order) -> Self {
         self.order = Some(value);
         self
     }

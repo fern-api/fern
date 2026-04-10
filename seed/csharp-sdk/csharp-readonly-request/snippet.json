@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.BatchCreateAsync(\n    new CreateVendorRequest\n    {\n        Vendors = new Dictionary<string, Vendor>()\n        {\n            {\n                \"key\",\n                new Vendor\n                {\n                    Id = \"id\",\n                    Name = \"name\",\n                    CreatedAt = \"created_at\",\n                    UpdatedAt = \"updated_at\",\n                }\n            },\n        },\n    }\n);\n"
+                "client": "using SeedCsharpReadonlyRequest;\n\nvar client = new SeedCsharpReadonlyRequestClient();\nawait client.BatchCreateAsync(\n    new CreateVendorRequest\n    {\n        Vendors = new Dictionary<string, Vendor>()\n        {\n            {\n                \"vendor-1\",\n                new Vendor\n                {\n                    Id = \"vendor-1\",\n                    Name = \"Acme Corp\",\n                    CreatedAt = \"2024-01-01T00:00:00Z\",\n                    UpdatedAt = \"2024-01-01T00:00:00Z\",\n                }\n            },\n        },\n    }\n);\n"
             }
         }
     ]

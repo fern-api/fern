@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Find(
 	ctx context.Context,
-	request *fern.FooFindRequest,
+	request *fern.FindRequest,
 	opts ...option.RequestOption,
 ) (*fern.ImportingType, error) {
 	response, err := c.WithRawResponse.Find(

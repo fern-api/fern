@@ -1,11 +1,11 @@
-//! # accept-header SDK
+//! # Accept SDK
 //!
-//! The official Rust SDK for the accept-header.
+//! The official Rust SDK for the Accept.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_accept::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,7 +13,7 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = AcceptClient::new(config).expect("Failed to build client");
 //!     client.service.endpoint(None).await;
 //! }
 //! ```

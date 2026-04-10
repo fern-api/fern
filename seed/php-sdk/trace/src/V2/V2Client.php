@@ -2,6 +2,8 @@
 
 namespace Seed\V2;
 
+use Seed\V2\Problem\ProblemClient;
+use Seed\V2\V3\V3Client;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
@@ -13,6 +15,16 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class V2Client
 {
+    /**
+     * @var ProblemClient $problem
+     */
+    public ProblemClient $problem;
+
+    /**
+     * @var V3Client $v3
+     */
+    public V3Client $v3;
+
     /**
      * @var array{
      *   baseUrl?: string,
@@ -45,6 +57,8 @@ class V2Client
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+        $this->problem = new ProblemClient($this->client, $this->options);
+        $this->v3 = new V3Client($this->client, $this->options);
     }
 
     /**
@@ -65,7 +79,7 @@ class V2Client
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
                     path: "",
                     method: HttpMethod::GET,
                 ),

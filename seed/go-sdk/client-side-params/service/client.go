@@ -34,12 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // List resources with pagination
-func (c *Client) Listresources(
+func (c *Client) ListResources(
 	ctx context.Context,
-	request *fern.ServiceListResourcesRequest,
+	request *fern.ListResourcesRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.Resource, error) {
-	response, err := c.WithRawResponse.Listresources(
+	response, err := c.WithRawResponse.ListResources(
 		ctx,
 		request,
 		opts...,
@@ -51,13 +51,15 @@ func (c *Client) Listresources(
 }
 
 // Get a single resource
-func (c *Client) Getresource(
+func (c *Client) GetResource(
 	ctx context.Context,
-	request *fern.ServiceGetResourceRequest,
+	resourceID string,
+	request *fern.GetResourceRequest,
 	opts ...option.RequestOption,
 ) (*fern.Resource, error) {
-	response, err := c.WithRawResponse.Getresource(
+	response, err := c.WithRawResponse.GetResource(
 		ctx,
+		resourceID,
 		request,
 		opts...,
 	)
@@ -68,12 +70,12 @@ func (c *Client) Getresource(
 }
 
 // Search resources with complex parameters
-func (c *Client) Searchresources(
+func (c *Client) SearchResources(
 	ctx context.Context,
-	request *fern.ServiceSearchResourcesRequest,
+	request *fern.SearchResourcesRequest,
 	opts ...option.RequestOption,
 ) (*fern.SearchResponse, error) {
-	response, err := c.WithRawResponse.Searchresources(
+	response, err := c.WithRawResponse.SearchResources(
 		ctx,
 		request,
 		opts...,
@@ -85,29 +87,12 @@ func (c *Client) Searchresources(
 }
 
 // List or search for users
-func (c *Client) Listusers(
+func (c *Client) ListUsers(
 	ctx context.Context,
-	request *fern.ServiceListUsersRequest,
+	request *fern.ListUsersRequest,
 	opts ...option.RequestOption,
 ) (*fern.PaginatedUserResponse, error) {
-	response, err := c.WithRawResponse.Listusers(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
-// Create a new user
-func (c *Client) Createuser(
-	ctx context.Context,
-	request *fern.CreateUserRequest,
-	opts ...option.RequestOption,
-) (*fern.User, error) {
-	response, err := c.WithRawResponse.Createuser(
+	response, err := c.WithRawResponse.ListUsers(
 		ctx,
 		request,
 		opts...,
@@ -119,13 +104,51 @@ func (c *Client) Createuser(
 }
 
 // Get a user by ID
-func (c *Client) Getuserbyid(
+func (c *Client) GetUserByID(
 	ctx context.Context,
-	request *fern.ServiceGetUserByIDRequest,
+	userID string,
+	request *fern.GetUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
-	response, err := c.WithRawResponse.Getuserbyid(
+	response, err := c.WithRawResponse.GetUserByID(
 		ctx,
+		userID,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Create a new user
+func (c *Client) CreateUser(
+	ctx context.Context,
+	request *fern.CreateUserRequest,
+	opts ...option.RequestOption,
+) (*fern.User, error) {
+	response, err := c.WithRawResponse.CreateUser(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Update a user
+func (c *Client) UpdateUser(
+	ctx context.Context,
+	userID string,
+	request *fern.UpdateUserRequest,
+	opts ...option.RequestOption,
+) (*fern.User, error) {
+	response, err := c.WithRawResponse.UpdateUser(
+		ctx,
+		userID,
 		request,
 		opts...,
 	)
@@ -136,14 +159,14 @@ func (c *Client) Getuserbyid(
 }
 
 // Delete a user
-func (c *Client) Deleteuser(
+func (c *Client) DeleteUser(
 	ctx context.Context,
-	request *fern.ServiceDeleteUserRequest,
+	userID string,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.Deleteuser(
+	_, err := c.WithRawResponse.DeleteUser(
 		ctx,
-		request,
+		userID,
 		opts...,
 	)
 	if err != nil {
@@ -152,30 +175,13 @@ func (c *Client) Deleteuser(
 	return nil
 }
 
-// Update a user
-func (c *Client) Updateuser(
-	ctx context.Context,
-	request *fern.UpdateUserRequest,
-	opts ...option.RequestOption,
-) (*fern.User, error) {
-	response, err := c.WithRawResponse.Updateuser(
-		ctx,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
 // List all connections
-func (c *Client) Listconnections(
+func (c *Client) ListConnections(
 	ctx context.Context,
-	request *fern.ServiceListConnectionsRequest,
+	request *fern.ListConnectionsRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.Connection, error) {
-	response, err := c.WithRawResponse.Listconnections(
+	response, err := c.WithRawResponse.ListConnections(
 		ctx,
 		request,
 		opts...,
@@ -187,13 +193,15 @@ func (c *Client) Listconnections(
 }
 
 // Get a connection by ID
-func (c *Client) Getconnection(
+func (c *Client) GetConnection(
 	ctx context.Context,
-	request *fern.ServiceGetConnectionRequest,
+	connectionID string,
+	request *fern.GetConnectionRequest,
 	opts ...option.RequestOption,
 ) (*fern.Connection, error) {
-	response, err := c.WithRawResponse.Getconnection(
+	response, err := c.WithRawResponse.GetConnection(
 		ctx,
+		connectionID,
 		request,
 		opts...,
 	)
@@ -204,12 +212,12 @@ func (c *Client) Getconnection(
 }
 
 // List all clients/applications
-func (c *Client) Listclients(
+func (c *Client) ListClients(
 	ctx context.Context,
-	request *fern.ServiceListClientsRequest,
+	request *fern.ListClientsRequest,
 	opts ...option.RequestOption,
 ) (*fern.PaginatedClientResponse, error) {
-	response, err := c.WithRawResponse.Listclients(
+	response, err := c.WithRawResponse.ListClients(
 		ctx,
 		request,
 		opts...,
@@ -221,13 +229,15 @@ func (c *Client) Listclients(
 }
 
 // Get a client by ID
-func (c *Client) Getclient(
+func (c *Client) GetClient(
 	ctx context.Context,
-	request *fern.ServiceGetClientRequest,
+	clientID string,
+	request *fern.GetClientRequest,
 	opts ...option.RequestOption,
 ) (*fern.Client, error) {
-	response, err := c.WithRawResponse.Getclient(
+	response, err := c.WithRawResponse.GetClient(
 		ctx,
+		clientID,
 		request,
 		opts...,
 	)

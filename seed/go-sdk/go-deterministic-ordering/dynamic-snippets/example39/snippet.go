@@ -17,8 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := fern.TypesWeatherReportSunny.Ptr()
-    client.EndpointsEnum.EndpointsEnumGetAndReturnEnum(
+    request := &fern.GetWithMultipleQuery{
+        Query: []string{
+            "query",
+        },
+        Number: []int{
+            1,
+        },
+    }
+    client.Endpoints.Params.GetWithAllowMultipleQuery(
         context.TODO(),
         request,
     )

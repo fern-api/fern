@@ -39,30 +39,35 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedQueryParameters;
 
-var client = new SeedApiClient();
-await client.User.GetusernameAsync(
-    new UserGetUsernameRequest
+var client = new SeedQueryParametersClient();
+await client.User.GetUsernameAsync(
+    new GetUsersRequest
     {
         Limit = 1,
-        Id = "id",
+        Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         Date = new DateOnly(2023, 1, 15),
         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        Bytes = "bytes",
+        Bytes = "SGVsbG8gd29ybGQh",
         User = new User
         {
             Name = "name",
             Tags = new List<string>() { "tags", "tags" },
         },
-        UserList =
-        [
+        UserList = new List<User>()
+        {
             new User
             {
                 Name = "name",
                 Tags = new List<string>() { "tags", "tags" },
             },
-        ],
+            new User
+            {
+                Name = "name",
+                Tags = new List<string>() { "tags", "tags" },
+            },
+        },
         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
         OptionalString = "optionalString",
@@ -99,11 +104,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedQueryParameters;
 
 try {
-    var response = await client.User.GetusernameAsync(...);
-} catch (SeedApiApiException e) {
+    var response = await client.User.GetUsernameAsync(...);
+} catch (SeedQueryParametersApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -126,7 +131,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.User.GetusernameAsync(
+var response = await client.User.GetUsernameAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -139,7 +144,7 @@ var response = await client.User.GetusernameAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.User.GetusernameAsync(
+var response = await client.User.GetUsernameAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -152,10 +157,10 @@ var response = await client.User.GetusernameAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedQueryParameters;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.User.GetusernameAsync(...).WithRawResponse();
+var result = await client.User.GetUsernameAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -172,7 +177,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.User.GetusernameAsync(...);
+var data = await client.User.GetUsernameAsync(...);
 ```
 
 ### Additional Headers
@@ -180,7 +185,7 @@ var data = await client.User.GetusernameAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.User.GetusernameAsync(
+var response = await client.User.GetUsernameAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -196,7 +201,7 @@ var response = await client.User.GetusernameAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.User.GetusernameAsync(
+var response = await client.User.GetUsernameAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

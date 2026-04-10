@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get</a>(request) -> Seed::Types::MyUnion</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get</a>(request) -> Seed::Union::Types::MyUnion</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.union.get(request: "string")
 <dl>
 <dd>
 
-**request:** `Seed::Types::MyUnion` 
+**request:** `Seed::Union::Types::MyUnion` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.union.get(request: "string")
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">getmetadata</a>() -> Internal::Types::Hash[String, String]</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get_metadata</a>() -> Internal::Types::Hash[Seed::Union::Types::Key, String]</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.union.get(request: "string")
 <dd>
 
 ```ruby
-client.union.getmetadata
+client.union.get_metadata
 ```
 </dd>
 </dl>
@@ -88,7 +88,7 @@ client.union.getmetadata
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">updatemetadata</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">update_metadata</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ client.union.getmetadata
 <dd>
 
 ```ruby
-client.union.updatemetadata(request: {})
+client.union.update_metadata(request: {})
 ```
 </dd>
 </dl>
@@ -116,7 +116,7 @@ client.union.updatemetadata(request: {})
 <dl>
 <dd>
 
-**request:** `Seed::Types::MetadataUnion` 
+**request:** `Seed::Union::Types::MetadataUnion` 
     
 </dd>
 </dl>
@@ -149,7 +149,7 @@ client.union.updatemetadata(request: {})
 <dd>
 
 ```ruby
-client.union.call
+client.union.call(union: {})
 ```
 </dd>
 </dl>
@@ -164,7 +164,7 @@ client.union.call
 <dl>
 <dd>
 
-**union:** `Seed::Types::MetadataUnion` 
+**request:** `Seed::Union::Types::Request` 
     
 </dd>
 </dl>
@@ -184,7 +184,7 @@ client.union.call
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">duplicatetypesunion</a>(request) -> Seed::Types::UnionWithDuplicateTypes</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">duplicate_types_union</a>(request) -> Seed::Union::Types::UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -197,7 +197,7 @@ client.union.call
 <dd>
 
 ```ruby
-client.union.duplicatetypesunion(request: "string")
+client.union.duplicate_types_union(request: "string")
 ```
 </dd>
 </dl>
@@ -212,7 +212,7 @@ client.union.duplicatetypesunion(request: "string")
 <dl>
 <dd>
 
-**request:** `Seed::Types::UnionWithDuplicateTypes` 
+**request:** `Seed::Union::Types::UnionWithDuplicateTypes` 
     
 </dd>
 </dl>
@@ -232,7 +232,7 @@ client.union.duplicatetypesunion(request: "string")
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">nestedunions</a>(request) -> String</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">nested_unions</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -245,7 +245,7 @@ client.union.duplicatetypesunion(request: "string")
 <dd>
 
 ```ruby
-client.union.nestedunions(request: "string")
+client.union.nested_unions(request: "string")
 ```
 </dd>
 </dl>
@@ -260,7 +260,7 @@ client.union.nestedunions(request: "string")
 <dl>
 <dd>
 
-**request:** `Seed::Types::NestedUnionRoot` 
+**request:** `Seed::Union::Types::NestedUnionRoot` 
     
 </dd>
 </dl>
@@ -280,7 +280,7 @@ client.union.nestedunions(request: "string")
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">testcamelcaseproperties</a>(request) -> String</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">test_camel_case_properties</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -293,9 +293,9 @@ client.union.nestedunions(request: "string")
 <dd>
 
 ```ruby
-client.union.testcamelcaseproperties(payment_method: {
-  method_: "method",
-  card_number: "cardNumber"
+client.union.test_camel_case_properties(payment_method: {
+  method_: "card",
+  card_number: "1234567890123456"
 })
 ```
 </dd>
@@ -311,7 +311,7 @@ client.union.testcamelcaseproperties(payment_method: {
 <dl>
 <dd>
 
-**payment_method:** `Seed::Types::PaymentMethodUnion` 
+**payment_method:** `Seed::Union::Types::PaymentMethodUnion` 
     
 </dd>
 </dl>

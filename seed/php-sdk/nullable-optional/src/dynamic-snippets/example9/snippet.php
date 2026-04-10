@@ -3,18 +3,19 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Nullableoptional\Requests\NullableOptionalSearchUsersRequest;
+use Seed\NullableOptional\Requests\FilterByRoleRequest;
+use Seed\NullableOptional\Types\UserRole;
+use Seed\NullableOptional\Types\UserStatus;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->nullableoptional->searchusers(
-    new NullableOptionalSearchUsersRequest([
-        'query' => 'query',
-        'department' => 'department',
-        'role' => 'role',
-        'isActive' => true,
+$client->nullableOptional->filterByRole(
+    new FilterByRoleRequest([
+        'role' => UserRole::Admin->value,
+        'status' => UserStatus::Active->value,
+        'secondaryRole' => UserRole::Admin->value,
     ]),
 );

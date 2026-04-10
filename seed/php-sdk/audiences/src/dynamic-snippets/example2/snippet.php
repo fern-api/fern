@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Foo\Requests\FooFindRequest;
+use Seed\Foo\Requests\FindRequest;
 
 $client = new SeedClient(
     options: [
@@ -11,7 +11,7 @@ $client = new SeedClient(
     ],
 );
 $client->foo->find(
-    new FooFindRequest([
+    new FindRequest([
         'optionalString' => 'optionalString',
         'publicProperty' => 'publicProperty',
         'privateProperty' => 1,

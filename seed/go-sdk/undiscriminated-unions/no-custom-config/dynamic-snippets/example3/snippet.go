@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    undiscriminated "github.com/fern-api/undiscriminated-go"
     client "github.com/fern-api/undiscriminated-go/client"
     option "github.com/fern-api/undiscriminated-go/option"
 )
@@ -13,7 +14,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Union.Getmetadata(
+    request := &undiscriminated.MetadataUnion{
+        OptionalMetadata: map[string]any{
+            "string": map[string]any{
+                "key": "value",
+            },
+        },
+    }
+    client.Union.UpdateMetadata(
         context.TODO(),
+        request,
     )
 }

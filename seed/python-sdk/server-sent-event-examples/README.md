@@ -12,6 +12,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Usage](#usage)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
+- [Streaming](#streaming)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -34,14 +35,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedServerSentEvents
 
-client = SeedApi(
+client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.completions.stream(
-    query="query",
+    query="foo",
 )
 ```
 
@@ -52,16 +53,16 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedServerSentEvents
 
-client = AsyncSeedApi(
+client = AsyncSeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
     await client.completions.stream(
-        query="query",
+        query="foo",
     )
 
 
@@ -83,6 +84,22 @@ except ApiError as e:
     print(e.body)
 ```
 
+## Streaming
+
+The SDK supports streaming responses, as well, the response will be a generator that you can loop over.
+
+```python
+from seed import SeedServerSentEvents
+
+client = SeedServerSentEvents(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.completions.stream(
+    query="foo",
+)
+```
+
 ## Advanced
 
 ### Access Raw Response Data
@@ -91,9 +108,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedServerSentEvents
 
-client = SeedApi(...)
+client = SeedServerSentEvents(...)
 response = client.completions.with_raw_response.stream(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -125,9 +142,9 @@ client.completions.stream(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedServerSentEvents
 
-client = SeedApi(..., timeout=20.0)
+client = SeedServerSentEvents(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.completions.stream(..., request_options={
@@ -142,9 +159,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedServerSentEvents
 
-client = SeedApi(
+client = SeedServerSentEvents(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

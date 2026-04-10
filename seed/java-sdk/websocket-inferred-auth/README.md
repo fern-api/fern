@@ -12,6 +12,7 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
 - [Usage](#usage)
 - [Base Url](#base-url)
 - [Exception Handling](#exception-handling)
+- [Websocket](#websocket)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
   - [Retries](#retries)
@@ -55,25 +56,21 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;
-import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;
-import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;
+import com.seed.websocketAuth.SeedWebsocketAuthClient;
+import com.seed.websocketAuth.resources.auth.requests.GetTokenRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedWebsocketAuthClient client = SeedWebsocketAuthClient
             .builder()
-            .apiKey("<X-Api-Key>")
             .build();
 
-        client.auth().gettokenwithclientcredentials(
-            AuthGetTokenWithClientCredentialsRequest
+        client.auth().getTokenWithClientCredentials(
+            GetTokenRequest
                 .builder()
+                .xApiKey("X-Api-Key")
                 .clientId("client_id")
                 .clientSecret("client_secret")
-                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)
-                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)
                 .scope("scope")
                 .build()
         );
@@ -86,9 +83,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.websocketAuth.SeedWebsocketAuthClient;
 
-SeedApiClient client = SeedApiClient
+SeedWebsocketAuthClient client = SeedWebsocketAuthClient
     .builder()
     .url("https://example.com")
     .build();
@@ -99,13 +96,41 @@ SeedApiClient client = SeedApiClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.api.core.SeedApiApiException;
+import com.seed.websocketAuth.core.SeedWebsocketAuthApiException;
 
 try{
-    client.auth().gettokenwithclientcredentials(...);
-} catch (SeedApiApiException e){
+    client.auth().getTokenWithClientCredentials(...);
+} catch (SeedWebsocketAuthApiException e){
     // Do something with the API exception...
 }
+```
+
+## Websocket
+
+The SDK provides WebSocket support for real-time bidirectional communication. You can connect to a WebSocket,
+register message handlers to receive server messages, send messages to the server, and close the connection when done.
+
+```java
+import com.seed.websocketAuth.SeedWebsocketAuthClient;
+
+SeedWebsocketAuthClient client = SeedWebsocketAuthClient
+    .builder()
+    .build();
+
+// Create the WebSocket client and connect
+var ws = client.realtime().realtimeWebSocket();
+ws.connect(RealtimeConnectOptions.builder()...build()).join();
+
+// Register message handlers to receive server messages
+ws.onReceive(message -> {
+    System.out.println("Received: " + message);
+});
+
+// Send messages to the server
+ws.sendSend(...);
+
+// Close the connection when done
+ws.disconnect();
 ```
 
 ## Advanced
@@ -116,12 +141,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.websocketAuth.SeedWebsocketAuthClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient
+SeedWebsocketAuthClient client = SeedWebsocketAuthClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -144,9 +169,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.websocketAuth.SeedWebsocketAuthClient;
 
-SeedApiClient client = SeedApiClient
+SeedWebsocketAuthClient client = SeedWebsocketAuthClient
     .builder()
     .maxRetries(1)
     .build();
@@ -156,17 +181,17 @@ SeedApiClient client = SeedApiClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.websocketAuth.SeedWebsocketAuthClient;
+import com.seed.websocketAuth.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedWebsocketAuthClient client = SeedWebsocketAuthClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.auth().gettokenwithclientcredentials(
+client.auth().getTokenWithClientCredentials(
     ...,
     RequestOptions
         .builder()
@@ -180,11 +205,11 @@ client.auth().gettokenwithclientcredentials(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.websocketAuth.SeedWebsocketAuthClient;
+import com.seed.websocketAuth.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedWebsocketAuthClient client = SeedWebsocketAuthClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -192,7 +217,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.auth().gettokenwithclientcredentials(
+client.auth().getTokenWithClientCredentials(
     ...,
     RequestOptions
         .builder()
@@ -208,7 +233,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.auth().withRawResponse().gettokenwithclientcredentials(...);
+SeedWebsocketAuthHttpResponse response = client.auth().withRawResponse().getTokenWithClientCredentials(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

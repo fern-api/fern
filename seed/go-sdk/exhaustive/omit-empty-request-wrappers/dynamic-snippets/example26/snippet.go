@@ -6,6 +6,7 @@ import (
     fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -17,10 +18,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.EndpointsHTTPMethodsTestDeleteRequest{
-        ID: "id",
+    request := &types.ObjectWithMixedRequiredAndOptionalFields{
+        RequiredString: "hello",
+        RequiredInteger: 0,
+        OptionalString: fern.String(
+            "world",
+        ),
+        RequiredLong: int64(0),
     }
-    client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestDelete(
+    client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
         context.TODO(),
         request,
     )

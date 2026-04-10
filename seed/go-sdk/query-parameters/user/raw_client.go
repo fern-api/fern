@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Getusername(
+func (r *RawClient) GetUsername(
 	ctx context.Context,
-	request *fern.UserGetUsernameRequest,
+	request *fern.GetUsersRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)

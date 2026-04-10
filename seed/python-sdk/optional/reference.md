@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.optional.<a href="src/seed/optional/client.py">sendoptionalbody</a>(...) -> str</code></summary>
+<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_body</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,15 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedObjectsWithImports
 
-client = SeedApi(
+client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.optional.sendoptionalbody(
+client.optional.send_optional_body(
     request={
-        "key": "value"
+        "string": {"key": "value"}
     },
 )
 
@@ -59,7 +59,7 @@ client.optional.sendoptionalbody(
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="src/seed/optional/client.py">sendoptionaltypedbody</a>(...) -> str</code></summary>
+<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_typed_body</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -72,14 +72,17 @@ client.optional.sendoptionalbody(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedObjectsWithImports
+from seed.optional import SendOptionalBodyRequest
 
-client = SeedApi(
+client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.optional.sendoptionaltypedbody(
-    message="message",
+client.optional.send_optional_typed_body(
+    request=SendOptionalBodyRequest(
+        message="message",
+    ),
 )
 
 ```
@@ -96,7 +99,7 @@ client.optional.sendoptionaltypedbody(
 <dl>
 <dd>
 
-**message:** `str` 
+**request:** `typing.Optional[SendOptionalBodyRequest]` 
     
 </dd>
 </dl>
@@ -116,7 +119,7 @@ client.optional.sendoptionaltypedbody(
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="src/seed/optional/client.py">sendoptionalnullablewithalloptionalproperties</a>(...) -> DeployResponse</code></summary>
+<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_nullable_with_all_optional_properties</a>(...) -> DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -144,15 +147,19 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedObjectsWithImports
+from seed.optional import DeployParams
 
-client = SeedApi(
+client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.optional.sendoptionalnullablewithalloptionalproperties(
+client.optional.send_optional_nullable_with_all_optional_properties(
     action_id="actionId",
     id="id",
+    request=DeployParams(
+        update_draft=True,
+    ),
 )
 
 ```
@@ -185,7 +192,7 @@ client.optional.sendoptionalnullablewithalloptionalproperties(
 <dl>
 <dd>
 
-**update_draft:** `typing.Optional[bool]` 
+**request:** `typing.Optional[DeployParams]` 
     
 </dd>
 </dl>

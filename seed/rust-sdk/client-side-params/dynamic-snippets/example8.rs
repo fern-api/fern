@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,20 +7,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ClientSideParamsClient::new(config).expect("Failed to build client");
     client
         .service
-        .createuser(
-            &CreateUserRequest {
-                email: "email".to_string(),
-                connection: "connection".to_string(),
-                email_verified: None,
-                username: None,
-                password: None,
-                phone_number: None,
-                phone_verified: None,
-                user_metadata: None,
-                app_metadata: None,
+        .list_connections(
+            &ListConnectionsQueryRequest {
+                strategy: Some("strategy".to_string()),
+                name: Some("name".to_string()),
+                fields: Some("fields".to_string()),
+                ..Default::default()
             },
             None,
         )

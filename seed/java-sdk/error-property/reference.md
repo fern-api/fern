@@ -1,6 +1,6 @@
 # Reference
-## Propertybasederror
-<details><summary><code>client.propertybasederror.throwerror() -> String</code></summary>
+## PropertyBasedError
+<details><summary><code>client.propertyBasedError.throwError() -> String</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```java
-client.propertybasederror().throwerror();
+client.propertyBasedError().throwError();
 ```
 </dd>
 </dl>

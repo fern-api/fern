@@ -7,7 +7,7 @@ import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedUnions from "../../../index.js";
 
 export declare namespace BigunionClient {
     export type Options = BaseClientOptions;
@@ -23,32 +23,29 @@ export class BigunionClient {
     }
 
     /**
-     * @param {SeedApi.BigunionGetRequest} request
+     * @param {string} id
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.bigunion.get({
-     *         id: "id"
-     *     })
+     *     await client.bigunion.get("id")
      */
     public get(
-        request: SeedApi.BigunionGetRequest,
+        id: string,
         requestOptions?: BigunionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.BigUnion> {
-        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
+    ): core.HttpResponsePromise<SeedUnions.BigUnion> {
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
     private async __get(
-        request: SeedApi.BigunionGetRequest,
+        id: string,
         requestOptions?: BigunionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.BigUnion>> {
-        const { id } = request;
+    ): Promise<core.WithRawResponse<SeedUnions.BigUnion>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `bigunion/${core.url.encodePathParam(id)}`,
+                `/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -73,44 +70,45 @@ export class BigunionClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/bigunion/{id}");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/{id}");
     }
 
     /**
-     * @param {SeedApi.BigUnion} request
+     * @param {SeedUnions.BigUnion} request
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.bigunion.update({
-     *         value: "value",
-     *         type: "normalSweet"
+     *         type: "normalSweet",
+     *         id: "id",
+     *         createdAt: new Date("2024-01-15T09:30:00.000Z"),
+     *         archivedAt: new Date("2024-01-15T09:30:00.000Z"),
+     *         value: "value"
      *     })
      */
     public update(
-        request: SeedApi.BigUnion,
+        request: SeedUnions.BigUnion,
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
     }
 
     private async __update(
-        request: SeedApi.BigUnion,
+        request: SeedUnions.BigUnion,
         requestOptions?: BigunionClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
+            url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "bigunion",
-            ),
+                (await core.Supplier.get(this._options.environment)),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
@@ -137,35 +135,44 @@ export class BigunionClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/bigunion");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/");
     }
 
     /**
-     * @param {SeedApi.BigUnion[]} request
+     * @param {SeedUnions.BigUnion[]} request
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.bigunion.updateMany([{
-     *             value: "value",
-     *             type: "normalSweet"
+     *             type: "normalSweet",
+     *             id: "id",
+     *             createdAt: new Date("2024-01-15T09:30:00.000Z"),
+     *             archivedAt: new Date("2024-01-15T09:30:00.000Z"),
+     *             value: "value"
+     *         }, {
+     *             type: "normalSweet",
+     *             id: "id",
+     *             createdAt: new Date("2024-01-15T09:30:00.000Z"),
+     *             archivedAt: new Date("2024-01-15T09:30:00.000Z"),
+     *             value: "value"
      *         }])
      */
     public updateMany(
-        request: SeedApi.BigUnion[],
+        request: SeedUnions.BigUnion[],
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, boolean>> {
         return core.HttpResponsePromise.fromPromise(this.__updateMany(request, requestOptions));
     }
 
     private async __updateMany(
-        request: SeedApi.BigUnion[],
+        request: SeedUnions.BigUnion[],
         requestOptions?: BigunionClient.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, boolean>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -173,7 +180,7 @@ export class BigunionClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "bigunion/many",
+                "/many",
             ),
             method: "PATCH",
             headers: _headers,
@@ -204,13 +211,13 @@ export class BigunionClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
             });
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/bigunion/many");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/many");
     }
 }

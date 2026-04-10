@@ -5,4 +5,9 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_http_methods.endpoints_http_methods_test_delete(id: "id")
+client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+  required_string: "requiredString",
+  required_integer: 1,
+  optional_string: "optionalString",
+  required_long: 1000000
+)

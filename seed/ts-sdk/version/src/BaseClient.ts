@@ -7,6 +7,8 @@ export interface BaseClientOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
+    /** Override the X-API-Version header */
+    xApiVersion?: "1.0.0" | "2.0.0" | "latest";
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -30,6 +32,8 @@ export interface BaseRequestOptions {
     queryParams?: Record<string, unknown>;
     /** Additional headers to include in the request. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
+    /** Override the X-API-Version header */
+    xApiVersion?: "1.0.0" | "2.0.0" | "latest";
 }
 
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
@@ -47,6 +51,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
             "User-Agent": "@fern/version/0.0.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
+            "X-API-Version": options?.xApiVersion ?? "2.0.0",
         },
         options?.headers,
     );

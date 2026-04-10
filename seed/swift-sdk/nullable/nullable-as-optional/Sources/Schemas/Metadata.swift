@@ -6,7 +6,7 @@ public struct Metadata: Codable, Hashable, Sendable {
     public let avatar: Nullable<String>
     public let activated: Nullable<Bool>?
     public let status: Status
-    public let values: Nullable<[String: Nullable<String>]>?
+    public let values: [String: Nullable<String>?]?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -16,7 +16,7 @@ public struct Metadata: Codable, Hashable, Sendable {
         avatar: Nullable<String>,
         activated: Nullable<Bool>? = nil,
         status: Status,
-        values: Nullable<[String: Nullable<String>]>? = nil,
+        values: [String: Nullable<String>?]? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.createdAt = createdAt
@@ -35,7 +35,7 @@ public struct Metadata: Codable, Hashable, Sendable {
         self.avatar = try container.decode(Nullable<String>.self, forKey: .avatar)
         self.activated = try container.decodeNullableIfPresent(Bool.self, forKey: .activated)
         self.status = try container.decode(Status.self, forKey: .status)
-        self.values = try container.decodeNullableIfPresent([String: Nullable<String>].self, forKey: .values)
+        self.values = try container.decodeIfPresent([String: Nullable<String>?].self, forKey: .values)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -47,7 +47,7 @@ public struct Metadata: Codable, Hashable, Sendable {
         try container.encode(self.avatar, forKey: .avatar)
         try container.encodeNullableIfPresent(self.activated, forKey: .activated)
         try container.encode(self.status, forKey: .status)
-        try container.encodeNullableIfPresent(self.values, forKey: .values)
+        try container.encodeIfPresent(self.values, forKey: .values)
     }
 
     /// Keys for encoding/decoding struct properties.

@@ -1,13 +1,20 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.service.requests.ServicePatchComplexRequest;
+import com.seed.contentTypes.SeedContentTypesClient;
+import com.seed.contentTypes.resources.service.requests.NamedMixedPatchRequest;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedContentTypesClient client =
+                SeedContentTypesClient.builder().url("https://api.fern.com").build();
 
-        client.service().patchcomplex("id", ServicePatchComplexRequest.builder().build());
+        client.service()
+                .namedPatchWithMixed(
+                        "id",
+                        NamedMixedPatchRequest.builder()
+                                .instructions("instructions")
+                                .active(true)
+                                .appId("appId")
+                                .build());
     }
 }

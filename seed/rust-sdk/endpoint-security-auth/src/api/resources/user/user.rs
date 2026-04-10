@@ -13,66 +13,66 @@ impl UserClient {
         })
     }
 
-    pub async fn getwithbearer(
+    pub async fn get_with_bearer(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users/bearer", None, None, options)
+            .execute_request(Method::GET, "users", None, None, options)
             .await
     }
 
-    pub async fn getwithapikey(
+    pub async fn get_with_api_key(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users/api-key", None, None, options)
+            .execute_request(Method::GET, "users", None, None, options)
             .await
     }
 
-    pub async fn getwithoauth(
+    pub async fn get_with_o_auth(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users/oauth", None, None, options)
+            .execute_request(Method::GET, "users", None, None, options)
             .await
     }
 
-    pub async fn getwithbasic(
+    pub async fn get_with_basic(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users/basic", None, None, options)
+            .execute_request(Method::GET, "users", None, None, options)
             .await
     }
 
-    pub async fn getwithinferredauth(
+    pub async fn get_with_inferred_auth(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users/inferred", None, None, options)
+            .execute_request(Method::GET, "users", None, None, options)
             .await
     }
 
-    pub async fn getwithanyauth(
+    pub async fn get_with_any_auth(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users/any", None, None, options)
+            .execute_request(Method::GET, "users", None, None, options)
             .await
     }
 
-    pub async fn getwithallauth(
+    pub async fn get_with_all_auth(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
-            .execute_request(Method::GET, "users/all", None, None, options)
+            .execute_request(Method::GET, "users", None, None, options)
             .await
     }
 }

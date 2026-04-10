@@ -11,16 +11,16 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..types.submission_id import SubmissionId
-from ..types.test_case_result_with_stdout import TestCaseResultWithStdout
-from ..types.test_submission_status import TestSubmissionStatus
-from ..types.test_submission_update_info import TestSubmissionUpdateInfo
-from ..types.trace_response import TraceResponse
-from ..types.trace_response_v2 import TraceResponseV2
-from ..types.v2test_case_id import V2TestCaseId
-from ..types.workspace_run_details import WorkspaceRunDetails
-from ..types.workspace_submission_status import WorkspaceSubmissionStatus
-from ..types.workspace_submission_update_info import WorkspaceSubmissionUpdateInfo
+from ..submission.types.submission_id import SubmissionId
+from ..submission.types.test_case_result_with_stdout import TestCaseResultWithStdout
+from ..submission.types.test_submission_status import TestSubmissionStatus
+from ..submission.types.test_submission_update_info import TestSubmissionUpdateInfo
+from ..submission.types.trace_response import TraceResponse
+from ..submission.types.trace_response_v2 import TraceResponseV2
+from ..submission.types.workspace_run_details import WorkspaceRunDetails
+from ..submission.types.workspace_submission_status import WorkspaceSubmissionStatus
+from ..submission.types.workspace_submission_update_info import WorkspaceSubmissionUpdateInfo
+from ..v2.problem.types.test_case_id import TestCaseId
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -31,7 +31,7 @@ class RawAdminClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def updatetestsubmissionstatus(
+    def update_test_submission_status(
         self,
         submission_id: SubmissionId,
         *,
@@ -58,15 +58,12 @@ class RawAdminClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=TestSubmissionStatus, direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return HttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -76,7 +73,7 @@ class RawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def sendtestsubmissionupdate(
+    def send_test_submission_update(
         self,
         submission_id: SubmissionId,
         *,
@@ -109,15 +106,12 @@ class RawAdminClient:
                     object_=update_info, annotation=TestSubmissionUpdateInfo, direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return HttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -127,7 +121,7 @@ class RawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def updateworkspacesubmissionstatus(
+    def update_workspace_submission_status(
         self,
         submission_id: SubmissionId,
         *,
@@ -154,15 +148,12 @@ class RawAdminClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return HttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -172,7 +163,7 @@ class RawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def sendworkspacesubmissionupdate(
+    def send_workspace_submission_update(
         self,
         submission_id: SubmissionId,
         *,
@@ -205,15 +196,12 @@ class RawAdminClient:
                     object_=update_info, annotation=WorkspaceSubmissionUpdateInfo, direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return HttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -223,7 +211,7 @@ class RawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def storetracedtestcase(
+    def store_traced_test_case(
         self,
         submission_id: SubmissionId,
         test_case_id: str,
@@ -261,15 +249,12 @@ class RawAdminClient:
                     object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return HttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -279,10 +264,10 @@ class RawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def storetracedtestcasev2(
+    def store_traced_test_case_v2(
         self,
         submission_id: SubmissionId,
-        test_case_id: V2TestCaseId,
+        test_case_id: TestCaseId,
         *,
         request: typing.Sequence[TraceResponseV2],
         request_options: typing.Optional[RequestOptions] = None,
@@ -292,7 +277,7 @@ class RawAdminClient:
         ----------
         submission_id : SubmissionId
 
-        test_case_id : V2TestCaseId
+        test_case_id : TestCaseId
 
         request : typing.Sequence[TraceResponseV2]
 
@@ -309,15 +294,12 @@ class RawAdminClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return HttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -327,7 +309,7 @@ class RawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def storetracedworkspace(
+    def store_traced_workspace(
         self,
         submission_id: SubmissionId,
         *,
@@ -362,15 +344,12 @@ class RawAdminClient:
                     object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return HttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -380,7 +359,7 @@ class RawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def storetracedworkspacev2(
+    def store_traced_workspace_v2(
         self,
         submission_id: SubmissionId,
         *,
@@ -407,15 +386,12 @@ class RawAdminClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return HttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -430,7 +406,7 @@ class AsyncRawAdminClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def updatetestsubmissionstatus(
+    async def update_test_submission_status(
         self,
         submission_id: SubmissionId,
         *,
@@ -457,15 +433,12 @@ class AsyncRawAdminClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=TestSubmissionStatus, direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return AsyncHttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -475,7 +448,7 @@ class AsyncRawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def sendtestsubmissionupdate(
+    async def send_test_submission_update(
         self,
         submission_id: SubmissionId,
         *,
@@ -508,15 +481,12 @@ class AsyncRawAdminClient:
                     object_=update_info, annotation=TestSubmissionUpdateInfo, direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return AsyncHttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -526,7 +496,7 @@ class AsyncRawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def updateworkspacesubmissionstatus(
+    async def update_workspace_submission_status(
         self,
         submission_id: SubmissionId,
         *,
@@ -553,15 +523,12 @@ class AsyncRawAdminClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=WorkspaceSubmissionStatus, direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return AsyncHttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -571,7 +538,7 @@ class AsyncRawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def sendworkspacesubmissionupdate(
+    async def send_workspace_submission_update(
         self,
         submission_id: SubmissionId,
         *,
@@ -604,15 +571,12 @@ class AsyncRawAdminClient:
                     object_=update_info, annotation=WorkspaceSubmissionUpdateInfo, direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return AsyncHttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -622,7 +586,7 @@ class AsyncRawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def storetracedtestcase(
+    async def store_traced_test_case(
         self,
         submission_id: SubmissionId,
         test_case_id: str,
@@ -660,15 +624,12 @@ class AsyncRawAdminClient:
                     object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return AsyncHttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -678,10 +639,10 @@ class AsyncRawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def storetracedtestcasev2(
+    async def store_traced_test_case_v2(
         self,
         submission_id: SubmissionId,
-        test_case_id: V2TestCaseId,
+        test_case_id: TestCaseId,
         *,
         request: typing.Sequence[TraceResponseV2],
         request_options: typing.Optional[RequestOptions] = None,
@@ -691,7 +652,7 @@ class AsyncRawAdminClient:
         ----------
         submission_id : SubmissionId
 
-        test_case_id : V2TestCaseId
+        test_case_id : TestCaseId
 
         request : typing.Sequence[TraceResponseV2]
 
@@ -708,15 +669,12 @@ class AsyncRawAdminClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return AsyncHttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -726,7 +684,7 @@ class AsyncRawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def storetracedworkspace(
+    async def store_traced_workspace(
         self,
         submission_id: SubmissionId,
         *,
@@ -761,15 +719,12 @@ class AsyncRawAdminClient:
                     object_=trace_responses, annotation=typing.Sequence[TraceResponse], direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return AsyncHttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -779,7 +734,7 @@ class AsyncRawAdminClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def storetracedworkspacev2(
+    async def store_traced_workspace_v2(
         self,
         submission_id: SubmissionId,
         *,
@@ -806,15 +761,12 @@ class AsyncRawAdminClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[TraceResponseV2], direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
+        if 200 <= _response.status_code < 300:
+            return AsyncHttpResponse(response=_response, data=None)
         try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

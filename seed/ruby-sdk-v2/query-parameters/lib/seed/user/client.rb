@@ -22,18 +22,18 @@ module Seed
       # @option params [String] :date
       # @option params [String] :deadline
       # @option params [String] :bytes
-      # @option params [Seed::Types::User] :user
-      # @option params [Seed::Types::User, nil] :user_list
+      # @option params [Seed::User::Types::User] :user
+      # @option params [Array[Seed::User::Types::User]] :user_list
       # @option params [String, nil] :optional_deadline
       # @option params [Hash[String, String]] :key_value
       # @option params [String, nil] :optional_string
-      # @option params [Seed::Types::NestedUser] :nested_user
-      # @option params [Seed::Types::User, nil] :optional_user
-      # @option params [Seed::Types::User, nil] :exclude_user
-      # @option params [String, nil] :filter
+      # @option params [Seed::User::Types::NestedUser] :nested_user
+      # @option params [Seed::User::Types::User, nil] :optional_user
+      # @option params [Seed::User::Types::User] :exclude_user
+      # @option params [String] :filter
       #
-      # @return [Seed::Types::User]
-      def getusername(request_options: {}, **params)
+      # @return [Seed::User::Types::User]
+      def get_username(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit id date deadline bytes user user_list optional_deadline key_value optional_string nested_user optional_user exclude_user filter]
         query_params = {}
@@ -56,7 +56,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "user",
+          path: "/user",
           query: query_params,
           request_options: request_options
         )
@@ -67,7 +67,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::User.load(response.body)
+          Seed::User::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

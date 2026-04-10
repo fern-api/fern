@@ -4,17 +4,16 @@ namespace Seed\Organizations;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Organizations\Requests\OrganizationsGetOrganizationRequest;
-use Seed\Types\Organization;
+use Seed\Organizations\Types\Organization;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Organizations\Requests\OrganizationsGetOrganizationUserRequest;
-use Seed\Types\User;
-use Seed\Organizations\Requests\OrganizationsSearchOrganizationsRequest;
+use Seed\Organizations\Requests\GetOrganizationUserRequest;
+use Seed\User\Types\User;
+use Seed\Organizations\Requests\SearchOrganizationsRequest;
 use Seed\Core\Json\JsonDecoder;
 
 class OrganizationsClient
@@ -54,7 +53,8 @@ class OrganizationsClient
     }
 
     /**
-     * @param OrganizationsGetOrganizationRequest $request
+     * @param string $tenantId
+     * @param string $organizationId
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -67,14 +67,14 @@ class OrganizationsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getorganization(OrganizationsGetOrganizationRequest $request, ?array $options = null): ?Organization
+    public function getOrganization(string $tenantId, string $organizationId, ?array $options = null): ?Organization
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "{$request->getTenantId()}/organizations/{$request->getOrganizationId()}/",
+                    path: "/{$tenantId}/organizations/{$organizationId}/",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -100,7 +100,7 @@ class OrganizationsClient
     }
 
     /**
-     * @param OrganizationsGetOrganizationUserRequest $request
+     * @param GetOrganizationUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -113,14 +113,14 @@ class OrganizationsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getorganizationuser(OrganizationsGetOrganizationUserRequest $request, ?array $options = null): ?User
+    public function getOrganizationUser(GetOrganizationUserRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "{$request->getTenantId()}/organizations/{$request->getOrganizationId()}/users/{$request->getUserId()}",
+                    path: "/{$request->getTenantId()}/organizations/{$request->getOrganizationId()}/users/{$request->getUserId()}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -146,7 +146,9 @@ class OrganizationsClient
     }
 
     /**
-     * @param OrganizationsSearchOrganizationsRequest $request
+     * @param string $tenantId
+     * @param string $organizationId
+     * @param SearchOrganizationsRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -159,7 +161,7 @@ class OrganizationsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function searchorganizations(OrganizationsSearchOrganizationsRequest $request, ?array $options = null): ?array
+    public function searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request = new SearchOrganizationsRequest(), ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -170,7 +172,7 @@ class OrganizationsClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "{$request->getTenantId()}/organizations/{$request->getOrganizationId()}/search",
+                    path: "/{$tenantId}/organizations/{$organizationId}/search",
                     method: HttpMethod::GET,
                     query: $query,
                 ),

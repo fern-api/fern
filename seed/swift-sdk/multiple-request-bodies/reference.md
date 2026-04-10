@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/Sources/Resources//Client.swift">uploadJsonDocument</a>(request: Requests.UploadJsonDocumentRequest, requestOptions: RequestOptions?) -> UploadDocumentResponse</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">uploadJsonDocument</a>(request: Requests.UploadDocumentRequest, requestOptions: RequestOptions?) -> UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -19,7 +18,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(token: "<token>")
 
-    _ = try await client..uploadJsonDocument(request: .init())
+    _ = try await client.uploadJsonDocument(request: .init())
 }
 
 try await main()
@@ -37,7 +36,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.UploadJsonDocumentRequest` 
+**request:** `Requests.UploadDocumentRequest` 
     
 </dd>
 </dl>

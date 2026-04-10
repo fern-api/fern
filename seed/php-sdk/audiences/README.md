@@ -38,11 +38,15 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Foo\Requests\FooFindRequest;
+use Seed\Foo\Requests\FindRequest;
 
 $client = new SeedClient();
 $client->foo->find(
-    new FooFindRequest([]),
+    new FindRequest([
+        'optionalString' => 'optionalString',
+        'publicProperty' => 'publicProperty',
+        'privateProperty' => 1,
+    ]),
 );
 
 ```
@@ -52,7 +56,7 @@ $client->foo->find(
 This SDK allows you to configure different environments for API requests.
 
 ```php
-The SDK defaults to the `Default_` environment. To use a different environment, pass it to the client constructor:
+The SDK defaults to the `EnvironmentA` environment. To use a different environment, pass it to the client constructor:
 
 ```php
 use Seed\SeedClient;
@@ -67,7 +71,8 @@ $client = new SeedClient(
 ```
 
 Available environments:
-- `Environments::Default_`
+- `Environments::EnvironmentA`
+- `Environments::EnvironmentB`
 ```
 
 ## Exception Handling

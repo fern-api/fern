@@ -1,22 +1,19 @@
-using SeedApi;
+using SeedPagination;
 
 namespace Usage;
 
 public class Example27
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedPaginationClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Users.ListwithcursorpaginationAsync(
-            new UsersListWithCursorPaginationRequest {
-                Page = 1,
-                PerPage = 1,
-                Order = Order.Asc,
+        await client.Users.ListUsernamesAsync(
+            new SeedPagination.ListUsernamesRequest {
                 StartingAfter = "starting_after"
             }
         );

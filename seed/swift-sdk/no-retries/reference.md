@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.retries.<a href="/Sources/Resources/Retries/RetriesClient.swift">getusers</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.retries.<a href="/Sources/Resources/Retries/RetriesClient.swift">getUsers</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import NoRetries
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NoRetriesClient()
 
-    _ = try await client.retries.getusers()
+    _ = try await client.retries.getUsers()
 }
 
 try await main()

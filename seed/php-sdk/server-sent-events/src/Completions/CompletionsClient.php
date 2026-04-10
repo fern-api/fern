@@ -4,13 +4,13 @@ namespace Seed\Completions;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Completions\Requests\CompletionsStreamRequest;
+use Seed\Completions\Requests\StreamCompletionRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Completions\Requests\CompletionsStreamWithoutTerminatorRequest;
+use Seed\Completions\Requests\StreamCompletionRequestWithoutTerminator;
 
 class CompletionsClient
 {
@@ -49,7 +49,7 @@ class CompletionsClient
     }
 
     /**
-     * @param CompletionsStreamRequest $request
+     * @param StreamCompletionRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -58,11 +58,10 @@ class CompletionsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function stream(CompletionsStreamRequest $request, ?array $options = null): string
+    public function stream(StreamCompletionRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -76,9 +75,6 @@ class CompletionsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                return $response->getBody()->getContents();
-            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -90,7 +86,7 @@ class CompletionsClient
     }
 
     /**
-     * @param CompletionsStreamWithoutTerminatorRequest $request
+     * @param StreamCompletionRequestWithoutTerminator $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -99,11 +95,10 @@ class CompletionsClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return string
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function streamwithoutterminator(CompletionsStreamWithoutTerminatorRequest $request, ?array $options = null): string
+    public function streamWithoutTerminator(StreamCompletionRequestWithoutTerminator $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -117,9 +112,6 @@ class CompletionsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
-                return $response->getBody()->getContents();
-            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

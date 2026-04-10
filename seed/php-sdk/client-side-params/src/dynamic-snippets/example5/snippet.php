@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\ServiceSearchResourcesRequest;
+use Seed\Types\Types\CreateUserRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,15 +11,24 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->searchresources(
-    new ServiceSearchResourcesRequest([
-        'limit' => 1,
-        'offset' => 1,
-        'query' => 'query',
-        'filters' => [
-            'filters' => [
+$client->service->createUser(
+    new CreateUserRequest([
+        'email' => 'email',
+        'emailVerified' => true,
+        'username' => 'username',
+        'password' => 'password',
+        'phoneNumber' => 'phone_number',
+        'phoneVerified' => true,
+        'userMetadata' => [
+            'user_metadata' => [
                 'key' => "value",
             ],
         ],
+        'appMetadata' => [
+            'app_metadata' => [
+                'key' => "value",
+            ],
+        ],
+        'connection' => 'connection',
     ]),
 );

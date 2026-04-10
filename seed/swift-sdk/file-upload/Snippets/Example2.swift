@@ -1,10 +1,10 @@
 import Foundation
-import Api
+import FileUpload
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = FileUploadClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.service.justfilewithoptionalqueryparams(request: .init(file: .init(data: Data("".utf8))))
+    _ = try await client.service.simple()
 }
 
 try await main()

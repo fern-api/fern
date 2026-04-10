@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">gettext</a>(requestOptions: RequestOptions?) -> JSONValue</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getText</a>(requestOptions: RequestOptions?) -> JSONValue</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import PlainText
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = PlainTextClient()
 
-    _ = try await client.service.gettext()
+    _ = try await client.service.getText()
 }
 
 try await main()

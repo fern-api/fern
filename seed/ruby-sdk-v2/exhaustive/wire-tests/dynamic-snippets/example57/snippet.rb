@@ -5,4 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_params.endpoints_params_get_with_path(param: "param")
+client.endpoints.urls.no_ending_slash

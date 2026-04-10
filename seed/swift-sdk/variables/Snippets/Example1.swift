@@ -1,10 +1,10 @@
 import Foundation
-import Api
+import Variables
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = VariablesClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.service.post(endpointParam: "endpointParam")
+    _ = try await client.service.post()
 }
 
 try await main()

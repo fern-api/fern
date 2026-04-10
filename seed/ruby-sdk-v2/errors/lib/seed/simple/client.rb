@@ -11,21 +11,21 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Types::FooRequest]
+      # @param params [Seed::Simple::Types::FooRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Types::FooResponse]
-      def foowithoutendpointerror(request_options: {}, **params)
+      # @return [Seed::Simple::Types::FooResponse]
+      def foo_without_endpoint_error(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "foo1",
-          body: Seed::Types::FooRequest.new(params).to_h,
+          body: Seed::Simple::Types::FooRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -35,7 +35,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::FooResponse.load(response.body)
+          Seed::Simple::Types::FooResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -43,21 +43,21 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Types::FooRequest]
+      # @param params [Seed::Simple::Types::FooRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Types::FooResponse]
+      # @return [Seed::Simple::Types::FooResponse]
       def foo(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "foo2",
-          body: Seed::Types::FooRequest.new(params).to_h,
+          body: Seed::Simple::Types::FooRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -67,7 +67,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::FooResponse.load(response.body)
+          Seed::Simple::Types::FooResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -75,21 +75,21 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Types::FooRequest]
+      # @param params [Seed::Simple::Types::FooRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Types::FooResponse]
-      def foowithexamples(request_options: {}, **params)
+      # @return [Seed::Simple::Types::FooResponse]
+      def foo_with_examples(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "foo3",
-          body: Seed::Types::FooRequest.new(params).to_h,
+          body: Seed::Simple::Types::FooRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -99,7 +99,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::FooResponse.load(response.body)
+          Seed::Simple::Types::FooResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

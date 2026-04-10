@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\TypesObjectWithDocumentedUnknownType;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,10 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsObject->endpointsObjectGetAndReturnWithDocumentedUnknownType(
-    new TypesObjectWithDocumentedUnknownType([
-        'documentedUnknownType' => [
-            'key' => "value",
-        ],
-    ]),
+$client->endpoints->primitive->getAndReturnString(
+    'string',
 );

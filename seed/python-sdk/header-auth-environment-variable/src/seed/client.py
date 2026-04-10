@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import os
 import typing
 
 import httpx
+from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
@@ -12,7 +14,7 @@ if typing.TYPE_CHECKING:
     from .service.client import AsyncServiceClient, ServiceClient
 
 
-class SeedApi:
+class SeedHeaderTokenEnvironmentVariable:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -21,7 +23,7 @@ class SeedApi:
     base_url : str
         The base url to use for requests from the client.
 
-    api_key : str
+    header_token_auth : typing.Optional[str]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -39,10 +41,10 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedHeaderTokenEnvironmentVariable
 
-    client = SeedApi(
-        api_key="YOUR_API_KEY",
+    client = SeedHeaderTokenEnvironmentVariable(
+        header_token_auth="YOUR_HEADER_TOKEN_AUTH",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -51,7 +53,7 @@ class SeedApi:
         self,
         *,
         base_url: str,
-        api_key: str,
+        header_token_auth: typing.Optional[str] = os.getenv("HEADER_TOKEN_ENV_VAR"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -61,9 +63,13 @@ class SeedApi:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if header_token_auth is None:
+            raise ApiError(
+                body="The client must be instantiated be either passing in header_token_auth or setting HEADER_TOKEN_ENV_VAR"
+            )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
-            api_key=api_key,
+            header_token_auth=header_token_auth,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -102,7 +108,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedHeaderTokenEnvironmentVariable:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -111,7 +117,7 @@ class AsyncSeedApi:
     base_url : str
         The base url to use for requests from the client.
 
-    api_key : str
+    header_token_auth : typing.Optional[str]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -129,10 +135,10 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedHeaderTokenEnvironmentVariable
 
-    client = AsyncSeedApi(
-        api_key="YOUR_API_KEY",
+    client = AsyncSeedHeaderTokenEnvironmentVariable(
+        header_token_auth="YOUR_HEADER_TOKEN_AUTH",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -141,7 +147,7 @@ class AsyncSeedApi:
         self,
         *,
         base_url: str,
-        api_key: str,
+        header_token_auth: typing.Optional[str] = os.getenv("HEADER_TOKEN_ENV_VAR"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -151,9 +157,13 @@ class AsyncSeedApi:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if header_token_auth is None:
+            raise ApiError(
+                body="The client must be instantiated be either passing in header_token_auth or setting HEADER_TOKEN_ENV_VAR"
+            )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
-            api_key=api_key,
+            header_token_auth=header_token_auth,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None

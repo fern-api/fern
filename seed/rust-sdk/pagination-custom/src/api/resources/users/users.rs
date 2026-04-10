@@ -13,19 +13,19 @@ impl UsersClient {
         })
     }
 
-    pub async fn listwithcustompager(
+    pub async fn list_with_custom_pager(
         &self,
-        request: &ListwithcustompagerQueryRequest,
+        request: &ListWithCustomPagerQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<UsersListResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "users",
+                "/users",
                 None,
                 QueryBuilder::new()
-                    .serialize("limit", request.limit.clone())
-                    .serialize("starting_after", request.starting_after.clone())
+                    .int("limit", request.limit.clone())
+                    .string("starting_after", request.starting_after.clone())
                     .build(),
                 options,
             )

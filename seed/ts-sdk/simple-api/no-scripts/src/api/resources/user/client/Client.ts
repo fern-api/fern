@@ -7,7 +7,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedSimpleApi from "../../../index.js";
 
 export declare namespace UserClient {
     export type Options = BaseClientOptions;
@@ -27,24 +27,21 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedApi.UserGetRequest} request
+     * @param {string} id
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.get({
-     *         id: "id"
-     *     })
+     *     await client.user.get("id")
      */
-    public get(request: SeedApi.UserGetRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedApi.User> {
-        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
+    public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedSimpleApi.User> {
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
-    private async __get(request: SeedApi.UserGetRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedApi.User>> {
-        const { id } = request;
+    private async __get(id: string, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedSimpleApi.User>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(_authRequest.headers, this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedApiEnvironment.Production), `users/${core.url.encodePathParam(id)}`),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/users/${core.url.encodePathParam(id)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -55,11 +52,11 @@ export class UserClient {
             logging: this._options.logging
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedSimpleApi.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedSimpleApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse

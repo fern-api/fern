@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Organization\Requests\CreateOrganizationRequest;
+use Seed\Organization\Types\CreateOrganizationRequest;
 
 $client = new SeedClient(
     options: [

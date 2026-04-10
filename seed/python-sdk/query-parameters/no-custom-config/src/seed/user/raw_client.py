@@ -2,6 +2,7 @@
 
 import datetime as dt
 import typing
+import uuid
 from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
@@ -12,8 +13,8 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..types.nested_user import NestedUser
-from ..types.user import User
+from .types.nested_user import NestedUser
+from .types.user import User
 from pydantic import ValidationError
 
 
@@ -21,23 +22,23 @@ class RawUserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def getusername(
+    def get_username(
         self,
         *,
         limit: int,
-        id: str,
+        id: uuid.UUID,
         date: dt.date,
         deadline: dt.datetime,
         bytes: str,
         user: User,
+        user_list: typing.Sequence[User],
         key_value: typing.Dict[str, str],
         nested_user: NestedUser,
-        user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
+        exclude_user: typing.Union[User, typing.Sequence[User]],
+        filter: typing.Union[str, typing.Sequence[str]],
         optional_deadline: typing.Optional[dt.datetime] = None,
         optional_string: typing.Optional[str] = None,
         optional_user: typing.Optional[User] = None,
-        exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
-        filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[User]:
         """
@@ -45,7 +46,7 @@ class RawUserClient:
         ----------
         limit : int
 
-        id : str
+        id : uuid.UUID
 
         date : dt.date
 
@@ -55,11 +56,15 @@ class RawUserClient:
 
         user : User
 
+        user_list : typing.Sequence[User]
+
         key_value : typing.Dict[str, str]
 
         nested_user : NestedUser
 
-        user_list : typing.Optional[typing.Union[User, typing.Sequence[User]]]
+        exclude_user : typing.Union[User, typing.Sequence[User]]
+
+        filter : typing.Union[str, typing.Sequence[str]]
 
         optional_deadline : typing.Optional[dt.datetime]
 
@@ -67,17 +72,12 @@ class RawUserClient:
 
         optional_user : typing.Optional[User]
 
-        exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
-
-        filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "user",
@@ -90,7 +90,7 @@ class RawUserClient:
                 "bytes": bytes,
                 "user": convert_and_respect_annotation_metadata(object_=user, annotation=User, direction="write"),
                 "userList": convert_and_respect_annotation_metadata(
-                    object_=user_list, annotation=User, direction="write"
+                    object_=user_list, annotation=typing.Sequence[User], direction="write"
                 ),
                 "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
                 "keyValue": key_value,
@@ -132,23 +132,23 @@ class AsyncRawUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def getusername(
+    async def get_username(
         self,
         *,
         limit: int,
-        id: str,
+        id: uuid.UUID,
         date: dt.date,
         deadline: dt.datetime,
         bytes: str,
         user: User,
+        user_list: typing.Sequence[User],
         key_value: typing.Dict[str, str],
         nested_user: NestedUser,
-        user_list: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
+        exclude_user: typing.Union[User, typing.Sequence[User]],
+        filter: typing.Union[str, typing.Sequence[str]],
         optional_deadline: typing.Optional[dt.datetime] = None,
         optional_string: typing.Optional[str] = None,
         optional_user: typing.Optional[User] = None,
-        exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
-        filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[User]:
         """
@@ -156,7 +156,7 @@ class AsyncRawUserClient:
         ----------
         limit : int
 
-        id : str
+        id : uuid.UUID
 
         date : dt.date
 
@@ -166,11 +166,15 @@ class AsyncRawUserClient:
 
         user : User
 
+        user_list : typing.Sequence[User]
+
         key_value : typing.Dict[str, str]
 
         nested_user : NestedUser
 
-        user_list : typing.Optional[typing.Union[User, typing.Sequence[User]]]
+        exclude_user : typing.Union[User, typing.Sequence[User]]
+
+        filter : typing.Union[str, typing.Sequence[str]]
 
         optional_deadline : typing.Optional[dt.datetime]
 
@@ -178,17 +182,12 @@ class AsyncRawUserClient:
 
         optional_user : typing.Optional[User]
 
-        exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
-
-        filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "user",
@@ -201,7 +200,7 @@ class AsyncRawUserClient:
                 "bytes": bytes,
                 "user": convert_and_respect_annotation_metadata(object_=user, annotation=User, direction="write"),
                 "userList": convert_and_respect_annotation_metadata(
-                    object_=user_list, annotation=User, direction="write"
+                    object_=user_list, annotation=typing.Sequence[User], direction="write"
                 ),
                 "optionalDeadline": serialize_datetime(optional_deadline) if optional_deadline is not None else None,
                 "keyValue": key_value,

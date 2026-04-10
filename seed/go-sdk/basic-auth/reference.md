@@ -1,6 +1,6 @@
 # Reference
-## Basicauth
-<details><summary><code>client.Basicauth.Getwithbasicauth() -> bool</code></summary>
+## BasicAuth
+<details><summary><code>client.BasicAuth.GetWithBasicAuth() -> bool</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```go
-client.Basicauth.Getwithbasicauth(
+client.BasicAuth.GetWithBasicAuth(
         context.TODO(),
     )
 }
@@ -42,7 +42,7 @@ client.Basicauth.Getwithbasicauth(
 </dl>
 </details>
 
-<details><summary><code>client.Basicauth.Postwithbasicauth(request) -> bool</code></summary>
+<details><summary><code>client.BasicAuth.PostWithBasicAuth(request) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +72,7 @@ POST request with basic auth scheme
 request := map[string]any{
         "key": "value",
     }
-client.Basicauth.Postwithbasicauth(
+client.BasicAuth.PostWithBasicAuth(
         context.TODO(),
         request,
     )

@@ -19,15 +19,15 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Types::Language] :language
+      # @option params [Seed::Commons::Types::Language] :language
       #
-      # @return [Seed::Types::ExecutionSessionResponse]
-      def createexecutionsession(request_options: {}, **params)
+      # @return [Seed::Submission::Types::ExecutionSessionResponse]
+      def create_execution_session(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "sessions/create-session/#{URI.encode_uri_component(params[:language].to_s)}",
+          path: "/sessions/create-session/#{URI.encode_uri_component(params[:language].to_s)}",
           request_options: request_options
         )
         begin
@@ -37,7 +37,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::ExecutionSessionResponse.load(response.body)
+          Seed::Submission::Types::ExecutionSessionResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -55,13 +55,13 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :session_id
       #
-      # @return [Seed::Types::ExecutionSessionResponse]
-      def getexecutionsession(request_options: {}, **params)
+      # @return [Seed::Submission::Types::ExecutionSessionResponse, nil]
+      def get_execution_session(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "sessions/#{URI.encode_uri_component(params[:session_id].to_s)}",
+          path: "/sessions/#{URI.encode_uri_component(params[:session_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -70,12 +70,10 @@ module Seed
           raise Seed::Errors::TimeoutError
         end
         code = response.code.to_i
-        if code.between?(200, 299)
-          Seed::Types::ExecutionSessionResponse.load(response.body)
-        else
-          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
-        end
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Stops execution session.
@@ -90,12 +88,12 @@ module Seed
       # @option params [String] :session_id
       #
       # @return [untyped]
-      def stopexecutionsession(request_options: {}, **params)
+      def stop_execution_session(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "sessions/stop/#{URI.encode_uri_component(params[:session_id].to_s)}",
+          path: "/sessions/stop/#{URI.encode_uri_component(params[:session_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -118,13 +116,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Seed::Types::GetExecutionSessionStateResponse]
-      def getexecutionsessionsstate(request_options: {}, **params)
+      # @return [Seed::Submission::Types::GetExecutionSessionStateResponse]
+      def get_execution_sessions_state(request_options: {}, **params)
         Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "sessions/execution-sessions-state",
+          path: "/sessions/execution-sessions-state",
           request_options: request_options
         )
         begin
@@ -134,7 +132,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::GetExecutionSessionStateResponse.load(response.body)
+          Seed::Submission::Types::GetExecutionSessionStateResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

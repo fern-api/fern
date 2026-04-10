@@ -1,18 +1,18 @@
-//! # unknown SDK
+//! # UnknownAsAny SDK
 //!
-//! The official Rust SDK for the unknown.
+//! The official Rust SDK for the UnknownAsAny.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_unknown_as_any::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = UnknownAsAnyClient::new(config).expect("Failed to build client");
 //!     client
 //!         .unknown
 //!         .post(&serde_json::json!({"key":"value"}), None)

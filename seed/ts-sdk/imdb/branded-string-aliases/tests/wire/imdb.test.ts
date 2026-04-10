@@ -5,7 +5,7 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ImdbClient", () => {
-    test("createmovie", async () => {
+    test("createMovie", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { title: "title", rating: 1.1 };
@@ -20,14 +20,14 @@ describe("ImdbClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.imdb.createmovie({
+        const response = await client.imdb.createMovie({
             title: "title",
             rating: 1.1,
         });
         expect(response).toEqual(rawResponseBody);
     });
 
-    test("getmovie (1)", async () => {
+    test("getMovie (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
@@ -35,13 +35,11 @@ describe("ImdbClient", () => {
 
         server.mockEndpoint().get("/movies/movieId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.imdb.getmovie({
-            movieId: SeedApi.MovieId("movieId"),
-        });
+        const response = await client.imdb.getMovie(SeedApi.MovieId("movieId"));
         expect(response).toEqual(rawResponseBody);
     });
 
-    test("getmovie (2)", async () => {
+    test("getMovie (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
@@ -50,9 +48,7 @@ describe("ImdbClient", () => {
         server.mockEndpoint().get("/movies/movieId").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
-            return await client.imdb.getmovie({
-                movieId: SeedApi.MovieId("movieId"),
-            });
-        }).rejects.toThrow(SeedApi.NotFoundError);
+            return await client.imdb.getMovie(SeedApi.MovieId("movieId"));
+        }).rejects.toThrow(SeedApi.MovieDoesNotExistError);
     });
 });

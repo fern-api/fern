@@ -12,6 +12,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -40,12 +41,27 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedPagination;
 
-var client = new SeedApiClient("TOKEN");
-await client.Complex.SearchAsync(
-    new SearchRequest { Index = "index", Query = new SingleFilterSearchRequest() }
+var client = new SeedPaginationClient("TOKEN");
+var items = await client.Complex.SearchAsync(
+    "index",
+    new SearchRequest
+    {
+        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
+        Query = new SingleFilterSearchRequest
+        {
+            Field = "field",
+            Operator = SingleFilterSearchRequestOperator.Equals_,
+            Value = "value",
+        },
+    }
 );
+
+await foreach (var item in items)
+{
+    // do something with item
+}
 ```
 
 ## Exception Handling
@@ -54,13 +70,41 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedPagination;
 
 try {
     var response = await client.Complex.SearchAsync(...);
-} catch (SeedApiApiException e) {
+} catch (SeedPaginationApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
+}
+```
+
+## Pagination
+
+List endpoints are paginated. The SDK provides an async enumerable so that you can simply loop over the items:
+
+```csharp
+using SeedPagination;
+
+var client = new SeedPaginationClient("TOKEN");
+var items = await client.Complex.SearchAsync(
+    "index",
+    new SearchRequest
+    {
+        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = "starting_after" },
+        Query = new SingleFilterSearchRequest
+        {
+            Field = "field",
+            Operator = SingleFilterSearchRequestOperator.Equals_,
+            Value = "value",
+        },
+    }
+);
+
+await foreach (var item in items)
+{
+    // do something with item
 }
 ```
 
@@ -107,7 +151,7 @@ var response = await client.Complex.SearchAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedPagination;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.Complex.SearchAsync(...).WithRawResponse();
@@ -167,7 +211,7 @@ var response = await client.Complex.SearchAsync(
 This SDK uses forward-compatible enums that can handle unknown values gracefully.
 
 ```csharp
-using SeedApi;
+using SeedPagination;
 
 // Using a built-in value
 var multipleFilterSearchRequestOperator = MultipleFilterSearchRequestOperator.And;

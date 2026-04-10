@@ -3,14 +3,14 @@ import Foundation
 public struct PaymentInfo: Codable, Hashable, Sendable {
     public let amount: String
     public let currency: String
-    public let description: Nullable<String>?
+    public let description: String?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         amount: String,
         currency: String,
-        description: Nullable<String>? = nil,
+        description: String? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.amount = amount
@@ -23,7 +23,7 @@ public struct PaymentInfo: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.amount = try container.decode(String.self, forKey: .amount)
         self.currency = try container.decode(String.self, forKey: .currency)
-        self.description = try container.decodeNullableIfPresent(String.self, forKey: .description)
+        self.description = try container.decodeIfPresent(String.self, forKey: .description)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -32,7 +32,7 @@ public struct PaymentInfo: Codable, Hashable, Sendable {
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.amount, forKey: .amount)
         try container.encode(self.currency, forKey: .currency)
-        try container.encodeNullableIfPresent(self.description, forKey: .description)
+        try container.encodeIfPresent(self.description, forKey: .description)
     }
 
     /// Keys for encoding/decoding struct properties.

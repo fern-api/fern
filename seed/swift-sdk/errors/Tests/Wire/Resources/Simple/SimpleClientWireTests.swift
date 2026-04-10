@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import Api
+import Errors
 
 @Suite("SimpleClient Wire Tests") struct SimpleClientWireTests {
-    @Test func foowithoutendpointerror1() async throws -> Void {
+    @Test func fooWithoutEndpointError1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -14,41 +14,14 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = FooResponse(
             bar: "bar"
         )
-        let response = try await client.simple.foowithoutendpointerror(
-            request: FooRequest(
-                bar: "bar"
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func foowithoutendpointerror2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "bar": "bar"
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = FooResponse(
-            bar: "bar"
-        )
-        let response = try await client.simple.foowithoutendpointerror(
+        let response = try await client.simple.fooWithoutEndpointError(
             request: FooRequest(
                 bar: "bar"
             ),
@@ -68,7 +41,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -84,34 +57,34 @@ import Api
         try #require(response == expectedResponse)
     }
 
-    @Test func foo2() async throws -> Void {
+    @Test func fooWithExamples1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
                 {
-                  "bar": "bar"
+                  "bar": "hello"
                 }
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = FooResponse(
-            bar: "bar"
+            bar: "hello"
         )
-        let response = try await client.simple.foo(
+        let response = try await client.simple.fooWithExamples(
             request: FooRequest(
-                bar: "bar"
+                bar: "hello"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func foowithexamples1() async throws -> Void {
+    @Test func fooWithExamples4() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -122,41 +95,14 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ErrorsClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = FooResponse(
             bar: "bar"
         )
-        let response = try await client.simple.foowithexamples(
-            request: FooRequest(
-                bar: "bar"
-            ),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func foowithexamples2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "bar": "bar"
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = FooResponse(
-            bar: "bar"
-        )
-        let response = try await client.simple.foowithexamples(
+        let response = try await client.simple.fooWithExamples(
             request: FooRequest(
                 bar: "bar"
             ),

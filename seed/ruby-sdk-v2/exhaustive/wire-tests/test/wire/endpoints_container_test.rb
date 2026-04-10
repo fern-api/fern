@@ -12,14 +12,14 @@ class EndpointsContainerWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_container_endpoints_container_get_and_return_list_of_primitives_with_wiremock
-    test_id = "endpoints_container.endpoints_container_get_and_return_list_of_primitives.0"
+  def test_endpoints_container_get_and_return_list_of_primitives_with_wiremock
+    test_id = "endpoints.container.get_and_return_list_of_primitives.0"
 
-    @client.endpoints_container.endpoints_container_get_and_return_list_of_primitives(
-      request: ["string"],
+    @client.endpoints.container.get_and_return_list_of_primitives(
+      request: %w[string string],
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints_container.endpoints_container_get_and_return_list_of_primitives.0"
+          "X-Test-Id" => "endpoints.container.get_and_return_list_of_primitives.0"
         }
       }
     )
@@ -33,16 +33,18 @@ class EndpointsContainerWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_container_endpoints_container_get_and_return_list_of_objects_with_wiremock
-    test_id = "endpoints_container.endpoints_container_get_and_return_list_of_objects.0"
+  def test_endpoints_container_get_and_return_list_of_objects_with_wiremock
+    test_id = "endpoints.container.get_and_return_list_of_objects.0"
 
-    @client.endpoints_container.endpoints_container_get_and_return_list_of_objects(
+    @client.endpoints.container.get_and_return_list_of_objects(
       request: [{
+        string: "string"
+      }, {
         string: "string"
       }],
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints_container.endpoints_container_get_and_return_list_of_objects.0"
+          "X-Test-Id" => "endpoints.container.get_and_return_list_of_objects.0"
         }
       }
     )
@@ -56,14 +58,14 @@ class EndpointsContainerWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_container_endpoints_container_get_and_return_set_of_primitives_with_wiremock
-    test_id = "endpoints_container.endpoints_container_get_and_return_set_of_primitives.0"
+  def test_endpoints_container_get_and_return_set_of_primitives_with_wiremock
+    test_id = "endpoints.container.get_and_return_set_of_primitives.0"
 
-    @client.endpoints_container.endpoints_container_get_and_return_set_of_primitives(
-      request: ["string"],
+    @client.endpoints.container.get_and_return_set_of_primitives(
+      request: Set.new(["string"]),
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints_container.endpoints_container_get_and_return_set_of_primitives.0"
+          "X-Test-Id" => "endpoints.container.get_and_return_set_of_primitives.0"
         }
       }
     )
@@ -77,16 +79,16 @@ class EndpointsContainerWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_container_endpoints_container_get_and_return_set_of_objects_with_wiremock
-    test_id = "endpoints_container.endpoints_container_get_and_return_set_of_objects.0"
+  def test_endpoints_container_get_and_return_set_of_objects_with_wiremock
+    test_id = "endpoints.container.get_and_return_set_of_objects.0"
 
-    @client.endpoints_container.endpoints_container_get_and_return_set_of_objects(
-      request: [{
-        string: "string"
-      }],
+    @client.endpoints.container.get_and_return_set_of_objects(
+      request: Set.new([{
+                         string: "string"
+                       }]),
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints_container.endpoints_container_get_and_return_set_of_objects.0"
+          "X-Test-Id" => "endpoints.container.get_and_return_set_of_objects.0"
         }
       }
     )
@@ -100,16 +102,16 @@ class EndpointsContainerWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_container_endpoints_container_get_and_return_map_prim_to_prim_with_wiremock
-    test_id = "endpoints_container.endpoints_container_get_and_return_map_prim_to_prim.0"
+  def test_endpoints_container_get_and_return_map_prim_to_prim_with_wiremock
+    test_id = "endpoints.container.get_and_return_map_prim_to_prim.0"
 
-    @client.endpoints_container.endpoints_container_get_and_return_map_prim_to_prim(
+    @client.endpoints.container.get_and_return_map_prim_to_prim(
       request: {
-        key: "value"
+        string: "string"
       },
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints_container.endpoints_container_get_and_return_map_prim_to_prim.0"
+          "X-Test-Id" => "endpoints.container.get_and_return_map_prim_to_prim.0"
         }
       }
     )
@@ -123,18 +125,18 @@ class EndpointsContainerWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_container_endpoints_container_get_and_return_map_of_prim_to_object_with_wiremock
-    test_id = "endpoints_container.endpoints_container_get_and_return_map_of_prim_to_object.0"
+  def test_endpoints_container_get_and_return_map_of_prim_to_object_with_wiremock
+    test_id = "endpoints.container.get_and_return_map_of_prim_to_object.0"
 
-    @client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_object(
+    @client.endpoints.container.get_and_return_map_of_prim_to_object(
       request: {
-        key: {
+        string: {
           string: "string"
         }
       },
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints_container.endpoints_container_get_and_return_map_of_prim_to_object.0"
+          "X-Test-Id" => "endpoints.container.get_and_return_map_of_prim_to_object.0"
         }
       }
     )
@@ -148,16 +150,16 @@ class EndpointsContainerWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_container_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union_with_wiremock
-    test_id = "endpoints_container.endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union.0"
+  def test_endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union_with_wiremock
+    test_id = "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
 
-    @client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union(
+    @client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
       request: {
-        key: 1.1
+        string: 1.1
       },
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints_container.endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union.0"
+          "X-Test-Id" => "endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union.0"
         }
       }
     )
@@ -171,14 +173,16 @@ class EndpointsContainerWireTest < WireMockTestCase
     )
   end
 
-  def test_endpoints_container_endpoints_container_get_and_return_optional_with_wiremock
-    test_id = "endpoints_container.endpoints_container_get_and_return_optional.0"
+  def test_endpoints_container_get_and_return_optional_with_wiremock
+    test_id = "endpoints.container.get_and_return_optional.0"
 
-    @client.endpoints_container.endpoints_container_get_and_return_optional(
-      string: "string",
+    @client.endpoints.container.get_and_return_optional(
+      request: {
+        string: "string"
+      },
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "endpoints_container.endpoints_container_get_and_return_optional.0"
+          "X-Test-Id" => "endpoints.container.get_and_return_optional.0"
         }
       }
     )

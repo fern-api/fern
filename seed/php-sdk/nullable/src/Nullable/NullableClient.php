@@ -4,8 +4,8 @@ namespace Seed\Nullable;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Nullable\Requests\NullableGetUsersRequest;
-use Seed\Types\User;
+use Seed\Nullable\Requests\GetUsersRequest;
+use Seed\Nullable\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -13,8 +13,8 @@ use Seed\Core\Client\HttpMethod;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Nullable\Requests\NullableCreateUserRequest;
-use Seed\Nullable\Requests\NullableDeleteUserRequest;
+use Seed\Nullable\Requests\CreateUserRequest;
+use Seed\Nullable\Requests\DeleteUserRequest;
 
 class NullableClient
 {
@@ -53,7 +53,7 @@ class NullableClient
     }
 
     /**
-     * @param NullableGetUsersRequest $request
+     * @param GetUsersRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -66,7 +66,7 @@ class NullableClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getusers(NullableGetUsersRequest $request = new NullableGetUsersRequest(), ?array $options = null): ?array
+    public function getUsers(GetUsersRequest $request = new GetUsersRequest(), ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -89,7 +89,7 @@ class NullableClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "/users",
                     method: HttpMethod::GET,
                     query: $query,
                 ),
@@ -116,7 +116,7 @@ class NullableClient
     }
 
     /**
-     * @param NullableCreateUserRequest $request
+     * @param CreateUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -129,14 +129,14 @@ class NullableClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createuser(NullableCreateUserRequest $request, ?array $options = null): ?User
+    public function createUser(CreateUserRequest $request, ?array $options = null): ?User
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "/users",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -163,7 +163,7 @@ class NullableClient
     }
 
     /**
-     * @param NullableDeleteUserRequest $request
+     * @param DeleteUserRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -176,14 +176,14 @@ class NullableClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function deleteuser(NullableDeleteUserRequest $request = new NullableDeleteUserRequest(), ?array $options = null): ?bool
+    public function deleteUser(DeleteUserRequest $request = new DeleteUserRequest(), ?array $options = null): ?bool
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "users",
+                    path: "/users",
                     method: HttpMethod::DELETE,
                     body: $request,
                 ),

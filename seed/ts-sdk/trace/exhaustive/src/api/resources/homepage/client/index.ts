@@ -1,2 +1,2 @@
-export * as gethomepageproblems from "./gethomepageproblems.js";
-export * as sethomepageproblems from "./sethomepageproblems.js";
+export * as getHomepageProblems from "./getHomepageProblems.js";
+export * as setHomepageProblems from "./setHomepageProblems.js";

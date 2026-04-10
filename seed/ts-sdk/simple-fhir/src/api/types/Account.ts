@@ -3,15 +3,8 @@
 import type * as SeedApi from "../index.js";
 
 export interface Account extends SeedApi.BaseResource {
-    resource_type: Account.ResourceType;
+    resource_type: "Account";
     name: string;
     patient?: SeedApi.Patient | undefined;
     practitioner?: SeedApi.Practitioner | undefined;
-}
-
-export namespace Account {
-    export const ResourceType = {
-        Account: "Account",
-    } as const;
-    export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType];
 }

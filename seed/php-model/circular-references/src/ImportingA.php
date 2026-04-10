@@ -3,19 +3,20 @@
 namespace Seed;
 
 use Seed\Core\Json\JsonSerializableType;
+use Seed\A\A;
 use Seed\Core\Json\JsonProperty;
 
 class ImportingA extends JsonSerializableType
 {
     /**
-     * @var ?RootType $a
+     * @var ?A $a
      */
     #[JsonProperty('a')]
-    public ?RootType $a;
+    public ?A $a;
 
     /**
      * @param array{
-     *   a?: ?RootType,
+     *   a?: ?A,
      * } $values
      */
     public function __construct(

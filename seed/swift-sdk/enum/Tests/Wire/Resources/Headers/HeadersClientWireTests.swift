@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import Enum
 
 @Suite("HeadersClient Wire Tests") struct HeadersClientWireTests {
 }

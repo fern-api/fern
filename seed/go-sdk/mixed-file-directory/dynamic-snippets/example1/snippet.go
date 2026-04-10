@@ -14,10 +14,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.CreateOrganizationRequest{
-        Name: "name",
+    request := &fern.ListUsersRequest{
+        Limit: fern.Int(
+            1,
+        ),
     }
-    client.Organization.Create(
+    client.User.List(
         context.TODO(),
         request,
     )

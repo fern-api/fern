@@ -7,10 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.imdb.createmovie(request: .init(
-        title: "title",
-        rating: 1.1
-    ))
+    _ = try await client.imdb.getMovie(movieId: "movieId")
 }
 
 try await main()

@@ -11,14 +11,14 @@ use crate::{ApiError, ClientConfig};
 pub mod bigunion;
 pub mod types;
 pub mod union_;
-pub struct ApiClient {
+pub struct UnionsClient {
     pub config: ClientConfig,
     pub bigunion: BigunionClient,
     pub types: TypesClient,
     pub union_: UnionClient,
 }
 
-impl ApiClient {
+impl UnionsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

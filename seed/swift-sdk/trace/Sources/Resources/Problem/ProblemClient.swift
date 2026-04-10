@@ -10,7 +10,7 @@ public final class ProblemClient: Sendable {
     /// Creates a problem
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func createproblem(request: CreateProblemRequest, requestOptions: RequestOptions? = nil) async throws -> CreateProblemResponse {
+    public func createProblem(request: CreateProblemRequest, requestOptions: RequestOptions? = nil) async throws -> CreateProblemResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/problem-crud/create",
@@ -23,7 +23,7 @@ public final class ProblemClient: Sendable {
     /// Updates a problem
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func updateproblem(problemId: String, request: CreateProblemRequest, requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
+    public func updateProblem(problemId: String, request: CreateProblemRequest, requestOptions: RequestOptions? = nil) async throws -> UpdateProblemResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/problem-crud/update/\(problemId)",
@@ -36,7 +36,7 @@ public final class ProblemClient: Sendable {
     /// Soft deletes a problem
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func deleteproblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func deleteProblem(problemId: String, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .delete,
             path: "/problem-crud/delete/\(problemId)",
@@ -47,7 +47,7 @@ public final class ProblemClient: Sendable {
     /// Returns default starter files for problem
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getdefaultstarterfiles(request: Requests.ProblemGetDefaultStarterFilesRequest, requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
+    public func getDefaultStarterFiles(request: Requests.GetDefaultStarterFilesRequest, requestOptions: RequestOptions? = nil) async throws -> GetDefaultStarterFilesResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/problem-crud/default-starter-files",

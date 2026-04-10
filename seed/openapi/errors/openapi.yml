@@ -5,7 +5,7 @@ info:
 paths:
   /foo1:
     post:
-      operationId: simple_foowithoutendpointerror
+      operationId: simple_fooWithoutEndpointError
       tags:
         - Simple
       parameters: []
@@ -16,10 +16,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FooResponse'
-              examples:
-                Example1:
-                  value:
-                    bar: bar
         '400':
           description: ''
           content:
@@ -44,10 +40,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/FooRequest'
-            examples:
-              Example1:
-                value:
-                  bar: bar
   /foo2:
     post:
       operationId: simple_foo
@@ -61,10 +53,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FooResponse'
-              examples:
-                Example1:
-                  value:
-                    bar: bar
         '400':
           description: ''
           content:
@@ -95,13 +83,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/FooRequest'
-            examples:
-              Example1:
-                value:
-                  bar: bar
   /foo3:
     post:
-      operationId: simple_foowithexamples
+      operationId: simple_fooWithExamples
       tags:
         - Simple
       parameters: []
@@ -115,7 +99,7 @@ paths:
               examples:
                 Example1:
                   value:
-                    bar: bar
+                    bar: hello
         '400':
           description: ''
           content:
@@ -134,6 +118,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
+              examples:
+                Example1:
+                  value:
+                    message: Too much foo
+                    code: 1
         '500':
           description: ''
           content:
@@ -149,7 +138,13 @@ paths:
             examples:
               Example1:
                 value:
-                  bar: bar
+                  bar: hello
+              Example2:
+                value:
+                  bar: hello
+              Example3:
+                value:
+                  bar: hello
 components:
   schemas:
     ErrorBody:
@@ -169,7 +164,7 @@ components:
       properties:
         bar:
           type: string
-          example: bar
+          example: hello
       required:
         - bar
     FooResponse:
@@ -178,7 +173,7 @@ components:
       properties:
         bar:
           type: string
-          example: bar
+          example: hello
       required:
         - bar
   securitySchemes: {}

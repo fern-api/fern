@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,9 +7,9 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_params
-        .endpoints_params_modify_with_inline_path(&"param".to_string(), &"string".to_string(), None)
+        .no_auth
+        .post_with_no_auth(&serde_json::json!({"key":"value"}), None)
         .await;
 }

@@ -1,19 +1,19 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.service.requests.ServiceGetUserByIdRequest;
+import com.seed.clientSideParams.SeedClientSideParamsClient;
+import com.seed.clientSideParams.resources.service.requests.GetClientRequest;
 
 public class Example11 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedClientSideParamsClient client = SeedClientSideParamsClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.service()
-                .getuserbyid(
-                        "userId",
-                        ServiceGetUserByIdRequest.builder()
+                .getClient(
+                        "clientId",
+                        GetClientRequest.builder()
                                 .fields("fields")
                                 .includeFields(true)
                                 .build());

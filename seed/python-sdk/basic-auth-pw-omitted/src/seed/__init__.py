@@ -6,22 +6,22 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import UnauthorizedRequestErrorBody
-    from .errors import BadRequestError, UnauthorizedError
-    from . import basicauth
+    from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody
+    from . import basic_auth, errors
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedBasicAuthPwOmitted, SeedBasicAuthPwOmitted
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
-    "BadRequestError": ".errors",
+    "AsyncSeedBasicAuthPwOmitted": ".client",
+    "BadRequest": ".errors",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedApi": ".client",
-    "UnauthorizedError": ".errors",
-    "UnauthorizedRequestErrorBody": ".types",
+    "SeedBasicAuthPwOmitted": ".client",
+    "UnauthorizedRequest": ".errors",
+    "UnauthorizedRequestErrorBody": ".errors",
     "__version__": ".version",
-    "basicauth": ".basicauth",
+    "basic_auth": ".basic_auth",
+    "errors": ".errors",
 }
 
 
@@ -47,13 +47,14 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
-    "BadRequestError",
+    "AsyncSeedBasicAuthPwOmitted",
+    "BadRequest",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedApi",
-    "UnauthorizedError",
+    "SeedBasicAuthPwOmitted",
+    "UnauthorizedRequest",
     "UnauthorizedRequestErrorBody",
     "__version__",
-    "basicauth",
+    "basic_auth",
+    "errors",
 ]

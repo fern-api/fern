@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { AcmeSdkClient } from \"@fern/simple-api\";\n\nconst client = new AcmeSdkClient({ token: \"YOUR_TOKEN\" });\nawait client.user.get({\n    id: \"id\"\n});\n"
+                "client": "import { AcmeApiEnvironment, AcmeSdkClient } from \"@fern/simple-api\";\n\nconst client = new AcmeSdkClient({ environment: AcmeApiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
             }
         }
     ],

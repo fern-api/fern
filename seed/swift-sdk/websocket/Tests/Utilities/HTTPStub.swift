@@ -1,4 +1,4 @@
-import Api
+import Websocket
 import Foundation
 
 final class HTTPStub {

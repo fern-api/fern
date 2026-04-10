@@ -9,6 +9,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->getresource(
-    'ResourceID',
+$client->service->getResource(
+    'rsc-xyz',
 );

@@ -6,7 +6,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as serializers from "../../../../serialization/index.js";
-import * as SeedApi from "../../../index.js";
+import * as SeedTrace from "../../../index.js";
 
 export declare namespace MigrationClient {
     export type Options = BaseClientOptions;
@@ -22,39 +22,44 @@ export class MigrationClient {
     }
 
     /**
-     * @param {SeedApi.MigrationGetAttemptedMigrationsRequest} request
+     * @param {SeedTrace.GetAttemptedMigrationsRequest} request
      * @param {MigrationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.migration.getattemptedmigrations({
+     *     await client.migration.getAttemptedMigrations({
      *         adminKeyHeader: "admin-key-header"
      *     })
      */
-    public getattemptedmigrations(
-        request: SeedApi.MigrationGetAttemptedMigrationsRequest,
+    public getAttemptedMigrations(
+        request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: MigrationClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<SeedApi.Migration[], SeedApi.migration.getattemptedmigrations.Error>> {
-        return core.HttpResponsePromise.fromPromise(this.__getattemptedmigrations(request, requestOptions));
+    ): core.HttpResponsePromise<
+        core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
     }
 
-    private async __getattemptedmigrations(
-        request: SeedApi.MigrationGetAttemptedMigrationsRequest,
+    private async __getAttemptedMigrations(
+        request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: MigrationClient.RequestOptions,
     ): Promise<
-        core.WithRawResponse<core.APIResponse<SeedApi.Migration[], SeedApi.migration.getattemptedmigrations.Error>>
+        core.WithRawResponse<core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>>
     > {
         const { adminKeyHeader } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "admin-key-header": adminKeyHeader }),
+            mergeOnlyDefinedHeaders({
+                "admin-key-header": adminKeyHeader,
+                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+            }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Default,
-                "migration-info/all",
+                    environments.SeedTraceEnvironment.Prod,
+                "/migration-info/all",
             ),
             method: "GET",
             headers: _headers,
@@ -69,7 +74,7 @@ export class MigrationClient {
             return {
                 data: {
                     ok: true,
-                    body: serializers.migration.getattemptedmigrations.Response.parseOrThrow(_response.body, {
+                    body: serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
                         unrecognizedObjectKeys: "passthrough",
                         allowUnrecognizedUnionMembers: true,
                         allowUnrecognizedEnumValues: true,
@@ -86,7 +91,7 @@ export class MigrationClient {
         return {
             data: {
                 ok: false,
-                error: SeedApi.migration.getattemptedmigrations.Error._unknown(_response.error),
+                error: SeedTrace.migration.getAttemptedMigrations.Error._unknown(_response.error),
                 rawResponse: _response.rawResponse,
             },
             rawResponse: _response.rawResponse,

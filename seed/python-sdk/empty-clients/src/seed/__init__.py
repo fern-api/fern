@@ -6,29 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        Level1Address,
-        Level1AddressCountry,
-        Level1Level2Address,
-        Level1Level2AddressCountry,
-        Level1Level2Person,
-        Level1Person,
-    )
+    from . import level1
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedEmptyClients, SeedEmptyClients
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedEmptyClients": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "Level1Address": ".types",
-    "Level1AddressCountry": ".types",
-    "Level1Level2Address": ".types",
-    "Level1Level2AddressCountry": ".types",
-    "Level1Level2Person": ".types",
-    "Level1Person": ".types",
-    "SeedApi": ".client",
+    "SeedEmptyClients": ".client",
     "__version__": ".version",
+    "level1": ".level1",
 }
 
 
@@ -54,15 +42,10 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedEmptyClients",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "Level1Address",
-    "Level1AddressCountry",
-    "Level1Level2Address",
-    "Level1Level2AddressCountry",
-    "Level1Level2Person",
-    "Level1Person",
-    "SeedApi",
+    "SeedEmptyClients",
     "__version__",
+    "level1",
 ]

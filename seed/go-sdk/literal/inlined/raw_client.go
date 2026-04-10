@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Send(
 	ctx context.Context,
-	request *fern.InlinedSendRequest,
+	request *fern.SendLiteralsInlinedRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.SendResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,7 +47,6 @@ func (r *RawClient) Send(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response *fern.SendResponse
 	raw, err := r.caller.Call(
 		ctx,

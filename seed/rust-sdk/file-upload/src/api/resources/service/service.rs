@@ -29,15 +29,15 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn justfile(
+    pub async fn just_file(
         &self,
-        request: &JustfileRequest,
+        request: &JustFileRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "just-file",
+                "/just-file",
                 request.clone().to_multipart(),
                 None,
                 options,
@@ -45,22 +45,22 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn justfilewithqueryparams(
+    pub async fn just_file_with_query_params(
         &self,
-        request: &JustfilewithqueryparamsRequest,
+        request: &JustFileWithQueryParamsRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "just-file-with-query-params",
+                "/just-file-with-query-params",
                 request.clone().to_multipart(),
                 QueryBuilder::new()
-                    .serialize("maybeString", request.maybe_string.clone())
+                    .string("maybeString", request.maybe_string.clone())
                     .int("integer", request.integer.clone())
-                    .serialize("maybeInteger", request.maybe_integer.clone())
+                    .int("maybeInteger", request.maybe_integer.clone())
                     .string_array("listOfStrings", request.list_of_strings.clone())
-                    .serialize_array(
+                    .string_array(
                         "optionalListOfStrings",
                         request.optional_list_of_strings.clone(),
                     )
@@ -70,34 +70,34 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn justfilewithoptionalqueryparams(
+    pub async fn just_file_with_optional_query_params(
         &self,
-        request: &JustfilewithoptionalqueryparamsRequest,
+        request: &JustFileWithOptionalQueryParamsRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "just-file-with-optional-query-params",
+                "/just-file-with-optional-query-params",
                 request.clone().to_multipart(),
                 QueryBuilder::new()
-                    .serialize("maybeString", request.maybe_string.clone())
-                    .serialize("maybeInteger", request.maybe_integer.clone())
+                    .string("maybeString", request.maybe_string.clone())
+                    .int("maybeInteger", request.maybe_integer.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn withcontenttype(
+    pub async fn with_content_type(
         &self,
-        request: &WithcontenttypeRequest,
+        request: &WithContentTypeRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "with-content-type",
+                "/with-content-type",
                 request.clone().to_multipart(),
                 None,
                 options,
@@ -105,15 +105,15 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn withformencoding(
+    pub async fn with_form_encoding(
         &self,
-        request: &WithformencodingRequest,
+        request: &WithFormEncodingRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "with-form-encoding",
+                "/with-form-encoding",
                 request.clone().to_multipart(),
                 None,
                 options,
@@ -121,15 +121,15 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn withformencodedcontainers(
+    pub async fn with_form_encoded_containers(
         &self,
-        request: &WithformencodedcontainersRequest,
+        request: &WithFormEncodedContainersRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "form-encoded",
+                "",
                 request.clone().to_multipart(),
                 None,
                 options,
@@ -137,15 +137,15 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn optionalargs(
+    pub async fn optional_args(
         &self,
-        request: &OptionalargsRequest,
+        request: &OptionalArgsRequest,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "optional-args",
+                "/optional-args",
                 request.clone().to_multipart(),
                 None,
                 options,
@@ -153,15 +153,15 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn withinlinetype(
+    pub async fn with_inline_type(
         &self,
-        request: &WithinlinetypeRequest,
+        request: &WithInlineTypeRequest,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "inline-type",
+                "/inline-type",
                 request.clone().to_multipart(),
                 None,
                 options,
@@ -169,15 +169,15 @@ impl ServiceClient {
             .await
     }
 
-    pub async fn withjsonproperty(
+    pub async fn with_json_property(
         &self,
-        request: &WithjsonpropertyRequest,
+        request: &WithJsonPropertyRequest,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "with-json-property",
+                "/with-json-property",
                 request.clone().to_multipart(),
                 None,
                 options,
@@ -187,19 +187,19 @@ impl ServiceClient {
 
     pub async fn simple(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(Method::POST, "snippet", None, None, options)
+            .execute_request(Method::POST, "/snippet", None, None, options)
             .await
     }
 
-    pub async fn withliteralandenumtypes(
+    pub async fn with_literal_and_enum_types(
         &self,
-        request: &WithliteralandenumtypesRequest,
+        request: &WithLiteralAndEnumTypesRequest,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
             .execute_multipart_request(
                 Method::POST,
-                "with-literal-enum",
+                "/with-literal-enum",
                 request.clone().to_multipart(),
                 None,
                 options,

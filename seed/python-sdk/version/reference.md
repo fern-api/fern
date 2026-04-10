@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">getuser</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedVersion
 
-client = SeedApi(
+client = SeedVersion(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.getuser(
+client.user.get_user(
     user_id="userId",
 )
 

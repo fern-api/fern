@@ -3,6 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\Object\Types\ObjectWithRequiredField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -10,8 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsContainer->endpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(
-    [
-        'string' => 1.1,
-    ],
+$client->endpoints->httpMethods->testPut(
+    'id',
+    new ObjectWithRequiredField([
+        'string' => 'string',
+    ]),
 );

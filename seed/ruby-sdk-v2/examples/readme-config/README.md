@@ -52,7 +52,136 @@ require "seed"
 
 client = Seed::Client.new(token: "<token>")
 
-client.service.createbigentity
+client.service.create_big_entity(
+  cast_member: {
+    name: "name",
+    id: "id"
+  },
+  extended_movie: {
+    cast: %w[cast cast],
+    id: "id",
+    prequel: "prequel",
+    title: "title",
+    from: "from",
+    rating: 1.1,
+    type: "movie",
+    tag: "tag",
+    book: "book",
+    metadata: {},
+    revenue: 1000000
+  },
+  entity: {
+    type: "primitive",
+    name: "name"
+  },
+  metadata: {},
+  common_metadata: {
+    id: "id",
+    data: {
+      data: "data"
+    },
+    json_string: "jsonString"
+  },
+  data: {},
+  migration: {
+    name: "name",
+    status: "RUNNING"
+  },
+  test: {},
+  node: {
+    name: "name",
+    nodes: [{
+      name: "name",
+      nodes: [{
+        name: "name"
+      }, {
+        name: "name"
+      }],
+      trees: [{
+        nodes: []
+      }, {
+        nodes: []
+      }]
+    }, {
+      name: "name",
+      nodes: [{
+        name: "name"
+      }, {
+        name: "name"
+      }],
+      trees: [{
+        nodes: []
+      }, {
+        nodes: []
+      }]
+    }],
+    trees: [{
+      nodes: [{
+        name: "name",
+        nodes: [],
+        trees: []
+      }, {
+        name: "name",
+        nodes: [],
+        trees: []
+      }]
+    }, {
+      nodes: [{
+        name: "name",
+        nodes: [],
+        trees: []
+      }, {
+        name: "name",
+        nodes: [],
+        trees: []
+      }]
+    }]
+  },
+  directory: {
+    name: "name",
+    files: [{
+      name: "name",
+      contents: "contents"
+    }, {
+      name: "name",
+      contents: "contents"
+    }],
+    directories: [{
+      name: "name",
+      files: [{
+        name: "name",
+        contents: "contents"
+      }, {
+        name: "name",
+        contents: "contents"
+      }],
+      directories: [{
+        name: "name"
+      }, {
+        name: "name"
+      }]
+    }, {
+      name: "name",
+      files: [{
+        name: "name",
+        contents: "contents"
+      }, {
+        name: "name",
+        contents: "contents"
+      }],
+      directories: [{
+        name: "name"
+      }, {
+        name: "name"
+      }]
+    }]
+  },
+  moment: {
+    id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    date: "2023-01-15",
+    datetime: "2024-01-15T09:30:00Z"
+  }
+)
 ```
 
 ## Environments
@@ -88,7 +217,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client.service.createbigentity
+    result = client.service.create_big_entity
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -133,7 +262,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.service.getmovie(
+response = client.service.get_movie(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -142,7 +271,7 @@ response = client.service.getmovie(
 ```ruby
 require "seed"
 
-response = client.service.createmovie(
+response = client.service.create_movie(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -155,7 +284,7 @@ If you would like to send additional headers as part of the request, use the `ad
 ```ruby
 require "seed"
 
-response = client.service.createbigentity(
+response = client.service.create_big_entity(
     ...,
     request_options: {
         additional_headers: {
@@ -172,7 +301,7 @@ If you would like to send additional query parameters as part of the request, us
 ```ruby
 require "seed"
 
-response = client.service.createbigentity(
+response = client.service.create_big_entity(
     ...,
     request_options: {
         additional_query_parameters: {

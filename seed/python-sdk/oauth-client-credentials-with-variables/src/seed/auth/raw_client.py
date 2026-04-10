@@ -9,15 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.token_response import TokenResponse
-from .types.auth_get_token_with_client_credentials_request_audience import (
-    AuthGetTokenWithClientCredentialsRequestAudience,
-)
-from .types.auth_get_token_with_client_credentials_request_grant_type import (
-    AuthGetTokenWithClientCredentialsRequestGrantType,
-)
-from .types.auth_refresh_token_request_audience import AuthRefreshTokenRequestAudience
-from .types.auth_refresh_token_request_grant_type import AuthRefreshTokenRequestGrantType
+from .types.token_response import TokenResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -28,13 +20,11 @@ class RawAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def gettokenwithclientcredentials(
+    def get_token_with_client_credentials(
         self,
         *,
         client_id: str,
         client_secret: str,
-        audience: AuthGetTokenWithClientCredentialsRequestAudience,
-        grant_type: AuthGetTokenWithClientCredentialsRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TokenResponse]:
@@ -45,10 +35,6 @@ class RawAuthClient:
 
         client_secret : str
 
-        audience : AuthGetTokenWithClientCredentialsRequestAudience
-
-        grant_type : AuthGetTokenWithClientCredentialsRequestGrantType
-
         scope : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
@@ -57,7 +43,6 @@ class RawAuthClient:
         Returns
         -------
         HttpResponse[TokenResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "token",
@@ -65,12 +50,9 @@ class RawAuthClient:
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
-                "audience": audience,
-                "grant_type": grant_type,
                 "scope": scope,
-            },
-            headers={
-                "content-type": "application/json",
+                "audience": "https://api.example.com",
+                "grant_type": "client_credentials",
             },
             request_options=request_options,
             omit=OMIT,
@@ -94,14 +76,12 @@ class RawAuthClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def refreshtoken(
+    def refresh_token(
         self,
         *,
         client_id: str,
         client_secret: str,
         refresh_token: str,
-        audience: AuthRefreshTokenRequestAudience,
-        grant_type: AuthRefreshTokenRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TokenResponse]:
@@ -114,10 +94,6 @@ class RawAuthClient:
 
         refresh_token : str
 
-        audience : AuthRefreshTokenRequestAudience
-
-        grant_type : AuthRefreshTokenRequestGrantType
-
         scope : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
@@ -126,21 +102,17 @@ class RawAuthClient:
         Returns
         -------
         HttpResponse[TokenResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
-            "token/refresh",
+            "token",
             method="POST",
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "refresh_token": refresh_token,
-                "audience": audience,
-                "grant_type": grant_type,
                 "scope": scope,
-            },
-            headers={
-                "content-type": "application/json",
+                "audience": "https://api.example.com",
+                "grant_type": "refresh_token",
             },
             request_options=request_options,
             omit=OMIT,
@@ -169,13 +141,11 @@ class AsyncRawAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def gettokenwithclientcredentials(
+    async def get_token_with_client_credentials(
         self,
         *,
         client_id: str,
         client_secret: str,
-        audience: AuthGetTokenWithClientCredentialsRequestAudience,
-        grant_type: AuthGetTokenWithClientCredentialsRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TokenResponse]:
@@ -186,10 +156,6 @@ class AsyncRawAuthClient:
 
         client_secret : str
 
-        audience : AuthGetTokenWithClientCredentialsRequestAudience
-
-        grant_type : AuthGetTokenWithClientCredentialsRequestGrantType
-
         scope : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
@@ -198,7 +164,6 @@ class AsyncRawAuthClient:
         Returns
         -------
         AsyncHttpResponse[TokenResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "token",
@@ -206,12 +171,9 @@ class AsyncRawAuthClient:
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
-                "audience": audience,
-                "grant_type": grant_type,
                 "scope": scope,
-            },
-            headers={
-                "content-type": "application/json",
+                "audience": "https://api.example.com",
+                "grant_type": "client_credentials",
             },
             request_options=request_options,
             omit=OMIT,
@@ -235,14 +197,12 @@ class AsyncRawAuthClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def refreshtoken(
+    async def refresh_token(
         self,
         *,
         client_id: str,
         client_secret: str,
         refresh_token: str,
-        audience: AuthRefreshTokenRequestAudience,
-        grant_type: AuthRefreshTokenRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TokenResponse]:
@@ -255,10 +215,6 @@ class AsyncRawAuthClient:
 
         refresh_token : str
 
-        audience : AuthRefreshTokenRequestAudience
-
-        grant_type : AuthRefreshTokenRequestGrantType
-
         scope : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
@@ -267,21 +223,17 @@ class AsyncRawAuthClient:
         Returns
         -------
         AsyncHttpResponse[TokenResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "token/refresh",
+            "token",
             method="POST",
             json={
                 "client_id": client_id,
                 "client_secret": client_secret,
                 "refresh_token": refresh_token,
-                "audience": audience,
-                "grant_type": grant_type,
                 "scope": scope,
-            },
-            headers={
-                "content-type": "application/json",
+                "audience": "https://api.example.com",
+                "grant_type": "refresh_token",
             },
             request_options=request_options,
             omit=OMIT,

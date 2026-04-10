@@ -5,4 +5,14 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.migration.getattemptedmigrations(admin_key_header: "adminKeyHeader")
+client.problem.get_default_starter_files(
+  input_params: [{
+    variable_type: {},
+    name: "name"
+  }, {
+    variable_type: {},
+    name: "name"
+  }],
+  output_type: {},
+  method_name: "methodName"
+)

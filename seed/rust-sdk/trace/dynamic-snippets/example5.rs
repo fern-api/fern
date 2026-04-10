@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,19 +7,103 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = TraceClient::new(config).expect("Failed to build client");
     client
         .admin
-        .sendtestsubmissionupdate(
-            &SubmissionId("submissionId".to_string()),
-            &TestSubmissionUpdate {
-                update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                update_info: TestSubmissionUpdateInfo::TestSubmissionUpdateInfoZero(
-                    TestSubmissionUpdateInfoZero {
-                        r#type: TestSubmissionUpdateInfoZeroType::Running,
-                        value: Some(RunningSubmissionState::QueueingSubmission),
+        .store_traced_test_case(
+            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+            &"testCaseId".to_string(),
+            &StoreTracedTestCaseRequest {
+                result: TestCaseResultWithStdout {
+                    result: TestCaseResult {
+                        expected_result: VariableValue::IntegerValue { value: 0 },
+                        actual_result: ActualResult::Value {
+                            value: VariableValue::IntegerValue { value: 0 },
+                        },
+                        passed: true,
                     },
-                ),
+                    stdout: "stdout".to_string(),
+                },
+                trace_responses: vec![
+                    TraceResponse {
+                        submission_id: SubmissionId(
+                            Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+                        ),
+                        line_number: 1,
+                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
+                        expression_location: Some(ExpressionLocation {
+                            start: 1,
+                            offset: 1,
+                            ..Default::default()
+                        }),
+                        stack: StackInformation {
+                            num_stack_frames: 1,
+                            top_stack_frame: Some(StackFrame {
+                                method_name: "methodName".to_string(),
+                                line_number: 1,
+                                scopes: vec![
+                                    Scope {
+                                        variables: HashMap::from([(
+                                            "variables".to_string(),
+                                            DebugVariableValue::IntegerValue { value: 0 },
+                                        )]),
+                                        ..Default::default()
+                                    },
+                                    Scope {
+                                        variables: HashMap::from([(
+                                            "variables".to_string(),
+                                            DebugVariableValue::IntegerValue { value: 0 },
+                                        )]),
+                                        ..Default::default()
+                                    },
+                                ],
+                                ..Default::default()
+                            }),
+                            ..Default::default()
+                        },
+                        stdout: Some("stdout".to_string()),
+                        ..Default::default()
+                    },
+                    TraceResponse {
+                        submission_id: SubmissionId(
+                            Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+                        ),
+                        line_number: 1,
+                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
+                        expression_location: Some(ExpressionLocation {
+                            start: 1,
+                            offset: 1,
+                            ..Default::default()
+                        }),
+                        stack: StackInformation {
+                            num_stack_frames: 1,
+                            top_stack_frame: Some(StackFrame {
+                                method_name: "methodName".to_string(),
+                                line_number: 1,
+                                scopes: vec![
+                                    Scope {
+                                        variables: HashMap::from([(
+                                            "variables".to_string(),
+                                            DebugVariableValue::IntegerValue { value: 0 },
+                                        )]),
+                                        ..Default::default()
+                                    },
+                                    Scope {
+                                        variables: HashMap::from([(
+                                            "variables".to_string(),
+                                            DebugVariableValue::IntegerValue { value: 0 },
+                                        )]),
+                                        ..Default::default()
+                                    },
+                                ],
+                                ..Default::default()
+                            }),
+                            ..Default::default()
+                        },
+                        stdout: Some("stdout".to_string()),
+                        ..Default::default()
+                    },
+                ],
             },
             None,
         )

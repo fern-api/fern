@@ -44,7 +44,6 @@ impl QueryBuilder {
         self
     }
 
-
     /// Add multiple integer parameters with the same key (for allow-multiple query params)
     /// Accepts both Vec<i64> and Vec<Option<i64>>, adding each non-None value as a separate query parameter
     pub fn int_array<I, T>(mut self, key: &str, values: I) -> Self
@@ -105,7 +104,6 @@ impl QueryBuilder {
         }
         self
     }
-
 
     /// Add any serializable parameter (for enums and complex types)
     pub fn serialize<T: Serialize>(mut self, key: &str, value: Option<T>) -> Self {
@@ -282,14 +280,15 @@ mod tests {
         let result = QueryBuilder::new()
             .string("name", Some("alice".to_string()))
             .build();
-        assert_eq!(result, Some(vec![("name".to_string(), "alice".to_string())]));
+        assert_eq!(
+            result,
+            Some(vec![("name".to_string(), "alice".to_string())])
+        );
     }
 
     #[test]
     fn test_string_param_none_skipped() {
-        let result = QueryBuilder::new()
-            .string("name", None::<String>)
-            .build();
+        let result = QueryBuilder::new().string("name", None::<String>).build();
         assert!(result.is_none());
     }
 
@@ -323,12 +322,13 @@ mod tests {
         );
     }
 
-
-
     #[test]
     fn test_string_array_multiple_entries() {
         let result = QueryBuilder::new()
-            .string_array("tag", vec!["a".to_string(), "b".to_string(), "c".to_string()])
+            .string_array(
+                "tag",
+                vec!["a".to_string(), "b".to_string(), "c".to_string()],
+            )
             .build();
         assert_eq!(
             result,
@@ -404,21 +404,14 @@ mod tests {
 
     #[test]
     fn test_serialize_numeric_no_quotes() {
-        let result = QueryBuilder::new()
-            .serialize("count", Some(42))
-            .build();
-        assert_eq!(
-            result,
-            Some(vec![("count".to_string(), "42".to_string())])
-        );
+        let result = QueryBuilder::new().serialize("count", Some(42)).build();
+        assert_eq!(result, Some(vec![("count".to_string(), "42".to_string())]));
     }
 
     #[test]
     fn test_serialize_array_skips_null() {
         let values: Vec<Option<&str>> = vec![Some("a"), None, Some("b")];
-        let result = QueryBuilder::new()
-            .serialize_array("items", values)
-            .build();
+        let result = QueryBuilder::new().serialize_array("items", values).build();
         assert_eq!(
             result,
             Some(vec![
@@ -444,7 +437,6 @@ mod tests {
             ])
         );
     }
-
 
     // ===========================
     // parse_structured_query tests

@@ -1,4 +1,4 @@
-package api
+package variables
 
 import (
 	"io"

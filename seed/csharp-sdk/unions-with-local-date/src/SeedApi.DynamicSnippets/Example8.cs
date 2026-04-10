@@ -1,11 +1,11 @@
-using SeedApi;
+using SeedUnions;
 
 namespace Usage;
 
 public class Example8
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedUnionsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
@@ -13,7 +13,7 @@ public class Example8
 
         await client.Types.UpdateAsync(
             new UnionWithTime(
-                new UnionWithTimeValue()
+                new UnionWithTime.ValueInner()
             )
         );
     }

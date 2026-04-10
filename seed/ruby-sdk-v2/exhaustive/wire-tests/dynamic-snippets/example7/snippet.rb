@@ -5,8 +5,6 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_container.endpoints_container_get_and_return_set_of_objects(request: [{
+client.endpoints.container.get_and_return_optional(request: {
   string: "string"
-}, {
-  string: "string"
-}])
+})

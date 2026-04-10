@@ -33,16 +33,16 @@
             },
             "default": "./dist/cjs/api/resources/complex/exports.js"
         },
-        "./inlineUsersInlineUsers": {
+        "./inlineUsers": {
             "import": {
-                "types": "./dist/esm/api/resources/inlineUsersInlineUsers/exports.d.mts",
-                "default": "./dist/esm/api/resources/inlineUsersInlineUsers/exports.mjs"
+                "types": "./dist/esm/api/resources/inlineUsers/resources/inlineUsers/exports.d.mts",
+                "default": "./dist/esm/api/resources/inlineUsers/resources/inlineUsers/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/inlineUsersInlineUsers/exports.d.ts",
-                "default": "./dist/cjs/api/resources/inlineUsersInlineUsers/exports.js"
+                "types": "./dist/cjs/api/resources/inlineUsers/resources/inlineUsers/exports.d.ts",
+                "default": "./dist/cjs/api/resources/inlineUsers/resources/inlineUsers/exports.js"
             },
-            "default": "./dist/cjs/api/resources/inlineUsersInlineUsers/exports.js"
+            "default": "./dist/cjs/api/resources/inlineUsers/resources/inlineUsers/exports.js"
         },
         "./users": {
             "import": {

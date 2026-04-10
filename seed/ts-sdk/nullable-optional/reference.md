@@ -1,6 +1,6 @@
 # Reference
-## Nullableoptional
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">getuser</a>({ ...params }) -> SeedApi.UserResponse</code></summary>
+## NullableOptional
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">getUser</a>(userId) -> SeedNullableOptional.UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,9 +27,7 @@ Get a user by ID
 <dd>
 
 ```typescript
-await client.nullableoptional.getuser({
-    userId: "userId"
-});
+await client.nullableOptional.getUser("userId");
 
 ```
 </dd>
@@ -45,7 +43,7 @@ await client.nullableoptional.getuser({
 <dl>
 <dd>
 
-**request:** `SeedApi.NullableOptionalGetUserRequest` 
+**userId:** `string` 
     
 </dd>
 </dl>
@@ -53,72 +51,7 @@ await client.nullableoptional.getuser({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">updateuser</a>({ ...params }) -> SeedApi.UserResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a user (partial update)
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.nullableoptional.updateuser({
-    userId: "userId"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.UpdateUserRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -130,70 +63,7 @@ await client.nullableoptional.updateuser({
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">listusers</a>({ ...params }) -> SeedApi.UserResponse[]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List all users
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.nullableoptional.listusers();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.NullableOptionalListUsersRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">createuser</a>({ ...params }) -> SeedApi.UserResponse</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">createUser</a>({ ...params }) -> SeedNullableOptional.UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -220,8 +90,19 @@ Create a new user
 <dd>
 
 ```typescript
-await client.nullableoptional.createuser({
-    username: "username"
+await client.nullableOptional.createUser({
+    username: "username",
+    email: "email",
+    phone: "phone",
+    address: {
+        street: "street",
+        city: "city",
+        state: "state",
+        zipCode: "zipCode",
+        country: "country",
+        buildingId: "buildingId",
+        tenantId: "tenantId"
+    }
 });
 
 ```
@@ -238,7 +119,7 @@ await client.nullableoptional.createuser({
 <dl>
 <dd>
 
-**request:** `SeedApi.CreateUserRequest` 
+**request:** `SeedNullableOptional.CreateUserRequest` 
     
 </dd>
 </dl>
@@ -246,7 +127,7 @@ await client.nullableoptional.createuser({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -258,7 +139,159 @@ await client.nullableoptional.createuser({
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">searchusers</a>({ ...params }) -> SeedApi.UserResponse[]</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">updateUser</a>(userId, { ...params }) -> SeedNullableOptional.UserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user (partial update)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.updateUser("userId", {
+    username: "username",
+    email: "email",
+    phone: "phone",
+    address: {
+        street: "street",
+        city: "city",
+        state: "state",
+        zipCode: "zipCode",
+        country: "country",
+        buildingId: "buildingId",
+        tenantId: "tenantId"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedNullableOptional.UpdateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">listUsers</a>({ ...params }) -> SeedNullableOptional.UserResponse[]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all users
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.nullableOptional.listUsers({
+    limit: 1,
+    offset: 1,
+    includeDeleted: true,
+    sortBy: "sortBy"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedNullableOptional.ListUsersRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">searchUsers</a>({ ...params }) -> SeedNullableOptional.UserResponse[]</code></summary>
 <dl>
 <dd>
 
@@ -285,9 +318,11 @@ Search users
 <dd>
 
 ```typescript
-await client.nullableoptional.searchusers({
+await client.nullableOptional.searchUsers({
     query: "query",
-    department: "department"
+    department: "department",
+    role: "role",
+    isActive: true
 });
 
 ```
@@ -304,7 +339,7 @@ await client.nullableoptional.searchusers({
 <dl>
 <dd>
 
-**request:** `SeedApi.NullableOptionalSearchUsersRequest` 
+**request:** `SeedNullableOptional.SearchUsersRequest` 
     
 </dd>
 </dl>
@@ -312,7 +347,7 @@ await client.nullableoptional.searchusers({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -324,7 +359,7 @@ await client.nullableoptional.searchusers({
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">createcomplexprofile</a>({ ...params }) -> SeedApi.ComplexProfile</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">createComplexProfile</a>({ ...params }) -> SeedNullableOptional.ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -351,20 +386,96 @@ Create a complex profile to test nullable enums and unions
 <dd>
 
 ```typescript
-await client.nullableoptional.createcomplexprofile({
+await client.nullableOptional.createComplexProfile({
     id: "id",
     nullableRole: "ADMIN",
+    optionalRole: "ADMIN",
+    optionalNullableRole: "ADMIN",
     nullableStatus: "active",
+    optionalStatus: "active",
+    optionalNullableStatus: "active",
     nullableNotification: {
+        type: "email",
         emailAddress: "emailAddress",
         subject: "subject",
-        type: "email"
+        htmlContent: "htmlContent"
+    },
+    optionalNotification: {
+        type: "email",
+        emailAddress: "emailAddress",
+        subject: "subject",
+        htmlContent: "htmlContent"
+    },
+    optionalNullableNotification: {
+        type: "email",
+        emailAddress: "emailAddress",
+        subject: "subject",
+        htmlContent: "htmlContent"
     },
     nullableSearchResult: {
+        type: "user",
         id: "id",
         username: "username",
+        email: "email",
+        phone: "phone",
         createdAt: "2024-01-15T09:30:00Z",
-        type: "user"
+        updatedAt: "2024-01-15T09:30:00Z",
+        address: {
+            street: "street",
+            city: "city",
+            state: "state",
+            zipCode: "zipCode",
+            country: "country",
+            buildingId: "buildingId",
+            tenantId: "tenantId"
+        }
+    },
+    optionalSearchResult: {
+        type: "user",
+        id: "id",
+        username: "username",
+        email: "email",
+        phone: "phone",
+        createdAt: "2024-01-15T09:30:00Z",
+        updatedAt: "2024-01-15T09:30:00Z",
+        address: {
+            street: "street",
+            city: "city",
+            state: "state",
+            zipCode: "zipCode",
+            country: "country",
+            buildingId: "buildingId",
+            tenantId: "tenantId"
+        }
+    },
+    nullableArray: ["nullableArray", "nullableArray"],
+    optionalArray: ["optionalArray", "optionalArray"],
+    optionalNullableArray: ["optionalNullableArray", "optionalNullableArray"],
+    nullableListOfNullables: ["nullableListOfNullables", "nullableListOfNullables"],
+    nullableMapOfNullables: {
+        "nullableMapOfNullables": {
+            street: "street",
+            city: "city",
+            state: "state",
+            zipCode: "zipCode",
+            country: "country",
+            buildingId: "buildingId",
+            tenantId: "tenantId"
+        }
+    },
+    nullableListOfUnions: [{
+            type: "email",
+            emailAddress: "emailAddress",
+            subject: "subject",
+            htmlContent: "htmlContent"
+        }, {
+            type: "email",
+            emailAddress: "emailAddress",
+            subject: "subject",
+            htmlContent: "htmlContent"
+        }],
+    optionalMapOfEnums: {
+        "optionalMapOfEnums": "ADMIN"
     }
 });
 
@@ -382,7 +493,7 @@ await client.nullableoptional.createcomplexprofile({
 <dl>
 <dd>
 
-**request:** `SeedApi.ComplexProfile` 
+**request:** `SeedNullableOptional.ComplexProfile` 
     
 </dd>
 </dl>
@@ -390,7 +501,7 @@ await client.nullableoptional.createcomplexprofile({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -402,7 +513,7 @@ await client.nullableoptional.createcomplexprofile({
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">getcomplexprofile</a>({ ...params }) -> SeedApi.ComplexProfile</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">getComplexProfile</a>(profileId) -> SeedNullableOptional.ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -429,9 +540,7 @@ Get a complex profile by ID
 <dd>
 
 ```typescript
-await client.nullableoptional.getcomplexprofile({
-    profileId: "profileId"
-});
+await client.nullableOptional.getComplexProfile("profileId");
 
 ```
 </dd>
@@ -447,7 +556,7 @@ await client.nullableoptional.getcomplexprofile({
 <dl>
 <dd>
 
-**request:** `SeedApi.NullableOptionalGetComplexProfileRequest` 
+**profileId:** `string` 
     
 </dd>
 </dl>
@@ -455,7 +564,7 @@ await client.nullableoptional.getcomplexprofile({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -467,7 +576,7 @@ await client.nullableoptional.getcomplexprofile({
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">updatecomplexprofile</a>({ ...params }) -> SeedApi.ComplexProfile</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">updateComplexProfile</a>(profileId, { ...params }) -> SeedNullableOptional.ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -494,8 +603,34 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```typescript
-await client.nullableoptional.updatecomplexprofile({
-    profileId: "profileId"
+await client.nullableOptional.updateComplexProfile("profileId", {
+    nullableRole: "ADMIN",
+    nullableStatus: "active",
+    nullableNotification: {
+        type: "email",
+        emailAddress: "emailAddress",
+        subject: "subject",
+        htmlContent: "htmlContent"
+    },
+    nullableSearchResult: {
+        type: "user",
+        id: "id",
+        username: "username",
+        email: "email",
+        phone: "phone",
+        createdAt: "2024-01-15T09:30:00Z",
+        updatedAt: "2024-01-15T09:30:00Z",
+        address: {
+            street: "street",
+            city: "city",
+            state: "state",
+            zipCode: "zipCode",
+            country: "country",
+            buildingId: "buildingId",
+            tenantId: "tenantId"
+        }
+    },
+    nullableArray: ["nullableArray", "nullableArray"]
 });
 
 ```
@@ -512,7 +647,7 @@ await client.nullableoptional.updatecomplexprofile({
 <dl>
 <dd>
 
-**request:** `SeedApi.NullableOptionalUpdateComplexProfileRequest` 
+**profileId:** `string` 
     
 </dd>
 </dl>
@@ -520,7 +655,15 @@ await client.nullableoptional.updatecomplexprofile({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**request:** `SeedNullableOptional.UpdateComplexProfileRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -532,7 +675,7 @@ await client.nullableoptional.updatecomplexprofile({
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">testdeserialization</a>({ ...params }) -> SeedApi.DeserializationTestResponse</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">testDeserialization</a>({ ...params }) -> SeedNullableOptional.DeserializationTestResponse</code></summary>
 <dl>
 <dd>
 
@@ -559,17 +702,55 @@ Test endpoint for validating null deserialization
 <dd>
 
 ```typescript
-await client.nullableoptional.testdeserialization({
+await client.nullableOptional.testDeserialization({
     requiredString: "requiredString",
+    nullableString: "nullableString",
+    optionalString: "optionalString",
+    optionalNullableString: "optionalNullableString",
     nullableEnum: "ADMIN",
+    optionalEnum: "active",
     nullableUnion: {
+        type: "email",
         emailAddress: "emailAddress",
         subject: "subject",
-        type: "email"
+        htmlContent: "htmlContent"
+    },
+    optionalUnion: {
+        type: "user",
+        id: "id",
+        username: "username",
+        email: "email",
+        phone: "phone",
+        createdAt: "2024-01-15T09:30:00Z",
+        updatedAt: "2024-01-15T09:30:00Z",
+        address: {
+            street: "street",
+            city: "city",
+            state: "state",
+            zipCode: "zipCode",
+            country: "country",
+            buildingId: "buildingId",
+            tenantId: "tenantId"
+        }
+    },
+    nullableList: ["nullableList", "nullableList"],
+    nullableMap: {
+        "nullableMap": 1
     },
     nullableObject: {
         street: "street",
-        zipCode: "zipCode"
+        city: "city",
+        state: "state",
+        zipCode: "zipCode",
+        country: "country",
+        buildingId: "buildingId",
+        tenantId: "tenantId"
+    },
+    optionalObject: {
+        id: "id",
+        name: "name",
+        domain: "domain",
+        employeeCount: 1
     }
 });
 
@@ -587,7 +768,7 @@ await client.nullableoptional.testdeserialization({
 <dl>
 <dd>
 
-**request:** `SeedApi.DeserializationTestRequest` 
+**request:** `SeedNullableOptional.DeserializationTestRequest` 
     
 </dd>
 </dl>
@@ -595,7 +776,7 @@ await client.nullableoptional.testdeserialization({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -607,7 +788,7 @@ await client.nullableoptional.testdeserialization({
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">filterbyrole</a>({ ...params }) -> SeedApi.UserResponse[]</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">filterByRole</a>({ ...params }) -> SeedNullableOptional.UserResponse[]</code></summary>
 <dl>
 <dd>
 
@@ -634,8 +815,10 @@ Filter users by role with nullable enum
 <dd>
 
 ```typescript
-await client.nullableoptional.filterbyrole({
-    role: "ADMIN"
+await client.nullableOptional.filterByRole({
+    role: "ADMIN",
+    status: "active",
+    secondaryRole: "ADMIN"
 });
 
 ```
@@ -652,7 +835,7 @@ await client.nullableoptional.filterbyrole({
 <dl>
 <dd>
 
-**request:** `SeedApi.NullableOptionalFilterByRoleRequest` 
+**request:** `SeedNullableOptional.FilterByRoleRequest` 
     
 </dd>
 </dl>
@@ -660,7 +843,7 @@ await client.nullableoptional.filterbyrole({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -672,7 +855,7 @@ await client.nullableoptional.filterbyrole({
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">getnotificationsettings</a>({ ...params }) -> SeedApi.NotificationMethod</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">getNotificationSettings</a>(userId) -> SeedNullableOptional.NotificationMethod | null</code></summary>
 <dl>
 <dd>
 
@@ -699,9 +882,7 @@ Get notification settings which may be null
 <dd>
 
 ```typescript
-await client.nullableoptional.getnotificationsettings({
-    userId: "userId"
-});
+await client.nullableOptional.getNotificationSettings("userId");
 
 ```
 </dd>
@@ -717,7 +898,7 @@ await client.nullableoptional.getnotificationsettings({
 <dl>
 <dd>
 
-**request:** `SeedApi.NullableOptionalGetNotificationSettingsRequest` 
+**userId:** `string` 
     
 </dd>
 </dl>
@@ -725,7 +906,7 @@ await client.nullableoptional.getnotificationsettings({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -737,7 +918,7 @@ await client.nullableoptional.getnotificationsettings({
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">updatetags</a>({ ...params }) -> string[]</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">updateTags</a>(userId, { ...params }) -> string[]</code></summary>
 <dl>
 <dd>
 
@@ -764,8 +945,10 @@ Update tags to test array handling
 <dd>
 
 ```typescript
-await client.nullableoptional.updatetags({
-    userId: "userId"
+await client.nullableOptional.updateTags("userId", {
+    tags: ["tags", "tags"],
+    categories: ["categories", "categories"],
+    labels: ["labels", "labels"]
 });
 
 ```
@@ -782,7 +965,7 @@ await client.nullableoptional.updatetags({
 <dl>
 <dd>
 
-**request:** `SeedApi.NullableOptionalUpdateTagsRequest` 
+**userId:** `string` 
     
 </dd>
 </dl>
@@ -790,7 +973,15 @@ await client.nullableoptional.updatetags({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**request:** `SeedNullableOptional.UpdateTagsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -802,7 +993,7 @@ await client.nullableoptional.updatetags({
 </dl>
 </details>
 
-<details><summary><code>client.nullableoptional.<a href="/src/api/resources/nullableoptional/client/Client.ts">getsearchresults</a>({ ...params }) -> SeedApi.SearchResult[] | null</code></summary>
+<details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">getSearchResults</a>({ ...params }) -> SeedNullableOptional.SearchResult[] | null</code></summary>
 <dl>
 <dd>
 
@@ -829,8 +1020,12 @@ Get search results with nullable unions
 <dd>
 
 ```typescript
-await client.nullableoptional.getsearchresults({
-    query: "query"
+await client.nullableOptional.getSearchResults({
+    query: "query",
+    filters: {
+        "filters": "filters"
+    },
+    includeTypes: ["includeTypes", "includeTypes"]
 });
 
 ```
@@ -847,7 +1042,7 @@ await client.nullableoptional.getsearchresults({
 <dl>
 <dd>
 
-**request:** `SeedApi.NullableOptionalGetSearchResultsRequest` 
+**request:** `SeedNullableOptional.SearchRequest` 
     
 </dd>
 </dl>
@@ -855,7 +1050,7 @@ await client.nullableoptional.getsearchresults({
 <dl>
 <dd>
 
-**requestOptions:** `NullableoptionalClient.RequestOptions` 
+**requestOptions:** `NullableOptionalClient.RequestOptions` 
     
 </dd>
 </dl>

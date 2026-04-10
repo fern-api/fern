@@ -4,12 +4,10 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..requests.container_object import ContainerObjectParams
 from ..types.send_response import SendResponse
-from ..types.some_literal import SomeLiteral
 from .raw_client import AsyncRawReferenceClient, RawReferenceClient
-from .types.send_request_ending import SendRequestEnding
-from .types.send_request_prompt import SendRequestPrompt
+from .requests.container_object import ContainerObjectParams
+from .types.some_literal import SomeLiteral
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -33,11 +31,7 @@ class ReferenceClient:
     def send(
         self,
         *,
-        prompt: SendRequestPrompt,
         query: str,
-        stream: bool,
-        ending: SendRequestEnding,
-        context: SomeLiteral,
         container_object: ContainerObjectParams,
         maybe_context: typing.Optional[SomeLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -45,15 +39,7 @@ class ReferenceClient:
         """
         Parameters
         ----------
-        prompt : SendRequestPrompt
-
         query : str
-
-        stream : bool
-
-        ending : SendRequestEnding
-
-        context : SomeLiteral
 
         container_object : ContainerObjectParams
 
@@ -66,20 +52,15 @@ class ReferenceClient:
         -------
         SendResponse
 
-
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedLiteral
 
-        client = SeedApi(
+        client = SeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
         client.reference.send(
-            prompt="You are a helpful assistant",
-            query="query",
-            stream=True,
-            ending="\\$ending",
-            context="You're super wise",
+            query="What is the weather today",
             container_object={
                 "nested_objects": [
                     {
@@ -92,14 +73,7 @@ class ReferenceClient:
         )
         """
         _response = self._raw_client.send(
-            prompt=prompt,
-            query=query,
-            stream=stream,
-            ending=ending,
-            context=context,
-            container_object=container_object,
-            maybe_context=maybe_context,
-            request_options=request_options,
+            query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
         )
         return _response.data
 
@@ -122,11 +96,7 @@ class AsyncReferenceClient:
     async def send(
         self,
         *,
-        prompt: SendRequestPrompt,
         query: str,
-        stream: bool,
-        ending: SendRequestEnding,
-        context: SomeLiteral,
         container_object: ContainerObjectParams,
         maybe_context: typing.Optional[SomeLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -134,15 +104,7 @@ class AsyncReferenceClient:
         """
         Parameters
         ----------
-        prompt : SendRequestPrompt
-
         query : str
-
-        stream : bool
-
-        ending : SendRequestEnding
-
-        context : SomeLiteral
 
         container_object : ContainerObjectParams
 
@@ -155,25 +117,20 @@ class AsyncReferenceClient:
         -------
         SendResponse
 
-
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedLiteral
 
-        client = AsyncSeedApi(
+        client = AsyncSeedLiteral(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.reference.send(
-                prompt="You are a helpful assistant",
-                query="query",
-                stream=True,
-                ending="\\$ending",
-                context="You're super wise",
+                query="What is the weather today",
                 container_object={
                     "nested_objects": [
                         {
@@ -189,13 +146,6 @@ class AsyncReferenceClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.send(
-            prompt=prompt,
-            query=query,
-            stream=stream,
-            ending=ending,
-            context=context,
-            container_object=container_object,
-            maybe_context=maybe_context,
-            request_options=request_options,
+            query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
         )
         return _response.data

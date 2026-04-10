@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,18 +7,18 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExamplesClient::new(config).expect("Failed to build client");
     client
         .service
-        .createmovie(
+        .create_movie(
             &Movie {
                 id: MovieId("id".to_string()),
                 prequel: Some(MovieId("prequel".to_string())),
                 title: "title".to_string(),
                 from: "from".to_string(),
                 rating: 1.1,
-                r#type: MovieType::Movie,
-                tag: CommonsTag("tag".to_string()),
+                r#type: "movie".to_string(),
+                tag: Tag("tag".to_string()),
                 book: Some("book".to_string()),
                 metadata: HashMap::from([(
                     "metadata".to_string(),

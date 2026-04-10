@@ -14,37 +14,21 @@ paths:
           required: true
           schema:
             type: string
-          example: pathParam
-          examples:
-            Example1:
-              value: pathParam
         - name: serviceParam
           in: path
           required: true
           schema:
             type: string
-          example: serviceParam
-          examples:
-            Example1:
-              value: serviceParam
         - name: endpointParam
           in: path
           required: true
           schema:
             type: integer
-          example: 1
-          examples:
-            Example1:
-              value: 1
         - name: resourceParam
           in: path
           required: true
           schema:
             type: string
-          example: resourceParam
-          examples:
-            Example1:
-              value: resourceParam
       responses:
         '204':
           description: ''

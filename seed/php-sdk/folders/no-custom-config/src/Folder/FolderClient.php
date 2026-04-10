@@ -2,6 +2,7 @@
 
 namespace Seed\Folder;
 
+use Seed\Folder\Service\ServiceClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Exceptions\SeedException;
@@ -12,6 +13,11 @@ use Psr\Http\Client\ClientExceptionInterface;
 
 class FolderClient
 {
+    /**
+     * @var ServiceClient $service
+     */
+    public ServiceClient $service;
+
     /**
      * @var array{
      *   baseUrl?: string,
@@ -44,6 +50,7 @@ class FolderClient
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+        $this->service = new ServiceClient($this->client, $this->options);
     }
 
     /**
@@ -65,7 +72,7 @@ class FolderClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "folder",
+                    path: "",
                     method: HttpMethod::POST,
                 ),
                 $options,

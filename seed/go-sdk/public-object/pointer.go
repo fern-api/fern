@@ -1,4 +1,4 @@
-package api
+package publicobject
 
 import (
 	"time"

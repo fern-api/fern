@@ -36,11 +36,11 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SeedApiTimeoutError = exports.SeedApiError = exports.SeedApiClient = exports.SeedApi = void 0;
-exports.SeedApi = __importStar(require("./api/index.js"));
+exports.SeedExhaustiveTimeoutError = exports.SeedExhaustiveError = exports.SeedExhaustiveClient = exports.SeedExhaustive = void 0;
+exports.SeedExhaustive = __importStar(require("./api/index.js"));
 var Client_js_1 = require("./Client.js");
-Object.defineProperty(exports, "SeedApiClient", { enumerable: true, get: function () { return Client_js_1.SeedApiClient; } });
+Object.defineProperty(exports, "SeedExhaustiveClient", { enumerable: true, get: function () { return Client_js_1.SeedExhaustiveClient; } });
 var index_js_1 = require("./errors/index.js");
-Object.defineProperty(exports, "SeedApiError", { enumerable: true, get: function () { return index_js_1.SeedApiError; } });
-Object.defineProperty(exports, "SeedApiTimeoutError", { enumerable: true, get: function () { return index_js_1.SeedApiTimeoutError; } });
+Object.defineProperty(exports, "SeedExhaustiveError", { enumerable: true, get: function () { return index_js_1.SeedExhaustiveError; } });
+Object.defineProperty(exports, "SeedExhaustiveTimeoutError", { enumerable: true, get: function () { return index_js_1.SeedExhaustiveTimeoutError; } });
 __exportStar(require("./exports.js"), exports);

@@ -18,13 +18,13 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Array[Seed::Types::User]]
-      def getusers(request_options: {}, **params)
+      # @return [Array[Seed::Retries::Types::User]]
+      def get_users(request_options: {}, **params)
         Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "users",
+          path: "/users",
           request_options: request_options
         )
         begin

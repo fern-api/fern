@@ -1,17 +1,17 @@
 import Foundation
 
 public enum UnionWithNullableReference: Codable, Hashable, Sendable {
-    case bar(UnionWithNullableReferenceBar)
-    case foo(UnionWithNullableReferenceFoo)
+    case bar(Nullable<Bar>)
+    case foo(Nullable<Foo>)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "bar":
-            self = .bar(try UnionWithNullableReferenceBar(from: decoder))
+            self = .bar(try container.decode(Nullable<Bar>.self, forKey: .value))
         case "foo":
-            self = .foo(try UnionWithNullableReferenceFoo(from: decoder))
+            self = .foo(try container.decode(Nullable<Foo>.self, forKey: .value))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -27,14 +27,15 @@ public enum UnionWithNullableReference: Codable, Hashable, Sendable {
         switch self {
         case .bar(let data):
             try container.encode("bar", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         case .foo(let data):
             try container.encode("foo", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
+        case value
     }
 }

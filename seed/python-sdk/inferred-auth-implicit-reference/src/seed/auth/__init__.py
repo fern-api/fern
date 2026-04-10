@@ -6,17 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        GetTokenRequestAudience,
-        GetTokenRequestGrantType,
-        RefreshTokenRequestAudience,
-        RefreshTokenRequestGrantType,
-    )
+    from .types import GetTokenRequest, RefreshTokenRequest, TokenResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "GetTokenRequestAudience": ".types",
-    "GetTokenRequestGrantType": ".types",
-    "RefreshTokenRequestAudience": ".types",
-    "RefreshTokenRequestGrantType": ".types",
+    "GetTokenRequest": ".types",
+    "RefreshTokenRequest": ".types",
+    "TokenResponse": ".types",
 }
 
 
@@ -41,9 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "GetTokenRequestAudience",
-    "GetTokenRequestGrantType",
-    "RefreshTokenRequestAudience",
-    "RefreshTokenRequestGrantType",
-]
+__all__ = ["GetTokenRequest", "RefreshTokenRequest", "TokenResponse"]

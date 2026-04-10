@@ -1,10 +1,13 @@
 import Foundation
-import Api
+import MultiLineDocs
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = MultiLineDocsClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.user.getuser(userId: "userId")
+    _ = try await client.user.createUser(request: .init(
+        name: "name",
+        age: 1
+    ))
 }
 
 try await main()

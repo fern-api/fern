@@ -7,23 +7,21 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import Double, LargeInteger, Sentence, Shape, SmallInteger, Type, Word
-    from . import _
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedValidation, SeedValidation
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedValidation": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "Double": ".types",
     "LargeInteger": ".types",
-    "SeedApi": ".client",
+    "SeedValidation": ".client",
     "Sentence": ".types",
     "Shape": ".types",
     "SmallInteger": ".types",
     "Type": ".types",
     "Word": ".types",
-    "_": "._",
     "__version__": ".version",
 }
 
@@ -50,17 +48,16 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedValidation",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Double",
     "LargeInteger",
-    "SeedApi",
+    "SeedValidation",
     "Sentence",
     "Shape",
     "SmallInteger",
     "Type",
     "Word",
-    "_",
     "__version__",
 ]

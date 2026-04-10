@@ -19,7 +19,7 @@ import Testing
         )
 
         do {
-            _ = try await client..getFoo(
+            _ = try await client.getFoo(
                 requiredBaz: "required_baz",
                 requiredNullableBaz: .value("required_nullable_baz"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -53,7 +53,7 @@ import Testing
         )
 
         do {
-            _ = try await client..getFoo(
+            _ = try await client.getFoo(
                 requiredBaz: "required_baz",
                 requiredNullableBaz: .value("required_nullable_baz"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -87,7 +87,7 @@ import Testing
         )
 
         do {
-            _ = try await client..getFoo(
+            _ = try await client.getFoo(
                 requiredBaz: "required_baz",
                 requiredNullableBaz: .value("required_nullable_baz"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -123,7 +123,7 @@ import Testing
         )
 
         do {
-            _ = try await client..getFoo(
+            _ = try await client.getFoo(
                 requiredBaz: "required_baz",
                 requiredNullableBaz: .value("required_nullable_baz"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -157,7 +157,7 @@ import Testing
         )
 
         do {
-            _ = try await client..getFoo(
+            _ = try await client.getFoo(
                 requiredBaz: "required_baz",
                 requiredNullableBaz: .value("required_nullable_baz"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -193,7 +193,7 @@ import Testing
         )
 
         do {
-            _ = try await client..getFoo(
+            _ = try await client.getFoo(
                 requiredBaz: "required_baz",
                 requiredNullableBaz: .value("required_nullable_baz"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -227,7 +227,7 @@ import Testing
         )
 
         do {
-            _ = try await client..getFoo(
+            _ = try await client.getFoo(
                 requiredBaz: "required_baz",
                 requiredNullableBaz: .value("required_nullable_baz"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)

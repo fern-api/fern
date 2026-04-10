@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 pub struct Patient {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,
-    pub resource_type: PatientResourceType,
+    pub resource_type: String,
     #[serde(default)]
     pub name: String,
     #[serde(default)]
@@ -21,7 +21,7 @@ impl Patient {
 #[non_exhaustive]
 pub struct PatientBuilder {
     base_resource_fields: Option<BaseResource>,
-    resource_type: Option<PatientResourceType>,
+    resource_type: Option<String>,
     name: Option<String>,
     scripts: Option<Vec<Script>>,
 }
@@ -32,8 +32,8 @@ impl PatientBuilder {
         self
     }
 
-    pub fn resource_type(mut self, value: PatientResourceType) -> Self {
-        self.resource_type = Some(value);
+    pub fn resource_type(mut self, value: impl Into<String>) -> Self {
+        self.resource_type = Some(value.into());
         self
     }
 

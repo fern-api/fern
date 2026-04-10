@@ -58,10 +58,18 @@ client.Bigunion.Get(
 
 ```go
 request := &fern.BigUnion{
-        BigUnionZero: &fern.BigUnionZero{
+        NormalSweet: &fern.NormalSweet{
             Value: "value",
-            Type: fern.BigUnionZeroTypeNormalSweet,
         },
+        ID: "id",
+        CreatedAt: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+        ArchivedAt: fern.Time(
+            fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+        ),
     }
 client.Bigunion.Update(
         context.TODO(),
@@ -109,10 +117,32 @@ client.Bigunion.Update(
 ```go
 request := []*fern.BigUnion{
         &fern.BigUnion{
-            BigUnionZero: &fern.BigUnionZero{
+            NormalSweet: &fern.NormalSweet{
                 Value: "value",
-                Type: fern.BigUnionZeroTypeNormalSweet,
             },
+            ID: "id",
+            CreatedAt: fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            ArchivedAt: fern.Time(
+                fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
+        },
+        &fern.BigUnion{
+            NormalSweet: &fern.NormalSweet{
+                Value: "value",
+            },
+            ID: "id",
+            CreatedAt: fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            ArchivedAt: fern.Time(
+                fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
         },
     }
 client.Bigunion.UpdateMany(
@@ -160,7 +190,7 @@ client.Bigunion.UpdateMany(
 <dd>
 
 ```go
-client.Union.Get(
+client.Bigunion.Get(
         context.TODO(),
         "id",
     )
@@ -205,10 +235,10 @@ client.Union.Get(
 
 ```go
 request := &fern.Shape{
-        ShapeZero: &fern.ShapeZero{
+        Circle: &fern.Circle{
             Radius: 1.1,
-            Type: fern.ShapeZeroTypeCircle,
         },
+        ID: "id",
     }
 client.Union.Update(
         context.TODO(),

@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\UserListRequest;
+use Seed\User\Requests\ListUsersRequest;
 
 $client = new SeedClient(
     options: [
@@ -11,7 +11,7 @@ $client = new SeedClient(
     ],
 );
 $client->user->list(
-    new UserListRequest([
+    new ListUsersRequest([
         'limit' => 1,
     ]),
 );

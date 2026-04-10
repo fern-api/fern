@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getuser</a>(userId: String, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUser</a>(userId: String, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import Version
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = VersionClient()
 
-    _ = try await client.user.getuser(userId: "userId")
+    _ = try await client.user.getUser(userId: "userId")
 }
 
 try await main()

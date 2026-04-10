@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/lib/seed/client.rb">get</a>() -> </code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```ruby
-client..get
+client.get
 ```
 </dd>
 </dl>
@@ -28,7 +27,7 @@ client..get
 <dl>
 <dd>
 
-**request_options:** `Seed::::RequestOptions` 
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

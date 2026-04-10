@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.listwithcustompager() -> UsersListResponse</code></summary>
+<details><summary><code>client.users.listWithCustomPager() -> FernCustomPaginator&amp;lt;UsersListResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,11 @@
 <dd>
 
 ```java
-client.users().listwithcustompager(
-    UsersListWithCustomPagerRequest
+client.users().listWithCustomPager(
+    ListWithCustomPagerRequest
         .builder()
+        .limit(1)
+        .startingAfter("starting_after")
         .build()
 );
 ```

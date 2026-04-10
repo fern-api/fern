@@ -5,7 +5,7 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client..upload_json_document(
+client.upload_json_document(
   author: "author",
   tags: %w[tags tags],
   title: "title"

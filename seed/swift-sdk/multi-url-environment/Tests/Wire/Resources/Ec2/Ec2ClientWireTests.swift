@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import MultiUrlEnvironment
 
 @Suite("Ec2Client Wire Tests") struct Ec2ClientWireTests {
 }

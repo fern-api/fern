@@ -1,7 +1,7 @@
 # Seed Rust Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
-[![crates.io shield](https://img.shields.io/crates/v/seed_api)](https://crates.io/crates/seed_api)
+[![crates.io shield](https://img.shields.io/crates/v/seed_query_parameters)](https://crates.io/crates/seed_query_parameters)
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
@@ -24,13 +24,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_api = "0.0.1"
+seed_query_parameters = "0.0.1"
 ```
 
 Or install via cargo:
 
 ```sh
-cargo add seed_api
+cargo add seed_query_parameters
 ```
 
 ## Reference
@@ -42,33 +42,42 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use seed_api::prelude::*;
+use seed_query_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = QueryParametersClient::new(config).expect("Failed to build client");
     client
         .user
-        .getusername(
-            &GetusernameQueryRequest {
+        .get_username(
+            &GetUsernameQueryRequest {
                 limit: 1,
-                id: "id".to_string(),
+                id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
                 deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                bytes: "bytes".to_string(),
+                bytes: base64::engine::general_purpose::STANDARD
+                    .decode("SGVsbG8gd29ybGQh")
+                    .unwrap(),
                 user: User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
                     ..Default::default()
                 },
-                user_list: vec![Some(User {
-                    name: "name".to_string(),
-                    tags: vec!["tags".to_string(), "tags".to_string()],
-                    ..Default::default()
-                })],
+                user_list: vec![
+                    User {
+                        name: "name".to_string(),
+                        tags: vec!["tags".to_string(), "tags".to_string()],
+                        ..Default::default()
+                    },
+                    User {
+                        name: "name".to_string(),
+                        tags: vec!["tags".to_string(), "tags".to_string()],
+                        ..Default::default()
+                    },
+                ],
                 optional_deadline: Some(
                     DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 ),
@@ -88,12 +97,12 @@ async fn main() {
                     tags: vec!["tags".to_string(), "tags".to_string()],
                     ..Default::default()
                 }),
-                exclude_user: vec![Some(User {
+                exclude_user: vec![User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
                     ..Default::default()
-                })],
-                filter: vec![Some("filter".to_string())],
+                }],
+                filter: vec!["filter".to_string()],
             },
             None,
         )
@@ -106,7 +115,7 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.user.getusername(None)?.await {
+match client.user.get_username(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -136,7 +145,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.user.getusername(
+let response = client.user.get_username(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -146,7 +155,7 @@ let response = client.user.getusername(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.user.getusername(
+let response = client.user.get_username(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -156,7 +165,7 @@ let response = client.user.getusername(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.user.getusername(
+let response = client.user.get_username(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -171,7 +180,7 @@ let response = client.user.getusername(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.user.getusername(
+let response = client.user.get_username(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

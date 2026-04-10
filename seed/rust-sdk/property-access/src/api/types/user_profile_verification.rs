@@ -31,7 +31,9 @@ impl UserProfileVerificationBuilder {
     /// - [`verified`](UserProfileVerificationBuilder::verified)
     pub fn build(self) -> Result<UserProfileVerification, BuildError> {
         Ok(UserProfileVerification {
-            verified: self.verified.ok_or_else(|| BuildError::missing_field("verified"))?,
+            verified: self
+                .verified
+                .ok_or_else(|| BuildError::missing_field("verified"))?,
         })
     }
 }

@@ -1,0 +1,20 @@
+using SeedExamples.Core;
+using SeedExamples.File_.Notification;
+
+namespace SeedExamples.File_;
+
+public partial class FileClient : IFileClient
+{
+    private readonly RawClient _client;
+
+    internal FileClient(RawClient client)
+    {
+        _client = client;
+        Notification = new NotificationClient(_client);
+        Service = new ServiceClient(_client);
+    }
+
+    public INotificationClient Notification { get; }
+
+    public IServiceClient Service { get; }
+}

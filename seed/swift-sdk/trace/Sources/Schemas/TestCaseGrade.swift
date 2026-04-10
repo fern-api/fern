@@ -1,30 +1,40 @@
 import Foundation
 
 public enum TestCaseGrade: Codable, Hashable, Sendable {
-    case testCaseGradeOne(TestCaseGradeOne)
-    case testCaseGradeZero(TestCaseGradeZero)
+    case hidden(TestCaseHiddenGrade)
+    case nonHidden(TestCaseNonHiddenGrade)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if let value = try? container.decode(TestCaseGradeOne.self) {
-            self = .testCaseGradeOne(value)
-        } else if let value = try? container.decode(TestCaseGradeZero.self) {
-            self = .testCaseGradeZero(value)
-        } else {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Unexpected value."
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let discriminant = try container.decode(String.self, forKey: .type)
+        switch discriminant {
+        case "hidden":
+            self = .hidden(try TestCaseHiddenGrade(from: decoder))
+        case "nonHidden":
+            self = .nonHidden(try TestCaseNonHiddenGrade(from: decoder))
+        default:
+            throw DecodingError.dataCorrupted(
+                DecodingError.Context(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
+                )
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.singleValueContainer()
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .testCaseGradeOne(let value):
-            try container.encode(value)
-        case .testCaseGradeZero(let value):
-            try container.encode(value)
+        case .hidden(let data):
+            try container.encode("hidden", forKey: .type)
+            try data.encode(to: encoder)
+        case .nonHidden(let data):
+            try container.encode("nonHidden", forKey: .type)
+            try data.encode(to: encoder)
         }
+    }
+
+    enum CodingKeys: String, CodingKey, CaseIterable {
+        case type
     }
 }

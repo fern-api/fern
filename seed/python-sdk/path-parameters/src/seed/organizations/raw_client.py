@@ -10,8 +10,8 @@ from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..types.organization import Organization
-from ..types.user import User
+from ..user.types.user import User
+from .types.organization import Organization
 from pydantic import ValidationError
 
 
@@ -19,7 +19,7 @@ class RawOrganizationsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def getorganization(
+    def get_organization(
         self, tenant_id: str, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Organization]:
         """
@@ -35,7 +35,6 @@ class RawOrganizationsClient:
         Returns
         -------
         HttpResponse[Organization]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/",
@@ -61,7 +60,7 @@ class RawOrganizationsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def getorganizationuser(
+    def get_organization_user(
         self,
         tenant_id: str,
         organization_id: str,
@@ -84,7 +83,6 @@ class RawOrganizationsClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/users/{encode_path_param(user_id)}",
@@ -110,7 +108,7 @@ class RawOrganizationsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def searchorganizations(
+    def search_organizations(
         self,
         tenant_id: str,
         organization_id: str,
@@ -133,7 +131,6 @@ class RawOrganizationsClient:
         Returns
         -------
         HttpResponse[typing.List[Organization]]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/search",
@@ -167,7 +164,7 @@ class AsyncRawOrganizationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def getorganization(
+    async def get_organization(
         self, tenant_id: str, organization_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Organization]:
         """
@@ -183,7 +180,6 @@ class AsyncRawOrganizationsClient:
         Returns
         -------
         AsyncHttpResponse[Organization]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/",
@@ -209,7 +205,7 @@ class AsyncRawOrganizationsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def getorganizationuser(
+    async def get_organization_user(
         self,
         tenant_id: str,
         organization_id: str,
@@ -232,7 +228,6 @@ class AsyncRawOrganizationsClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/users/{encode_path_param(user_id)}",
@@ -258,7 +253,7 @@ class AsyncRawOrganizationsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def searchorganizations(
+    async def search_organizations(
         self,
         tenant_id: str,
         organization_id: str,
@@ -281,7 +276,6 @@ class AsyncRawOrganizationsClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[Organization]]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"{encode_path_param(tenant_id)}/organizations/{encode_path_param(organization_id)}/search",

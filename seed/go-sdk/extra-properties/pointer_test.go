@@ -1,4 +1,4 @@
-package api
+package extraproperties
 
 import (
 	"testing"

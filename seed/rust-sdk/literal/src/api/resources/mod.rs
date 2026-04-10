@@ -15,7 +15,7 @@ pub mod inlined;
 pub mod path;
 pub mod query;
 pub mod reference;
-pub struct ApiClient {
+pub struct LiteralClient {
     pub config: ClientConfig,
     pub headers: HeadersClient,
     pub inlined: InlinedClient,
@@ -24,7 +24,7 @@ pub struct ApiClient {
     pub reference: ReferenceClient,
 }
 
-impl ApiClient {
+impl LiteralClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

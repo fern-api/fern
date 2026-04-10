@@ -1,24 +1,24 @@
 import Foundation
 
 public indirect enum JsonLikeWithNullAndUndefined: Codable, Hashable, Sendable {
-    case jsonLikeWithNullAndUndefinedArray([JsonLikeWithNullAndUndefined])
-    case nullableBool(Nullable<Bool>)
-    case nullableInt(Nullable<Int>)
-    case nullableString(Nullable<String>)
-    case stringToJsonLikeWithNullAndUndefinedDictionary([String: JsonLikeWithNullAndUndefined])
+    case optionalNullableBool(Nullable<Bool>?)
+    case optionalNullableInt(Nullable<Int>?)
+    case optionalNullableJsonLikeWithNullAndUndefinedArray([Nullable<JsonLikeWithNullAndUndefined>?])
+    case optionalNullableString(Nullable<String>?)
+    case stringToOptionalNullableJsonLikeWithNullAndUndefinedDictionary([String: Nullable<JsonLikeWithNullAndUndefined>?])
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let value = try? container.decode([JsonLikeWithNullAndUndefined].self) {
-            self = .jsonLikeWithNullAndUndefinedArray(value)
-        } else if let value = try? container.decode(Nullable<Bool>.self) {
-            self = .nullableBool(value)
-        } else if let value = try? container.decode(Nullable<Int>.self) {
-            self = .nullableInt(value)
-        } else if let value = try? container.decode(Nullable<String>.self) {
-            self = .nullableString(value)
-        } else if let value = try? container.decode([String: JsonLikeWithNullAndUndefined].self) {
-            self = .stringToJsonLikeWithNullAndUndefinedDictionary(value)
+        if let value = try? container.decode(Nullable<Bool>?.self) {
+            self = .optionalNullableBool(value)
+        } else if let value = try? container.decode(Nullable<Int>?.self) {
+            self = .optionalNullableInt(value)
+        } else if let value = try? container.decode([Nullable<JsonLikeWithNullAndUndefined>?].self) {
+            self = .optionalNullableJsonLikeWithNullAndUndefinedArray(value)
+        } else if let value = try? container.decode(Nullable<String>?.self) {
+            self = .optionalNullableString(value)
+        } else if let value = try? container.decode([String: Nullable<JsonLikeWithNullAndUndefined>?].self) {
+            self = .stringToOptionalNullableJsonLikeWithNullAndUndefinedDictionary(value)
         } else {
             throw DecodingError.dataCorruptedError(
                 in: container,
@@ -30,15 +30,15 @@ public indirect enum JsonLikeWithNullAndUndefined: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.singleValueContainer()
         switch self {
-        case .jsonLikeWithNullAndUndefinedArray(let value):
+        case .optionalNullableBool(let value):
             try container.encode(value)
-        case .nullableBool(let value):
+        case .optionalNullableInt(let value):
             try container.encode(value)
-        case .nullableInt(let value):
+        case .optionalNullableJsonLikeWithNullAndUndefinedArray(let value):
             try container.encode(value)
-        case .nullableString(let value):
+        case .optionalNullableString(let value):
             try container.encode(value)
-        case .stringToJsonLikeWithNullAndUndefinedDictionary(let value):
+        case .stringToOptionalNullableJsonLikeWithNullAndUndefinedDictionary(let value):
             try container.encode(value)
         }
     }

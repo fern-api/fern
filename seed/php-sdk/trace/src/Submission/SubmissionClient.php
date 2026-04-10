@@ -4,8 +4,8 @@ namespace Seed\Submission;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Types\Language;
-use Seed\Types\ExecutionSessionResponse;
+use Seed\Commons\Types\Language;
+use Seed\Submission\Types\ExecutionSessionResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -13,7 +13,7 @@ use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Types\GetExecutionSessionStateResponse;
+use Seed\Submission\Types\GetExecutionSessionStateResponse;
 
 class SubmissionClient
 {
@@ -67,14 +67,14 @@ class SubmissionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createexecutionsession(string $language, ?array $options = null): ?ExecutionSessionResponse
+    public function createExecutionSession(string $language, ?array $options = null): ?ExecutionSessionResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "sessions/create-session/{$language}",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/sessions/create-session/{$language}",
                     method: HttpMethod::POST,
                 ),
                 $options,
@@ -115,14 +115,14 @@ class SubmissionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getexecutionsession(string $sessionId, ?array $options = null): ?ExecutionSessionResponse
+    public function getExecutionSession(string $sessionId, ?array $options = null): ?ExecutionSessionResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "sessions/{$sessionId}",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/sessions/{$sessionId}",
                     method: HttpMethod::GET,
                 ),
                 $options,
@@ -162,14 +162,14 @@ class SubmissionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function stopexecutionsession(string $sessionId, ?array $options = null): void
+    public function stopExecutionSession(string $sessionId, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "sessions/stop/{$sessionId}",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/sessions/stop/{$sessionId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,
@@ -201,14 +201,14 @@ class SubmissionClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getexecutionsessionsstate(?array $options = null): ?GetExecutionSessionStateResponse
+    public function getExecutionSessionsState(?array $options = null): ?GetExecutionSessionStateResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Default_->value,
-                    path: "sessions/execution-sessions-state",
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Prod->value,
+                    path: "/sessions/execution-sessions-state",
                     method: HttpMethod::GET,
                 ),
                 $options,

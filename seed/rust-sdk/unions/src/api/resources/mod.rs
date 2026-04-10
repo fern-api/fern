@@ -3,19 +3,21 @@
 //! This module contains client implementations for:
 //!
 //! - **Bigunion**
+//! - **Types**
 //! - **Union**
 
 use crate::{ApiError, ClientConfig};
 
 pub mod bigunion;
+pub mod types;
 pub mod union_;
-pub struct ApiClient {
+pub struct UnionsClient {
     pub config: ClientConfig,
     pub bigunion: BigunionClient,
     pub union_: UnionClient,
 }
 
-impl ApiClient {
+impl UnionsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
@@ -26,4 +28,5 @@ impl ApiClient {
 }
 
 pub use bigunion::BigunionClient;
+pub use types::TypesClient;
 pub use union_::UnionClient;

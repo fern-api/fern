@@ -1,29 +1,29 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.mjs";
 import { type NormalizedClientOptionsWithAuth } from "../../../../BaseClient.mjs";
 import * as core from "../../../../core/index.mjs";
-import type * as SeedApi from "../../../index.mjs";
-export declare namespace NoreqbodyClient {
+import type * as SeedExhaustive from "../../../index.mjs";
+export declare namespace NoReqBodyClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }
-export declare class NoreqbodyClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<NoreqbodyClient.Options>;
-    constructor(options: NoreqbodyClient.Options);
+export declare class NoReqBodyClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<NoReqBodyClient.Options>;
+    constructor(options: NoReqBodyClient.Options);
     /**
-     * @param {NoreqbodyClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.noreqbody.getwithnorequestbody()
+     *     await client.noReqBody.getWithNoRequestBody()
      */
-    getwithnorequestbody(requestOptions?: NoreqbodyClient.RequestOptions): core.HttpResponsePromise<SeedApi.TypesObjectWithOptionalField>;
-    private __getwithnorequestbody;
+    getWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    private __getWithNoRequestBody;
     /**
-     * @param {NoreqbodyClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.noreqbody.postwithnorequestbody()
+     *     await client.noReqBody.postWithNoRequestBody()
      */
-    postwithnorequestbody(requestOptions?: NoreqbodyClient.RequestOptions): core.HttpResponsePromise<string>;
-    private __postwithnorequestbody;
+    postWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<string>;
+    private __postWithNoRequestBody;
 }

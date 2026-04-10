@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.getusers() -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.nullable.getUsers() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,20 @@
 <dd>
 
 ```java
-client.nullable().getusers(
-    NullableGetUsersRequest
+client.nullable().getUsers(
+    GetUsersRequest
         .builder()
+        .usernames(
+            Arrays.asList("usernames")
+        )
+        .activated(
+            Arrays.asList(true)
+        )
+        .tags(
+            Arrays.asList(Optional.of("tags"))
+        )
+        .avatar("avatar")
+        .extra(true)
         .build()
 );
 ```
@@ -76,7 +87,7 @@ client.nullable().getusers(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.createuser(request) -> User</code></summary>
+<details><summary><code>client.nullable.createUser(request) -> User</code></summary>
 <dl>
 <dd>
 
@@ -89,10 +100,33 @@ client.nullable().getusers(
 <dd>
 
 ```java
-client.nullable().createuser(
-    NullableCreateUserRequest
+client.nullable().createUser(
+    CreateUserRequest
         .builder()
         .username("username")
+        .tags(
+            Optional.of(
+                Arrays.asList("tags", "tags")
+            )
+        )
+        .metadata(
+            Metadata
+                .builder()
+                .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                .status(
+                    Status.active()
+                )
+                .avatar("avatar")
+                .activated(true)
+                .values(
+                    new HashMap<String, Optional<String>>() {{
+                        put("values", Optional.of("values"));
+                    }}
+                )
+                .build()
+        )
+        .avatar("avatar")
         .build()
 );
 ```
@@ -145,7 +179,7 @@ client.nullable().createuser(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.deleteuser(request) -> Boolean</code></summary>
+<details><summary><code>client.nullable.deleteUser(request) -> Boolean</code></summary>
 <dl>
 <dd>
 
@@ -158,9 +192,10 @@ client.nullable().createuser(
 <dd>
 
 ```java
-client.nullable().deleteuser(
-    NullableDeleteUserRequest
+client.nullable().deleteUser(
+    DeleteUserRequest
         .builder()
+        .username("xy")
         .build()
 );
 ```

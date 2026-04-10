@@ -3,10 +3,9 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Admin\Requests\AdminStoreTracedTestCaseV2Request;
-use Seed\Types\TraceResponseV2;
-use Seed\Types\TracedFile;
-use Seed\Types\StackInformation;
+use Seed\Playlist\Requests\CreatePlaylistRequest;
+use DateTime;
+use Seed\Playlist\Types\PlaylistCreateRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -14,22 +13,17 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->admin->storetracedtestcasev2(
-    'submissionId',
-    'testCaseId',
-    new AdminStoreTracedTestCaseV2Request([
-        'body' => [
-            new TraceResponseV2([
-                'submissionId' => 'submissionId',
-                'lineNumber' => 1,
-                'file' => new TracedFile([
-                    'filename' => 'filename',
-                    'directory' => 'directory',
-                ]),
-                'stack' => new StackInformation([
-                    'numStackFrames' => 1,
-                ]),
-            ]),
-        ],
+$client->playlist->createPlaylist(
+    1,
+    new CreatePlaylistRequest([
+        'datetime' => new DateTime('2024-01-15T09:30:00Z'),
+        'optionalDatetime' => new DateTime('2024-01-15T09:30:00Z'),
+        'body' => new PlaylistCreateRequest([
+            'name' => 'name',
+            'problems' => [
+                'problems',
+                'problems',
+            ],
+        ]),
     ]),
 );

@@ -9,10 +9,10 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
-    from .basicauth.client import AsyncBasicauthClient, BasicauthClient
+    from .basic_auth.client import AsyncBasicAuthClient, BasicAuthClient
 
 
-class SeedApi:
+class SeedBasicAuth:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -40,9 +40,9 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedBasicAuth
 
-    client = SeedApi(
+    client = SeedBasicAuth(
         username="YOUR_USERNAME",
         password="YOUR_PASSWORD",
         base_url="https://yourhost.com/path/to/api",
@@ -77,15 +77,15 @@ class SeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._basicauth: typing.Optional[BasicauthClient] = None
+        self._basic_auth: typing.Optional[BasicAuthClient] = None
 
     @property
-    def basicauth(self):
-        if self._basicauth is None:
-            from .basicauth.client import BasicauthClient  # noqa: E402
+    def basic_auth(self):
+        if self._basic_auth is None:
+            from .basic_auth.client import BasicAuthClient  # noqa: E402
 
-            self._basicauth = BasicauthClient(client_wrapper=self._client_wrapper)
-        return self._basicauth
+            self._basic_auth = BasicAuthClient(client_wrapper=self._client_wrapper)
+        return self._basic_auth
 
 
 def _make_default_async_client(
@@ -106,7 +106,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedBasicAuth:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -134,9 +134,9 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedBasicAuth
 
-    client = AsyncSeedApi(
+    client = AsyncSeedBasicAuth(
         username="YOUR_USERNAME",
         password="YOUR_PASSWORD",
         base_url="https://yourhost.com/path/to/api",
@@ -169,12 +169,12 @@ class AsyncSeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._basicauth: typing.Optional[AsyncBasicauthClient] = None
+        self._basic_auth: typing.Optional[AsyncBasicAuthClient] = None
 
     @property
-    def basicauth(self):
-        if self._basicauth is None:
-            from .basicauth.client import AsyncBasicauthClient  # noqa: E402
+    def basic_auth(self):
+        if self._basic_auth is None:
+            from .basic_auth.client import AsyncBasicAuthClient  # noqa: E402
 
-            self._basicauth = AsyncBasicauthClient(client_wrapper=self._client_wrapper)
-        return self._basicauth
+            self._basic_auth = AsyncBasicAuthClient(client_wrapper=self._client_wrapper)
+        return self._basic_auth

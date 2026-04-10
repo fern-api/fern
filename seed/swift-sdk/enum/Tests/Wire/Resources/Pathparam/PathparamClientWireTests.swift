@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import Enum
 
-@Suite("PathparamClient Wire Tests") struct PathparamClientWireTests {
+@Suite("PathParamClient Wire Tests") struct PathParamClientWireTests {
 }

@@ -13,7 +13,6 @@ if typing.TYPE_CHECKING:
     from .forward_compatible_enum import ForwardCompatibleEnum
     from .operand import Operand
     from .special_enum import SpecialEnum
-    from .status import Status
 _dynamic_imports: typing.Dict[str, str] = {
     "Color": ".color",
     "ColorOrOperand": ".color_or_operand",
@@ -22,7 +21,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ForwardCompatibleEnum": ".forward_compatible_enum",
     "Operand": ".operand",
     "SpecialEnum": ".special_enum",
-    "Status": ".status",
 }
 
 
@@ -55,5 +53,4 @@ __all__ = [
     "ForwardCompatibleEnum",
     "Operand",
     "SpecialEnum",
-    "Status",
 ]

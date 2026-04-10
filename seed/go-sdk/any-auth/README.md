@@ -9,6 +9,7 @@ The Seed Go library provides convenient access to the Seed APIs from Go.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Environments](#environments)
+- [Oauth](#oauth)
 - [Errors](#errors)
 - [Request Options](#request-options)
 - [Advanced](#advanced)
@@ -42,17 +43,12 @@ func do() {
         option.WithToken(
             "<token>",
         ),
-        option.WithAPIKey(
-            "<X-API-Key>",
-        ),
     )
-    request := &fern.AuthGetTokenRequest{
+    request := &fern.GetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
-        Audience: fern.AuthGetTokenRequestAudienceHttpsApiExampleCom,
-        GrantType: fern.AuthGetTokenRequestGrantTypeClientCredentials,
     }
-    client.Auth.Gettoken(
+    client.Auth.GetToken(
         context.TODO(),
         request,
     )
@@ -70,13 +66,38 @@ client := client.NewClient(
 )
 ```
 
+## Oauth
+
+This SDK supports OAuth 2.0 authentication. You have two options for providing credentials:
+
+**Option 1: Client Credentials** - Provide your client ID and secret, and the SDK will automatically handle
+token fetching and refresh:
+
+**Option 2: Direct Token** - If you already have an access token (e.g., obtained through your own OAuth flow),
+you can provide it directly:
+
+```go
+// Option 1: Use client credentials (SDK will handle token fetching and refresh)
+client := client.NewClient(
+    option.WithClientCredentials(
+        "<YOUR_CLIENT_ID>",
+        "<YOUR_CLIENT_SECRET>",
+    ),
+)
+
+// Option 2: Use a pre-fetched token directly
+client := client.NewClient(
+    option.WithToken("<YOUR_ACCESS_TOKEN>"),
+)
+```
+
 ## Errors
 
 Structured error types are returned from API calls that return non-success status codes. These errors are compatible
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.Auth.Gettoken(...)
+response, err := client.Auth.GetToken(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -110,7 +131,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.Auth.Gettoken(
+response, err := client.Auth.GetToken(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -125,7 +146,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.Auth.WithRawResponse.Gettoken(...)
+response, err := client.Auth.WithRawResponse.GetToken(...)
 if err != nil {
     return err
 }
@@ -155,7 +176,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.Auth.Gettoken(
+response, err := client.Auth.GetToken(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -169,7 +190,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Auth.Gettoken(ctx, ...)
+response, err := client.Auth.GetToken(ctx, ...)
 ```
 
 ### Explicit Null
@@ -191,7 +212,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.Auth.Gettoken(ctx, request, ...)
+response, err := client.Auth.GetToken(ctx, request, ...)
 ```
 
 ## Contributing

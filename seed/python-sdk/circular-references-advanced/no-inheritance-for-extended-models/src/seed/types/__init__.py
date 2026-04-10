@@ -6,66 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .a import A
-    from .acai import Acai
-    from .animal import Animal
-    from .berry import Berry
-    from .branch_node import BranchNode
-    from .cat import Cat
-    from .container_value import ContainerValue, ContainerValue_List, ContainerValue_Optional
-    from .container_value_list import ContainerValueList
-    from .container_value_optional import ContainerValueOptional
-    from .dog import Dog
-    from .field_name import FieldName
-    from .field_value import FieldValue
-    from .field_value_one import FieldValueOne
-    from .field_value_one_type import FieldValueOneType
-    from .field_value_two import FieldValueTwo
-    from .field_value_two_type import FieldValueTwoType
-    from .field_value_zero import FieldValueZero
-    from .field_value_zero_type import FieldValueZeroType
-    from .fig import Fig
-    from .fruit import Fruit
     from .importing_a import ImportingA
-    from .leaf_node import LeafNode
-    from .node import Node
-    from .nodes_wrapper import NodesWrapper
-    from .object_field_value import ObjectFieldValue
-    from .object_value import ObjectValue
-    from .primitive_value import PrimitiveValue
     from .root_type import RootType
-_dynamic_imports: typing.Dict[str, str] = {
-    "A": ".a",
-    "Acai": ".acai",
-    "Animal": ".animal",
-    "Berry": ".berry",
-    "BranchNode": ".branch_node",
-    "Cat": ".cat",
-    "ContainerValue": ".container_value",
-    "ContainerValueList": ".container_value_list",
-    "ContainerValueOptional": ".container_value_optional",
-    "ContainerValue_List": ".container_value",
-    "ContainerValue_Optional": ".container_value",
-    "Dog": ".dog",
-    "FieldName": ".field_name",
-    "FieldValue": ".field_value",
-    "FieldValueOne": ".field_value_one",
-    "FieldValueOneType": ".field_value_one_type",
-    "FieldValueTwo": ".field_value_two",
-    "FieldValueTwoType": ".field_value_two_type",
-    "FieldValueZero": ".field_value_zero",
-    "FieldValueZeroType": ".field_value_zero_type",
-    "Fig": ".fig",
-    "Fruit": ".fruit",
-    "ImportingA": ".importing_a",
-    "LeafNode": ".leaf_node",
-    "Node": ".node",
-    "NodesWrapper": ".nodes_wrapper",
-    "ObjectFieldValue": ".object_field_value",
-    "ObjectValue": ".object_value",
-    "PrimitiveValue": ".primitive_value",
-    "RootType": ".root_type",
-}
+_dynamic_imports: typing.Dict[str, str] = {"ImportingA": ".importing_a", "RootType": ".root_type"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -89,35 +32,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "A",
-    "Acai",
-    "Animal",
-    "Berry",
-    "BranchNode",
-    "Cat",
-    "ContainerValue",
-    "ContainerValueList",
-    "ContainerValueOptional",
-    "ContainerValue_List",
-    "ContainerValue_Optional",
-    "Dog",
-    "FieldName",
-    "FieldValue",
-    "FieldValueOne",
-    "FieldValueOneType",
-    "FieldValueTwo",
-    "FieldValueTwoType",
-    "FieldValueZero",
-    "FieldValueZeroType",
-    "Fig",
-    "Fruit",
-    "ImportingA",
-    "LeafNode",
-    "Node",
-    "NodesWrapper",
-    "ObjectFieldValue",
-    "ObjectValue",
-    "PrimitiveValue",
-    "RootType",
-]
+__all__ = ["ImportingA", "RootType"]

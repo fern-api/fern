@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">patch</a>(request: Requests.ServicePatchRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">patch</a>(request: Requests.PatchProxyRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -14,14 +14,14 @@
 
 ```swift
 import Foundation
-import Api
+import ContentTypes
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ContentTypesClient()
 
     _ = try await client.service.patch(request: .init(
-        application: .null,
-        requireAuth: .null
+        application: .value("application"),
+        requireAuth: .value(true)
     ))
 }
 
@@ -40,7 +40,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ServicePatchRequest` 
+**request:** `Requests.PatchProxyRequest` 
     
 </dd>
 </dl>
@@ -60,7 +60,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">patchcomplex</a>(id: String, request: Requests.ServicePatchComplexRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">patchComplex</a>(id: String, request: Requests.PatchComplexRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -91,14 +91,36 @@ This endpoint demonstrates the distinction between:
 
 ```swift
 import Foundation
-import Api
+import ContentTypes
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ContentTypesClient()
 
-    _ = try await client.service.patchcomplex(
+    _ = try await client.service.patchComplex(
         id: "id",
-        request: .init()
+        request: .init(
+            name: "name",
+            age: 1,
+            active: true,
+            metadata: [
+                "metadata": .object([
+                    "key": .string("value")
+                ])
+            ],
+            tags: [
+                "tags",
+                "tags"
+            ],
+            email: .value("email"),
+            nickname: .value("nickname"),
+            bio: .value("bio"),
+            profileImageUrl: .value("profileImageUrl"),
+            settings: .value([
+                "settings": .object([
+                    "key": .string("value")
+                ])
+            ])
+        )
     )
 }
 
@@ -125,7 +147,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ServicePatchComplexRequest` 
+**request:** `Requests.PatchComplexRequest` 
     
 </dd>
 </dl>
@@ -145,7 +167,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">namedpatchwithmixed</a>(id: String, request: Requests.ServiceNamedPatchWithMixedRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">namedPatchWithMixed</a>(id: String, request: Requests.NamedMixedPatchRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -174,16 +196,17 @@ This should trigger the NPE issue when optional fields aren't initialized.
 
 ```swift
 import Foundation
-import Api
+import ContentTypes
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ContentTypesClient()
 
-    _ = try await client.service.namedpatchwithmixed(
+    _ = try await client.service.namedPatchWithMixed(
         id: "id",
         request: .init(
-            instructions: .null,
-            active: .null
+            appId: "appId",
+            instructions: .value("instructions"),
+            active: .value(true)
         )
     )
 }
@@ -211,7 +234,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ServiceNamedPatchWithMixedRequest` 
+**request:** `Requests.NamedMixedPatchRequest` 
     
 </dd>
 </dl>
@@ -231,7 +254,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">optionalmergepatchtest</a>(request: Requests.ServiceOptionalMergePatchTestRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">optionalMergePatchTest</a>(request: Requests.OptionalMergePatchRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -262,14 +285,17 @@ This endpoint should:
 
 ```swift
 import Foundation
-import Api
+import ContentTypes
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ContentTypesClient()
 
-    _ = try await client.service.optionalmergepatchtest(request: .init(
+    _ = try await client.service.optionalMergePatchTest(request: .init(
         requiredField: "requiredField",
-        nullableString: .null
+        optionalString: "optionalString",
+        optionalInteger: 1,
+        optionalBoolean: true,
+        nullableString: .value("nullableString")
     ))
 }
 
@@ -288,7 +314,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ServiceOptionalMergePatchTestRequest` 
+**request:** `Requests.OptionalMergePatchRequest` 
     
 </dd>
 </dl>
@@ -308,7 +334,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">regularpatch</a>(id: String, request: Requests.ServiceRegularPatchRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">regularPatch</a>(id: String, request: Requests.RegularPatchRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -336,14 +362,17 @@ Regular PATCH endpoint without merge-patch semantics
 
 ```swift
 import Foundation
-import Api
+import ContentTypes
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = ContentTypesClient()
 
-    _ = try await client.service.regularpatch(
+    _ = try await client.service.regularPatch(
         id: "id",
-        request: .init()
+        request: .init(
+            field1: "field1",
+            field2: 1
+        )
     )
 }
 
@@ -370,7 +399,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ServiceRegularPatchRequest` 
+**request:** `Requests.RegularPatchRequest` 
     
 </dd>
 </dl>

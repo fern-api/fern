@@ -2,19 +2,19 @@ import Foundation
 
 public struct CursorPages: Codable, Hashable, Sendable {
     public let next: StartingAfterPaging?
-    public let page: Nullable<Int>?
-    public let perPage: Nullable<Int>?
-    public let totalPages: Nullable<Int>?
-    public let type: CursorPagesType
+    public let page: Int?
+    public let perPage: Int?
+    public let totalPages: Int?
+    public let type: Pages
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         next: StartingAfterPaging? = nil,
-        page: Nullable<Int>? = nil,
-        perPage: Nullable<Int>? = nil,
-        totalPages: Nullable<Int>? = nil,
-        type: CursorPagesType,
+        page: Int? = nil,
+        perPage: Int? = nil,
+        totalPages: Int? = nil,
+        type: Pages,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.next = next
@@ -28,10 +28,10 @@ public struct CursorPages: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.next = try container.decodeIfPresent(StartingAfterPaging.self, forKey: .next)
-        self.page = try container.decodeNullableIfPresent(Int.self, forKey: .page)
-        self.perPage = try container.decodeNullableIfPresent(Int.self, forKey: .perPage)
-        self.totalPages = try container.decodeNullableIfPresent(Int.self, forKey: .totalPages)
-        self.type = try container.decode(CursorPagesType.self, forKey: .type)
+        self.page = try container.decodeIfPresent(Int.self, forKey: .page)
+        self.perPage = try container.decodeIfPresent(Int.self, forKey: .perPage)
+        self.totalPages = try container.decodeIfPresent(Int.self, forKey: .totalPages)
+        self.type = try container.decode(Pages.self, forKey: .type)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -39,10 +39,14 @@ public struct CursorPages: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encodeIfPresent(self.next, forKey: .next)
-        try container.encodeNullableIfPresent(self.page, forKey: .page)
-        try container.encodeNullableIfPresent(self.perPage, forKey: .perPage)
-        try container.encodeNullableIfPresent(self.totalPages, forKey: .totalPages)
+        try container.encodeIfPresent(self.page, forKey: .page)
+        try container.encodeIfPresent(self.perPage, forKey: .perPage)
+        try container.encodeIfPresent(self.totalPages, forKey: .totalPages)
         try container.encode(self.type, forKey: .type)
+    }
+
+    public enum Pages: String, Codable, Hashable, CaseIterable, Sendable {
+        case pages
     }
 
     /// Keys for encoding/decoding struct properties.

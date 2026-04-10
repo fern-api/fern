@@ -3,7 +3,7 @@
 module Seed
   module Types
     class Practitioner < Internal::Types::Model
-      field :resource_type, -> { Seed::Types::PractitionerResourceType }, optional: false, nullable: false
+      field :resource_type, -> { String }, optional: false, nullable: false
       field :name, -> { String }, optional: false, nullable: false
     end
   end

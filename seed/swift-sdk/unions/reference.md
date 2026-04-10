@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import Api
+import Unions
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = UnionsClient()
 
     _ = try await client.bigunion.get(id: "id")
 }
@@ -71,15 +71,14 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Unions
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = UnionsClient()
 
-    _ = try await client.bigunion.update(request: BigUnion.bigUnionZero(
-        BigUnionZero(
-            value: "value",
-            type: .normalSweet
+    _ = try await client.bigunion.update(request: BigUnion.normalSweet(
+        NormalSweet(
+            value: "value"
         )
     ))
 }
@@ -133,16 +132,20 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Unions
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = UnionsClient()
 
     _ = try await client.bigunion.updateMany(request: [
-        BigUnion.bigUnionZero(
-            BigUnionZero(
-                value: "value",
-                type: .normalSweet
+        BigUnion.normalSweet(
+            NormalSweet(
+                value: "value"
+            )
+        ),
+        BigUnion.normalSweet(
+            NormalSweet(
+                value: "value"
             )
         )
     ])
@@ -198,12 +201,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Unions
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = UnionsClient()
 
-    _ = try await client.union.get(id: "id")
+    _ = try await client.bigunion.get(id: "id")
 }
 
 try await main()
@@ -255,15 +258,14 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Unions
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = UnionsClient()
 
-    _ = try await client.union.update(request: Shape.shapeZero(
-        ShapeZero(
-            radius: 1.1,
-            type: .circle
+    _ = try await client.union.update(request: Shape.circle(
+        Circle(
+            radius: 1.1
         )
     ))
 }

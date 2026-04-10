@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/required-nullable\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client..getFoo({\n    required_baz: \"required_baz\",\n    required_nullable_baz: \"required_nullable_baz\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/required-nullable\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getFoo({\n    required_baz: \"required_baz\",\n    required_nullable_baz: \"required_nullable_baz\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient } from \"@fern/required-nullable\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client..updateFoo({\n    \"X-Idempotency-Key\": \"X-Idempotency-Key\",\n    id: \"id\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/required-nullable\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.updateFoo(\"id\", {\n    \"X-Idempotency-Key\": \"X-Idempotency-Key\",\n    nullable_text: \"nullable_text\",\n    nullable_number: 1.1,\n    non_nullable_text: \"non_nullable_text\"\n});\n"
             }
         }
     ],

@@ -8,11 +8,9 @@ module Seed
     class MyUnion < Internal::Types::Model
       extend Seed::Internal::Types::Union
 
-      discriminant :type
-
-      member -> { Seed::Types::VariantA }, key: "A"
-      member -> { Seed::Types::VariantB }, key: "B"
-      member -> { Seed::Types::VariantC }, key: "C"
+      member -> { Seed::Types::VariantA }
+      member -> { Seed::Types::VariantB }
+      member -> { Seed::Types::VariantC }
     end
   end
 end

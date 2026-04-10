@@ -21,12 +21,12 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
-      def createmovie(request_options: {}, **params)
+      def create_movie(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "movies/create-movie",
+          path: "/movies/create-movie",
           body: Seed::Imdb::Types::CreateMovieRequest.new(params).to_h,
           request_options: request_options
         )
@@ -37,7 +37,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::MovieID.load(response.body)
+          Seed::Imdb::Types::MovieID.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)
@@ -51,15 +51,15 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Types::MovieID] :movie_id
+      # @option params [Seed::Imdb::Types::MovieID] :movie_id
       #
-      # @return [Seed::Types::Movie]
-      def getmovie(request_options: {}, **params)
+      # @return [Seed::Imdb::Types::Movie]
+      def get_movie(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "movies/#{URI.encode_uri_component(params[:movie_id].to_s)}",
+          path: "/movies/#{URI.encode_uri_component(params[:movie_id].to_s)}",
           request_options: request_options
         )
         begin
@@ -69,7 +69,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Movie.load(response.body)
+          Seed::Imdb::Types::Movie.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

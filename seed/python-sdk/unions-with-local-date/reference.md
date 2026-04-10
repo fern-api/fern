@@ -13,9 +13,9 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedUnions
 
-client = SeedApi(
+client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -70,16 +70,20 @@ client.bigunion.get(
 <dd>
 
 ```python
-from seed import SeedApi, BigUnionZero
+from seed import SeedUnions
+from seed.bigunion import BigUnion_NormalSweet
+import datetime
 
-client = SeedApi(
+client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.bigunion.update(
-    request=BigUnionZero(
+    request=BigUnion_NormalSweet(
+        id="id",
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         value="value",
-        type="normalSweet",
     ),
 )
 
@@ -130,17 +134,27 @@ client.bigunion.update(
 <dd>
 
 ```python
-from seed import SeedApi, BigUnionZero
+from seed import SeedUnions
+from seed.bigunion import BigUnion_NormalSweet
+import datetime
 
-client = SeedApi(
+client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.bigunion.update_many(
     request=[
-        BigUnionZero(
+        BigUnion_NormalSweet(
+            id="id",
+            created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
             value="value",
-            type="normalSweet",
+        ),
+        BigUnion_NormalSweet(
+            id="id",
+            created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            value="value",
         )
     ],
 )
@@ -193,14 +207,14 @@ client.bigunion.update_many(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedUnions
 
-client = SeedApi(
+client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.types.get(
-    id="id",
+    id="date-example",
 )
 
 ```
@@ -250,14 +264,17 @@ client.types.get(
 <dd>
 
 ```python
-from seed import SeedApi, UnionWithTime_Value
+from seed import SeedUnions
+from seed.types import UnionWithTime_Date
 
-client = SeedApi(
+client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.types.update(
-    request=UnionWithTime_Value(),
+    request=UnionWithTime_Date(
+        date=,
+    ),
 )
 
 ```
@@ -308,13 +325,13 @@ client.types.update(
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedUnions
 
-client = SeedApi(
+client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.union.get(
+client.bigunion.get(
     id="id",
 )
 
@@ -365,16 +382,17 @@ client.union.get(
 <dd>
 
 ```python
-from seed import SeedApi, ShapeZero
+from seed import SeedUnions
+from seed.union import Shape_Circle
 
-client = SeedApi(
+client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.union.update(
-    request=ShapeZero(
+    request=Shape_Circle(
+        id="id",
         radius=1.1,
-        type="circle",
     ),
 )
 

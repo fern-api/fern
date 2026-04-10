@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>client.Organization.<a href="/src/SeedApi/Organization/OrganizationClient.cs">CreateAsync</a>(CreateOrganizationRequest { ... }) -> WithRawResponseTask&lt;Organization&gt;</code></summary>
+<details><summary><code>client.Organization.<a href="/src/SeedMixedFileDirectory/Organization/OrganizationClient.cs">CreateAsync</a>(CreateOrganizationRequest { ... }) -> WithRawResponseTask&lt;Organization&gt;</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +55,7 @@ await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "na
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">ListAsync</a>(UserListRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedMixedFileDirectory/User/UserClient.cs">ListAsync</a>(ListUsersRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -82,7 +82,7 @@ List all users.
 <dd>
 
 ```csharp
-await client.User.ListAsync(new UserListRequest());
+await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
 ```
 </dd>
 </dl>
@@ -97,7 +97,7 @@ await client.User.ListAsync(new UserListRequest());
 <dl>
 <dd>
 
-**request:** `UserListRequest` 
+**request:** `ListUsersRequest` 
     
 </dd>
 </dl>
@@ -109,8 +109,8 @@ await client.User.ListAsync(new UserListRequest());
 </dl>
 </details>
 
-## UserEvents
-<details><summary><code>client.UserEvents.<a href="/src/SeedApi/UserEvents/UserEventsClient.cs">UserEventsListEventsAsync</a>(UserEventsListEventsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;UserEvent&gt;&gt;</code></summary>
+## User Events
+<details><summary><code>client.User.Events.<a href="/src/SeedMixedFileDirectory/User/Events/EventsClient.cs">ListEventsAsync</a>(ListUserEventsRequest { ... }) -> WithRawResponseTask&lt;IEnumerable&lt;Event&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -137,7 +137,7 @@ List all user events.
 <dd>
 
 ```csharp
-await client.UserEvents.UserEventsListEventsAsync(new UserEventsListEventsRequest());
+await client.User.Events.ListEventsAsync(new ListUserEventsRequest { Limit = 1 });
 ```
 </dd>
 </dl>
@@ -152,7 +152,7 @@ await client.UserEvents.UserEventsListEventsAsync(new UserEventsListEventsReques
 <dl>
 <dd>
 
-**request:** `UserEventsListEventsRequest` 
+**request:** `ListUserEventsRequest` 
     
 </dd>
 </dl>
@@ -164,8 +164,8 @@ await client.UserEvents.UserEventsListEventsAsync(new UserEventsListEventsReques
 </dl>
 </details>
 
-## UserEventsMetadata
-<details><summary><code>client.UserEventsMetadata.<a href="/src/SeedApi/UserEventsMetadata/UserEventsMetadataClient.cs">UserEventsMetadataGetMetadataAsync</a>(UserEventsMetadataGetMetadataRequest { ... }) -> WithRawResponseTask&lt;UsereventsMetadata&gt;</code></summary>
+## User Events Metadata
+<details><summary><code>client.User.Events.Metadata.<a href="/src/SeedMixedFileDirectory/User/Events/Metadata/MetadataClient.cs">GetMetadataAsync</a>(GetEventMetadataRequest { ... }) -> WithRawResponseTask&lt;Metadata&gt;</code></summary>
 <dl>
 <dd>
 
@@ -192,9 +192,7 @@ Get event metadata.
 <dd>
 
 ```csharp
-await client.UserEventsMetadata.UserEventsMetadataGetMetadataAsync(
-    new UserEventsMetadataGetMetadataRequest { Id = "id" }
-);
+await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest { Id = "id" });
 ```
 </dd>
 </dl>
@@ -209,7 +207,7 @@ await client.UserEventsMetadata.UserEventsMetadataGetMetadataAsync(
 <dl>
 <dd>
 
-**request:** `UserEventsMetadataGetMetadataRequest` 
+**request:** `GetEventMetadataRequest` 
     
 </dd>
 </dl>

@@ -1,11 +1,11 @@
 openapi: 3.0.1
 info:
-  title: pagination-custom
+  title: pagination
   version: ''
 paths:
   /users:
     get:
-      operationId: users_listwithcustompager
+      operationId: users_listWithCustomPager
       tags:
         - Users
       parameters:
@@ -30,18 +30,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UsersListResponse'
-              examples:
-                Example1:
-                  value:
-                    limit: 1
-                    count: 1
-                    has_more: true
-                    links:
-                      - rel: rel
-                        method: method
-                        href: href
-                    data:
-                      - data
 components:
   schemas:
     UsersListResponse:
@@ -65,8 +53,6 @@ components:
           type: array
           items:
             type: string
-          example:
-            - data
       required:
         - links
         - data
@@ -85,6 +71,6 @@ components:
         - method
         - href
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

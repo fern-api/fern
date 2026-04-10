@@ -6,12 +6,10 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
-from .types.path_send_request_id import PathSendRequestId
 from pydantic import ValidationError
 
 
@@ -19,24 +17,19 @@ class RawPathClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send(
-        self, id: PathSendRequestId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[SendResponse]:
+    def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[SendResponse]:
         """
         Parameters
         ----------
-        id : PathSendRequestId
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         HttpResponse[SendResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"path/{encode_path_param(id)}",
+            "path/123",
             method="POST",
             request_options=request_options,
         )
@@ -64,24 +57,19 @@ class AsyncRawPathClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send(
-        self, id: PathSendRequestId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[SendResponse]:
+    async def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[SendResponse]:
         """
         Parameters
         ----------
-        id : PathSendRequestId
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
         AsyncHttpResponse[SendResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"path/{encode_path_param(id)}",
+            "path/123",
             method="POST",
             request_options=request_options,
         )

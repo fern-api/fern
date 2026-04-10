@@ -8,86 +8,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { EndpointsContainerClient } from "./api/resources/endpointsContainer/client/Client.mjs";
-import { EndpointsContentTypeClient } from "./api/resources/endpointsContentType/client/Client.mjs";
-import { EndpointsEnumClient } from "./api/resources/endpointsEnum/client/Client.mjs";
-import { EndpointsHttpMethodsClient } from "./api/resources/endpointsHttpMethods/client/Client.mjs";
-import { EndpointsObjectClient } from "./api/resources/endpointsObject/client/Client.mjs";
-import { EndpointsPaginationClient } from "./api/resources/endpointsPagination/client/Client.mjs";
-import { EndpointsParamsClient } from "./api/resources/endpointsParams/client/Client.mjs";
-import { EndpointsPrimitiveClient } from "./api/resources/endpointsPrimitive/client/Client.mjs";
-import { EndpointsPutClient } from "./api/resources/endpointsPut/client/Client.mjs";
-import { EndpointsUnionClient } from "./api/resources/endpointsUnion/client/Client.mjs";
-import { EndpointsUrLsClient } from "./api/resources/endpointsUrLs/client/Client.mjs";
-import { InlinedrequestsClient } from "./api/resources/inlinedrequests/client/Client.mjs";
-import { NoauthClient } from "./api/resources/noauth/client/Client.mjs";
-import { NoreqbodyClient } from "./api/resources/noreqbody/client/Client.mjs";
-import { ReqwithheadersClient } from "./api/resources/reqwithheaders/client/Client.mjs";
+import { EndpointsClient } from "./api/resources/endpoints/client/Client.mjs";
+import { InlinedRequestsClient } from "./api/resources/inlinedRequests/client/Client.mjs";
+import { NoAuthClient } from "./api/resources/noAuth/client/Client.mjs";
+import { NoReqBodyClient } from "./api/resources/noReqBody/client/Client.mjs";
+import { ReqWithHeadersClient } from "./api/resources/reqWithHeaders/client/Client.mjs";
 import { normalizeClientOptionsWithAuth } from "./BaseClient.mjs";
 import * as core from "./core/index.mjs";
-export class SeedApiClient {
+export class SeedExhaustiveClient {
     constructor(options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
-    get endpointsContainer() {
+    get endpoints() {
         var _a;
-        return ((_a = this._endpointsContainer) !== null && _a !== void 0 ? _a : (this._endpointsContainer = new EndpointsContainerClient(this._options)));
+        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new EndpointsClient(this._options)));
     }
-    get endpointsContentType() {
+    get inlinedRequests() {
         var _a;
-        return ((_a = this._endpointsContentType) !== null && _a !== void 0 ? _a : (this._endpointsContentType = new EndpointsContentTypeClient(this._options)));
+        return ((_a = this._inlinedRequests) !== null && _a !== void 0 ? _a : (this._inlinedRequests = new InlinedRequestsClient(this._options)));
     }
-    get endpointsEnum() {
+    get noAuth() {
         var _a;
-        return ((_a = this._endpointsEnum) !== null && _a !== void 0 ? _a : (this._endpointsEnum = new EndpointsEnumClient(this._options)));
+        return ((_a = this._noAuth) !== null && _a !== void 0 ? _a : (this._noAuth = new NoAuthClient(this._options)));
     }
-    get endpointsHttpMethods() {
+    get noReqBody() {
         var _a;
-        return ((_a = this._endpointsHttpMethods) !== null && _a !== void 0 ? _a : (this._endpointsHttpMethods = new EndpointsHttpMethodsClient(this._options)));
+        return ((_a = this._noReqBody) !== null && _a !== void 0 ? _a : (this._noReqBody = new NoReqBodyClient(this._options)));
     }
-    get endpointsObject() {
+    get reqWithHeaders() {
         var _a;
-        return ((_a = this._endpointsObject) !== null && _a !== void 0 ? _a : (this._endpointsObject = new EndpointsObjectClient(this._options)));
-    }
-    get endpointsPagination() {
-        var _a;
-        return ((_a = this._endpointsPagination) !== null && _a !== void 0 ? _a : (this._endpointsPagination = new EndpointsPaginationClient(this._options)));
-    }
-    get endpointsParams() {
-        var _a;
-        return ((_a = this._endpointsParams) !== null && _a !== void 0 ? _a : (this._endpointsParams = new EndpointsParamsClient(this._options)));
-    }
-    get endpointsPrimitive() {
-        var _a;
-        return ((_a = this._endpointsPrimitive) !== null && _a !== void 0 ? _a : (this._endpointsPrimitive = new EndpointsPrimitiveClient(this._options)));
-    }
-    get endpointsPut() {
-        var _a;
-        return ((_a = this._endpointsPut) !== null && _a !== void 0 ? _a : (this._endpointsPut = new EndpointsPutClient(this._options)));
-    }
-    get endpointsUnion() {
-        var _a;
-        return ((_a = this._endpointsUnion) !== null && _a !== void 0 ? _a : (this._endpointsUnion = new EndpointsUnionClient(this._options)));
-    }
-    get endpointsUrLs() {
-        var _a;
-        return ((_a = this._endpointsUrLs) !== null && _a !== void 0 ? _a : (this._endpointsUrLs = new EndpointsUrLsClient(this._options)));
-    }
-    get inlinedrequests() {
-        var _a;
-        return ((_a = this._inlinedrequests) !== null && _a !== void 0 ? _a : (this._inlinedrequests = new InlinedrequestsClient(this._options)));
-    }
-    get noauth() {
-        var _a;
-        return ((_a = this._noauth) !== null && _a !== void 0 ? _a : (this._noauth = new NoauthClient(this._options)));
-    }
-    get noreqbody() {
-        var _a;
-        return ((_a = this._noreqbody) !== null && _a !== void 0 ? _a : (this._noreqbody = new NoreqbodyClient(this._options)));
-    }
-    get reqwithheaders() {
-        var _a;
-        return ((_a = this._reqwithheaders) !== null && _a !== void 0 ? _a : (this._reqwithheaders = new ReqwithheadersClient(this._options)));
+        return ((_a = this._reqWithHeaders) !== null && _a !== void 0 ? _a : (this._reqWithHeaders = new ReqWithHeadersClient(this._options)));
     }
     /**
      * Make a passthrough request using the SDK's configured auth, retry, logging, etc.

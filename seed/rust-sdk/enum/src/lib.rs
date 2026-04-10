@@ -1,23 +1,24 @@
-//! # enum SDK
+//! # Enum SDK
 //!
-//! The official Rust SDK for the enum.
+//! The official Rust SDK for the Enum.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_enum::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = EnumClient::new(config).expect("Failed to build client");
 //!     client
 //!         .headers
 //!         .send(Some(
 //!             RequestOptions::new()
 //!                 .additional_header("operand", ">")
+//!                 .additional_header("maybeOperand", ">")
 //!                 .additional_header("operandOrColor", "red"),
 //!         ))
 //!         .await;
@@ -34,15 +35,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
 pub use error::{ApiError, BuildError};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-

@@ -5,7 +5,7 @@ info:
 paths:
   /resource/{ResourceID}:
     get:
-      operationId: service_getresource
+      operationId: service_getResource
       tags:
         - Service
       parameters:
@@ -14,10 +14,10 @@ paths:
           required: true
           schema:
             type: string
-          example: ResourceID
+          example: rsc-xyz
           examples:
             Example1:
-              value: ResourceID
+              value: rsc-xyz
       responses:
         '200':
           description: ''
@@ -28,15 +28,18 @@ paths:
               examples:
                 Example1:
                   value:
-                    userName: userName
-                    metadata_tags:
-                      - metadata_tags
-                    EXTRA_PROPERTIES:
-                      key: value
+                    status: ACTIVE
                     resource_type: user
+                    userName: username
+                    metadata_tags:
+                      - tag1
+                      - tag2
+                    EXTRA_PROPERTIES:
+                      foo: bar
+                      baz: qux
   /resource:
     get:
-      operationId: service_listresources
+      operationId: service_listResources
       tags:
         - Service
       parameters:
@@ -45,20 +48,20 @@ paths:
           required: true
           schema:
             type: integer
-          example: 1
+          example: 10
           examples:
-            Example1:
-              value: 1
+            One:
+              value: 10
         - name: beforeDate
           in: query
           required: true
           schema:
             type: string
             format: date
-          example: '2023-01-15'
+          example: '2023-01-01'
           examples:
-            Example1:
-              value: '2023-01-15'
+            One:
+              value: '2023-01-01'
       responses:
         '200':
           description: ''
@@ -69,14 +72,17 @@ paths:
                 items:
                   $ref: '#/components/schemas/Resource'
               examples:
-                Example1:
+                One:
                   value:
-                    - userName: userName
+                    - resource_type: user
+                      status: ACTIVE
+                      userName: username
                       metadata_tags:
-                        - metadata_tags
+                        - tag1
+                        - tag2
                       EXTRA_PROPERTIES:
-                        key: value
-                      resource_type: user
+                        foo: bar
+                        baz: qux
 components:
   schemas:
     Organization:
@@ -85,6 +91,7 @@ components:
       properties:
         name:
           type: string
+          example: orgName
       required:
         - name
     User:
@@ -93,10 +100,14 @@ components:
       properties:
         userName:
           type: string
+          example: username
         metadata_tags:
           type: array
           items:
             type: string
+          example:
+            - tag1
+            - tag2
         EXTRA_PROPERTIES:
           type: object
           additionalProperties:
@@ -111,6 +122,7 @@ components:
       properties:
         Name:
           type: string
+          example: username
         NestedUser:
           $ref: '#/components/schemas/User'
       required:
@@ -122,39 +134,34 @@ components:
       enum:
         - ACTIVE
         - INACTIVE
-    ResourceZeroResourceType:
-      title: ResourceZeroResourceType
-      type: string
-      enum:
-        - user
-    ResourceZero:
-      title: ResourceZero
-      type: object
-      properties:
-        resource_type:
-          $ref: '#/components/schemas/ResourceZeroResourceType'
-      required:
-        - resource_type
-      allOf:
-        - $ref: '#/components/schemas/User'
-    ResourceOneResourceType:
-      title: ResourceOneResourceType
-      type: string
-      enum:
-        - Organization
-    ResourceOne:
-      title: ResourceOne
-      type: object
-      properties:
-        resource_type:
-          $ref: '#/components/schemas/ResourceOneResourceType'
-      required:
-        - resource_type
-      allOf:
-        - $ref: '#/components/schemas/Organization'
     Resource:
       title: Resource
       oneOf:
-        - $ref: '#/components/schemas/ResourceZero'
-        - $ref: '#/components/schemas/ResourceOne'
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                resource_type:
+                  type: string
+                  enum:
+                    - user
+            - $ref: '#/components/schemas/User'
+          required:
+            - resource_type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                resource_type:
+                  type: string
+                  enum:
+                    - Organization
+            - $ref: '#/components/schemas/Organization'
+          required:
+            - resource_type
+      required:
+        - status
+      properties:
+        status:
+          $ref: '#/components/schemas/ResourceStatus'
   securitySchemes: {}

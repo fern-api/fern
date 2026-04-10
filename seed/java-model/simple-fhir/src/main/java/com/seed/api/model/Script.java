@@ -28,16 +28,12 @@ public final class Script implements IBaseResource {
 
   private final Memo memo;
 
-  private final ScriptResourceType resourceType;
-
   private final String name;
 
-  private Script(String id, List<ResourceList> relatedResources, Memo memo,
-      ScriptResourceType resourceType, String name) {
+  private Script(String id, List<ResourceList> relatedResources, Memo memo, String name) {
     this.id = id;
     this.relatedResources = relatedResources;
     this.memo = memo;
-    this.resourceType = resourceType;
     this.name = name;
   }
 
@@ -60,8 +56,8 @@ public final class Script implements IBaseResource {
   }
 
   @JsonProperty("resource_type")
-  public ScriptResourceType getResourceType() {
-    return resourceType;
+  public String getResourceType() {
+    return "Script";
   }
 
   @JsonProperty("name")
@@ -76,12 +72,12 @@ public final class Script implements IBaseResource {
   }
 
   private boolean equalTo(Script other) {
-    return id.equals(other.id) && relatedResources.equals(other.relatedResources) && memo.equals(other.memo) && resourceType.equals(other.resourceType) && name.equals(other.name);
+    return id.equals(other.id) && relatedResources.equals(other.relatedResources) && memo.equals(other.memo) && name.equals(other.name);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.id, this.relatedResources, this.memo, this.resourceType, this.name);
+    return Objects.hash(this.id, this.relatedResources, this.memo, this.name);
   }
 
   @java.lang.Override
@@ -100,11 +96,7 @@ public final class Script implements IBaseResource {
   }
 
   public interface MemoStage {
-    ResourceTypeStage memo(Memo memo);
-  }
-
-  public interface ResourceTypeStage {
-    NameStage resourceType(ScriptResourceType resourceType);
+    NameStage memo(Memo memo);
   }
 
   public interface NameStage {
@@ -124,12 +116,10 @@ public final class Script implements IBaseResource {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements IdStage, MemoStage, ResourceTypeStage, NameStage, _FinalStage {
+  public static final class Builder implements IdStage, MemoStage, NameStage, _FinalStage {
     private String id;
 
     private Memo memo;
-
-    private ScriptResourceType resourceType;
 
     private String name;
 
@@ -143,7 +133,6 @@ public final class Script implements IBaseResource {
       id(other.getId());
       relatedResources(other.getRelatedResources());
       memo(other.getMemo());
-      resourceType(other.getResourceType());
       name(other.getName());
       return this;
     }
@@ -157,15 +146,8 @@ public final class Script implements IBaseResource {
 
     @java.lang.Override
     @JsonSetter("memo")
-    public ResourceTypeStage memo(Memo memo) {
+    public NameStage memo(Memo memo) {
       this.memo = Objects.requireNonNull(memo, "memo must not be null");
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("resource_type")
-    public NameStage resourceType(ScriptResourceType resourceType) {
-      this.resourceType = Objects.requireNonNull(resourceType, "resourceType must not be null");
       return this;
     }
 
@@ -205,7 +187,7 @@ public final class Script implements IBaseResource {
 
     @java.lang.Override
     public Script build() {
-      return new Script(id, relatedResources, memo, resourceType, name);
+      return new Script(id, relatedResources, memo, name);
     }
   }
 }

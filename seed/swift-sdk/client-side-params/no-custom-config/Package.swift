@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "ClientSideParams",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "ClientSideParams",
+            targets: ["ClientSideParams"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "ClientSideParams",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "ClientSideParamsTests",
+            dependencies: ["ClientSideParams"],
             path: "Tests"
         )
     ]

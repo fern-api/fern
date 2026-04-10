@@ -43,37 +43,41 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReqwithheadersClient = void 0;
+exports.ReqWithHeadersClient = void 0;
 const BaseClient_js_1 = require("../../../../BaseClient.js");
 const headers_js_1 = require("../../../../core/headers.js");
 const core = __importStar(require("../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../errors/index.js"));
-class ReqwithheadersClient {
+class ReqWithHeadersClient {
     constructor(options) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
     }
     /**
-     * @param {SeedApi.ReqWithHeadersGetWithCustomHeaderRequest} request
-     * @param {ReqwithheadersClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedExhaustive.ReqWithHeaders} request
+     * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.reqwithheaders.getwithcustomheader({
+     *     await client.reqWithHeaders.getWithCustomHeader({
+     *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
      *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
      *         body: "string"
      *     })
      */
-    getwithcustomheader(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getwithcustomheader(request, requestOptions));
+    getWithCustomHeader(request, requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
     }
-    __getwithcustomheader(request, requestOptions) {
+    __getWithCustomHeader(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { "X-TEST-ENDPOINT-HEADER": testEndpointHeader, body: _body } = request;
+            const { "X-TEST-SERVICE-HEADER": xTestServiceHeader, "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader, body: _body, } = request;
             const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ "X-TEST-ENDPOINT-HEADER": testEndpointHeader }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({
+                "X-TEST-SERVICE-HEADER": xTestServiceHeader,
+                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
+            }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "test-headers/custom-header"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/test-headers/custom-header"),
                 method: "POST",
                 headers: _headers,
                 contentType: "application/json",
@@ -90,7 +94,7 @@ class ReqwithheadersClient {
                 return { data: undefined, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
-                throw new errors.SeedApiError({
+                throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.body,
                     rawResponse: _response.rawResponse,
@@ -100,4 +104,4 @@ class ReqwithheadersClient {
         });
     }
 }
-exports.ReqwithheadersClient = ReqwithheadersClient;
+exports.ReqWithHeadersClient = ReqWithHeadersClient;

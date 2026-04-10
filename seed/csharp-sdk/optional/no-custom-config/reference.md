@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.Optional.<a href="/src/SeedApi/Optional/OptionalClient.cs">SendoptionalbodyAsync</a>(Dictionary&lt;string, object?&gt;? { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalBodyAsync</a>(Dictionary&lt;string, object?&gt;? { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,14 @@
 <dd>
 
 ```csharp
-await client.Optional.SendoptionalbodyAsync(
-    new Dictionary<string, object?>() { { "key", "value" } }
+await client.Optional.SendOptionalBodyAsync(
+    new Dictionary<string, object?>()
+    {
+        {
+            "string",
+            new Dictionary<object, object?>() { { "key", "value" } }
+        },
+    }
 );
 ```
 </dd>
@@ -42,7 +48,7 @@ await client.Optional.SendoptionalbodyAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Optional.<a href="/src/SeedApi/Optional/OptionalClient.cs">SendoptionaltypedbodyAsync</a>(SendOptionalBodyRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalTypedBodyAsync</a>(SendOptionalBodyRequest? { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +61,7 @@ await client.Optional.SendoptionalbodyAsync(
 <dd>
 
 ```csharp
-await client.Optional.SendoptionaltypedbodyAsync(
+await client.Optional.SendOptionalTypedBodyAsync(
     new SendOptionalBodyRequest { Message = "message" }
 );
 ```
@@ -72,7 +78,7 @@ await client.Optional.SendoptionaltypedbodyAsync(
 <dl>
 <dd>
 
-**request:** `SendOptionalBodyRequest` 
+**request:** `SendOptionalBodyRequest?` 
     
 </dd>
 </dl>
@@ -84,7 +90,7 @@ await client.Optional.SendoptionaltypedbodyAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Optional.<a href="/src/SeedApi/Optional/OptionalClient.cs">SendoptionalnullablewithalloptionalpropertiesAsync</a>(DeployParams { ... }) -> WithRawResponseTask&lt;DeployResponse&gt;</code></summary>
+<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalNullableWithAllOptionalPropertiesAsync</a>(actionId, id, DeployParams? { ... }) -> WithRawResponseTask&lt;DeployResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -112,8 +118,10 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 <dd>
 
 ```csharp
-await client.Optional.SendoptionalnullablewithalloptionalpropertiesAsync(
-    new DeployParams { ActionId = "actionId", Id = "id" }
+await client.Optional.SendOptionalNullableWithAllOptionalPropertiesAsync(
+    "actionId",
+    "id",
+    new DeployParams { UpdateDraft = true }
 );
 ```
 </dd>
@@ -129,7 +137,23 @@ await client.Optional.SendoptionalnullablewithalloptionalpropertiesAsync(
 <dl>
 <dd>
 
-**request:** `DeployParams` 
+**actionId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `DeployParams?` 
     
 </dd>
 </dl>

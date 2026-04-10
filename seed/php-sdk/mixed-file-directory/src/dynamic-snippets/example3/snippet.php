@@ -3,15 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Requests\UserListRequest;
+use Seed\User\Events\Metadata\Requests\GetEventMetadataRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->list(
-    new UserListRequest([
-        'limit' => 1,
+$client->user->events->metadata->getMetadata(
+    new GetEventMetadataRequest([
+        'id' => 'id',
     ]),
 );

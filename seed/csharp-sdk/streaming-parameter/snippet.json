@@ -2,7 +2,7 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": null,
+            "example_identifier": "Default",
             "id": {
                 "path": "/generate",
                 "method": "POST",
@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dummy.GenerateAsync(new DummyGenerateRequest { Stream = true, NumEvents = 1 });\n"
+                "client": "using SeedStreaming;\n\nvar client = new SeedStreamingClient();\nclient.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });\n"
             }
         }
     ]

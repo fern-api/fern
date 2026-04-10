@@ -3,5 +3,5 @@
 import enum
 
 
-class SeedApiEnvironment(enum.Enum):
-    DEFAULT = "https://api.trace.come"
+class SeedTraceEnvironment(enum.Enum):
+    PROD = "https://api.trace.come"

@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedContentTypes from "../../../index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -22,21 +22,24 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedApi.ServicePatchRequest} request
+     * @param {SeedContentTypes.PatchProxyRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.patch({})
+     *     await client.service.patch({
+     *         application: "application",
+     *         require_auth: true
+     *     })
      */
     public patch(
-        request: SeedApi.ServicePatchRequest,
+        request: SeedContentTypes.PatchProxyRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__patch(request, requestOptions));
     }
 
     private async __patch(
-        request: SeedApi.ServicePatchRequest,
+        request: SeedContentTypes.PatchProxyRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -46,7 +49,7 @@ export class ServiceClient {
                 (await core.Supplier.get(this._options.environment)),
             method: "PATCH",
             headers: _headers,
-            contentType: "application/json",
+            contentType: "application/merge-patch+json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
@@ -61,7 +64,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedContentTypesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -77,26 +80,45 @@ export class ServiceClient {
      * - optional<T> fields (can be present or absent, but not null)
      * - optional<nullable<T>> fields (can be present, absent, or null)
      *
-     * @param {SeedApi.ServicePatchComplexRequest} request
+     * @param {string} id
+     * @param {SeedContentTypes.PatchComplexRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.patchcomplex({
-     *         id: "id"
+     *     await client.service.patchComplex("id", {
+     *         name: "name",
+     *         age: 1,
+     *         active: true,
+     *         metadata: {
+     *             "metadata": {
+     *                 "key": "value"
+     *             }
+     *         },
+     *         tags: ["tags", "tags"],
+     *         email: "email",
+     *         nickname: "nickname",
+     *         bio: "bio",
+     *         profileImageUrl: "profileImageUrl",
+     *         settings: {
+     *             "settings": {
+     *                 "key": "value"
+     *             }
+     *         }
      *     })
      */
-    public patchcomplex(
-        request: SeedApi.ServicePatchComplexRequest,
+    public patchComplex(
+        id: string,
+        request: SeedContentTypes.PatchComplexRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__patchcomplex(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__patchComplex(id, request, requestOptions));
     }
 
-    private async __patchcomplex(
-        request: SeedApi.ServicePatchComplexRequest,
+    private async __patchComplex(
+        id: string,
+        request: SeedContentTypes.PatchComplexRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { id, ..._body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -106,10 +128,10 @@ export class ServiceClient {
             ),
             method: "PATCH",
             headers: _headers,
-            contentType: "application/json",
+            contentType: "application/merge-patch+json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -121,7 +143,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedContentTypesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -135,26 +157,30 @@ export class ServiceClient {
      * Named request with mixed optional/nullable fields and merge-patch content type.
      * This should trigger the NPE issue when optional fields aren't initialized.
      *
-     * @param {SeedApi.ServiceNamedPatchWithMixedRequest} request
+     * @param {string} id
+     * @param {SeedContentTypes.NamedMixedPatchRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.namedpatchwithmixed({
-     *         id: "id"
+     *     await client.service.namedPatchWithMixed("id", {
+     *         appId: "appId",
+     *         instructions: "instructions",
+     *         active: true
      *     })
      */
-    public namedpatchwithmixed(
-        request: SeedApi.ServiceNamedPatchWithMixedRequest,
+    public namedPatchWithMixed(
+        id: string,
+        request: SeedContentTypes.NamedMixedPatchRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__namedpatchwithmixed(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__namedPatchWithMixed(id, request, requestOptions));
     }
 
-    private async __namedpatchwithmixed(
-        request: SeedApi.ServiceNamedPatchWithMixedRequest,
+    private async __namedPatchWithMixed(
+        id: string,
+        request: SeedContentTypes.NamedMixedPatchRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const { id, ..._body } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -164,10 +190,10 @@ export class ServiceClient {
             ),
             method: "PATCH",
             headers: _headers,
-            contentType: "application/json",
+            contentType: "application/merge-patch+json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -179,7 +205,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedContentTypesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -195,23 +221,27 @@ export class ServiceClient {
      * 1. Not NPE when fields are not provided (tests initialization)
      * 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
      *
-     * @param {SeedApi.ServiceOptionalMergePatchTestRequest} request
+     * @param {SeedContentTypes.OptionalMergePatchRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.optionalmergepatchtest({
-     *         requiredField: "requiredField"
+     *     await client.service.optionalMergePatchTest({
+     *         requiredField: "requiredField",
+     *         optionalString: "optionalString",
+     *         optionalInteger: 1,
+     *         optionalBoolean: true,
+     *         nullableString: "nullableString"
      *     })
      */
-    public optionalmergepatchtest(
-        request: SeedApi.ServiceOptionalMergePatchTestRequest,
+    public optionalMergePatchTest(
+        request: SeedContentTypes.OptionalMergePatchRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__optionalmergepatchtest(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__optionalMergePatchTest(request, requestOptions));
     }
 
-    private async __optionalmergepatchtest(
-        request: SeedApi.ServiceOptionalMergePatchTestRequest,
+    private async __optionalMergePatchTest(
+        request: SeedContentTypes.OptionalMergePatchRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -220,6 +250,66 @@ export class ServiceClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 "optional-merge-patch-test",
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/merge-patch+json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/optional-merge-patch-test");
+    }
+
+    /**
+     * Regular PATCH endpoint without merge-patch semantics
+     *
+     * @param {string} id
+     * @param {SeedContentTypes.RegularPatchRequest} request
+     * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.service.regularPatch("id", {
+     *         field1: "field1",
+     *         field2: 1
+     *     })
+     */
+    public regularPatch(
+        id: string,
+        request: SeedContentTypes.RegularPatchRequest = {},
+        requestOptions?: ServiceClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__regularPatch(id, request, requestOptions));
+    }
+
+    private async __regularPatch(
+        id: string,
+        request: SeedContentTypes.RegularPatchRequest = {},
+        requestOptions?: ServiceClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `regular/${core.url.encodePathParam(id)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -238,64 +328,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/optional-merge-patch-test");
-    }
-
-    /**
-     * Regular PATCH endpoint without merge-patch semantics
-     *
-     * @param {SeedApi.ServiceRegularPatchRequest} request
-     * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.service.regularpatch({
-     *         id: "id"
-     *     })
-     */
-    public regularpatch(
-        request: SeedApi.ServiceRegularPatchRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__regularpatch(request, requestOptions));
-    }
-
-    private async __regularpatch(
-        request: SeedApi.ServiceRegularPatchRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const { id, ..._body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `regular/${core.url.encodePathParam(id)}`,
-            ),
-            method: "PATCH",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: _body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedContentTypesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

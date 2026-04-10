@@ -1,4 +1,4 @@
-
+# frozen_string_literal: true
 
 module Seed
   class Client
@@ -14,10 +14,7 @@ module Seed
         }
       )
     end
-    # @return [Seed::::Client]
-    def 
-      @ ||= Seed::::Client.new(client: @raw_client)
-    end
+
     # @return [Seed::Service::Client]
     def service
       @service ||= Seed::Service::Client.new(client: @raw_client)

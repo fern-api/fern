@@ -38,7 +38,9 @@ impl JsonBuilder {
     /// - [`raw`](JsonBuilder::raw)
     pub fn build(self) -> Result<Json, BuildError> {
         Ok(Json {
-            docs_fields: self.docs_fields.ok_or_else(|| BuildError::missing_field("docs_fields"))?,
+            docs_fields: self
+                .docs_fields
+                .ok_or_else(|| BuildError::missing_field("docs_fields"))?,
             raw: self.raw.ok_or_else(|| BuildError::missing_field("raw"))?,
         })
     }

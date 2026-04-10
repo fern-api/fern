@@ -55,11 +55,10 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.nullable.requests.NullableCreateUserRequest;
-import com.seed.api.types.Metadata;
-import com.seed.api.types.Status;
-import com.seed.api.types.StatusActive;
+import com.seed.nullable.SeedNullableClient;
+import com.seed.nullable.resources.nullable.requests.CreateUserRequest;
+import com.seed.nullable.resources.nullable.types.Metadata;
+import com.seed.nullable.resources.nullable.types.Status;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -67,12 +66,12 @@ import java.util.Optional;
 
 public class Example {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient
+        SeedNullableClient client = SeedNullableClient
             .builder()
             .build();
 
-        client.nullable().createuser(
-            NullableCreateUserRequest
+        client.nullable().createUser(
+            CreateUserRequest
                 .builder()
                 .username("username")
                 .tags(
@@ -86,11 +85,7 @@ public class Example {
                         .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                         .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                         .status(
-                            Status.active(
-                                StatusActive
-                                    .builder()
-                                    .build()
-                            )
+                            Status.active()
                         )
                         .avatar("avatar")
                         .activated(true)
@@ -113,9 +108,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.nullable.SeedNullableClient;
 
-SeedApiClient client = SeedApiClient
+SeedNullableClient client = SeedNullableClient
     .builder()
     .url("https://example.com")
     .build();
@@ -126,11 +121,11 @@ SeedApiClient client = SeedApiClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.api.core.SeedApiApiException;
+import com.seed.nullable.core.SeedNullableApiException;
 
 try{
-    client.nullable().createuser(...);
-} catch (SeedApiApiException e){
+    client.nullable().createUser(...);
+} catch (SeedNullableApiException e){
     // Do something with the API exception...
 }
 ```
@@ -143,12 +138,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.nullable.SeedNullableClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedApiClient client = SeedApiClient
+SeedNullableClient client = SeedNullableClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -171,9 +166,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.api.SeedApiClient;
+import com.seed.nullable.SeedNullableClient;
 
-SeedApiClient client = SeedApiClient
+SeedNullableClient client = SeedNullableClient
     .builder()
     .maxRetries(1)
     .build();
@@ -183,17 +178,17 @@ SeedApiClient client = SeedApiClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.nullable.SeedNullableClient;
+import com.seed.nullable.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedNullableClient client = SeedNullableClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.nullable().createuser(
+client.nullable().createUser(
     ...,
     RequestOptions
         .builder()
@@ -207,11 +202,11 @@ client.nullable().createuser(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.api.SeedApiClient;
-import com.seed.api.core.RequestOptions;
+import com.seed.nullable.SeedNullableClient;
+import com.seed.nullable.core.RequestOptions;
 
 // Client level
-SeedApiClient client = SeedApiClient
+SeedNullableClient client = SeedNullableClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -219,7 +214,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.nullable().createuser(
+client.nullable().createUser(
     ...,
     RequestOptions
         .builder()
@@ -235,7 +230,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.nullable().withRawResponse().createuser(...);
+SeedNullableHttpResponse response = client.nullable().withRawResponse().createUser(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

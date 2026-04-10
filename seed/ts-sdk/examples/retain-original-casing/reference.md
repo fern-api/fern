@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">echo</a>({ ...params }) -> string</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">echo</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```typescript
-await client..echo("string");
+await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 
 ```
 </dd>
@@ -37,7 +36,7 @@ await client..echo("string");
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `SeedExamplesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -49,7 +48,7 @@ await client..echo("string");
 </dl>
 </details>
 
-<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">createType</a>({ ...params }) -> SeedApi.Identifier</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">createType</a>({ ...params }) -> SeedExamples.Identifier</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +61,7 @@ await client..echo("string");
 <dd>
 
 ```typescript
-await client..createType("primitive");
+await client.createType("primitive");
 
 ```
 </dd>
@@ -78,7 +77,7 @@ await client..createType("primitive");
 <dl>
 <dd>
 
-**request:** `SeedApi.Type` 
+**request:** `SeedExamples.Type` 
     
 </dd>
 </dl>
@@ -86,7 +85,7 @@ await client..createType("primitive");
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `SeedExamplesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -98,8 +97,8 @@ await client..createType("primitive");
 </dl>
 </details>
 
-## FileNotificationService
-<details><summary><code>client.fileNotificationService.<a href="/src/api/resources/fileNotificationService/client/Client.ts">fileNotificationServiceGetException</a>({ ...params }) -> SeedApi.Exception</code></summary>
+## File Notification Service
+<details><summary><code>client.file.notification.service.<a href="/src/api/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>(notificationId) -> SeedExamples.Exception</code></summary>
 <dl>
 <dd>
 
@@ -112,9 +111,7 @@ await client..createType("primitive");
 <dd>
 
 ```typescript
-await client.fileNotificationService.fileNotificationServiceGetException({
-    notificationId: "notificationId"
-});
+await client.file.notification.service.getException("notification-hsy129x");
 
 ```
 </dd>
@@ -130,7 +127,7 @@ await client.fileNotificationService.fileNotificationServiceGetException({
 <dl>
 <dd>
 
-**request:** `SeedApi.FileNotificationServiceGetExceptionRequest` 
+**notificationId:** `string` 
     
 </dd>
 </dl>
@@ -138,7 +135,7 @@ await client.fileNotificationService.fileNotificationServiceGetException({
 <dl>
 <dd>
 
-**requestOptions:** `FileNotificationServiceClient.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -150,8 +147,8 @@ await client.fileNotificationService.fileNotificationServiceGetException({
 </dl>
 </details>
 
-## FileService
-<details><summary><code>client.fileService.<a href="/src/api/resources/fileService/client/Client.ts">fileServiceGetFile</a>({ ...params }) -> SeedApi.File_</code></summary>
+## File Service
+<details><summary><code>client.file.service.<a href="/src/api/resources/file/resources/service/client/Client.ts">getFile</a>(filename, { ...params }) -> SeedExamples.File_</code></summary>
 <dl>
 <dd>
 
@@ -178,8 +175,8 @@ This endpoint returns a file by its name.
 <dd>
 
 ```typescript
-await client.fileService.fileServiceGetFile({
-    filename: "filename"
+await client.file.service.getFile("file.txt", {
+    "X-File-API-Version": "0.0.2"
 });
 
 ```
@@ -196,7 +193,7 @@ await client.fileService.fileServiceGetFile({
 <dl>
 <dd>
 
-**request:** `SeedApi.FileServiceGetFileRequest` 
+**filename:** `string` — This is a filename
     
 </dd>
 </dl>
@@ -204,7 +201,15 @@ await client.fileService.fileServiceGetFile({
 <dl>
 <dd>
 
-**requestOptions:** `FileServiceClient.RequestOptions` 
+**request:** `SeedExamples.file.GetFileRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -216,8 +221,8 @@ await client.fileService.fileServiceGetFile({
 </dl>
 </details>
 
-## HealthService
-<details><summary><code>client.healthService.<a href="/src/api/resources/healthService/client/Client.ts">healthServiceCheck</a>({ ...params }) -> void</code></summary>
+## Health Service
+<details><summary><code>client.health.service.<a href="/src/api/resources/health/resources/service/client/Client.ts">check</a>(id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -244,9 +249,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```typescript
-await client.healthService.healthServiceCheck({
-    id: "id"
-});
+await client.health.service.check("id-2sdx82h");
 
 ```
 </dd>
@@ -262,7 +265,7 @@ await client.healthService.healthServiceCheck({
 <dl>
 <dd>
 
-**request:** `SeedApi.HealthServiceCheckRequest` 
+**id:** `string` — The id to check
     
 </dd>
 </dl>
@@ -270,7 +273,7 @@ await client.healthService.healthServiceCheck({
 <dl>
 <dd>
 
-**requestOptions:** `HealthServiceClient.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -282,7 +285,7 @@ await client.healthService.healthServiceCheck({
 </dl>
 </details>
 
-<details><summary><code>client.healthService.<a href="/src/api/resources/healthService/client/Client.ts">healthServicePing</a>() -> boolean</code></summary>
+<details><summary><code>client.health.service.<a href="/src/api/resources/health/resources/service/client/Client.ts">ping</a>() -> boolean</code></summary>
 <dl>
 <dd>
 
@@ -309,7 +312,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```typescript
-await client.healthService.healthServicePing();
+await client.health.service.ping();
 
 ```
 </dd>
@@ -325,7 +328,7 @@ await client.healthService.healthServicePing();
 <dl>
 <dd>
 
-**requestOptions:** `HealthServiceClient.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -338,7 +341,7 @@ await client.healthService.healthServicePing();
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getmovie</a>({ ...params }) -> SeedApi.Movie</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getMovie</a>(movieId) -> SeedExamples.Movie</code></summary>
 <dl>
 <dd>
 
@@ -351,9 +354,7 @@ await client.healthService.healthServicePing();
 <dd>
 
 ```typescript
-await client.service.getmovie({
-    movieId: "movieId"
-});
+await client.service.getMovie("movie-c06a4ad7");
 
 ```
 </dd>
@@ -369,7 +370,7 @@ await client.service.getmovie({
 <dl>
 <dd>
 
-**request:** `SeedApi.ServiceGetMovieRequest` 
+**movieId:** `SeedExamples.MovieId` 
     
 </dd>
 </dl>
@@ -389,7 +390,7 @@ await client.service.getmovie({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">createmovie</a>({ ...params }) -> SeedApi.MovieId</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">createMovie</a>({ ...params }) -> SeedExamples.MovieId</code></summary>
 <dl>
 <dd>
 
@@ -402,15 +403,25 @@ await client.service.getmovie({
 <dd>
 
 ```typescript
-await client.service.createmovie({
-    id: "id",
-    title: "title",
-    from: "from",
-    rating: 1.1,
+await client.service.createMovie({
+    id: "movie-c06a4ad7",
+    prequel: "movie-cv9b914f",
+    title: "The Boy and the Heron",
+    from: "Hayao Miyazaki",
+    rating: 8,
     type: "movie",
-    tag: "tag",
+    tag: "tag-wf9as23d",
     metadata: {
-        "key": "value"
+        "actors": [
+            "Christian Bale",
+            "Florence Pugh",
+            "Willem Dafoe"
+        ],
+        "releaseDate": "2023-12-08",
+        "ratings": {
+            "rottenTomatoes": 97,
+            "imdb": 7.6
+        }
     },
     revenue: 1000000
 });
@@ -429,7 +440,7 @@ await client.service.createmovie({
 <dl>
 <dd>
 
-**request:** `SeedApi.Movie` 
+**request:** `SeedExamples.Movie` 
     
 </dd>
 </dl>
@@ -449,7 +460,7 @@ await client.service.createmovie({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getmetadata</a>({ ...params }) -> SeedApi.Metadata</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getMetadata</a>({ ...params }) -> SeedExamples.Metadata</code></summary>
 <dl>
 <dd>
 
@@ -462,8 +473,10 @@ await client.service.createmovie({
 <dd>
 
 ```typescript
-await client.service.getmetadata({
-    "X-API-Version": "X-API-Version"
+await client.service.getMetadata({
+    "X-API-Version": "0.0.1",
+    shallow: false,
+    tag: "development"
 });
 
 ```
@@ -480,7 +493,7 @@ await client.service.getmetadata({
 <dl>
 <dd>
 
-**request:** `SeedApi.ServiceGetMetadataRequest` 
+**request:** `SeedExamples.GetMetadataRequest` 
     
 </dd>
 </dl>
@@ -500,7 +513,7 @@ await client.service.getmetadata({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">createbigentity</a>({ ...params }) -> SeedApi.Response</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">createBigEntity</a>({ ...params }) -> SeedExamples.Response</code></summary>
 <dl>
 <dd>
 
@@ -513,57 +526,166 @@ await client.service.getmetadata({
 <dd>
 
 ```typescript
-await client.service.createbigentity();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.BigEntity` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServiceClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">refreshtoken</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.service.refreshtoken({
-    ttl: 1
+await client.service.createBigEntity({
+    castMember: {
+        name: "name",
+        id: "id"
+    },
+    extendedMovie: {
+        cast: ["cast", "cast"],
+        id: "id",
+        prequel: "prequel",
+        title: "title",
+        from: "from",
+        rating: 1.1,
+        type: "movie",
+        tag: "tag",
+        book: "book",
+        metadata: {
+            "metadata": {
+                "key": "value"
+            }
+        },
+        revenue: 1000000
+    },
+    entity: {
+        type: "primitive",
+        name: "name"
+    },
+    metadata: {
+        type: "html",
+        extra: {
+            "extra": "extra"
+        },
+        tags: ["tags"],
+        value: "metadata"
+    },
+    commonMetadata: {
+        id: "id",
+        data: {
+            "data": "data"
+        },
+        jsonString: "jsonString"
+    },
+    eventInfo: {
+        type: "metadata",
+        id: "id",
+        data: {
+            "data": "data"
+        },
+        jsonString: "jsonString"
+    },
+    data: {
+        type: "string",
+        value: "data"
+    },
+    migration: {
+        name: "name",
+        status: "RUNNING"
+    },
+    exception: {
+        type: "generic",
+        exceptionType: "exceptionType",
+        exceptionMessage: "exceptionMessage",
+        exceptionStacktrace: "exceptionStacktrace"
+    },
+    test: {
+        type: "and",
+        value: true
+    },
+    node: {
+        name: "name",
+        nodes: [{
+                name: "name",
+                nodes: [{
+                        name: "name"
+                    }, {
+                        name: "name"
+                    }],
+                trees: [{
+                        nodes: []
+                    }, {
+                        nodes: []
+                    }]
+            }, {
+                name: "name",
+                nodes: [{
+                        name: "name"
+                    }, {
+                        name: "name"
+                    }],
+                trees: [{
+                        nodes: []
+                    }, {
+                        nodes: []
+                    }]
+            }],
+        trees: [{
+                nodes: [{
+                        name: "name",
+                        nodes: [],
+                        trees: []
+                    }, {
+                        name: "name",
+                        nodes: [],
+                        trees: []
+                    }]
+            }, {
+                nodes: [{
+                        name: "name",
+                        nodes: [],
+                        trees: []
+                    }, {
+                        name: "name",
+                        nodes: [],
+                        trees: []
+                    }]
+            }]
+    },
+    directory: {
+        name: "name",
+        files: [{
+                name: "name",
+                contents: "contents"
+            }, {
+                name: "name",
+                contents: "contents"
+            }],
+        directories: [{
+                name: "name",
+                files: [{
+                        name: "name",
+                        contents: "contents"
+                    }, {
+                        name: "name",
+                        contents: "contents"
+                    }],
+                directories: [{
+                        name: "name"
+                    }, {
+                        name: "name"
+                    }]
+            }, {
+                name: "name",
+                files: [{
+                        name: "name",
+                        contents: "contents"
+                    }, {
+                        name: "name",
+                        contents: "contents"
+                    }],
+                directories: [{
+                        name: "name"
+                    }, {
+                        name: "name"
+                    }]
+            }]
+    },
+    moment: {
+        id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        date: "2023-01-15",
+        datetime: "2024-01-15T09:30:00Z"
+    }
 });
 
 ```
@@ -580,7 +702,56 @@ await client.service.refreshtoken({
 <dl>
 <dd>
 
-**request:** `SeedApi.RefreshTokenRequest` 
+**request:** `SeedExamples.BigEntity` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">refreshToken</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.service.refreshToken(undefined);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExamples.RefreshTokenRequest` 
     
 </dd>
 </dl>

@@ -3,10 +3,11 @@
 namespace Seed;
 
 use Seed\Auth\AuthClient;
-use Seed\NestedApi\NestedApiClient;
+use Seed\Nested\NestedClient;
 use Seed\Simple\SimpleClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Core\OAuthTokenProvider;
 
 class SeedClient
 {
@@ -16,9 +17,9 @@ class SeedClient
     public AuthClient $auth;
 
     /**
-     * @var NestedApiClient $nestedApi
+     * @var NestedClient $nested
      */
-    public NestedApiClient $nestedApi;
+    public NestedClient $nested;
 
     /**
      * @var SimpleClient $simple
@@ -42,7 +43,13 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?string $token The token to use for authentication.
+     * @var OAuthTokenProvider $oauthTokenProvider
+     */
+    private OAuthTokenProvider $oauthTokenProvider;
+
+    /**
+     * @param ?string $clientId The client ID for OAuth authentication.
+     * @param ?string $clientSecret The client secret for OAuth authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -52,7 +59,8 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        ?string $token = null,
+        ?string $clientId = null,
+        ?string $clientSecret = null,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -61,23 +69,27 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($token != null) {
-            $defaultHeaders['Authorization'] = "Bearer $token";
-        }
 
         $this->options = $options ?? [];
+
+        $authRawClient = new RawClient(['headers' => []]);
+        $authClient = new AuthClient($authRawClient);
+        $this->oauthTokenProvider = new OAuthTokenProvider($clientId ?? '', $clientSecret ?? '', $authClient);
 
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
 
+        $this->options['getAuthHeaders'] = fn () =>
+            ['Authorization' => "Bearer " . $this->oauthTokenProvider->getToken()];
+
         $this->client = new RawClient(
             options: $this->options,
         );
 
         $this->auth = new AuthClient($this->client, $this->options);
-        $this->nestedApi = new NestedApiClient($this->client, $this->options);
+        $this->nested = new NestedClient($this->client, $this->options);
         $this->simple = new SimpleClient($this->client, $this->options);
     }
 }

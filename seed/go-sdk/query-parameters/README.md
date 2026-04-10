@@ -32,22 +32,25 @@ package example
 import (
     context "context"
 
+    uuid "github.com/google/uuid"
     fern "github.com/query-parameters/fern"
     client "github.com/query-parameters/fern/client"
 )
 
 func do() {
     client := client.NewClient()
-    request := &fern.UserGetUsernameRequest{
+    request := &fern.GetUsersRequest{
         Limit: 1,
-        ID: "id",
+        ID: uuid.MustParse(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
         Date: fern.MustParseDate(
             "2023-01-15",
         ),
         Deadline: fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
-        Bytes: "bytes",
+        Bytes: []byte("SGVsbG8gd29ybGQh"),
         User: &fern.User{
             Name: "name",
             Tags: []string{
@@ -56,6 +59,13 @@ func do() {
             },
         },
         UserList: []*fern.User{
+            &fern.User{
+                Name: "name",
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
+            },
             &fern.User{
                 Name: "name",
                 Tags: []string{
@@ -101,13 +111,11 @@ func do() {
                 },
             },
         },
-        Filter: []*string{
-            fern.String(
-                "filter",
-            ),
+        Filter: []string{
+            "filter",
         },
     }
-    client.User.Getusername(
+    client.User.GetUsername(
         context.TODO(),
         request,
     )
@@ -131,7 +139,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.User.Getusername(...)
+response, err := client.User.GetUsername(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -165,7 +173,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.User.Getusername(
+response, err := client.User.GetUsername(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -180,7 +188,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.User.WithRawResponse.Getusername(...)
+response, err := client.User.WithRawResponse.GetUsername(...)
 if err != nil {
     return err
 }
@@ -210,7 +218,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.User.Getusername(
+response, err := client.User.GetUsername(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -224,7 +232,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.User.Getusername(ctx, ...)
+response, err := client.User.GetUsername(ctx, ...)
 ```
 
 ### Explicit Null
@@ -246,7 +254,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.User.Getusername(ctx, request, ...)
+response, err := client.User.GetUsername(ctx, request, ...)
 ```
 
 ## Contributing

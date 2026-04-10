@@ -21,7 +21,6 @@ class SeedClient
 
     /**
      * @var array{
-     *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
      *   timeout?: float,
@@ -36,9 +35,14 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @var Environments $environment
+     */
+    private Environments $environment;
+
+    /**
      * @param string $token The token to use for authentication.
+     * @param Environments $environment The environment to use for API requests.
      * @param ?array{
-     *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
      *   timeout?: float,
@@ -47,6 +51,7 @@ class SeedClient
      */
     public function __construct(
         string $token,
+        Environments $environment,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -58,6 +63,7 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
+        $this->environment = $environment;
 
         $this->options['headers'] = array_merge(
             $defaultHeaders,
@@ -68,7 +74,7 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->ec2 = new Ec2Client($this->client, $this->options);
-        $this->s3 = new S3Client($this->client, $this->options);
+        $this->ec2 = new Ec2Client($this->client, $this->environment);
+        $this->s3 = new S3Client($this->client, $this->environment);
     }
 }

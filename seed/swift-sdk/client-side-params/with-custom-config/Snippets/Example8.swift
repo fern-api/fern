@@ -7,10 +7,11 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.service.createuser(request: .init(
-        email: "email",
-        connection: "connection"
-    ))
+    _ = try await client.service.listConnections(
+        strategy: "strategy",
+        name: "name",
+        fields: "fields"
+    )
 }
 
 try await main()

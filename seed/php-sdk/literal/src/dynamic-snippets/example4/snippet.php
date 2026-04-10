@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Path\Types\PathSendRequestId;
 
 $client = new SeedClient(
     options: [
@@ -11,5 +10,5 @@ $client = new SeedClient(
     ],
 );
 $client->path->send(
-    PathSendRequestId::OneHundredTwentyThree->value,
+    '123',
 );

@@ -7,7 +7,7 @@ import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type * as SeedQueryParameters from "../../../index.js";
 
 export declare namespace UserClient {
     export type Options = BaseClientOptions;
@@ -23,24 +23,27 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedApi.UserGetUsernameRequest} request
+     * @param {SeedQueryParameters.GetUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.getusername({
+     *     await client.user.getUsername({
      *         limit: 1,
-     *         id: "id",
+     *         id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         date: "2023-01-15",
      *         deadline: "2024-01-15T09:30:00Z",
-     *         bytes: "bytes",
+     *         bytes: "SGVsbG8gd29ybGQh",
      *         user: {
      *             name: "name",
      *             tags: ["tags", "tags"]
      *         },
-     *         user_list: {
-     *             name: "name",
-     *             tags: ["tags", "tags"]
-     *         },
+     *         user_list: [{
+     *                 name: "name",
+     *                 tags: ["tags", "tags"]
+     *             }, {
+     *                 name: "name",
+     *                 tags: ["tags", "tags"]
+     *             }],
      *         optional_deadline: "2024-01-15T09:30:00Z",
      *         key_value: {
      *             "keyValue": "keyValue"
@@ -64,17 +67,17 @@ export class UserClient {
      *         filter: "filter"
      *     })
      */
-    public getusername(
-        request: SeedApi.UserGetUsernameRequest,
+    public getUsername(
+        request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getusername(request, requestOptions));
+    ): core.HttpResponsePromise<SeedQueryParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
     }
 
-    private async __getusername(
-        request: SeedApi.UserGetUsernameRequest,
+    private async __getUsername(
+        request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.User>> {
+    ): Promise<core.WithRawResponse<SeedQueryParameters.User>> {
         const {
             limit,
             id,
@@ -98,8 +101,8 @@ export class UserClient {
             deadline,
             bytes,
             user,
-            userList,
-            optionalDeadline: optionalDeadline !== undefined ? optionalDeadline : undefined,
+            userList: toJson(userList),
+            optionalDeadline: optionalDeadline != null ? optionalDeadline : undefined,
             keyValue: toJson(keyValue),
             optionalString,
             nestedUser,
@@ -112,7 +115,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "user",
+                "/user",
             ),
             method: "GET",
             headers: _headers,
@@ -124,11 +127,11 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedQueryParameters.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedQueryParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

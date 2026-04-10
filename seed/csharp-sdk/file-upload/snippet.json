@@ -4,73 +4,13 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/",
-                "method": "POST",
-                "identifier_override": "endpoint_service.post"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.PostAsync(new ServicePostRequest());\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
                 "path": "/just-file",
                 "method": "POST",
-                "identifier_override": "endpoint_service.justfile"
+                "identifier_override": "endpoint_service.justFile"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.JustfileAsync(new ServiceJustFileRequest());\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/just-file-with-optional-query-params",
-                "method": "POST",
-                "identifier_override": "endpoint_service.justfilewithoptionalqueryparams"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.JustfilewithoptionalqueryparamsAsync(\n    new ServiceJustFileWithOptionalQueryParamsRequest()\n);\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/with-content-type",
-                "method": "POST",
-                "identifier_override": "endpoint_service.withcontenttype"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.WithcontenttypeAsync(new ServiceWithContentTypeRequest());\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/with-form-encoding",
-                "method": "POST",
-                "identifier_override": "endpoint_service.withformencoding"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.WithformencodingAsync(new ServiceWithFormEncodingRequest());\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/form-encoded",
-                "method": "POST",
-                "identifier_override": "endpoint_service.withformencodedcontainers"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.WithformencodedcontainersAsync(new ServiceWithFormEncodedContainersRequest());\n"
+                "client": "using SeedFileUpload;\n\nvar client = new SeedFileUploadClient();\nawait client.Service.JustFileAsync(new JustFileRequest());\n"
             }
         },
         {
@@ -78,35 +18,11 @@
             "id": {
                 "path": "/optional-args",
                 "method": "POST",
-                "identifier_override": "endpoint_service.optionalargs"
+                "identifier_override": "endpoint_service.optionalArgs"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.OptionalargsAsync(new ServiceOptionalArgsRequest());\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/inline-type",
-                "method": "POST",
-                "identifier_override": "endpoint_service.withinlinetype"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.WithinlinetypeAsync(new ServiceWithInlineTypeRequest());\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/with-json-property",
-                "method": "POST",
-                "identifier_override": "endpoint_service.withjsonproperty"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.WithjsonpropertyAsync(new ServiceWithJsonPropertyRequest());\n"
+                "client": "using SeedFileUpload;\n\nvar client = new SeedFileUploadClient();\nawait client.Service.OptionalArgsAsync(new OptionalArgsRequest());\n"
             }
         },
         {
@@ -118,19 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.SimpleAsync();\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
-                "path": "/with-literal-enum",
-                "method": "POST",
-                "identifier_override": "endpoint_service.withliteralandenumtypes"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.WithliteralandenumtypesAsync(new ServiceWithLiteralAndEnumTypesRequest());\n"
+                "client": "using SeedFileUpload;\n\nvar client = new SeedFileUploadClient();\nawait client.Service.SimpleAsync();\n"
             }
         }
     ]

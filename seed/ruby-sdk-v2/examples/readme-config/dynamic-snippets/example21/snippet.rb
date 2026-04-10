@@ -5,4 +5,6 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.service.refreshtoken(ttl: 1)
+client.service.refresh_token(request: {
+  ttl: 420
+})

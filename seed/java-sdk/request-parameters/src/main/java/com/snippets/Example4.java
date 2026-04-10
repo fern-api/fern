@@ -1,25 +1,28 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.user.requests.UserGetUsernameRequest;
-import com.seed.api.types.NestedUser;
-import com.seed.api.types.User;
+import com.seed.requestParameters.SeedRequestParametersClient;
+import com.seed.requestParameters.resources.user.requests.GetUsersRequest;
+import com.seed.requestParameters.resources.user.types.NestedUser;
+import com.seed.requestParameters.resources.user.types.User;
+import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedRequestParametersClient client = SeedRequestParametersClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
         client.user()
-                .getusername(UserGetUsernameRequest.builder()
+                .getUsername(GetUsersRequest.builder()
                         .limit(1)
-                        .id("id")
+                        .id(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
                         .date("2023-01-15")
                         .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .bytes("bytes")
+                        .bytes("SGVsbG8gd29ybGQh".getBytes())
                         .user(User.builder()
                                 .name("name")
                                 .tags(Arrays.asList("tags", "tags"))
@@ -32,11 +35,16 @@ public class Example4 {
                                         .build())
                                 .build())
                         .longParam(1000000L)
-                        .bigIntParam(1)
-                        .userList(Arrays.asList(User.builder()
-                                .name("name")
-                                .tags(Arrays.asList("tags", "tags"))
-                                .build()))
+                        .bigIntParam(new BigInteger("1000000"))
+                        .userList(Arrays.asList(
+                                User.builder()
+                                        .name("name")
+                                        .tags(Arrays.asList("tags", "tags"))
+                                        .build(),
+                                User.builder()
+                                        .name("name")
+                                        .tags(Arrays.asList("tags", "tags"))
+                                        .build()))
                         .keyValue(new HashMap<String, String>() {
                             {
                                 put("keyValue", "keyValue");

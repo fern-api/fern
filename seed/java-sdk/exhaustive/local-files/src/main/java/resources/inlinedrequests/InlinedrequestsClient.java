@@ -6,39 +6,38 @@ package com.fern.sdk.resources.inlinedrequests;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.resources.inlinedrequests.requests.InlinedRequestsPostWithObjectBodyandResponseRequest;
-import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.resources.inlinedrequests.requests.PostWithObjectBody;
+import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 
-public class InlinedrequestsClient {
+public class InlinedRequestsClient {
   protected final ClientOptions clientOptions;
 
-  private final RawInlinedrequestsClient rawClient;
+  private final RawInlinedRequestsClient rawClient;
 
-  public InlinedrequestsClient(ClientOptions clientOptions) {
+  public InlinedRequestsClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new RawInlinedrequestsClient(clientOptions);
+    this.rawClient = new RawInlinedRequestsClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawInlinedrequestsClient withRawResponse() {
+  public RawInlinedRequestsClient withRawResponse() {
     return this.rawClient;
   }
 
   /**
    * POST with custom object in request body, response is an object
    */
-  public TypesObjectWithOptionalField postwithobjectbodyandresponse(
-      InlinedRequestsPostWithObjectBodyandResponseRequest request) {
-    return this.rawClient.postwithobjectbodyandresponse(request).body();
+  public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request) {
+    return this.rawClient.postWithObjectBodyandResponse(request).body();
   }
 
   /**
    * POST with custom object in request body, response is an object
    */
-  public TypesObjectWithOptionalField postwithobjectbodyandresponse(
-      InlinedRequestsPostWithObjectBodyandResponseRequest request, RequestOptions requestOptions) {
-    return this.rawClient.postwithobjectbodyandresponse(request, requestOptions).body();
+  public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request,
+      RequestOptions requestOptions) {
+    return this.rawClient.postWithObjectBodyandResponse(request, requestOptions).body();
   }
 }

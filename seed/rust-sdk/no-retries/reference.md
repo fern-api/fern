@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.retries.<a href="/src/api/resources/retries/client.rs">getusers</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.retries.<a href="/src/api/resources/retries/client.rs">get_users</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,15 @@
 <dd>
 
 ```rust
-use seed_api::prelude::*;
+use seed_no_retries::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.retries.getusers(None).await;
+    let client = NoRetriesClient::new(config).expect("Failed to build client");
+    client.retries.get_users(None).await;
 }
 ```
 </dd>

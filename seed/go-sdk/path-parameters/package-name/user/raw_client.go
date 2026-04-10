@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Getuser(
+func (r *RawClient) GetUser(
 	ctx context.Context,
-	request *path.UserGetUserRequest,
+	request *path.GetUsersRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*path.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -75,55 +75,10 @@ func (r *RawClient) Getuser(
 	}, nil
 }
 
-func (r *RawClient) Updateuser(
+func (r *RawClient) CreateUser(
 	ctx context.Context,
-	request *path.UserUpdateUserRequest,
-	opts ...option.RequestOption,
-) (*core.Response[*path.User], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		r.baseURL,
-		"",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/%v/user/%v",
-		request.TenantID,
-		request.UserID,
-	)
-	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
-	)
-	headers.Add("Content-Type", "application/json")
-	var response *path.User
-	raw, err := r.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPatch,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &core.Response[*path.User]{
-		StatusCode: raw.StatusCode,
-		Header:     raw.Header,
-		Body:       response,
-	}, nil
-}
-
-func (r *RawClient) Createuser(
-	ctx context.Context,
-	request *path.UserCreateUserRequest,
+	tenantID string,
+	request *path.User,
 	opts ...option.RequestOption,
 ) (*core.Response[*path.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -134,13 +89,12 @@ func (r *RawClient) Createuser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/user/",
-		request.TenantID,
+		tenantID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response *path.User
 	raw, err := r.caller.Call(
 		ctx,
@@ -166,9 +120,54 @@ func (r *RawClient) Createuser(
 	}, nil
 }
 
-func (r *RawClient) Searchusers(
+func (r *RawClient) UpdateUser(
 	ctx context.Context,
-	request *path.UserSearchUsersRequest,
+	request *path.UpdateUserRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*path.User], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/%v/user/%v",
+		request.TenantID,
+		request.UserID,
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *path.User
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPatch,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*path.User]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) SearchUsers(
+	ctx context.Context,
+	request *path.SearchUsersRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*path.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -217,9 +216,9 @@ func (r *RawClient) Searchusers(
 	}, nil
 }
 
-func (r *RawClient) Getusermetadata(
+func (r *RawClient) GetUserMetadata(
 	ctx context.Context,
-	request *path.UserGetUserMetadataRequest,
+	request *path.GetUserMetadataRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*path.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -262,9 +261,9 @@ func (r *RawClient) Getusermetadata(
 	}, nil
 }
 
-func (r *RawClient) Getuserspecifics(
+func (r *RawClient) GetUserSpecifics(
 	ctx context.Context,
-	request *path.UserGetUserSpecificsRequest,
+	request *path.GetUserSpecificsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*path.User], error) {
 	options := core.NewRequestOptions(opts...)

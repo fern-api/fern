@@ -1,6 +1,6 @@
 # Reference
-## FolderAService
-<details><summary><code>client.folderAService.<a href="/Sources/Resources/FolderAService/FolderAServiceClient.swift">folderAServiceGetDirectThread</a>(requestOptions: RequestOptions?) -> FolderAResponse</code></summary>
+## FolderA Service
+<details><summary><code>client.folderA.service.<a href="/Sources/Resources/FolderA/Service/ServiceClient.swift">getDirectThread</a>(requestOptions: RequestOptions?) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import CrossPackageTypeNames
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = CrossPackageTypeNamesClient()
 
-    _ = try await client.folderAService.folderAServiceGetDirectThread()
+    _ = try await client.folderA.service.getDirectThread()
 }
 
 try await main()
@@ -49,8 +49,8 @@ try await main()
 </dl>
 </details>
 
-## FolderDService
-<details><summary><code>client.folderDService.<a href="/Sources/Resources/FolderDService/FolderDServiceClient.swift">folderDServiceGetDirectThread</a>(requestOptions: RequestOptions?) -> FolderDResponse</code></summary>
+## FolderD Service
+<details><summary><code>client.folderD.service.<a href="/Sources/Resources/FolderD/Service/FolderDServiceClient.swift">getDirectThread</a>(requestOptions: RequestOptions?) -> ResponseType</code></summary>
 <dl>
 <dd>
 
@@ -64,12 +64,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import CrossPackageTypeNames
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = CrossPackageTypeNamesClient()
 
-    _ = try await client.folderDService.folderDServiceGetDirectThread()
+    _ = try await client.folderA.service.getDirectThread()
 }
 
 try await main()
@@ -100,7 +100,7 @@ try await main()
 </details>
 
 ## Foo
-<details><summary><code>client.foo.<a href="/Sources/Resources/Foo/FooClient.swift">find</a>(optionalString: Nullable&lt;OptionalString&gt;?, request: Requests.FooFindRequest, requestOptions: RequestOptions?) -> ImportingType</code></summary>
+<details><summary><code>client.foo.<a href="/Sources/Resources/Foo/FooClient.swift">find</a>(optionalString: OptionalString, request: Requests.FindRequest, requestOptions: RequestOptions?) -> ImportingType</code></summary>
 <dl>
 <dd>
 
@@ -114,12 +114,18 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import CrossPackageTypeNames
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = CrossPackageTypeNamesClient()
 
-    _ = try await client.foo.find(request: .init())
+    _ = try await client.foo.find(
+        optionalString: "optionalString",
+        request: .init(
+            publicProperty: "publicProperty",
+            privateProperty: 1
+        )
+    )
 }
 
 try await main()
@@ -137,7 +143,7 @@ try await main()
 <dl>
 <dd>
 
-**optionalString:** `Nullable<OptionalString>?` 
+**optionalString:** `OptionalString` 
     
 </dd>
 </dl>
@@ -145,7 +151,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.FooFindRequest` 
+**request:** `Requests.FindRequest` 
     
 </dd>
 </dl>

@@ -3,7 +3,6 @@ package example
 import (
     context "context"
 
-    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
 )
@@ -17,12 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.TypesObjectWithMixedRequiredAndOptionalFields{
-        RequiredString: "requiredString",
-        RequiredInteger: 1,
-        RequiredLong: int64(1000000),
-    }
-    client.EndpointsObject.EndpointsObjectGetAndReturnWithMixedRequiredAndOptionalFields(
+    request := 1.1
+    client.Endpoints.Primitive.GetAndReturnDouble(
         context.TODO(),
         request,
     )

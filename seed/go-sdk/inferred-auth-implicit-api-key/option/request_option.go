@@ -71,3 +71,10 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 		MaxBufSize: size,
 	}
 }
+
+// WithAPIKey sets the apiKey auth request parameter.
+func WithAPIKey(apiKey string) *core.APIKeyOption {
+	return &core.APIKeyOption{
+		APIKey: apiKey,
+	}
+}

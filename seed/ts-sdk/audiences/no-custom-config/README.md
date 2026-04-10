@@ -41,10 +41,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/audiences";
+import { SeedAudiencesClient, SeedAudiencesEnvironment } from "@fern/audiences";
 
-const client = new SeedApiClient;
-await client.foo.find();
+const client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });
+await client.foo.find({
+    optionalString: "optionalString",
+    publicProperty: "publicProperty",
+    privateProperty: 1
+});
 ```
 
 ## Environments
@@ -52,10 +56,10 @@ await client.foo.find();
 This SDK allows you to configure different environments for API requests.
 
 ```typescript
-import { SeedApiClient, SeedApiEnvironment } from "@fern/audiences";
+import { SeedAudiencesClient, SeedAudiencesEnvironment } from "@fern/audiences";
 
-const client = new SeedApiClient({
-    environment: SeedApiEnvironment.Default,
+const client = new SeedAudiencesClient({
+    environment: SeedAudiencesEnvironment.EnvironmentA,
 });
 ```
 
@@ -65,9 +69,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedApi } from "@fern/audiences";
+import { SeedAudiences } from "@fern/audiences";
 
-const request: SeedApi.FolderAServiceGetDirectThreadRequest = {
+const request: SeedAudiences.GetDirectThreadRequest = {
     ...
 };
 ```
@@ -78,12 +82,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/audiences";
+import { SeedAudiencesError } from "@fern/audiences";
 
 try {
     await client.foo.find(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedAudiencesError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -99,9 +103,9 @@ try {
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { FolderAServiceClient } from '@fern/audiences/folderAService';
+import { FolderAClient } from '@fern/audiences/folderA';
 
-const client = new FolderAServiceClient({...});
+const client = new FolderAClient({...});
 ```
 
 ### Additional Headers
@@ -109,9 +113,9 @@ const client = new FolderAServiceClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/audiences";
+import { SeedAudiencesClient } from "@fern/audiences";
 
-const client = new SeedApiClient({
+const client = new SeedAudiencesClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -196,9 +200,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/audiences";
+import { SeedAudiencesClient, logging } from "@fern/audiences";
 
-const client = new SeedApiClient({
+const client = new SeedAudiencesClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

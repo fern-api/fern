@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,15 +7,14 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object
-        .endpoints_object_get_and_return_with_datetime_like_string(
-            &TypesObjectWithDatetimeLikeString {
-                datetime_like_string: "datetimeLikeString".to_string(),
-                actual_datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                ..Default::default()
-            },
+        .endpoints
+        .primitive
+        .get_and_return_base64(
+            &base64::engine::general_purpose::STANDARD
+                .decode("SGVsbG8gd29ybGQh")
+                .unwrap(),
             None,
         )
         .await;

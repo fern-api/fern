@@ -1,16 +1,17 @@
 import Foundation
-import Api
+import ClientSideParams
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = ClientSideParamsClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.service.createuser(request: .init(
-        email: "email",
-        connection: "connection"
-    ))
+    _ = try await client.service.listConnections(
+        strategy: "strategy",
+        name: "name",
+        fields: "fields"
+    )
 }
 
 try await main()

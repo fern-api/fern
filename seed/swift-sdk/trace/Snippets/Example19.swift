@@ -1,13 +1,16 @@
 import Foundation
-import Api
+import Trace
 
 private func main() async throws {
-    let client = ApiClient(
+    let client = TraceClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.homepage.gethomepageproblems()
+    _ = try await client.playlist.deletePlaylist(
+        serviceParam: 1,
+        playlistId: "playlist_id"
+    )
 }
 
 try await main()

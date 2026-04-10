@@ -7,10 +7,10 @@ package com.fern.sdk.resources.noreqbody;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedApiApiException;
-import com.fern.sdk.core.SeedApiException;
-import com.fern.sdk.core.SeedApiHttpResponse;
-import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.core.SeedExhaustiveApiException;
+import com.fern.sdk.core.SeedExhaustiveException;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
+import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
@@ -22,22 +22,22 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class RawNoreqbodyClient {
+public class RawNoReqBodyClient {
   protected final ClientOptions clientOptions;
 
-  public RawNoreqbodyClient(ClientOptions clientOptions) {
+  public RawNoReqBodyClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
   }
 
-  public SeedApiHttpResponse<TypesObjectWithOptionalField> getwithnorequestbody() {
-    return getwithnorequestbody(null);
+  public SeedExhaustiveHttpResponse<ObjectWithOptionalField> getWithNoRequestBody() {
+    return getWithNoRequestBody(null);
   }
 
-  public SeedApiHttpResponse<TypesObjectWithOptionalField> getwithnorequestbody(
+  public SeedExhaustiveHttpResponse<ObjectWithOptionalField> getWithNoRequestBody(
       RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-
-      .addPathSegments("no-req-body");if (requestOptions != null) {
+      .addPathSegments("no-req-body")
+      ;if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
@@ -56,24 +56,24 @@ public class RawNoreqbodyClient {
         ResponseBody responseBody = response.body();
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         if (response.isSuccessful()) {
-          return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TypesObjectWithOptionalField.class), response);
+          return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithOptionalField.class), response);
         }
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
       }
       catch (IOException e) {
-        throw new SeedApiException("Network error executing HTTP request", e);
+        throw new SeedExhaustiveException("Network error executing HTTP request", e);
       }
     }
 
-    public SeedApiHttpResponse<String> postwithnorequestbody() {
-      return postwithnorequestbody(null);
+    public SeedExhaustiveHttpResponse<String> postWithNoRequestBody() {
+      return postWithNoRequestBody(null);
     }
 
-    public SeedApiHttpResponse<String> postwithnorequestbody(RequestOptions requestOptions) {
+    public SeedExhaustiveHttpResponse<String> postWithNoRequestBody(RequestOptions requestOptions) {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-
-        .addPathSegments("no-req-body");if (requestOptions != null) {
+        .addPathSegments("no-req-body")
+        ;if (requestOptions != null) {
           requestOptions.getQueryParameters().forEach((_key, _value) -> {
             httpUrl.addQueryParameter(_key, _value);
           } );
@@ -92,13 +92,13 @@ public class RawNoreqbodyClient {
           ResponseBody responseBody = response.body();
           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
           if (response.isSuccessful()) {
-            return new SeedApiHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
           }
           Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-          throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+          throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
         }
         catch (IOException e) {
-          throw new SeedApiException("Network error executing HTTP request", e);
+          throw new SeedExhaustiveException("Network error executing HTTP request", e);
         }
       }
     }

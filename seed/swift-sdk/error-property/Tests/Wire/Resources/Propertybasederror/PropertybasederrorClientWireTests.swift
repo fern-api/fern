@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-import Api
+import ErrorProperty
 
-@Suite("PropertybasederrorClient Wire Tests") struct PropertybasederrorClientWireTests {
-    @Test func throwerror1() async throws -> Void {
+@Suite("PropertyBasedErrorClient Wire Tests") struct PropertyBasedErrorClientWireTests {
+    @Test func throwError1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -12,30 +12,12 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = ErrorPropertyClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.propertybasederror.throwerror(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func throwerror2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                string
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = "string"
-        let response = try await client.propertybasederror.throwerror(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.propertyBasedError.throwError(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

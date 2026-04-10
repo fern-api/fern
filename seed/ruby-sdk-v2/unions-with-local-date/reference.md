@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.bigunion.<a href="/lib/seed/bigunion/client.rb">get</a>(id) -> Seed::Types::BigUnion</code></summary>
+<details><summary><code>client.bigunion.<a href="/lib/seed/bigunion/client.rb">get</a>(id) -> Seed::Bigunion::Types::BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -61,10 +61,7 @@ client.bigunion.get(id: "id")
 <dd>
 
 ```ruby
-client.bigunion.update(
-  value: "value",
-  type: "normalSweet"
-)
+client.bigunion.update
 ```
 </dd>
 </dl>
@@ -79,7 +76,7 @@ client.bigunion.update(
 <dl>
 <dd>
 
-**request:** `Seed::Types::BigUnion` 
+**request:** `Seed::Bigunion::Types::BigUnion` 
     
 </dd>
 </dl>
@@ -112,10 +109,7 @@ client.bigunion.update(
 <dd>
 
 ```ruby
-client.bigunion.update_many(request: [{
-  value: "value",
-  type: "normalSweet"
-}])
+client.bigunion.update_many(request: [])
 ```
 </dd>
 </dl>
@@ -130,7 +124,7 @@ client.bigunion.update_many(request: [{
 <dl>
 <dd>
 
-**request:** `Internal::Types::Array[Seed::Types::BigUnion]` 
+**request:** `Internal::Types::Array[Seed::Bigunion::Types::BigUnion]` 
     
 </dd>
 </dl>
@@ -151,7 +145,7 @@ client.bigunion.update_many(request: [{
 </details>
 
 ## Types
-<details><summary><code>client.types.<a href="/lib/seed/types/client.rb">get</a>(id) -> Seed::Types::UnionWithTime</code></summary>
+<details><summary><code>client.types.<a href="/lib/seed/types/client.rb">get</a>(id) -> Seed::Types::Types::UnionWithTime</code></summary>
 <dl>
 <dd>
 
@@ -164,7 +158,7 @@ client.bigunion.update_many(request: [{
 <dd>
 
 ```ruby
-client.types.get(id: "id")
+client.types.get(id: "date-example")
 ```
 </dd>
 </dl>
@@ -212,7 +206,7 @@ client.types.get(id: "id")
 <dd>
 
 ```ruby
-client.types.update
+client.types.update(request: {})
 ```
 </dd>
 </dl>
@@ -227,7 +221,7 @@ client.types.update
 <dl>
 <dd>
 
-**request:** `Seed::Types::UnionWithTime` 
+**request:** `Seed::Types::Types::UnionWithTime` 
     
 </dd>
 </dl>
@@ -248,7 +242,7 @@ client.types.update
 </details>
 
 ## Union
-<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get</a>(id) -> Seed::Types::Shape</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get</a>(id) -> Seed::Union::Types::Shape</code></summary>
 <dl>
 <dd>
 
@@ -261,7 +255,7 @@ client.types.update
 <dd>
 
 ```ruby
-client.union.get(id: "id")
+client.bigunion.get(id: "id")
 ```
 </dd>
 </dl>
@@ -309,10 +303,7 @@ client.union.get(id: "id")
 <dd>
 
 ```ruby
-client.union.update(
-  radius: 1.1,
-  type: "circle"
-)
+client.union.update
 ```
 </dd>
 </dl>
@@ -327,7 +318,7 @@ client.union.update(
 <dl>
 <dd>
 
-**request:** `Seed::Types::Shape` 
+**request:** `Seed::Union::Types::Shape` 
     
 </dd>
 </dl>

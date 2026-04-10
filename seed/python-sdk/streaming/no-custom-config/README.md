@@ -12,6 +12,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Usage](#usage)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
+- [Streaming](#streaming)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -34,14 +35,13 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedStreaming
 
-client = SeedApi(
+client = SeedStreaming(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.dummy.generate(
-    stream=True,
+client.dummy.generate_stream(
     num_events=1,
 )
 ```
@@ -53,16 +53,15 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedStreaming
 
-client = AsyncSeedApi(
+client = AsyncSeedStreaming(
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.dummy.generate(
-        stream=True,
+    await client.dummy.generate_stream(
         num_events=1,
     )
 
@@ -79,10 +78,26 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.dummy.generate(...)
+    client.dummy.generate_stream(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
+```
+
+## Streaming
+
+The SDK supports streaming responses, as well, the response will be a generator that you can loop over.
+
+```python
+from seed import SeedStreaming
+
+client = SeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.dummy.generate_stream(
+    num_events=1,
+)
 ```
 
 ## Advanced
@@ -93,10 +108,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedStreaming
 
-client = SeedApi(...)
-response = client.dummy.with_raw_response.generate(...)
+client = SeedStreaming(...)
+response = client.dummy.with_raw_response.generate_stream(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -117,7 +132,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.dummy.generate(..., request_options={
+client.dummy.generate_stream(..., request_options={
     "max_retries": 1
 })
 ```
@@ -127,12 +142,12 @@ client.dummy.generate(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedStreaming
 
-client = SeedApi(..., timeout=20.0)
+client = SeedStreaming(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.dummy.generate(..., request_options={
+client.dummy.generate_stream(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -144,9 +159,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedStreaming
 
-client = SeedApi(
+client = SeedStreaming(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

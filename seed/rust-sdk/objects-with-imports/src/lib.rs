@@ -1,6 +1,6 @@
-//! # objects-with-imports SDK
+//! # ObjectsWithImports SDK
 //!
-//! The official Rust SDK for the objects-with-imports.
+//! The official Rust SDK for the ObjectsWithImports.
 //!
 //! ## Getting Started
 //!

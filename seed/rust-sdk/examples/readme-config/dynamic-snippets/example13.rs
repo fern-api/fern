@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,9 +7,9 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ExamplesClient::new(config).expect("Failed to build client");
     client
         .service
-        .getmovie(&MovieId("movieId".to_string()), None)
+        .get_movie(&MovieId("movie-c06a4ad7".to_string()), None)
         .await;
 }

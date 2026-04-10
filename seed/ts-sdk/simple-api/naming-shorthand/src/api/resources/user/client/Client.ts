@@ -4,7 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as acme from "../../../index.js";
@@ -23,26 +22,20 @@ export class UserClient {
     }
 
     /**
-     * @param {acme.UserGetRequest} request
+     * @param {string} id
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.get({
-     *         id: "id"
-     *     })
+     *     await client.user.get("id")
      */
-    public get(
-        request: acme.UserGetRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<acme.User> {
-        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
+    public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<acme.User> {
+        return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
     private async __get(
-        request: acme.UserGetRequest,
+        id: string,
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<acme.User>> {
-        const { id } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -52,9 +45,8 @@ export class UserClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AcmeEnvironment.Production,
-                `users/${core.url.encodePathParam(id)}`,
+                    (await core.Supplier.get(this._options.environment)),
+                `/users/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,

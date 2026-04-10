@@ -1,18 +1,14 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.migration.requests.MigrationGetAttemptedMigrationsRequest;
+import com.seed.trace.SeedTraceClient;
 
 public class Example22 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedTraceClient client = SeedTraceClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.migration()
-                .getattemptedmigrations(MigrationGetAttemptedMigrationsRequest.builder()
-                        .adminKeyHeader("admin-key-header")
-                        .build());
+        client.problem().deleteProblem("problemId");
     }
 }

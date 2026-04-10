@@ -4,7 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 
@@ -25,13 +24,13 @@ export class DummyClient {
      * @param {DummyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.dummy.getdummy()
+     *     await client.dummy.getDummy()
      */
-    public getdummy(requestOptions?: DummyClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__getdummy(requestOptions));
+    public getDummy(requestOptions?: DummyClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getDummy(requestOptions));
     }
 
-    private async __getdummy(requestOptions?: DummyClient.RequestOptions): Promise<core.WithRawResponse<string>> {
+    private async __getDummy(requestOptions?: DummyClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -41,8 +40,7 @@ export class DummyClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedApiEnvironment.Production,
+                    (await core.Supplier.get(this._options.environment)),
                 "dummy",
             ),
             method: "GET",
@@ -59,7 +57,7 @@ export class DummyClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
+            throw new errors.SeedSingleUrlEnvironmentNoDefaultError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

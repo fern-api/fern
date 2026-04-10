@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import ApiWideBasePath
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
 }

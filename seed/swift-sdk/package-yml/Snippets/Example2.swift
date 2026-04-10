@@ -1,12 +1,12 @@
 import Foundation
-import Api
+import PackageYml
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = PackageYmlClient(baseURL: "https://api.fern.com")
 
     _ = try await client.service.nop(
-        id: "id",
-        nestedId: "nestedId"
+        id: "id-a2ijs82",
+        nestedId: "id-219xca8"
     )
 }
 

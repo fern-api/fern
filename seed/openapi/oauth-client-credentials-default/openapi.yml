@@ -5,7 +5,7 @@ info:
 paths:
   /token:
     post:
-      operationId: auth_gettoken
+      operationId: auth_getToken
       tags:
         - Auth
       parameters: []
@@ -16,11 +16,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenResponse'
-              examples:
-                Example1:
-                  value:
-                    access_token: access_token
-                    expires_in: 1
       requestBody:
         required: true
         content:
@@ -30,25 +25,18 @@ paths:
               properties:
                 client_id:
                   type: string
-                  example: client_id
                 client_secret:
                   type: string
-                  example: client_secret
                 grant_type:
-                  $ref: '#/components/schemas/AuthGetTokenRequestGrantType'
+                  type: string
+                  const: client_credentials
               required:
                 - client_id
                 - client_secret
                 - grant_type
-            examples:
-              Example1:
-                value:
-                  client_id: client_id
-                  client_secret: client_secret
-                  grant_type: client_credentials
   /nested-no-auth/get-something:
     get:
-      operationId: nestedNoAuthAPI_nestedNoAuth_api_getSomething
+      operationId: nestedNoAuth_api_getSomething
       tags:
         - NestedNoAuthAPI
       parameters: []
@@ -57,7 +45,7 @@ paths:
           description: ''
   /nested/get-something:
     get:
-      operationId: nestedAPI_nested_api_getSomething
+      operationId: nested_api_getSomething
       tags:
         - NestedAPI
       parameters: []
@@ -65,10 +53,10 @@ paths:
         '204':
           description: ''
       security:
-        - BearerAuth: []
+        - OAuthScheme: []
   /get-something:
     get:
-      operationId: simple_getsomething
+      operationId: simple_getSomething
       tags:
         - Simple
       parameters: []
@@ -76,14 +64,9 @@ paths:
         '204':
           description: ''
       security:
-        - BearerAuth: []
+        - OAuthScheme: []
 components:
   schemas:
-    AuthGetTokenRequestGrantType:
-      title: AuthGetTokenRequestGrantType
-      type: string
-      enum:
-        - client_credentials
     TokenResponse:
       title: TokenResponse
       type: object
@@ -91,14 +74,12 @@ components:
       properties:
         access_token:
           type: string
-          example: access_token
         expires_in:
           type: integer
-          example: 1
       required:
         - access_token
         - expires_in
   securitySchemes:
-    BearerAuth:
+    OAuthScheme:
       type: http
       scheme: bearer

@@ -18,7 +18,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Array[Seed::Types::User]]
+      # @return [Array[Seed::User::Types::User]]
       def get(request_options: {}, **params)
         Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
@@ -47,8 +47,8 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Array[Seed::Types::User]]
-      def getadmins(request_options: {}, **params)
+      # @return [Array[Seed::User::Types::User]]
+      def get_admins(request_options: {}, **params)
         Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

@@ -3,13 +3,10 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Foo\Requests\FooFindRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->foo->find(
-    new FooFindRequest([]),
-);
+$client->folderD->service->getDirectThread();

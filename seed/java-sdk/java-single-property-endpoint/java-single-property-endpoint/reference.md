@@ -1,6 +1,6 @@
 # Reference
-## Singleproperty
-<details><summary><code>client.singleproperty.dothing(id) -> String</code></summary>
+## SingleProperty
+<details><summary><code>client.singleProperty.doThing(id) -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,11 @@
 <dd>
 
 ```java
-client.singleproperty().dothing(
+client.singleProperty().doThing(
     "id",
-    SinglePropertyDoThingRequest
+    GetThingRequest
         .builder()
+        .includeRemoteData(true)
         .build()
 );
 ```

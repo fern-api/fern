@@ -1,18 +1,18 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.payment.requests.PaymentCreateRequest;
-import com.seed.api.types.Currency;
+import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
+import com.seed.idempotencyHeaders.resources.payment.requests.CreatePaymentRequest;
+import com.seed.idempotencyHeaders.resources.payment.types.Currency;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.payment()
-                .create(PaymentCreateRequest.builder()
+                .create(CreatePaymentRequest.builder()
                         .amount(1)
                         .currency(Currency.USD)
                         .build());

@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Createuser(
+func (c *Client) CreateUser(
 	ctx context.Context,
-	request *fern.UserCreateUserRequest,
+	request *fern.CreateUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
-	response, err := c.WithRawResponse.Createuser(
+	response, err := c.WithRawResponse.CreateUser(
 		ctx,
 		request,
 		opts...,

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedDollarStringExamples.Test/SeedDollarStringExamples.Test.csproj" />
+  <Project Path="src/SeedDollarStringExamples/SeedDollarStringExamples.csproj" />
+</Solution>

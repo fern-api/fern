@@ -4,14 +4,23 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .multiple_discriminators_type import MultipleDiscriminatorsType
-from .multiple_discriminators_version import MultipleDiscriminatorsVersion
 
 
 class MultipleDiscriminators(UniversalBaseModel):
     value: str
-    type: MultipleDiscriminatorsType
-    version: MultipleDiscriminatorsVersion
+    type: typing.Literal["TYPE_A"] = "TYPE_A"
+    version: typing.Literal["v1"] = "v1"
+
+    @typing.overload
+    def __init__(self, value: str) -> None: ...
+    @typing.overload
+    def __init__(self, *, value: str) -> None: ...
+    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
+        if args:
+            kwargs.pop("value", None)
+            super().__init__(value=args[0], **kwargs)
+        else:
+            super().__init__(**kwargs)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

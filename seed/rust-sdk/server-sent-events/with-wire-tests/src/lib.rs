@@ -1,8 +1,29 @@
-//! # server-sent-events SDK
+//! # ServerSentEvents SDK
 //!
-//! The official Rust SDK for the server-sent-events.
+//! The official Rust SDK for the ServerSentEvents.
 //!
 //! ## Getting Started
+//!
+//! ```rust
+//! use seed_server_sent_events::prelude::*;
+//!
+//! #[tokio::main]
+//! async fn main() {
+//!     let config = ClientConfig {
+//!         ..Default::default()
+//!     };
+//!     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+//!     client
+//!         .completions
+//!         .stream(
+//!             &StreamCompletionRequest {
+//!                 query: "foo".to_string(),
+//!             },
+//!             None,
+//!         )
+//!         .await;
+//! }
+//! ```
 //!
 //! ## Modules
 //!

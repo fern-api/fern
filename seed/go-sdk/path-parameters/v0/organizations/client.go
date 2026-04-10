@@ -33,13 +33,13 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Getorganization(
+func (c *Client) GetOrganization(
 	ctx context.Context,
 	tenantID string,
 	organizationID string,
 	opts ...option.RequestOption,
 ) (*fern.Organization, error) {
-	response, err := c.WithRawResponse.Getorganization(
+	response, err := c.WithRawResponse.GetOrganization(
 		ctx,
 		tenantID,
 		organizationID,
@@ -51,14 +51,14 @@ func (c *Client) Getorganization(
 	return response.Body, nil
 }
 
-func (c *Client) Getorganizationuser(
+func (c *Client) GetOrganizationUser(
 	ctx context.Context,
 	tenantID string,
 	organizationID string,
 	userID string,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
-	response, err := c.WithRawResponse.Getorganizationuser(
+	response, err := c.WithRawResponse.GetOrganizationUser(
 		ctx,
 		tenantID,
 		organizationID,
@@ -71,14 +71,14 @@ func (c *Client) Getorganizationuser(
 	return response.Body, nil
 }
 
-func (c *Client) Searchorganizations(
+func (c *Client) SearchOrganizations(
 	ctx context.Context,
 	tenantID string,
 	organizationID string,
-	request *fern.OrganizationsSearchOrganizationsRequest,
+	request *fern.SearchOrganizationsRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.Organization, error) {
-	response, err := c.WithRawResponse.Searchorganizations(
+	response, err := c.WithRawResponse.SearchOrganizations(
 		ctx,
 		tenantID,
 		organizationID,

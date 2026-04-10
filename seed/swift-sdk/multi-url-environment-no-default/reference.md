@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.ec2.<a href="/Sources/Resources/Ec2/Ec2Client.swift">bootinstance</a>(request: Requests.Ec2BootInstanceRequest, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.ec2.<a href="/Sources/Resources/Ec2/Ec2Client.swift">bootInstance</a>(request: Requests.BootInstanceRequest, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,12 @@
 
 ```swift
 import Foundation
-import Api
+import MultiUrlEnvironmentNoDefault
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = MultiUrlEnvironmentNoDefaultClient(token: "<token>")
 
-    _ = try await client.ec2.bootinstance(request: .init(size: "size"))
+    _ = try await client.ec2.bootInstance(request: .init(size: "size"))
 }
 
 try await main()
@@ -37,7 +37,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.Ec2BootInstanceRequest` 
+**request:** `Requests.BootInstanceRequest` 
     
 </dd>
 </dl>
@@ -58,7 +58,7 @@ try await main()
 </details>
 
 ## S3
-<details><summary><code>client.s3.<a href="/Sources/Resources/S3/S3Client.swift">getpresignedurl</a>(request: Requests.S3GetPresignedUrlRequest, requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.s3.<a href="/Sources/Resources/S3/S3Client.swift">getPresignedUrl</a>(request: Requests.GetPresignedUrlRequest, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -72,12 +72,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import MultiUrlEnvironmentNoDefault
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = MultiUrlEnvironmentNoDefaultClient(token: "<token>")
 
-    _ = try await client.s3.getpresignedurl(request: .init(s3Key: "s3Key"))
+    _ = try await client.s3.getPresignedUrl(request: .init(s3Key: "s3Key"))
 }
 
 try await main()
@@ -95,7 +95,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.S3GetPresignedUrlRequest` 
+**request:** `Requests.GetPresignedUrlRequest` 
     
 </dd>
 </dl>

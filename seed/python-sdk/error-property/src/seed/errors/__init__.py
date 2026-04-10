@@ -6,8 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .bad_request_error import BadRequestError
-_dynamic_imports: typing.Dict[str, str] = {"BadRequestError": ".bad_request_error"}
+    from .types import PropertyBasedErrorTestBody
+    from .errors import PropertyBasedErrorTest
+_dynamic_imports: typing.Dict[str, str] = {"PropertyBasedErrorTest": ".errors", "PropertyBasedErrorTestBody": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +32,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["BadRequestError"]
+__all__ = ["PropertyBasedErrorTest", "PropertyBasedErrorTestBody"]

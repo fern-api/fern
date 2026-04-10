@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.Retries.<a href="/src/SeedApi/Retries/RetriesClient.cs">GetusersAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.Retries.<a href="/src/SeedNoRetries/Retries/RetriesClient.cs">GetUsersAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Retries.GetusersAsync();
+await client.Retries.GetUsersAsync();
 ```
 </dd>
 </dl>

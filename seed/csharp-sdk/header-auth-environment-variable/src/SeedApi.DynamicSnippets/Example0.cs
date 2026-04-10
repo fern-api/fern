@@ -1,18 +1,18 @@
-using SeedApi;
+using SeedHeaderTokenEnvironmentVariable;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
-            apiKey: "<value>",
+        var client = new SeedHeaderTokenEnvironmentVariableClient(
+            headerTokenAuth: "<value>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Service.GetwithbearertokenAsync();
+        await client.Service.GetWithBearerTokenAsync();
     }
 
 }

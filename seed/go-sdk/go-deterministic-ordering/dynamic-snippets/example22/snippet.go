@@ -3,9 +3,9 @@ package example
 import (
     context "context"
 
-    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
+    types "github.com/go-deterministic-ordering/fern/types"
 )
 
 func do() {
@@ -17,12 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.EndpointsDuplicateNamesACreateRequest{
-        Name: "name",
-        Value: 1,
+    request := &types.ObjectWithRequiredField{
+        FieldString: "string",
     }
-    client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesACreate(
+    client.Endpoints.HTTPMethods.TestPut(
         context.TODO(),
+        "id",
         request,
     )
 }

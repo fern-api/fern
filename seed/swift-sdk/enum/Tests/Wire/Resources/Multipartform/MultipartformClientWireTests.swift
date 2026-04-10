@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import Enum
 
-@Suite("MultipartformClient Wire Tests") struct MultipartformClientWireTests {
+@Suite("MultipartFormClient Wire Tests") struct MultipartFormClientWireTests {
 }

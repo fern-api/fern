@@ -39,10 +39,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/no-retries";
+import { SeedNoRetriesClient } from "@fern/no-retries";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client.retries.getusers();
+const client = new SeedNoRetriesClient({ environment: "YOUR_BASE_URL" });
+await client.retries.getUsers();
 ```
 
 ## Exception Handling
@@ -51,12 +51,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/no-retries";
+import { SeedNoRetriesError } from "@fern/no-retries";
 
 try {
-    await client.retries.getusers(...);
+    await client.retries.getUsers(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedNoRetriesError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -82,16 +82,16 @@ const client = new RetriesClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/no-retries";
+import { SeedNoRetriesClient } from "@fern/no-retries";
 
-const client = new SeedApiClient({
+const client = new SeedNoRetriesClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.retries.getusers(..., {
+const response = await client.retries.getUsers(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -103,7 +103,7 @@ const response = await client.retries.getusers(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.retries.getusers(..., {
+const response = await client.retries.getUsers(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -125,7 +125,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.retries.getusers(..., {
+const response = await client.retries.getUsers(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -135,7 +135,7 @@ const response = await client.retries.getusers(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.retries.getusers(..., {
+const response = await client.retries.getUsers(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -146,7 +146,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.retries.getusers(..., {
+const response = await client.retries.getUsers(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -158,7 +158,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.retries.getusers(...).withRawResponse();
+const { data, rawResponse } = await client.retries.getUsers(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -169,9 +169,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/no-retries";
+import { SeedNoRetriesClient, logging } from "@fern/no-retries";
 
-const client = new SeedApiClient({
+const client = new SeedNoRetriesClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

@@ -10,7 +10,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -40,25 +39,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/variables";
+import { SeedVariablesClient } from "@fern/variables";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client.service.post({
-    endpointParam: "endpointParam"
-});
-```
-
-## Request and Response Types
-
-The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
-following namespace:
-
-```typescript
-import { SeedApi } from "@fern/variables";
-
-const request: SeedApi.ServicePostRequest = {
-    ...
-};
+const client = new SeedVariablesClient({ environment: "YOUR_BASE_URL", rootVariable: "YOUR_ROOT_VARIABLE" });
+await client.service.post();
 ```
 
 ## Exception Handling
@@ -67,12 +51,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/variables";
+import { SeedVariablesError } from "@fern/variables";
 
 try {
     await client.service.post(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedVariablesError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -98,9 +82,9 @@ const client = new ServiceClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/variables";
+import { SeedVariablesClient } from "@fern/variables";
 
-const client = new SeedApiClient({
+const client = new SeedVariablesClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -185,9 +169,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/variables";
+import { SeedVariablesClient, logging } from "@fern/variables";
 
-const client = new SeedApiClient({
+const client = new SeedVariablesClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

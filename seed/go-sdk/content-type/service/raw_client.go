@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Patch(
 	ctx context.Context,
-	request *fern.ServicePatchRequest,
+	request *fern.PatchProxyRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,7 +47,7 @@ func (r *RawClient) Patch(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
+	headers.Add("Content-Type", "application/merge-patch+json")
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -71,9 +71,10 @@ func (r *RawClient) Patch(
 	}, nil
 }
 
-func (r *RawClient) Patchcomplex(
+func (r *RawClient) PatchComplex(
 	ctx context.Context,
-	request *fern.ServicePatchComplexRequest,
+	id string,
+	request *fern.PatchComplexRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -84,13 +85,13 @@ func (r *RawClient) Patchcomplex(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/complex/%v",
-		request.ID,
+		id,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
+	headers.Add("Content-Type", "application/merge-patch+json")
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -114,9 +115,10 @@ func (r *RawClient) Patchcomplex(
 	}, nil
 }
 
-func (r *RawClient) Namedpatchwithmixed(
+func (r *RawClient) NamedPatchWithMixed(
 	ctx context.Context,
-	request *fern.ServiceNamedPatchWithMixedRequest,
+	id string,
+	request *fern.NamedMixedPatchRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -127,13 +129,13 @@ func (r *RawClient) Namedpatchwithmixed(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/named-mixed/%v",
-		request.ID,
+		id,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
+	headers.Add("Content-Type", "application/merge-patch+json")
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -157,9 +159,9 @@ func (r *RawClient) Namedpatchwithmixed(
 	}, nil
 }
 
-func (r *RawClient) Optionalmergepatchtest(
+func (r *RawClient) OptionalMergePatchTest(
 	ctx context.Context,
-	request *fern.ServiceOptionalMergePatchTestRequest,
+	request *fern.OptionalMergePatchRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -173,7 +175,7 @@ func (r *RawClient) Optionalmergepatchtest(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
+	headers.Add("Content-Type", "application/merge-patch+json")
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -197,9 +199,10 @@ func (r *RawClient) Optionalmergepatchtest(
 	}, nil
 }
 
-func (r *RawClient) Regularpatch(
+func (r *RawClient) RegularPatch(
 	ctx context.Context,
-	request *fern.ServiceRegularPatchRequest,
+	id string,
+	request *fern.RegularPatchRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -210,13 +213,12 @@ func (r *RawClient) Regularpatch(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/regular/%v",
-		request.ID,
+		id,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{

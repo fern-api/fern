@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_undiscriminated_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,6 +6,6 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
-    client.union_.getmetadata(None).await;
+    let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
+    client.union_.get_metadata(None).await;
 }

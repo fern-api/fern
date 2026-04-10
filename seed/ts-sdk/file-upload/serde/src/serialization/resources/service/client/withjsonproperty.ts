@@ -3,7 +3,7 @@
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const Response: core.serialization.Schema<serializers.service.withjsonproperty.Response.Raw, string> =
+export const Response: core.serialization.Schema<serializers.service.withJsonProperty.Response.Raw, string> =
     core.serialization.string();
 
 export declare namespace Response {

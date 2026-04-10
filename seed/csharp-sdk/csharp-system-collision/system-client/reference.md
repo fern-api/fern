@@ -1,6 +1,5 @@
 # Reference
-## _
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">CreateUserAsync</a>(User { ... }) -> WithRawResponseTask&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +12,15 @@
 <dd>
 
 ```csharp
-await client._.CreateUserAsync(
+await client.CreateUserAsync(
     new User
     {
         Line1 = "line1",
+        Line2 = "line2",
         City = "city",
         State = "state",
         Zip = "zip",
-        Country = UserCountry.Usa,
+        Country = "USA",
     }
 );
 ```
@@ -49,7 +49,7 @@ await client._.CreateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">CreateTaskAsync</a>(Task { ... }) -> WithRawResponseTask&lt;Task&gt;</code></summary>
 <dl>
 <dd>
 
@@ -62,17 +62,18 @@ await client._.CreateUserAsync(
 <dd>
 
 ```csharp
-await client._.CreateTaskAsync(
-    new SeedApi.Task
+await client.CreateTaskAsync(
+    new SeedCsharpSystemCollision.Task
     {
         Name = "name",
         User = new User
         {
             Line1 = "line1",
+            Line2 = "line2",
             City = "city",
             State = "state",
             Zip = "zip",
-            Country = UserCountry.Usa,
+            Country = "USA",
         },
     }
 );
@@ -102,7 +103,7 @@ await client._.CreateTaskAsync(
 </dl>
 </details>
 
-<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">EmptyResponseAsync</a>(Task { ... })</code></summary>
+<details><summary><code>client.<a href="/src/SeedCsharpSystemCollision/System.cs">EmptyResponseAsync</a>(Task { ... })</code></summary>
 <dl>
 <dd>
 
@@ -115,17 +116,18 @@ await client._.CreateTaskAsync(
 <dd>
 
 ```csharp
-await client._.EmptyResponseAsync(
-    new SeedApi.Task
+await client.EmptyResponseAsync(
+    new SeedCsharpSystemCollision.Task
     {
         Name = "name",
         User = new User
         {
             Line1 = "line1",
+            Line2 = "line2",
             City = "city",
             State = "state",
             Zip = "zip",
-            Country = UserCountry.Usa,
+            Country = "USA",
         },
     }
 );

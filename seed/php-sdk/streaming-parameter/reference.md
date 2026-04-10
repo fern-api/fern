@@ -14,9 +14,9 @@
 
 ```php
 $client->dummy->generate(
-    new DummyGenerateRequest([
-        'stream' => true,
-        'numEvents' => 1,
+    new GenerateRequest([
+        'stream' => false,
+        'numEvents' => 5,
     ]),
 );
 ```

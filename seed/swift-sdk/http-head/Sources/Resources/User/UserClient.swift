@@ -7,6 +7,14 @@ public final class UserClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
+    public func head(requestOptions: RequestOptions? = nil) async throws -> Void {
+        return try await httpClient.performRequest(
+            method: .head,
+            path: "/users",
+            requestOptions: requestOptions
+        )
+    }
+
     public func list(limit: Int, requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,
@@ -16,14 +24,6 @@ public final class UserClient: Sendable {
             ],
             requestOptions: requestOptions,
             responseType: [User].self
-        )
-    }
-
-    public func head(requestOptions: RequestOptions? = nil) async throws -> Void {
-        return try await httpClient.performRequest(
-            method: .head,
-            path: "/users",
-            requestOptions: requestOptions
         )
     }
 }

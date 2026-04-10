@@ -15,7 +15,9 @@
 ```typescript
 await client.headers.send({
     operand: ">",
-    operandOrColor: "red"
+    maybeOperand: ">",
+    operandOrColor: "red",
+    maybeOperandOrColor: undefined
 });
 
 ```
@@ -32,7 +34,7 @@ await client.headers.send({
 <dl>
 <dd>
 
-**request:** `SeedApi.HeadersSendRequest` 
+**request:** `SeedEnum.SendEnumAsHeaderRequest` 
     
 </dd>
 </dl>
@@ -52,8 +54,8 @@ await client.headers.send({
 </dl>
 </details>
 
-## Inlinedrequest
-<details><summary><code>client.inlinedrequest.<a href="/src/api/resources/inlinedrequest/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
+## InlinedRequest
+<details><summary><code>client.inlinedRequest.<a href="/src/api/resources/inlinedRequest/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +68,7 @@ await client.headers.send({
 <dd>
 
 ```typescript
-await client.inlinedrequest.send({
+await client.inlinedRequest.send({
     operand: ">",
     operandOrColor: "red"
 });
@@ -85,7 +87,7 @@ await client.inlinedrequest.send({
 <dl>
 <dd>
 
-**request:** `SeedApi.InlinedRequestSendRequest` 
+**request:** `SeedEnum.SendEnumInlinedRequest` 
     
 </dd>
 </dl>
@@ -93,7 +95,7 @@ await client.inlinedrequest.send({
 <dl>
 <dd>
 
-**requestOptions:** `InlinedrequestClient.RequestOptions` 
+**requestOptions:** `InlinedRequestClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -105,8 +107,9 @@ await client.inlinedrequest.send({
 </dl>
 </details>
 
-## Multipartform
-<details><summary><code>client.multipartform.<a href="/src/api/resources/multipartform/client/Client.ts">multipartform</a>({ ...params }) -> void</code></summary>
+## MultipartForm
+## PathParam
+<details><summary><code>client.pathParam.<a href="/src/api/resources/pathParam/client/Client.ts">send</a>(operand, operandOrColor) -> void</code></summary>
 <dl>
 <dd>
 
@@ -119,7 +122,7 @@ await client.inlinedrequest.send({
 <dd>
 
 ```typescript
-await client.multipartform.multipartform({});
+await client.pathParam.send(">", "red");
 
 ```
 </dd>
@@ -135,7 +138,7 @@ await client.multipartform.multipartform({});
 <dl>
 <dd>
 
-**request:** `SeedApi.MultipartFormMultipartFormRequest` 
+**operand:** `SeedEnum.Operand` 
     
 </dd>
 </dl>
@@ -143,7 +146,15 @@ await client.multipartform.multipartform({});
 <dl>
 <dd>
 
-**requestOptions:** `MultipartformClient.RequestOptions` 
+**operandOrColor:** `SeedEnum.ColorOrOperand` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PathParamClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -155,8 +166,8 @@ await client.multipartform.multipartform({});
 </dl>
 </details>
 
-## Pathparam
-<details><summary><code>client.pathparam.<a href="/src/api/resources/pathparam/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
+## QueryParam
+<details><summary><code>client.queryParam.<a href="/src/api/resources/queryParam/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -169,7 +180,7 @@ await client.multipartform.multipartform({});
 <dd>
 
 ```typescript
-await client.pathparam.send({
+await client.queryParam.send({
     operand: ">",
     operandOrColor: "red"
 });
@@ -188,7 +199,7 @@ await client.pathparam.send({
 <dl>
 <dd>
 
-**request:** `SeedApi.PathParamSendRequest` 
+**request:** `SeedEnum.SendEnumAsQueryParamRequest` 
     
 </dd>
 </dl>
@@ -196,7 +207,7 @@ await client.pathparam.send({
 <dl>
 <dd>
 
-**requestOptions:** `PathparamClient.RequestOptions` 
+**requestOptions:** `QueryParamClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -208,8 +219,7 @@ await client.pathparam.send({
 </dl>
 </details>
 
-## Queryparam
-<details><summary><code>client.queryparam.<a href="/src/api/resources/queryparam/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.queryParam.<a href="/src/api/resources/queryParam/client/Client.ts">sendList</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -222,59 +232,7 @@ await client.pathparam.send({
 <dd>
 
 ```typescript
-await client.queryparam.send({
-    operand: ">",
-    operandOrColor: "red"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.QueryParamSendRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `QueryparamClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.queryparam.<a href="/src/api/resources/queryparam/client/Client.ts">sendlist</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.queryparam.sendlist({
+await client.queryParam.sendList({
     operand: ">",
     maybeOperand: ">",
     operandOrColor: "red",
@@ -295,7 +253,7 @@ await client.queryparam.sendlist({
 <dl>
 <dd>
 
-**request:** `SeedApi.QueryParamSendListRequest` 
+**request:** `SeedEnum.SendEnumListAsQueryParamRequest` 
     
 </dd>
 </dl>
@@ -303,7 +261,7 @@ await client.queryparam.sendlist({
 <dl>
 <dd>
 
-**requestOptions:** `QueryparamClient.RequestOptions` 
+**requestOptions:** `QueryParamClient.RequestOptions` 
     
 </dd>
 </dl>

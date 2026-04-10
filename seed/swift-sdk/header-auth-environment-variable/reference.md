@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getwithbearertoken</a>(requestOptions: RequestOptions?) -> String</code></summary>
+<details><summary><code>client.service.<a href="/Sources/Resources/Service/ServiceClient.swift">getWithBearerToken</a>(requestOptions: RequestOptions?) -> String</code></summary>
 <dl>
 <dd>
 
@@ -28,12 +28,12 @@ GET request with custom api key
 
 ```swift
 import Foundation
-import Api
+import HeaderTokenEnvironmentVariable
 
 private func main() async throws {
-    let client = ApiClient(apiKey: "<value>")
+    let client = HeaderTokenEnvironmentVariableClient(headerTokenAuth: "<value>")
 
-    _ = try await client.service.getwithbearertoken()
+    _ = try await client.service.getWithBearerToken()
 }
 
 try await main()

@@ -5,8 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints_object.endpoints_object_get_and_return_with_map_of_map(map: {
-  key: {
-    key: "value"
-  }
-})
+client.endpoints.params.get_with_allow_multiple_query

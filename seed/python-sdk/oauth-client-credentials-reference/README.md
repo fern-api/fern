@@ -12,6 +12,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Usage](#usage)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
+- [Oauth Token Override](#oauth-token-override)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -34,14 +35,15 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedOauthClientCredentialsReference
 
-client = SeedApi(
-    token="<token>",
+client = SeedOauthClientCredentialsReference(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.gettoken(
+client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
 )
@@ -54,16 +56,17 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedOauthClientCredentialsReference
 
-client = AsyncSeedApi(
-    token="<token>",
+client = AsyncSeedOauthClientCredentialsReference(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.auth.gettoken(
+    await client.auth.get_token(
         client_id="client_id",
         client_secret="client_secret",
     )
@@ -81,10 +84,31 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.auth.gettoken(...)
+    client.auth.get_token(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
+```
+
+## Oauth Token Override
+
+This SDK supports two authentication methods: OAuth client credentials flow (automatic token management) or direct bearer token authentication. You can choose between these options when initializing the client:
+
+```python
+from seed import SeedOauthClientCredentialsReference
+
+# Option 1: Direct bearer token (bypass OAuth flow)
+client = SeedOauthClientCredentialsReference(
+    ...,
+    token="my-pre-generated-bearer-token",
+)
+
+# Option 2: OAuth client credentials flow (automatic token management)
+client = SeedOauthClientCredentialsReference(
+    ...,
+    client_id="your-client-id",
+    client_secret="your-client-secret",
+)
 ```
 
 ## Advanced
@@ -95,10 +119,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedApi
+from seed import SeedOauthClientCredentialsReference
 
-client = SeedApi(...)
-response = client.auth.with_raw_response.gettoken(...)
+client = SeedOauthClientCredentialsReference(...)
+response = client.auth.with_raw_response.get_token(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -119,7 +143,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.auth.gettoken(..., request_options={
+client.auth.get_token(..., request_options={
     "max_retries": 1
 })
 ```
@@ -129,12 +153,12 @@ client.auth.gettoken(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedApi
+from seed import SeedOauthClientCredentialsReference
 
-client = SeedApi(..., timeout=20.0)
+client = SeedOauthClientCredentialsReference(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.auth.gettoken(..., request_options={
+client.auth.get_token(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -146,9 +170,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedApi
+from seed import SeedOauthClientCredentialsReference
 
-client = SeedApi(
+client = SeedOauthClientCredentialsReference(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

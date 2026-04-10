@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Api",
+    name: "BasicAuthEnvironmentVariables",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Api",
-            targets: ["Api"]
+            name: "BasicAuthEnvironmentVariables",
+            targets: ["BasicAuthEnvironmentVariables"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Api",
+            name: "BasicAuthEnvironmentVariables",
             path: "Sources"
         ),
         .testTarget(
-            name: "ApiTests",
-            dependencies: ["Api"],
+            name: "BasicAuthEnvironmentVariablesTests",
+            dependencies: ["BasicAuthEnvironmentVariables"],
             path: "Tests"
         )
     ]

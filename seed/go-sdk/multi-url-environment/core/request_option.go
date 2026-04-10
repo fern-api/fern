@@ -18,6 +18,7 @@ type RequestOption interface {
 // to be used directly; use the option package instead.
 type RequestOptions struct {
 	BaseURL         string
+	Environment     interface{}
 	HTTPClient      HTTPClient
 	HTTPHeader      http.Header
 	BodyProperties  map[string]interface{}
@@ -123,6 +124,15 @@ type MaxBufSizeOption struct {
 
 func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
+}
+
+// EnvironmentOption implements the RequestOption interface.
+type EnvironmentOption struct {
+	Environment interface{}
+}
+
+func (e *EnvironmentOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Environment = e.Environment
 }
 
 // TokenOption implements the RequestOption interface.

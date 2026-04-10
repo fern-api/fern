@@ -1,23 +1,22 @@
-using SeedApi;
-using SeedApi.Core;
+using SeedExhaustive;
+using SeedExhaustive.Core;
+using OneOf;
 
 namespace Usage;
 
 public class Example6
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfObjectsAsync(
-            new List<TypesObjectWithRequiredField>(){
-                new TypesObjectWithRequiredField {
-                    String = "string"
-                },
+        await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+            new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>(){
+                ["string"] = 1.1,
             }
         );
     }

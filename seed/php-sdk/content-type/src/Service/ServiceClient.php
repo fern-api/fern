@@ -4,16 +4,16 @@ namespace Seed\Service;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Service\Requests\ServicePatchRequest;
+use Seed\Service\Requests\PatchProxyRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use Psr\Http\Client\ClientExceptionInterface;
-use Seed\Service\Requests\ServicePatchComplexRequest;
-use Seed\Service\Requests\ServiceNamedPatchWithMixedRequest;
-use Seed\Service\Requests\ServiceOptionalMergePatchTestRequest;
-use Seed\Service\Requests\ServiceRegularPatchRequest;
+use Seed\Service\Requests\PatchComplexRequest;
+use Seed\Service\Requests\NamedMixedPatchRequest;
+use Seed\Service\Requests\OptionalMergePatchRequest;
+use Seed\Service\Requests\RegularPatchRequest;
 
 class ServiceClient
 {
@@ -52,7 +52,7 @@ class ServiceClient
     }
 
     /**
-     * @param ServicePatchRequest $request
+     * @param PatchProxyRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -64,7 +64,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function patch(ServicePatchRequest $request, ?array $options = null): void
+    public function patch(PatchProxyRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -98,7 +98,7 @@ class ServiceClient
      * - optional<nullable<T>> fields (can be present, absent, or null)
      *
      * @param string $id
-     * @param ServicePatchComplexRequest $request
+     * @param PatchComplexRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -110,7 +110,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function patchcomplex(string $id, ServicePatchComplexRequest $request = new ServicePatchComplexRequest(), ?array $options = null): void
+    public function patchComplex(string $id, PatchComplexRequest $request = new PatchComplexRequest(), ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -142,7 +142,7 @@ class ServiceClient
      * This should trigger the NPE issue when optional fields aren't initialized.
      *
      * @param string $id
-     * @param ServiceNamedPatchWithMixedRequest $request
+     * @param NamedMixedPatchRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -154,7 +154,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function namedpatchwithmixed(string $id, ServiceNamedPatchWithMixedRequest $request, ?array $options = null): void
+    public function namedPatchWithMixed(string $id, NamedMixedPatchRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -187,7 +187,7 @@ class ServiceClient
      * 1. Not NPE when fields are not provided (tests initialization)
      * 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
      *
-     * @param ServiceOptionalMergePatchTestRequest $request
+     * @param OptionalMergePatchRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -199,7 +199,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function optionalmergepatchtest(ServiceOptionalMergePatchTestRequest $request, ?array $options = null): void
+    public function optionalMergePatchTest(OptionalMergePatchRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -230,7 +230,7 @@ class ServiceClient
      * Regular PATCH endpoint without merge-patch semantics
      *
      * @param string $id
-     * @param ServiceRegularPatchRequest $request
+     * @param RegularPatchRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -242,7 +242,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function regularpatch(string $id, ServiceRegularPatchRequest $request = new ServiceRegularPatchRequest(), ?array $options = null): void
+    public function regularPatch(string $id, RegularPatchRequest $request = new RegularPatchRequest(), ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {

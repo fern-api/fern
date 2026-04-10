@@ -1,21 +1,25 @@
-using SeedApi;
+using SeedServerSentEvents;
 
 namespace Usage;
 
 public class Example2
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedServerSentEventsClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Completions.StreameventscontextprotocolAsync(
-            new CompletionsStreamEventsContextProtocolRequest {
+        await foreach (var item in client.Completions.StreamAsync(
+            new StreamCompletionRequest {
                 Query = "query"
             }
-        );
+        ))
+        {
+            /* consume each item */
+        }
+        ;
     }
 
 }

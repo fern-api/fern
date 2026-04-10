@@ -1,18 +1,19 @@
-using SeedApi;
+using SeedAudiences;
+using SeedAudiences.FolderA;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedAudiencesClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.FolderAService.FolderAServiceGetDirectThreadAsync(
-            new FolderAServiceGetDirectThreadRequest {
+        await client.FolderA.Service.GetDirectThreadAsync(
+            new GetDirectThreadRequest {
                 Ids = new List<string>(){
                     "ids",
                 }

@@ -5,15 +5,18 @@ info:
 paths:
   /ec2/boot:
     post:
-      operationId: ec2_bootinstance
+      operationId: ec2_bootInstance
       tags:
         - Ec2
       parameters: []
       responses:
         '204':
           description: ''
+      servers:
+        - url: https://ec2.aws.com
+        - url: https://staging.ec2.aws.com
       security:
-        - BearerAuth: []
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -23,16 +26,11 @@ paths:
               properties:
                 size:
                   type: string
-                  example: size
               required:
                 - size
-            examples:
-              Example1:
-                value:
-                  size: size
   /s3/presigned-url:
     post:
-      operationId: s3_getpresignedurl
+      operationId: s3_getPresignedUrl
       tags:
         - S3
       parameters: []
@@ -43,11 +41,11 @@ paths:
             application/json:
               schema:
                 type: string
-              examples:
-                Example1:
-                  value: string
+      servers:
+        - url: https://s3.aws.com
+        - url: https://staging.s3.aws.com
       security:
-        - BearerAuth: []
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -57,16 +55,11 @@ paths:
               properties:
                 s3Key:
                   type: string
-                  example: s3Key
               required:
                 - s3Key
-            examples:
-              Example1:
-                value:
-                  s3Key: s3Key
 components:
   schemas: {}
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

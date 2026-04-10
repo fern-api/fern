@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.Users.<a href="/src/SeedApi/Users/UsersClient.cs">ListwithcustompagerAsync</a>(UsersListWithCustomPagerRequest { ... }) -> WithRawResponseTask&lt;UsersListResponse&gt;</code></summary>
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithCustomPagerAsync</a>(ListWithCustomPagerRequest { ... }) -> SeedPaginationPager&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,9 @@
 <dd>
 
 ```csharp
-await client.Users.ListwithcustompagerAsync(new UsersListWithCustomPagerRequest());
+await client.Users.ListWithCustomPagerAsync(
+    new ListWithCustomPagerRequest { Limit = 1, StartingAfter = "starting_after" }
+);
 ```
 </dd>
 </dl>
@@ -28,7 +30,7 @@ await client.Users.ListwithcustompagerAsync(new UsersListWithCustomPagerRequest(
 <dl>
 <dd>
 
-**request:** `UsersListWithCustomPagerRequest` 
+**request:** `ListWithCustomPagerRequest` 
     
 </dd>
 </dl>

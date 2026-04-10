@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) Gettokenwithclientcredentials(
+func (c *Client) GetTokenWithClientCredentials(
 	ctx context.Context,
 	request *fern.GetTokenRequest,
 	opts ...option.RequestOption,
 ) (*fern.TokenResponse, error) {
-	response, err := c.WithRawResponse.Gettokenwithclientcredentials(
+	response, err := c.WithRawResponse.GetTokenWithClientCredentials(
 		ctx,
 		request,
 		opts...,
@@ -49,12 +49,12 @@ func (c *Client) Gettokenwithclientcredentials(
 	return response.Body, nil
 }
 
-func (c *Client) Refreshtoken(
+func (c *Client) RefreshToken(
 	ctx context.Context,
 	request *fern.RefreshTokenRequest,
 	opts ...option.RequestOption,
 ) (*fern.TokenResponse, error) {
-	response, err := c.WithRawResponse.Refreshtoken(
+	response, err := c.WithRawResponse.RefreshToken(
 		ctx,
 		request,
 		opts...,

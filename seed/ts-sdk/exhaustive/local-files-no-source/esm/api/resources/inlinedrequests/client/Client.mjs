@@ -13,35 +13,51 @@ import { mergeHeaders } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../errors/index.mjs";
-import * as SeedApi from "../../../index.mjs";
-export class InlinedrequestsClient {
+import * as SeedExhaustive from "../../../index.mjs";
+export class InlinedRequestsClient {
     constructor(options) {
         this._options = normalizeClientOptions(options);
     }
     /**
      * POST with custom object in request body, response is an object
      *
-     * @param {SeedApi.InlinedRequestsPostWithObjectBodyandResponseRequest} request
-     * @param {InlinedrequestsClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.BadRequestError}
+     * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
-     *     await client.inlinedrequests.postwithobjectbodyandresponse({
+     *     await client.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",
      *         integer: 1,
-     *         NestedObject: {}
+     *         NestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: "2024-01-15T09:30:00Z",
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["list", "list"],
+     *             set: ["set"],
+     *             map: {
+     *                 1: "map"
+     *             },
+     *             bigint: "1000000"
+     *         }
      *     })
      */
-    postwithobjectbodyandresponse(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__postwithobjectbodyandresponse(request, requestOptions));
+    postWithObjectBodyandResponse(request, requestOptions) {
+        return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
     }
-    __postwithobjectbodyandresponse(request, requestOptions) {
+    __postWithObjectBodyandResponse(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "req-bodies/object"),
+                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/req-bodies/object"),
                 method: "POST",
                 headers: _headers,
                 contentType: "application/json",
@@ -55,14 +71,17 @@ export class InlinedrequestsClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
+                return {
+                    data: _response.body,
+                    rawResponse: _response.rawResponse,
+                };
             }
             if (_response.error.reason === "status-code") {
                 switch (_response.error.statusCode) {
                     case 400:
-                        throw new SeedApi.BadRequestError(_response.error.body, _response.rawResponse);
+                        throw new SeedExhaustive.BadRequestBody(_response.error.body, _response.rawResponse);
                     default:
-                        throw new errors.SeedApiError({
+                        throw new errors.SeedExhaustiveError({
                             statusCode: _response.error.statusCode,
                             body: _response.error.body,
                             rawResponse: _response.rawResponse,

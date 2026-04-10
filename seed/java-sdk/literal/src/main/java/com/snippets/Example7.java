@@ -1,27 +1,22 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.query.requests.QuerySendRequest;
-import com.seed.api.resources.query.types.QuerySendRequestOptionalPrompt;
-import com.seed.api.resources.query.types.QuerySendRequestPrompt;
-import com.seed.api.types.AliasToPrompt;
+import com.seed.literal.SeedLiteralClient;
+import com.seed.literal.resources.query.requests.SendLiteralsInQueryRequest;
 
 public class Example7 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedLiteralClient client =
+                SeedLiteralClient.builder().url("https://api.fern.com").build();
 
         client.query()
-                .send(QuerySendRequest.builder()
-                        .prompt(QuerySendRequestPrompt.YOU_ARE_A_HELPFUL_ASSISTANT)
-                        .aliasPrompt(AliasToPrompt.YOU_ARE_A_HELPFUL_ASSISTANT)
+                .send(SendLiteralsInQueryRequest.builder()
+                        .aliasPrompt("You are a helpful assistant")
                         .query("query")
-                        .stream(true)
-                        .aliasStream(true)
-                        .optionalPrompt(QuerySendRequestOptionalPrompt.YOU_ARE_A_HELPFUL_ASSISTANT)
-                        .aliasOptionalPrompt(AliasToPrompt.YOU_ARE_A_HELPFUL_ASSISTANT)
-                        .optionalStream(true)
-                        .aliasOptionalStream(true)
+                        .aliasStream(false)
+                        .optionalPrompt("You are a helpful assistant")
+                        .aliasOptionalPrompt("You are a helpful assistant")
+                        .optionalStream(false)
+                        .aliasOptionalStream(false)
                         .build());
     }
 }

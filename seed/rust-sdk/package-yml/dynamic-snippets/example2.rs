@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_package_yml::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,9 +6,9 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = PackageYmlClient::new(config).expect("Failed to build client");
     client
         .service
-        .nop(&"id".to_string(), &"nestedId".to_string(), None)
+        .nop(&"id-a2ijs82".to_string(), &"id-219xca8".to_string(), None)
         .await;
 }

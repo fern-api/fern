@@ -1,11 +1,11 @@
-using SeedApi;
+using SeedPagination;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedPaginationClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
@@ -13,9 +13,17 @@ public class Example0
         );
 
         await client.Complex.SearchAsync(
+            "index",
             new SearchRequest {
-                Index = "index",
-                Query = new SingleFilterSearchRequest()
+                Pagination = new StartingAfterPaging {
+                    PerPage = 1,
+                    StartingAfter = "starting_after"
+                },
+                Query = new SingleFilterSearchRequest {
+                    Field = "field",
+                    Operator = SingleFilterSearchRequestOperator.Equals_,
+                    Value = "value"
+                }
             }
         );
     }

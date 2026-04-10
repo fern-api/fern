@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\RefreshTokenRequest;
+use Seed\Types\Types\RefreshTokenRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,7 +11,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->refreshtoken(
+$client->service->refreshToken(
     new RefreshTokenRequest([
         'ttl' => 1,
     ]),

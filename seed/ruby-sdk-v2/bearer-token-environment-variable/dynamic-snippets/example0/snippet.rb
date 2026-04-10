@@ -1,8 +1,8 @@
 require "seed"
 
 client = Seed::Client.new(
-  token: "<token>",
+  api_key: "<token>",
   base_url: "https://api.fern.com"
 )
 
-client.service.getwithbearertoken
+client.service.get_with_bearer_token

@@ -1,6 +1,6 @@
 # Reference
-## EndpointsContainer
-<details><summary><code>client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitives(request) -> []string</code></summary>
+## Endpoints Container
+<details><summary><code>client.Endpoints.Container.GetAndReturnListOfPrimitives(request) -> []string</code></summary>
 <dl>
 <dd>
 
@@ -15,8 +15,9 @@
 ```go
 request := []string{
         "string",
+        "string",
     }
-client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitives(
+client.Endpoints.Container.GetAndReturnListOfPrimitives(
         context.TODO(),
         request,
     )
@@ -47,7 +48,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsContainer.EndpointsContainerGetAndReturnListOfObjects(request) -> []*fern.TypesObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnListOfObjects(request) -> []*types.ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -60,12 +61,15 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnListOfPrimitives(
 <dd>
 
 ```go
-request := []*fern.TypesObjectWithRequiredField{
-        &fern.TypesObjectWithRequiredField{
+request := []*types.ObjectWithRequiredField{
+        &types.ObjectWithRequiredField{
+            FieldString: "string",
+        },
+        &types.ObjectWithRequiredField{
             FieldString: "string",
         },
     }
-client.EndpointsContainer.EndpointsContainerGetAndReturnListOfObjects(
+client.Endpoints.Container.GetAndReturnListOfObjects(
         context.TODO(),
         request,
     )
@@ -84,7 +88,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnListOfObjects(
 <dl>
 <dd>
 
-**request:** `[]*fern.TypesObjectWithRequiredField` 
+**request:** `[]*types.ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -96,7 +100,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnListOfObjects(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfPrimitives(request) -> []string</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnSetOfPrimitives(request) -> []string</code></summary>
 <dl>
 <dd>
 
@@ -112,7 +116,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnListOfObjects(
 request := []string{
         "string",
     }
-client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfPrimitives(
+client.Endpoints.Container.GetAndReturnSetOfPrimitives(
         context.TODO(),
         request,
     )
@@ -143,7 +147,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfObjects(request) -> []*fern.TypesObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnSetOfObjects(request) -> []*types.ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -156,12 +160,12 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfPrimitives(
 <dd>
 
 ```go
-request := []*fern.TypesObjectWithRequiredField{
-        &fern.TypesObjectWithRequiredField{
+request := []*types.ObjectWithRequiredField{
+        &types.ObjectWithRequiredField{
             FieldString: "string",
         },
     }
-client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfObjects(
+client.Endpoints.Container.GetAndReturnSetOfObjects(
         context.TODO(),
         request,
     )
@@ -180,7 +184,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfObjects(
 <dl>
 <dd>
 
-**request:** `[]*fern.TypesObjectWithRequiredField` 
+**request:** `[]*types.ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -192,7 +196,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfObjects(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsContainer.EndpointsContainerGetAndReturnMapPrimToPrim(request) -> map[string]string</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnMapPrimToPrim(request) -> map[string]string</code></summary>
 <dl>
 <dd>
 
@@ -206,9 +210,9 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfObjects(
 
 ```go
 request := map[string]string{
-        "key": "value",
+        "string": "string",
     }
-client.EndpointsContainer.EndpointsContainerGetAndReturnMapPrimToPrim(
+client.Endpoints.Container.GetAndReturnMapPrimToPrim(
         context.TODO(),
         request,
     )
@@ -239,7 +243,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnMapPrimToPrim(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToObject(request) -> map[string]*fern.TypesObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnMapOfPrimToObject(request) -> map[string]*types.ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -252,12 +256,12 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnMapPrimToPrim(
 <dd>
 
 ```go
-request := map[string]*fern.TypesObjectWithRequiredField{
-        "key": &fern.TypesObjectWithRequiredField{
+request := map[string]*types.ObjectWithRequiredField{
+        "string": &types.ObjectWithRequiredField{
             FieldString: "string",
         },
     }
-client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToObject(
+client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
         context.TODO(),
         request,
     )
@@ -276,7 +280,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToObject(
 <dl>
 <dd>
 
-**request:** `map[string]*fern.TypesObjectWithRequiredField` 
+**request:** `map[string]*types.ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -288,7 +292,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToObject(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(request) -> map[string]*fern.TypesMixedType</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(request) -> map[string]*types.MixedType</code></summary>
 <dl>
 <dd>
 
@@ -301,12 +305,12 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToObject(
 <dd>
 
 ```go
-request := map[string]*fern.TypesMixedType{
-        "key": &fern.TypesMixedType{
+request := map[string]*types.MixedType{
+        "string": &types.MixedType{
             Double: 1.1,
         },
     }
-client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnion(
+client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
         context.TODO(),
         request,
     )
@@ -325,7 +329,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminat
 <dl>
 <dd>
 
-**request:** `map[string]*fern.TypesMixedType` 
+**request:** `map[string]*types.MixedType` 
     
 </dd>
 </dl>
@@ -337,7 +341,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminat
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsContainer.EndpointsContainerGetAndReturnOptional(request) -> *fern.TypesObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Container.GetAndReturnOptional(request) -> *types.ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -350,10 +354,10 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnMapOfPrimToUndiscriminat
 <dd>
 
 ```go
-request := &fern.TypesObjectWithRequiredField{
+request := &types.ObjectWithRequiredField{
         FieldString: "string",
     }
-client.EndpointsContainer.EndpointsContainerGetAndReturnOptional(
+client.Endpoints.Container.GetAndReturnOptional(
         context.TODO(),
         request,
     )
@@ -372,7 +376,7 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnOptional(
 <dl>
 <dd>
 
-**request:** `*fern.TypesObjectWithRequiredField` 
+**request:** `*types.ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -384,8 +388,8 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnOptional(
 </dl>
 </details>
 
-## EndpointsContentType
-<details><summary><code>client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentType(request) -> error</code></summary>
+## Endpoints ContentType
+<details><summary><code>client.Endpoints.ContentType.PostJSONPatchContentType(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -398,8 +402,55 @@ client.EndpointsContainer.EndpointsContainerGetAndReturnOptional(
 <dd>
 
 ```go
-request := &fern.TypesObjectWithOptionalField{}
-client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentType(
+request := &types.ObjectWithOptionalField{
+        FieldString: fern.String(
+            "string",
+        ),
+        Integer: fern.Int(
+            1,
+        ),
+        Long: fern.Int64(
+            int64(1000000),
+        ),
+        Double: fern.Float64(
+            1.1,
+        ),
+        Bool: fern.Bool(
+            true,
+        ),
+        Datetime: fern.Time(
+            fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+        ),
+        Date: fern.Time(
+            fern.MustParseDate(
+                "2023-01-15",
+            ),
+        ),
+        UUID: fern.UUID(
+            uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        ),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
+        List: []string{
+            "list",
+            "list",
+        },
+        Set: []string{
+            "set",
+        },
+        Map: map[int]string{
+            1: "map",
+        },
+        Bigint: fern.String(
+            "1000000",
+        ),
+    }
+client.Endpoints.ContentType.PostJSONPatchContentType(
         context.TODO(),
         request,
     )
@@ -418,7 +469,7 @@ client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentType(
 <dl>
 <dd>
 
-**request:** `*fern.TypesObjectWithOptionalField` 
+**request:** `*types.ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -430,7 +481,7 @@ client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentType(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentWithCharsetType(request) -> error</code></summary>
+<details><summary><code>client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -443,8 +494,55 @@ client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentType(
 <dd>
 
 ```go
-request := &fern.TypesObjectWithOptionalField{}
-client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentWithCharsetType(
+request := &types.ObjectWithOptionalField{
+        FieldString: fern.String(
+            "string",
+        ),
+        Integer: fern.Int(
+            1,
+        ),
+        Long: fern.Int64(
+            int64(1000000),
+        ),
+        Double: fern.Float64(
+            1.1,
+        ),
+        Bool: fern.Bool(
+            true,
+        ),
+        Datetime: fern.Time(
+            fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+        ),
+        Date: fern.Time(
+            fern.MustParseDate(
+                "2023-01-15",
+            ),
+        ),
+        UUID: fern.UUID(
+            uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        ),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
+        List: []string{
+            "list",
+            "list",
+        },
+        Set: []string{
+            "set",
+        },
+        Map: map[int]string{
+            1: "map",
+        },
+        Bigint: fern.String(
+            "1000000",
+        ),
+    }
+client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
         context.TODO(),
         request,
     )
@@ -463,7 +561,7 @@ client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentWithCharsetT
 <dl>
 <dd>
 
-**request:** `*fern.TypesObjectWithOptionalField` 
+**request:** `*types.ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -475,75 +573,8 @@ client.EndpointsContentType.EndpointsContentTypePostJSONPatchContentWithCharsetT
 </dl>
 </details>
 
-## EndpointsDuplicateNamesA
-<details><summary><code>client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesAList() -> error</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List endpoint for service A
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.EndpointsDuplicateNamesAListRequest{}
-client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesAList(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page:** `*int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `*int` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesACreate(request) -> *fern.TypesObjectWithOptionalField</code></summary>
+## Endpoints DuplicateNamesA
+<details><summary><code>client.Endpoints.DuplicateNamesA.Create(request) -> *types.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -570,11 +601,11 @@ Create endpoint for service A
 <dd>
 
 ```go
-request := &fern.EndpointsDuplicateNamesACreateRequest{
+request := &fern.CreateRequestA{
         Name: "name",
         Value: 1,
     }
-client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesACreate(
+client.Endpoints.DuplicateNamesA.Create(
         context.TODO(),
         request,
     )
@@ -613,7 +644,7 @@ client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesACreate(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesAGet(ID) -> error</code></summary>
+<details><summary><code>client.Endpoints.DuplicateNamesA.Get(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -640,10 +671,13 @@ Get endpoint for service A
 <dd>
 
 ```go
-request := &fern.EndpointsDuplicateNamesAGetRequest{
+request := &fern.GetRequestA{
         ID: "id",
+        Filter: fern.String(
+            "filter",
+        ),
     }
-client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesAGet(
+client.Endpoints.DuplicateNamesA.Get(
         context.TODO(),
         request,
     )
@@ -682,8 +716,7 @@ client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesAGet(
 </dl>
 </details>
 
-## EndpointsDuplicateNamesB
-<details><summary><code>client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBList() -> error</code></summary>
+<details><summary><code>client.Endpoints.DuplicateNamesA.List() -> error</code></summary>
 <dl>
 <dd>
 
@@ -695,7 +728,7 @@ client.EndpointsDuplicateNamesA.EndpointsDuplicateNamesAGet(
 <dl>
 <dd>
 
-List endpoint for service B
+List endpoint for service A
 </dd>
 </dl>
 </dd>
@@ -710,8 +743,15 @@ List endpoint for service B
 <dd>
 
 ```go
-request := &fern.EndpointsDuplicateNamesBListRequest{}
-client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBList(
+request := &fern.ListRequestA{
+        Page: fern.Int(
+            1,
+        ),
+        Limit: fern.Int(
+            1,
+        ),
+    }
+client.Endpoints.DuplicateNamesA.List(
         context.TODO(),
         request,
     )
@@ -730,7 +770,7 @@ client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBList(
 <dl>
 <dd>
 
-**cursor:** `*string` 
+**page:** `*int` 
     
 </dd>
 </dl>
@@ -738,7 +778,7 @@ client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBList(
 <dl>
 <dd>
 
-**size:** `*int` 
+**limit:** `*int` 
     
 </dd>
 </dl>
@@ -750,7 +790,8 @@ client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBList(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBCreate(request) -> *fern.TypesObjectWithOptionalField</code></summary>
+## Endpoints DuplicateNamesB
+<details><summary><code>client.Endpoints.DuplicateNamesB.Create(request) -> *types.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -777,11 +818,11 @@ Create endpoint for service B
 <dd>
 
 ```go
-request := &fern.EndpointsDuplicateNamesBCreateRequest{
+request := &fern.CreateRequestB{
         Description: "description",
         Count: 1,
     }
-client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBCreate(
+client.Endpoints.DuplicateNamesB.Create(
         context.TODO(),
         request,
     )
@@ -820,7 +861,7 @@ client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBCreate(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBGet(ID) -> error</code></summary>
+<details><summary><code>client.Endpoints.DuplicateNamesB.Get(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -847,10 +888,13 @@ Get endpoint for service B
 <dd>
 
 ```go
-request := &fern.EndpointsDuplicateNamesBGetRequest{
+request := &fern.GetRequestB{
         ID: "id",
+        Expand: fern.Bool(
+            true,
+        ),
     }
-client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBGet(
+client.Endpoints.DuplicateNamesB.Get(
         context.TODO(),
         request,
     )
@@ -889,8 +933,7 @@ client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBGet(
 </dl>
 </details>
 
-## EndpointsDuplicateNamesC
-<details><summary><code>client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCList() -> error</code></summary>
+<details><summary><code>client.Endpoints.DuplicateNamesB.List() -> error</code></summary>
 <dl>
 <dd>
 
@@ -902,7 +945,7 @@ client.EndpointsDuplicateNamesB.EndpointsDuplicateNamesBGet(
 <dl>
 <dd>
 
-List endpoint for service C
+List endpoint for service B
 </dd>
 </dl>
 </dd>
@@ -917,8 +960,15 @@ List endpoint for service C
 <dd>
 
 ```go
-request := &fern.EndpointsDuplicateNamesCListRequest{}
-client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCList(
+request := &fern.ListRequestB{
+        Cursor: fern.String(
+            "cursor",
+        ),
+        Size: fern.Int(
+            1,
+        ),
+    }
+client.Endpoints.DuplicateNamesB.List(
         context.TODO(),
         request,
     )
@@ -937,7 +987,7 @@ client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCList(
 <dl>
 <dd>
 
-**offset:** `*int` 
+**cursor:** `*string` 
     
 </dd>
 </dl>
@@ -945,7 +995,7 @@ client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCList(
 <dl>
 <dd>
 
-**count:** `*int` 
+**size:** `*int` 
     
 </dd>
 </dl>
@@ -957,7 +1007,8 @@ client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCList(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCCreate(request) -> *fern.TypesObjectWithOptionalField</code></summary>
+## Endpoints DuplicateNamesC
+<details><summary><code>client.Endpoints.DuplicateNamesC.Create(request) -> *types.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -984,11 +1035,11 @@ Create endpoint for service C
 <dd>
 
 ```go
-request := &fern.EndpointsDuplicateNamesCCreateRequest{
+request := &fern.CreateRequestC{
         Label: "label",
         Priority: 1,
     }
-client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCCreate(
+client.Endpoints.DuplicateNamesC.Create(
         context.TODO(),
         request,
     )
@@ -1027,7 +1078,7 @@ client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCCreate(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCGet(ID) -> error</code></summary>
+<details><summary><code>client.Endpoints.DuplicateNamesC.Get(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -1054,10 +1105,13 @@ Get endpoint for service C
 <dd>
 
 ```go
-request := &fern.EndpointsDuplicateNamesCGetRequest{
+request := &fern.GetRequestC{
         ID: "id",
+        Verbose: fern.Bool(
+            true,
+        ),
     }
-client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCGet(
+client.Endpoints.DuplicateNamesC.Get(
         context.TODO(),
         request,
     )
@@ -1096,10 +1150,23 @@ client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCGet(
 </dl>
 </details>
 
-## EndpointsEnum
-<details><summary><code>client.EndpointsEnum.EndpointsEnumGetAndReturnEnum(request) -> *fern.TypesWeatherReport</code></summary>
+<details><summary><code>client.Endpoints.DuplicateNamesC.List() -> error</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List endpoint for service C
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1110,7 +1177,15 @@ client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCGet(
 <dd>
 
 ```go
-client.EndpointsEnum.EndpointsEnumGetAndReturnEnum(
+request := &fern.ListRequestC{
+        Offset: fern.Int(
+            1,
+        ),
+        Count: fern.Int(
+            1,
+        ),
+    }
+client.Endpoints.DuplicateNamesC.List(
         context.TODO(),
         request,
     )
@@ -1129,7 +1204,15 @@ client.EndpointsEnum.EndpointsEnumGetAndReturnEnum(
 <dl>
 <dd>
 
-**request:** `*fern.TypesWeatherReport` 
+**offset:** `*int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**count:** `*int` 
     
 </dd>
 </dl>
@@ -1141,8 +1224,8 @@ client.EndpointsEnum.EndpointsEnumGetAndReturnEnum(
 </dl>
 </details>
 
-## EndpointsHTTPMethods
-<details><summary><code>client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestGet(ID) -> string</code></summary>
+## Endpoints Enum
+<details><summary><code>client.Endpoints.Enum.GetAndReturnEnum(request) -> *types.WeatherReport</code></summary>
 <dl>
 <dd>
 
@@ -1155,12 +1238,54 @@ client.EndpointsEnum.EndpointsEnumGetAndReturnEnum(
 <dd>
 
 ```go
-request := &fern.EndpointsHTTPMethodsTestGetRequest{
-        ID: "id",
-    }
-client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestGet(
+client.Endpoints.Enum.GetAndReturnEnum(
         context.TODO(),
         request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*types.WeatherReport` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints HTTPMethods
+<details><summary><code>client.Endpoints.HTTPMethods.TestGet(ID) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Endpoints.HTTPMethods.TestGet(
+        context.TODO(),
+        "id",
     )
 }
 ```
@@ -1189,7 +1314,7 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestGet(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPut(ID, request) -> *fern.TypesObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.HTTPMethods.TestPost(request) -> *types.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1202,14 +1327,160 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestGet(
 <dd>
 
 ```go
-request := &fern.EndpointsHTTPMethodsTestPutRequest{
-        ID: "id",
-        Body: &fern.TypesObjectWithRequiredField{
-            FieldString: "string",
+request := &types.ObjectWithRequiredField{
+        FieldString: "string",
+    }
+client.Endpoints.HTTPMethods.TestPost(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*types.ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.HTTPMethods.TestPut(ID, request) -> *types.ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &types.ObjectWithRequiredField{
+        FieldString: "string",
+    }
+client.Endpoints.HTTPMethods.TestPut(
+        context.TODO(),
+        "id",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*types.ObjectWithRequiredField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.HTTPMethods.TestPatch(ID, request) -> *types.ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &types.ObjectWithOptionalField{
+        FieldString: fern.String(
+            "string",
+        ),
+        Integer: fern.Int(
+            1,
+        ),
+        Long: fern.Int64(
+            int64(1000000),
+        ),
+        Double: fern.Float64(
+            1.1,
+        ),
+        Bool: fern.Bool(
+            true,
+        ),
+        Datetime: fern.Time(
+            fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+        ),
+        Date: fern.Time(
+            fern.MustParseDate(
+                "2023-01-15",
+            ),
+        ),
+        UUID: fern.UUID(
+            uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        ),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
+        List: []string{
+            "list",
+            "list",
         },
+        Set: []string{
+            "set",
+        },
+        Map: map[int]string{
+            1: "map",
+        },
+        Bigint: fern.String(
+            "1000000",
+        ),
     }
-client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPut(
+client.Endpoints.HTTPMethods.TestPatch(
         context.TODO(),
+        "id",
         request,
     )
 }
@@ -1235,7 +1506,7 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPut(
 <dl>
 <dd>
 
-**request:** `*fern.TypesObjectWithRequiredField` 
+**request:** `*types.ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -1247,7 +1518,7 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPut(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestDelete(ID) -> bool</code></summary>
+<details><summary><code>client.Endpoints.HTTPMethods.TestDelete(ID) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -1260,12 +1531,9 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPut(
 <dd>
 
 ```go
-request := &fern.EndpointsHTTPMethodsTestDeleteRequest{
-        ID: "id",
-    }
-client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestDelete(
+client.Endpoints.HTTPMethods.TestDelete(
         context.TODO(),
-        request,
+        "id",
     )
 }
 ```
@@ -1294,7 +1562,8 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestDelete(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPatch(ID, request) -> *fern.TypesObjectWithOptionalField</code></summary>
+## Endpoints Object
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithOptionalField(request) -> *types.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1307,11 +1576,55 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestDelete(
 <dd>
 
 ```go
-request := &fern.EndpointsHTTPMethodsTestPatchRequest{
-        ID: "id",
-        Body: &fern.TypesObjectWithOptionalField{},
+request := &types.ObjectWithOptionalField{
+        FieldString: fern.String(
+            "string",
+        ),
+        Integer: fern.Int(
+            1,
+        ),
+        Long: fern.Int64(
+            int64(1000000),
+        ),
+        Double: fern.Float64(
+            1.1,
+        ),
+        Bool: fern.Bool(
+            true,
+        ),
+        Datetime: fern.Time(
+            fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+        ),
+        Date: fern.Time(
+            fern.MustParseDate(
+                "2023-01-15",
+            ),
+        ),
+        UUID: fern.UUID(
+            uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        ),
+        Base64: fern.Bytes(
+            []byte("SGVsbG8gd29ybGQh"),
+        ),
+        List: []string{
+            "list",
+            "list",
+        },
+        Set: []string{
+            "set",
+        },
+        Map: map[int]string{
+            1: "map",
+        },
+        Bigint: fern.String(
+            "1000000",
+        ),
     }
-client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPatch(
+client.Endpoints.Object.GetAndReturnWithOptionalField(
         context.TODO(),
         request,
     )
@@ -1330,15 +1643,7 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPatch(
 <dl>
 <dd>
 
-**id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*fern.TypesObjectWithOptionalField` 
+**request:** `*types.ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -1350,7 +1655,7 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPatch(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPost(request) -> *fern.TypesObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithRequiredField(request) -> *types.ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1363,10 +1668,10 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPatch(
 <dd>
 
 ```go
-request := &fern.TypesObjectWithRequiredField{
+request := &types.ObjectWithRequiredField{
         FieldString: "string",
     }
-client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPost(
+client.Endpoints.Object.GetAndReturnWithRequiredField(
         context.TODO(),
         request,
     )
@@ -1385,7 +1690,7 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPost(
 <dl>
 <dd>
 
-**request:** `*fern.TypesObjectWithRequiredField` 
+**request:** `*types.ObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1397,8 +1702,7 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPost(
 </dl>
 </details>
 
-## EndpointsObject
-<details><summary><code>client.EndpointsObject.EndpointsObjectGetAndReturnWithOptionalField(request) -> *fern.TypesObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithMapOfMap(request) -> *types.ObjectWithMapOfMap</code></summary>
 <dl>
 <dd>
 
@@ -1411,106 +1715,14 @@ client.EndpointsHTTPMethods.EndpointsHTTPMethodsTestPost(
 <dd>
 
 ```go
-request := &fern.TypesObjectWithOptionalField{}
-client.EndpointsObject.EndpointsObjectGetAndReturnWithOptionalField(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `*fern.TypesObjectWithOptionalField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.EndpointsObject.EndpointsObjectGetAndReturnWithRequiredField(request) -> *fern.TypesObjectWithRequiredField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.TypesObjectWithRequiredField{
-        FieldString: "string",
-    }
-client.EndpointsObject.EndpointsObjectGetAndReturnWithRequiredField(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `*fern.TypesObjectWithRequiredField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.EndpointsObject.EndpointsObjectGetAndReturnWithMapOfMap(request) -> *fern.TypesObjectWithMapOfMap</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.TypesObjectWithMapOfMap{
+request := &types.ObjectWithMapOfMap{
         Map: map[string]map[string]string{
-            "key": map[string]string{
-                "key": "value",
+            "map": map[string]string{
+                "map": "map",
             },
         },
     }
-client.EndpointsObject.EndpointsObjectGetAndReturnWithMapOfMap(
+client.Endpoints.Object.GetAndReturnWithMapOfMap(
         context.TODO(),
         request,
     )
@@ -1529,7 +1741,7 @@ client.EndpointsObject.EndpointsObjectGetAndReturnWithMapOfMap(
 <dl>
 <dd>
 
-**request:** `*fern.TypesObjectWithMapOfMap` 
+**request:** `*types.ObjectWithMapOfMap` 
     
 </dd>
 </dl>
@@ -1541,7 +1753,7 @@ client.EndpointsObject.EndpointsObjectGetAndReturnWithMapOfMap(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithOptionalField(request) -> *fern.TypesNestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnNestedWithOptionalField(request) -> *types.NestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1554,60 +1766,157 @@ client.EndpointsObject.EndpointsObjectGetAndReturnWithMapOfMap(
 <dd>
 
 ```go
-request := &fern.TypesNestedObjectWithOptionalField{}
-client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithOptionalField(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `*fern.TypesNestedObjectWithOptionalField` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredField(String, request) -> *fern.TypesNestedObjectWithRequiredField</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.EndpointsObjectGetAndReturnNestedWithRequiredFieldRequest{
-        String: "string",
-        Body: &fern.TypesNestedObjectWithRequiredField{
-            FieldString: "string",
-            NestedObject: &fern.TypesObjectWithOptionalField{},
+request := &types.NestedObjectWithOptionalField{
+        FieldString: fern.String(
+            "string",
+        ),
+        NestedObject: &types.ObjectWithOptionalField{
+            FieldString: fern.String(
+                "string",
+            ),
+            Integer: fern.Int(
+                1,
+            ),
+            Long: fern.Int64(
+                int64(1000000),
+            ),
+            Double: fern.Float64(
+                1.1,
+            ),
+            Bool: fern.Bool(
+                true,
+            ),
+            Datetime: fern.Time(
+                fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
+            Date: fern.Time(
+                fern.MustParseDate(
+                    "2023-01-15",
+                ),
+            ),
+            UUID: fern.UUID(
+                uuid.MustParse(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            ),
+            Base64: fern.Bytes(
+                []byte("SGVsbG8gd29ybGQh"),
+            ),
+            List: []string{
+                "list",
+                "list",
+            },
+            Set: []string{
+                "set",
+            },
+            Map: map[int]string{
+                1: "map",
+            },
+            Bigint: fern.String(
+                "1000000",
+            ),
         },
     }
-client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredField(
+client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
         context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*types.NestedObjectWithOptionalField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Object.GetAndReturnNestedWithRequiredField(String, request) -> *types.NestedObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &types.NestedObjectWithRequiredField{
+        FieldString: "string",
+        NestedObject: &types.ObjectWithOptionalField{
+            FieldString: fern.String(
+                "string",
+            ),
+            Integer: fern.Int(
+                1,
+            ),
+            Long: fern.Int64(
+                int64(1000000),
+            ),
+            Double: fern.Float64(
+                1.1,
+            ),
+            Bool: fern.Bool(
+                true,
+            ),
+            Datetime: fern.Time(
+                fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
+            Date: fern.Time(
+                fern.MustParseDate(
+                    "2023-01-15",
+                ),
+            ),
+            UUID: fern.UUID(
+                uuid.MustParse(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            ),
+            Base64: fern.Bytes(
+                []byte("SGVsbG8gd29ybGQh"),
+            ),
+            List: []string{
+                "list",
+                "list",
+            },
+            Set: []string{
+                "set",
+            },
+            Map: map[int]string{
+                1: "map",
+            },
+            Bigint: fern.String(
+                "1000000",
+            ),
+        },
+    }
+client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
+        context.TODO(),
+        "string",
         request,
     )
 }
@@ -1633,7 +1942,7 @@ client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredField(
 <dl>
 <dd>
 
-**request:** `*fern.TypesNestedObjectWithRequiredField` 
+**request:** `*types.NestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1645,7 +1954,7 @@ client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredField(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredFieldAsList(request) -> *fern.TypesNestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(request) -> *types.NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1658,13 +1967,111 @@ client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredField(
 <dd>
 
 ```go
-request := []*fern.TypesNestedObjectWithRequiredField{
-        &fern.TypesNestedObjectWithRequiredField{
+request := []*types.NestedObjectWithRequiredField{
+        &types.NestedObjectWithRequiredField{
             FieldString: "string",
-            NestedObject: &fern.TypesObjectWithOptionalField{},
+            NestedObject: &types.ObjectWithOptionalField{
+                FieldString: fern.String(
+                    "string",
+                ),
+                Integer: fern.Int(
+                    1,
+                ),
+                Long: fern.Int64(
+                    int64(1000000),
+                ),
+                Double: fern.Float64(
+                    1.1,
+                ),
+                Bool: fern.Bool(
+                    true,
+                ),
+                Datetime: fern.Time(
+                    fern.MustParseDateTime(
+                        "2024-01-15T09:30:00Z",
+                    ),
+                ),
+                Date: fern.Time(
+                    fern.MustParseDate(
+                        "2023-01-15",
+                    ),
+                ),
+                UUID: fern.UUID(
+                    uuid.MustParse(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                ),
+                Base64: fern.Bytes(
+                    []byte("SGVsbG8gd29ybGQh"),
+                ),
+                List: []string{
+                    "list",
+                    "list",
+                },
+                Set: []string{
+                    "set",
+                },
+                Map: map[int]string{
+                    1: "map",
+                },
+                Bigint: fern.String(
+                    "1000000",
+                ),
+            },
+        },
+        &types.NestedObjectWithRequiredField{
+            FieldString: "string",
+            NestedObject: &types.ObjectWithOptionalField{
+                FieldString: fern.String(
+                    "string",
+                ),
+                Integer: fern.Int(
+                    1,
+                ),
+                Long: fern.Int64(
+                    int64(1000000),
+                ),
+                Double: fern.Float64(
+                    1.1,
+                ),
+                Bool: fern.Bool(
+                    true,
+                ),
+                Datetime: fern.Time(
+                    fern.MustParseDateTime(
+                        "2024-01-15T09:30:00Z",
+                    ),
+                ),
+                Date: fern.Time(
+                    fern.MustParseDate(
+                        "2023-01-15",
+                    ),
+                ),
+                UUID: fern.UUID(
+                    uuid.MustParse(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                ),
+                Base64: fern.Bytes(
+                    []byte("SGVsbG8gd29ybGQh"),
+                ),
+                List: []string{
+                    "list",
+                    "list",
+                },
+                Set: []string{
+                    "set",
+                },
+                Map: map[int]string{
+                    1: "map",
+                },
+                Bigint: fern.String(
+                    "1000000",
+                ),
+            },
         },
     }
-client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredFieldAsList(
+client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
         context.TODO(),
         request,
     )
@@ -1683,7 +2090,7 @@ client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredFieldAsList(
 <dl>
 <dd>
 
-**request:** `[]*fern.TypesNestedObjectWithRequiredField` 
+**request:** `[]*types.NestedObjectWithRequiredField` 
     
 </dd>
 </dl>
@@ -1695,7 +2102,7 @@ client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsObject.EndpointsObjectGetAndReturnWithUnknownField(request) -> *fern.TypesObjectWithUnknownField</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithUnknownField(request) -> *types.ObjectWithUnknownField</code></summary>
 <dl>
 <dd>
 
@@ -1708,12 +2115,12 @@ client.EndpointsObject.EndpointsObjectGetAndReturnNestedWithRequiredFieldAsList(
 <dd>
 
 ```go
-request := &fern.TypesObjectWithUnknownField{
+request := &types.ObjectWithUnknownField{
         Unknown: map[string]any{
-            "key": "value",
+            "$ref": "https://example.com/schema",
         },
     }
-client.EndpointsObject.EndpointsObjectGetAndReturnWithUnknownField(
+client.Endpoints.Object.GetAndReturnWithUnknownField(
         context.TODO(),
         request,
     )
@@ -1732,7 +2139,7 @@ client.EndpointsObject.EndpointsObjectGetAndReturnWithUnknownField(
 <dl>
 <dd>
 
-**request:** `*fern.TypesObjectWithUnknownField` 
+**request:** `*types.ObjectWithUnknownField` 
     
 </dd>
 </dl>
@@ -1744,7 +2151,7 @@ client.EndpointsObject.EndpointsObjectGetAndReturnWithUnknownField(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsObject.EndpointsObjectGetAndReturnWithDatetimeLikeString(request) -> *fern.TypesObjectWithDatetimeLikeString</code></summary>
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(request) -> *types.ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
 
@@ -1773,13 +2180,13 @@ without being converted to "2023-08-31T14:15:22.000Z".
 <dd>
 
 ```go
-request := &fern.TypesObjectWithDatetimeLikeString{
-        DatetimeLikeString: "datetimeLikeString",
+request := &types.ObjectWithDatetimeLikeString{
+        DatetimeLikeString: "2023-08-31T14:15:22Z",
         ActualDatetime: fern.MustParseDateTime(
-            "2024-01-15T09:30:00Z",
+            "2023-08-31T14:15:22Z",
         ),
     }
-client.EndpointsObject.EndpointsObjectGetAndReturnWithDatetimeLikeString(
+client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
         context.TODO(),
         request,
     )
@@ -1798,7 +2205,7 @@ client.EndpointsObject.EndpointsObjectGetAndReturnWithDatetimeLikeString(
 <dl>
 <dd>
 
-**request:** `*fern.TypesObjectWithDatetimeLikeString` 
+**request:** `*types.ObjectWithDatetimeLikeString` 
     
 </dd>
 </dl>
@@ -1810,8 +2217,8 @@ client.EndpointsObject.EndpointsObjectGetAndReturnWithDatetimeLikeString(
 </dl>
 </details>
 
-## EndpointsPagination
-<details><summary><code>client.EndpointsPagination.EndpointsPaginationListItems() -> *fern.EndpointsPaginatedResponse</code></summary>
+## Endpoints Pagination
+<details><summary><code>client.Endpoints.Pagination.ListItems() -> *endpoints.PaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1838,8 +2245,15 @@ List items with cursor pagination
 <dd>
 
 ```go
-request := &fern.EndpointsPaginationListItemsRequest{}
-client.EndpointsPagination.EndpointsPaginationListItems(
+request := &fern.ListItemsRequest{
+        Cursor: fern.String(
+            "cursor",
+        ),
+        Limit: fern.Int(
+            1,
+        ),
+    }
+client.Endpoints.Pagination.ListItems(
         context.TODO(),
         request,
     )
@@ -1878,8 +2292,8 @@ client.EndpointsPagination.EndpointsPaginationListItems(
 </dl>
 </details>
 
-## EndpointsParams
-<details><summary><code>client.EndpointsParams.EndpointsParamsGetWithPath(Param) -> string</code></summary>
+## Endpoints Params
+<details><summary><code>client.Endpoints.Params.GetWithPath(Param) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1906,12 +2320,9 @@ GET with path param
 <dd>
 
 ```go
-request := &fern.EndpointsParamsGetWithPathRequest{
-        Param: "param",
-    }
-client.EndpointsParams.EndpointsParamsGetWithPath(
+client.Endpoints.Params.GetWithPath(
         context.TODO(),
-        request,
+        "param",
     )
 }
 ```
@@ -1940,77 +2351,7 @@ client.EndpointsParams.EndpointsParamsGetWithPath(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsParams.EndpointsParamsModifyWithPath(Param, request) -> string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.EndpointsParamsModifyWithPathRequest{
-        Param: "param",
-        Body: "string",
-    }
-client.EndpointsParams.EndpointsParamsModifyWithPath(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.EndpointsParams.EndpointsParamsGetWithInlinePath(Param) -> string</code></summary>
+<details><summary><code>client.Endpoints.Params.GetWithInlinePath(Param) -> string</code></summary>
 <dl>
 <dd>
 
@@ -2037,12 +2378,9 @@ GET with path param
 <dd>
 
 ```go
-request := &fern.EndpointsParamsGetWithInlinePathRequest{
-        Param: "param",
-    }
-client.EndpointsParams.EndpointsParamsGetWithInlinePath(
+client.Endpoints.Params.GetWithPath(
         context.TODO(),
-        request,
+        "param",
     )
 }
 ```
@@ -2071,77 +2409,7 @@ client.EndpointsParams.EndpointsParamsGetWithInlinePath(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsParams.EndpointsParamsModifyWithInlinePath(Param, request) -> string</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-PUT to update with path param
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.EndpointsParamsModifyWithInlinePathRequest{
-        Param: "param",
-        Body: "string",
-    }
-client.EndpointsParams.EndpointsParamsModifyWithInlinePath(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**param:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `string` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.EndpointsParams.EndpointsParamsGetWithQuery() -> error</code></summary>
+<details><summary><code>client.Endpoints.Params.GetWithQuery() -> error</code></summary>
 <dl>
 <dd>
 
@@ -2168,11 +2436,11 @@ GET with query param
 <dd>
 
 ```go
-request := &fern.EndpointsParamsGetWithQueryRequest{
+request := &fern.GetWithQuery{
         Query: "query",
         Number: 1,
     }
-client.EndpointsParams.EndpointsParamsGetWithQuery(
+client.Endpoints.Params.GetWithQuery(
         context.TODO(),
         request,
     )
@@ -2211,7 +2479,7 @@ client.EndpointsParams.EndpointsParamsGetWithQuery(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsParams.EndpointsParamsGetWithAllowMultipleQuery() -> error</code></summary>
+<details><summary><code>client.Endpoints.Params.GetWithAllowMultipleQuery() -> error</code></summary>
 <dl>
 <dd>
 
@@ -2238,19 +2506,11 @@ GET with multiple of same query param
 <dd>
 
 ```go
-request := &fern.EndpointsParamsGetWithAllowMultipleQueryRequest{
-        Query: []*string{
-            fern.String(
-                "query",
-            ),
-        },
-        Number: []*int{
-            fern.Int(
-                1,
-            ),
-        },
+request := &fern.GetWithQuery{
+        Query: "query",
+        Number: 1,
     }
-client.EndpointsParams.EndpointsParamsGetWithAllowMultipleQuery(
+client.Endpoints.Params.GetWithQuery(
         context.TODO(),
         request,
     )
@@ -2269,7 +2529,7 @@ client.EndpointsParams.EndpointsParamsGetWithAllowMultipleQuery(
 <dl>
 <dd>
 
-**query:** `*string` 
+**query:** `string` 
     
 </dd>
 </dl>
@@ -2277,7 +2537,7 @@ client.EndpointsParams.EndpointsParamsGetWithAllowMultipleQuery(
 <dl>
 <dd>
 
-**number:** `*int` 
+**number:** `int` 
     
 </dd>
 </dl>
@@ -2289,7 +2549,7 @@ client.EndpointsParams.EndpointsParamsGetWithAllowMultipleQuery(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsParams.EndpointsParamsGetWithPathAndQuery(Param) -> error</code></summary>
+<details><summary><code>client.Endpoints.Params.GetWithPathAndQuery(Param) -> error</code></summary>
 <dl>
 <dd>
 
@@ -2316,12 +2576,12 @@ GET with path and query params
 <dd>
 
 ```go
-request := &fern.EndpointsParamsGetWithPathAndQueryRequest{
-        Param: "param",
+request := &fern.GetWithPathAndQuery{
         Query: "query",
     }
-client.EndpointsParams.EndpointsParamsGetWithPathAndQuery(
+client.Endpoints.Params.GetWithPathAndQuery(
         context.TODO(),
+        "param",
         request,
     )
 }
@@ -2359,7 +2619,7 @@ client.EndpointsParams.EndpointsParamsGetWithPathAndQuery(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsParams.EndpointsParamsGetWithInlinePathAndQuery(Param) -> error</code></summary>
+<details><summary><code>client.Endpoints.Params.GetWithInlinePathAndQuery(Param) -> error</code></summary>
 <dl>
 <dd>
 
@@ -2386,12 +2646,12 @@ GET with path and query params
 <dd>
 
 ```go
-request := &fern.EndpointsParamsGetWithInlinePathAndQueryRequest{
-        Param: "param",
+request := &fern.GetWithPathAndQuery{
         Query: "query",
     }
-client.EndpointsParams.EndpointsParamsGetWithInlinePathAndQuery(
+client.Endpoints.Params.GetWithPathAndQuery(
         context.TODO(),
+        "param",
         request,
     )
 }
@@ -2429,8 +2689,201 @@ client.EndpointsParams.EndpointsParamsGetWithInlinePathAndQuery(
 </dl>
 </details>
 
-## EndpointsPrimitive
-<details><summary><code>client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnString(request) -> string</code></summary>
+<details><summary><code>client.Endpoints.Params.ModifyWithPath(Param, request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Endpoints.Params.ModifyWithPath(
+        context.TODO(),
+        "param",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Params.ModifyWithInlinePath(Param, request) -> string</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+PUT to update with path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Endpoints.Params.ModifyWithPath(
+        context.TODO(),
+        "param",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Params.UploadWithPath(Param, request) -> *types.ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Endpoints.Params.UploadWithPath(
+        context.TODO(),
+        "upload-path",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Primitive
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnString(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -2443,7 +2896,7 @@ client.EndpointsParams.EndpointsParamsGetWithInlinePathAndQuery(
 <dd>
 
 ```go
-client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnString(
+client.Endpoints.Primitive.GetAndReturnString(
         context.TODO(),
         request,
     )
@@ -2474,7 +2927,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnString(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnInt(request) -> int</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnInt(request) -> int</code></summary>
 <dl>
 <dd>
 
@@ -2487,7 +2940,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnString(
 <dd>
 
 ```go
-client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnInt(
+client.Endpoints.Primitive.GetAndReturnInt(
         context.TODO(),
         request,
     )
@@ -2518,7 +2971,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnInt(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnLong(request) -> int64</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnLong(request) -> int64</code></summary>
 <dl>
 <dd>
 
@@ -2531,7 +2984,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnInt(
 <dd>
 
 ```go
-client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnLong(
+client.Endpoints.Primitive.GetAndReturnLong(
         context.TODO(),
         request,
     )
@@ -2562,7 +3015,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnLong(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDouble(request) -> float64</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnDouble(request) -> float64</code></summary>
 <dl>
 <dd>
 
@@ -2575,7 +3028,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnLong(
 <dd>
 
 ```go
-client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDouble(
+client.Endpoints.Primitive.GetAndReturnDouble(
         context.TODO(),
         request,
     )
@@ -2606,7 +3059,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDouble(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBool(request) -> bool</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnBool(request) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -2619,7 +3072,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDouble(
 <dd>
 
 ```go
-client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBool(
+client.Endpoints.Primitive.GetAndReturnBool(
         context.TODO(),
         request,
     )
@@ -2650,7 +3103,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBool(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDatetime(request) -> time.Time</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnDatetime(request) -> time.Time</code></summary>
 <dl>
 <dd>
 
@@ -2663,7 +3116,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBool(
 <dd>
 
 ```go
-client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDatetime(
+client.Endpoints.Primitive.GetAndReturnDatetime(
         context.TODO(),
         request,
     )
@@ -2694,7 +3147,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDatetime(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDate(request) -> time.Time</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnDate(request) -> time.Time</code></summary>
 <dl>
 <dd>
 
@@ -2707,7 +3160,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDatetime(
 <dd>
 
 ```go
-client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDate(
+client.Endpoints.Primitive.GetAndReturnDate(
         context.TODO(),
         request,
     )
@@ -2738,7 +3191,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDate(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnUUID(request) -> string</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnUUID(request) -> uuid.UUID</code></summary>
 <dl>
 <dd>
 
@@ -2751,7 +3204,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnDate(
 <dd>
 
 ```go
-client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnUUID(
+client.Endpoints.Primitive.GetAndReturnUUID(
         context.TODO(),
         request,
     )
@@ -2770,7 +3223,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnUUID(
 <dl>
 <dd>
 
-**request:** `string` 
+**request:** `uuid.UUID` 
     
 </dd>
 </dl>
@@ -2782,7 +3235,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnUUID(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBase64(request) -> string</code></summary>
+<details><summary><code>client.Endpoints.Primitive.GetAndReturnBase64(request) -> []byte</code></summary>
 <dl>
 <dd>
 
@@ -2795,7 +3248,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnUUID(
 <dd>
 
 ```go
-client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBase64(
+client.Endpoints.Primitive.GetAndReturnBase64(
         context.TODO(),
         request,
     )
@@ -2814,7 +3267,7 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBase64(
 <dl>
 <dd>
 
-**request:** `string` 
+**request:** `[]byte` 
     
 </dd>
 </dl>
@@ -2826,8 +3279,8 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBase64(
 </dl>
 </details>
 
-## EndpointsPut
-<details><summary><code>client.EndpointsPut.EndpointsPutAdd(ID) -> *fern.EndpointsPutResponse</code></summary>
+## Endpoints Put
+<details><summary><code>client.Endpoints.Put.Add(ID) -> *endpoints.PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -2840,10 +3293,10 @@ client.EndpointsPrimitive.EndpointsPrimitiveGetAndReturnBase64(
 <dd>
 
 ```go
-request := &fern.EndpointsPutAddRequest{
+request := &fern.PutRequest{
         ID: "id",
     }
-client.EndpointsPut.EndpointsPutAdd(
+client.Endpoints.Put.Add(
         context.TODO(),
         request,
     )
@@ -2874,8 +3327,8 @@ client.EndpointsPut.EndpointsPutAdd(
 </dl>
 </details>
 
-## EndpointsUnion
-<details><summary><code>client.EndpointsUnion.EndpointsUnionGetAndReturnUnion(request) -> *fern.TypesAnimal</code></summary>
+## Endpoints Union
+<details><summary><code>client.Endpoints.Union.GetAndReturnUnion(request) -> *types.Animal</code></summary>
 <dl>
 <dd>
 
@@ -2888,14 +3341,13 @@ client.EndpointsPut.EndpointsPutAdd(
 <dd>
 
 ```go
-request := &fern.TypesAnimal{
-        TypesAnimalZero: &fern.TypesAnimalZero{
+request := &types.Animal{
+        Dog: &types.Dog{
             Name: "name",
             LikesToWoof: true,
-            Animal: fern.TypesAnimalZeroAnimalDog,
         },
     }
-client.EndpointsUnion.EndpointsUnionGetAndReturnUnion(
+client.Endpoints.Union.GetAndReturnUnion(
         context.TODO(),
         request,
     )
@@ -2914,7 +3366,7 @@ client.EndpointsUnion.EndpointsUnionGetAndReturnUnion(
 <dl>
 <dd>
 
-**request:** `*fern.TypesAnimal` 
+**request:** `*types.Animal` 
     
 </dd>
 </dl>
@@ -2926,8 +3378,8 @@ client.EndpointsUnion.EndpointsUnionGetAndReturnUnion(
 </dl>
 </details>
 
-## EndpointsUrLs
-<details><summary><code>client.EndpointsUrLs.EndpointsURLsWithMixedCase() -> string</code></summary>
+## Endpoints URLs
+<details><summary><code>client.Endpoints.URLs.WithMixedCase() -> string</code></summary>
 <dl>
 <dd>
 
@@ -2940,7 +3392,7 @@ client.EndpointsUnion.EndpointsUnionGetAndReturnUnion(
 <dd>
 
 ```go
-client.EndpointsUrLs.EndpointsURLsWithMixedCase(
+client.Endpoints.URLs.WithMixedCase(
         context.TODO(),
     )
 }
@@ -2955,7 +3407,7 @@ client.EndpointsUrLs.EndpointsURLsWithMixedCase(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsUrLs.EndpointsURLsNoEndingSlash() -> string</code></summary>
+<details><summary><code>client.Endpoints.URLs.NoEndingSlash() -> string</code></summary>
 <dl>
 <dd>
 
@@ -2968,7 +3420,7 @@ client.EndpointsUrLs.EndpointsURLsWithMixedCase(
 <dd>
 
 ```go
-client.EndpointsUrLs.EndpointsURLsNoEndingSlash(
+client.Endpoints.URLs.NoEndingSlash(
         context.TODO(),
     )
 }
@@ -2983,7 +3435,7 @@ client.EndpointsUrLs.EndpointsURLsNoEndingSlash(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsUrLs.EndpointsURLsWithEndingSlash() -> string</code></summary>
+<details><summary><code>client.Endpoints.URLs.WithEndingSlash() -> string</code></summary>
 <dl>
 <dd>
 
@@ -2996,7 +3448,7 @@ client.EndpointsUrLs.EndpointsURLsNoEndingSlash(
 <dd>
 
 ```go
-client.EndpointsUrLs.EndpointsURLsWithEndingSlash(
+client.Endpoints.URLs.WithEndingSlash(
         context.TODO(),
     )
 }
@@ -3011,7 +3463,7 @@ client.EndpointsUrLs.EndpointsURLsWithEndingSlash(
 </dl>
 </details>
 
-<details><summary><code>client.EndpointsUrLs.EndpointsURLsWithUnderscores() -> string</code></summary>
+<details><summary><code>client.Endpoints.URLs.WithUnderscores() -> string</code></summary>
 <dl>
 <dd>
 
@@ -3024,7 +3476,7 @@ client.EndpointsUrLs.EndpointsURLsWithEndingSlash(
 <dd>
 
 ```go
-client.EndpointsUrLs.EndpointsURLsWithUnderscores(
+client.Endpoints.URLs.WithUnderscores(
         context.TODO(),
     )
 }
@@ -3039,8 +3491,8 @@ client.EndpointsUrLs.EndpointsURLsWithUnderscores(
 </dl>
 </details>
 
-## Inlinedrequests
-<details><summary><code>client.Inlinedrequests.Postwithobjectbodyandresponse(request) -> *fern.TypesObjectWithOptionalField</code></summary>
+## InlinedRequests
+<details><summary><code>client.InlinedRequests.PostWithObjectBodyandResponse(request) -> *types.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -3067,12 +3519,59 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```go
-request := &fern.InlinedRequestsPostWithObjectBodyandResponseRequest{
+request := &fern.PostWithObjectBody{
         FieldString: "string",
         Integer: 1,
-        NestedObject: &fern.TypesObjectWithOptionalField{},
+        NestedObject: &types.ObjectWithOptionalField{
+            FieldString: fern.String(
+                "string",
+            ),
+            Integer: fern.Int(
+                1,
+            ),
+            Long: fern.Int64(
+                int64(1000000),
+            ),
+            Double: fern.Float64(
+                1.1,
+            ),
+            Bool: fern.Bool(
+                true,
+            ),
+            Datetime: fern.Time(
+                fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
+            Date: fern.Time(
+                fern.MustParseDate(
+                    "2023-01-15",
+                ),
+            ),
+            UUID: fern.UUID(
+                uuid.MustParse(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            ),
+            Base64: fern.Bytes(
+                []byte("SGVsbG8gd29ybGQh"),
+            ),
+            List: []string{
+                "list",
+                "list",
+            },
+            Set: []string{
+                "set",
+            },
+            Map: map[int]string{
+                1: "map",
+            },
+            Bigint: fern.String(
+                "1000000",
+            ),
+        },
     }
-client.Inlinedrequests.Postwithobjectbodyandresponse(
+client.InlinedRequests.PostWithObjectBodyandResponse(
         context.TODO(),
         request,
     )
@@ -3107,7 +3606,7 @@ client.Inlinedrequests.Postwithobjectbodyandresponse(
 <dl>
 <dd>
 
-**nestedObject:** `*fern.TypesObjectWithOptionalField` 
+**nestedObject:** `*types.ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -3119,8 +3618,8 @@ client.Inlinedrequests.Postwithobjectbodyandresponse(
 </dl>
 </details>
 
-## Noauth
-<details><summary><code>client.Noauth.Postwithnoauth(request) -> bool</code></summary>
+## NoAuth
+<details><summary><code>client.NoAuth.PostWithNoAuth(request) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -3150,7 +3649,7 @@ POST request with no auth
 request := map[string]any{
         "key": "value",
     }
-client.Noauth.Postwithnoauth(
+client.NoAuth.PostWithNoAuth(
         context.TODO(),
         request,
     )
@@ -3181,8 +3680,8 @@ client.Noauth.Postwithnoauth(
 </dl>
 </details>
 
-## Noreqbody
-<details><summary><code>client.Noreqbody.Getwithnorequestbody() -> *fern.TypesObjectWithOptionalField</code></summary>
+## NoReqBody
+<details><summary><code>client.NoReqBody.GetWithNoRequestBody() -> *types.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -3195,7 +3694,7 @@ client.Noauth.Postwithnoauth(
 <dd>
 
 ```go
-client.Noreqbody.Getwithnorequestbody(
+client.NoReqBody.GetWithNoRequestBody(
         context.TODO(),
     )
 }
@@ -3210,7 +3709,7 @@ client.Noreqbody.Getwithnorequestbody(
 </dl>
 </details>
 
-<details><summary><code>client.Noreqbody.Postwithnorequestbody() -> string</code></summary>
+<details><summary><code>client.NoReqBody.PostWithNoRequestBody() -> string</code></summary>
 <dl>
 <dd>
 
@@ -3223,7 +3722,7 @@ client.Noreqbody.Getwithnorequestbody(
 <dd>
 
 ```go
-client.Noreqbody.Postwithnorequestbody(
+client.NoReqBody.PostWithNoRequestBody(
         context.TODO(),
     )
 }
@@ -3238,8 +3737,8 @@ client.Noreqbody.Postwithnorequestbody(
 </dl>
 </details>
 
-## Reqwithheaders
-<details><summary><code>client.Reqwithheaders.Getwithcustomheader(request) -> error</code></summary>
+## ReqWithHeaders
+<details><summary><code>client.ReqWithHeaders.GetWithCustomHeader(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -3252,11 +3751,12 @@ client.Noreqbody.Postwithnorequestbody(
 <dd>
 
 ```go
-request := &fern.ReqWithHeadersGetWithCustomHeaderRequest{
-        TestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+request := &fern.ReqWithHeaders{
+        XTestServiceHeader: "X-TEST-SERVICE-HEADER",
+        XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
         Body: "string",
     }
-client.Reqwithheaders.Getwithcustomheader(
+client.ReqWithHeaders.GetWithCustomHeader(
         context.TODO(),
         request,
     )
@@ -3275,7 +3775,7 @@ client.Reqwithheaders.Getwithcustomheader(
 <dl>
 <dd>
 
-**testEndpointHeader:** `string` 
+**xTestEndpointHeader:** `string` 
     
 </dd>
 </dl>

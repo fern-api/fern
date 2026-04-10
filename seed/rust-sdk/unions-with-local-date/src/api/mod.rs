@@ -1,4 +1,4 @@
-//! API client and types for the unions-with-local-date
+//! API client and types for the Unions
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -11,5 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ApiClient, BigunionClient, TypesClient, UnionClient};
+pub use resources::{BigunionClient, TypesClient, UnionClient, UnionsClient};
 pub use types::*;

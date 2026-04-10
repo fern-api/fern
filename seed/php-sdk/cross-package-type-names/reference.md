@@ -1,6 +1,6 @@
 # Reference
-## FolderAService
-<details><summary><code>$client-&gt;folderAService-&gt;folderAServiceGetDirectThread() -> ?FolderAResponse</code></summary>
+## FolderA Service
+<details><summary><code>$client-&gt;folderA-&gt;service-&gt;getDirectThread() -> ?Response</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->folderAService->folderAServiceGetDirectThread();
+$client->folderA->service->getDirectThread();
 ```
 </dd>
 </dl>
@@ -25,8 +25,8 @@ $client->folderAService->folderAServiceGetDirectThread();
 </dl>
 </details>
 
-## FolderDService
-<details><summary><code>$client-&gt;folderDService-&gt;folderDServiceGetDirectThread() -> ?FolderDResponse</code></summary>
+## FolderD Service
+<details><summary><code>$client-&gt;folderD-&gt;service-&gt;getDirectThread() -> ?Response</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ $client->folderAService->folderAServiceGetDirectThread();
 <dd>
 
 ```php
-$client->folderDService->folderDServiceGetDirectThread();
+$client->folderA->service->getDirectThread();
 ```
 </dd>
 </dl>
@@ -66,7 +66,11 @@ $client->folderDService->folderDServiceGetDirectThread();
 
 ```php
 $client->foo->find(
-    new FooFindRequest([]),
+    new FindRequest([
+        'optionalString' => 'optionalString',
+        'publicProperty' => 'publicProperty',
+        'privateProperty' => 1,
+    ]),
 );
 ```
 </dd>

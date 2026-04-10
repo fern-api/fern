@@ -6,39 +6,39 @@ package com.fern.sdk.resources.noreqbody;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.types.TypesObjectWithOptionalField;
+import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.lang.String;
 
-public class NoreqbodyClient {
+public class NoReqBodyClient {
   protected final ClientOptions clientOptions;
 
-  private final RawNoreqbodyClient rawClient;
+  private final RawNoReqBodyClient rawClient;
 
-  public NoreqbodyClient(ClientOptions clientOptions) {
+  public NoReqBodyClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
-    this.rawClient = new RawNoreqbodyClient(clientOptions);
+    this.rawClient = new RawNoReqBodyClient(clientOptions);
   }
 
   /**
    * Get responses with HTTP metadata like headers
    */
-  public RawNoreqbodyClient withRawResponse() {
+  public RawNoReqBodyClient withRawResponse() {
     return this.rawClient;
   }
 
-  public TypesObjectWithOptionalField getwithnorequestbody() {
-    return this.rawClient.getwithnorequestbody().body();
+  public ObjectWithOptionalField getWithNoRequestBody() {
+    return this.rawClient.getWithNoRequestBody().body();
   }
 
-  public TypesObjectWithOptionalField getwithnorequestbody(RequestOptions requestOptions) {
-    return this.rawClient.getwithnorequestbody(requestOptions).body();
+  public ObjectWithOptionalField getWithNoRequestBody(RequestOptions requestOptions) {
+    return this.rawClient.getWithNoRequestBody(requestOptions).body();
   }
 
-  public String postwithnorequestbody() {
-    return this.rawClient.postwithnorequestbody().body();
+  public String postWithNoRequestBody() {
+    return this.rawClient.postWithNoRequestBody().body();
   }
 
-  public String postwithnorequestbody(RequestOptions requestOptions) {
-    return this.rawClient.postwithnorequestbody(requestOptions).body();
+  public String postWithNoRequestBody(RequestOptions requestOptions) {
+    return this.rawClient.postWithNoRequestBody(requestOptions).body();
   }
 }

@@ -8,10 +8,10 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
 import com.fern.sdk.core.RequestOptions;
-import com.fern.sdk.core.SeedApiApiException;
-import com.fern.sdk.core.SeedApiException;
-import com.fern.sdk.core.SeedApiHttpResponse;
-import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeadersGetWithCustomHeaderRequest;
+import com.fern.sdk.core.SeedExhaustiveApiException;
+import com.fern.sdk.core.SeedExhaustiveException;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
+import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
 import java.io.IOException;
 import java.lang.Exception;
 import java.lang.Object;
@@ -26,23 +26,22 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class RawReqwithheadersClient {
+public class RawReqWithHeadersClient {
   protected final ClientOptions clientOptions;
 
-  public RawReqwithheadersClient(ClientOptions clientOptions) {
+  public RawReqWithHeadersClient(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
   }
 
-  public SeedApiHttpResponse<Void> getwithcustomheader(
-      ReqWithHeadersGetWithCustomHeaderRequest request) {
-    return getwithcustomheader(request,null);
+  public SeedExhaustiveHttpResponse<Void> getWithCustomHeader(ReqWithHeaders request) {
+    return getWithCustomHeader(request,null);
   }
 
-  public SeedApiHttpResponse<Void> getwithcustomheader(
-      ReqWithHeadersGetWithCustomHeaderRequest request, RequestOptions requestOptions) {
+  public SeedExhaustiveHttpResponse<Void> getWithCustomHeader(ReqWithHeaders request,
+      RequestOptions requestOptions) {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
-
-      .addPathSegments("test-headers/custom-header");if (requestOptions != null) {
+      .addPathSegments("test-headers")
+      .addPathSegments("custom-header");if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
@@ -59,7 +58,8 @@ public class RawReqwithheadersClient {
         .method("POST", body)
         .headers(Headers.of(clientOptions.headers(requestOptions)))
         .addHeader("Content-Type", "application/json");
-      _requestBuilder.addHeader("X-TEST-ENDPOINT-HEADER", request.getTestEndpointHeader());
+      _requestBuilder.addHeader("X-TEST-SERVICE-HEADER", request.getXTestServiceHeader());
+      _requestBuilder.addHeader("X-TEST-ENDPOINT-HEADER", request.getXTestEndpointHeader());
       Request okhttpRequest = _requestBuilder.build();
       OkHttpClient client = clientOptions.httpClient();
       if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
@@ -68,14 +68,14 @@ public class RawReqwithheadersClient {
       try (Response response = client.newCall(okhttpRequest).execute()) {
         ResponseBody responseBody = response.body();
         if (response.isSuccessful()) {
-          return new SeedApiHttpResponse<>(null, response);
+          return new SeedExhaustiveHttpResponse<>(null, response);
         }
         String responseBodyString = responseBody != null ? responseBody.string() : "{}";
         Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-        throw new SeedApiApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+        throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
       }
       catch (IOException e) {
-        throw new SeedApiException("Network error executing HTTP request", e);
+        throw new SeedExhaustiveException("Network error executing HTTP request", e);
       }
     }
   }

@@ -17,10 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.Ec2BootInstanceRequest{
+    request := &fern.BootInstanceRequest{
         Size: "size",
     }
-    client.Ec2.Bootinstance(
+    client.Ec2.BootInstance(
         context.TODO(),
         request,
     )

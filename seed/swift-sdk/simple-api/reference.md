@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import Api
+import SimpleApi
 
 private func main() async throws {
-    let client = ApiClient(token: "<token>")
+    let client = SimpleApiClient(token: "<token>")
 
     _ = try await client.user.get(id: "id")
 }

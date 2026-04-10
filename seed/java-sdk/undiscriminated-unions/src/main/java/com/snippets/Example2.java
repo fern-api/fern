@@ -1,12 +1,13 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
+import com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
-        client.union().getmetadata();
+        client.union().getMetadata();
     }
 }

@@ -7,13 +7,13 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
-from .environment import SeedApiEnvironment
+from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
 
 if typing.TYPE_CHECKING:
     from .dummy.client import AsyncDummyClient, DummyClient
 
 
-class SeedApi:
+class SeedSingleUrlEnvironmentDefault:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -22,12 +22,12 @@ class SeedApi:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : SeedApiEnvironment
-        The environment to use for requests from the client. from .environment import SeedApiEnvironment
+    environment : SeedSingleUrlEnvironmentDefaultEnvironment
+        The environment to use for requests from the client. from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
 
 
 
-        Defaults to SeedApiEnvironment.PRODUCTION
+        Defaults to SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION
 
 
 
@@ -49,9 +49,9 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedSingleUrlEnvironmentDefault
 
-    client = SeedApi(
+    client = SeedSingleUrlEnvironmentDefault(
         token="YOUR_TOKEN",
     )
     """
@@ -60,7 +60,7 @@ class SeedApi:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: SeedApiEnvironment = SeedApiEnvironment.PRODUCTION,
+        environment: SeedSingleUrlEnvironmentDefaultEnvironment = SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION,
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
@@ -112,7 +112,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApi:
+class AsyncSeedSingleUrlEnvironmentDefault:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -121,12 +121,12 @@ class AsyncSeedApi:
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : SeedApiEnvironment
-        The environment to use for requests from the client. from .environment import SeedApiEnvironment
+    environment : SeedSingleUrlEnvironmentDefaultEnvironment
+        The environment to use for requests from the client. from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
 
 
 
-        Defaults to SeedApiEnvironment.PRODUCTION
+        Defaults to SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION
 
 
 
@@ -151,9 +151,9 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedSingleUrlEnvironmentDefault
 
-    client = AsyncSeedApi(
+    client = AsyncSeedSingleUrlEnvironmentDefault(
         token="YOUR_TOKEN",
     )
     """
@@ -162,7 +162,7 @@ class AsyncSeedApi:
         self,
         *,
         base_url: typing.Optional[str] = None,
-        environment: SeedApiEnvironment = SeedApiEnvironment.PRODUCTION,
+        environment: SeedSingleUrlEnvironmentDefaultEnvironment = SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION,
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
@@ -196,7 +196,9 @@ class AsyncSeedApi:
         return self._dummy
 
 
-def _get_base_url(*, base_url: typing.Optional[str] = None, environment: SeedApiEnvironment) -> str:
+def _get_base_url(
+    *, base_url: typing.Optional[str] = None, environment: SeedSingleUrlEnvironmentDefaultEnvironment
+) -> str:
     if base_url is not None:
         return base_url
     elif environment is not None:

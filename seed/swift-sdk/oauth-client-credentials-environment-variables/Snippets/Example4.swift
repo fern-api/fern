@@ -1,13 +1,10 @@
 import Foundation
-import Api
+import OauthClientCredentialsEnvironmentVariables
 
 private func main() async throws {
-    let client = ApiClient(
-        baseURL: "https://api.fern.com",
-        token: "<token>"
-    )
+    let client = OauthClientCredentialsEnvironmentVariablesClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.nestedNoAuthApi.nestedNoAuthApiGetSomething()
+    _ = try await client.simple.getSomething()
 }
 
 try await main()

@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import Api
+import Enum
 
-@Suite("QueryparamClient Wire Tests") struct QueryparamClientWireTests {
+@Suite("QueryParamClient Wire Tests") struct QueryParamClientWireTests {
 }

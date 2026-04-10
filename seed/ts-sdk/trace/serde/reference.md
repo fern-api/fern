@@ -42,7 +42,7 @@ await client.v2.test();
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">updatetestsubmissionstatus</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">updateTestSubmissionStatus</a>(submissionId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -55,11 +55,8 @@ await client.v2.test();
 <dd>
 
 ```typescript
-await client.admin.updatetestsubmissionstatus({
-    submissionId: "submissionId",
-    body: {
-        type: "stopped"
-    }
+await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+    type: "stopped"
 });
 
 ```
@@ -76,7 +73,15 @@ await client.admin.updatetestsubmissionstatus({
 <dl>
 <dd>
 
-**request:** `SeedApi.AdminUpdateTestSubmissionStatusRequest` 
+**submissionId:** `SeedTrace.SubmissionId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.TestSubmissionStatus` 
     
 </dd>
 </dl>
@@ -96,7 +101,7 @@ await client.admin.updatetestsubmissionstatus({
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">sendtestsubmissionupdate</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">sendTestSubmissionUpdate</a>(submissionId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -109,13 +114,11 @@ await client.admin.updatetestsubmissionstatus({
 <dd>
 
 ```typescript
-await client.admin.sendtestsubmissionupdate({
-    submissionId: "submissionId",
-    body: {
-        updateTime: new Date("2024-01-15T09:30:00.000Z"),
-        updateInfo: {
-            type: "running"
-        }
+await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+    updateTime: new Date("2024-01-15T09:30:00.000Z"),
+    updateInfo: {
+        type: "running",
+        value: "QUEUEING_SUBMISSION"
     }
 });
 
@@ -133,7 +136,15 @@ await client.admin.sendtestsubmissionupdate({
 <dl>
 <dd>
 
-**request:** `SeedApi.AdminSendTestSubmissionUpdateRequest` 
+**submissionId:** `SeedTrace.SubmissionId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.TestSubmissionUpdate` 
     
 </dd>
 </dl>
@@ -153,7 +164,7 @@ await client.admin.sendtestsubmissionupdate({
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">updateworkspacesubmissionstatus</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">updateWorkspaceSubmissionStatus</a>(submissionId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -166,11 +177,8 @@ await client.admin.sendtestsubmissionupdate({
 <dd>
 
 ```typescript
-await client.admin.updateworkspacesubmissionstatus({
-    submissionId: "submissionId",
-    body: {
-        type: "stopped"
-    }
+await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+    type: "stopped"
 });
 
 ```
@@ -187,7 +195,15 @@ await client.admin.updateworkspacesubmissionstatus({
 <dl>
 <dd>
 
-**request:** `SeedApi.AdminUpdateWorkspaceSubmissionStatusRequest` 
+**submissionId:** `SeedTrace.SubmissionId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.WorkspaceSubmissionStatus` 
     
 </dd>
 </dl>
@@ -207,7 +223,7 @@ await client.admin.updateworkspacesubmissionstatus({
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">sendworkspacesubmissionupdate</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">sendWorkspaceSubmissionUpdate</a>(submissionId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -220,13 +236,11 @@ await client.admin.updateworkspacesubmissionstatus({
 <dd>
 
 ```typescript
-await client.admin.sendworkspacesubmissionupdate({
-    submissionId: "submissionId",
-    body: {
-        updateTime: new Date("2024-01-15T09:30:00.000Z"),
-        updateInfo: {
-            type: "running"
-        }
+await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+    updateTime: new Date("2024-01-15T09:30:00.000Z"),
+    updateInfo: {
+        type: "running",
+        value: "QUEUEING_SUBMISSION"
     }
 });
 
@@ -244,7 +258,15 @@ await client.admin.sendworkspacesubmissionupdate({
 <dl>
 <dd>
 
-**request:** `SeedApi.AdminSendWorkspaceSubmissionUpdateRequest` 
+**submissionId:** `SeedTrace.SubmissionId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.WorkspaceSubmissionUpdate` 
     
 </dd>
 </dl>
@@ -264,7 +286,7 @@ await client.admin.sendworkspacesubmissionupdate({
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storetracedtestcase</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedTestCase</a>(submissionId, testCaseId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -277,90 +299,92 @@ await client.admin.sendworkspacesubmissionupdate({
 <dd>
 
 ```typescript
-await client.admin.storetracedtestcase({
-    submissionId: "submissionId",
-    testCaseId: "testCaseId",
+await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", {
     result: {
         result: {
             expectedResult: {
-                type: "integerValue"
+                type: "integerValue",
+                value: 1
             },
             actualResult: {
-                type: "value"
+                type: "value",
+                value: {
+                    type: "integerValue",
+                    value: 1
+                }
             },
             passed: true
         },
         stdout: "stdout"
     },
     traceResponses: [{
-            submissionId: "submissionId",
+            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             lineNumber: 1,
-            stack: {
-                numStackFrames: 1
-            }
-        }]
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `SeedApi.AdminStoreTracedTestCaseRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `AdminClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storetracedtestcasev2</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.admin.storetracedtestcasev2({
-    submissionId: "submissionId",
-    testCaseId: "testCaseId",
-    body: [{
-            submissionId: "submissionId",
-            lineNumber: 1,
-            file: {
-                filename: "filename",
-                directory: "directory"
+            returnValue: {
+                type: "integerValue",
+                value: 1
+            },
+            expressionLocation: {
+                start: 1,
+                offset: 1
             },
             stack: {
-                numStackFrames: 1
-            }
+                numStackFrames: 1,
+                topStackFrame: {
+                    methodName: "methodName",
+                    lineNumber: 1,
+                    scopes: [{
+                            variables: {
+                                "variables": {
+                                    type: "integerValue",
+                                    value: 1
+                                }
+                            }
+                        }, {
+                            variables: {
+                                "variables": {
+                                    type: "integerValue",
+                                    value: 1
+                                }
+                            }
+                        }]
+                }
+            },
+            stdout: "stdout"
+        }, {
+            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            lineNumber: 1,
+            returnValue: {
+                type: "integerValue",
+                value: 1
+            },
+            expressionLocation: {
+                start: 1,
+                offset: 1
+            },
+            stack: {
+                numStackFrames: 1,
+                topStackFrame: {
+                    methodName: "methodName",
+                    lineNumber: 1,
+                    scopes: [{
+                            variables: {
+                                "variables": {
+                                    type: "integerValue",
+                                    value: 1
+                                }
+                            }
+                        }, {
+                            variables: {
+                                "variables": {
+                                    type: "integerValue",
+                                    value: 1
+                                }
+                            }
+                        }]
+                }
+            },
+            stdout: "stdout"
         }]
 });
 
@@ -378,7 +402,23 @@ await client.admin.storetracedtestcasev2({
 <dl>
 <dd>
 
-**request:** `SeedApi.AdminStoreTracedTestCaseV2Request` 
+**submissionId:** `SeedTrace.SubmissionId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**testCaseId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.StoreTracedTestCaseRequest` 
     
 </dd>
 </dl>
@@ -398,7 +438,7 @@ await client.admin.storetracedtestcasev2({
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storetracedworkspace</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedTestCaseV2</a>(submissionId, testCaseId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -411,17 +451,230 @@ await client.admin.storetracedtestcasev2({
 <dd>
 
 ```typescript
-await client.admin.storetracedworkspace({
-    submissionId: "submissionId",
+await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "testCaseId", [{
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        lineNumber: 1,
+        file: {
+            filename: "filename",
+            directory: "directory"
+        },
+        returnValue: {
+            type: "integerValue",
+            value: 1
+        },
+        expressionLocation: {
+            start: 1,
+            offset: 1
+        },
+        stack: {
+            numStackFrames: 1,
+            topStackFrame: {
+                methodName: "methodName",
+                lineNumber: 1,
+                scopes: [{
+                        variables: {
+                            "variables": {
+                                type: "integerValue",
+                                value: 1
+                            }
+                        }
+                    }, {
+                        variables: {
+                            "variables": {
+                                type: "integerValue",
+                                value: 1
+                            }
+                        }
+                    }]
+            }
+        },
+        stdout: "stdout"
+    }, {
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        lineNumber: 1,
+        file: {
+            filename: "filename",
+            directory: "directory"
+        },
+        returnValue: {
+            type: "integerValue",
+            value: 1
+        },
+        expressionLocation: {
+            start: 1,
+            offset: 1
+        },
+        stack: {
+            numStackFrames: 1,
+            topStackFrame: {
+                methodName: "methodName",
+                lineNumber: 1,
+                scopes: [{
+                        variables: {
+                            "variables": {
+                                type: "integerValue",
+                                value: 1
+                            }
+                        }
+                    }, {
+                        variables: {
+                            "variables": {
+                                type: "integerValue",
+                                value: 1
+                            }
+                        }
+                    }]
+            }
+        },
+        stdout: "stdout"
+    }]);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**submissionId:** `SeedTrace.SubmissionId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**testCaseId:** `SeedTrace.TestCaseId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.TraceResponseV2[]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AdminClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedWorkspace</a>(submissionId, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
     workspaceRunDetails: {
+        exceptionV2: {
+            type: "generic",
+            exceptionType: "exceptionType",
+            exceptionMessage: "exceptionMessage",
+            exceptionStacktrace: "exceptionStacktrace"
+        },
+        exception: {
+            exceptionType: "exceptionType",
+            exceptionMessage: "exceptionMessage",
+            exceptionStacktrace: "exceptionStacktrace"
+        },
         stdout: "stdout"
     },
     traceResponses: [{
-            submissionId: "submissionId",
+            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             lineNumber: 1,
+            returnValue: {
+                type: "integerValue",
+                value: 1
+            },
+            expressionLocation: {
+                start: 1,
+                offset: 1
+            },
             stack: {
-                numStackFrames: 1
-            }
+                numStackFrames: 1,
+                topStackFrame: {
+                    methodName: "methodName",
+                    lineNumber: 1,
+                    scopes: [{
+                            variables: {
+                                "variables": {
+                                    type: "integerValue",
+                                    value: 1
+                                }
+                            }
+                        }, {
+                            variables: {
+                                "variables": {
+                                    type: "integerValue",
+                                    value: 1
+                                }
+                            }
+                        }]
+                }
+            },
+            stdout: "stdout"
+        }, {
+            submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            lineNumber: 1,
+            returnValue: {
+                type: "integerValue",
+                value: 1
+            },
+            expressionLocation: {
+                start: 1,
+                offset: 1
+            },
+            stack: {
+                numStackFrames: 1,
+                topStackFrame: {
+                    methodName: "methodName",
+                    lineNumber: 1,
+                    scopes: [{
+                            variables: {
+                                "variables": {
+                                    type: "integerValue",
+                                    value: 1
+                                }
+                            }
+                        }, {
+                            variables: {
+                                "variables": {
+                                    type: "integerValue",
+                                    value: 1
+                                }
+                            }
+                        }]
+                }
+            },
+            stdout: "stdout"
         }]
 });
 
@@ -439,7 +692,15 @@ await client.admin.storetracedworkspace({
 <dl>
 <dd>
 
-**request:** `SeedApi.AdminStoreTracedWorkspaceRequest` 
+**submissionId:** `SeedTrace.SubmissionId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.StoreTracedWorkspaceRequest` 
     
 </dd>
 </dl>
@@ -459,7 +720,7 @@ await client.admin.storetracedworkspace({
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storetracedworkspacev2</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedWorkspaceV2</a>(submissionId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -472,20 +733,83 @@ await client.admin.storetracedworkspace({
 <dd>
 
 ```typescript
-await client.admin.storetracedworkspacev2({
-    submissionId: "submissionId",
-    body: [{
-            submissionId: "submissionId",
-            lineNumber: 1,
-            file: {
-                filename: "filename",
-                directory: "directory"
-            },
-            stack: {
-                numStackFrames: 1
+await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", [{
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        lineNumber: 1,
+        file: {
+            filename: "filename",
+            directory: "directory"
+        },
+        returnValue: {
+            type: "integerValue",
+            value: 1
+        },
+        expressionLocation: {
+            start: 1,
+            offset: 1
+        },
+        stack: {
+            numStackFrames: 1,
+            topStackFrame: {
+                methodName: "methodName",
+                lineNumber: 1,
+                scopes: [{
+                        variables: {
+                            "variables": {
+                                type: "integerValue",
+                                value: 1
+                            }
+                        }
+                    }, {
+                        variables: {
+                            "variables": {
+                                type: "integerValue",
+                                value: 1
+                            }
+                        }
+                    }]
             }
-        }]
-});
+        },
+        stdout: "stdout"
+    }, {
+        submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        lineNumber: 1,
+        file: {
+            filename: "filename",
+            directory: "directory"
+        },
+        returnValue: {
+            type: "integerValue",
+            value: 1
+        },
+        expressionLocation: {
+            start: 1,
+            offset: 1
+        },
+        stack: {
+            numStackFrames: 1,
+            topStackFrame: {
+                methodName: "methodName",
+                lineNumber: 1,
+                scopes: [{
+                        variables: {
+                            "variables": {
+                                type: "integerValue",
+                                value: 1
+                            }
+                        }
+                    }, {
+                        variables: {
+                            "variables": {
+                                type: "integerValue",
+                                value: 1
+                            }
+                        }
+                    }]
+            }
+        },
+        stdout: "stdout"
+    }]);
 
 ```
 </dd>
@@ -501,7 +825,15 @@ await client.admin.storetracedworkspacev2({
 <dl>
 <dd>
 
-**request:** `SeedApi.AdminStoreTracedWorkspaceV2Request` 
+**submissionId:** `SeedTrace.SubmissionId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.TraceResponseV2[]` 
     
 </dd>
 </dl>
@@ -522,7 +854,7 @@ await client.admin.storetracedworkspacev2({
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client/Client.ts">gethomepageproblems</a>() -> SeedApi.ProblemId[]</code></summary>
+<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client/Client.ts">getHomepageProblems</a>() -> SeedTrace.ProblemId[]</code></summary>
 <dl>
 <dd>
 
@@ -535,7 +867,7 @@ await client.admin.storetracedworkspacev2({
 <dd>
 
 ```typescript
-await client.homepage.gethomepageproblems();
+await client.homepage.getHomepageProblems();
 
 ```
 </dd>
@@ -563,7 +895,7 @@ await client.homepage.gethomepageproblems();
 </dl>
 </details>
 
-<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client/Client.ts">sethomepageproblems</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client/Client.ts">setHomepageProblems</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -576,7 +908,7 @@ await client.homepage.gethomepageproblems();
 <dd>
 
 ```typescript
-await client.homepage.sethomepageproblems(["string"]);
+await client.homepage.setHomepageProblems(["string", "string"]);
 
 ```
 </dd>
@@ -592,7 +924,7 @@ await client.homepage.sethomepageproblems(["string"]);
 <dl>
 <dd>
 
-**request:** `SeedApi.ProblemId[]` 
+**request:** `SeedTrace.ProblemId[]` 
     
 </dd>
 </dl>
@@ -613,7 +945,7 @@ await client.homepage.sethomepageproblems(["string"]);
 </details>
 
 ## Migration
-<details><summary><code>client.migration.<a href="/src/api/resources/migration/client/Client.ts">getattemptedmigrations</a>({ ...params }) -> SeedApi.Migration[]</code></summary>
+<details><summary><code>client.migration.<a href="/src/api/resources/migration/client/Client.ts">getAttemptedMigrations</a>({ ...params }) -> SeedTrace.Migration[]</code></summary>
 <dl>
 <dd>
 
@@ -626,7 +958,7 @@ await client.homepage.sethomepageproblems(["string"]);
 <dd>
 
 ```typescript
-await client.migration.getattemptedmigrations({
+await client.migration.getAttemptedMigrations({
     adminKeyHeader: "admin-key-header"
 });
 
@@ -644,7 +976,7 @@ await client.migration.getattemptedmigrations({
 <dl>
 <dd>
 
-**request:** `SeedApi.MigrationGetAttemptedMigrationsRequest` 
+**request:** `SeedTrace.GetAttemptedMigrationsRequest` 
     
 </dd>
 </dl>
@@ -665,7 +997,7 @@ await client.migration.getattemptedmigrations({
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">createplaylist</a>({ ...params }) -> SeedApi.Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">createPlaylist</a>(serviceParam, { ...params }) -> SeedTrace.Playlist</code></summary>
 <dl>
 <dd>
 
@@ -692,12 +1024,12 @@ Create a new playlist
 <dd>
 
 ```typescript
-await client.playlist.createplaylist({
-    serviceParam: 1,
+await client.playlist.createPlaylist(1, {
     datetime: new Date("2024-01-15T09:30:00.000Z"),
+    optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
     body: {
         name: "name",
-        problems: ["problems"]
+        problems: ["problems", "problems"]
     }
 });
 
@@ -715,7 +1047,15 @@ await client.playlist.createplaylist({
 <dl>
 <dd>
 
-**request:** `SeedApi.PlaylistCreatePlaylistRequest` 
+**serviceParam:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.CreatePlaylistRequest` 
     
 </dd>
 </dl>
@@ -735,7 +1075,7 @@ await client.playlist.createplaylist({
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">getplaylists</a>({ ...params }) -> SeedApi.Playlist[]</code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">getPlaylists</a>(serviceParam, { ...params }) -> SeedTrace.Playlist[]</code></summary>
 <dl>
 <dd>
 
@@ -762,8 +1102,7 @@ Returns the user's playlists
 <dd>
 
 ```typescript
-await client.playlist.getplaylists({
-    serviceParam: 1,
+await client.playlist.getPlaylists(1, {
     limit: 1,
     otherField: "otherField",
     multiLineDocs: "multiLineDocs",
@@ -785,7 +1124,15 @@ await client.playlist.getplaylists({
 <dl>
 <dd>
 
-**request:** `SeedApi.PlaylistGetPlaylistsRequest` 
+**serviceParam:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.GetPlaylistsRequest` 
     
 </dd>
 </dl>
@@ -805,7 +1152,7 @@ await client.playlist.getplaylists({
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">getplaylist</a>({ ...params }) -> SeedApi.Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">getPlaylist</a>(serviceParam, playlistId) -> SeedTrace.Playlist</code></summary>
 <dl>
 <dd>
 
@@ -832,10 +1179,7 @@ Returns a playlist
 <dd>
 
 ```typescript
-await client.playlist.getplaylist({
-    serviceParam: 1,
-    playlistId: "playlistId"
-});
+await client.playlist.getPlaylist(1, "playlistId");
 
 ```
 </dd>
@@ -851,7 +1195,15 @@ await client.playlist.getplaylist({
 <dl>
 <dd>
 
-**request:** `SeedApi.PlaylistGetPlaylistRequest` 
+**serviceParam:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**playlistId:** `SeedTrace.PlaylistId` 
     
 </dd>
 </dl>
@@ -871,7 +1223,7 @@ await client.playlist.getplaylist({
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">updateplaylist</a>({ ...params }) -> SeedApi.Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">updatePlaylist</a>(serviceParam, playlistId, { ...params }) -> SeedTrace.Playlist | undefined</code></summary>
 <dl>
 <dd>
 
@@ -898,11 +1250,9 @@ Updates a playlist
 <dd>
 
 ```typescript
-await client.playlist.updateplaylist({
-    serviceParam: 1,
-    playlistId: "playlistId",
+await client.playlist.updatePlaylist(1, "playlistId", {
     name: "name",
-    problems: ["problems"]
+    problems: ["problems", "problems"]
 });
 
 ```
@@ -919,7 +1269,23 @@ await client.playlist.updateplaylist({
 <dl>
 <dd>
 
-**request:** `SeedApi.UpdatePlaylistRequest` 
+**serviceParam:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**playlistId:** `SeedTrace.PlaylistId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.UpdatePlaylistRequest` 
     
 </dd>
 </dl>
@@ -939,7 +1305,7 @@ await client.playlist.updateplaylist({
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">deleteplaylist</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">deletePlaylist</a>(serviceParam, playlist_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -966,10 +1332,7 @@ Deletes a playlist
 <dd>
 
 ```typescript
-await client.playlist.deleteplaylist({
-    serviceParam: 1,
-    playlistId: "playlist_id"
-});
+await client.playlist.deletePlaylist(1, "playlist_id");
 
 ```
 </dd>
@@ -985,7 +1348,15 @@ await client.playlist.deleteplaylist({
 <dl>
 <dd>
 
-**request:** `SeedApi.PlaylistDeletePlaylistRequest` 
+**serviceParam:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**playlist_id:** `SeedTrace.PlaylistId` 
     
 </dd>
 </dl>
@@ -1006,7 +1377,7 @@ await client.playlist.deleteplaylist({
 </details>
 
 ## Problem
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">createproblem</a>({ ...params }) -> SeedApi.CreateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">createProblem</a>({ ...params }) -> SeedTrace.CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1033,15 +1404,19 @@ Creates a problem
 <dd>
 
 ```typescript
-await client.problem.createproblem({
+await client.problem.createProblem({
     problemName: "problemName",
     problemDescription: {
         boards: [{
-                type: "html"
+                type: "html",
+                value: "boards"
+            }, {
+                type: "html",
+                value: "boards"
             }]
     },
     files: {
-        "key": {
+        ["JAVA"]: {
             solutionFile: {
                 filename: "filename",
                 contents: "contents"
@@ -1049,10 +1424,18 @@ await client.problem.createproblem({
             readOnlyFiles: [{
                     filename: "filename",
                     contents: "contents"
+                }, {
+                    filename: "filename",
+                    contents: "contents"
                 }]
         }
     },
     inputParams: [{
+            variableType: {
+                type: "integerType"
+            },
+            name: "name"
+        }, {
             variableType: {
                 type: "integerType"
             },
@@ -1065,11 +1448,31 @@ await client.problem.createproblem({
             testCase: {
                 id: "id",
                 params: [{
-                        type: "integerValue"
+                        type: "integerValue",
+                        value: 1
+                    }, {
+                        type: "integerValue",
+                        value: 1
                     }]
             },
             expectedResult: {
-                type: "integerValue"
+                type: "integerValue",
+                value: 1
+            }
+        }, {
+            testCase: {
+                id: "id",
+                params: [{
+                        type: "integerValue",
+                        value: 1
+                    }, {
+                        type: "integerValue",
+                        value: 1
+                    }]
+            },
+            expectedResult: {
+                type: "integerValue",
+                value: 1
             }
         }],
     methodName: "methodName"
@@ -1089,7 +1492,7 @@ await client.problem.createproblem({
 <dl>
 <dd>
 
-**request:** `SeedApi.CreateProblemRequest` 
+**request:** `SeedTrace.CreateProblemRequest` 
     
 </dd>
 </dl>
@@ -1109,7 +1512,7 @@ await client.problem.createproblem({
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">updateproblem</a>({ ...params }) -> SeedApi.UpdateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">updateProblem</a>(problemId, { ...params }) -> SeedTrace.UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1136,49 +1539,78 @@ Updates a problem
 <dd>
 
 ```typescript
-await client.problem.updateproblem({
-    problemId: "problemId",
-    body: {
-        problemName: "problemName",
-        problemDescription: {
-            boards: [{
-                    type: "html"
-                }]
-        },
-        files: {
-            "key": {
-                solutionFile: {
+await client.problem.updateProblem("problemId", {
+    problemName: "problemName",
+    problemDescription: {
+        boards: [{
+                type: "html",
+                value: "boards"
+            }, {
+                type: "html",
+                value: "boards"
+            }]
+    },
+    files: {
+        ["JAVA"]: {
+            solutionFile: {
+                filename: "filename",
+                contents: "contents"
+            },
+            readOnlyFiles: [{
                     filename: "filename",
                     contents: "contents"
-                },
-                readOnlyFiles: [{
-                        filename: "filename",
-                        contents: "contents"
+                }, {
+                    filename: "filename",
+                    contents: "contents"
+                }]
+        }
+    },
+    inputParams: [{
+            variableType: {
+                type: "integerType"
+            },
+            name: "name"
+        }, {
+            variableType: {
+                type: "integerType"
+            },
+            name: "name"
+        }],
+    outputType: {
+        type: "integerType"
+    },
+    testcases: [{
+            testCase: {
+                id: "id",
+                params: [{
+                        type: "integerValue",
+                        value: 1
+                    }, {
+                        type: "integerValue",
+                        value: 1
                     }]
+            },
+            expectedResult: {
+                type: "integerValue",
+                value: 1
             }
-        },
-        inputParams: [{
-                variableType: {
-                    type: "integerType"
-                },
-                name: "name"
-            }],
-        outputType: {
-            type: "integerType"
-        },
-        testcases: [{
-                testCase: {
-                    id: "id",
-                    params: [{
-                            type: "integerValue"
-                        }]
-                },
-                expectedResult: {
-                    type: "integerValue"
-                }
-            }],
-        methodName: "methodName"
-    }
+        }, {
+            testCase: {
+                id: "id",
+                params: [{
+                        type: "integerValue",
+                        value: 1
+                    }, {
+                        type: "integerValue",
+                        value: 1
+                    }]
+            },
+            expectedResult: {
+                type: "integerValue",
+                value: 1
+            }
+        }],
+    methodName: "methodName"
 });
 
 ```
@@ -1195,7 +1627,15 @@ await client.problem.updateproblem({
 <dl>
 <dd>
 
-**request:** `SeedApi.ProblemUpdateProblemRequest` 
+**problemId:** `SeedTrace.ProblemId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `SeedTrace.CreateProblemRequest` 
     
 </dd>
 </dl>
@@ -1215,7 +1655,7 @@ await client.problem.updateproblem({
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">deleteproblem</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">deleteProblem</a>(problemId) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1242,9 +1682,7 @@ Soft deletes a problem
 <dd>
 
 ```typescript
-await client.problem.deleteproblem({
-    problemId: "problemId"
-});
+await client.problem.deleteProblem("problemId");
 
 ```
 </dd>
@@ -1260,7 +1698,7 @@ await client.problem.deleteproblem({
 <dl>
 <dd>
 
-**request:** `SeedApi.ProblemDeleteProblemRequest` 
+**problemId:** `SeedTrace.ProblemId` 
     
 </dd>
 </dl>
@@ -1280,7 +1718,7 @@ await client.problem.deleteproblem({
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">getdefaultstarterfiles</a>({ ...params }) -> SeedApi.GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">getDefaultStarterFiles</a>({ ...params }) -> SeedTrace.GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1307,8 +1745,13 @@ Returns default starter files for problem
 <dd>
 
 ```typescript
-await client.problem.getdefaultstarterfiles({
+await client.problem.getDefaultStarterFiles({
     inputParams: [{
+            variableType: {
+                type: "integerType"
+            },
+            name: "name"
+        }, {
             variableType: {
                 type: "integerType"
             },
@@ -1334,7 +1777,7 @@ await client.problem.getdefaultstarterfiles({
 <dl>
 <dd>
 
-**request:** `SeedApi.ProblemGetDefaultStarterFilesRequest` 
+**request:** `SeedTrace.GetDefaultStarterFilesRequest` 
     
 </dd>
 </dl>
@@ -1355,7 +1798,7 @@ await client.problem.getdefaultstarterfiles({
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">createexecutionsession</a>({ ...params }) -> SeedApi.ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">createExecutionSession</a>(language) -> SeedTrace.ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1382,9 +1825,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```typescript
-await client.submission.createexecutionsession({
-    language: "JAVA"
-});
+await client.submission.createExecutionSession("JAVA");
 
 ```
 </dd>
@@ -1400,7 +1841,7 @@ await client.submission.createexecutionsession({
 <dl>
 <dd>
 
-**request:** `SeedApi.SubmissionCreateExecutionSessionRequest` 
+**language:** `SeedTrace.Language` 
     
 </dd>
 </dl>
@@ -1420,7 +1861,7 @@ await client.submission.createexecutionsession({
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">getexecutionsession</a>({ ...params }) -> SeedApi.ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">getExecutionSession</a>(sessionId) -> SeedTrace.ExecutionSessionResponse | undefined</code></summary>
 <dl>
 <dd>
 
@@ -1447,9 +1888,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```typescript
-await client.submission.getexecutionsession({
-    sessionId: "sessionId"
-});
+await client.submission.getExecutionSession("sessionId");
 
 ```
 </dd>
@@ -1465,7 +1904,7 @@ await client.submission.getexecutionsession({
 <dl>
 <dd>
 
-**request:** `SeedApi.SubmissionGetExecutionSessionRequest` 
+**sessionId:** `string` 
     
 </dd>
 </dl>
@@ -1485,7 +1924,7 @@ await client.submission.getexecutionsession({
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">stopexecutionsession</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">stopExecutionSession</a>(sessionId) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1512,9 +1951,7 @@ Stops execution session.
 <dd>
 
 ```typescript
-await client.submission.stopexecutionsession({
-    sessionId: "sessionId"
-});
+await client.submission.stopExecutionSession("sessionId");
 
 ```
 </dd>
@@ -1530,7 +1967,7 @@ await client.submission.stopexecutionsession({
 <dl>
 <dd>
 
-**request:** `SeedApi.SubmissionStopExecutionSessionRequest` 
+**sessionId:** `string` 
     
 </dd>
 </dl>
@@ -1550,7 +1987,7 @@ await client.submission.stopexecutionsession({
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">getexecutionsessionsstate</a>() -> SeedApi.GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">getExecutionSessionsState</a>() -> SeedTrace.GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -1563,7 +2000,7 @@ await client.submission.stopexecutionsession({
 <dd>
 
 ```typescript
-await client.submission.getexecutionsessionsstate();
+await client.submission.getExecutionSessionsState();
 
 ```
 </dd>
@@ -1592,7 +2029,7 @@ await client.submission.getexecutionsessionsstate();
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">setnumwarminstances</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">setNumWarmInstances</a>(language, numWarmInstances) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1605,10 +2042,7 @@ await client.submission.getexecutionsessionsstate();
 <dd>
 
 ```typescript
-await client.sysprop.setnumwarminstances({
-    language: "JAVA",
-    numWarmInstances: 1
-});
+await client.sysprop.setNumWarmInstances("JAVA", 1);
 
 ```
 </dd>
@@ -1624,7 +2058,15 @@ await client.sysprop.setnumwarminstances({
 <dl>
 <dd>
 
-**request:** `SeedApi.SyspropSetNumWarmInstancesRequest` 
+**language:** `SeedTrace.Language` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**numWarmInstances:** `number` 
     
 </dd>
 </dl>
@@ -1644,7 +2086,7 @@ await client.sysprop.setnumwarminstances({
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">getnumwarminstances</a>() -> Record&lt;string, number&gt;</code></summary>
+<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">getNumWarmInstances</a>() -> Partial&lt;Record&lt;SeedTrace.Language, number&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1657,7 +2099,7 @@ await client.sysprop.setnumwarminstances({
 <dd>
 
 ```typescript
-await client.sysprop.getnumwarminstances();
+await client.sysprop.getNumWarmInstances();
 
 ```
 </dd>
@@ -1685,8 +2127,8 @@ await client.sysprop.getnumwarminstances();
 </dl>
 </details>
 
-## V2Problem
-<details><summary><code>client.v2Problem.<a href="/src/api/resources/v2Problem/client/Client.ts">v2ProblemGetLightweightProblems</a>() -> SeedApi.V2LightweightProblemInfoV2[]</code></summary>
+## V2 Problem
+<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getLightweightProblems</a>() -> SeedTrace.LightweightProblemInfoV2[]</code></summary>
 <dl>
 <dd>
 
@@ -1713,7 +2155,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```typescript
-await client.v2Problem.v2ProblemGetLightweightProblems();
+await client.v2.problem.getLightweightProblems();
 
 ```
 </dd>
@@ -1729,7 +2171,7 @@ await client.v2Problem.v2ProblemGetLightweightProblems();
 <dl>
 <dd>
 
-**requestOptions:** `V2ProblemClient.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1741,7 +2183,7 @@ await client.v2Problem.v2ProblemGetLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2Problem.<a href="/src/api/resources/v2Problem/client/Client.ts">v2ProblemGetProblems</a>() -> SeedApi.V2ProblemInfoV2[]</code></summary>
+<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getProblems</a>() -> SeedTrace.ProblemInfoV2[]</code></summary>
 <dl>
 <dd>
 
@@ -1768,7 +2210,7 @@ Returns latest versions of all problems
 <dd>
 
 ```typescript
-await client.v2Problem.v2ProblemGetProblems();
+await client.v2.problem.getProblems();
 
 ```
 </dd>
@@ -1784,7 +2226,7 @@ await client.v2Problem.v2ProblemGetProblems();
 <dl>
 <dd>
 
-**requestOptions:** `V2ProblemClient.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1796,7 +2238,7 @@ await client.v2Problem.v2ProblemGetProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2Problem.<a href="/src/api/resources/v2Problem/client/Client.ts">v2ProblemGetLatestProblem</a>({ ...params }) -> SeedApi.V2ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getLatestProblem</a>(problemId) -> SeedTrace.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1823,9 +2265,7 @@ Returns latest version of a problem
 <dd>
 
 ```typescript
-await client.v2Problem.v2ProblemGetLatestProblem({
-    problemId: "problemId"
-});
+await client.v2.problem.getLatestProblem("problemId");
 
 ```
 </dd>
@@ -1841,7 +2281,7 @@ await client.v2Problem.v2ProblemGetLatestProblem({
 <dl>
 <dd>
 
-**request:** `SeedApi.V2ProblemGetLatestProblemRequest` 
+**problemId:** `SeedTrace.ProblemId` 
     
 </dd>
 </dl>
@@ -1849,7 +2289,7 @@ await client.v2Problem.v2ProblemGetLatestProblem({
 <dl>
 <dd>
 
-**requestOptions:** `V2ProblemClient.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1861,7 +2301,7 @@ await client.v2Problem.v2ProblemGetLatestProblem({
 </dl>
 </details>
 
-<details><summary><code>client.v2Problem.<a href="/src/api/resources/v2Problem/client/Client.ts">v2ProblemGetProblemVersion</a>({ ...params }) -> SeedApi.V2ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getProblemVersion</a>(problemId, problemVersion) -> SeedTrace.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1888,10 +2328,7 @@ Returns requested version of a problem
 <dd>
 
 ```typescript
-await client.v2Problem.v2ProblemGetProblemVersion({
-    problemId: "problemId",
-    problemVersion: 1
-});
+await client.v2.problem.getProblemVersion("problemId", 1);
 
 ```
 </dd>
@@ -1907,7 +2344,7 @@ await client.v2Problem.v2ProblemGetProblemVersion({
 <dl>
 <dd>
 
-**request:** `SeedApi.V2ProblemGetProblemVersionRequest` 
+**problemId:** `SeedTrace.ProblemId` 
     
 </dd>
 </dl>
@@ -1915,7 +2352,15 @@ await client.v2Problem.v2ProblemGetProblemVersion({
 <dl>
 <dd>
 
-**requestOptions:** `V2ProblemClient.RequestOptions` 
+**problemVersion:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1927,8 +2372,8 @@ await client.v2Problem.v2ProblemGetProblemVersion({
 </dl>
 </details>
 
-## V2V3Problem
-<details><summary><code>client.v2V3Problem.<a href="/src/api/resources/v2V3Problem/client/Client.ts">v2V3ProblemGetLightweightProblems</a>() -> SeedApi.V2V3LightweightProblemInfoV2[]</code></summary>
+## V2 V3 Problem
+<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getLightweightProblems</a>() -> SeedTrace.LightweightProblemInfoV2[]</code></summary>
 <dl>
 <dd>
 
@@ -1955,7 +2400,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```typescript
-await client.v2V3Problem.v2V3ProblemGetLightweightProblems();
+await client.v2.v3.problem.getLightweightProblems();
 
 ```
 </dd>
@@ -1971,7 +2416,7 @@ await client.v2V3Problem.v2V3ProblemGetLightweightProblems();
 <dl>
 <dd>
 
-**requestOptions:** `V2V3ProblemClient.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1983,7 +2428,7 @@ await client.v2V3Problem.v2V3ProblemGetLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2V3Problem.<a href="/src/api/resources/v2V3Problem/client/Client.ts">v2V3ProblemGetProblems</a>() -> SeedApi.V2V3ProblemInfoV2[]</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getProblems</a>() -> SeedTrace.ProblemInfoV2[]</code></summary>
 <dl>
 <dd>
 
@@ -2010,7 +2455,7 @@ Returns latest versions of all problems
 <dd>
 
 ```typescript
-await client.v2V3Problem.v2V3ProblemGetProblems();
+await client.v2.v3.problem.getProblems();
 
 ```
 </dd>
@@ -2026,7 +2471,7 @@ await client.v2V3Problem.v2V3ProblemGetProblems();
 <dl>
 <dd>
 
-**requestOptions:** `V2V3ProblemClient.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2038,7 +2483,7 @@ await client.v2V3Problem.v2V3ProblemGetProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2V3Problem.<a href="/src/api/resources/v2V3Problem/client/Client.ts">v2V3ProblemGetLatestProblem</a>({ ...params }) -> SeedApi.V2V3ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getLatestProblem</a>(problemId) -> SeedTrace.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2065,9 +2510,7 @@ Returns latest version of a problem
 <dd>
 
 ```typescript
-await client.v2V3Problem.v2V3ProblemGetLatestProblem({
-    problemId: "problemId"
-});
+await client.v2.v3.problem.getLatestProblem("problemId");
 
 ```
 </dd>
@@ -2083,7 +2526,7 @@ await client.v2V3Problem.v2V3ProblemGetLatestProblem({
 <dl>
 <dd>
 
-**request:** `SeedApi.V2V3ProblemGetLatestProblemRequest` 
+**problemId:** `SeedTrace.ProblemId` 
     
 </dd>
 </dl>
@@ -2091,7 +2534,7 @@ await client.v2V3Problem.v2V3ProblemGetLatestProblem({
 <dl>
 <dd>
 
-**requestOptions:** `V2V3ProblemClient.RequestOptions` 
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2103,7 +2546,7 @@ await client.v2V3Problem.v2V3ProblemGetLatestProblem({
 </dl>
 </details>
 
-<details><summary><code>client.v2V3Problem.<a href="/src/api/resources/v2V3Problem/client/Client.ts">v2V3ProblemGetProblemVersion</a>({ ...params }) -> SeedApi.V2V3ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getProblemVersion</a>(problemId, problemVersion) -> SeedTrace.ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2130,10 +2573,7 @@ Returns requested version of a problem
 <dd>
 
 ```typescript
-await client.v2V3Problem.v2V3ProblemGetProblemVersion({
-    problemId: "problemId",
-    problemVersion: 1
-});
+await client.v2.v3.problem.getProblemVersion("problemId", 1);
 
 ```
 </dd>
@@ -2149,7 +2589,7 @@ await client.v2V3Problem.v2V3ProblemGetProblemVersion({
 <dl>
 <dd>
 
-**request:** `SeedApi.V2V3ProblemGetProblemVersionRequest` 
+**problemId:** `SeedTrace.ProblemId` 
     
 </dd>
 </dl>
@@ -2157,7 +2597,15 @@ await client.v2V3Problem.v2V3ProblemGetProblemVersion({
 <dl>
 <dd>
 
-**requestOptions:** `V2V3ProblemClient.RequestOptions` 
+**problemVersion:** `number` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ProblemClient.RequestOptions` 
     
 </dd>
 </dl>

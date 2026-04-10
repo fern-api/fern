@@ -1,17 +1,17 @@
 import Foundation
 
 public enum UnionWithPrimitive: Codable, Hashable, Sendable {
-    case integer(UnionWithPrimitiveInteger)
-    case string(UnionWithPrimitiveString)
+    case integer(Int)
+    case string(String)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "integer":
-            self = .integer(try UnionWithPrimitiveInteger(from: decoder))
+            self = .integer(try container.decode(Int.self, forKey: .value))
         case "string":
-            self = .string(try UnionWithPrimitiveString(from: decoder))
+            self = .string(try container.decode(String.self, forKey: .value))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -27,14 +27,15 @@ public enum UnionWithPrimitive: Codable, Hashable, Sendable {
         switch self {
         case .integer(let data):
             try container.encode("integer", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         case .string(let data):
             try container.encode("string", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
+        case value
     }
 }

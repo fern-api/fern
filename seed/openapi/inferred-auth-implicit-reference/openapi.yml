@@ -1,11 +1,11 @@
 openapi: 3.0.1
 info:
-  title: inferred-auth-implicit-reference
+  title: inferred-auth-implicit
   version: ''
 paths:
   /token:
     post:
-      operationId: auth_gettokenwithclientcredentials
+      operationId: auth_getTokenWithClientCredentials
       tags:
         - Auth
       parameters: []
@@ -16,47 +16,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenResponse'
-              examples:
-                Example1:
-                  value:
-                    access_token: access_token
-                    expires_in: 1
-                    refresh_token: refresh_token
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                client_id:
-                  type: string
-                  example: client_id
-                client_secret:
-                  type: string
-                  example: client_secret
-                audience:
-                  $ref: '#/components/schemas/GetTokenRequestAudience'
-                grant_type:
-                  $ref: '#/components/schemas/GetTokenRequestGrantType'
-                scope:
-                  type: string
-                  nullable: true
-              required:
-                - client_id
-                - client_secret
-                - audience
-                - grant_type
-            examples:
-              Example1:
-                value:
-                  client_id: client_id
-                  client_secret: client_secret
-                  audience: https://api.example.com
-                  grant_type: client_credentials
+              $ref: '#/components/schemas/GetTokenRequest'
   /token/refresh:
     post:
-      operationId: auth_refreshtoken
+      operationId: auth_refreshToken
       tags:
         - Auth
       parameters: []
@@ -67,52 +35,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenResponse'
-              examples:
-                Example1:
-                  value:
-                    access_token: access_token
-                    expires_in: 1
-                    refresh_token: refresh_token
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                client_id:
-                  type: string
-                  example: client_id
-                client_secret:
-                  type: string
-                  example: client_secret
-                refresh_token:
-                  type: string
-                  example: refresh_token
-                audience:
-                  $ref: '#/components/schemas/RefreshTokenRequestAudience'
-                grant_type:
-                  $ref: '#/components/schemas/RefreshTokenRequestGrantType'
-                scope:
-                  type: string
-                  nullable: true
-              required:
-                - client_id
-                - client_secret
-                - refresh_token
-                - audience
-                - grant_type
-            examples:
-              Example1:
-                value:
-                  client_id: client_id
-                  client_secret: client_secret
-                  refresh_token: refresh_token
-                  audience: https://api.example.com
-                  grant_type: refresh_token
+              $ref: '#/components/schemas/RefreshTokenRequest'
   /nested-no-auth/get-something:
     get:
-      operationId: nestedNoAuthAPI_nestedNoAuth_api_getSomething
+      operationId: nestedNoAuth_api_getSomething
       tags:
         - NestedNoAuthAPI
       parameters: []
@@ -121,7 +52,7 @@ paths:
           description: ''
   /nested/get-something:
     get:
-      operationId: nestedAPI_nested_api_getSomething
+      operationId: nested_api_getSomething
       tags:
         - NestedAPI
       parameters: []
@@ -129,10 +60,10 @@ paths:
         '204':
           description: ''
       security:
-        - {}
+        - InferredAuthScheme: []
   /get-something:
     get:
-      operationId: simple_getsomething
+      operationId: simple_getSomething
       tags:
         - Simple
       parameters: []
@@ -140,29 +71,58 @@ paths:
         '204':
           description: ''
       security:
-        - {}
+        - InferredAuthScheme: []
 components:
   schemas:
-    GetTokenRequestAudience:
-      title: GetTokenRequestAudience
-      type: string
-      enum:
-        - https://api.example.com
-    GetTokenRequestGrantType:
-      title: GetTokenRequestGrantType
-      type: string
-      enum:
-        - client_credentials
-    RefreshTokenRequestAudience:
-      title: RefreshTokenRequestAudience
-      type: string
-      enum:
-        - https://api.example.com
-    RefreshTokenRequestGrantType:
-      title: RefreshTokenRequestGrantType
-      type: string
-      enum:
+    GetTokenRequest:
+      title: GetTokenRequest
+      type: object
+      description: A request to obtain an OAuth token.
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        audience:
+          type: string
+          const: https://api.example.com
+        grant_type:
+          type: string
+          const: client_credentials
+        scope:
+          type: string
+          nullable: true
+      required:
+        - client_id
+        - client_secret
+        - audience
+        - grant_type
+    RefreshTokenRequest:
+      title: RefreshTokenRequest
+      type: object
+      description: A request to refresh an OAuth token.
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        refresh_token:
+          type: string
+        audience:
+          type: string
+          const: https://api.example.com
+        grant_type:
+          type: string
+          const: refresh_token
+        scope:
+          type: string
+          nullable: true
+      required:
+        - client_id
+        - client_secret
         - refresh_token
+        - audience
+        - grant_type
     TokenResponse:
       title: TokenResponse
       type: object
@@ -170,14 +130,15 @@ components:
       properties:
         access_token:
           type: string
-          example: access_token
         expires_in:
           type: integer
-          example: 1
         refresh_token:
           type: string
           nullable: true
       required:
         - access_token
         - expires_in
-  securitySchemes: {}
+  securitySchemes:
+    InferredAuthScheme:
+      type: http
+      scheme: bearer

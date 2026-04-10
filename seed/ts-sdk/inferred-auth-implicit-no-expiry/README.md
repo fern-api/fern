@@ -40,15 +40,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/inferred-auth-implicit-no-expiry";
+import { SeedInferredAuthImplicitNoExpiryClient } from "@fern/inferred-auth-implicit-no-expiry";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
-await client.auth.gettokenwithclientcredentials({
+const client = new SeedInferredAuthImplicitNoExpiryClient({ environment: "YOUR_BASE_URL" });
+await client.auth.getTokenWithClientCredentials({
     "X-Api-Key": "X-Api-Key",
     client_id: "client_id",
     client_secret: "client_secret",
-    audience: "https://api.example.com",
-    grant_type: "client_credentials"
+    scope: "scope"
 });
 ```
 
@@ -58,9 +57,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedApi } from "@fern/inferred-auth-implicit-no-expiry";
+import { SeedInferredAuthImplicitNoExpiry } from "@fern/inferred-auth-implicit-no-expiry";
 
-const request: SeedApi.AuthGetTokenWithClientCredentialsRequest = {
+const request: SeedInferredAuthImplicitNoExpiry.GetTokenRequest = {
     ...
 };
 ```
@@ -71,12 +70,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/inferred-auth-implicit-no-expiry";
+import { SeedInferredAuthImplicitNoExpiryError } from "@fern/inferred-auth-implicit-no-expiry";
 
 try {
-    await client.auth.gettokenwithclientcredentials(...);
+    await client.auth.getTokenWithClientCredentials(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedInferredAuthImplicitNoExpiryError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -102,16 +101,16 @@ const client = new AuthClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/inferred-auth-implicit-no-expiry";
+import { SeedInferredAuthImplicitNoExpiryClient } from "@fern/inferred-auth-implicit-no-expiry";
 
-const client = new SeedApiClient({
+const client = new SeedInferredAuthImplicitNoExpiryClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.auth.gettokenwithclientcredentials(..., {
+const response = await client.auth.getTokenWithClientCredentials(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -123,7 +122,7 @@ const response = await client.auth.gettokenwithclientcredentials(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.auth.gettokenwithclientcredentials(..., {
+const response = await client.auth.getTokenWithClientCredentials(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -145,7 +144,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.auth.gettokenwithclientcredentials(..., {
+const response = await client.auth.getTokenWithClientCredentials(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -155,7 +154,7 @@ const response = await client.auth.gettokenwithclientcredentials(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.auth.gettokenwithclientcredentials(..., {
+const response = await client.auth.getTokenWithClientCredentials(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -166,7 +165,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.auth.gettokenwithclientcredentials(..., {
+const response = await client.auth.getTokenWithClientCredentials(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -178,7 +177,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.auth.gettokenwithclientcredentials(...).withRawResponse();
+const { data, rawResponse } = await client.auth.getTokenWithClientCredentials(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -189,9 +188,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/inferred-auth-implicit-no-expiry";
+import { SeedInferredAuthImplicitNoExpiryClient, logging } from "@fern/inferred-auth-implicit-no-expiry";
 
-const client = new SeedApiClient({
+const client = new SeedInferredAuthImplicitNoExpiryClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

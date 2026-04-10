@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.gettoken(request) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.getToken(request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,11 @@
 <dd>
 
 ```java
-client.auth().gettoken(
-    AuthGetTokenRequest
+client.auth().getToken(
+    GetTokenRequest
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
-        .audience(AuthGetTokenRequestAudience.HTTPS_API_EXAMPLE_COM)
-        .grantType(AuthGetTokenRequestGrantType.CLIENT_CREDENTIALS)
         .build()
 );
 ```
@@ -52,7 +50,7 @@ client.auth().gettoken(
 <dl>
 <dd>
 
-**audience:** `AuthGetTokenRequestAudience` 
+**audience:** `String` 
     
 </dd>
 </dl>
@@ -60,7 +58,7 @@ client.auth().gettoken(
 <dl>
 <dd>
 
-**grantType:** `AuthGetTokenRequestGrantType` 
+**grantType:** `String` 
     
 </dd>
 </dl>
@@ -98,7 +96,7 @@ client.user().get();
 </dl>
 </details>
 
-<details><summary><code>client.user.getadmins() -> List&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.user.getAdmins() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -111,7 +109,7 @@ client.user().get();
 <dd>
 
 ```java
-client.user().getadmins();
+client.user().getAdmins();
 ```
 </dd>
 </dl>

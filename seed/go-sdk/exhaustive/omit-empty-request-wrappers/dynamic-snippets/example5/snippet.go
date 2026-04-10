@@ -5,6 +5,7 @@ import (
 
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -16,11 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := []string{
-        "string",
-        "string",
+    request := map[string]*types.ObjectWithRequiredField{
+        "string": &types.ObjectWithRequiredField{
+            FieldString: "string",
+        },
     }
-    client.EndpointsContainer.EndpointsContainerGetAndReturnSetOfPrimitives(
+    client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
         context.TODO(),
         request,
     )

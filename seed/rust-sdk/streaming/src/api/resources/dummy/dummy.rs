@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ByteStream, ClientConfig, HttpClient, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct DummyClient {
@@ -15,11 +15,11 @@ impl DummyClient {
 
     pub async fn generate_stream(
         &self,
-        request: &DummyGenerateStreamRequest,
+        request: &GenerateStreamRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ByteStream, ApiError> {
+    ) -> Result<StreamResponse, ApiError> {
         self.http_client
-            .execute_stream_request(
+            .execute_request::<StreamResponse>(
                 Method::POST,
                 "generate-stream",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
@@ -31,7 +31,7 @@ impl DummyClient {
 
     pub async fn generate(
         &self,
-        request: &DummyGenerateRequest,
+        request: &Generateequest,
         options: Option<RequestOptions>,
     ) -> Result<StreamResponse, ApiError> {
         self.http_client

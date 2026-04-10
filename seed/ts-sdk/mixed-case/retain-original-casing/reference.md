@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getresource</a>({ ...params }) -> SeedApi.Resource</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getResource</a>(ResourceID) -> SeedMixedCase.Resource</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,7 @@
 <dd>
 
 ```typescript
-await client.service.getresource({
-    ResourceID: "ResourceID"
-});
+await client.service.getResource("rsc-xyz");
 
 ```
 </dd>
@@ -31,7 +29,7 @@ await client.service.getresource({
 <dl>
 <dd>
 
-**request:** `SeedApi.ServiceGetResourceRequest` 
+**ResourceID:** `string` 
     
 </dd>
 </dl>
@@ -51,7 +49,7 @@ await client.service.getresource({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listresources</a>({ ...params }) -> SeedApi.Resource[]</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listResources</a>({ ...params }) -> SeedMixedCase.Resource[]</code></summary>
 <dl>
 <dd>
 
@@ -64,9 +62,9 @@ await client.service.getresource({
 <dd>
 
 ```typescript
-await client.service.listresources({
-    page_limit: 1,
-    beforeDate: "2023-01-15"
+await client.service.listResources({
+    page_limit: 10,
+    beforeDate: "2023-01-01"
 });
 
 ```
@@ -83,7 +81,7 @@ await client.service.listresources({
 <dl>
 <dd>
 
-**request:** `SeedApi.ServiceListResourcesRequest` 
+**request:** `SeedMixedCase.ListResourcesRequest` 
     
 </dd>
 </dl>

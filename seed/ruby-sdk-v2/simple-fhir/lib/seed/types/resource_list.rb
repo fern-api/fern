@@ -5,12 +5,10 @@ module Seed
     class ResourceList < Internal::Types::Model
       extend Seed::Internal::Types::Union
 
-      discriminant :resource_type
-
-      member -> { Seed::Types::Account }, key: "ACCOUNT"
-      member -> { Seed::Types::Patient }, key: "PATIENT"
-      member -> { Seed::Types::Practitioner }, key: "PRACTITIONER"
-      member -> { Seed::Types::Script }, key: "SCRIPT"
+      member -> { Seed::Types::Account }
+      member -> { Seed::Types::Patient }
+      member -> { Seed::Types::Practitioner }
+      member -> { Seed::Types::Script }
     end
   end
 end

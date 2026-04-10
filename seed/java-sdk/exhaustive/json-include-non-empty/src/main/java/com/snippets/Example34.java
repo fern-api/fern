@@ -1,17 +1,17 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.types.TypesObjectWithRequiredField;
+import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePath;
 
 public class Example34 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedExhaustiveClient client = SeedExhaustiveClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpointsObject()
-                .endpointsObjectGetAndReturnWithRequiredField(
-                        TypesObjectWithRequiredField.builder().string("string").build());
+        client.endpoints()
+                .params()
+                .getWithInlinePath(GetWithInlinePath.builder().param("param").build());
     }
 }

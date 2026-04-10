@@ -8,11 +8,10 @@ import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.MediaTypes;
 import com.seed.unions.core.ObjectMappers;
 import com.seed.unions.core.RequestOptions;
-import com.seed.unions.core.SeedApiApiException;
-import com.seed.unions.core.SeedApiException;
-import com.seed.unions.core.SeedApiHttpResponse;
-import com.seed.unions.resources.types.requests.TypesGetRequest;
-import com.seed.unions.types.UnionWithTime;
+import com.seed.unions.core.SeedUnionsApiException;
+import com.seed.unions.core.SeedUnionsException;
+import com.seed.unions.core.SeedUnionsHttpResponse;
+import com.seed.unions.resources.types.types.UnionWithTime;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -29,19 +28,11 @@ public class RawTypesClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedApiHttpResponse<UnionWithTime> get(String id) {
-        return get(id, TypesGetRequest.builder().build());
+    public SeedUnionsHttpResponse<UnionWithTime> get(String id) {
+        return get(id, null);
     }
 
-    public SeedApiHttpResponse<UnionWithTime> get(String id, RequestOptions requestOptions) {
-        return get(id, TypesGetRequest.builder().build(), requestOptions);
-    }
-
-    public SeedApiHttpResponse<UnionWithTime> get(String id, TypesGetRequest request) {
-        return get(id, request, null);
-    }
-
-    public SeedApiHttpResponse<UnionWithTime> get(String id, TypesGetRequest request, RequestOptions requestOptions) {
+    public SeedUnionsHttpResponse<UnionWithTime> get(String id, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("time")
@@ -51,12 +42,12 @@ public class RawTypesClient {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
+                .addHeader("Accept", "application/json")
+                .build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -65,22 +56,22 @@ public class RawTypesClient {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-                return new SeedApiHttpResponse<>(
+                return new SeedUnionsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UnionWithTime.class), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new SeedApiApiException(
+            throw new SeedUnionsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
-            throw new SeedApiException("Network error executing HTTP request", e);
+            throw new SeedUnionsException("Network error executing HTTP request", e);
         }
     }
 
-    public SeedApiHttpResponse<Boolean> update(UnionWithTime request) {
+    public SeedUnionsHttpResponse<Boolean> update(UnionWithTime request) {
         return update(request, null);
     }
 
-    public SeedApiHttpResponse<Boolean> update(UnionWithTime request, RequestOptions requestOptions) {
+    public SeedUnionsHttpResponse<Boolean> update(UnionWithTime request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("time");
@@ -94,7 +85,7 @@ public class RawTypesClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedApiException("Failed to serialize request", e);
+            throw new SeedUnionsException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
@@ -111,14 +102,14 @@ public class RawTypesClient {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             if (response.isSuccessful()) {
-                return new SeedApiHttpResponse<>(
+                return new SeedUnionsHttpResponse<>(
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-            throw new SeedApiApiException(
+            throw new SeedUnionsApiException(
                     "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
-            throw new SeedApiException("Network error executing HTTP request", e);
+            throw new SeedUnionsException("Network error executing HTTP request", e);
         }
     }
 }

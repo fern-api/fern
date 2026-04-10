@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/src/api/resources/client/Client.ts">extendedInlineRequestBody</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.<a href="/src/Client.ts">extendedInlineRequestBody</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +12,10 @@
 <dd>
 
 ```typescript
-await client..extendedInlineRequestBody({
-    docs: "docs",
+await client.extendedInlineRequestBody({
+    unique: "unique",
     name: "name",
-    unique: "unique"
+    docs: "docs"
 });
 
 ```
@@ -33,7 +32,7 @@ await client..extendedInlineRequestBody({
 <dl>
 <dd>
 
-**request:** `SeedApi.ExtendedInlineRequestBodyRequest` 
+**request:** `SeedExtends.Inlined` 
     
 </dd>
 </dl>
@@ -41,7 +40,7 @@ await client..extendedInlineRequestBody({
 <dl>
 <dd>
 
-**requestOptions:** `Client.RequestOptions` 
+**requestOptions:** `SeedExtendsClient.RequestOptions` 
     
 </dd>
 </dl>

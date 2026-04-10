@@ -40,10 +40,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedApi;
+using SeedSingleUrlEnvironmentDefault;
 
-var client = new SeedApiClient("TOKEN");
-await client.Dummy.GetdummyAsync();
+var client = new SeedSingleUrlEnvironmentDefaultClient("TOKEN");
+await client.Dummy.GetDummyAsync();
 ```
 
 ## Environments
@@ -51,11 +51,11 @@ await client.Dummy.GetdummyAsync();
 This SDK allows you to configure different environments for API requests.
 
 ```csharp
-using SeedApi;
+using SeedSingleUrlEnvironmentDefault;
 
-var client = new SeedApiClient(new ClientOptions
+var client = new SeedSingleUrlEnvironmentDefaultClient(new ClientOptions
 {
-    BaseUrl = SeedApiEnvironment.Production
+    BaseUrl = SeedSingleUrlEnvironmentDefaultEnvironment.Production
 });
 ```
 
@@ -65,11 +65,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedApi;
+using SeedSingleUrlEnvironmentDefault;
 
 try {
-    var response = await client.Dummy.GetdummyAsync(...);
-} catch (SeedApiApiException e) {
+    var response = await client.Dummy.GetDummyAsync(...);
+} catch (SeedSingleUrlEnvironmentDefaultApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -92,7 +92,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Dummy.GetdummyAsync(
+var response = await client.Dummy.GetDummyAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -105,7 +105,7 @@ var response = await client.Dummy.GetdummyAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Dummy.GetdummyAsync(
+var response = await client.Dummy.GetDummyAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -118,10 +118,10 @@ var response = await client.Dummy.GetdummyAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedApi;
+using SeedSingleUrlEnvironmentDefault;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Dummy.GetdummyAsync(...).WithRawResponse();
+var result = await client.Dummy.GetDummyAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -138,7 +138,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Dummy.GetdummyAsync(...);
+var data = await client.Dummy.GetDummyAsync(...);
 ```
 
 ### Additional Headers
@@ -146,7 +146,7 @@ var data = await client.Dummy.GetdummyAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Dummy.GetdummyAsync(
+var response = await client.Dummy.GetDummyAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -162,7 +162,7 @@ var response = await client.Dummy.GetdummyAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.Dummy.GetdummyAsync(
+var response = await client.Dummy.GetDummyAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

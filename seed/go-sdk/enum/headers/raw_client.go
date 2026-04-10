@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Send(
 	ctx context.Context,
-	request *fern.HeadersSendRequest,
+	request *fern.SendEnumAsHeaderRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)

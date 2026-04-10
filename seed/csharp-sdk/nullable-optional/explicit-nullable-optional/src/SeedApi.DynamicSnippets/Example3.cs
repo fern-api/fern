@@ -1,31 +1,22 @@
-using SeedApi;
+using SeedNullableOptional;
 
 namespace Usage;
 
 public class Example3
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedNullableOptionalClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Nullableoptional.UpdateuserAsync(
-            new UpdateUserRequest {
-                UserId = "userId",
-                Username = "username",
-                Email = "email",
-                Phone = "phone",
-                Address = new Address {
-                    Street = "street",
-                    City = "city",
-                    State = "state",
-                    ZipCode = "zipCode",
-                    Country = "country",
-                    BuildingId = "buildingId",
-                    TenantId = "tenantId"
-                }
+        await client.NullableOptional.ListUsersAsync(
+            new ListUsersRequest {
+                Limit = 1,
+                Offset = 1,
+                IncludeDeleted = true,
+                SortBy = "sortBy"
             }
         );
     }

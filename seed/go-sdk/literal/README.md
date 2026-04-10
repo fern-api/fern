@@ -38,10 +38,8 @@ import (
 
 func do() {
     client := client.NewClient()
-    request := &fern.HeadersSendRequest{
-        EndpointVersion: fern.HeadersSendRequestXEndpointVersionTwo122024,
-        Async: true,
-        Query: "query",
+    request := &fern.SendLiteralsInHeadersRequest{
+        Query: "What is the weather today",
     }
     client.Headers.Send(
         context.TODO(),

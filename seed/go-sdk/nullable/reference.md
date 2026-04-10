@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.Nullable.Getusers() -> []*fern.User</code></summary>
+<details><summary><code>client.Nullable.GetUsers() -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,30 @@
 <dd>
 
 ```go
-request := &fern.NullableGetUsersRequest{}
-client.Nullable.Getusers(
+request := &fern.GetUsersRequest{
+        Usernames: []*string{
+            fern.String(
+                "usernames",
+            ),
+        },
+        Avatar: fern.String(
+            "avatar",
+        ),
+        Activated: []*bool{
+            fern.Bool(
+                true,
+            ),
+        },
+        Tags: []*string{
+            fern.String(
+                "tags",
+            ),
+        },
+        Extra: fern.Bool(
+            true,
+        ),
+    }
+client.Nullable.GetUsers(
         context.TODO(),
         request,
     )
@@ -77,7 +99,7 @@ client.Nullable.Getusers(
 </dl>
 </details>
 
-<details><summary><code>client.Nullable.Createuser(request) -> *fern.User</code></summary>
+<details><summary><code>client.Nullable.CreateUser(request) -> *fern.User</code></summary>
 <dl>
 <dd>
 
@@ -90,10 +112,39 @@ client.Nullable.Getusers(
 <dd>
 
 ```go
-request := &fern.NullableCreateUserRequest{
+request := &fern.CreateUserRequest{
         Username: "username",
+        Tags: []string{
+            "tags",
+            "tags",
+        },
+        Metadata: &fern.Metadata{
+            CreatedAt: fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            UpdatedAt: fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            Avatar: fern.String(
+                "avatar",
+            ),
+            Activated: fern.Bool(
+                true,
+            ),
+            Status: &fern.Status{
+                Active: "active",
+            },
+            Values: map[string]*string{
+                "values": fern.String(
+                    "values",
+                ),
+            },
+        },
+        Avatar: fern.String(
+            "avatar",
+        ),
     }
-client.Nullable.Createuser(
+client.Nullable.CreateUser(
         context.TODO(),
         request,
     )
@@ -148,7 +199,7 @@ client.Nullable.Createuser(
 </dl>
 </details>
 
-<details><summary><code>client.Nullable.Deleteuser(request) -> bool</code></summary>
+<details><summary><code>client.Nullable.DeleteUser(request) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -161,8 +212,12 @@ client.Nullable.Createuser(
 <dd>
 
 ```go
-request := &fern.NullableDeleteUserRequest{}
-client.Nullable.Deleteuser(
+request := &fern.DeleteUserRequest{
+        Username: fern.String(
+            "xy",
+        ),
+    }
+client.Nullable.DeleteUser(
         context.TODO(),
         request,
     )

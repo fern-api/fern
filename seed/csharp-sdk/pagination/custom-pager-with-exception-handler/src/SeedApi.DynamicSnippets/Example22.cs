@@ -1,19 +1,23 @@
-using SeedApi;
+using SeedPagination;
 
 namespace Usage;
 
 public class Example22
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedPaginationClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.InlineUsersInlineUsers.InlineUsersInlineUsersListUsernamesAsync(
-            new InlineUsersInlineUsersListUsernamesRequest()
+        await client.Users.ListWithOffsetPaginationHasNextPageAsync(
+            new SeedPagination.ListWithOffsetPaginationHasNextPageRequest {
+                Page = 1,
+                Limit = 3,
+                Order = SeedPagination.Order.Asc
+            }
         );
     }
 

@@ -33,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Get(
 	ctx context.Context,
-	request *fern.BigunionGetRequest,
+	id string,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.BigUnion], error) {
 	options := core.NewRequestOptions(opts...)
@@ -43,8 +43,8 @@ func (r *RawClient) Get(
 		"",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/bigunion/%v",
-		request.ID,
+		baseURL+"/%v",
+		id,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -85,7 +85,7 @@ func (r *RawClient) Update(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/bigunion"
+	endpointURL := baseURL
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -126,7 +126,7 @@ func (r *RawClient) UpdateMany(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/bigunion/many"
+	endpointURL := baseURL + "/many"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

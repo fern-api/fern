@@ -6,25 +6,27 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ErrorBody, FooRequest, FooResponse
-    from .errors import BadRequestError, InternalServerError, NotFoundError, TooManyRequestsError
-    from . import simple
+    from . import commons, simple
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedErrors, SeedErrors
+    from .commons import BadRequestError, ErrorBody, InternalServerError, NotFoundError
+    from .simple import FooRequest, FooResponse, FooTooLittle, FooTooMuch
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
-    "BadRequestError": ".errors",
+    "AsyncSeedErrors": ".client",
+    "BadRequestError": ".commons",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "ErrorBody": ".types",
-    "FooRequest": ".types",
-    "FooResponse": ".types",
-    "InternalServerError": ".errors",
-    "NotFoundError": ".errors",
-    "SeedApi": ".client",
-    "TooManyRequestsError": ".errors",
+    "ErrorBody": ".commons",
+    "FooRequest": ".simple",
+    "FooResponse": ".simple",
+    "FooTooLittle": ".simple",
+    "FooTooMuch": ".simple",
+    "InternalServerError": ".commons",
+    "NotFoundError": ".commons",
+    "SeedErrors": ".client",
     "__version__": ".version",
+    "commons": ".commons",
     "simple": ".simple",
 }
 
@@ -51,17 +53,19 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedErrors",
     "BadRequestError",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "ErrorBody",
     "FooRequest",
     "FooResponse",
+    "FooTooLittle",
+    "FooTooMuch",
     "InternalServerError",
     "NotFoundError",
-    "SeedApi",
-    "TooManyRequestsError",
+    "SeedErrors",
     "__version__",
+    "commons",
     "simple",
 ]

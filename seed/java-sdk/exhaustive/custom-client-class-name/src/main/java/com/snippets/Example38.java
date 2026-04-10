@@ -1,15 +1,18 @@
 package com.snippets;
 
-import com.seed.api.Best;
-import com.seed.api.types.TypesNestedObjectWithOptionalField;
+import com.seed.exhaustive.Best;
+import com.seed.exhaustive.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
 
 public class Example38 {
     public static void main(String[] args) {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpointsObject()
-                .endpointsObjectGetAndReturnNestedWithOptionalField(
-                        TypesNestedObjectWithOptionalField.builder().build());
+        client.endpoints()
+                .params()
+                .getWithInlinePathAndQuery(GetWithInlinePathAndQuery.builder()
+                        .param("param")
+                        .query("query")
+                        .build());
     }
 }

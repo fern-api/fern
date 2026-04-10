@@ -31,10 +31,10 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) Listwithuripagination(
+func (r *RawClient) ListWithUriPagination(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*core.Response[*fern.ListUsersURIPaginationResponse], error) {
+) (*core.Response[*fern.ListUsersUriPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -46,7 +46,7 @@ func (r *RawClient) Listwithuripagination(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response *fern.ListUsersURIPaginationResponse
+	var response *fern.ListUsersUriPaginationResponse
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -63,14 +63,14 @@ func (r *RawClient) Listwithuripagination(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*fern.ListUsersURIPaginationResponse]{
+	return &core.Response[*fern.ListUsersUriPaginationResponse]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
 	}, nil
 }
 
-func (r *RawClient) Listwithpathpagination(
+func (r *RawClient) ListWithPathPagination(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.ListUsersPathPaginationResponse], error) {

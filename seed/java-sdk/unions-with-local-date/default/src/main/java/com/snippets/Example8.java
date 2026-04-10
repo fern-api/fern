@@ -1,14 +1,13 @@
 package com.snippets;
 
-import com.seed.unions.SeedApiClient;
-import com.seed.unions.types.UnionWithTime;
-import com.seed.unions.types.UnionWithTimeValue;
+import com.seed.unions.SeedUnionsClient;
+import com.seed.unions.resources.types.types.UnionWithTime;
 
 public class Example8 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedUnionsClient client =
+                SeedUnionsClient.builder().url("https://api.fern.com").build();
 
-        client.types().update(UnionWithTime.value(UnionWithTimeValue.builder().build()));
+        client.types().update(UnionWithTime.value(1));
     }
 }

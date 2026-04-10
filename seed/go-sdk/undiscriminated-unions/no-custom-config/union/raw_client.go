@@ -72,7 +72,7 @@ func (r *RawClient) Get(
 	}, nil
 }
 
-func (r *RawClient) Getmetadata(
+func (r *RawClient) GetMetadata(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[undiscriminated.Metadata], error) {
@@ -111,7 +111,7 @@ func (r *RawClient) Getmetadata(
 	}, nil
 }
 
-func (r *RawClient) Updatemetadata(
+func (r *RawClient) UpdateMetadata(
 	ctx context.Context,
 	request *undiscriminated.MetadataUnion,
 	opts ...option.RequestOption,
@@ -168,7 +168,6 @@ func (r *RawClient) Call(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,
@@ -194,7 +193,7 @@ func (r *RawClient) Call(
 	}, nil
 }
 
-func (r *RawClient) Duplicatetypesunion(
+func (r *RawClient) DuplicateTypesUnion(
 	ctx context.Context,
 	request *undiscriminated.UnionWithDuplicateTypes,
 	opts ...option.RequestOption,
@@ -235,7 +234,7 @@ func (r *RawClient) Duplicatetypesunion(
 	}, nil
 }
 
-func (r *RawClient) Nestedunions(
+func (r *RawClient) NestedUnions(
 	ctx context.Context,
 	request *undiscriminated.NestedUnionRoot,
 	opts ...option.RequestOption,
@@ -276,9 +275,9 @@ func (r *RawClient) Nestedunions(
 	}, nil
 }
 
-func (r *RawClient) Testcamelcaseproperties(
+func (r *RawClient) TestCamelCaseProperties(
 	ctx context.Context,
-	request *undiscriminated.UnionTestCamelCasePropertiesRequest,
+	request *undiscriminated.PaymentRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -292,7 +291,6 @@ func (r *RawClient) Testcamelcaseproperties(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("Content-Type", "application/json")
 	var response string
 	raw, err := r.caller.Call(
 		ctx,

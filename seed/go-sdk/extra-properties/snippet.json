@@ -4,11 +4,11 @@
             "id": {
                 "path": "/user",
                 "method": "POST",
-                "identifier_override": "endpoint_user.createuser"
+                "identifier_override": "endpoint_user.createUser"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/extra-properties/fern\"\n\tfernclient \"github.com/extra-properties/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.Createuser(\n\tcontext.TODO(),\n\t\u0026fern.UserCreateUserRequest{\n\t\tType:    fern.UserCreateUserRequestTypeCreateUserRequest,\n\t\tVersion: fern.UserCreateUserRequestVersionV1,\n\t\tName:    \"name\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/extra-properties/fern\"\n\tfernclient \"github.com/extra-properties/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.CreateUser(\n\tcontext.TODO(),\n\t\u0026fern.CreateUserRequest{\n\t\tName: \"Alice\",\n\t},\n)\n"
             }
         }
     ]

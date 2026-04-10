@@ -3,7 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\InlineUsersInlineUsers\Requests\InlineUsersInlineUsersListUsernamesRequest;
+use Seed\Users\Requests\ListWithOffsetPaginationHasNextPageRequest;
+use Seed\Users\Types\Order;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,8 +12,10 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->inlineUsersInlineUsers->inlineUsersInlineUsersListUsernames(
-    new InlineUsersInlineUsersListUsernamesRequest([
-        'startingAfter' => 'starting_after',
+$client->users->listWithOffsetPaginationHasNextPage(
+    new ListWithOffsetPaginationHasNextPageRequest([
+        'page' => 1,
+        'limit' => 10,
+        'order' => Order::Asc->value,
     ]),
 );

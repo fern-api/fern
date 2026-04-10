@@ -1,5 +1,5 @@
-export * as SeedApi from "./api/index.js";
+export * as SeedBytesDownload from "./api/index.js";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-export { SeedApiClient } from "./Client.js";
-export { SeedApiError, SeedApiTimeoutError } from "./errors/index.js";
+export { SeedBytesDownloadClient } from "./Client.js";
+export { SeedBytesDownloadError, SeedBytesDownloadTimeoutError } from "./errors/index.js";
 export * from "./exports.js";

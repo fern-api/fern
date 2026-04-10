@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient.swift">getusers</a>(usernames: Nullable&lt;String&gt;?, avatar: Nullable&lt;String&gt;?, activated: Nullable&lt;Bool&gt;?, tags: Nullable&lt;String&gt;?, extra: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient_.swift">getUsers</a>(usernames: String?, avatar: String?, activated: Bool?, tags: Nullable&lt;String&gt;?, extra: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,15 @@
 
 ```swift
 import Foundation
-import Api
+import Nullable
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableClient()
 
-    _ = try await client.nullable.getusers()
+    _ = try await client.nullable.getUsers(
+        avatar: "avatar",
+        extra: .value(true)
+    )
 }
 
 try await main()
@@ -37,7 +40,7 @@ try await main()
 <dl>
 <dd>
 
-**usernames:** `Nullable<String>?` 
+**usernames:** `String?` 
     
 </dd>
 </dl>
@@ -45,7 +48,7 @@ try await main()
 <dl>
 <dd>
 
-**avatar:** `Nullable<String>?` 
+**avatar:** `String?` 
     
 </dd>
 </dl>
@@ -53,7 +56,7 @@ try await main()
 <dl>
 <dd>
 
-**activated:** `Nullable<Bool>?` 
+**activated:** `Bool?` 
     
 </dd>
 </dl>
@@ -89,7 +92,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient.swift">createuser</a>(request: Requests.NullableCreateUserRequest, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient_.swift">createUser</a>(request: Requests.CreateUserRequest, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -103,12 +106,29 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Nullable
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableClient()
 
-    _ = try await client.nullable.createuser(request: .init(username: "username"))
+    _ = try await client.nullable.createUser(request: .init(
+        username: "username",
+        tags: [
+            "tags",
+            "tags"
+        ],
+        metadata: Metadata(
+            createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            updatedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            avatar: .value("avatar"),
+            activated: .value(true),
+            status: Status.active,
+            values: [
+                "values": .value("values")
+            ]
+        ),
+        avatar: .value("avatar")
+    ))
 }
 
 try await main()
@@ -126,7 +146,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.NullableCreateUserRequest` 
+**request:** `Requests.CreateUserRequest` 
     
 </dd>
 </dl>
@@ -146,7 +166,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient.swift">deleteuser</a>(request: Requests.NullableDeleteUserRequest, requestOptions: RequestOptions?) -> Bool</code></summary>
+<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient_.swift">deleteUser</a>(request: Requests.DeleteUserRequest, requestOptions: RequestOptions?) -> Bool</code></summary>
 <dl>
 <dd>
 
@@ -160,12 +180,12 @@ try await main()
 
 ```swift
 import Foundation
-import Api
+import Nullable
 
 private func main() async throws {
-    let client = ApiClient()
+    let client = NullableClient()
 
-    _ = try await client.nullable.deleteuser(request: .init())
+    _ = try await client.nullable.deleteUser(request: .init(username: .value("xy")))
 }
 
 try await main()
@@ -183,7 +203,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.NullableDeleteUserRequest` 
+**request:** `Requests.DeleteUserRequest` 
     
 </dd>
 </dl>

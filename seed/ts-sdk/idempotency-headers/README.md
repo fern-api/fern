@@ -40,9 +40,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient } from "@fern/idempotency-headers";
+import { SeedIdempotencyHeadersClient } from "@fern/idempotency-headers";
 
-const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const client = new SeedIdempotencyHeadersClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 await client.payment.create({
     amount: 1,
     currency: "USD"
@@ -55,9 +55,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedApi } from "@fern/idempotency-headers";
+import { SeedIdempotencyHeaders } from "@fern/idempotency-headers";
 
-const request: SeedApi.PaymentCreateRequest = {
+const request: SeedIdempotencyHeaders.CreatePaymentRequest = {
     ...
 };
 ```
@@ -68,12 +68,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedApiError } from "@fern/idempotency-headers";
+import { SeedIdempotencyHeadersError } from "@fern/idempotency-headers";
 
 try {
     await client.payment.create(...);
 } catch (err) {
-    if (err instanceof SeedApiError) {
+    if (err instanceof SeedIdempotencyHeadersError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -99,9 +99,9 @@ const client = new PaymentClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedApiClient } from "@fern/idempotency-headers";
+import { SeedIdempotencyHeadersClient } from "@fern/idempotency-headers";
 
-const client = new SeedApiClient({
+const client = new SeedIdempotencyHeadersClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -186,9 +186,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedApiClient, logging } from "@fern/idempotency-headers";
+import { SeedIdempotencyHeadersClient, logging } from "@fern/idempotency-headers";
 
-const client = new SeedApiClient({
+const client = new SeedIdempotencyHeadersClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.createsimple(request) -> String</code></summary>
+<details><summary><code>client.service.createSimple(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,12 @@
 <dd>
 
 ```java
-client.service().createsimple(
+client.service().createSimple(
     SimpleStaged
         .builder()
-        .first("first")
-        .second("second")
-        .third("third")
+        .first("a")
+        .second("b")
+        .third("c")
         .build()
 );
 ```
@@ -47,7 +47,7 @@ client.service().createsimple(
 </dl>
 </details>
 
-<details><summary><code>client.service.createmedium(request) -> String</code></summary>
+<details><summary><code>client.service.createMedium(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -60,13 +60,14 @@ client.service().createsimple(
 <dd>
 
 ```java
-client.service().createmedium(
+client.service().createMedium(
     MediumStaged
         .builder()
         .alpha("alpha")
         .beta(1)
         .gamma("gamma")
         .delta(true)
+        .optional("optional")
         .build()
 );
 ```
@@ -83,39 +84,7 @@ client.service().createmedium(
 <dl>
 <dd>
 
-**alpha:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**beta:** `Integer` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**gamma:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**delta:** `Boolean` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**optional:** `Optional<String>` 
+**request:** `MediumStaged` 
     
 </dd>
 </dl>
@@ -127,7 +96,7 @@ client.service().createmedium(
 </dl>
 </details>
 
-<details><summary><code>client.service.createcomplex(request) -> String</code></summary>
+<details><summary><code>client.service.createComplex(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -140,14 +109,17 @@ client.service().createmedium(
 <dd>
 
 ```java
-client.service().createcomplex(
+client.service().createComplex(
     ComplexStaged
         .builder()
-        .fieldA("fieldA")
+        .fieldA("a")
         .fieldB(1)
         .fieldC(true)
-        .fieldD("fieldD")
-        .fieldE(1.1)
+        .fieldD("d")
+        .fieldE(1.5)
+        .optionalX("x")
+        .optionalY(2)
+        .optionalZ(false)
         .build()
 );
 ```
@@ -164,63 +136,7 @@ client.service().createcomplex(
 <dl>
 <dd>
 
-**fieldA:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fieldB:** `Integer` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fieldC:** `Boolean` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fieldD:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**fieldE:** `Double` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**optionalX:** `Optional<String>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**optionalY:** `Optional<Integer>` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**optionalZ:** `Optional<Boolean>` 
+**request:** `ComplexStaged` 
     
 </dd>
 </dl>
@@ -232,7 +148,7 @@ client.service().createcomplex(
 </dl>
 </details>
 
-<details><summary><code>client.service.createmixed(request) -> String</code></summary>
+<details><summary><code>client.service.createMixed(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -245,21 +161,21 @@ client.service().createcomplex(
 <dd>
 
 ```java
-client.service().createmixed(
+client.service().createMixed(
     MixedStaged
         .builder()
-        .id("id")
-        .name("name")
+        .id(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+        .name("test")
         .timestamp(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .nested(
             SimpleStaged
                 .builder()
-                .first("first")
-                .second("second")
-                .third("third")
+                .first("a")
+                .second("b")
+                .third("c")
                 .build()
         )
-        .count(1)
+        .count(42)
         .build()
 );
 ```
@@ -276,39 +192,7 @@ client.service().createmixed(
 <dl>
 <dd>
 
-**id:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**timestamp:** `OffsetDateTime` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**nested:** `SimpleStaged` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**count:** `Integer` 
+**request:** `MixedStaged` 
     
 </dd>
 </dl>
@@ -320,7 +204,7 @@ client.service().createmixed(
 </dl>
 </details>
 
-<details><summary><code>client.service.createparent(request) -> String</code></summary>
+<details><summary><code>client.service.createParent(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -333,18 +217,18 @@ client.service().createmixed(
 <dd>
 
 ```java
-client.service().createparent(
+client.service().createParent(
     Parent
         .builder()
-        .parentId("parentId")
+        .parentId("parent-123")
         .child(
             Child
                 .builder()
-                .childId("childId")
-                .childValue(1)
+                .childId("child-456")
+                .childValue(789)
                 .build()
         )
-        .parentName("parentName")
+        .parentName("Parent Name")
         .build()
 );
 ```
@@ -361,23 +245,7 @@ client.service().createparent(
 <dl>
 <dd>
 
-**parentId:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**child:** `Child` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**parentName:** `String` 
+**request:** `Parent` 
     
 </dd>
 </dl>

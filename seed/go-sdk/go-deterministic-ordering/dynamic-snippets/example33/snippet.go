@@ -6,6 +6,7 @@ import (
     fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
+    types "github.com/go-deterministic-ordering/fern/types"
 )
 
 func do() {
@@ -17,15 +18,13 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.EndpointsDuplicateNamesCListRequest{
-        Offset: fern.Int(
-            1,
-        ),
-        Count: fern.Int(
-            1,
+    request := &types.ObjectWithDatetimeLikeString{
+        DatetimeLikeString: "2023-08-31T14:15:22Z",
+        ActualDatetime: fern.MustParseDateTime(
+            "2023-08-31T14:15:22Z",
         ),
     }
-    client.EndpointsDuplicateNamesC.EndpointsDuplicateNamesCList(
+    client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
         context.TODO(),
         request,
     )

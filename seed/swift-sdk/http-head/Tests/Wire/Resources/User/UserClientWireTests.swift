@@ -1,44 +1,9 @@
 import Foundation
 import Testing
-import Api
+import HttpHead
 
 @Suite("UserClient Wire Tests") struct UserClientWireTests {
     @Test func list1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                [
-                  {
-                    "name": "name",
-                    "tags": [
-                      "tags"
-                    ]
-                  }
-                ]
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = [
-            User(
-                name: "name",
-                tags: [
-                    "tags"
-                ]
-            )
-        ]
-        let response = try await client.user.list(
-            limit: 1,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func list2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -62,7 +27,7 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = HttpHeadClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )

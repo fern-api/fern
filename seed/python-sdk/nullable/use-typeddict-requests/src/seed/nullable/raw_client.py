@@ -10,8 +10,8 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..requests.metadata import MetadataParams
-from ..types.user import User
+from .requests.metadata import MetadataParams
+from .types.user import User
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -22,7 +22,7 @@ class RawNullableClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def getusers(
+    def get_users(
         self,
         *,
         usernames: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -51,7 +51,6 @@ class RawNullableClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -84,7 +83,7 @@ class RawNullableClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def createuser(
+    def create_user(
         self,
         *,
         username: str,
@@ -110,7 +109,6 @@ class RawNullableClient:
         Returns
         -------
         HttpResponse[User]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
@@ -122,9 +120,6 @@ class RawNullableClient:
                     object_=metadata, annotation=MetadataParams, direction="write"
                 ),
                 "avatar": avatar,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -148,7 +143,7 @@ class RawNullableClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def deleteuser(
+    def delete_user(
         self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[bool]:
         """
@@ -163,16 +158,12 @@ class RawNullableClient:
         Returns
         -------
         HttpResponse[bool]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="DELETE",
             json={
                 "username": username,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -201,7 +192,7 @@ class AsyncRawNullableClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def getusers(
+    async def get_users(
         self,
         *,
         usernames: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -230,7 +221,6 @@ class AsyncRawNullableClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -263,7 +253,7 @@ class AsyncRawNullableClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def createuser(
+    async def create_user(
         self,
         *,
         username: str,
@@ -289,7 +279,6 @@ class AsyncRawNullableClient:
         Returns
         -------
         AsyncHttpResponse[User]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
@@ -301,9 +290,6 @@ class AsyncRawNullableClient:
                     object_=metadata, annotation=MetadataParams, direction="write"
                 ),
                 "avatar": avatar,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -327,7 +313,7 @@ class AsyncRawNullableClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def deleteuser(
+    async def delete_user(
         self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[bool]:
         """
@@ -342,16 +328,12 @@ class AsyncRawNullableClient:
         Returns
         -------
         AsyncHttpResponse[bool]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="DELETE",
             json={
                 "username": username,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

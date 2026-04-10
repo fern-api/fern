@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.gettoken(request) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.getToken(request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,11 @@
 <dd>
 
 ```java
-client.auth().gettoken(
-    AuthGetTokenRequest
+client.auth().getToken(
+    GetTokenRequest
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
-        .grantType(AuthGetTokenRequestGrantType.CLIENT_CREDENTIALS)
         .build()
 );
 ```
@@ -51,7 +50,7 @@ client.auth().gettoken(
 <dl>
 <dd>
 
-**grantType:** `AuthGetTokenRequestGrantType` 
+**grantType:** `String` 
     
 </dd>
 </dl>
@@ -63,8 +62,8 @@ client.auth().gettoken(
 </dl>
 </details>
 
-## NestedNoAuthApi
-<details><summary><code>client.nestedNoAuthApi.nestedNoAuthApiGetSomething()</code></summary>
+## NestedNoAuth Api
+<details><summary><code>client.nestedNoAuth.api.getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -77,7 +76,7 @@ client.auth().gettoken(
 <dd>
 
 ```java
-client.nestedNoAuthApi().nestedNoAuthApiGetSomething();
+client.nestedNoAuth().api().getSomething();
 ```
 </dd>
 </dl>
@@ -89,8 +88,8 @@ client.nestedNoAuthApi().nestedNoAuthApiGetSomething();
 </dl>
 </details>
 
-## NestedApi
-<details><summary><code>client.nestedApi.nestedApiGetSomething()</code></summary>
+## Nested Api
+<details><summary><code>client.nested.api.getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -103,7 +102,7 @@ client.nestedNoAuthApi().nestedNoAuthApiGetSomething();
 <dd>
 
 ```java
-client.nestedApi().nestedApiGetSomething();
+client.nested().api().getSomething();
 ```
 </dd>
 </dl>
@@ -116,7 +115,7 @@ client.nestedApi().nestedApiGetSomething();
 </details>
 
 ## Simple
-<details><summary><code>client.simple.getsomething()</code></summary>
+<details><summary><code>client.simple.getSomething()</code></summary>
 <dl>
 <dd>
 
@@ -129,7 +128,7 @@ client.nestedApi().nestedApiGetSomething();
 <dd>
 
 ```java
-client.simple().getsomething();
+client.simple().getSomething();
 ```
 </dd>
 </dl>

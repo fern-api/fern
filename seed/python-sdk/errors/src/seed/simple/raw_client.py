@@ -3,18 +3,19 @@
 import typing
 from json.decoder import JSONDecodeError
 
+from ..commons.errors.bad_request_error import BadRequestError
+from ..commons.errors.internal_server_error import InternalServerError
+from ..commons.errors.not_found_error import NotFoundError
+from ..commons.types.error_body import ErrorBody
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from ..errors.bad_request_error import BadRequestError
-from ..errors.internal_server_error import InternalServerError
-from ..errors.not_found_error import NotFoundError
-from ..errors.too_many_requests_error import TooManyRequestsError
-from ..types.error_body import ErrorBody
-from ..types.foo_response import FooResponse
+from .errors.foo_too_little import FooTooLittle
+from .errors.foo_too_much import FooTooMuch
+from .types.foo_response import FooResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -25,7 +26,7 @@ class RawSimpleClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def foowithoutendpointerror(
+    def foo_without_endpoint_error(
         self, *, bar: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[FooResponse]:
         """
@@ -39,16 +40,12 @@ class RawSimpleClient:
         Returns
         -------
         HttpResponse[FooResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "foo1",
             method="POST",
             json={
                 "bar": bar,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -63,8 +60,8 @@ class RawSimpleClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -74,8 +71,8 @@ class RawSimpleClient:
                         ),
                     ),
                 )
-            if _response.status_code == 404:
-                raise NotFoundError(
+            if _response.status_code == 400:
+                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -117,16 +114,12 @@ class RawSimpleClient:
         Returns
         -------
         HttpResponse[FooResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "foo2",
             method="POST",
             json={
                 "bar": bar,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -141,8 +134,19 @@ class RawSimpleClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
+            if _response.status_code == 429:
+                raise FooTooMuch(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorBody,
+                        parse_obj_as(
+                            type_=ErrorBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise FooTooLittle(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -163,8 +167,8 @@ class RawSimpleClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 400:
+                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -194,7 +198,7 @@ class RawSimpleClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def foowithexamples(
+    def foo_with_examples(
         self, *, bar: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[FooResponse]:
         """
@@ -208,16 +212,12 @@ class RawSimpleClient:
         Returns
         -------
         HttpResponse[FooResponse]
-
         """
         _response = self._client_wrapper.httpx_client.request(
             "foo3",
             method="POST",
             json={
                 "bar": bar,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -232,8 +232,19 @@ class RawSimpleClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
+            if _response.status_code == 429:
+                raise FooTooMuch(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorBody,
+                        parse_obj_as(
+                            type_=ErrorBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise FooTooLittle(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -254,8 +265,8 @@ class RawSimpleClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 400:
+                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -290,7 +301,7 @@ class AsyncRawSimpleClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def foowithoutendpointerror(
+    async def foo_without_endpoint_error(
         self, *, bar: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[FooResponse]:
         """
@@ -304,16 +315,12 @@ class AsyncRawSimpleClient:
         Returns
         -------
         AsyncHttpResponse[FooResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "foo1",
             method="POST",
             json={
                 "bar": bar,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -328,8 +335,8 @@ class AsyncRawSimpleClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -339,8 +346,8 @@ class AsyncRawSimpleClient:
                         ),
                     ),
                 )
-            if _response.status_code == 404:
-                raise NotFoundError(
+            if _response.status_code == 400:
+                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -384,16 +391,12 @@ class AsyncRawSimpleClient:
         Returns
         -------
         AsyncHttpResponse[FooResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "foo2",
             method="POST",
             json={
                 "bar": bar,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -408,8 +411,19 @@ class AsyncRawSimpleClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
+            if _response.status_code == 429:
+                raise FooTooMuch(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorBody,
+                        parse_obj_as(
+                            type_=ErrorBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise FooTooLittle(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -430,8 +444,8 @@ class AsyncRawSimpleClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 400:
+                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -461,7 +475,7 @@ class AsyncRawSimpleClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def foowithexamples(
+    async def foo_with_examples(
         self, *, bar: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[FooResponse]:
         """
@@ -475,16 +489,12 @@ class AsyncRawSimpleClient:
         Returns
         -------
         AsyncHttpResponse[FooResponse]
-
         """
         _response = await self._client_wrapper.httpx_client.request(
             "foo3",
             method="POST",
             json={
                 "bar": bar,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -499,8 +509,19 @@ class AsyncRawSimpleClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise BadRequestError(
+            if _response.status_code == 429:
+                raise FooTooMuch(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorBody,
+                        parse_obj_as(
+                            type_=ErrorBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise FooTooLittle(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,
@@ -521,8 +542,8 @@ class AsyncRawSimpleClient:
                         ),
                     ),
                 )
-            if _response.status_code == 429:
-                raise TooManyRequestsError(
+            if _response.status_code == 400:
+                raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorBody,

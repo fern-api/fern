@@ -6,8 +6,28 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import InlinedSendRequestContext, InlinedSendRequestPrompt
-_dynamic_imports: typing.Dict[str, str] = {"InlinedSendRequestContext": ".types", "InlinedSendRequestPrompt": ".types"}
+    from .types import (
+        ANestedLiteral,
+        ATopLevelLiteral,
+        DiscriminatedLiteral,
+        DiscriminatedLiteral_CustomName,
+        DiscriminatedLiteral_DefaultName,
+        DiscriminatedLiteral_George,
+        DiscriminatedLiteral_LiteralGeorge,
+        SomeAliasedLiteral,
+        UndiscriminatedLiteral,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "ANestedLiteral": ".types",
+    "ATopLevelLiteral": ".types",
+    "DiscriminatedLiteral": ".types",
+    "DiscriminatedLiteral_CustomName": ".types",
+    "DiscriminatedLiteral_DefaultName": ".types",
+    "DiscriminatedLiteral_George": ".types",
+    "DiscriminatedLiteral_LiteralGeorge": ".types",
+    "SomeAliasedLiteral": ".types",
+    "UndiscriminatedLiteral": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +51,14 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["InlinedSendRequestContext", "InlinedSendRequestPrompt"]
+__all__ = [
+    "ANestedLiteral",
+    "ATopLevelLiteral",
+    "DiscriminatedLiteral",
+    "DiscriminatedLiteral_CustomName",
+    "DiscriminatedLiteral_DefaultName",
+    "DiscriminatedLiteral_George",
+    "DiscriminatedLiteral_LiteralGeorge",
+    "SomeAliasedLiteral",
+    "UndiscriminatedLiteral",
+]

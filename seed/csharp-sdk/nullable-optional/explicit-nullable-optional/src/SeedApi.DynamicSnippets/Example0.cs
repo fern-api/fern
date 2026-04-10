@@ -1,20 +1,18 @@
-using SeedApi;
+using SeedNullableOptional;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedNullableOptionalClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Nullableoptional.GetuserAsync(
-            new NullableOptionalGetUserRequest {
-                UserId = "userId"
-            }
+        await client.NullableOptional.GetUserAsync(
+            "userId"
         );
     }
 

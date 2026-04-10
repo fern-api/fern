@@ -1,8 +1,8 @@
 import Foundation
-import Api
+import FileDownload
 
 private func main() async throws {
-    let client = ApiClient(baseURL: "https://api.fern.com")
+    let client = FileDownloadClient(baseURL: "https://api.fern.com")
 
     _ = try await client.service.simple()
 }

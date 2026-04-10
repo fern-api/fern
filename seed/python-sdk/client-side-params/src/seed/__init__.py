@@ -9,21 +9,24 @@ if typing.TYPE_CHECKING:
     from .types import (
         Client,
         Connection,
+        CreateUserRequest,
         Identity,
         PaginatedClientResponse,
         PaginatedUserResponse,
         Resource,
         SearchResponse,
+        UpdateUserRequest,
         User,
     )
-    from . import service
+    from . import service, types
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedClientSideParams, SeedClientSideParams
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedClientSideParams": ".client",
     "Client": ".types",
     "Connection": ".types",
+    "CreateUserRequest": ".types",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "Identity": ".types",
@@ -31,10 +34,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PaginatedUserResponse": ".types",
     "Resource": ".types",
     "SearchResponse": ".types",
-    "SeedApi": ".client",
+    "SeedClientSideParams": ".client",
+    "UpdateUserRequest": ".types",
     "User": ".types",
     "__version__": ".version",
     "service": ".service",
+    "types": ".types",
 }
 
 
@@ -60,9 +65,10 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedClientSideParams",
     "Client",
     "Connection",
+    "CreateUserRequest",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Identity",
@@ -70,8 +76,10 @@ __all__ = [
     "PaginatedUserResponse",
     "Resource",
     "SearchResponse",
-    "SeedApi",
+    "SeedClientSideParams",
+    "UpdateUserRequest",
     "User",
     "__version__",
     "service",
+    "types",
 ]

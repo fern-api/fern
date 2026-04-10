@@ -19,7 +19,7 @@ impl TypesClient {
         options: Option<RequestOptions>,
     ) -> Result<UnionWithTime, ApiError> {
         self.http_client
-            .execute_request(Method::GET, &format!("time/{}", id), None, None, options)
+            .execute_request(Method::GET, &format!("/time/{}", id), None, None, options)
             .await
     }
 
@@ -31,7 +31,7 @@ impl TypesClient {
         self.http_client
             .execute_request(
                 Method::PATCH,
-                "time",
+                "/time",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

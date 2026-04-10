@@ -6,23 +6,23 @@
             "id": {
                 "path": "/resource/{ResourceID}",
                 "method": "GET",
-                "identifier_override": "endpoint_service.getresource"
+                "identifier_override": "endpoint_service.getResource"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.GetresourceAsync(new ServiceGetResourceRequest { ResourceId = \"ResourceID\" });\n"
+                "client": "using SeedMixedCase;\n\nvar client = new SeedMixedCaseClient();\nawait client.Service.GetResourceAsync(\"rsc-xyz\");\n"
             }
         },
         {
-            "example_identifier": null,
+            "example_identifier": "One",
             "id": {
                 "path": "/resource",
                 "method": "GET",
-                "identifier_override": "endpoint_service.listresources"
+                "identifier_override": "endpoint_service.listResources"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.ListresourcesAsync(\n    new ServiceListResourcesRequest { PageLimit = 1, BeforeDate = new DateOnly(2023, 1, 15) }\n);\n"
+                "client": "using SeedMixedCase;\n\nvar client = new SeedMixedCaseClient();\nawait client.Service.ListResourcesAsync(\n    new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }\n);\n"
             }
         }
     ]

@@ -1,4 +1,4 @@
-use seed_api::prelude::*;
+use seed_content_types::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,29 +6,16 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ApiClient::new(config).expect("Failed to build client");
+    let client = ContentTypesClient::new(config).expect("Failed to build client");
     client
         .service
-        .patchcomplex(
-            &"id".to_string(),
-            &ServicePatchComplexRequest {
-                name: Some("name".to_string()),
-                age: Some(1),
-                active: Some(true),
-                metadata: Some(HashMap::from([(
-                    "metadata".to_string(),
-                    serde_json::json!({"key":"value"}),
-                )])),
-                tags: Some(vec!["tags".to_string(), "tags".to_string()]),
-                email: Some("email".to_string()),
-                nickname: Some("nickname".to_string()),
-                bio: Some("bio".to_string()),
-                profile_image_url: Some("profileImageUrl".to_string()),
-                settings: Some(HashMap::from([(
-                    "settings".to_string(),
-                    serde_json::json!({"key":"value"}),
-                )])),
-                ..Default::default()
+        .optional_merge_patch_test(
+            &OptionalMergePatchRequest {
+                required_field: "requiredField".to_string(),
+                optional_string: Some("optionalString".to_string()),
+                optional_integer: Some(1),
+                optional_boolean: Some(true),
+                nullable_string: Some("nullableString".to_string()),
             },
             None,
         )

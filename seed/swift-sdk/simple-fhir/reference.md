@@ -1,6 +1,5 @@
 # Reference
-## 
-<details><summary><code>client..<a href="/Sources/Resources//Client.swift">getAccount</a>(accountId: String, requestOptions: RequestOptions?) -> Account</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">getAccount</a>(accountId: String, requestOptions: RequestOptions?) -> Account</code></summary>
 <dl>
 <dd>
 
@@ -19,7 +18,7 @@ import Api
 private func main() async throws {
     let client = ApiClient()
 
-    _ = try await client..getAccount(accountId: "account_id")
+    _ = try await client.getAccount(accountId: "account_id")
 }
 
 try await main()

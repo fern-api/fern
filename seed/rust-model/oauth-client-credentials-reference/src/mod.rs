@@ -1,4 +1,4 @@
-//! Request and response types for the oauth-client-credentials-reference
+//! Request and response types for the OauthClientCredentialsReference
 //!
 //! This module contains all data structures used for API communication,
 //! including request bodies, response types, and shared models.
@@ -7,9 +7,9 @@
 //!
 //! - **Request/Response Types**: 2 types for API operations
 
-pub mod token_response;
-pub mod get_token_request;
+pub mod auth_token_response;
+pub mod auth_get_token_request;
 
-pub use token_response::TokenResponse;
-pub use get_token_request::GetTokenRequest;
+pub use auth_token_response::TokenResponse;
+pub use auth_get_token_request::GetTokenRequest;
 

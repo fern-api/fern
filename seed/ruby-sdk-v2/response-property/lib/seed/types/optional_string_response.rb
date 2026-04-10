@@ -3,7 +3,7 @@
 module Seed
   module Types
     module OptionalStringResponse
-      # OptionalStringResponse is an alias for StringResponse
+      # OptionalStringResponse is an alias for Object
 
       # @option str [String]
       #

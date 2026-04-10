@@ -6,10 +6,12 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
+    from . import realtime
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
+    from .client import AsyncSeedWebsocket, SeedWebsocket
+    from .realtime import (
         ErrorEvent,
         FlushedEvent,
-        FlushedEventType,
         ReceiveEvent,
         ReceiveEvent2,
         ReceiveEvent3,
@@ -18,29 +20,25 @@ if typing.TYPE_CHECKING:
         SendEvent2,
         SendSnakeCase,
         TranscriptEvent,
-        TranscriptEventType,
     )
-    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedWebsocket": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "ErrorEvent": ".types",
-    "FlushedEvent": ".types",
-    "FlushedEventType": ".types",
-    "ReceiveEvent": ".types",
-    "ReceiveEvent2": ".types",
-    "ReceiveEvent3": ".types",
-    "ReceiveSnakeCase": ".types",
-    "SeedApi": ".client",
-    "SendEvent": ".types",
-    "SendEvent2": ".types",
-    "SendSnakeCase": ".types",
-    "TranscriptEvent": ".types",
-    "TranscriptEventType": ".types",
+    "ErrorEvent": ".realtime",
+    "FlushedEvent": ".realtime",
+    "ReceiveEvent": ".realtime",
+    "ReceiveEvent2": ".realtime",
+    "ReceiveEvent3": ".realtime",
+    "ReceiveSnakeCase": ".realtime",
+    "SeedWebsocket": ".client",
+    "SendEvent": ".realtime",
+    "SendEvent2": ".realtime",
+    "SendSnakeCase": ".realtime",
+    "TranscriptEvent": ".realtime",
     "__version__": ".version",
+    "realtime": ".realtime",
 }
 
 
@@ -66,21 +64,20 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
+    "AsyncSeedWebsocket",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "ErrorEvent",
     "FlushedEvent",
-    "FlushedEventType",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
     "ReceiveSnakeCase",
-    "SeedApi",
+    "SeedWebsocket",
     "SendEvent",
     "SendEvent2",
     "SendSnakeCase",
     "TranscriptEvent",
-    "TranscriptEventType",
     "__version__",
+    "realtime",
 ]

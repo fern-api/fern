@@ -8,6 +8,17 @@ from .docs import Docs
 
 
 class ExampleType(Docs):
+    """
+    Examples
+    --------
+    from seed import ExampleType
+
+    ExampleType(
+        docs="This is an example type.",
+        name="Example",
+    )
+    """
+
     name: str
 
     if IS_PYDANTIC_V2:

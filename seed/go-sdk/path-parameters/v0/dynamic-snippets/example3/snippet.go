@@ -13,10 +13,9 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Organizations.Getorganizationuser(
+    client.User.GetUser(
         context.TODO(),
         "tenant_id",
-        "organization_id",
         "user_id",
     )
 }

@@ -1,20 +1,20 @@
 import Foundation
 
 public enum Status: Codable, Hashable, Sendable {
-    case active(StatusActive)
-    case archived(StatusArchived)
-    case softDeleted(StatusSoftDeleted)
+    case active
+    case archived(Nullable<Date>)
+    case softDeleted(Date?)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "active":
-            self = .active(try StatusActive(from: decoder))
+            self = .active
         case "archived":
-            self = .archived(try StatusArchived(from: decoder))
+            self = .archived(try container.decode(Nullable<Date>.self, forKey: .value))
         case "soft-deleted":
-            self = .softDeleted(try StatusSoftDeleted(from: decoder))
+            self = .softDeleted(try container.decode(Date?.self, forKey: .value))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -28,19 +28,19 @@ public enum Status: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .active(let data):
+        case .active:
             try container.encode("active", forKey: .type)
-            try data.encode(to: encoder)
         case .archived(let data):
             try container.encode("archived", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         case .softDeleted(let data):
             try container.encode("soft-deleted", forKey: .type)
-            try data.encode(to: encoder)
+            try container.encode(data, forKey: .value)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
+        case value
     }
 }

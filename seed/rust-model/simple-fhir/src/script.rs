@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 pub struct Script {
     #[serde(flatten)]
     pub base_resource_fields: BaseResource,
-    pub resource_type: ScriptResourceType,
+    pub resource_type: String,
     #[serde(default)]
     pub name: String,
 }
@@ -19,7 +19,7 @@ impl Script {
 #[non_exhaustive]
 pub struct ScriptBuilder {
     base_resource_fields: Option<BaseResource>,
-    resource_type: Option<ScriptResourceType>,
+    resource_type: Option<String>,
     name: Option<String>,
 }
 
@@ -29,8 +29,8 @@ impl ScriptBuilder {
         self
     }
 
-    pub fn resource_type(mut self, value: ScriptResourceType) -> Self {
-        self.resource_type = Some(value);
+    pub fn resource_type(mut self, value: impl Into<String>) -> Self {
+        self.resource_type = Some(value.into());
         self
     }
 

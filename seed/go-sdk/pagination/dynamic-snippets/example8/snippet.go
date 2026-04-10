@@ -5,6 +5,7 @@ import (
 
     fern "github.com/pagination/fern"
     client "github.com/pagination/fern/client"
+    inlineusers "github.com/pagination/fern/inlineusers"
     option "github.com/pagination/fern/option"
 )
 
@@ -17,8 +18,16 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.InlineUsersInlineUsersListWithOffsetPaginationRequest{}
-    client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPagination(
+    request := &inlineusers.ListWithOffsetPaginationHasNextPageRequest{
+        Page: fern.Int(
+            1,
+        ),
+        Limit: fern.Int(
+            1,
+        ),
+        Order: inlineusers.OrderAsc.Ptr(),
+    }
+    client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage(
         context.TODO(),
         request,
     )

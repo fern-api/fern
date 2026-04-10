@@ -1,64 +1,9 @@
 import Foundation
 import Testing
-import Api
+import Pagination
 
 @Suite("UsersClient Wire Tests") struct UsersClientWireTests {
-    @Test func listwithcursorpagination1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithcursorpagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithcursorpagination2() async throws -> Void {
+    @Test func listWithCursorPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -89,16 +34,16 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
+        let expectedResponse = ListUsersPaginationResponseType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: Optional(NextPage(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
                 )),
@@ -107,62 +52,27 @@ import Api
             )),
             totalCount: 1,
             data: [
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 ),
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 )
             ]
         )
-        let response = try await client.users.listwithcursorpagination(
-            page: .value(1),
-            perPage: .value(1),
+        let response = try await client.users.listWithCursorPagination(
+            page: 1,
+            perPage: 1,
             order: .asc,
-            startingAfter: .value("starting_after"),
+            startingAfter: "starting_after",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func listwithmixedtypecursorpagination1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "next": "next",
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersMixedTypePaginationResponse(
-            next: "next",
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithmixedtypecursorpagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithmixedtypecursorpagination2() async throws -> Void {
+    @Test func listWithMixedTypeCursorPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -183,90 +93,32 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ListUsersMixedTypePaginationResponse(
+        let expectedResponse = ListUsersMixedTypePaginationResponseType(
             next: "next",
             data: [
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 ),
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 )
             ]
         )
-        let response = try await client.users.listwithmixedtypecursorpagination(
-            cursor: .value("cursor"),
+        let response = try await client.users.listWithMixedTypeCursorPagination(
+            cursor: "cursor",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func listwithbodycursorpagination1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithbodycursorpagination(
-            request: .init(),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithbodycursorpagination2() async throws -> Void {
+    @Test func listWithBodyCursorPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -297,16 +149,16 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
+        let expectedResponse = ListUsersPaginationResponseType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: Optional(NextPage(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
                 )),
@@ -315,184 +167,81 @@ import Api
             )),
             totalCount: 1,
             data: [
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 ),
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 )
             ]
         )
-        let response = try await client.users.listwithbodycursorpagination(
-            request: .init(pagination: WithCursor(
-                cursor: .value("cursor")
+        let response = try await client.users.listWithBodyCursorPagination(
+            request: .init(pagination: WithCursorType(
+                cursor: "cursor"
             )),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func listwithtoplevelbodycursorpagination1() async throws -> Void {
+    @Test func listWithTopLevelBodyCursorPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
                 {
-                  "next_cursor": "next_cursor",
+                  "next_cursor": "next_cursor_value",
                   "data": [
                     {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersTopLevelCursorPaginationResponse(
-            nextCursor: Optional(Nullable<String>.value("next_cursor")),
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithtoplevelbodycursorpagination(
-            request: .init(),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithtoplevelbodycursorpagination2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "next_cursor": "next_cursor",
-                  "data": [
-                    {
-                      "name": "name",
+                      "name": "Alice",
                       "id": 1
                     },
                     {
-                      "name": "name",
-                      "id": 1
+                      "name": "Bob",
+                      "id": 2
                     }
                   ]
                 }
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersTopLevelCursorPaginationResponse(
-            nextCursor: Optional(Nullable<String>.value("next_cursor")),
+            nextCursor: Optional("next_cursor_value"),
             data: [
-                User(
-                    name: "name",
+                UserType(
+                    name: "Alice",
                     id: 1
                 ),
-                User(
-                    name: "name",
-                    id: 1
+                UserType(
+                    name: "Bob",
+                    id: 2
                 )
             ]
         )
-        let response = try await client.users.listwithtoplevelbodycursorpagination(
+        let response = try await client.users.listWithTopLevelBodyCursorPagination(
             request: .init(
-                cursor: .value("cursor"),
-                filter: .value("filter")
+                cursor: "initial_cursor",
+                filter: "active"
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func listwithoffsetpagination1() async throws -> Void {
+    @Test func listWithTopLevelBodyCursorPagination2() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
                 {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithoffsetpagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithoffsetpagination2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
+                  "next_cursor": "next_cursor",
                   "data": [
                     {
                       "name": "name",
@@ -507,582 +256,513 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
+        let expectedResponse = ListUsersTopLevelCursorPaginationResponse(
+            nextCursor: Optional("next_cursor"),
             data: [
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 ),
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 )
             ]
         )
-        let response = try await client.users.listwithoffsetpagination(
-            page: .value(1),
-            perPage: .value(1),
-            order: .asc,
-            startingAfter: .value("starting_after"),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithdoubleoffsetpagination1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithdoubleoffsetpagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithdoubleoffsetpagination2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    },
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                ),
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithdoubleoffsetpagination(
-            page: .value(1.1),
-            perPage: .value(1.1),
-            order: .asc,
-            startingAfter: .value("starting_after"),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithbodyoffsetpagination1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithbodyoffsetpagination(
-            request: .init(),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithbodyoffsetpagination2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    },
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                ),
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithbodyoffsetpagination(
-            request: .init(pagination: WithPage(
-                page: .value(1)
-            )),
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithoffsetsteppagination1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithoffsetsteppagination(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithoffsetsteppagination2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    },
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                ),
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithoffsetsteppagination(
-            page: .value(1),
-            limit: .value(1),
-            order: .asc,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithoffsetpaginationhasnextpage1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithoffsetpaginationhasnextpage(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithoffsetpaginationhasnextpage2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    },
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
-                    name: "name",
-                    id: 1
-                ),
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithoffsetpaginationhasnextpage(
-            page: .value(1),
-            limit: .value(1),
-            order: .asc,
-            requestOptions: RequestOptions(additionalHeaders: stub.headers)
-        )
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithextendedresults1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "data": {
-                    "users": [
-                      {
-                        "name": "name",
-                        "id": 1
-                      }
-                    ]
-                  },
-                  "next": "next",
-                  "total_count": 1
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersExtendedResponse(
-            data: UserListContainer(
-                users: [
-                    User(
-                        name: "name",
-                        id: 1
-                    )
-                ]
+        let response = try await client.users.listWithTopLevelBodyCursorPagination(
+            request: .init(
+                cursor: "cursor",
+                filter: "filter"
             ),
-            next: Optional(Nullable<String>.value("next")),
-            totalCount: 1
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
-        let response = try await client.users.listwithextendedresults(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
-    @Test func listwithextendedresults2() async throws -> Void {
+    @Test func listWithOffsetPagination1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersPaginationResponseType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
+                page: 1,
+                next: Optional(NextPageType(
+                    page: 1,
+                    startingAfter: "starting_after"
+                )),
+                perPage: 1,
+                totalPage: 1
+            )),
+            totalCount: 1,
+            data: [
+                UserType(
+                    name: "name",
+                    id: 1
+                ),
+                UserType(
+                    name: "name",
+                    id: 1
+                )
+            ]
+        )
+        let response = try await client.users.listWithOffsetPagination(
+            page: 1,
+            perPage: 1,
+            order: .asc,
+            startingAfter: "starting_after",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func listWithDoubleOffsetPagination1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersPaginationResponseType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
+                page: 1,
+                next: Optional(NextPageType(
+                    page: 1,
+                    startingAfter: "starting_after"
+                )),
+                perPage: 1,
+                totalPage: 1
+            )),
+            totalCount: 1,
+            data: [
+                UserType(
+                    name: "name",
+                    id: 1
+                ),
+                UserType(
+                    name: "name",
+                    id: 1
+                )
+            ]
+        )
+        let response = try await client.users.listWithDoubleOffsetPagination(
+            page: 1.1,
+            perPage: 1.1,
+            order: .asc,
+            startingAfter: "starting_after",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func listWithBodyOffsetPagination1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersPaginationResponseType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
+                page: 1,
+                next: Optional(NextPageType(
+                    page: 1,
+                    startingAfter: "starting_after"
+                )),
+                perPage: 1,
+                totalPage: 1
+            )),
+            totalCount: 1,
+            data: [
+                UserType(
+                    name: "name",
+                    id: 1
+                ),
+                UserType(
+                    name: "name",
+                    id: 1
+                )
+            ]
+        )
+        let response = try await client.users.listWithBodyOffsetPagination(
+            request: .init(pagination: WithPageType(
+                page: 1
+            )),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func listWithOffsetStepPagination1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersPaginationResponseType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
+                page: 1,
+                next: Optional(NextPageType(
+                    page: 1,
+                    startingAfter: "starting_after"
+                )),
+                perPage: 1,
+                totalPage: 1
+            )),
+            totalCount: 1,
+            data: [
+                UserType(
+                    name: "name",
+                    id: 1
+                ),
+                UserType(
+                    name: "name",
+                    id: 1
+                )
+            ]
+        )
+        let response = try await client.users.listWithOffsetStepPagination(
+            page: 1,
+            limit: 1,
+            order: .asc,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func listWithOffsetPaginationHasNextPage1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 2,
+                      "starting_after": "next_cursor"
+                    },
+                    "per_page": 3,
+                    "total_page": 5
+                  },
+                  "total_count": 15,
+                  "data": [
+                    {
+                      "name": "Alice",
+                      "id": 1
+                    },
+                    {
+                      "name": "Bob",
+                      "id": 2
+                    }
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersPaginationResponseType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
+                page: 1,
+                next: Optional(NextPageType(
+                    page: 2,
+                    startingAfter: "next_cursor"
+                )),
+                perPage: 3,
+                totalPage: 5
+            )),
+            totalCount: 15,
+            data: [
+                UserType(
+                    name: "Alice",
+                    id: 1
+                ),
+                UserType(
+                    name: "Bob",
+                    id: 2
+                )
+            ]
+        )
+        let response = try await client.users.listWithOffsetPaginationHasNextPage(
+            page: 1,
+            limit: 3,
+            order: .asc,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func listWithOffsetPaginationHasNextPage2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "hasNextPage": false,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 2,
+                      "starting_after": "next_cursor"
+                    },
+                    "per_page": 10,
+                    "total_page": 1
+                  },
+                  "total_count": 2,
+                  "data": [
+                    {
+                      "name": "Alice",
+                      "id": 1
+                    },
+                    {
+                      "name": "Bob",
+                      "id": 2
+                    }
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersPaginationResponseType(
+            hasNextPage: Optional(false),
+            page: Optional(PageType(
+                page: 1,
+                next: Optional(NextPageType(
+                    page: 2,
+                    startingAfter: "next_cursor"
+                )),
+                perPage: 10,
+                totalPage: 1
+            )),
+            totalCount: 2,
+            data: [
+                UserType(
+                    name: "Alice",
+                    id: 1
+                ),
+                UserType(
+                    name: "Bob",
+                    id: 2
+                )
+            ]
+        )
+        let response = try await client.users.listWithOffsetPaginationHasNextPage(
+            page: 1,
+            limit: 10,
+            order: .asc,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func listWithOffsetPaginationHasNextPage3() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersPaginationResponseType(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
+                page: 1,
+                next: Optional(NextPageType(
+                    page: 1,
+                    startingAfter: "starting_after"
+                )),
+                perPage: 1,
+                totalPage: 1
+            )),
+            totalCount: 1,
+            data: [
+                UserType(
+                    name: "name",
+                    id: 1
+                ),
+                UserType(
+                    name: "name",
+                    id: 1
+                )
+            ]
+        )
+        let response = try await client.users.listWithOffsetPaginationHasNextPage(
+            page: 1,
+            limit: 1,
+            order: .asc,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func listWithExtendedResults1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -1101,81 +781,40 @@ import Api
                       }
                     ]
                   },
-                  "next": "next"
+                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                 }
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ListUsersExtendedResponse(
+        let expectedResponse = ListUsersExtendedResponseType(
             totalCount: 1,
-            data: UserListContainer(
+            data: UserListContainerType(
                 users: [
-                    User(
+                    UserType(
                         name: "name",
                         id: 1
                     ),
-                    User(
+                    UserType(
                         name: "name",
                         id: 1
                     )
                 ]
             ),
-            next: Optional(Nullable<String>.value("next"))
+            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
         )
-        let response = try await client.users.listwithextendedresults(
-            cursor: .value("cursor"),
+        let response = try await client.users.listWithExtendedResults(
+            cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func listwithextendedresultsandoptionaldata1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "data": {
-                    "users": [
-                      {
-                        "name": "name",
-                        "id": 1
-                      }
-                    ]
-                  },
-                  "next": "next",
-                  "total_count": 1
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersExtendedOptionalListResponse(
-            data: UserOptionalListContainer(
-                users: Optional(Nullable<[User]>.value([
-                    User(
-                        name: "name",
-                        id: 1
-                    )
-                ]))
-            ),
-            next: Optional(Nullable<String>.value("next")),
-            totalCount: 1
-        )
-        let response = try await client.users.listwithextendedresultsandoptionaldata(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithextendedresultsandoptionaldata2() async throws -> Void {
+    @Test func listWithExtendedResultsAndOptionalData1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -1194,73 +833,40 @@ import Api
                       }
                     ]
                   },
-                  "next": "next"
+                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                 }
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = ListUsersExtendedOptionalListResponse(
+        let expectedResponse = ListUsersExtendedOptionalListResponseType(
             totalCount: 1,
-            data: UserOptionalListContainer(
-                users: Optional(Nullable<[User]>.value([
-                    User(
+            data: UserOptionalListContainerType(
+                users: Optional([
+                    UserType(
                         name: "name",
                         id: 1
                     ),
-                    User(
+                    UserType(
                         name: "name",
                         id: 1
                     )
-                ]))
+                ])
             ),
-            next: Optional(Nullable<String>.value("next"))
+            next: Optional(UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!)
         )
-        let response = try await client.users.listwithextendedresultsandoptionaldata(
-            cursor: .value("cursor"),
+        let response = try await client.users.listWithExtendedResultsAndOptionalData(
+            cursor: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")!,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func listusernames1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "cursor": {
-                    "after": "after",
-                    "data": [
-                      "data"
-                    ]
-                  }
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = UsernameCursor(
-            cursor: UsernamePage(
-                after: Optional(Nullable<String>.value("after")),
-                data: [
-                    "data"
-                ]
-            )
-        )
-        let response = try await client.users.listusernames(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listusernames2() async throws -> Void {
+    @Test func listUsernames1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -1277,61 +883,28 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = UsernameCursor(
             cursor: UsernamePage(
-                after: Optional(Nullable<String>.value("after")),
+                after: Optional("after"),
                 data: [
                     "data",
                     "data"
                 ]
             )
         )
-        let response = try await client.users.listusernames(
-            startingAfter: .value("starting_after"),
+        let response = try await client.users.listUsernames(
+            startingAfter: "starting_after",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func listusernameswithoptionalresponse1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "cursor": {
-                    "after": "after",
-                    "data": [
-                      "data"
-                    ]
-                  }
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = UsernameCursor(
-            cursor: UsernamePage(
-                after: Optional(Nullable<String>.value("after")),
-                data: [
-                    "data"
-                ]
-            )
-        )
-        let response = try await client.users.listusernameswithoptionalresponse(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listusernameswithoptionalresponse2() async throws -> Void {
+    @Test func listUsernamesWithOptionalResponse1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -1348,55 +921,28 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = UsernameCursor(
+        let expectedResponse = Optional(UsernameCursor(
             cursor: UsernamePage(
-                after: Optional(Nullable<String>.value("after")),
+                after: Optional("after"),
                 data: [
                     "data",
                     "data"
                 ]
             )
-        )
-        let response = try await client.users.listusernameswithoptionalresponse(
-            startingAfter: .value("starting_after"),
+        ))
+        let response = try await client.users.listUsernamesWithOptionalResponse(
+            startingAfter: "starting_after",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func listwithglobalconfig1() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "results": [
-                    "results"
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = UsernameContainer(
-            results: [
-                "results"
-            ]
-        )
-        let response = try await client.users.listwithglobalconfig(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithglobalconfig2() async throws -> Void {
+    @Test func listWithGlobalConfig1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -1410,25 +956,25 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = UsernameContainer(
+        let expectedResponse = UsernameContainerType(
             results: [
                 "results",
                 "results"
             ]
         )
-        let response = try await client.users.listwithglobalconfig(
-            offset: .value(1),
+        let response = try await client.users.listWithGlobalConfig(
+            offset: 1,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func listwithoptionaldata1() async throws -> Void {
+    @Test func listWithOptionalData1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -1438,52 +984,109 @@ import Api
                   "page": {
                     "page": 1,
                     "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
+                      "page": 2,
+                      "starting_after": "next_cursor"
                     },
-                    "per_page": 1,
-                    "total_page": 1
+                    "per_page": 10,
+                    "total_page": 5
                   },
-                  "total_count": 1,
+                  "total_count": 50,
                   "data": [
                     {
-                      "name": "name",
+                      "name": "Alice",
                       "id": 1
+                    },
+                    {
+                      "name": "Bob",
+                      "id": 2
                     }
                   ]
                 }
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersOptionalDataPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
+                next: Optional(NextPageType(
+                    page: 2,
+                    startingAfter: "next_cursor"
                 )),
-                perPage: 1,
-                totalPage: 1
+                perPage: 10,
+                totalPage: 5
             )),
-            totalCount: 1,
-            data: Optional(Nullable<[User]>.value([
-                User(
-                    name: "name",
+            totalCount: 50,
+            data: Optional([
+                UserType(
+                    name: "Alice",
                     id: 1
+                ),
+                UserType(
+                    name: "Bob",
+                    id: 2
                 )
-            ]))
+            ])
         )
-        let response = try await client.users.listwithoptionaldata(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        let response = try await client.users.listWithOptionalData(
+            page: 1,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 
-    @Test func listwithoptionaldata2() async throws -> Void {
+    @Test func listWithOptionalData2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "hasNextPage": false,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 2,
+                      "starting_after": "next_cursor"
+                    },
+                    "per_page": 10,
+                    "total_page": 1
+                  },
+                  "total_count": 0
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersOptionalDataPaginationResponse(
+            hasNextPage: Optional(false),
+            page: Optional(PageType(
+                page: 1,
+                next: Optional(NextPageType(
+                    page: 2,
+                    startingAfter: "next_cursor"
+                )),
+                perPage: 10,
+                totalPage: 1
+            )),
+            totalCount: 0
+        )
+        let response = try await client.users.listWithOptionalData(
+            page: 1,
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func listWithOptionalData3() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -1514,16 +1117,16 @@ import Api
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersOptionalDataPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: Optional(NextPage(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
                 )),
@@ -1531,25 +1134,25 @@ import Api
                 totalPage: 1
             )),
             totalCount: 1,
-            data: Optional(Nullable<[User]>.value([
-                User(
+            data: Optional([
+                UserType(
                     name: "name",
                     id: 1
                 ),
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 )
-            ]))
+            ])
         )
-        let response = try await client.users.listwithoptionaldata(
-            page: .value(1),
+        let response = try await client.users.listWithOptionalData(
+            page: 1,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)
     }
 
-    @Test func listwithaliaseddata1() async throws -> Void {
+    @Test func listWithAliasedData1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
@@ -1570,22 +1173,26 @@ import Api
                     {
                       "name": "name",
                       "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
                     }
                   ]
                 }
                 """.utf8
             )
         )
-        let client = ApiClient(
+        let client = PaginationClient(
             baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
         let expectedResponse = ListUsersAliasedDataPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
                 page: 1,
-                next: Optional(NextPage(
+                next: Optional(NextPageType(
                     page: 1,
                     startingAfter: "starting_after"
                 )),
@@ -1594,79 +1201,20 @@ import Api
             )),
             totalCount: 1,
             data: [
-                User(
-                    name: "name",
-                    id: 1
-                )
-            ]
-        )
-        let response = try await client.users.listwithaliaseddata(requestOptions: RequestOptions(additionalHeaders: stub.headers))
-        try #require(response == expectedResponse)
-    }
-
-    @Test func listwithaliaseddata2() async throws -> Void {
-        let stub = HTTPStub()
-        stub.setResponse(
-            body: Data(
-                """
-                {
-                  "hasNextPage": true,
-                  "page": {
-                    "page": 1,
-                    "next": {
-                      "page": 1,
-                      "starting_after": "starting_after"
-                    },
-                    "per_page": 1,
-                    "total_page": 1
-                  },
-                  "total_count": 1,
-                  "data": [
-                    {
-                      "name": "name",
-                      "id": 1
-                    },
-                    {
-                      "name": "name",
-                      "id": 1
-                    }
-                  ]
-                }
-                """.utf8
-            )
-        )
-        let client = ApiClient(
-            baseURL: "https://api.fern.com",
-            token: "<token>",
-            urlSession: stub.urlSession
-        )
-        let expectedResponse = ListUsersAliasedDataPaginationResponse(
-            hasNextPage: Optional(Nullable<Bool>.value(true)),
-            page: Optional(Page(
-                page: 1,
-                next: Optional(NextPage(
-                    page: 1,
-                    startingAfter: "starting_after"
-                )),
-                perPage: 1,
-                totalPage: 1
-            )),
-            totalCount: 1,
-            data: [
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 ),
-                User(
+                UserType(
                     name: "name",
                     id: 1
                 )
             ]
         )
-        let response = try await client.users.listwithaliaseddata(
-            page: .value(1),
-            perPage: .value(1),
-            startingAfter: .value("starting_after"),
+        let response = try await client.users.listWithAliasedData(
+            page: 1,
+            perPage: 1,
+            startingAfter: "starting_after",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
         try #require(response == expectedResponse)

@@ -6,24 +6,19 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import AuthTokenResponse
-    from . import auth, nested_api, nested_no_auth_api, simple
+    from . import auth, nested, nested_no_auth, simple
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .auth import AuthGetTokenRequestAudience, AuthGetTokenRequestGrantType
-    from .client import AsyncSeedApi, SeedApi
+    from .client import AsyncSeedOauthClientCredentials, SeedOauthClientCredentials
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
-    "AuthGetTokenRequestAudience": ".auth",
-    "AuthGetTokenRequestGrantType": ".auth",
-    "AuthTokenResponse": ".types",
+    "AsyncSeedOauthClientCredentials": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedApi": ".client",
+    "SeedOauthClientCredentials": ".client",
     "__version__": ".version",
     "auth": ".auth",
-    "nested_api": ".nested_api",
-    "nested_no_auth_api": ".nested_no_auth_api",
+    "nested": ".nested",
+    "nested_no_auth": ".nested_no_auth",
     "simple": ".simple",
 }
 
@@ -50,16 +45,13 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedApi",
-    "AuthGetTokenRequestAudience",
-    "AuthGetTokenRequestGrantType",
-    "AuthTokenResponse",
+    "AsyncSeedOauthClientCredentials",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
-    "SeedApi",
+    "SeedOauthClientCredentials",
     "__version__",
     "auth",
-    "nested_api",
-    "nested_no_auth_api",
+    "nested",
+    "nested_no_auth",
     "simple",
 ]

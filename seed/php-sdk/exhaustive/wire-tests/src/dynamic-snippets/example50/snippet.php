@@ -3,9 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\TypesObjectWithRequiredNestedObject;
-use Seed\Types\TypesNestedObjectWithRequiredField;
-use Seed\Types\TypesObjectWithOptionalField;
+use DateTime;
 
 $client = new SeedClient(
     token: '<token>',
@@ -13,12 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpointsObject->endpointsObjectGetAndReturnWithRequiredNestedObject(
-    new TypesObjectWithRequiredNestedObject([
-        'requiredString' => 'requiredString',
-        'requiredObject' => new TypesNestedObjectWithRequiredField([
-            'string' => 'string',
-            'nestedObject' => new TypesObjectWithOptionalField([]),
-        ]),
-    ]),
+$client->endpoints->primitive->getAndReturnDatetime(
+    new DateTime('2024-01-15T09:30:00Z'),
 );

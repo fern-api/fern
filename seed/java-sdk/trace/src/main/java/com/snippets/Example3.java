@@ -1,23 +1,18 @@
 package com.snippets;
 
-import com.seed.api.SeedApiClient;
-import com.seed.api.resources.admin.requests.AdminUpdateTestSubmissionStatusRequest;
-import com.seed.api.types.TestSubmissionStatus;
-import com.seed.api.types.TestSubmissionStatusStopped;
+import com.seed.trace.SeedTraceClient;
+import com.seed.trace.resources.submission.types.WorkspaceSubmissionStatus;
+import java.util.UUID;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedApiClient client = SeedApiClient.builder()
+        SeedTraceClient client = SeedTraceClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.admin()
-                .updatetestsubmissionstatus(
-                        "submissionId",
-                        AdminUpdateTestSubmissionStatusRequest.builder()
-                                .body(TestSubmissionStatus.stopped(
-                                        TestSubmissionStatusStopped.builder().build()))
-                                .build());
+                .updateWorkspaceSubmissionStatus(
+                        UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), WorkspaceSubmissionStatus.stopped());
     }
 }

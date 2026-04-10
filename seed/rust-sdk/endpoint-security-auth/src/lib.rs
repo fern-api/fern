@@ -1,11 +1,11 @@
-//! # endpoint-security-auth SDK
+//! # EndpointSecurityAuth SDK
 //!
-//! The official Rust SDK for the endpoint-security-auth.
+//! The official Rust SDK for the EndpointSecurityAuth.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_api::prelude::*;
+//! use seed_endpoint_security_auth::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,15 +13,15 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
 //!     client
 //!         .auth
-//!         .gettoken(
-//!             &AuthGetTokenRequest {
+//!         .get_token(
+//!             &GetTokenRequest {
 //!                 client_id: "client_id".to_string(),
 //!                 client_secret: "client_secret".to_string(),
-//!                 audience: AuthGetTokenRequestAudience::HttpsApiExampleCom,
-//!                 grant_type: AuthGetTokenRequestGrantType::ClientCredentials,
+//!                 audience: "https://api.example.com".to_string(),
+//!                 grant_type: "client_credentials".to_string(),
 //!             },
 //!             None,
 //!         )

@@ -1,4 +1,5 @@
-use crate::api::resources::ApiClient;
+use crate::api::resources::MultiUrlEnvironmentNoDefaultClient;
+use crate::Environment;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -15,10 +16,24 @@ impl Default for ApiClientBuilder {
 }
 impl ApiClientBuilder {
     /// Create a new builder with the specified base URL
+    ///
+    /// This disables environment-based URL resolution. Use `environment()` instead
+    /// to configure per-service URL resolution for multi-URL environments.
     pub fn new(base_url: impl Into<String>) -> Self {
         let mut config = ClientConfig::default();
         config.base_url = base_url.into();
+        config.environment = None;
         Self { config }
+    }
+
+    /// Set the environment, updating the base URL
+    ///
+    /// In multi-URL environments, this enables per-service URL resolution.
+    /// Each service will use its designated URL from the environment.
+    pub fn environment(mut self, environment: Environment) -> Self {
+        self.config.base_url = environment.url().to_string();
+        self.config.environment = Some(environment);
+        self
     }
 
     /// Set the API key for authentication
@@ -99,13 +114,22 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<ApiClient, ApiError> {
-        ApiClient::new(self.config)
+    pub fn build(self) -> Result<MultiUrlEnvironmentNoDefaultClient, ApiError> {
+        MultiUrlEnvironmentNoDefaultClient::new(self.config)
     }
 }
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_environment() {
+        let builder = ApiClientBuilder::default().environment(Environment::default());
+        assert_eq!(
+            builder.config.base_url,
+            Environment::default().url().to_string()
+        );
+    }
 
     #[test]
     fn test_new_sets_base_url() {
