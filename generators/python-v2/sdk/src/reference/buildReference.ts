@@ -274,6 +274,7 @@ function getTypeString(typeReference: FernIr.TypeReference): string {
                 case "DATE":
                     return "datetime.date";
                 case "DATE_TIME":
+                case "DATE_TIME_RFC_2822":
                     return "datetime.datetime";
                 case "UUID":
                     return "uuid.UUID";
