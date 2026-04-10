@@ -11,13 +11,13 @@ import (
 )
 
 var (
-	dataContextEntityEventFieldEntityId    = big.NewInt(1 << 0)
+	dataContextEntityEventFieldEntityID    = big.NewInt(1 << 0)
 	dataContextEntityEventFieldEventType   = big.NewInt(1 << 1)
 	dataContextEntityEventFieldUpdatedTime = big.NewInt(1 << 2)
 )
 
 type DataContextEntityEvent struct {
-	EntityId    *string                      `json:"entityId,omitempty" url:"entityId,omitempty"`
+	EntityID    *string                      `json:"entityId,omitempty" url:"entityId,omitempty"`
 	EventType   *EntityEventPayloadEventType `json:"eventType,omitempty" url:"eventType,omitempty"`
 	UpdatedTime *time.Time                   `json:"updatedTime,omitempty" url:"updatedTime,omitempty"`
 
@@ -28,11 +28,11 @@ type DataContextEntityEvent struct {
 	rawJSON         json.RawMessage
 }
 
-func (d *DataContextEntityEvent) GetEntityId() *string {
+func (d *DataContextEntityEvent) GetEntityID() *string {
 	if d == nil {
 		return nil
 	}
-	return d.EntityId
+	return d.EntityID
 }
 
 func (d *DataContextEntityEvent) GetEventType() *EntityEventPayloadEventType {
@@ -63,11 +63,11 @@ func (d *DataContextEntityEvent) require(field *big.Int) {
 	d.explicitFields.Or(d.explicitFields, field)
 }
 
-// SetEntityId sets the EntityId field and marks it as non-optional;
+// SetEntityID sets the EntityID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DataContextEntityEvent) SetEntityId(entityId *string) {
-	d.EntityId = entityId
-	d.require(dataContextEntityEventFieldEntityId)
+func (d *DataContextEntityEvent) SetEntityID(entityID *string) {
+	d.EntityID = entityID
+	d.require(dataContextEntityEventFieldEntityID)
 }
 
 // SetEventType sets the EventType field and marks it as non-optional;
@@ -227,13 +227,13 @@ func (d *DataContextHeartbeat) String() string {
 }
 
 var (
-	entityEventPayloadFieldEntityId    = big.NewInt(1 << 0)
+	entityEventPayloadFieldEntityID    = big.NewInt(1 << 0)
 	entityEventPayloadFieldEventType   = big.NewInt(1 << 1)
 	entityEventPayloadFieldUpdatedTime = big.NewInt(1 << 2)
 )
 
 type EntityEventPayload struct {
-	EntityId    *string                      `json:"entityId,omitempty" url:"entityId,omitempty"`
+	EntityID    *string                      `json:"entityId,omitempty" url:"entityId,omitempty"`
 	EventType   *EntityEventPayloadEventType `json:"eventType,omitempty" url:"eventType,omitempty"`
 	UpdatedTime *time.Time                   `json:"updatedTime,omitempty" url:"updatedTime,omitempty"`
 
@@ -244,11 +244,11 @@ type EntityEventPayload struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *EntityEventPayload) GetEntityId() *string {
+func (e *EntityEventPayload) GetEntityID() *string {
 	if e == nil {
 		return nil
 	}
-	return e.EntityId
+	return e.EntityID
 }
 
 func (e *EntityEventPayload) GetEventType() *EntityEventPayloadEventType {
@@ -279,11 +279,11 @@ func (e *EntityEventPayload) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetEntityId sets the EntityId field and marks it as non-optional;
+// SetEntityID sets the EntityID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EntityEventPayload) SetEntityId(entityId *string) {
-	e.EntityId = entityId
-	e.require(entityEventPayloadFieldEntityId)
+func (e *EntityEventPayload) SetEntityID(entityID *string) {
+	e.EntityID = entityID
+	e.require(entityEventPayloadFieldEntityID)
 }
 
 // SetEventType sets the EventType field and marks it as non-optional;
@@ -381,14 +381,14 @@ func (e EntityEventPayloadEventType) Ptr() *EntityEventPayloadEventType {
 var (
 	eventFieldData  = big.NewInt(1 << 0)
 	eventFieldEvent = big.NewInt(1 << 1)
-	eventFieldId    = big.NewInt(1 << 2)
+	eventFieldID    = big.NewInt(1 << 2)
 	eventFieldRetry = big.NewInt(1 << 3)
 )
 
 type Event struct {
 	Data  string  `json:"data" url:"data"`
 	Event *string `json:"event,omitempty" url:"event,omitempty"`
-	Id    *string `json:"id,omitempty" url:"id,omitempty"`
+	ID    *string `json:"id,omitempty" url:"id,omitempty"`
 	Retry *int    `json:"retry,omitempty" url:"retry,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -412,11 +412,11 @@ func (e *Event) GetEvent() *string {
 	return e.Event
 }
 
-func (e *Event) GetId() *string {
+func (e *Event) GetID() *string {
 	if e == nil {
 		return nil
 	}
-	return e.Id
+	return e.ID
 }
 
 func (e *Event) GetRetry() *int {
@@ -454,11 +454,11 @@ func (e *Event) SetEvent(event *string) {
 	e.require(eventFieldEvent)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *Event) SetId(id *string) {
-	e.Id = id
-	e.require(eventFieldId)
+func (e *Event) SetID(id *string) {
+	e.ID = id
+	e.require(eventFieldID)
 }
 
 // SetRetry sets the Retry field and marks it as non-optional;
@@ -603,13 +603,13 @@ func (h *HeartbeatPayload) String() string {
 }
 
 var (
-	objectPayloadWithEventFieldFieldId    = big.NewInt(1 << 0)
+	objectPayloadWithEventFieldFieldID    = big.NewInt(1 << 0)
 	objectPayloadWithEventFieldFieldName  = big.NewInt(1 << 1)
 	objectPayloadWithEventFieldFieldEvent = big.NewInt(1 << 2)
 )
 
 type ObjectPayloadWithEventField struct {
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 	// An event type field inside the data payload that collides with the SSE envelope's event field used for discrimination.
 	Event string `json:"event" url:"event"`
@@ -621,11 +621,11 @@ type ObjectPayloadWithEventField struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *ObjectPayloadWithEventField) GetId() string {
+func (o *ObjectPayloadWithEventField) GetID() string {
 	if o == nil {
 		return ""
 	}
-	return o.Id
+	return o.ID
 }
 
 func (o *ObjectPayloadWithEventField) GetName() string {
@@ -656,11 +656,11 @@ func (o *ObjectPayloadWithEventField) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *ObjectPayloadWithEventField) SetId(id string) {
-	o.Id = id
-	o.require(objectPayloadWithEventFieldFieldId)
+func (o *ObjectPayloadWithEventField) SetID(id string) {
+	o.ID = id
+	o.require(objectPayloadWithEventFieldFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;

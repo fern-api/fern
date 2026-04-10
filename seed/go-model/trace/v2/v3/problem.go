@@ -10,14 +10,14 @@ import (
 	internal "github.com/trace/fern/internal"
 )
 
-type TestCaseTemplateId = string
+type TestCaseTemplateID = string
 
-type TestCaseId = string
+type TestCaseID = string
 
-type ParameterId = string
+type ParameterID = string
 
 type ProblemInfoV2 struct {
-	ProblemId               fern.ProblemId           `json:"problemId" url:"problemId"`
+	ProblemID               fern.ProblemID           `json:"problemId" url:"problemId"`
 	ProblemDescription      *fern.ProblemDescription `json:"problemDescription" url:"problemDescription"`
 	ProblemName             string                   `json:"problemName" url:"problemName"`
 	ProblemVersion          int                      `json:"problemVersion" url:"problemVersion"`
@@ -32,11 +32,11 @@ type ProblemInfoV2 struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *ProblemInfoV2) GetProblemId() fern.ProblemId {
+func (p *ProblemInfoV2) GetProblemID() fern.ProblemID {
 	if p == nil {
 		return ""
 	}
-	return p.ProblemId
+	return p.ProblemID
 }
 
 func (p *ProblemInfoV2) GetProblemDescription() *fern.ProblemDescription {
@@ -140,7 +140,7 @@ func (p *ProblemInfoV2) String() string {
 }
 
 type LightweightProblemInfoV2 struct {
-	ProblemId      fern.ProblemId       `json:"problemId" url:"problemId"`
+	ProblemID      fern.ProblemID       `json:"problemId" url:"problemId"`
 	ProblemName    string               `json:"problemName" url:"problemName"`
 	ProblemVersion int                  `json:"problemVersion" url:"problemVersion"`
 	VariableTypes  []*fern.VariableType `json:"variableTypes" url:"variableTypes"`
@@ -149,11 +149,11 @@ type LightweightProblemInfoV2 struct {
 	rawJSON         json.RawMessage
 }
 
-func (l *LightweightProblemInfoV2) GetProblemId() fern.ProblemId {
+func (l *LightweightProblemInfoV2) GetProblemID() fern.ProblemID {
 	if l == nil {
 		return ""
 	}
-	return l.ProblemId
+	return l.ProblemID
 }
 
 func (l *LightweightProblemInfoV2) GetProblemName() string {
@@ -316,7 +316,7 @@ func (c *CreateProblemRequestV2) String() string {
 type TestCaseV2 struct {
 	Metadata       *TestCaseMetadata                   `json:"metadata" url:"metadata"`
 	Implementation *TestCaseImplementationReference    `json:"implementation" url:"implementation"`
-	Arguments      map[ParameterId]*fern.VariableValue `json:"arguments" url:"arguments"`
+	Arguments      map[ParameterID]*fern.VariableValue `json:"arguments" url:"arguments"`
 	Expects        *TestCaseExpects                    `json:"expects,omitempty" url:"expects,omitempty"`
 
 	extraProperties map[string]any
@@ -337,7 +337,7 @@ func (t *TestCaseV2) GetImplementation() *TestCaseImplementationReference {
 	return t.Implementation
 }
 
-func (t *TestCaseV2) GetArguments() map[ParameterId]*fern.VariableValue {
+func (t *TestCaseV2) GetArguments() map[ParameterID]*fern.VariableValue {
 	if t == nil {
 		return nil
 	}
@@ -441,25 +441,25 @@ func (t *TestCaseExpects) String() string {
 
 type TestCaseImplementationReference struct {
 	Type           string
-	TemplateId     TestCaseTemplateId
+	TemplateID     TestCaseTemplateID
 	Implementation TestCaseImplementation
 }
 
 type BasicTestCaseTemplate struct {
-	TemplateId               TestCaseTemplateId                 `json:"templateId" url:"templateId"`
+	TemplateID               TestCaseTemplateID                 `json:"templateId" url:"templateId"`
 	Name                     string                             `json:"name" url:"name"`
 	Description              *TestCaseImplementationDescription `json:"description" url:"description"`
-	ExpectedValueParameterId ParameterId                        `json:"expectedValueParameterId" url:"expectedValueParameterId"`
+	ExpectedValueParameterID ParameterID                        `json:"expectedValueParameterId" url:"expectedValueParameterId"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (b *BasicTestCaseTemplate) GetTemplateId() TestCaseTemplateId {
+func (b *BasicTestCaseTemplate) GetTemplateID() TestCaseTemplateID {
 	if b == nil {
 		return ""
 	}
-	return b.TemplateId
+	return b.TemplateID
 }
 
 func (b *BasicTestCaseTemplate) GetName() string {
@@ -476,11 +476,11 @@ func (b *BasicTestCaseTemplate) GetDescription() *TestCaseImplementationDescript
 	return b.Description
 }
 
-func (b *BasicTestCaseTemplate) GetExpectedValueParameterId() ParameterId {
+func (b *BasicTestCaseTemplate) GetExpectedValueParameterID() ParameterID {
 	if b == nil {
 		return ""
 	}
-	return b.ExpectedValueParameterId
+	return b.ExpectedValueParameterID
 }
 
 func (b *BasicTestCaseTemplate) GetExtraProperties() map[string]any {
@@ -521,7 +521,7 @@ func (b *BasicTestCaseTemplate) String() string {
 }
 
 type TestCaseTemplate struct {
-	TemplateId     TestCaseTemplateId      `json:"templateId" url:"templateId"`
+	TemplateID     TestCaseTemplateID      `json:"templateId" url:"templateId"`
 	Name           string                  `json:"name" url:"name"`
 	Implementation *TestCaseImplementation `json:"implementation" url:"implementation"`
 
@@ -529,11 +529,11 @@ type TestCaseTemplate struct {
 	rawJSON         json.RawMessage
 }
 
-func (t *TestCaseTemplate) GetTemplateId() TestCaseTemplateId {
+func (t *TestCaseTemplate) GetTemplateID() TestCaseTemplateID {
 	if t == nil {
 		return ""
 	}
-	return t.TemplateId
+	return t.TemplateID
 }
 
 func (t *TestCaseTemplate) GetName() string {
@@ -771,7 +771,7 @@ func (v *VoidFunctionDefinition) String() string {
 }
 
 type Parameter struct {
-	ParameterId  ParameterId        `json:"parameterId" url:"parameterId"`
+	ParameterID  ParameterID        `json:"parameterId" url:"parameterId"`
 	Name         string             `json:"name" url:"name"`
 	VariableType *fern.VariableType `json:"variableType" url:"variableType"`
 
@@ -779,11 +779,11 @@ type Parameter struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *Parameter) GetParameterId() ParameterId {
+func (p *Parameter) GetParameterID() ParameterID {
 	if p == nil {
 		return ""
 	}
-	return p.ParameterId
+	return p.ParameterID
 }
 
 func (p *Parameter) GetName() string {
@@ -1073,17 +1073,17 @@ type AssertCorrectnessCheck struct {
 }
 
 type DeepEqualityCorrectnessCheck struct {
-	ExpectedValueParameterId ParameterId `json:"expectedValueParameterId" url:"expectedValueParameterId"`
+	ExpectedValueParameterID ParameterID `json:"expectedValueParameterId" url:"expectedValueParameterId"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (d *DeepEqualityCorrectnessCheck) GetExpectedValueParameterId() ParameterId {
+func (d *DeepEqualityCorrectnessCheck) GetExpectedValueParameterID() ParameterID {
 	if d == nil {
 		return ""
 	}
-	return d.ExpectedValueParameterId
+	return d.ExpectedValueParameterID
 }
 
 func (d *DeepEqualityCorrectnessCheck) GetExtraProperties() map[string]any {
@@ -1236,12 +1236,12 @@ func (t *TestCaseImplementationDescription) String() string {
 
 type TestCaseImplementationDescriptionBoard struct {
 	Type    string
-	Html    string
-	ParamId ParameterId
+	HTML    string
+	ParamID ParameterID
 }
 
 type TestCaseMetadata struct {
-	Id     TestCaseId `json:"id" url:"id"`
+	ID     TestCaseID `json:"id" url:"id"`
 	Name   string     `json:"name" url:"name"`
 	Hidden bool       `json:"hidden" url:"hidden"`
 
@@ -1249,11 +1249,11 @@ type TestCaseMetadata struct {
 	rawJSON         json.RawMessage
 }
 
-func (t *TestCaseMetadata) GetId() TestCaseId {
+func (t *TestCaseMetadata) GetID() TestCaseID {
 	if t == nil {
 		return ""
 	}
-	return t.Id
+	return t.ID
 }
 
 func (t *TestCaseMetadata) GetName() string {

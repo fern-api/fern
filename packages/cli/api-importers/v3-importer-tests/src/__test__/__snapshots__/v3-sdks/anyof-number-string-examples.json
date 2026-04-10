@@ -613,6 +613,7 @@
               "name": "PaymentRequest",
               "typeId": "PaymentRequest",
               "inline": false,
+              "displayName": "PaymentRequest",
               "type": "named"
             },
             "v2Examples": {
@@ -638,6 +639,7 @@
                   "name": "PaymentRequest",
                   "typeId": "PaymentRequest",
                   "inline": false,
+                  "displayName": "PaymentRequest",
                   "type": "named"
                 },
                 "v2Examples": {
@@ -664,6 +666,7 @@
                   "name": "PaymentResponse",
                   "typeId": "PaymentResponse",
                   "inline": false,
+                  "displayName": "PaymentResponse",
                   "type": "named"
                 },
                 "docs": "Payment created successfully",
@@ -728,6 +731,7 @@
                       "name": "PaymentResponse",
                       "typeId": "PaymentResponse",
                       "inline": false,
+                      "displayName": "PaymentResponse",
                       "type": "named"
                     },
                     "docs": "Payment created successfully",

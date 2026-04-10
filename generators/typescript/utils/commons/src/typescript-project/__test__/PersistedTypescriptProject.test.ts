@@ -128,6 +128,110 @@ describe("PersistedTypescriptProject", () => {
         });
     });
 
+    describe("publish", () => {
+        const publishInfo = {
+            registryUrl: "https://npm.buildwithfern.com",
+            token: "fern_test_token_123"
+        };
+
+        it("adds --tag preview for prerelease versions", async () => {
+            const mockNpm = vi.fn().mockResolvedValue({ stdout: "", stderr: "" });
+            mockedCreateLoggingExecutable.mockReturnValue(mockNpm);
+
+            const { logger } = collectLogs();
+            const project = makeProject();
+
+            await project.publish({
+                logger,
+                publishInfo,
+                dryRun: false,
+                shouldTolerateRepublish: false,
+                version: "0.0.1-abc123.1234567890"
+            });
+
+            // Second call is the publish command (first is npm config set)
+            const publishCall = mockNpm.mock.calls[1]?.[0] as string[];
+            expect(publishCall).toContain("--tag");
+            expect(publishCall).toContain("preview");
+        });
+
+        it("does not add --tag for stable versions", async () => {
+            const mockNpm = vi.fn().mockResolvedValue({ stdout: "", stderr: "" });
+            mockedCreateLoggingExecutable.mockReturnValue(mockNpm);
+
+            const { logger } = collectLogs();
+            const project = makeProject();
+
+            await project.publish({
+                logger,
+                publishInfo,
+                dryRun: false,
+                shouldTolerateRepublish: false,
+                version: "1.0.0"
+            });
+
+            const publishCall = mockNpm.mock.calls[1]?.[0] as string[];
+            expect(publishCall).not.toContain("--tag");
+        });
+
+        it("does not add --tag when version is undefined", async () => {
+            const mockNpm = vi.fn().mockResolvedValue({ stdout: "", stderr: "" });
+            mockedCreateLoggingExecutable.mockReturnValue(mockNpm);
+
+            const { logger } = collectLogs();
+            const project = makeProject();
+
+            await project.publish({
+                logger,
+                publishInfo,
+                dryRun: false,
+                shouldTolerateRepublish: false
+            });
+
+            const publishCall = mockNpm.mock.calls[1]?.[0] as string[];
+            expect(publishCall).not.toContain("--tag");
+        });
+
+        it("includes --dry-run and --tolerate-republish when requested", async () => {
+            const mockNpm = vi.fn().mockResolvedValue({ stdout: "", stderr: "" });
+            mockedCreateLoggingExecutable.mockReturnValue(mockNpm);
+
+            const { logger } = collectLogs();
+            const project = makeProject();
+
+            await project.publish({
+                logger,
+                publishInfo,
+                dryRun: true,
+                shouldTolerateRepublish: true,
+                version: "0.0.1-preview.123"
+            });
+
+            const publishCall = mockNpm.mock.calls[1]?.[0] as string[];
+            expect(publishCall).toContain("--tag");
+            expect(publishCall).toContain("--dry-run");
+            expect(publishCall).toContain("--tolerate-republish");
+        });
+
+        it("sets auth token with registry host", async () => {
+            const mockNpm = vi.fn().mockResolvedValue({ stdout: "", stderr: "" });
+            mockedCreateLoggingExecutable.mockReturnValue(mockNpm);
+
+            const { logger } = collectLogs();
+            const project = makeProject();
+
+            await project.publish({
+                logger,
+                publishInfo,
+                dryRun: false,
+                shouldTolerateRepublish: false
+            });
+
+            const configCall = mockNpm.mock.calls[0]?.[0] as string[];
+            expect(configCall).toEqual(["config", "set", "//npm.buildwithfern.com/:_authToken", "fern_test_token_123"]);
+        });
+    });
+
     describe("checkFix", () => {
         afterEach(async () => {
             try {

@@ -317,7 +317,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         return context.type.getReferenceToInlinePropertyType(
             property.valueType,
             this.typeName,
-            this.caseConverter.pascalSafe(property.name)
+            this.case.pascalSafe(property.name)
         );
     }
 
@@ -331,7 +331,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
 
     private getPropertyKeyFromProperty(property: FernIr.ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return this.caseConverter.camelUnsafe(property.name);
+            return this.case.camelUnsafe(property.name);
         } else {
             return getWireValue(property.name);
         }
@@ -429,7 +429,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             ...this.shape.properties.map((property) => ({
                 wireKey: getWireValue(property.name),
                 propertyKey: forceCamelCase
-                    ? this.caseConverter.camelSafe(property.name)
+                    ? this.case.camelSafe(property.name)
                     : this.getPropertyKeyFromProperty(property),
                 type: property.valueType
             })),
@@ -605,7 +605,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         }
         return generateInlinePropertiesModule({
             properties: this.shape.properties.map((prop) => ({
-                propertyName: this.caseConverter.pascalSafe(prop.name),
+                propertyName: this.case.pascalSafe(prop.name),
                 typeReference: prop.valueType
             })),
             generateStatements: (typeName, typeNameOverride) =>

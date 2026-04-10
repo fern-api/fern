@@ -140,6 +140,11 @@ types:
         type: list<DeclaredTypeName>
       types: list<SingleUnionType>
       baseProperties: list<ObjectProperty>
+      default:
+        docs: |
+          The default union variant to use when the discriminant field is missing from input.
+          When set, generators should fall back to this variant rather than an unknown/error type.
+        type: optional<SingleUnionType>
       discriminatorContext:
         docs: |
           Context for where the discriminator exists. Defaults to "data" for backward compatibility.

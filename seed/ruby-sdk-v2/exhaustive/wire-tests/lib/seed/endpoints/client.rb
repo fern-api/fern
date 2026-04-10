@@ -25,9 +25,9 @@ module Seed
         @enum ||= Seed::Endpoints::Enum::Client.new(client: @client)
       end
 
-      # @return [Seed::HttpMethods::Client]
+      # @return [Seed::HTTPMethods::Client]
       def http_methods
-        @http_methods ||= Seed::Endpoints::HttpMethods::Client.new(client: @client)
+        @http_methods ||= Seed::Endpoints::HTTPMethods::Client.new(client: @client)
       end
 
       # @return [Seed::Object_::Client]
@@ -60,9 +60,9 @@ module Seed
         @union ||= Seed::Endpoints::Union::Client.new(client: @client)
       end
 
-      # @return [Seed::Urls::Client]
+      # @return [Seed::URLs::Client]
       def urls
-        @urls ||= Seed::Endpoints::Urls::Client.new(client: @client)
+        @urls ||= Seed::Endpoints::URLs::Client.new(client: @client)
       end
     end
   end

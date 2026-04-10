@@ -190,7 +190,7 @@ type MyRequest struct {
 	ListOfObjects         []*MyObject             `json:"list_of_objects" url:"-"`
 	OptionalMetadata      any                     `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType    *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
-	OptionalId            *Id                     `json:"optional_id,omitempty" url:"-"`
+	OptionalID            *ID                     `json:"optional_id,omitempty" url:"-"`
 	AliasObject           MyAliasObject           `json:"alias_object" url:"-"`
 	ListOfAliasObject     []MyAliasObject         `json:"list_of_alias_object" url:"-"`
 	AliasListOfObject     MyCollectionAliasObject `json:"alias_list_of_object" url:"-"`
@@ -206,7 +206,7 @@ func (m *MyRequest) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
-type Id = string
+type ID = string
 
 type ModelType = string
 
@@ -558,7 +558,7 @@ type MyOtherRequest struct {
 	ListOfObjects              []*MyObject             `json:"list_of_objects" url:"-"`
 	OptionalMetadata           any                     `json:"optional_metadata,omitempty" url:"-"`
 	OptionalObjectType         *ObjectType             `json:"optional_object_type,omitempty" url:"-"`
-	OptionalId                 *Id                     `json:"optional_id,omitempty" url:"-"`
+	OptionalID                 *ID                     `json:"optional_id,omitempty" url:"-"`
 	ListOfObjectsWithOptionals []*MyObjectWithOptional `json:"list_of_objects_with_optionals" url:"-"`
 	AliasObject                MyAliasObject           `json:"alias_object" url:"-"`
 	ListOfAliasObject          []MyAliasObject         `json:"list_of_alias_object" url:"-"`
@@ -606,15 +606,15 @@ func (i *InlineTypeRequest) require(field *big.Int) {
 	i.explicitFields.Or(i.explicitFields, field)
 }
 
-type WithJsonPropertyRequest struct {
+type WithJSONPropertyRequest struct {
 	File io.Reader `json:"-" url:"-"`
-	Json *MyObject `json:"json,omitempty" url:"-"`
+	JSON *MyObject `json:"json,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (w *WithJsonPropertyRequest) require(field *big.Int) {
+func (w *WithJSONPropertyRequest) require(field *big.Int) {
 	if w.explicitFields == nil {
 		w.explicitFields = big.NewInt(0)
 	}

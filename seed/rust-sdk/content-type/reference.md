@@ -488,8 +488,8 @@ async fn main() {
         .regular_patch(
             &"id".to_string(),
             &RegularPatchRequest {
-                field_1: Some("field1".to_string()),
-                field_2: Some(1),
+                field1: Some("field1".to_string()),
+                field2: Some(1),
                 ..Default::default()
             },
             None,
@@ -518,7 +518,7 @@ async fn main() {
 <dl>
 <dd>
 
-**field_1:** `Option<String>` 
+**field1:** `Option<String>` 
     
 </dd>
 </dl>
@@ -526,7 +526,7 @@ async fn main() {
 <dl>
 <dd>
 
-**field_2:** `Option<i64>` 
+**field2:** `Option<i64>` 
     
 </dd>
 </dl>

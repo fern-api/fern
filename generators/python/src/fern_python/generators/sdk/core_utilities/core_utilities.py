@@ -106,7 +106,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="jsonable_encoder"),
             ),
-            exports={"jsonable_encoder"} if not self._exclude_types_from_init_exports else set(),
+            exports={"jsonable_encoder", "encode_path_param"} if not self._exclude_types_from_init_exports else set(),
         )
         self._copy_file_to_project(
             project=project,
@@ -328,6 +328,23 @@ class CoreUtilities:
         else:
             project.add_dependency(PYDANTIC_DEPENDENCY)
 
+    @staticmethod
+    def _resolve_core_utilities_path(relative_filepath: str) -> str:
+        """Resolve the core utilities source directory.
+
+        Supports FERN_CORE_UTILITIES_PATH env var with colon-separated paths
+        for local execution where sdk/ and shared/ are separate directories.
+        """
+        env_paths = os.environ.get("FERN_CORE_UTILITIES_PATH")
+        if env_paths is not None:
+            for source in env_paths.split(":"):
+                if os.path.exists(os.path.join(source, relative_filepath)):
+                    return source
+            return env_paths.split(":")[0]
+        if "PYTEST_CURRENT_TEST" in os.environ:
+            return os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
+        return "/assets/core_utilities"
+
     def _copy_file_to_project(
         self,
         *,
@@ -337,11 +354,7 @@ class CoreUtilities:
         exports: Set[str],
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
-        source = (
-            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
-            if "PYTEST_CURRENT_TEST" in os.environ
-            else "/assets/core_utilities"
-        )
+        source = self._resolve_core_utilities_path(relative_filepath_on_disk)
         SourceFileFactory.add_source_file_from_disk(
             project=project,
             path_on_disk=os.path.join(source, relative_filepath_on_disk),
@@ -352,11 +365,7 @@ class CoreUtilities:
 
     def _copy_http_sse_folder_to_project(self, *, project: Project) -> None:
         """Copy the http_sse folder using the same approach as individual file copying"""
-        source = (
-            os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
-            if "PYTEST_CURRENT_TEST" in os.environ
-            else "/assets/core_utilities"
-        )
+        source = self._resolve_core_utilities_path("http_sse")
         folder_path_on_disk = os.path.join(source, "http_sse")
 
         # Define exports for each file
@@ -607,6 +616,20 @@ class CoreUtilities:
                     import_=AST.ReferenceImport(
                         module=AST.Module.local(*self._module_path, "jsonable_encoder"),
                         named_import="jsonable_encoder",
+                    ),
+                ),
+                args=[obj],
+            )
+        )
+
+    def encode_path_param(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "jsonable_encoder"),
+                        named_import="encode_path_param",
                     ),
                 ),
                 args=[obj],

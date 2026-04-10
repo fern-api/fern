@@ -1,8 +1,8 @@
 {
   "mappings": [
     {
-      "id": "07afdcff-a307-475a-b81a-89ebf2b474b2",
-      "name": "stream - default",
+      "id": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
+      "name": "stream - Stream completions",
       "request": {
         "urlPathTemplate": "/stream",
         "method": "POST"
@@ -14,7 +14,7 @@
           "Content-Type": "text/event-stream"
         }
       },
-      "uuid": "07afdcff-a307-475a-b81a-89ebf2b474b2",
+      "uuid": "da00c5d3-8997-4a3a-ac5a-78907c04708e",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -27,8 +27,8 @@
       }
     },
     {
-      "id": "3cab3f22-4084-44cf-bb9c-eb0141d7c518",
-      "name": "streamWithoutTerminator - default",
+      "id": "392a038a-4138-4153-a873-41da36997679",
+      "name": "streamWithoutTerminator - Stream without terminator",
       "request": {
         "urlPathTemplate": "/stream-no-terminator",
         "method": "POST"
@@ -40,7 +40,7 @@
           "Content-Type": "text/event-stream"
         }
       },
-      "uuid": "3cab3f22-4084-44cf-bb9c-eb0141d7c518",
+      "uuid": "392a038a-4138-4153-a873-41da36997679",
       "persistent": true,
       "priority": 3,
       "metadata": {

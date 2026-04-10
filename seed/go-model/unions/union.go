@@ -10,17 +10,17 @@ import (
 )
 
 type GetShapeRequest struct {
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (g *GetShapeRequest) GetId() string {
+func (g *GetShapeRequest) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
 func (g *GetShapeRequest) GetExtraProperties() map[string]any {
@@ -114,7 +114,7 @@ func (w *WithName) String() string {
 type Shape struct {
 	Type   string
 	Name   string
-	Id     string
+	ID     string
 	Circle Circle
 	Square Square
 }

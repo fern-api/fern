@@ -20,15 +20,6 @@ describe("SeedApiClient", () => {
             .build();
 
         const response = await client.uploadJsonDocument();
-        expect(response).toEqual({
-            author: "author",
-            id: 1,
-            tags: [
-                {
-                    key: "value",
-                },
-            ],
-            title: "title",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

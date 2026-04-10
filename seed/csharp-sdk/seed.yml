@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v65
+irVersion: v66
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -185,6 +185,10 @@ fixtures:
           Moq: 4.20.70
           Moq.Contrib.HttpClient: "1.4.0"
       outputFolder: extra-dependencies
+    - customConfig:
+        extra-dependencies:
+          PolySharp: "1.14.0"
+      outputFolder: extra-dependencies-override
     - customConfig:
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
@@ -394,6 +398,7 @@ fixtures:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
 allowedFailures:
+  - schemaless-request-body-examples
   - bytes-upload
   - enum:forward-compatible-enums
   - imdb:exported-client-class-name

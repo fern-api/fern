@@ -260,7 +260,7 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def get_and_return_base_64(request_options: {}, **params)
+        def get_and_return_base64(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],

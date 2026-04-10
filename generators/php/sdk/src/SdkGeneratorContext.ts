@@ -1,4 +1,4 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { GeneratorNotificationService, NameInput } from "@fern-api/base-generator";
 import { AbstractPhpGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -81,7 +81,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getSubpackageClassReference(subpackage: FernIr.Subpackage): php.ClassReference {
         return php.classReference({
-            name: `${subpackage.name.pascalCase.unsafeName}Client`,
+            name: `${this.case.pascalUnsafe(subpackage.name)}Client`,
             namespace: this.getFileLocation(subpackage.fernFilepath).namespace
         });
     }
@@ -99,22 +99,22 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getSubpackageInterfaceClassReference(subpackage: FernIr.Subpackage): php.ClassReference {
         return php.classReference({
-            name: `${subpackage.name.pascalCase.unsafeName}ClientInterface`,
+            name: `${this.case.pascalUnsafe(subpackage.name)}ClientInterface`,
             namespace: this.getFileLocation(subpackage.fernFilepath).namespace
         });
     }
 
     public getSubpackageGetterName(subpackage: FernIr.Subpackage): string {
-        return `get${subpackage.name.pascalCase.safeName}`;
+        return `get${this.case.pascalSafe(subpackage.name)}`;
     }
 
     public getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         // TODO: Propogate reserved keywords through IR via CasingsGenerator.
-        const unsafeName = endpoint.name.camelCase.unsafeName;
+        const unsafeName = this.case.camelUnsafe(endpoint.name);
         if (RESERVED_METHOD_NAMES.includes(unsafeName)) {
             return unsafeName;
         }
-        return endpoint.name.camelCase.safeName;
+        return this.case.camelSafe(endpoint.name);
     }
 
     public getUnpagedEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
@@ -127,7 +127,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getSubpackageField(subpackage: FernIr.Subpackage): php.Field {
         return php.field({
-            name: `$${subpackage.name.camelCase.safeName}`,
+            name: `$${this.case.camelSafe(subpackage.name)}`,
             access: "public",
             type: php.Type.reference(this.getSubpackageClassReference(subpackage))
         });
@@ -203,9 +203,9 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getUtilsClassReference("File");
     }
 
-    public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: FernIr.Name): php.ClassReference {
+    public getRequestWrapperReference(serviceId: FernIr.ServiceId, requestName: NameInput): php.ClassReference {
         return php.classReference({
-            name: requestName.pascalCase.safeName,
+            name: this.case.pascalSafe(requestName),
             namespace: this.getLocationForWrappedRequest(serviceId).namespace
         });
     }
@@ -397,7 +397,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getEnvironmentAccess(name: FernIr.Name): php.CodeBlock {
+    public getEnvironmentAccess(name: NameInput): php.CodeBlock {
         const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
         if (isMultiUrl) {
             return php.codeblock((writer) => {
@@ -434,14 +434,17 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public deepSetPagination(
         objectVarToSetOn: php.AstNode,
-        setterPath: FernIr.Name[],
+        setterPath: NameInput[],
         valueVarToSet: php.AstNode
     ): php.AstNode {
         if (setterPath.length === 0) {
             throw new Error("setterPath cannot be empty");
         }
         if (setterPath.length === 1) {
-            const singleSetter = setterPath[0] as FernIr.Name;
+            const singleSetter = setterPath[0];
+            if (singleSetter == null) {
+                throw new Error("setterPath[0] is unexpectedly undefined");
+            }
             return php.codeblock((writer) => {
                 writer.writeNode(objectVarToSetOn);
                 writer.writeNode(this.getTypeSetter(singleSetter, valueVarToSet));
@@ -462,8 +465,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getEnvironmentName(name: FernIr.Name): string {
-        return name.pascalCase.safeName;
+    public getEnvironmentName(name: NameInput): string {
+        return this.case.pascalSafe(name);
     }
 
     public getUserAgent(): FernIr.UserAgent | undefined {
@@ -479,7 +482,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return undefined;
     }
 
-    public getTypeGetter(propertyName: FernIr.Name): php.AstNode {
+    public getTypeGetter(propertyName: NameInput): php.AstNode {
         return php.codeblock((writer) => {
             if (this.shouldGenerateGetterMethods()) {
                 writer.write(`->${this.getPropertyGetterName(propertyName)}()`);
@@ -489,7 +492,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
-    public getTypeSetter(propertyName: FernIr.Name, valueVarToSet: php.AstNode): php.AstNode {
+    public getTypeSetter(propertyName: NameInput, valueVarToSet: php.AstNode): php.AstNode {
         return php.codeblock((writer) => {
             if (this.shouldGenerateGetterMethods()) {
                 writer.write(`->${this.getPropertySetterName(propertyName)}`);
@@ -508,8 +511,8 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         requestParameterName,
         propertyName
     }: {
-        requestParameterName: FernIr.Name;
-        propertyName: FernIr.Name;
+        requestParameterName: NameInput;
+        propertyName: NameInput;
     }): string {
         const requestParameter = this.getRequestParameterVar({ requestParameterName });
         if (this.shouldGenerateGetterMethods()) {
@@ -518,7 +521,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return `${requestParameter}->${this.getPropertyName(propertyName)}`;
     }
 
-    public getRequestParameterVar({ requestParameterName }: { requestParameterName: FernIr.Name }): string {
+    public getRequestParameterVar({ requestParameterName }: { requestParameterName: NameInput }): string {
         return `$${this.getParameterName(requestParameterName)}`;
     }
 
@@ -551,7 +554,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
         const clientVariableName = this.getClientVariableName();
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.safeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => this.case.camelSafe(part));
         return clientAccessParts.length > 0
             ? `${clientVariableName}->${clientAccessParts.join("->")}`
             : clientVariableName;
@@ -730,7 +733,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         }
 
         const baseUrl = multiUrlEnvs.baseUrls.find((url) => url.id === baseUrlId);
-        return baseUrl?.name.camelCase.safeName ?? "";
+        return baseUrl?.name != null ? this.case.camelSafe(baseUrl.name) : "";
     }
 
     private getComputedClientName(): string {

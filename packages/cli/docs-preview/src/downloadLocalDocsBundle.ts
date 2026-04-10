@@ -4,7 +4,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import chalk from "chalk";
 import cliProgress from "cli-progress";
 import decompress from "decompress";
-import { mkdir, readFile, rm, writeFile } from "fs/promises";
+import { mkdir, readFile, rename, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
@@ -225,8 +225,14 @@ export async function downloadBundle({
 
         const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
         if (await doesPathExist(absolutePathToPreviewFolder)) {
-            logger.debug(`Removing previously cached bundle at: ${absolutePathToPreviewFolder}`);
-            await rm(absolutePathToPreviewFolder, { recursive: true });
+            const oldBundlePath = AbsoluteFilePath.of(`${absolutePathToPreviewFolder}-old-${Date.now()}`);
+            logger.debug(`Moving previously cached bundle to: ${oldBundlePath}`);
+            await rename(absolutePathToPreviewFolder, oldBundlePath);
+
+            // Delete the old bundle asynchronously so it doesn't block the rest of the setup
+            rm(oldBundlePath, { recursive: true }).catch((error) => {
+                logger.debug(`Failed to remove old bundle at ${oldBundlePath}: ${error}`);
+            });
         }
         await mkdir(absolutePathToPreviewFolder, { recursive: true });
 

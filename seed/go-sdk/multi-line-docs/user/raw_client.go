@@ -35,7 +35,7 @@ func (r *RawClient) GetUser(
 	ctx context.Context,
 	// The ID of the user to retrieve.
 	// This ID is unique to each user.
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -46,7 +46,7 @@ func (r *RawClient) GetUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v",
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

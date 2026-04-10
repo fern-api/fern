@@ -386,6 +386,14 @@ jobs:
       - name: Test
         run: poetry run pytest -rP -n auto .
 """
+        # Add aiohttp extra install and test steps
+        workflow_yaml += """
+      - name: Install aiohttp extra
+        run: poetry install --extras aiohttp
+
+      - name: Test (aiohttp)
+        run: poetry run pytest -rP -n auto -m aiohttp .
+"""
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
             if publish_info_union.type != "pypi":
@@ -477,6 +485,14 @@ jobs:
             workflow_yaml += """
       - name: Test
         run: poetry run pytest -rP -n auto .
+"""
+        # Add aiohttp extra install and test steps
+        workflow_yaml += """
+      - name: Install aiohttp extra
+        run: poetry install --extras aiohttp
+
+      - name: Test (aiohttp)
+        run: poetry run pytest -rP -n auto -m aiohttp .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()

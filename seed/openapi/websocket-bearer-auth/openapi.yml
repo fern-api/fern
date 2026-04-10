@@ -99,6 +99,6 @@ components:
       required:
         - receiveText3
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

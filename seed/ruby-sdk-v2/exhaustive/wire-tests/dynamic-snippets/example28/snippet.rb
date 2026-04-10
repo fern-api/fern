@@ -5,7 +5,10 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.pagination.list_items(
-  cursor: "cursor",
-  limit: 1
+client.endpoints.object.get_and_return_with_required_nested_object(
+  required_string: "hello",
+  required_object: {
+    string: "nested",
+    nested_object: {}
+  }
 )

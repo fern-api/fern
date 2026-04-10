@@ -124,11 +124,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "boolean",
-                            "value": true
-                        }
+                        "type": "primitive",
+                        "value": "BOOLEAN"
                     },
                     "propertyAccess": null,
                     "variable": null

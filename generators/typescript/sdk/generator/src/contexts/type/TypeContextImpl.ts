@@ -61,7 +61,7 @@ export class TypeContextImpl implements TypeContext {
     private npmPackage: NpmPackage | undefined;
     private context: BaseContext;
     private useDefaultRequestParameterValues: boolean;
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
     private requestResponseVariantCache: Map<FernIr.TypeId, { request: boolean; response: boolean }> = new Map();
     private requestResponseVariantInProgress: Set<FernIr.TypeId> = new Set();
 
@@ -100,7 +100,7 @@ export class TypeContextImpl implements TypeContext {
         this.retainOriginalCasing = retainOriginalCasing;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
         this.context = context;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
@@ -592,15 +592,11 @@ export class TypeContextImpl implements TypeContext {
     }
 
     private getPropertyName({ name }: { name: FernIr.NameOrString }): string {
-        return this.retainOriginalCasing || !this.includeSerdeLayer
-            ? getOriginalName(name)
-            : this.caseConverter.camelSafe(name);
+        return this.retainOriginalCasing || !this.includeSerdeLayer ? getOriginalName(name) : this.case.camelSafe(name);
     }
 
     private getNameFromWireValue({ name }: { name: FernIr.NameAndWireValueOrString }): string {
-        return this.retainOriginalCasing || !this.includeSerdeLayer
-            ? getWireValue(name)
-            : this.caseConverter.camelSafe(name);
+        return this.retainOriginalCasing || !this.includeSerdeLayer ? getWireValue(name) : this.case.camelSafe(name);
     }
 
     public getReferenceToResponsePropertyType({
@@ -639,7 +635,7 @@ export class TypeContextImpl implements TypeContext {
             const ref = this.getReferenceToInlinePropertyType(
                 inlinePropertyPathItem.type,
                 getTextOfTsNode(currentParentTypeNode),
-                this.caseConverter.pascalSafe(inlinePropertyPathItem.name)
+                this.case.pascalSafe(inlinePropertyPathItem.name)
             );
             currentParentTypeNode = ref.responseTypeNode ?? ref.typeNode;
         }

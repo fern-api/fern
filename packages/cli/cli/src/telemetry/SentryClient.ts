@@ -1,3 +1,4 @@
+import { setSentryRunIdTags } from "@fern-api/cli-telemetry";
 import * as Sentry from "@sentry/node";
 
 export class SentryClient {
@@ -19,6 +20,7 @@ export class SentryClient {
                 integrations: [Sentry.rewriteFramesIntegration()],
                 tracesSampleRate: 0
             });
+            setSentryRunIdTags();
         }
     }
 

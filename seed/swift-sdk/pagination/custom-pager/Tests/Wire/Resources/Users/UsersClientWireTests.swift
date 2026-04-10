@@ -1151,4 +1151,72 @@ import Pagination
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func listWithAliasedData1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersAliasedDataPaginationResponse(
+            hasNextPage: Optional(true),
+            page: Optional(PageType(
+                page: 1,
+                next: Optional(NextPageType(
+                    page: 1,
+                    startingAfter: "starting_after"
+                )),
+                perPage: 1,
+                totalPage: 1
+            )),
+            totalCount: 1,
+            data: [
+                UserType(
+                    name: "name",
+                    id: 1
+                ),
+                UserType(
+                    name: "name",
+                    id: 1
+                )
+            ]
+        )
+        let response = try await client.users.listWithAliasedData(
+            page: 1,
+            perPage: 1,
+            startingAfter: "starting_after",
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
 }

@@ -184,7 +184,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
                     for (const subpackage of this.getSubpackages()) {
                         // skip subpackages that are completely empty (recursively)
                         if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
-                            innerWriter.writeLine(`${subpackage.name.pascalCase.safeName} = `);
+                            innerWriter.writeLine(`${this.case.pascalSafe(subpackage.name)} = `);
                             innerWriter.writeNodeStatement(
                                 this.csharp.instantiateClass({
                                     classReference: this.context.getSubpackageClassReference(subpackage),

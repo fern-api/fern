@@ -45,9 +45,7 @@ describe("SyspropClient", () => {
 
         const response = await client.sysprop.getNumWarmInstances();
         expect(response).toEqual({
-            body: {
-                JAVA: 1,
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

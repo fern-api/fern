@@ -18,8 +18,10 @@ import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
 import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
 import com.fern.sdk.resources.types.object.types.ObjectWithDocumentedUnknownType;
 import com.fern.sdk.resources.types.object.types.ObjectWithMapOfMap;
+import com.fern.sdk.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.resources.types.object.types.ObjectWithRequiredNestedObject;
 import com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;
 import java.io.IOException;
 import java.lang.Object;
@@ -599,25 +601,24 @@ public class AsyncRawObjectClient {
                     }
 
                     /**
-                     * Tests that string fields containing datetime-like values are NOT reformatted.
-                     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
-                     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+                     * Tests that dynamic snippets include all required properties in the
+                     * object initializer, even when the example omits some required fields.
                      */
-                    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> getAndReturnWithDatetimeLikeString(
-                        ObjectWithDatetimeLikeString request) {
-                      return getAndReturnWithDatetimeLikeString(request,null);
+                    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMixedRequiredAndOptionalFields>> getAndReturnWithMixedRequiredAndOptionalFields(
+                        ObjectWithMixedRequiredAndOptionalFields request) {
+                      return getAndReturnWithMixedRequiredAndOptionalFields(request,null);
                     }
 
                     /**
-                     * Tests that string fields containing datetime-like values are NOT reformatted.
-                     * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
-                     * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+                     * Tests that dynamic snippets include all required properties in the
+                     * object initializer, even when the example omits some required fields.
                      */
-                    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> getAndReturnWithDatetimeLikeString(
-                        ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+                    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMixedRequiredAndOptionalFields>> getAndReturnWithMixedRequiredAndOptionalFields(
+                        ObjectWithMixedRequiredAndOptionalFields request,
+                        RequestOptions requestOptions) {
                       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                         .addPathSegments("object")
-                        .addPathSegments("get-and-return-with-datetime-like-string");if (requestOptions != null) {
+                        .addPathSegments("get-and-return-with-mixed-required-and-optional-fields");if (requestOptions != null) {
                           requestOptions.getQueryParameters().forEach((_key, _value) -> {
                             httpUrl.addQueryParameter(_key, _value);
                           } );
@@ -640,14 +641,14 @@ public class AsyncRawObjectClient {
                         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                           client = clientOptions.httpClientWithTimeout(requestOptions);
                         }
-                        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> future = new CompletableFuture<>();
+                        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithMixedRequiredAndOptionalFields>> future = new CompletableFuture<>();
                         client.newCall(okhttpRequest).enqueue(new Callback() {
                           @Override
                           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                             try (ResponseBody responseBody = response.body()) {
                               String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                               if (response.isSuccessful()) {
-                                future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDatetimeLikeString.class), response));
+                                future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithMixedRequiredAndOptionalFields.class), response));
                                 return;
                               }
                               Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
@@ -666,4 +667,144 @@ public class AsyncRawObjectClient {
                         });
                         return future;
                       }
-                    }
+
+                      /**
+                       * Tests that dynamic snippets recursively construct default objects for
+                       * required properties whose type is a named object. When the example
+                       * omits the nested object, the generator should construct a default
+                       * initializer with the nested object's required properties filled in.
+                       */
+                      public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredNestedObject>> getAndReturnWithRequiredNestedObject(
+                          ObjectWithRequiredNestedObject request) {
+                        return getAndReturnWithRequiredNestedObject(request,null);
+                      }
+
+                      /**
+                       * Tests that dynamic snippets recursively construct default objects for
+                       * required properties whose type is a named object. When the example
+                       * omits the nested object, the generator should construct a default
+                       * initializer with the nested object's required properties filled in.
+                       */
+                      public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredNestedObject>> getAndReturnWithRequiredNestedObject(
+                          ObjectWithRequiredNestedObject request, RequestOptions requestOptions) {
+                        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+                          .addPathSegments("object")
+                          .addPathSegments("get-and-return-with-required-nested-object");if (requestOptions != null) {
+                            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                              httpUrl.addQueryParameter(_key, _value);
+                            } );
+                          }
+                          RequestBody body;
+                          try {
+                            body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                          }
+                          catch(JsonProcessingException e) {
+                            throw new SeedExhaustiveException("Failed to serialize request", e);
+                          }
+                          Request okhttpRequest = new Request.Builder()
+                            .url(httpUrl.build())
+                            .method("POST", body)
+                            .headers(Headers.of(clientOptions.headers(requestOptions)))
+                            .addHeader("Content-Type", "application/json")
+                            .addHeader("Accept", "application/json")
+                            .build();
+                          OkHttpClient client = clientOptions.httpClient();
+                          if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                            client = clientOptions.httpClientWithTimeout(requestOptions);
+                          }
+                          CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredNestedObject>> future = new CompletableFuture<>();
+                          client.newCall(okhttpRequest).enqueue(new Callback() {
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                              try (ResponseBody responseBody = response.body()) {
+                                String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                                if (response.isSuccessful()) {
+                                  future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithRequiredNestedObject.class), response));
+                                  return;
+                                }
+                                Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                                future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                                return;
+                              }
+                              catch (IOException e) {
+                                future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                              }
+                            }
+
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                              future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                            }
+                          });
+                          return future;
+                        }
+
+                        /**
+                         * Tests that string fields containing datetime-like values are NOT reformatted.
+                         * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+                         * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+                         */
+                        public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> getAndReturnWithDatetimeLikeString(
+                            ObjectWithDatetimeLikeString request) {
+                          return getAndReturnWithDatetimeLikeString(request,null);
+                        }
+
+                        /**
+                         * Tests that string fields containing datetime-like values are NOT reformatted.
+                         * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+                         * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+                         */
+                        public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> getAndReturnWithDatetimeLikeString(
+                            ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+                          HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+                            .addPathSegments("object")
+                            .addPathSegments("get-and-return-with-datetime-like-string");if (requestOptions != null) {
+                              requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                                httpUrl.addQueryParameter(_key, _value);
+                              } );
+                            }
+                            RequestBody body;
+                            try {
+                              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                            }
+                            catch(JsonProcessingException e) {
+                              throw new SeedExhaustiveException("Failed to serialize request", e);
+                            }
+                            Request okhttpRequest = new Request.Builder()
+                              .url(httpUrl.build())
+                              .method("POST", body)
+                              .headers(Headers.of(clientOptions.headers(requestOptions)))
+                              .addHeader("Content-Type", "application/json")
+                              .addHeader("Accept", "application/json")
+                              .build();
+                            OkHttpClient client = clientOptions.httpClient();
+                            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                              client = clientOptions.httpClientWithTimeout(requestOptions);
+                            }
+                            CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> future = new CompletableFuture<>();
+                            client.newCall(okhttpRequest).enqueue(new Callback() {
+                              @Override
+                              public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                try (ResponseBody responseBody = response.body()) {
+                                  String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                                  if (response.isSuccessful()) {
+                                    future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDatetimeLikeString.class), response));
+                                    return;
+                                  }
+                                  Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                                  future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                                  return;
+                                }
+                                catch (IOException e) {
+                                  future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                                }
+                              }
+
+                              @Override
+                              public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                                future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                              }
+                            });
+                            return future;
+                          }
+                        }

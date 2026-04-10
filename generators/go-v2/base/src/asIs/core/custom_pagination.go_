@@ -17,8 +17,8 @@ type CustomPaginatedLink interface {
 // L is the concrete link type (e.g., *Link) that implements CustomPaginatedLink
 type CustomPaginatedResponse[D any, L CustomPaginatedLink] interface {
 	comparable // Allows nil comparison
-	GetLimit() *float64
-	GetCount() *float64
+	GetLimit() *int
+	GetCount() *int
 	GetHasMore() *bool
 	GetLinks() []L
 	GetData() D

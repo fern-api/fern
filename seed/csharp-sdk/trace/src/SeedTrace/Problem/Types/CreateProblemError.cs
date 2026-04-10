@@ -30,7 +30,7 @@ public record CreateProblemError
     /// <summary>
     /// Discriminant value
     /// </summary>
-    [JsonPropertyName("errorType")]
+    [JsonPropertyName("_type")]
     public string ErrorType { get; internal set; }
 
     /// <summary>

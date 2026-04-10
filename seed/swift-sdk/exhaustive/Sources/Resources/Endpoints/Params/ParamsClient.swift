@@ -129,6 +129,18 @@ public final class ParamsClient: Sendable {
         )
     }
 
+    /// GET with boolean path param
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getWithBooleanPath(param: String, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/params/path-bool/\(param)",
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
+
     /// GET with path param that can throw errors
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.

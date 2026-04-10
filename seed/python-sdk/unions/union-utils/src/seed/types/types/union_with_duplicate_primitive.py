@@ -12,7 +12,7 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class _Factory:
-    def integer_1(self, value: int) -> UnionWithDuplicatePrimitive:
+    def integer1(self, value: int) -> UnionWithDuplicatePrimitive:
         if IS_PYDANTIC_V2:
             return UnionWithDuplicatePrimitive(root=_UnionWithDuplicatePrimitive.Integer1(type="integer1", value=value))  # type: ignore
         else:
@@ -20,7 +20,7 @@ class _Factory:
                 __root__=_UnionWithDuplicatePrimitive.Integer1(type="integer1", value=value)
             )  # type: ignore
 
-    def integer_2(self, value: int) -> UnionWithDuplicatePrimitive:
+    def integer2(self, value: int) -> UnionWithDuplicatePrimitive:
         if IS_PYDANTIC_V2:
             return UnionWithDuplicatePrimitive(root=_UnionWithDuplicatePrimitive.Integer2(type="integer2", value=value))  # type: ignore
         else:
@@ -28,7 +28,7 @@ class _Factory:
                 __root__=_UnionWithDuplicatePrimitive.Integer2(type="integer2", value=value)
             )  # type: ignore
 
-    def string_1(self, value: str) -> UnionWithDuplicatePrimitive:
+    def string1(self, value: str) -> UnionWithDuplicatePrimitive:
         if IS_PYDANTIC_V2:
             return UnionWithDuplicatePrimitive(root=_UnionWithDuplicatePrimitive.String1(type="string1", value=value))  # type: ignore
         else:
@@ -36,7 +36,7 @@ class _Factory:
                 __root__=_UnionWithDuplicatePrimitive.String1(type="string1", value=value)
             )  # type: ignore
 
-    def string_2(self, value: str) -> UnionWithDuplicatePrimitive:
+    def string2(self, value: str) -> UnionWithDuplicatePrimitive:
         if IS_PYDANTIC_V2:
             return UnionWithDuplicatePrimitive(root=_UnionWithDuplicatePrimitive.String2(type="string2", value=value))  # type: ignore
         else:
@@ -105,20 +105,20 @@ class UnionWithDuplicatePrimitive(UniversalRootModel):
 
     def visit(
         self,
-        integer_1: typing.Callable[[int], T_Result],
-        integer_2: typing.Callable[[int], T_Result],
-        string_1: typing.Callable[[str], T_Result],
-        string_2: typing.Callable[[str], T_Result],
+        integer1: typing.Callable[[int], T_Result],
+        integer2: typing.Callable[[int], T_Result],
+        string1: typing.Callable[[str], T_Result],
+        string2: typing.Callable[[str], T_Result],
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "integer1":
-            return integer_1(unioned_value.value)
+            return integer1(unioned_value.value)
         if unioned_value.type == "integer2":
-            return integer_2(unioned_value.value)
+            return integer2(unioned_value.value)
         if unioned_value.type == "string1":
-            return string_1(unioned_value.value)
+            return string1(unioned_value.value)
         if unioned_value.type == "string2":
-            return string_2(unioned_value.value)
+            return string2(unioned_value.value)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

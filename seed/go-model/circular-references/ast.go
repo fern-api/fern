@@ -193,17 +193,17 @@ func (o *ObjectValue) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
-type JsonLike struct {
-	JsonLikeList      []*JsonLike
-	StringJsonLikeMap map[string]*JsonLike
+type JSONLike struct {
+	JSONLikeList      []*JSONLike
+	StringJSONLikeMap map[string]*JSONLike
 	String            string
 	Integer           int
 	Boolean           bool
 }
 
-type JsonLikeWithNullAndUndefined struct {
-	JsonLikeWithNullAndUndefinedOptionalOptionalList      []*JsonLikeWithNullAndUndefined
-	StringJsonLikeWithNullAndUndefinedOptionalOptionalMap map[string]*JsonLikeWithNullAndUndefined
+type JSONLikeWithNullAndUndefined struct {
+	JSONLikeWithNullAndUndefinedOptionalOptionalList      []*JSONLikeWithNullAndUndefined
+	StringJSONLikeWithNullAndUndefinedOptionalOptionalMap map[string]*JSONLikeWithNullAndUndefined
 	StringOptionalOptional                                *string
 	IntegerOptionalOptional                               *int
 	BooleanOptionalOptional                               *bool

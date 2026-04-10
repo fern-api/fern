@@ -87,6 +87,16 @@ def test_endpoints_params_modify_with_inline_path() -> None:
     verify_request_count(test_id, "PUT", "/params/path/param", None, 1)
 
 
+def test_endpoints_params_get_with_boolean_path() -> None:
+    """Test getWithBooleanPath endpoint with WireMock"""
+    test_id = "endpoints.params.get_with_boolean_path.0"
+    client = get_client(test_id)
+    client.endpoints.params.get_with_boolean_path(
+        param=True,
+    )
+    verify_request_count(test_id, "GET", "/params/path-bool/true", None, 1)
+
+
 def test_endpoints_params_get_with_path_and_errors() -> None:
     """Test getWithPathAndErrors endpoint with WireMock"""
     test_id = "endpoints.params.get_with_path_and_errors.0"

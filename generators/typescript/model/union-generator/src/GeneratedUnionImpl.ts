@@ -82,7 +82,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private readonly inline: boolean;
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
 
     constructor({
         typeName,
@@ -121,7 +121,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.inline = inline;
         this.enableInlineTypes = enableInlineTypes;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public generateStatements(
@@ -291,7 +291,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
 
     private _getBasePropertyKey(baseProperty: FernIr.ObjectProperty): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return this.caseConverter.camelUnsafe(baseProperty.name);
+            return this.case.camelUnsafe(baseProperty.name);
         } else {
             return getWireValue(baseProperty.name);
         }

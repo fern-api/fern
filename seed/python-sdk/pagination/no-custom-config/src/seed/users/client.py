@@ -8,6 +8,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.username_cursor import UsernameCursor
 from .raw_client import AsyncRawUsersClient, RawUsersClient
+from .types.list_users_aliased_data_pagination_response import ListUsersAliasedDataPaginationResponse
 from .types.list_users_extended_optional_list_response import ListUsersExtendedOptionalListResponse
 from .types.list_users_extended_response import ListUsersExtendedResponse
 from .types.list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
@@ -688,6 +689,57 @@ class UsersClient:
             yield page
         """
         return self._raw_client.list_with_optional_data(page=page, request_options=request_options)
+
+    def list_with_aliased_data(
+        self,
+        *,
+        page: typing.Optional[int] = None,
+        per_page: typing.Optional[int] = None,
+        starting_after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[User, ListUsersAliasedDataPaginationResponse]:
+        """
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
+
+        per_page : typing.Optional[int]
+            Defaults to per page
+
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[User, ListUsersAliasedDataPaginationResponse]
+
+        Examples
+        --------
+        from seed import SeedPagination
+
+        client = SeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.users.list_with_aliased_data(
+            page=1,
+            per_page=1,
+            starting_after="starting_after",
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list_with_aliased_data(
+            page=page, per_page=per_page, starting_after=starting_after, request_options=request_options
+        )
 
 
 class AsyncUsersClient:
@@ -1493,3 +1545,63 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         return await self._raw_client.list_with_optional_data(page=page, request_options=request_options)
+
+    async def list_with_aliased_data(
+        self,
+        *,
+        page: typing.Optional[int] = None,
+        per_page: typing.Optional[int] = None,
+        starting_after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[User, ListUsersAliasedDataPaginationResponse]:
+        """
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
+
+        per_page : typing.Optional[int]
+            Defaults to per page
+
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[User, ListUsersAliasedDataPaginationResponse]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPagination
+
+        client = AsyncSeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.users.list_with_aliased_data(
+                page=1,
+                per_page=1,
+                starting_after="starting_after",
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list_with_aliased_data(
+            page=page, per_page=per_page, starting_after=starting_after, request_options=request_options
+        )

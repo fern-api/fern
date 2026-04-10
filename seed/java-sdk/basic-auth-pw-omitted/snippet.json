@@ -1,0 +1,96 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "c7d7b6ea",
+            "id": {
+                "method": "GET",
+                "path": "/basic-auth",
+                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().getWithBasicAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().getWithBasicAuth();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "14b143fa",
+            "id": {
+                "method": "GET",
+                "path": "/basic-auth",
+                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().getWithBasicAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().getWithBasicAuth();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "870016e8",
+            "id": {
+                "method": "GET",
+                "path": "/basic-auth",
+                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().getWithBasicAuth();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().getWithBasicAuth();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "8ae9427b",
+            "id": {
+                "method": "POST",
+                "path": "/basic-auth",
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().postWithBasicAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().postWithBasicAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "91843eb7",
+            "id": {
+                "method": "POST",
+                "path": "/basic-auth",
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().postWithBasicAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().postWithBasicAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "f39df15b",
+            "id": {
+                "method": "POST",
+                "path": "/basic-auth",
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().postWithBasicAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().postWithBasicAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "3fd3da91",
+            "id": {
+                "method": "POST",
+                "path": "/basic-auth",
+                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().postWithBasicAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.basicAuthPwOmitted.SeedBasicAuthPwOmittedClient;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBasicAuthPwOmittedClient client = SeedBasicAuthPwOmittedClient\n            .builder()\n            .credentials(\"<username>\", \"<password>\")\n            .build();\n\n        client.basicAuth().postWithBasicAuth(new \n        HashMap<String, Object>() {{put(\"key\", \"value\");\n        }});\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

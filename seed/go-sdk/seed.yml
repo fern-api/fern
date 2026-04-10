@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v66
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -143,6 +143,7 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+        maxRetries: 5
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -331,6 +332,7 @@ scripts:
           fi
           exit $TEST_EXIT_CODE
 allowedFailures:
+  - schemaless-request-body-examples
   - alias-extends
   - bytes-upload
   - bytes-download
@@ -352,6 +354,7 @@ allowedFailures:
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
+  - pagination-uri-path
 
   # TODO: Update the dynamic snippet generator to handle these cases.
   - examples:exported-client-name
@@ -366,6 +369,5 @@ allowedFailures:
   - file-upload:package-name
   - file-upload-openapi
 
-  - pagination-custom:.
-
-  # exhaustive fixtures now pass after fixing bytes endpoint wire test generation
+  - go-deterministic-ordering:.
+  - exhaustive:omit-empty-request-wrappers

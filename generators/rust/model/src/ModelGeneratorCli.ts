@@ -45,7 +45,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
 
     protected async generate(context: ModelGeneratorContext): Promise<void> {
         context.logger.debug(
-            `Starting model generation for ${context.ir.apiName.pascalCase.safeName} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
+            `Starting model generation for ${context.case.pascalSafe(context.ir.apiName)} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
         );
 
         const files: RustFile[] = [];
@@ -113,7 +113,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         const writer = new Writer();
 
         // Add module documentation
-        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiName = context.ir.apiDisplayName ?? context.case.pascalSafe(context.ir.apiName) ?? "API";
         writer.writeLine(`//! Request and response types for the ${apiName}`);
         writer.writeLine("//!");
         writer.writeLine("//! This module contains all data structures used for API communication,");

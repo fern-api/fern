@@ -1,6 +1,7 @@
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { findUp } from "find-up";
 import fs from "fs";
 import { rm } from "fs/promises";
 import path from "path";
@@ -118,6 +119,69 @@ export function findOrphanedSeedFolders(generators: GeneratorWorkspace[]): Orpha
     }
 
     return orphanedFolders;
+}
+
+export interface EmptyDirectoryResult {
+    emptyDirectories: AbsoluteFilePath[];
+    deletedDirectories: AbsoluteFilePath[];
+}
+
+export async function cleanEmptySeedDirectories(dryRun: boolean): Promise<EmptyDirectoryResult> {
+    const seedDirectoryStr = await findUp("seed", { type: "directory" });
+    if (seedDirectoryStr == null) {
+        CONSOLE_LOGGER.warn("Could not find seed directory");
+        return { emptyDirectories: [], deletedDirectories: [] };
+    }
+    const seedDirectory = AbsoluteFilePath.of(seedDirectoryStr);
+
+    const emptyDirectories: AbsoluteFilePath[] = [];
+
+    const generatorDirs = fs.readdirSync(seedDirectory).filter((name) => {
+        const fullPath = path.join(seedDirectory, name);
+        return fs.statSync(fullPath).isDirectory() && name !== "fern-cli";
+    });
+
+    for (const generatorDir of generatorDirs) {
+        const generatorPath = AbsoluteFilePath.of(path.join(seedDirectory, generatorDir));
+        const seedConfigPath = path.join(generatorPath, "seed.yml");
+        if (!fs.existsSync(seedConfigPath)) {
+            emptyDirectories.push(generatorPath);
+        }
+    }
+
+    if (emptyDirectories.length === 0) {
+        CONSOLE_LOGGER.info("No seed directories without seed.yml found.");
+        return { emptyDirectories, deletedDirectories: [] };
+    }
+
+    CONSOLE_LOGGER.info(
+        `Found ${emptyDirectories.length} seed director${emptyDirectories.length === 1 ? "y" : "ies"} without seed.yml:`
+    );
+    for (const dir of emptyDirectories) {
+        CONSOLE_LOGGER.info(`  - ${path.basename(dir)}`);
+    }
+
+    if (dryRun) {
+        CONSOLE_LOGGER.info("\nDry run mode - no directories were deleted.");
+        return { emptyDirectories, deletedDirectories: [] };
+    }
+
+    const deletedDirectories: AbsoluteFilePath[] = [];
+    CONSOLE_LOGGER.info("\nDeleting directories without seed.yml...");
+    for (const dir of emptyDirectories) {
+        try {
+            await rm(dir, { recursive: true, force: true });
+            deletedDirectories.push(dir);
+            CONSOLE_LOGGER.info(`  Deleted: ${path.basename(dir)}`);
+        } catch (error) {
+            CONSOLE_LOGGER.error(`  Failed to delete ${path.basename(dir)}: ${error}`);
+        }
+    }
+
+    CONSOLE_LOGGER.info(
+        `\nDeleted ${deletedDirectories.length}/${emptyDirectories.length} director${emptyDirectories.length === 1 ? "y" : "ies"} without seed.yml.`
+    );
+    return { emptyDirectories, deletedDirectories };
 }
 
 export async function cleanOrphanedSeedFolders(

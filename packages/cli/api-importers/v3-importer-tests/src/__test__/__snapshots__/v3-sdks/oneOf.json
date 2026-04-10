@@ -25,6 +25,7 @@
               "name": "EmailObject",
               "typeId": "EmailObject",
               "inline": false,
+              "displayName": "EmailObject",
               "type": "named"
             }
           },
@@ -37,6 +38,7 @@
               "name": "PhoneNumberObject",
               "typeId": "PhoneNumberObject",
               "inline": false,
+              "displayName": "PhoneNumberObject",
               "type": "named"
             }
           }
@@ -331,6 +333,7 @@
               "name": "EmailObject",
               "typeId": "EmailObject",
               "inline": false,
+              "displayName": "EmailObject",
               "type": "named"
             },
             "v2Examples": {
@@ -383,6 +386,7 @@
               "name": "PhoneNumberObject",
               "typeId": "PhoneNumberObject",
               "inline": false,
+              "displayName": "PhoneNumberObject",
               "type": "named"
             },
             "v2Examples": {
@@ -1451,6 +1455,7 @@
               "name": "UserRequest",
               "typeId": "UserRequest",
               "inline": false,
+              "displayName": "UserRequest",
               "type": "named"
             },
             "v2Examples": {
@@ -1473,6 +1478,7 @@
                   "name": "UserRequest",
                   "typeId": "UserRequest",
                   "inline": false,
+                  "displayName": "UserRequest",
                   "type": "named"
                 },
                 "v2Examples": {

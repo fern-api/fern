@@ -5,7 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.custom_pagination import AsyncCustomPager, SyncCustomPager
 from ..core.request_options import RequestOptions
-from ..types.username_cursor import UsernameCursor
+from ..types.users_list_response import UsersListResponse
 from .raw_client import AsyncRawUsersClient, RawUsersClient
 
 
@@ -24,22 +24,28 @@ class UsersClient:
         """
         return self._raw_client
 
-    def list_usernames_custom(
-        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncCustomPager[str, UsernameCursor]:
+    def list_with_custom_pager(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        starting_after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncCustomPager[str, UsersListResponse]:
         """
         Parameters
         ----------
+        limit : typing.Optional[int]
+            The maximum number of results to return.
+
         starting_after : typing.Optional[str]
-            The cursor used for pagination in order to fetch
-            the next page of results.
+            The cursor used for pagination.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncCustomPager[str, UsernameCursor]
+        SyncCustomPager[str, UsersListResponse]
 
         Examples
         --------
@@ -49,7 +55,8 @@ class UsersClient:
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.users.list_usernames_custom(
+        response = client.users.list_with_custom_pager(
+            limit=1,
             starting_after="starting_after",
         )
         for item in response:
@@ -58,7 +65,9 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        return self._raw_client.list_usernames_custom(starting_after=starting_after, request_options=request_options)
+        return self._raw_client.list_with_custom_pager(
+            limit=limit, starting_after=starting_after, request_options=request_options
+        )
 
 
 class AsyncUsersClient:
@@ -76,22 +85,28 @@ class AsyncUsersClient:
         """
         return self._raw_client
 
-    async def list_usernames_custom(
-        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncCustomPager[str, UsernameCursor]:
+    async def list_with_custom_pager(
+        self,
+        *,
+        limit: typing.Optional[int] = None,
+        starting_after: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncCustomPager[str, UsersListResponse]:
         """
         Parameters
         ----------
+        limit : typing.Optional[int]
+            The maximum number of results to return.
+
         starting_after : typing.Optional[str]
-            The cursor used for pagination in order to fetch
-            the next page of results.
+            The cursor used for pagination.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncCustomPager[str, UsernameCursor]
+        AsyncCustomPager[str, UsersListResponse]
 
         Examples
         --------
@@ -106,7 +121,8 @@ class AsyncUsersClient:
 
 
         async def main() -> None:
-            response = await client.users.list_usernames_custom(
+            response = await client.users.list_with_custom_pager(
+                limit=1,
                 starting_after="starting_after",
             )
             async for item in response:
@@ -119,6 +135,6 @@ class AsyncUsersClient:
 
         asyncio.run(main())
         """
-        return await self._raw_client.list_usernames_custom(
-            starting_after=starting_after, request_options=request_options
+        return await self._raw_client.list_with_custom_pager(
+            limit=limit, starting_after=starting_after, request_options=request_options
         )
