@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -296,7 +297,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
                 return typeRef;
             }
         }
-        throw new Error("Failed to get request class reference");
+        throw GeneratorError.internalError("Failed to get request class reference");
     }
 
     private getRequestBody() {

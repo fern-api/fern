@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
@@ -32,7 +33,7 @@ export class WireTestGenerator {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate wire tests without dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -418,7 +419,7 @@ export class WireTestGenerator {
 
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
         if (!wiremockMapping) {
-            throw new Error(`No wiremock mapping found for endpoint ${endpoint.id} and mappingKey "${mappingKey}"`);
+            throw GeneratorError.internalError(`No wiremock mapping found for endpoint ${endpoint.id} and mappingKey "${mappingKey}"`);
         }
 
         // Try to get path parameters from wiremock mapping first
@@ -493,7 +494,7 @@ export class WireTestGenerator {
         const snippetRequest = convertDynamicEndpointSnippetRequest(example);
         const response = await this.dynamicSnippetsGenerator.generate(snippetRequest);
         if (!response.snippet) {
-            throw new Error("No snippet generated for example");
+            throw GeneratorError.internalError("No snippet generated for example");
         }
         return response.snippet;
     }

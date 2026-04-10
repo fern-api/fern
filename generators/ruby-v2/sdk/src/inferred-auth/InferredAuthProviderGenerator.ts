@@ -1,3 +1,4 @@
+import { GeneratorError } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
@@ -30,7 +31,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
 
         const service = this.context.ir.services[this.tokenEndpointReference.serviceId];
         if (service == null) {
-            throw new Error(`Service with id ${this.tokenEndpointReference.serviceId} not found`);
+            throw GeneratorError.referenceError(`Service with id ${this.tokenEndpointReference.serviceId} not found`);
         }
         this.tokenEndpointHttpService = service;
 
@@ -38,7 +39,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
             (e) => e.id === this.tokenEndpointReference.endpointId
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint with id ${this.tokenEndpointReference.endpointId} not found`);
+            throw GeneratorError.referenceError(`Endpoint with id ${this.tokenEndpointReference.endpointId} not found`);
         }
         this.tokenEndpoint = endpoint;
     }
@@ -379,7 +380,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
             case "boolean":
                 return literal.boolean ? "true" : "false";
             default:
-                throw new Error(`Unknown literal type: ${(literal as FernIr.Literal).type}`);
+                throw GeneratorError.internalError(`Unknown literal type: ${(literal as FernIr.Literal).type}`);
         }
     }
 }
