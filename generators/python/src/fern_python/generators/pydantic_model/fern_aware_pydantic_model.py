@@ -372,9 +372,10 @@ class FernAwarePydanticModel:
             shape_union = extended_declaration.shape.get_as_union()
             if shape_union.type == "object":
                 for property in shape_union.properties:
+                    resolved_prop_name = resolve_name(get_name_from_wire_value(property.name))
                     field = self._create_pydantic_field(
-                        name=resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name,
-                        pascal_case_field_name=resolve_name(get_name_from_wire_value(property.name)).pascal_case.safe_name,
+                        name=resolved_prop_name.snake_case.safe_name,
+                        pascal_case_field_name=resolved_prop_name.pascal_case.safe_name,
                         json_field_name=get_wire_value(property.name),
                         type_reference=property.value_type,
                         description=property.docs,

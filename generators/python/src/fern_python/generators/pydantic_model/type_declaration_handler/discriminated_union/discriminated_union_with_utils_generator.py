@@ -174,9 +174,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             internal_union = self._source_file.add_class_declaration(declaration=internal_union_class_declaration)
 
             for single_union_type in self._union.types:
+                resolved_discriminant_value = resolve_name(get_name_from_wire_value(single_union_type.discriminant_value))
                 with PydanticModel(
                     version=self._custom_config.version,
-                    name=resolve_name(get_name_from_wire_value(single_union_type.discriminant_value)).pascal_case.safe_name,
+                    name=resolved_discriminant_value.pascal_case.safe_name,
                     source_file=self._source_file,
                     base_models=single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: [
@@ -210,10 +211,11 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
                     shape = single_union_type.shape.get_as_union()
                     if shape.properties_type == "singleProperty":
+                        resolved_shape_name = resolve_name(get_name_from_wire_value(shape.name))
                         internal_pydantic_model_for_single_union_type.add_field(
                             PydanticField(
-                                name=resolve_name(get_name_from_wire_value(shape.name)).snake_case.safe_name,
-                                pascal_case_field_name=resolve_name(get_name_from_wire_value(shape.name)).pascal_case.safe_name,
+                                name=resolved_shape_name.snake_case.safe_name,
+                                pascal_case_field_name=resolved_shape_name.pascal_case.safe_name,
                                 json_field_name=get_wire_value(shape.name),
                                 type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
                             )
@@ -223,7 +225,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
                     factory_declaration.add_method(
                         AST.FunctionDeclaration(
-                            name=resolve_name(get_name_from_wire_value(single_union_type.discriminant_value)).snake_case.safe_name,
+                            name=resolved_discriminant_value.snake_case.safe_name,
                             signature=AST.FunctionSignature(
                                 parameters=single_union_properties.visit(
                                     same_properties_as_object=lambda declared_type_name: [

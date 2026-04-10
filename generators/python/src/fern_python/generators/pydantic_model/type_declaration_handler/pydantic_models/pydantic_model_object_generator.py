@@ -77,9 +77,10 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
             snippet=self._snippet,
         ) as pydantic_model:
             for property in properties:
+                resolved_prop_name = resolve_name(get_name_from_wire_value(property.name))
                 pydantic_model.add_field(
-                    name=resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name,
-                    pascal_case_field_name=resolve_name(get_name_from_wire_value(property.name)).pascal_case.safe_name,
+                    name=resolved_prop_name.snake_case.safe_name,
+                    pascal_case_field_name=resolved_prop_name.pascal_case.safe_name,
                     type_reference=property.value_type,
                     json_field_name=get_wire_value(property.name),
                     description=property.docs,

@@ -122,7 +122,7 @@ class SnippetWriter:
                 # TODO: we really need to centralize a lot of this logic,
                 # especially around renaming and models in general
                 maybe_rewritten_name = (
-                    request_parameter_names.get(property.name.name) or resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name
+                    request_parameter_names.get(get_name_from_wire_value(property.name)) or resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name
                 )
                 if maybe_rewritten_name.startswith("_"):
                     maybe_rewritten_name = "f_" + maybe_rewritten_name.lstrip("_")

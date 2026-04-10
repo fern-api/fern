@@ -78,10 +78,12 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                     shape.type, self._name.type_id
                 )
 
+                resolved_shape_name = resolve_name(get_name_from_wire_value(shape.name))
+                resolved_discriminant_name = resolve_name(get_name_from_wire_value(self._union.discriminant))
                 single_property_property_fields: List[PydanticField] = [
                     PydanticField(
-                        name=resolve_name(get_name_from_wire_value(shape.name)).snake_case.safe_name,
-                        pascal_case_field_name=resolve_name(get_name_from_wire_value(shape.name)).pascal_case.safe_name,
+                        name=resolved_shape_name.snake_case.safe_name,
+                        pascal_case_field_name=resolved_shape_name.pascal_case.safe_name,
                         json_field_name=get_wire_value(shape.name),
                         type_hint=self._context.get_type_hint_for_type_reference(
                             type_reference=shape.type,
@@ -90,7 +92,7 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                     ),
                     PydanticField(
                         name=get_discriminant_parameter_name(self._union.discriminant),
-                        pascal_case_field_name=resolve_name(get_name_from_wire_value(self._union.discriminant)).pascal_case.safe_name,
+                        pascal_case_field_name=resolved_discriminant_name.pascal_case.safe_name,
                         type_hint=AST.TypeHint.literal(discriminant_value),
                         json_field_name=get_wire_value(self._union.discriminant),
                         default_value=discriminant_value,
@@ -99,14 +101,14 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
 
                 single_property_property_fern_aware_fields: List[FernAwarePydanticField] = [
                     FernAwarePydanticField(
-                        name=resolve_name(get_name_from_wire_value(shape.name)).snake_case.safe_name,
-                        pascal_case_field_name=resolve_name(get_name_from_wire_value(shape.name)).pascal_case.safe_name,
+                        name=resolved_shape_name.snake_case.safe_name,
+                        pascal_case_field_name=resolved_shape_name.pascal_case.safe_name,
                         json_field_name=get_wire_value(shape.name),
                         type_reference=shape.type,
                     ),
                     FernAwarePydanticField(
                         name=get_discriminant_parameter_name(self._union.discriminant),
-                        pascal_case_field_name=resolve_name(get_name_from_wire_value(self._union.discriminant)).pascal_case.safe_name,
+                        pascal_case_field_name=resolved_discriminant_name.pascal_case.safe_name,
                         json_field_name=get_wire_value(self._union.discriminant),
                         default_value=discriminant_value,
                         type_reference=ir_types.TypeReference.factory.container(
@@ -126,10 +128,11 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                 )
 
             elif shape.properties_type == "samePropertiesAsObject":
+                resolved_discriminant_name = resolve_name(get_name_from_wire_value(self._union.discriminant))
                 same_properties_as_object_property_fields: List[FernAwarePydanticField] = [
                     FernAwarePydanticField(
                         name=get_discriminant_parameter_name(self._union.discriminant),
-                        pascal_case_field_name=resolve_name(get_name_from_wire_value(self._union.discriminant)).pascal_case.safe_name,
+                        pascal_case_field_name=resolved_discriminant_name.pascal_case.safe_name,
                         type_reference=ir_types.TypeReference.factory.container(
                             ir_types.ContainerType.factory.literal(
                                 ir_types.Literal.factory.string(get_wire_value(single_union_type.discriminant_value))
@@ -146,10 +149,11 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                     if get_wire_value(object_property.name) == discriminant_wire_value:
                         continue
                     self._all_referenced_types.append(object_property.value_type)
+                    resolved_prop_name = resolve_name(get_name_from_wire_value(object_property.name))
                     same_properties_as_object_property_fields.append(
                         FernAwarePydanticField(
-                            name=resolve_name(get_name_from_wire_value(object_property.name)).snake_case.safe_name,
-                            pascal_case_field_name=resolve_name(get_name_from_wire_value(object_property.name)).pascal_case.safe_name,
+                            name=resolved_prop_name.snake_case.safe_name,
+                            pascal_case_field_name=resolved_prop_name.pascal_case.safe_name,
                             json_field_name=get_wire_value(object_property.name),
                             type_reference=object_property.value_type,
                         )
@@ -164,9 +168,10 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                 )
 
             elif shape.properties_type == "noProperties":
+                resolved_discriminant_name = resolve_name(get_name_from_wire_value(self._union.discriminant))
                 no_properties_property_field = FernAwarePydanticField(
                     name=get_discriminant_parameter_name(self._union.discriminant),
-                    pascal_case_field_name=resolve_name(get_name_from_wire_value(self._union.discriminant)).pascal_case.safe_name,
+                    pascal_case_field_name=resolved_discriminant_name.pascal_case.safe_name,
                     type_reference=ir_types.TypeReference.factory.container(
                         ir_types.ContainerType.factory.literal(
                             ir_types.Literal.factory.string(get_wire_value(single_union_type.discriminant_value))
@@ -310,10 +315,11 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
             )
 
             for property in self._union.base_properties:
+                resolved_prop_name = resolve_name(get_name_from_wire_value(property.name))
                 self._base_class_properties.append(
                     FernAwarePydanticField(
-                        name=resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name,
-                        pascal_case_field_name=resolve_name(get_name_from_wire_value(property.name)).pascal_case.safe_name,
+                        name=resolved_prop_name.snake_case.safe_name,
+                        pascal_case_field_name=resolved_prop_name.pascal_case.safe_name,
                         type_reference=property.value_type,
                         json_field_name=get_wire_value(property.name),
                         description=property.docs,
