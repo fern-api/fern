@@ -63,7 +63,7 @@ catalog:
   "@fern-api/fdr-sdk": 1.1.13-c1ad12a2b8
   "@fern-api/generator-cli": 0.9.4
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
-  "@fern-api/venus-api-sdk": 0.17.3-3-gf696595
+  "@fern-api/venus-api-sdk": 0.22.34
   "@fern-fern/docs-config": 0.0.80
   "@fern-fern/fdr-test-sdk": ^0.0.5297
   "@fern-fern/fiddle-sdk": 0.0.775

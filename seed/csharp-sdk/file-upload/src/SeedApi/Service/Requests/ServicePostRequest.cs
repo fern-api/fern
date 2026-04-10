@@ -1,27 +1,27 @@
-using SeedApi.Core;
+using SeedFileUpload.Core;
 
-namespace SeedApi;
+namespace SeedFileUpload;
 
 [Serializable]
-public record ServicePostRequest
+public record MyRequest
 {
     public string? MaybeString { get; set; }
 
-    public int? Integer { get; set; }
+    public required int Integer { get; set; }
 
-    public FileParameter? File { get; set; }
+    public required FileParameter File { get; set; }
 
-    public FileParameter? FileList { get; set; }
+    public IEnumerable<FileParameter> FileList { get; set; } = new List<FileParameter>();
 
     public FileParameter? MaybeFile { get; set; }
 
-    public FileParameter? MaybeFileList { get; set; }
+    public IEnumerable<FileParameter>? MaybeFileList { get; set; }
 
     public int? MaybeInteger { get; set; }
 
     public IEnumerable<string>? OptionalListOfStrings { get; set; }
 
-    public IEnumerable<MyObject>? ListOfObjects { get; set; }
+    public IEnumerable<MyObject> ListOfObjects { get; set; } = new List<MyObject>();
 
     public object? OptionalMetadata { get; set; }
 
@@ -29,11 +29,11 @@ public record ServicePostRequest
 
     public string? OptionalId { get; set; }
 
-    public MyObject? AliasObject { get; set; }
+    public required MyObject AliasObject { get; set; }
 
-    public IEnumerable<MyObject>? ListOfAliasObject { get; set; }
+    public IEnumerable<MyObject> ListOfAliasObject { get; set; } = new List<MyObject>();
 
-    public IEnumerable<MyObject>? AliasListOfObject { get; set; }
+    public IEnumerable<MyObject> AliasListOfObject { get; set; } = new List<MyObject>();
 
     /// <inheritdoc />
     public override string ToString()

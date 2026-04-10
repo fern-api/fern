@@ -1,27 +1,23 @@
-using SeedApi;
+using SeedLiteral;
 
 namespace Usage;
 
 public class Example7
 {
     public async Task Do() {
-        var client = new SeedApiClient(
+        var client = new SeedLiteralClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
         await client.Query.SendAsync(
-            new QuerySendRequest {
-                Prompt = QuerySendRequestPrompt.YouAreAHelpfulAssistant,
-                OptionalPrompt = QuerySendRequestOptionalPrompt.YouAreAHelpfulAssistant,
-                AliasPrompt = AliasToPrompt.YouAreAHelpfulAssistant,
-                AliasOptionalPrompt = AliasToPrompt.YouAreAHelpfulAssistant,
+            new SendLiteralsInQueryRequest {
+                AliasPrompt = new AliasToPrompt(),
+                AliasOptionalPrompt = new AliasToPrompt(),
                 Query = "query",
-                Stream = true,
-                OptionalStream = true,
-                AliasStream = true,
-                AliasOptionalStream = true
+                AliasStream = new AliasToStream(),
+                AliasOptionalStream = new AliasToStream()
             }
         );
     }
