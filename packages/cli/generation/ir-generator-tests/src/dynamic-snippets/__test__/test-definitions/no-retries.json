@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_retries:User": {
+        "type_:User": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,47 +24,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "retries",
-                            "camelCase": {
-                                "unsafeName": "retries",
-                                "safeName": "retries"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "retries",
-                                "safeName": "retries"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "RETRIES",
-                                "safeName": "RETRIES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Retries",
-                                "safeName": "Retries"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "retries",
-                        "camelCase": {
-                            "unsafeName": "retries",
-                            "safeName": "retries"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "retries",
-                            "safeName": "retries"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "RETRIES",
-                            "safeName": "RETRIES"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Retries",
-                            "safeName": "Retries"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -135,26 +97,26 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_retries.getUsers": {
+        "endpoint_retries.getusers": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getUsers",
+                    "originalName": "getusers",
                     "camelCase": {
-                        "unsafeName": "getUsers",
-                        "safeName": "getUsers"
+                        "unsafeName": "getusers",
+                        "safeName": "getusers"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_users",
-                        "safeName": "get_users"
+                        "unsafeName": "getusers",
+                        "safeName": "getusers"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_USERS",
-                        "safeName": "GET_USERS"
+                        "unsafeName": "GETUSERS",
+                        "safeName": "GETUSERS"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetUsers",
-                        "safeName": "GetUsers"
+                        "unsafeName": "Getusers",
+                        "safeName": "Getusers"
                     }
                 },
                 "fernFilepath": {

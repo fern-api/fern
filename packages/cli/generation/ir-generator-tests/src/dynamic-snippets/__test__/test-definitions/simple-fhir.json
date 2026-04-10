@@ -224,7 +224,7 @@
             "additionalProperties": false
         },
         "type_:ResourceList": {
-            "type": "undiscriminatedUnion",
+            "type": "discriminatedUnion",
             "declaration": {
                 "name": {
                     "originalName": "ResourceList",
@@ -251,22 +251,189 @@
                     "file": null
                 }
             },
-            "types": [
-                {
-                    "type": "named",
-                    "value": "type_:Account"
+            "discriminant": {
+                "wireValue": "resource_type",
+                "name": {
+                    "originalName": "resource_type",
+                    "camelCase": {
+                        "unsafeName": "resourceType",
+                        "safeName": "resourceType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "resource_type",
+                        "safeName": "resource_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RESOURCE_TYPE",
+                        "safeName": "RESOURCE_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ResourceType",
+                        "safeName": "ResourceType"
+                    }
+                }
+            },
+            "types": {
+                "Account": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:Account",
+                    "discriminantValue": {
+                        "wireValue": "Account",
+                        "name": {
+                            "originalName": "Account",
+                            "camelCase": {
+                                "unsafeName": "account",
+                                "safeName": "account"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "account",
+                                "safeName": "account"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ACCOUNT",
+                                "safeName": "ACCOUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Account",
+                                "safeName": "Account"
+                            }
+                        }
+                    },
+                    "properties": []
                 },
-                {
-                    "type": "named",
-                    "value": "type_:Patient"
+                "Patient": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:Patient",
+                    "discriminantValue": {
+                        "wireValue": "Patient",
+                        "name": {
+                            "originalName": "Patient",
+                            "camelCase": {
+                                "unsafeName": "patient",
+                                "safeName": "patient"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "patient",
+                                "safeName": "patient"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PATIENT",
+                                "safeName": "PATIENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Patient",
+                                "safeName": "Patient"
+                            }
+                        }
+                    },
+                    "properties": []
                 },
-                {
-                    "type": "named",
-                    "value": "type_:Practitioner"
+                "Practitioner": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:Practitioner",
+                    "discriminantValue": {
+                        "wireValue": "Practitioner",
+                        "name": {
+                            "originalName": "Practitioner",
+                            "camelCase": {
+                                "unsafeName": "practitioner",
+                                "safeName": "practitioner"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "practitioner",
+                                "safeName": "practitioner"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRACTITIONER",
+                                "safeName": "PRACTITIONER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Practitioner",
+                                "safeName": "Practitioner"
+                            }
+                        }
+                    },
+                    "properties": []
                 },
+                "Script": {
+                    "type": "samePropertiesAsObject",
+                    "typeId": "type_:Script",
+                    "discriminantValue": {
+                        "wireValue": "Script",
+                        "name": {
+                            "originalName": "Script",
+                            "camelCase": {
+                                "unsafeName": "script",
+                                "safeName": "script"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "script",
+                                "safeName": "script"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SCRIPT",
+                                "safeName": "SCRIPT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Script",
+                                "safeName": "Script"
+                            }
+                        }
+                    },
+                    "properties": []
+                }
+            }
+        },
+        "type_:AccountResourceType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "AccountResourceType",
+                    "camelCase": {
+                        "unsafeName": "accountResourceType",
+                        "safeName": "accountResourceType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "account_resource_type",
+                        "safeName": "account_resource_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ACCOUNT_RESOURCE_TYPE",
+                        "safeName": "ACCOUNT_RESOURCE_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "AccountResourceType",
+                        "safeName": "AccountResourceType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
                 {
-                    "type": "named",
-                    "value": "type_:Script"
+                    "wireValue": "Account",
+                    "name": {
+                        "originalName": "Account",
+                        "camelCase": {
+                            "unsafeName": "account",
+                            "safeName": "account"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "account",
+                            "safeName": "account"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ACCOUNT",
+                            "safeName": "ACCOUNT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Account",
+                            "safeName": "Account"
+                        }
+                    }
                 }
             ]
         },
@@ -416,11 +583,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "Account"
-                        }
+                        "type": "named",
+                        "value": "type_:AccountResourceType"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -526,6 +690,59 @@
                 "type_:BaseResource"
             ],
             "additionalProperties": false
+        },
+        "type_:PatientResourceType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "PatientResourceType",
+                    "camelCase": {
+                        "unsafeName": "patientResourceType",
+                        "safeName": "patientResourceType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "patient_resource_type",
+                        "safeName": "patient_resource_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PATIENT_RESOURCE_TYPE",
+                        "safeName": "PATIENT_RESOURCE_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PatientResourceType",
+                        "safeName": "PatientResourceType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "Patient",
+                    "name": {
+                        "originalName": "Patient",
+                        "camelCase": {
+                            "unsafeName": "patient",
+                            "safeName": "patient"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "patient",
+                            "safeName": "patient"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PATIENT",
+                            "safeName": "PATIENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Patient",
+                            "safeName": "Patient"
+                        }
+                    }
+                }
+            ]
         },
         "type_:Patient": {
             "type": "object",
@@ -673,11 +890,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "Patient"
-                        }
+                        "type": "named",
+                        "value": "type_:PatientResourceType"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -750,6 +964,59 @@
                 "type_:BaseResource"
             ],
             "additionalProperties": false
+        },
+        "type_:PractitionerResourceType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "PractitionerResourceType",
+                    "camelCase": {
+                        "unsafeName": "practitionerResourceType",
+                        "safeName": "practitionerResourceType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "practitioner_resource_type",
+                        "safeName": "practitioner_resource_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRACTITIONER_RESOURCE_TYPE",
+                        "safeName": "PRACTITIONER_RESOURCE_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PractitionerResourceType",
+                        "safeName": "PractitionerResourceType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "Practitioner",
+                    "name": {
+                        "originalName": "Practitioner",
+                        "camelCase": {
+                            "unsafeName": "practitioner",
+                            "safeName": "practitioner"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "practitioner",
+                            "safeName": "practitioner"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRACTITIONER",
+                            "safeName": "PRACTITIONER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Practitioner",
+                            "safeName": "Practitioner"
+                        }
+                    }
+                }
+            ]
         },
         "type_:Practitioner": {
             "type": "object",
@@ -897,11 +1164,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "Practitioner"
-                        }
+                        "type": "named",
+                        "value": "type_:PractitionerResourceType"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -941,6 +1205,59 @@
                 "type_:BaseResource"
             ],
             "additionalProperties": false
+        },
+        "type_:ScriptResourceType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "ScriptResourceType",
+                    "camelCase": {
+                        "unsafeName": "scriptResourceType",
+                        "safeName": "scriptResourceType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "script_resource_type",
+                        "safeName": "script_resource_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SCRIPT_RESOURCE_TYPE",
+                        "safeName": "SCRIPT_RESOURCE_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ScriptResourceType",
+                        "safeName": "ScriptResourceType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "Script",
+                    "name": {
+                        "originalName": "Script",
+                        "camelCase": {
+                            "unsafeName": "script",
+                            "safeName": "script"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "script",
+                            "safeName": "script"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SCRIPT",
+                            "safeName": "SCRIPT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Script",
+                            "safeName": "Script"
+                        }
+                    }
+                }
+            ]
         },
         "type_:Script": {
             "type": "object",
@@ -1088,11 +1405,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "Script"
-                        }
+                        "type": "named",
+                        "value": "type_:ScriptResourceType"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -1159,9 +1473,47 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
@@ -1169,7 +1521,71 @@
                 "path": "/account/{account_id}"
             },
             "request": {
-                "type": "body",
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "GetAccountRequest",
+                        "camelCase": {
+                            "unsafeName": "getAccountRequest",
+                            "safeName": "getAccountRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_account_request",
+                            "safeName": "get_account_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_ACCOUNT_REQUEST",
+                            "safeName": "GET_ACCOUNT_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetAccountRequest",
+                            "safeName": "GetAccountRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    }
+                },
                 "pathParameters": [
                     {
                         "name": {
@@ -1202,7 +1618,13 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
             },
             "response": {
                 "type": "json"

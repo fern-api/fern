@@ -56,8 +56,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -89,8 +92,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "INTEGER"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "INTEGER"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -122,9 +128,12 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "list",
+                            "type": "nullable",
                             "value": {
-                                "type": "unknown"
+                                "type": "list",
+                                "value": {
+                                    "type": "unknown"
+                                }
                             }
                         }
                     },
@@ -157,8 +166,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -223,8 +235,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -256,8 +271,11 @@
                     "typeReference": {
                         "type": "optional",
                         "value": {
-                            "type": "primitive",
-                            "value": "STRING"
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
                         }
                     },
                     "propertyAccess": null,
@@ -353,41 +371,117 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
                 "method": "POST",
-                "path": "/documents/upload"
+                "path": "/documents/upload/json"
             },
             "request": {
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "UploadDocumentRequest",
+                        "originalName": "UploadJsonDocumentRequest",
                         "camelCase": {
-                            "unsafeName": "uploadDocumentRequest",
-                            "safeName": "uploadDocumentRequest"
+                            "unsafeName": "uploadJSONDocumentRequest",
+                            "safeName": "uploadJSONDocumentRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "upload_document_request",
-                            "safeName": "upload_document_request"
+                            "unsafeName": "upload_json_document_request",
+                            "safeName": "upload_json_document_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "UPLOAD_DOCUMENT_REQUEST",
-                            "safeName": "UPLOAD_DOCUMENT_REQUEST"
+                            "unsafeName": "UPLOAD_JSON_DOCUMENT_REQUEST",
+                            "safeName": "UPLOAD_JSON_DOCUMENT_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "UploadDocumentRequest",
-                            "safeName": "UploadDocumentRequest"
+                            "unsafeName": "UploadJSONDocumentRequest",
+                            "safeName": "UploadJSONDocumentRequest"
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "pathParameters": [],
@@ -422,8 +516,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -455,10 +552,13 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "list",
+                                    "type": "nullable",
                                     "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
+                                        "type": "list",
+                                        "value": {
+                                            "type": "primitive",
+                                            "value": "STRING"
+                                        }
                                     }
                                 }
                             },
@@ -491,8 +591,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -554,14 +657,52 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": {
+                        "originalName": "",
+                        "camelCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "snakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        },
+                        "pascalCase": {
+                            "unsafeName": "",
+                            "safeName": ""
+                        }
+                    }
                 }
             },
             "location": {
                 "method": "POST",
-                "path": "/documents/upload"
+                "path": "/documents/upload/pdf"
             },
             "request": {
                 "type": "body",

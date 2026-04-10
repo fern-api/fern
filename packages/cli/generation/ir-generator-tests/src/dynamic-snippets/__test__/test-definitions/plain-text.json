@@ -3,26 +3,26 @@
     "types": {},
     "headers": [],
     "endpoints": {
-        "endpoint_service.getText": {
+        "endpoint_service.gettext": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getText",
+                    "originalName": "gettext",
                     "camelCase": {
-                        "unsafeName": "getText",
-                        "safeName": "getText"
+                        "unsafeName": "gettext",
+                        "safeName": "gettext"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_text",
-                        "safeName": "get_text"
+                        "unsafeName": "gettext",
+                        "safeName": "gettext"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_TEXT",
-                        "safeName": "GET_TEXT"
+                        "unsafeName": "GETTEXT",
+                        "safeName": "GETTEXT"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetText",
-                        "safeName": "GetText"
+                        "unsafeName": "Gettext",
+                        "safeName": "Gettext"
                     }
                 },
                 "fernFilepath": {

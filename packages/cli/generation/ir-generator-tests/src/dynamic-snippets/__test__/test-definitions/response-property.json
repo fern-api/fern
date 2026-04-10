@@ -93,11 +93,8 @@
                 }
             },
             "typeReference": {
-                "type": "optional",
-                "value": {
-                    "type": "named",
-                    "value": "type_:StringResponse"
-                }
+                "type": "named",
+                "value": "type_:StringResponse"
             }
         },
         "type_:WithMetadata": {
@@ -170,7 +167,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_service:WithDocs": {
+        "type_:WithDocs": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -193,47 +190,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -271,7 +230,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_service:OptionalWithDocs": {
+        "type_:OptionalWithDocs": {
             "type": "alias",
             "declaration": {
                 "name": {
@@ -294,58 +253,17 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": null
                 }
             },
             "typeReference": {
-                "type": "optional",
-                "value": {
-                    "type": "named",
-                    "value": "type_service:WithDocs"
-                }
+                "type": "named",
+                "value": "type_:WithDocs"
             }
         },
-        "type_service:Movie": {
+        "type_:Movie": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -368,47 +286,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -476,7 +356,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_service:Response": {
+        "type_:Response": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -499,47 +379,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -635,7 +477,7 @@
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_service:Movie"
+                        "value": "type_:Movie"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -643,33 +485,33 @@
             ],
             "extends": [
                 "type_:WithMetadata",
-                "type_service:WithDocs"
+                "type_:WithDocs"
             ],
             "additionalProperties": false
         }
     },
     "headers": [],
     "endpoints": {
-        "endpoint_service.getMovie": {
+        "endpoint_service.getmovie": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getMovie",
+                    "originalName": "getmovie",
                     "camelCase": {
-                        "unsafeName": "getMovie",
-                        "safeName": "getMovie"
+                        "unsafeName": "getmovie",
+                        "safeName": "getmovie"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_movie",
-                        "safeName": "get_movie"
+                        "unsafeName": "getmovie",
+                        "safeName": "getmovie"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_MOVIE",
-                        "safeName": "GET_MOVIE"
+                        "unsafeName": "GETMOVIE",
+                        "safeName": "GETMOVIE"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetMovie",
-                        "safeName": "GetMovie"
+                        "unsafeName": "Getmovie",
+                        "safeName": "Getmovie"
                     }
                 },
                 "fernFilepath": {
@@ -736,26 +578,26 @@
             },
             "examples": null
         },
-        "endpoint_service.getMovieDocs": {
+        "endpoint_service.getmoviedocs": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getMovieDocs",
+                    "originalName": "getmoviedocs",
                     "camelCase": {
-                        "unsafeName": "getMovieDocs",
-                        "safeName": "getMovieDocs"
+                        "unsafeName": "getmoviedocs",
+                        "safeName": "getmoviedocs"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_movie_docs",
-                        "safeName": "get_movie_docs"
+                        "unsafeName": "getmoviedocs",
+                        "safeName": "getmoviedocs"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_MOVIE_DOCS",
-                        "safeName": "GET_MOVIE_DOCS"
+                        "unsafeName": "GETMOVIEDOCS",
+                        "safeName": "GETMOVIEDOCS"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetMovieDocs",
-                        "safeName": "GetMovieDocs"
+                        "unsafeName": "Getmoviedocs",
+                        "safeName": "Getmoviedocs"
                     }
                 },
                 "fernFilepath": {
@@ -804,7 +646,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/docs"
             },
             "request": {
                 "type": "body",
@@ -822,26 +664,26 @@
             },
             "examples": null
         },
-        "endpoint_service.getMovieName": {
+        "endpoint_service.getmoviename": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getMovieName",
+                    "originalName": "getmoviename",
                     "camelCase": {
-                        "unsafeName": "getMovieName",
-                        "safeName": "getMovieName"
+                        "unsafeName": "getmoviename",
+                        "safeName": "getmoviename"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_movie_name",
-                        "safeName": "get_movie_name"
+                        "unsafeName": "getmoviename",
+                        "safeName": "getmoviename"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_MOVIE_NAME",
-                        "safeName": "GET_MOVIE_NAME"
+                        "unsafeName": "GETMOVIENAME",
+                        "safeName": "GETMOVIENAME"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetMovieName",
-                        "safeName": "GetMovieName"
+                        "unsafeName": "Getmoviename",
+                        "safeName": "Getmoviename"
                     }
                 },
                 "fernFilepath": {
@@ -890,7 +732,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/name"
             },
             "request": {
                 "type": "body",
@@ -908,26 +750,26 @@
             },
             "examples": null
         },
-        "endpoint_service.getMovieMetadata": {
+        "endpoint_service.getmoviemetadata": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getMovieMetadata",
+                    "originalName": "getmoviemetadata",
                     "camelCase": {
-                        "unsafeName": "getMovieMetadata",
-                        "safeName": "getMovieMetadata"
+                        "unsafeName": "getmoviemetadata",
+                        "safeName": "getmoviemetadata"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_movie_metadata",
-                        "safeName": "get_movie_metadata"
+                        "unsafeName": "getmoviemetadata",
+                        "safeName": "getmoviemetadata"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_MOVIE_METADATA",
-                        "safeName": "GET_MOVIE_METADATA"
+                        "unsafeName": "GETMOVIEMETADATA",
+                        "safeName": "GETMOVIEMETADATA"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetMovieMetadata",
-                        "safeName": "GetMovieMetadata"
+                        "unsafeName": "Getmoviemetadata",
+                        "safeName": "Getmoviemetadata"
                     }
                 },
                 "fernFilepath": {
@@ -976,7 +818,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/metadata"
             },
             "request": {
                 "type": "body",
@@ -994,26 +836,26 @@
             },
             "examples": null
         },
-        "endpoint_service.getOptionalMovie": {
+        "endpoint_service.getoptionalmovie": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getOptionalMovie",
+                    "originalName": "getoptionalmovie",
                     "camelCase": {
-                        "unsafeName": "getOptionalMovie",
-                        "safeName": "getOptionalMovie"
+                        "unsafeName": "getoptionalmovie",
+                        "safeName": "getoptionalmovie"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_optional_movie",
-                        "safeName": "get_optional_movie"
+                        "unsafeName": "getoptionalmovie",
+                        "safeName": "getoptionalmovie"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_OPTIONAL_MOVIE",
-                        "safeName": "GET_OPTIONAL_MOVIE"
+                        "unsafeName": "GETOPTIONALMOVIE",
+                        "safeName": "GETOPTIONALMOVIE"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetOptionalMovie",
-                        "safeName": "GetOptionalMovie"
+                        "unsafeName": "Getoptionalmovie",
+                        "safeName": "Getoptionalmovie"
                     }
                 },
                 "fernFilepath": {
@@ -1062,7 +904,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/optional"
             },
             "request": {
                 "type": "body",
@@ -1080,26 +922,26 @@
             },
             "examples": null
         },
-        "endpoint_service.getOptionalMovieDocs": {
+        "endpoint_service.getoptionalmoviedocs": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getOptionalMovieDocs",
+                    "originalName": "getoptionalmoviedocs",
                     "camelCase": {
-                        "unsafeName": "getOptionalMovieDocs",
-                        "safeName": "getOptionalMovieDocs"
+                        "unsafeName": "getoptionalmoviedocs",
+                        "safeName": "getoptionalmoviedocs"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_optional_movie_docs",
-                        "safeName": "get_optional_movie_docs"
+                        "unsafeName": "getoptionalmoviedocs",
+                        "safeName": "getoptionalmoviedocs"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_OPTIONAL_MOVIE_DOCS",
-                        "safeName": "GET_OPTIONAL_MOVIE_DOCS"
+                        "unsafeName": "GETOPTIONALMOVIEDOCS",
+                        "safeName": "GETOPTIONALMOVIEDOCS"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetOptionalMovieDocs",
-                        "safeName": "GetOptionalMovieDocs"
+                        "unsafeName": "Getoptionalmoviedocs",
+                        "safeName": "Getoptionalmoviedocs"
                     }
                 },
                 "fernFilepath": {
@@ -1148,7 +990,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/optional/docs"
             },
             "request": {
                 "type": "body",
@@ -1166,26 +1008,26 @@
             },
             "examples": null
         },
-        "endpoint_service.getOptionalMovieName": {
+        "endpoint_service.getoptionalmoviename": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "getOptionalMovieName",
+                    "originalName": "getoptionalmoviename",
                     "camelCase": {
-                        "unsafeName": "getOptionalMovieName",
-                        "safeName": "getOptionalMovieName"
+                        "unsafeName": "getoptionalmoviename",
+                        "safeName": "getoptionalmoviename"
                     },
                     "snakeCase": {
-                        "unsafeName": "get_optional_movie_name",
-                        "safeName": "get_optional_movie_name"
+                        "unsafeName": "getoptionalmoviename",
+                        "safeName": "getoptionalmoviename"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "GET_OPTIONAL_MOVIE_NAME",
-                        "safeName": "GET_OPTIONAL_MOVIE_NAME"
+                        "unsafeName": "GETOPTIONALMOVIENAME",
+                        "safeName": "GETOPTIONALMOVIENAME"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetOptionalMovieName",
-                        "safeName": "GetOptionalMovieName"
+                        "unsafeName": "Getoptionalmoviename",
+                        "safeName": "Getoptionalmoviename"
                     }
                 },
                 "fernFilepath": {
@@ -1234,7 +1076,7 @@
             },
             "location": {
                 "method": "POST",
-                "path": "/movie"
+                "path": "/movie/optional/name"
             },
             "request": {
                 "type": "body",

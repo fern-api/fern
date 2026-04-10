@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "ruby-reserved-word-properties",
-    "apiDisplayName": null,
+    "apiName": "api",
+    "apiDisplayName": "ruby-reserved-word-properties",
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -13,19 +13,17 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_service:Foo": {
+        "type_:Foo": {
             "inline": null,
             "name": {
                 "name": "Foo",
                 "fernFilepath": {
-                    "allParts": [
-                        "service"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "service"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_service:Foo"
+                "typeId": "type_:Foo"
             },
             "shape": {
                 "_type": "object",
@@ -609,7 +607,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/ruby-reserved-word-properties",
+                "head": "",
                 "parts": []
             },
             "headers": [],
@@ -634,11 +632,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/getFoo",
+                        "head": "/ruby-reserved-word-properties/getFoo",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/ruby-reserved-word-properties/getFoo",
+                        "head": "ruby-reserved-word-properties/getFoo",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -657,32 +655,778 @@
                                     "_type": "named",
                                     "name": "Foo",
                                     "fernFilepath": {
-                                        "allParts": [
-                                            "service"
-                                        ],
+                                        "allParts": [],
                                         "packagePath": [],
-                                        "file": "service"
+                                        "file": null
                                     },
                                     "displayName": null,
-                                    "typeId": "type_service:Foo",
+                                    "typeId": "type_:Foo",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": null,
+                                "docs": "",
                                 "v2Examples": null
                             }
                         },
                         "status-code": 201,
                         "isWildcardStatusCode": null,
-                        "docs": null
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "26933dc6",
+                                "name": null,
+                                "url": "/ruby-reserved-word-properties/getFoo",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_:Foo",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "name": "Foo",
+                                                    "displayName": null
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "id",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "id"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "id"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "bar",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "bar"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "bar"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "baz",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "baz"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "baz"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "qux",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "qux"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "qux"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "object_id",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "object_id"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "object_id"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "hash",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "hash"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "hash"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "eql",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "eql"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "eql"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "equal",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "equal"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "equal"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "method",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "method"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "method"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "send",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "send"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "send"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "respond_to",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "respond_to"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "respond_to"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "respond_to_missing",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "respond_to_missing"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "respond_to_missing"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "instance_of",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "instance_of"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "instance_of"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "kind_of",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "kind_of"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "kind_of"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "is_a",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "is_a"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "is_a"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "extend",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "extend"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "extend"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "singleton_class",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "singleton_class"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "singleton_class"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "instance_variables",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "instance_variables"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "instance_variables"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "instance_variable_get",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "instance_variable_get"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "instance_variable_get"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "instance_variable_set",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "instance_variable_set"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "instance_variable_set"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "instance_variable_defined",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "instance_variable_defined"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "instance_variable_defined"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "remove_instance_variable",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "remove_instance_variable"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "remove_instance_variable"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "public_methods",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "public_methods"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "public_methods"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "private_methods",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "private_methods"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "private_methods"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "protected_methods",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "protected_methods"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "protected_methods"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "singleton_methods",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "singleton_methods"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "singleton_methods"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:Foo",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "Foo",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "id": "id",
+                                                "bar": "bar",
+                                                "baz": "baz",
+                                                "qux": "qux",
+                                                "object_id": "object_id",
+                                                "hash": "hash",
+                                                "eql": "eql",
+                                                "equal": "equal",
+                                                "method": "method",
+                                                "send": "send",
+                                                "respond_to": "respond_to",
+                                                "respond_to_missing": "respond_to_missing",
+                                                "instance_of": "instance_of",
+                                                "kind_of": "kind_of",
+                                                "is_a": "is_a",
+                                                "extend": "extend",
+                                                "singleton_class": "singleton_class",
+                                                "instance_variables": "instance_variables",
+                                                "instance_variable_get": "instance_variable_get",
+                                                "instance_variable_set": "instance_variable_set",
+                                                "instance_variable_defined": "instance_variable_defined",
+                                                "remove_instance_variable": "remove_instance_variable",
+                                                "public_methods": "public_methods",
+                                                "private_methods": "private_methods",
+                                                "protected_methods": "protected_methods",
+                                                "singleton_methods": "singleton_methods"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "d2a1a071",
+                                "id": "aa31840e",
                                 "url": "/ruby-reserved-word-properties/getFoo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -707,14 +1451,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -735,14 +1477,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -763,14 +1503,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -791,14 +1529,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -819,14 +1555,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -847,14 +1581,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -875,14 +1607,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -903,14 +1633,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -931,14 +1659,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -959,14 +1685,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -987,14 +1711,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1015,14 +1737,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1043,14 +1763,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1071,14 +1789,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1099,14 +1815,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1127,14 +1841,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1155,14 +1867,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1183,14 +1893,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1211,14 +1919,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1239,14 +1945,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1267,14 +1971,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1295,14 +1997,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1323,14 +2023,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1351,14 +2049,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1379,14 +2075,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1407,14 +2101,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "Foo",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:Foo"
+                                                                "typeId": "type_:Foo"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1436,14 +2128,12 @@
                                                 "typeName": {
                                                     "name": "Foo",
                                                     "fernFilepath": {
-                                                        "allParts": [
-                                                            "service"
-                                                        ],
+                                                        "allParts": [],
                                                         "packagePath": [],
-                                                        "file": "service"
+                                                        "file": null
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_service:Foo"
+                                                    "typeId": "type_:Foo"
                                                 }
                                             },
                                             "jsonExample": {
@@ -1509,7 +2199,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
-                "type_service:Foo"
+                "type_:Foo"
             ]
         },
         "sharedTypes": []
@@ -1522,7 +2212,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_service:Foo": {
+            "type_:Foo": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1545,47 +2235,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "service",
-                                "camelCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE",
-                                    "safeName": "SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Service",
-                                    "safeName": "Service"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -2482,9 +3134,7 @@
                 "file": "service"
             },
             "service": "service_service",
-            "types": [
-                "type_service:Foo"
-            ],
+            "types": [],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -2502,7 +3152,9 @@
         },
         "websocket": null,
         "service": null,
-        "types": [],
+        "types": [
+            "type_:Foo"
+        ],
         "errors": [],
         "subpackages": [
             "subpackage_service"

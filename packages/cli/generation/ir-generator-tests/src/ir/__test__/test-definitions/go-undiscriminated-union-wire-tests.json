@@ -3,7 +3,7 @@
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": "api",
-    "apiDisplayName": null,
+    "apiDisplayName": "go-undiscriminated-union-wire-tests",
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -12,7 +12,7 @@
                 "_type": "bearer",
                 "token": "token",
                 "tokenEnvVar": null,
-                "key": "bearer",
+                "key": "BearerAuth",
                 "docs": null
             }
         ],
@@ -21,19 +21,17 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_service:DocumentItem": {
+        "type_:DocumentItem": {
             "inline": null,
             "name": {
                 "name": "DocumentItem",
                 "fernFilepath": {
-                    "allParts": [
-                        "service"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "service"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_service:DocumentItem"
+                "typeId": "type_:DocumentItem"
             },
             "shape": {
                 "_type": "undiscriminatedUnion",
@@ -57,14 +55,12 @@
                             "_type": "named",
                             "name": "DocumentObject",
                             "fernFilepath": {
-                                "allParts": [
-                                    "service"
-                                ],
+                                "allParts": [],
                                 "packagePath": [],
-                                "file": "service"
+                                "file": null
                             },
                             "displayName": "Document Object",
-                            "typeId": "type_service:DocumentObject",
+                            "typeId": "type_:DocumentObject",
                             "default": null,
                             "inline": null
                         },
@@ -73,7 +69,7 @@
                 ]
             },
             "referencedTypes": [
-                "type_service:DocumentObject"
+                "type_:DocumentObject"
             ],
             "encoding": {
                 "json": {},
@@ -86,19 +82,17 @@
             "availability": null,
             "docs": null
         },
-        "type_service:DocumentObject": {
+        "type_:DocumentObject": {
             "inline": null,
             "name": {
                 "name": "DocumentObject",
                 "fernFilepath": {
-                    "allParts": [
-                        "service"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "service"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_service:DocumentObject"
+                "typeId": "type_:DocumentObject"
             },
             "shape": {
                 "_type": "object",
@@ -141,108 +135,17 @@
             "availability": null,
             "docs": null
         },
-        "type_service:RerankRequest": {
-            "inline": null,
-            "name": {
-                "name": "RerankRequest",
-                "fernFilepath": {
-                    "allParts": [
-                        "service"
-                    ],
-                    "packagePath": [],
-                    "file": "service"
-                },
-                "displayName": null,
-                "typeId": "type_service:RerankRequest"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
-                    {
-                        "name": "documents",
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "list",
-                                "list": {
-                                    "_type": "named",
-                                    "name": "DocumentItem",
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            "service"
-                                        ],
-                                        "packagePath": [],
-                                        "file": "service"
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_service:DocumentItem",
-                                    "default": null,
-                                    "inline": null
-                                }
-                            }
-                        },
-                        "propertyAccess": null,
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": null
-                    },
-                    {
-                        "name": "query",
-                        "valueType": {
-                            "_type": "primitive",
-                            "primitive": {
-                                "v1": "STRING",
-                                "v2": {
-                                    "type": "string",
-                                    "default": null,
-                                    "validation": null
-                                }
-                            }
-                        },
-                        "propertyAccess": null,
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": []
-            },
-            "referencedTypes": [
-                "type_service:DocumentItem",
-                "type_service:DocumentObject"
-            ],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_service:RerankResponse": {
+        "type_:RerankResponse": {
             "inline": null,
             "name": {
                 "name": "RerankResponse",
                 "fernFilepath": {
-                    "allParts": [
-                        "service"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "service"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_service:RerankResponse"
+                "typeId": "type_:RerankResponse"
             },
             "shape": {
                 "_type": "object",
@@ -307,7 +210,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/",
+                "head": "",
                 "parts": []
             },
             "headers": [],
@@ -336,7 +239,7 @@
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/rerank",
+                        "head": "rerank",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -344,51 +247,75 @@
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
-                        "type": "reference",
-                        "requestBodyType": {
-                            "_type": "named",
-                            "name": "RerankRequest",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "service"
-                                ],
-                                "packagePath": [],
-                                "file": "service"
+                        "type": "inlinedRequestBody",
+                        "name": "RerankRequest",
+                        "extends": [],
+                        "properties": [
+                            {
+                                "name": "documents",
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "list",
+                                        "list": {
+                                            "_type": "named",
+                                            "name": "DocumentItem",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_:DocumentItem",
+                                            "default": null,
+                                            "inline": null
+                                        }
+                                    }
+                                },
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
+                                "availability": null,
+                                "docs": null
                             },
-                            "displayName": null,
-                            "typeId": "type_service:RerankRequest",
-                            "default": null,
-                            "inline": null
-                        },
+                            {
+                                "name": "query",
+                                "valueType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
+                                },
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "propertyAccess": null,
+                                "availability": null,
+                                "docs": null
+                            }
+                        ],
+                        "extra-properties": false,
+                        "extendedProperties": [],
                         "docs": null,
-                        "contentType": null,
-                        "v2Examples": null
+                        "v2Examples": null,
+                        "contentType": "application/json"
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
-                            "type": "justRequestBody",
-                            "value": {
-                                "type": "typeReference",
-                                "requestBodyType": {
-                                    "_type": "named",
-                                    "name": "RerankRequest",
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            "service"
-                                        ],
-                                        "packagePath": [],
-                                        "file": "service"
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_service:RerankRequest",
-                                    "default": null,
-                                    "inline": null
-                                },
-                                "docs": null,
-                                "contentType": null,
-                                "v2Examples": null
-                            }
+                            "type": "wrapper",
+                            "wrapperName": "RerankRequest",
+                            "bodyKey": "body",
+                            "includePathParameters": false,
+                            "onlyPathParameters": false
                         },
                         "requestParameterName": "request",
                         "streamParameter": null
@@ -402,31 +329,29 @@
                                     "_type": "named",
                                     "name": "RerankResponse",
                                     "fernFilepath": {
-                                        "allParts": [
-                                            "service"
-                                        ],
+                                        "allParts": [],
                                         "packagePath": [],
-                                        "file": "service"
+                                        "file": null
                                     },
                                     "displayName": null,
-                                    "typeId": "type_service:RerankResponse",
+                                    "typeId": "type_:RerankResponse",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": null,
+                                "docs": "",
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null,
+                        "status-code": 200,
                         "isWildcardStatusCode": null,
-                        "docs": null
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "3e6feae",
+                                "id": "64588069",
                                 "name": null,
                                 "url": "/rerank",
                                 "rootPathParameters": [],
@@ -436,271 +361,93 @@
                                 "serviceHeaders": [],
                                 "queryParameters": [],
                                 "request": {
-                                    "type": "reference",
-                                    "shape": {
-                                        "type": "named",
-                                        "typeName": {
-                                            "typeId": "type_service:RerankRequest",
-                                            "fernFilepath": {
-                                                "allParts": [
-                                                    "service"
-                                                ],
-                                                "packagePath": [],
-                                                "file": "service"
-                                            },
-                                            "name": "RerankRequest",
-                                            "displayName": null
-                                        },
-                                        "shape": {
-                                            "type": "object",
-                                            "properties": [
-                                                {
-                                                    "name": "documents",
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "container",
-                                                            "container": {
-                                                                "type": "list",
-                                                                "list": [
-                                                                    {
-                                                                        "shape": {
-                                                                            "type": "named",
-                                                                            "typeName": {
-                                                                                "typeId": "type_service:DocumentItem",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "service"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "service"
-                                                                                },
-                                                                                "name": "DocumentItem",
-                                                                                "displayName": null
-                                                                            },
-                                                                            "shape": {
-                                                                                "type": "undiscriminatedUnion",
-                                                                                "index": 1,
-                                                                                "singleUnionType": {
-                                                                                    "shape": {
-                                                                                        "type": "named",
-                                                                                        "typeName": {
-                                                                                            "typeId": "type_service:DocumentObject",
-                                                                                            "fernFilepath": {
-                                                                                                "allParts": [
-                                                                                                    "service"
-                                                                                                ],
-                                                                                                "packagePath": [],
-                                                                                                "file": "service"
-                                                                                            },
-                                                                                            "name": "DocumentObject",
-                                                                                            "displayName": null
-                                                                                        },
-                                                                                        "shape": {
-                                                                                            "type": "object",
-                                                                                            "properties": [
-                                                                                                {
-                                                                                                    "name": "text",
-                                                                                                    "value": {
-                                                                                                        "shape": {
-                                                                                                            "type": "primitive",
-                                                                                                            "primitive": {
-                                                                                                                "type": "string",
-                                                                                                                "string": {
-                                                                                                                    "original": "Carson City is the capital city of the American state of Nevada."
-                                                                                                                }
-                                                                                                            }
-                                                                                                        },
-                                                                                                        "jsonExample": "Carson City is the capital city of the American state of Nevada."
-                                                                                                    },
-                                                                                                    "originalTypeDeclaration": {
-                                                                                                        "typeId": "type_service:DocumentObject",
-                                                                                                        "fernFilepath": {
-                                                                                                            "allParts": [
-                                                                                                                "service"
-                                                                                                            ],
-                                                                                                            "packagePath": [],
-                                                                                                            "file": "service"
-                                                                                                        },
-                                                                                                        "name": "DocumentObject",
-                                                                                                        "displayName": null
-                                                                                                    },
-                                                                                                    "propertyAccess": null
-                                                                                                }
-                                                                                            ],
-                                                                                            "extraProperties": null
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": {
-                                                                                        "text": "Carson City is the capital city of the American state of Nevada."
-                                                                                    }
-                                                                                }
-                                                                            }
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": "documents",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "list",
+                                                        "list": [
+                                                            {
+                                                                "shape": {
+                                                                    "type": "named",
+                                                                    "typeName": {
+                                                                        "typeId": "type_:DocumentItem",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
                                                                         },
-                                                                        "jsonExample": {
-                                                                            "text": "Carson City is the capital city of the American state of Nevada."
-                                                                        }
+                                                                        "name": "DocumentItem",
+                                                                        "displayName": null
                                                                     },
-                                                                    {
-                                                                        "shape": {
-                                                                            "type": "named",
-                                                                            "typeName": {
-                                                                                "typeId": "type_service:DocumentItem",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "service"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "service"
-                                                                                },
-                                                                                "name": "DocumentItem",
-                                                                                "displayName": null
-                                                                            },
+                                                                    "shape": {
+                                                                        "type": "undiscriminatedUnion",
+                                                                        "index": 0,
+                                                                        "singleUnionType": {
                                                                             "shape": {
-                                                                                "type": "undiscriminatedUnion",
-                                                                                "index": 1,
-                                                                                "singleUnionType": {
-                                                                                    "shape": {
-                                                                                        "type": "named",
-                                                                                        "typeName": {
-                                                                                            "typeId": "type_service:DocumentObject",
-                                                                                            "fernFilepath": {
-                                                                                                "allParts": [
-                                                                                                    "service"
-                                                                                                ],
-                                                                                                "packagePath": [],
-                                                                                                "file": "service"
-                                                                                            },
-                                                                                            "name": "DocumentObject",
-                                                                                            "displayName": null
-                                                                                        },
-                                                                                        "shape": {
-                                                                                            "type": "object",
-                                                                                            "properties": [
-                                                                                                {
-                                                                                                    "name": "text",
-                                                                                                    "value": {
-                                                                                                        "shape": {
-                                                                                                            "type": "primitive",
-                                                                                                            "primitive": {
-                                                                                                                "type": "string",
-                                                                                                                "string": {
-                                                                                                                    "original": "Washington, D.C. is the capital of the United States."
-                                                                                                                }
-                                                                                                            }
-                                                                                                        },
-                                                                                                        "jsonExample": "Washington, D.C. is the capital of the United States."
-                                                                                                    },
-                                                                                                    "originalTypeDeclaration": {
-                                                                                                        "typeId": "type_service:DocumentObject",
-                                                                                                        "fernFilepath": {
-                                                                                                            "allParts": [
-                                                                                                                "service"
-                                                                                                            ],
-                                                                                                            "packagePath": [],
-                                                                                                            "file": "service"
-                                                                                                        },
-                                                                                                        "name": "DocumentObject",
-                                                                                                        "displayName": null
-                                                                                                    },
-                                                                                                    "propertyAccess": null
-                                                                                                }
-                                                                                            ],
-                                                                                            "extraProperties": null
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": {
-                                                                                        "text": "Washington, D.C. is the capital of the United States."
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "documents"
                                                                                     }
                                                                                 }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": {
-                                                                            "text": "Washington, D.C. is the capital of the United States."
+                                                                            },
+                                                                            "jsonExample": "documents"
                                                                         }
                                                                     }
-                                                                ],
-                                                                "itemType": {
-                                                                    "_type": "named",
-                                                                    "name": "DocumentItem",
-                                                                    "fernFilepath": {
-                                                                        "allParts": [
-                                                                            "service"
-                                                                        ],
-                                                                        "packagePath": [],
-                                                                        "file": "service"
-                                                                    },
-                                                                    "displayName": null,
-                                                                    "typeId": "type_service:DocumentItem",
-                                                                    "default": null,
-                                                                    "inline": null
-                                                                }
+                                                                },
+                                                                "jsonExample": "documents"
                                                             }
-                                                        },
-                                                        "jsonExample": [
-                                                            {
-                                                                "text": "Carson City is the capital city of the American state of Nevada."
+                                                        ],
+                                                        "itemType": {
+                                                            "_type": "named",
+                                                            "name": "DocumentItem",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
                                                             },
-                                                            {
-                                                                "text": "Washington, D.C. is the capital of the United States."
-                                                            }
-                                                        ]
-                                                    },
-                                                    "originalTypeDeclaration": {
-                                                        "typeId": "type_service:RerankRequest",
-                                                        "fernFilepath": {
-                                                            "allParts": [
-                                                                "service"
-                                                            ],
-                                                            "packagePath": [],
-                                                            "file": "service"
-                                                        },
-                                                        "name": "RerankRequest",
-                                                        "displayName": null
-                                                    },
-                                                    "propertyAccess": null
+                                                            "displayName": null,
+                                                            "typeId": "type_:DocumentItem",
+                                                            "default": null,
+                                                            "inline": null
+                                                        }
+                                                    }
                                                 },
-                                                {
-                                                    "name": "query",
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "primitive",
-                                                            "primitive": {
-                                                                "type": "string",
-                                                                "string": {
-                                                                    "original": "What is the capital of the United States?"
-                                                                }
-                                                            }
-                                                        },
-                                                        "jsonExample": "What is the capital of the United States?"
-                                                    },
-                                                    "originalTypeDeclaration": {
-                                                        "typeId": "type_service:RerankRequest",
-                                                        "fernFilepath": {
-                                                            "allParts": [
-                                                                "service"
-                                                            ],
-                                                            "packagePath": [],
-                                                            "file": "service"
-                                                        },
-                                                        "name": "RerankRequest",
-                                                        "displayName": null
-                                                    },
-                                                    "propertyAccess": null
-                                                }
-                                            ],
-                                            "extraProperties": null
+                                                "jsonExample": [
+                                                    "documents"
+                                                ]
+                                            },
+                                            "originalTypeDeclaration": null
+                                        },
+                                        {
+                                            "name": "query",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "query"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "query"
+                                            },
+                                            "originalTypeDeclaration": null
                                         }
-                                    },
+                                    ],
+                                    "extraProperties": null,
                                     "jsonExample": {
                                         "documents": [
-                                            {
-                                                "text": "Carson City is the capital city of the American state of Nevada."
-                                            },
-                                            {
-                                                "text": "Washington, D.C. is the capital of the United States."
-                                            }
+                                            "documents"
                                         ],
-                                        "query": "What is the capital of the United States?"
+                                        "query": "query"
                                     }
                                 },
                                 "response": {
@@ -711,13 +458,11 @@
                                             "shape": {
                                                 "type": "named",
                                                 "typeName": {
-                                                    "typeId": "type_service:RerankResponse",
+                                                    "typeId": "type_:RerankResponse",
                                                     "fernFilepath": {
-                                                        "allParts": [
-                                                            "service"
-                                                        ],
+                                                        "allParts": [],
                                                         "packagePath": [],
-                                                        "file": "service"
+                                                        "file": null
                                                     },
                                                     "name": "RerankResponse",
                                                     "displayName": null
@@ -739,23 +484,11 @@
                                                                                     "primitive": {
                                                                                         "type": "string",
                                                                                         "string": {
-                                                                                            "original": "Washington, D.C. is the capital of the United States."
+                                                                                            "original": "results"
                                                                                         }
                                                                                     }
                                                                                 },
-                                                                                "jsonExample": "Washington, D.C. is the capital of the United States."
-                                                                            },
-                                                                            {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "string",
-                                                                                        "string": {
-                                                                                            "original": "Carson City is the capital city of the American state of Nevada."
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": "Carson City is the capital city of the American state of Nevada."
+                                                                                "jsonExample": "results"
                                                                             }
                                                                         ],
                                                                         "itemType": {
@@ -772,18 +505,15 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": [
-                                                                    "Washington, D.C. is the capital of the United States.",
-                                                                    "Carson City is the capital city of the American state of Nevada."
+                                                                    "results"
                                                                 ]
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_service:RerankResponse",
+                                                                "typeId": "type_:RerankResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "name": "RerankResponse",
                                                                 "displayName": null
@@ -796,8 +526,7 @@
                                             },
                                             "jsonExample": {
                                                 "results": [
-                                                    "Washington, D.C. is the capital of the United States.",
-                                                    "Carson City is the capital city of the American state of Nevada."
+                                                    "results"
                                                 ]
                                             }
                                         }
@@ -811,7 +540,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "2a5fe990",
+                                "id": "281be9f3",
                                 "url": "/rerank",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -821,169 +550,121 @@
                                 "serviceHeaders": [],
                                 "rootPathParameters": [],
                                 "request": {
-                                    "type": "reference",
-                                    "shape": {
-                                        "type": "named",
-                                        "shape": {
-                                            "type": "object",
-                                            "properties": [
-                                                {
-                                                    "name": "documents",
-                                                    "originalTypeDeclaration": {
-                                                        "name": "RerankRequest",
-                                                        "fernFilepath": {
-                                                            "allParts": [
-                                                                "service"
-                                                            ],
-                                                            "packagePath": [],
-                                                            "file": "service"
-                                                        },
-                                                        "displayName": null,
-                                                        "typeId": "type_service:RerankRequest"
-                                                    },
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "container",
-                                                            "container": {
-                                                                "type": "list",
-                                                                "list": [
-                                                                    {
-                                                                        "shape": {
-                                                                            "type": "named",
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": "documents",
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "list",
+                                                        "list": [
+                                                            {
+                                                                "shape": {
+                                                                    "type": "named",
+                                                                    "shape": {
+                                                                        "type": "undiscriminatedUnion",
+                                                                        "index": 0,
+                                                                        "singleUnionType": {
                                                                             "shape": {
-                                                                                "type": "undiscriminatedUnion",
-                                                                                "index": 0,
-                                                                                "singleUnionType": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "string",
-                                                                                            "string": {
-                                                                                                "original": "documents"
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": "documents"
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "documents"
+                                                                                    }
                                                                                 }
                                                                             },
-                                                                            "typeName": {
-                                                                                "name": "DocumentItem",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "service"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "service"
-                                                                                },
-                                                                                "displayName": null,
-                                                                                "typeId": "type_service:DocumentItem"
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": "documents"
+                                                                            "jsonExample": "documents"
+                                                                        }
                                                                     },
-                                                                    {
-                                                                        "shape": {
-                                                                            "type": "named",
-                                                                            "shape": {
-                                                                                "type": "undiscriminatedUnion",
-                                                                                "index": 0,
-                                                                                "singleUnionType": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "string",
-                                                                                            "string": {
-                                                                                                "original": "documents"
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": "documents"
-                                                                                }
-                                                                            },
-                                                                            "typeName": {
-                                                                                "name": "DocumentItem",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "service"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "service"
-                                                                                },
-                                                                                "displayName": null,
-                                                                                "typeId": "type_service:DocumentItem"
-                                                                            }
+                                                                    "typeName": {
+                                                                        "name": "DocumentItem",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
                                                                         },
-                                                                        "jsonExample": "documents"
+                                                                        "displayName": null,
+                                                                        "typeId": "type_:DocumentItem"
                                                                     }
-                                                                ],
-                                                                "itemType": {
-                                                                    "_type": "named",
-                                                                    "name": "DocumentItem",
-                                                                    "fernFilepath": {
-                                                                        "allParts": [
-                                                                            "service"
-                                                                        ],
-                                                                        "packagePath": [],
-                                                                        "file": "service"
+                                                                },
+                                                                "jsonExample": "documents"
+                                                            },
+                                                            {
+                                                                "shape": {
+                                                                    "type": "named",
+                                                                    "shape": {
+                                                                        "type": "undiscriminatedUnion",
+                                                                        "index": 0,
+                                                                        "singleUnionType": {
+                                                                            "shape": {
+                                                                                "type": "primitive",
+                                                                                "primitive": {
+                                                                                    "type": "string",
+                                                                                    "string": {
+                                                                                        "original": "documents"
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "jsonExample": "documents"
+                                                                        }
                                                                     },
-                                                                    "displayName": null,
-                                                                    "typeId": "type_service:DocumentItem",
-                                                                    "default": null,
-                                                                    "inline": null
-                                                                }
+                                                                    "typeName": {
+                                                                        "name": "DocumentItem",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "displayName": null,
+                                                                        "typeId": "type_:DocumentItem"
+                                                                    }
+                                                                },
+                                                                "jsonExample": "documents"
                                                             }
-                                                        },
-                                                        "jsonExample": [
-                                                            "documents",
-                                                            "documents"
-                                                        ]
-                                                    },
-                                                    "propertyAccess": null
+                                                        ],
+                                                        "itemType": {
+                                                            "_type": "named",
+                                                            "name": "DocumentItem",
+                                                            "fernFilepath": {
+                                                                "allParts": [],
+                                                                "packagePath": [],
+                                                                "file": null
+                                                            },
+                                                            "displayName": null,
+                                                            "typeId": "type_:DocumentItem",
+                                                            "default": null,
+                                                            "inline": null
+                                                        }
+                                                    }
                                                 },
-                                                {
-                                                    "name": "query",
-                                                    "originalTypeDeclaration": {
-                                                        "name": "RerankRequest",
-                                                        "fernFilepath": {
-                                                            "allParts": [
-                                                                "service"
-                                                            ],
-                                                            "packagePath": [],
-                                                            "file": "service"
-                                                        },
-                                                        "displayName": null,
-                                                        "typeId": "type_service:RerankRequest"
-                                                    },
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "primitive",
-                                                            "primitive": {
-                                                                "type": "string",
-                                                                "string": {
-                                                                    "original": "query"
-                                                                }
-                                                            }
-                                                        },
-                                                        "jsonExample": "query"
-                                                    },
-                                                    "propertyAccess": null
-                                                }
-                                            ],
-                                            "extraProperties": null
+                                                "jsonExample": [
+                                                    "documents",
+                                                    "documents"
+                                                ]
+                                            }
                                         },
-                                        "typeName": {
-                                            "name": "RerankRequest",
-                                            "fernFilepath": {
-                                                "allParts": [
-                                                    "service"
-                                                ],
-                                                "packagePath": [],
-                                                "file": "service"
-                                            },
-                                            "displayName": null,
-                                            "typeId": "type_service:RerankRequest"
+                                        {
+                                            "name": "query",
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "query"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "query"
+                                            }
                                         }
-                                    },
+                                    ],
+                                    "extraProperties": null,
                                     "jsonExample": {
                                         "documents": [
                                             "documents",
@@ -1007,14 +688,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "RerankResponse",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:RerankResponse"
+                                                                "typeId": "type_:RerankResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1073,14 +752,12 @@
                                                 "typeName": {
                                                     "name": "RerankResponse",
                                                     "fernFilepath": {
-                                                        "allParts": [
-                                                            "service"
-                                                        ],
+                                                        "allParts": [],
                                                         "packagePath": [],
-                                                        "file": "service"
+                                                        "file": null
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_service:RerankResponse"
+                                                    "typeId": "type_:RerankResponse"
                                                 }
                                             },
                                             "jsonExample": {
@@ -1124,10 +801,9 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
-                "type_service:DocumentItem",
-                "type_service:DocumentObject",
-                "type_service:RerankRequest",
-                "type_service:RerankResponse"
+                "type_:DocumentItem",
+                "type_:DocumentObject",
+                "type_:RerankResponse"
             ]
         },
         "sharedTypes": []
@@ -1140,7 +816,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_service:DocumentItem": {
+            "type_:DocumentItem": {
                 "type": "undiscriminatedUnion",
                 "declaration": {
                     "name": {
@@ -1163,47 +839,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "service",
-                                "camelCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE",
-                                    "safeName": "SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Service",
-                                    "safeName": "Service"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "types": [
@@ -1213,11 +851,11 @@
                     },
                     {
                         "type": "named",
-                        "value": "type_service:DocumentObject"
+                        "value": "type_:DocumentObject"
                     }
                 ]
             },
-            "type_service:DocumentObject": {
+            "type_:DocumentObject": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1240,47 +878,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "service",
-                                "camelCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE",
-                                    "safeName": "SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Service",
-                                    "safeName": "Service"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -1318,141 +918,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_service:RerankRequest": {
-                "type": "object",
-                "declaration": {
-                    "name": {
-                        "originalName": "RerankRequest",
-                        "camelCase": {
-                            "unsafeName": "rerankRequest",
-                            "safeName": "rerankRequest"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "rerank_request",
-                            "safeName": "rerank_request"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "RERANK_REQUEST",
-                            "safeName": "RERANK_REQUEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "RerankRequest",
-                            "safeName": "RerankRequest"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "service",
-                                "camelCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE",
-                                    "safeName": "SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Service",
-                                    "safeName": "Service"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    }
-                },
-                "properties": [
-                    {
-                        "name": {
-                            "wireValue": "documents",
-                            "name": {
-                                "originalName": "documents",
-                                "camelCase": {
-                                    "unsafeName": "documents",
-                                    "safeName": "documents"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "documents",
-                                    "safeName": "documents"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DOCUMENTS",
-                                    "safeName": "DOCUMENTS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Documents",
-                                    "safeName": "Documents"
-                                }
-                            }
-                        },
-                        "typeReference": {
-                            "type": "list",
-                            "value": {
-                                "type": "named",
-                                "value": "type_service:DocumentItem"
-                            }
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    },
-                    {
-                        "name": {
-                            "wireValue": "query",
-                            "name": {
-                                "originalName": "query",
-                                "camelCase": {
-                                    "unsafeName": "query",
-                                    "safeName": "query"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "query",
-                                    "safeName": "query"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "QUERY",
-                                    "safeName": "QUERY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Query",
-                                    "safeName": "Query"
-                                }
-                            }
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ],
-                "extends": null,
-                "additionalProperties": false
-            },
-            "type_service:RerankResponse": {
+            "type_:RerankResponse": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1475,47 +941,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "service",
-                                "camelCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE",
-                                    "safeName": "SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Service",
-                                    "safeName": "Service"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -1651,14 +1079,145 @@
                     "path": "/rerank"
                 },
                 "request": {
-                    "type": "body",
-                    "pathParameters": [],
-                    "body": {
-                        "type": "typeReference",
-                        "value": {
-                            "type": "named",
-                            "value": "type_service:RerankRequest"
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "RerankRequest",
+                            "camelCase": {
+                                "unsafeName": "rerankRequest",
+                                "safeName": "rerankRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "rerank_request",
+                                "safeName": "rerank_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RERANK_REQUEST",
+                                "safeName": "RERANK_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "RerankRequest",
+                                "safeName": "RerankRequest"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [
+                                {
+                                    "originalName": "service",
+                                    "camelCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SERVICE",
+                                        "safeName": "SERVICE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Service",
+                                        "safeName": "Service"
+                                    }
+                                }
+                            ],
+                            "packagePath": [],
+                            "file": {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
                         }
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "body": {
+                        "type": "properties",
+                        "value": [
+                            {
+                                "name": {
+                                    "wireValue": "documents",
+                                    "name": {
+                                        "originalName": "documents",
+                                        "camelCase": {
+                                            "unsafeName": "documents",
+                                            "safeName": "documents"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "documents",
+                                            "safeName": "documents"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "DOCUMENTS",
+                                            "safeName": "DOCUMENTS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Documents",
+                                            "safeName": "Documents"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "list",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:DocumentItem"
+                                    }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            },
+                            {
+                                "name": {
+                                    "wireValue": "query",
+                                    "name": {
+                                        "originalName": "query",
+                                        "camelCase": {
+                                            "unsafeName": "query",
+                                            "safeName": "query"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "query",
+                                            "safeName": "query"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "QUERY",
+                                            "safeName": "QUERY"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Query",
+                                            "safeName": "Query"
+                                        }
+                                    }
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            }
+                        ]
+                    },
+                    "metadata": {
+                        "includePathParameters": false,
+                        "onlyPathParameters": false
                     }
                 },
                 "response": {
@@ -1692,12 +1251,7 @@
                 "file": "service"
             },
             "service": "service_service",
-            "types": [
-                "type_service:DocumentItem",
-                "type_service:DocumentObject",
-                "type_service:RerankRequest",
-                "type_service:RerankResponse"
-            ],
+            "types": [],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -1715,7 +1269,11 @@
         },
         "websocket": null,
         "service": null,
-        "types": [],
+        "types": [
+            "type_:DocumentItem",
+            "type_:DocumentObject",
+            "type_:RerankResponse"
+        ],
         "errors": [],
         "subpackages": [
             "subpackage_service"

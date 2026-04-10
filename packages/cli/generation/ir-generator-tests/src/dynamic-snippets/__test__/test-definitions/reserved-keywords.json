@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_package:Package": {
+        "type_:Package": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,47 +24,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "package",
-                            "camelCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE",
-                                "safeName": "PACKAGE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Package",
-                                "safeName": "Package"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "package",
-                        "camelCase": {
-                            "unsafeName": "package",
-                            "safeName": "package"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "package",
-                            "safeName": "package"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "PACKAGE",
-                            "safeName": "PACKAGE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Package",
-                            "safeName": "Package"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -102,7 +64,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_package:Record": {
+        "type_:Record": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -125,47 +87,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "package",
-                            "camelCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE",
-                                "safeName": "PACKAGE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Package",
-                                "safeName": "Package"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "package",
-                        "camelCase": {
-                            "unsafeName": "package",
-                            "safeName": "package"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "package",
-                            "safeName": "package"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "PACKAGE",
-                            "safeName": "PACKAGE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Package",
-                            "safeName": "Package"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -210,7 +134,7 @@
                     "name": {
                         "wireValue": "3d",
                         "name": {
-                            "originalName": "3d",
+                            "originalName": "_3d",
                             "camelCase": {
                                 "unsafeName": "3D",
                                 "safeName": "3D"
@@ -317,22 +241,22 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "TestRequest",
+                        "originalName": "PackageTestRequest",
                         "camelCase": {
-                            "unsafeName": "testRequest",
-                            "safeName": "testRequest"
+                            "unsafeName": "packageTestRequest",
+                            "safeName": "packageTestRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "test_request",
-                            "safeName": "test_request"
+                            "unsafeName": "package_test_request",
+                            "safeName": "package_test_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "TEST_REQUEST",
-                            "safeName": "TEST_REQUEST"
+                            "unsafeName": "PACKAGE_TEST_REQUEST",
+                            "safeName": "PACKAGE_TEST_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "TestRequest",
-                            "safeName": "TestRequest"
+                            "unsafeName": "PackageTestRequest",
+                            "safeName": "PackageTestRequest"
                         }
                     },
                     "fernFilepath": {

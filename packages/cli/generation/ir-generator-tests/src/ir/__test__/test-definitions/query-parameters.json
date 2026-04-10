@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "query-parameters",
-    "apiDisplayName": null,
+    "apiName": "api",
+    "apiDisplayName": "query-parameters",
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -13,19 +13,17 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_user:User": {
+        "type_:User": {
             "inline": null,
             "name": {
                 "name": "User",
                 "fernFilepath": {
-                    "allParts": [
-                        "user"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "user"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_user:User"
+                "typeId": "type_:User"
             },
             "shape": {
                 "_type": "object",
@@ -95,19 +93,17 @@
             "availability": null,
             "docs": null
         },
-        "type_user:NestedUser": {
+        "type_:NestedUser": {
             "inline": null,
             "name": {
                 "name": "NestedUser",
                 "fernFilepath": {
-                    "allParts": [
-                        "user"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "user"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_user:NestedUser"
+                "typeId": "type_:NestedUser"
             },
             "shape": {
                 "_type": "object",
@@ -140,14 +136,12 @@
                             "_type": "named",
                             "name": "User",
                             "fernFilepath": {
-                                "allParts": [
-                                    "user"
-                                ],
+                                "allParts": [],
                                 "packagePath": [],
-                                "file": "user"
+                                "file": null
                             },
                             "displayName": null,
-                            "typeId": "type_user:User",
+                            "typeId": "type_:User",
                             "default": null,
                             "inline": null
                         },
@@ -164,7 +158,7 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_user:User"
+                "type_:User"
             ],
             "encoding": {
                 "json": {},
@@ -193,7 +187,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/user",
+                "head": "",
                 "parts": []
             },
             "headers": [],
@@ -207,8 +201,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_user.getUsername",
-                    "name": "getUsername",
+                    "id": "endpoint_user.getusername",
+                    "name": "getusername",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -218,11 +212,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/user",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/user",
+                        "head": "user",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -256,8 +250,17 @@
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
-                                    "v1": "UUID",
-                                    "v2": null
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": {
+                                            "format": "uuid",
+                                            "pattern": null,
+                                            "minLength": null,
+                                            "maxLength": null
+                                        }
+                                    }
                                 }
                             },
                             "allowMultiple": false,
@@ -313,8 +316,17 @@
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
-                                    "v1": "BASE_64",
-                                    "v2": null
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": {
+                                            "format": "byte",
+                                            "pattern": null,
+                                            "minLength": null,
+                                            "maxLength": null
+                                        }
+                                    }
                                 }
                             },
                             "allowMultiple": false,
@@ -333,14 +345,12 @@
                                 "_type": "named",
                                 "name": "User",
                                 "fernFilepath": {
-                                    "allParts": [
-                                        "user"
-                                    ],
+                                    "allParts": [],
                                     "packagePath": [],
-                                    "file": "user"
+                                    "file": null
                                 },
                                 "displayName": null,
-                                "typeId": "type_user:User",
+                                "typeId": "type_:User",
                                 "default": null,
                                 "inline": null
                             },
@@ -359,25 +369,23 @@
                             "valueType": {
                                 "_type": "container",
                                 "container": {
-                                    "_type": "list",
-                                    "list": {
+                                    "_type": "optional",
+                                    "optional": {
                                         "_type": "named",
                                         "name": "User",
                                         "fernFilepath": {
-                                            "allParts": [
-                                                "user"
-                                            ],
+                                            "allParts": [],
                                             "packagePath": [],
-                                            "file": "user"
+                                            "file": null
                                         },
                                         "displayName": null,
-                                        "typeId": "type_user:User",
+                                        "typeId": "type_:User",
                                         "default": null,
                                         "inline": null
                                     }
                                 }
                             },
-                            "allowMultiple": false,
+                            "allowMultiple": true,
                             "clientDefault": null,
                             "v2Examples": {
                                 "userSpecifiedExamples": {},
@@ -394,10 +402,16 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "DATE_TIME",
-                                            "v2": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "DATE_TIME",
+                                                    "v2": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -459,13 +473,19 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "STRING",
-                                            "v2": {
-                                                "type": "string",
-                                                "default": null,
-                                                "validation": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -487,14 +507,12 @@
                                 "_type": "named",
                                 "name": "NestedUser",
                                 "fernFilepath": {
-                                    "allParts": [
-                                        "user"
-                                    ],
+                                    "allParts": [],
                                     "packagePath": [],
-                                    "file": "user"
+                                    "file": null
                                 },
                                 "displayName": null,
-                                "typeId": "type_user:NestedUser",
+                                "typeId": "type_:NestedUser",
                                 "default": null,
                                 "inline": null
                             },
@@ -518,14 +536,12 @@
                                         "_type": "named",
                                         "name": "User",
                                         "fernFilepath": {
-                                            "allParts": [
-                                                "user"
-                                            ],
+                                            "allParts": [],
                                             "packagePath": [],
-                                            "file": "user"
+                                            "file": null
                                         },
                                         "displayName": null,
-                                        "typeId": "type_user:User",
+                                        "typeId": "type_:User",
                                         "default": null,
                                         "inline": null
                                     }
@@ -544,19 +560,23 @@
                         {
                             "name": "excludeUser",
                             "valueType": {
-                                "_type": "named",
-                                "name": "User",
-                                "fernFilepath": {
-                                    "allParts": [
-                                        "user"
-                                    ],
-                                    "packagePath": [],
-                                    "file": "user"
-                                },
-                                "displayName": null,
-                                "typeId": "type_user:User",
-                                "default": null,
-                                "inline": null
+                                "_type": "container",
+                                "container": {
+                                    "_type": "optional",
+                                    "optional": {
+                                        "_type": "named",
+                                        "name": "User",
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_:User",
+                                        "default": null,
+                                        "inline": null
+                                    }
+                                }
                             },
                             "allowMultiple": true,
                             "clientDefault": null,
@@ -571,13 +591,19 @@
                         {
                             "name": "filter",
                             "valueType": {
-                                "_type": "primitive",
-                                "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                        "type": "string",
-                                        "default": null,
-                                        "validation": null
+                                "_type": "container",
+                                "container": {
+                                    "_type": "optional",
+                                    "optional": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
                                     }
                                 }
                             },
@@ -598,7 +624,7 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "GetUsersRequest",
+                            "wrapperName": "UserGetUsernameRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -615,24 +641,22 @@
                                     "_type": "named",
                                     "name": "User",
                                     "fernFilepath": {
-                                        "allParts": [
-                                            "user"
-                                        ],
+                                        "allParts": [],
                                         "packagePath": [],
-                                        "file": "user"
+                                        "file": null
                                     },
                                     "displayName": null,
-                                    "typeId": "type_user:User",
+                                    "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": null,
+                                "docs": "",
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null,
+                        "status-code": 200,
                         "isWildcardStatusCode": null,
-                        "docs": null
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -640,7 +664,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "e477bddc",
+                                "id": "4b837f95",
                                 "url": "/user",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -671,11 +695,13 @@
                                             "shape": {
                                                 "type": "primitive",
                                                 "primitive": {
-                                                    "type": "uuid",
-                                                    "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "id"
+                                                    }
                                                 }
                                             },
-                                            "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                            "jsonExample": "id"
                                         }
                                     },
                                     {
@@ -720,11 +746,13 @@
                                             "shape": {
                                                 "type": "primitive",
                                                 "primitive": {
-                                                    "type": "base64",
-                                                    "base64": "SGVsbG8gd29ybGQh"
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "bytes"
+                                                    }
                                                 }
                                             },
-                                            "jsonExample": "SGVsbG8gd29ybGQh"
+                                            "jsonExample": "bytes"
                                         }
                                     },
                                     {
@@ -743,14 +771,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "User",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "user"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "user"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_user:User"
+                                                                "typeId": "type_:User"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -771,14 +797,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "User",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "user"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "user"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_user:User"
+                                                                "typeId": "type_:User"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -837,14 +861,12 @@
                                                 "typeName": {
                                                     "name": "User",
                                                     "fernFilepath": {
-                                                        "allParts": [
-                                                            "user"
-                                                        ],
+                                                        "allParts": [],
                                                         "packagePath": [],
-                                                        "file": "user"
+                                                        "file": null
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_user:User"
+                                                    "typeId": "type_:User"
                                                 }
                                             },
                                             "jsonExample": {
@@ -854,299 +876,6 @@
                                                     "tags"
                                                 ]
                                             }
-                                        }
-                                    },
-                                    {
-                                        "name": "userList",
-                                        "shape": {
-                                            "type": "single"
-                                        },
-                                        "value": {
-                                            "shape": {
-                                                "type": "container",
-                                                "container": {
-                                                    "type": "list",
-                                                    "list": [
-                                                        {
-                                                            "shape": {
-                                                                "type": "named",
-                                                                "shape": {
-                                                                    "type": "object",
-                                                                    "properties": [
-                                                                        {
-                                                                            "name": "name",
-                                                                            "originalTypeDeclaration": {
-                                                                                "name": "User",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "user"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "user"
-                                                                                },
-                                                                                "displayName": null,
-                                                                                "typeId": "type_user:User"
-                                                                            },
-                                                                            "value": {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "string",
-                                                                                        "string": {
-                                                                                            "original": "name"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": "name"
-                                                                            },
-                                                                            "propertyAccess": null
-                                                                        },
-                                                                        {
-                                                                            "name": "tags",
-                                                                            "originalTypeDeclaration": {
-                                                                                "name": "User",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "user"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "user"
-                                                                                },
-                                                                                "displayName": null,
-                                                                                "typeId": "type_user:User"
-                                                                            },
-                                                                            "value": {
-                                                                                "shape": {
-                                                                                    "type": "container",
-                                                                                    "container": {
-                                                                                        "type": "list",
-                                                                                        "list": [
-                                                                                            {
-                                                                                                "shape": {
-                                                                                                    "type": "primitive",
-                                                                                                    "primitive": {
-                                                                                                        "type": "string",
-                                                                                                        "string": {
-                                                                                                            "original": "tags"
-                                                                                                        }
-                                                                                                    }
-                                                                                                },
-                                                                                                "jsonExample": "tags"
-                                                                                            },
-                                                                                            {
-                                                                                                "shape": {
-                                                                                                    "type": "primitive",
-                                                                                                    "primitive": {
-                                                                                                        "type": "string",
-                                                                                                        "string": {
-                                                                                                            "original": "tags"
-                                                                                                        }
-                                                                                                    }
-                                                                                                },
-                                                                                                "jsonExample": "tags"
-                                                                                            }
-                                                                                        ],
-                                                                                        "itemType": {
-                                                                                            "_type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "v1": "STRING",
-                                                                                                "v2": {
-                                                                                                    "type": "string",
-                                                                                                    "default": null,
-                                                                                                    "validation": null
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": [
-                                                                                    "tags",
-                                                                                    "tags"
-                                                                                ]
-                                                                            },
-                                                                            "propertyAccess": null
-                                                                        }
-                                                                    ],
-                                                                    "extraProperties": null
-                                                                },
-                                                                "typeName": {
-                                                                    "name": "User",
-                                                                    "fernFilepath": {
-                                                                        "allParts": [
-                                                                            "user"
-                                                                        ],
-                                                                        "packagePath": [],
-                                                                        "file": "user"
-                                                                    },
-                                                                    "displayName": null,
-                                                                    "typeId": "type_user:User"
-                                                                }
-                                                            },
-                                                            "jsonExample": {
-                                                                "name": "name",
-                                                                "tags": [
-                                                                    "tags",
-                                                                    "tags"
-                                                                ]
-                                                            }
-                                                        },
-                                                        {
-                                                            "shape": {
-                                                                "type": "named",
-                                                                "shape": {
-                                                                    "type": "object",
-                                                                    "properties": [
-                                                                        {
-                                                                            "name": "name",
-                                                                            "originalTypeDeclaration": {
-                                                                                "name": "User",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "user"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "user"
-                                                                                },
-                                                                                "displayName": null,
-                                                                                "typeId": "type_user:User"
-                                                                            },
-                                                                            "value": {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "string",
-                                                                                        "string": {
-                                                                                            "original": "name"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": "name"
-                                                                            },
-                                                                            "propertyAccess": null
-                                                                        },
-                                                                        {
-                                                                            "name": "tags",
-                                                                            "originalTypeDeclaration": {
-                                                                                "name": "User",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "user"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "user"
-                                                                                },
-                                                                                "displayName": null,
-                                                                                "typeId": "type_user:User"
-                                                                            },
-                                                                            "value": {
-                                                                                "shape": {
-                                                                                    "type": "container",
-                                                                                    "container": {
-                                                                                        "type": "list",
-                                                                                        "list": [
-                                                                                            {
-                                                                                                "shape": {
-                                                                                                    "type": "primitive",
-                                                                                                    "primitive": {
-                                                                                                        "type": "string",
-                                                                                                        "string": {
-                                                                                                            "original": "tags"
-                                                                                                        }
-                                                                                                    }
-                                                                                                },
-                                                                                                "jsonExample": "tags"
-                                                                                            },
-                                                                                            {
-                                                                                                "shape": {
-                                                                                                    "type": "primitive",
-                                                                                                    "primitive": {
-                                                                                                        "type": "string",
-                                                                                                        "string": {
-                                                                                                            "original": "tags"
-                                                                                                        }
-                                                                                                    }
-                                                                                                },
-                                                                                                "jsonExample": "tags"
-                                                                                            }
-                                                                                        ],
-                                                                                        "itemType": {
-                                                                                            "_type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "v1": "STRING",
-                                                                                                "v2": {
-                                                                                                    "type": "string",
-                                                                                                    "default": null,
-                                                                                                    "validation": null
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": [
-                                                                                    "tags",
-                                                                                    "tags"
-                                                                                ]
-                                                                            },
-                                                                            "propertyAccess": null
-                                                                        }
-                                                                    ],
-                                                                    "extraProperties": null
-                                                                },
-                                                                "typeName": {
-                                                                    "name": "User",
-                                                                    "fernFilepath": {
-                                                                        "allParts": [
-                                                                            "user"
-                                                                        ],
-                                                                        "packagePath": [],
-                                                                        "file": "user"
-                                                                    },
-                                                                    "displayName": null,
-                                                                    "typeId": "type_user:User"
-                                                                }
-                                                            },
-                                                            "jsonExample": {
-                                                                "name": "name",
-                                                                "tags": [
-                                                                    "tags",
-                                                                    "tags"
-                                                                ]
-                                                            }
-                                                        }
-                                                    ],
-                                                    "itemType": {
-                                                        "_type": "named",
-                                                        "name": "User",
-                                                        "fernFilepath": {
-                                                            "allParts": [
-                                                                "user"
-                                                            ],
-                                                            "packagePath": [],
-                                                            "file": "user"
-                                                        },
-                                                        "displayName": null,
-                                                        "typeId": "type_user:User",
-                                                        "default": null,
-                                                        "inline": null
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": [
-                                                {
-                                                    "name": "name",
-                                                    "tags": [
-                                                        "tags",
-                                                        "tags"
-                                                    ]
-                                                },
-                                                {
-                                                    "name": "name",
-                                                    "tags": [
-                                                        "tags",
-                                                        "tags"
-                                                    ]
-                                                }
-                                            ]
                                         }
                                     },
                                     {
@@ -1232,14 +961,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "NestedUser",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "user"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "user"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_user:NestedUser"
+                                                                "typeId": "type_:NestedUser"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1260,14 +987,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "NestedUser",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "user"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "user"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_user:NestedUser"
+                                                                "typeId": "type_:NestedUser"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1280,14 +1005,12 @@
                                                                                 "originalTypeDeclaration": {
                                                                                     "name": "User",
                                                                                     "fernFilepath": {
-                                                                                        "allParts": [
-                                                                                            "user"
-                                                                                        ],
+                                                                                        "allParts": [],
                                                                                         "packagePath": [],
-                                                                                        "file": "user"
+                                                                                        "file": null
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "typeId": "type_user:User"
+                                                                                    "typeId": "type_:User"
                                                                                 },
                                                                                 "value": {
                                                                                     "shape": {
@@ -1308,14 +1031,12 @@
                                                                                 "originalTypeDeclaration": {
                                                                                     "name": "User",
                                                                                     "fernFilepath": {
-                                                                                        "allParts": [
-                                                                                            "user"
-                                                                                        ],
+                                                                                        "allParts": [],
                                                                                         "packagePath": [],
-                                                                                        "file": "user"
+                                                                                        "file": null
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "typeId": "type_user:User"
+                                                                                    "typeId": "type_:User"
                                                                                 },
                                                                                 "value": {
                                                                                     "shape": {
@@ -1374,14 +1095,12 @@
                                                                     "typeName": {
                                                                         "name": "User",
                                                                         "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "user"
-                                                                            ],
+                                                                            "allParts": [],
                                                                             "packagePath": [],
-                                                                            "file": "user"
+                                                                            "file": null
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_user:User"
+                                                                        "typeId": "type_:User"
                                                                     }
                                                                 },
                                                                 "jsonExample": {
@@ -1400,14 +1119,12 @@
                                                 "typeName": {
                                                     "name": "NestedUser",
                                                     "fernFilepath": {
-                                                        "allParts": [
-                                                            "user"
-                                                        ],
+                                                        "allParts": [],
                                                         "packagePath": [],
-                                                        "file": "user"
+                                                        "file": null
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_user:NestedUser"
+                                                    "typeId": "type_:NestedUser"
                                                 }
                                             },
                                             "jsonExample": {
@@ -1420,153 +1137,6 @@
                                                     ]
                                                 }
                                             }
-                                        }
-                                    },
-                                    {
-                                        "name": "excludeUser",
-                                        "shape": {
-                                            "type": "exploded"
-                                        },
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": "name",
-                                                            "originalTypeDeclaration": {
-                                                                "name": "User",
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "user"
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": "user"
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_user:User"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "name"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "name"
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": "tags",
-                                                            "originalTypeDeclaration": {
-                                                                "name": "User",
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "user"
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": "user"
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_user:User"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "list",
-                                                                        "list": [
-                                                                            {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "string",
-                                                                                        "string": {
-                                                                                            "original": "tags"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": "tags"
-                                                                            },
-                                                                            {
-                                                                                "shape": {
-                                                                                    "type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "type": "string",
-                                                                                        "string": {
-                                                                                            "original": "tags"
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "jsonExample": "tags"
-                                                                            }
-                                                                        ],
-                                                                        "itemType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": [
-                                                                    "tags",
-                                                                    "tags"
-                                                                ]
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": "User",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "user"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "user"
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_user:User"
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "name": "name",
-                                                "tags": [
-                                                    "tags",
-                                                    "tags"
-                                                ]
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "name": "filter",
-                                        "shape": {
-                                            "type": "exploded"
-                                        },
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "filter"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "filter"
                                         }
                                     }
                                 ],
@@ -1589,14 +1159,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "User",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "user"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "user"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_user:User"
+                                                                "typeId": "type_:User"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1617,14 +1185,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "User",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "user"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "user"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_user:User"
+                                                                "typeId": "type_:User"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1683,14 +1249,12 @@
                                                 "typeName": {
                                                     "name": "User",
                                                     "fernFilepath": {
-                                                        "allParts": [
-                                                            "user"
-                                                        ],
+                                                        "allParts": [],
                                                         "packagePath": [],
-                                                        "file": "user"
+                                                        "file": null
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_user:User"
+                                                    "typeId": "type_:User"
                                                 }
                                             },
                                             "jsonExample": {
@@ -1735,8 +1299,8 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_user": [
-                "type_user:User",
-                "type_user:NestedUser"
+                "type_:User",
+                "type_:NestedUser"
             ]
         },
         "sharedTypes": []
@@ -1749,7 +1313,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_user:User": {
+            "type_:User": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1772,47 +1336,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "user",
-                                "camelCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "USER",
-                                    "safeName": "USER"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "User",
-                                    "safeName": "User"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -1883,7 +1409,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_user:NestedUser": {
+            "type_:NestedUser": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1906,47 +1432,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "user",
-                                "camelCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "USER",
-                                    "safeName": "USER"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "User",
-                                    "safeName": "User"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -2005,7 +1493,7 @@
                         },
                         "typeReference": {
                             "type": "named",
-                            "value": "type_user:User"
+                            "value": "type_:User"
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -2017,26 +1505,26 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_user.getUsername": {
+            "endpoint_user.getusername": {
                 "auth": null,
                 "declaration": {
                     "name": {
-                        "originalName": "getUsername",
+                        "originalName": "getusername",
                         "camelCase": {
-                            "unsafeName": "getUsername",
-                            "safeName": "getUsername"
+                            "unsafeName": "getusername",
+                            "safeName": "getusername"
                         },
                         "snakeCase": {
-                            "unsafeName": "get_username",
-                            "safeName": "get_username"
+                            "unsafeName": "getusername",
+                            "safeName": "getusername"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "GET_USERNAME",
-                            "safeName": "GET_USERNAME"
+                            "unsafeName": "GETUSERNAME",
+                            "safeName": "GETUSERNAME"
                         },
                         "pascalCase": {
-                            "unsafeName": "GetUsername",
-                            "safeName": "GetUsername"
+                            "unsafeName": "Getusername",
+                            "safeName": "Getusername"
                         }
                     },
                     "fernFilepath": {
@@ -2091,22 +1579,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "GetUsersRequest",
+                            "originalName": "UserGetUsernameRequest",
                             "camelCase": {
-                                "unsafeName": "getUsersRequest",
-                                "safeName": "getUsersRequest"
+                                "unsafeName": "userGetUsernameRequest",
+                                "safeName": "userGetUsernameRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "get_users_request",
-                                "safeName": "get_users_request"
+                                "unsafeName": "user_get_username_request",
+                                "safeName": "user_get_username_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "GET_USERS_REQUEST",
-                                "safeName": "GET_USERS_REQUEST"
+                                "unsafeName": "USER_GET_USERNAME_REQUEST",
+                                "safeName": "USER_GET_USERNAME_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "GetUsersRequest",
-                                "safeName": "GetUsersRequest"
+                                "unsafeName": "UserGetUsernameRequest",
+                                "safeName": "UserGetUsernameRequest"
                             }
                         },
                         "fernFilepath": {
@@ -2210,7 +1698,7 @@
                             },
                             "typeReference": {
                                 "type": "primitive",
-                                "value": "UUID"
+                                "value": "STRING"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2300,7 +1788,7 @@
                             },
                             "typeReference": {
                                 "type": "primitive",
-                                "value": "BASE_64"
+                                "value": "STRING"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2330,7 +1818,7 @@
                             },
                             "typeReference": {
                                 "type": "named",
-                                "value": "type_user:User"
+                                "value": "type_:User"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2361,8 +1849,11 @@
                             "typeReference": {
                                 "type": "list",
                                 "value": {
-                                    "type": "named",
-                                    "value": "type_user:User"
+                                    "type": "optional",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:User"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2394,8 +1885,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "DATE_TIME"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "DATE_TIME"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2464,8 +1958,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2496,7 +1993,7 @@
                             },
                             "typeReference": {
                                 "type": "named",
-                                "value": "type_user:NestedUser"
+                                "value": "type_:NestedUser"
                             },
                             "propertyAccess": null,
                             "variable": null
@@ -2528,7 +2025,7 @@
                                 "type": "optional",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_user:User"
+                                    "value": "type_:User"
                                 }
                             },
                             "propertyAccess": null,
@@ -2560,8 +2057,11 @@
                             "typeReference": {
                                 "type": "list",
                                 "value": {
-                                    "type": "named",
-                                    "value": "type_user:User"
+                                    "type": "optional",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:User"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2593,8 +2093,11 @@
                             "typeReference": {
                                 "type": "list",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "optional",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2639,10 +2142,7 @@
                 "file": "user"
             },
             "service": "service_user",
-            "types": [
-                "type_user:User",
-                "type_user:NestedUser"
-            ],
+            "types": [],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -2660,7 +2160,10 @@
         },
         "websocket": null,
         "service": null,
-        "types": [],
+        "types": [
+            "type_:User",
+            "type_:NestedUser"
+        ],
         "errors": [],
         "subpackages": [
             "subpackage_user"

@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_service:DocumentItem": {
+        "type_:DocumentItem": {
             "type": "undiscriminatedUnion",
             "declaration": {
                 "name": {
@@ -24,47 +24,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": null
                 }
             },
             "types": [
@@ -74,11 +36,11 @@
                 },
                 {
                     "type": "named",
-                    "value": "type_service:DocumentObject"
+                    "value": "type_:DocumentObject"
                 }
             ]
         },
-        "type_service:DocumentObject": {
+        "type_:DocumentObject": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -101,47 +63,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -179,141 +103,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_service:RerankRequest": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "RerankRequest",
-                    "camelCase": {
-                        "unsafeName": "rerankRequest",
-                        "safeName": "rerankRequest"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "rerank_request",
-                        "safeName": "rerank_request"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "RERANK_REQUEST",
-                        "safeName": "RERANK_REQUEST"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RerankRequest",
-                        "safeName": "RerankRequest"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "wireValue": "documents",
-                        "name": {
-                            "originalName": "documents",
-                            "camelCase": {
-                                "unsafeName": "documents",
-                                "safeName": "documents"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "documents",
-                                "safeName": "documents"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "DOCUMENTS",
-                                "safeName": "DOCUMENTS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Documents",
-                                "safeName": "Documents"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "list",
-                        "value": {
-                            "type": "named",
-                            "value": "type_service:DocumentItem"
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "query",
-                        "name": {
-                            "originalName": "query",
-                            "camelCase": {
-                                "unsafeName": "query",
-                                "safeName": "query"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "query",
-                                "safeName": "query"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "QUERY",
-                                "safeName": "QUERY"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Query",
-                                "safeName": "Query"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_service:RerankResponse": {
+        "type_:RerankResponse": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -336,47 +126,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -512,14 +264,145 @@
                 "path": "/rerank"
             },
             "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "named",
-                        "value": "type_service:RerankRequest"
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "RerankRequest",
+                        "camelCase": {
+                            "unsafeName": "rerankRequest",
+                            "safeName": "rerankRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "rerank_request",
+                            "safeName": "rerank_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "RERANK_REQUEST",
+                            "safeName": "RERANK_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "RerankRequest",
+                            "safeName": "RerankRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "wireValue": "documents",
+                                "name": {
+                                    "originalName": "documents",
+                                    "camelCase": {
+                                        "unsafeName": "documents",
+                                        "safeName": "documents"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "documents",
+                                        "safeName": "documents"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "DOCUMENTS",
+                                        "safeName": "DOCUMENTS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Documents",
+                                        "safeName": "Documents"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "list",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:DocumentItem"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "query",
+                                "name": {
+                                    "originalName": "query",
+                                    "camelCase": {
+                                        "unsafeName": "query",
+                                        "safeName": "query"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "query",
+                                        "safeName": "query"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "QUERY",
+                                        "safeName": "QUERY"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Query",
+                                        "safeName": "Query"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
                 }
             },
             "response": {

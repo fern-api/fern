@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "websocket",
-    "apiDisplayName": null,
+    "apiName": "api",
+    "apiDisplayName": "websocket",
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -13,19 +13,17 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_realtime:SendEvent": {
+        "type_:SendEvent": {
             "inline": null,
             "name": {
                 "name": "SendEvent",
                 "fernFilepath": {
-                    "allParts": [
-                        "realtime"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "realtime"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_realtime:SendEvent"
+                "typeId": "type_:SendEvent"
             },
             "shape": {
                 "_type": "object",
@@ -89,19 +87,17 @@
             "availability": null,
             "docs": null
         },
-        "type_realtime:send_snake_case": {
+        "type_:SendSnakeCase": {
             "inline": null,
             "name": {
-                "name": "send_snake_case",
+                "name": "SendSnakeCase",
                 "fernFilepath": {
-                    "allParts": [
-                        "realtime"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "realtime"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_realtime:send_snake_case"
+                "typeId": "type_:SendSnakeCase"
             },
             "shape": {
                 "_type": "object",
@@ -165,19 +161,17 @@
             "availability": null,
             "docs": null
         },
-        "type_realtime:ReceiveEvent": {
+        "type_:ReceiveEvent": {
             "inline": null,
             "name": {
                 "name": "ReceiveEvent",
                 "fernFilepath": {
-                    "allParts": [
-                        "realtime"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "realtime"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_realtime:ReceiveEvent"
+                "typeId": "type_:ReceiveEvent"
             },
             "shape": {
                 "_type": "object",
@@ -241,19 +235,17 @@
             "availability": null,
             "docs": null
         },
-        "type_realtime:receive_snake_case": {
+        "type_:ReceiveSnakeCase": {
             "inline": null,
             "name": {
-                "name": "receive_snake_case",
+                "name": "ReceiveSnakeCase",
                 "fernFilepath": {
-                    "allParts": [
-                        "realtime"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "realtime"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_realtime:receive_snake_case"
+                "typeId": "type_:ReceiveSnakeCase"
             },
             "shape": {
                 "_type": "object",
@@ -317,19 +309,17 @@
             "availability": null,
             "docs": null
         },
-        "type_realtime:SendEvent2": {
+        "type_:SendEvent2": {
             "inline": null,
             "name": {
                 "name": "SendEvent2",
                 "fernFilepath": {
-                    "allParts": [
-                        "realtime"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "realtime"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_realtime:SendEvent2"
+                "typeId": "type_:SendEvent2"
             },
             "shape": {
                 "_type": "object",
@@ -392,19 +382,17 @@
             "availability": null,
             "docs": null
         },
-        "type_realtime:ReceiveEvent2": {
+        "type_:ReceiveEvent2": {
             "inline": null,
             "name": {
                 "name": "ReceiveEvent2",
                 "fernFilepath": {
-                    "allParts": [
-                        "realtime"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "realtime"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_realtime:ReceiveEvent2"
+                "typeId": "type_:ReceiveEvent2"
             },
             "shape": {
                 "_type": "object",
@@ -488,19 +476,17 @@
             "availability": null,
             "docs": null
         },
-        "type_realtime:ReceiveEvent3": {
+        "type_:ReceiveEvent3": {
             "inline": null,
             "name": {
                 "name": "ReceiveEvent3",
                 "fernFilepath": {
-                    "allParts": [
-                        "realtime"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "realtime"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_realtime:ReceiveEvent3"
+                "typeId": "type_:ReceiveEvent3"
             },
             "shape": {
                 "_type": "object",
@@ -543,19 +529,53 @@
             "availability": null,
             "docs": null
         },
-        "type_realtime:TranscriptEvent": {
+        "type_:TranscriptEventType": {
+            "inline": true,
+            "name": {
+                "name": "TranscriptEventType",
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:TranscriptEventType"
+            },
+            "shape": {
+                "_type": "enum",
+                "default": null,
+                "values": [
+                    {
+                        "name": "transcript",
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "forwardCompatible": null
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
+        "type_:TranscriptEvent": {
             "inline": null,
             "name": {
                 "name": "TranscriptEvent",
                 "fernFilepath": {
-                    "allParts": [
-                        "realtime"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "realtime"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_realtime:TranscriptEvent"
+                "typeId": "type_:TranscriptEvent"
             },
             "shape": {
                 "_type": "object",
@@ -564,14 +584,17 @@
                     {
                         "name": "type",
                         "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "literal",
-                                "literal": {
-                                    "type": "string",
-                                    "string": "transcript"
-                                }
-                            }
+                            "_type": "named",
+                            "name": "TranscriptEventType",
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": null,
+                            "typeId": "type_:TranscriptEventType",
+                            "default": null,
+                            "inline": null
                         },
                         "propertyAccess": null,
                         "v2Examples": {
@@ -606,6 +629,44 @@
                 "extra-properties": false,
                 "extendedProperties": []
             },
+            "referencedTypes": [
+                "type_:TranscriptEventType"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": null
+        },
+        "type_:FlushedEventType": {
+            "inline": true,
+            "name": {
+                "name": "FlushedEventType",
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:FlushedEventType"
+            },
+            "shape": {
+                "_type": "enum",
+                "default": null,
+                "values": [
+                    {
+                        "name": "flushed",
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "forwardCompatible": null
+            },
             "referencedTypes": [],
             "encoding": {
                 "json": {},
@@ -618,19 +679,17 @@
             "availability": null,
             "docs": null
         },
-        "type_realtime:FlushedEvent": {
+        "type_:FlushedEvent": {
             "inline": null,
             "name": {
                 "name": "FlushedEvent",
                 "fernFilepath": {
-                    "allParts": [
-                        "realtime"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "realtime"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_realtime:FlushedEvent"
+                "typeId": "type_:FlushedEvent"
             },
             "shape": {
                 "_type": "object",
@@ -639,14 +698,17 @@
                     {
                         "name": "type",
                         "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "literal",
-                                "literal": {
-                                    "type": "string",
-                                    "string": "flushed"
-                                }
-                            }
+                            "_type": "named",
+                            "name": "FlushedEventType",
+                            "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": [],
+                                "file": null
+                            },
+                            "displayName": null,
+                            "typeId": "type_:FlushedEventType",
+                            "default": null,
+                            "inline": null
                         },
                         "propertyAccess": null,
                         "v2Examples": {
@@ -660,7 +722,9 @@
                 "extra-properties": false,
                 "extendedProperties": []
             },
-            "referencedTypes": [],
+            "referencedTypes": [
+                "type_:FlushedEventType"
+            ],
             "encoding": {
                 "json": {},
                 "proto": null
@@ -672,19 +736,17 @@
             "availability": null,
             "docs": null
         },
-        "type_realtime:ErrorEvent": {
+        "type_:ErrorEvent": {
             "inline": null,
             "name": {
                 "name": "ErrorEvent",
                 "fernFilepath": {
-                    "allParts": [
-                        "realtime"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "realtime"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_realtime:ErrorEvent"
+                "typeId": "type_:ErrorEvent"
             },
             "shape": {
                 "_type": "object",
@@ -764,1060 +826,29 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_realtime:SendEvent",
-            "type_realtime:send_snake_case",
-            "type_realtime:ReceiveEvent",
-            "type_realtime:receive_snake_case",
-            "type_realtime:SendEvent2",
-            "type_realtime:ReceiveEvent2",
-            "type_realtime:ReceiveEvent3",
-            "type_realtime:TranscriptEvent",
-            "type_realtime:FlushedEvent",
-            "type_realtime:ErrorEvent"
+            "type_:SendEvent",
+            "type_:SendSnakeCase",
+            "type_:ReceiveEvent",
+            "type_:ReceiveSnakeCase",
+            "type_:SendEvent2",
+            "type_:ReceiveEvent2",
+            "type_:ReceiveEvent3",
+            "type_:TranscriptEventType",
+            "type_:TranscriptEvent",
+            "type_:FlushedEventType",
+            "type_:FlushedEvent",
+            "type_:ErrorEvent"
         ]
     },
     "webhookGroups": {},
-    "websocketChannels": {
-        "channel_empty/empty-realtime": {
-            "path": {
-                "head": "/empty/realtime/",
-                "parts": []
-            },
-            "baseUrl": null,
-            "auth": false,
-            "name": "empty-realtime",
-            "displayName": null,
-            "connectMethodName": null,
-            "headers": [],
-            "pathParameters": [],
-            "queryParameters": [],
-            "messages": [],
-            "examples": [
-                {
-                    "name": null,
-                    "pathParameters": [],
-                    "headers": [],
-                    "queryParameters": [],
-                    "messages": [],
-                    "url": "/empty/realtime/",
-                    "docs": null
-                }
-            ],
-            "v2Examples": {
-                "userSpecifiedExamples": {},
-                "autogeneratedExamples": {}
-            },
-            "availability": null,
-            "docs": null
-        },
-        "channel_realtime": {
-            "path": {
-                "head": "/realtime/",
-                "parts": [
-                    {
-                        "pathParameter": "session_id",
-                        "tail": ""
-                    }
-                ]
-            },
-            "baseUrl": null,
-            "auth": true,
-            "name": "realtime",
-            "displayName": null,
-            "connectMethodName": "createRealtimeConnection",
-            "headers": [],
-            "pathParameters": [
-                {
-                    "name": "session_id",
-                    "valueType": {
-                        "_type": "primitive",
-                        "primitive": {
-                            "v1": "STRING",
-                            "v2": {
-                                "type": "string",
-                                "default": null,
-                                "validation": null
-                            }
-                        }
-                    },
-                    "location": "ENDPOINT",
-                    "variable": null,
-                    "clientDefault": null,
-                    "v2Examples": {
-                        "userSpecifiedExamples": {},
-                        "autogeneratedExamples": {}
-                    },
-                    "explode": null,
-                    "docs": null
-                }
-            ],
-            "queryParameters": [
-                {
-                    "name": "model",
-                    "valueType": {
-                        "_type": "container",
-                        "container": {
-                            "_type": "optional",
-                            "optional": {
-                                "_type": "primitive",
-                                "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                        "type": "string",
-                                        "default": null,
-                                        "validation": null
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "allowMultiple": false,
-                    "clientDefault": null,
-                    "v2Examples": {
-                        "userSpecifiedExamples": {},
-                        "autogeneratedExamples": {}
-                    },
-                    "explode": null,
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "name": "temperature",
-                    "valueType": {
-                        "_type": "container",
-                        "container": {
-                            "_type": "optional",
-                            "optional": {
-                                "_type": "primitive",
-                                "primitive": {
-                                    "v1": "INTEGER",
-                                    "v2": {
-                                        "type": "integer",
-                                        "default": null,
-                                        "validation": null
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "allowMultiple": false,
-                    "clientDefault": null,
-                    "v2Examples": {
-                        "userSpecifiedExamples": {},
-                        "autogeneratedExamples": {}
-                    },
-                    "explode": null,
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "name": "language-code",
-                    "valueType": {
-                        "_type": "container",
-                        "container": {
-                            "_type": "optional",
-                            "optional": {
-                                "_type": "primitive",
-                                "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                        "type": "string",
-                                        "default": null,
-                                        "validation": null
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "allowMultiple": false,
-                    "clientDefault": null,
-                    "v2Examples": {
-                        "userSpecifiedExamples": {},
-                        "autogeneratedExamples": {}
-                    },
-                    "explode": null,
-                    "availability": null,
-                    "docs": null
-                }
-            ],
-            "messages": [
-                {
-                    "type": "send",
-                    "origin": "client",
-                    "body": {
-                        "type": "reference",
-                        "bodyType": {
-                            "_type": "named",
-                            "name": "SendEvent",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "realtime"
-                                ],
-                                "packagePath": [],
-                                "file": "realtime"
-                            },
-                            "displayName": null,
-                            "typeId": "type_realtime:SendEvent",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    },
-                    "displayName": "Send",
-                    "methodName": null,
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "type": "send_snake_case",
-                    "origin": "client",
-                    "body": {
-                        "type": "reference",
-                        "bodyType": {
-                            "_type": "named",
-                            "name": "send_snake_case",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "realtime"
-                                ],
-                                "packagePath": [],
-                                "file": "realtime"
-                            },
-                            "displayName": null,
-                            "typeId": "type_realtime:send_snake_case",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    },
-                    "displayName": "send_snake",
-                    "methodName": null,
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "type": "send2",
-                    "origin": "client",
-                    "body": {
-                        "type": "reference",
-                        "bodyType": {
-                            "_type": "named",
-                            "name": "SendEvent2",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "realtime"
-                                ],
-                                "packagePath": [],
-                                "file": "realtime"
-                            },
-                            "displayName": null,
-                            "typeId": "type_realtime:SendEvent2",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    },
-                    "displayName": "Send2",
-                    "methodName": "custom_send",
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "type": "receive",
-                    "origin": "server",
-                    "body": {
-                        "type": "reference",
-                        "bodyType": {
-                            "_type": "named",
-                            "name": "ReceiveEvent",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "realtime"
-                                ],
-                                "packagePath": [],
-                                "file": "realtime"
-                            },
-                            "displayName": null,
-                            "typeId": "type_realtime:ReceiveEvent",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    },
-                    "displayName": "Receive",
-                    "methodName": null,
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "type": "receive_snake_case",
-                    "origin": "server",
-                    "body": {
-                        "type": "reference",
-                        "bodyType": {
-                            "_type": "named",
-                            "name": "receive_snake_case",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "realtime"
-                                ],
-                                "packagePath": [],
-                                "file": "realtime"
-                            },
-                            "displayName": null,
-                            "typeId": "type_realtime:receive_snake_case",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    },
-                    "displayName": "Receive",
-                    "methodName": null,
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "type": "receive2",
-                    "origin": "server",
-                    "body": {
-                        "type": "reference",
-                        "bodyType": {
-                            "_type": "named",
-                            "name": "ReceiveEvent2",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "realtime"
-                                ],
-                                "packagePath": [],
-                                "file": "realtime"
-                            },
-                            "displayName": null,
-                            "typeId": "type_realtime:ReceiveEvent2",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    },
-                    "displayName": "Receive2",
-                    "methodName": null,
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "type": "receive3",
-                    "origin": "server",
-                    "body": {
-                        "type": "reference",
-                        "bodyType": {
-                            "_type": "named",
-                            "name": "ReceiveEvent3",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "realtime"
-                                ],
-                                "packagePath": [],
-                                "file": "realtime"
-                            },
-                            "displayName": null,
-                            "typeId": "type_realtime:ReceiveEvent3",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    },
-                    "displayName": "Receive3",
-                    "methodName": null,
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "type": "receive_transcript",
-                    "origin": "server",
-                    "body": {
-                        "type": "reference",
-                        "bodyType": {
-                            "_type": "named",
-                            "name": "TranscriptEvent",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "realtime"
-                                ],
-                                "packagePath": [],
-                                "file": "realtime"
-                            },
-                            "displayName": null,
-                            "typeId": "type_realtime:TranscriptEvent",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    },
-                    "displayName": "ReceiveTranscript",
-                    "methodName": null,
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "type": "receive_flushed",
-                    "origin": "server",
-                    "body": {
-                        "type": "reference",
-                        "bodyType": {
-                            "_type": "named",
-                            "name": "FlushedEvent",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "realtime"
-                                ],
-                                "packagePath": [],
-                                "file": "realtime"
-                            },
-                            "displayName": null,
-                            "typeId": "type_realtime:FlushedEvent",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    },
-                    "displayName": "ReceiveFlushed",
-                    "methodName": null,
-                    "availability": null,
-                    "docs": null
-                },
-                {
-                    "type": "error",
-                    "origin": "server",
-                    "body": {
-                        "type": "reference",
-                        "bodyType": {
-                            "_type": "named",
-                            "name": "ErrorEvent",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "realtime"
-                                ],
-                                "packagePath": [],
-                                "file": "realtime"
-                            },
-                            "displayName": null,
-                            "typeId": "type_realtime:ErrorEvent",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    },
-                    "displayName": "Error",
-                    "methodName": null,
-                    "availability": null,
-                    "docs": null
-                }
-            ],
-            "examples": [
-                {
-                    "name": "Default example",
-                    "url": "/realtime/doc_123",
-                    "pathParameters": [
-                        {
-                            "name": "session_id",
-                            "value": {
-                                "shape": {
-                                    "type": "primitive",
-                                    "primitive": {
-                                        "type": "string",
-                                        "string": {
-                                            "original": "doc_123"
-                                        }
-                                    }
-                                },
-                                "jsonExample": "doc_123"
-                            }
-                        }
-                    ],
-                    "headers": [],
-                    "queryParameters": [],
-                    "messages": [
-                        {
-                            "type": "send",
-                            "body": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "named",
-                                    "typeName": {
-                                        "typeId": "type_realtime:SendEvent",
-                                        "fernFilepath": {
-                                            "allParts": [
-                                                "realtime"
-                                            ],
-                                            "packagePath": [],
-                                            "file": "realtime"
-                                        },
-                                        "name": "SendEvent",
-                                        "displayName": null
-                                    },
-                                    "shape": {
-                                        "type": "object",
-                                        "properties": [
-                                            {
-                                                "name": "sendText",
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "uvxcdv12344412b"
-                                                            }
-                                                        }
-                                                    },
-                                                    "jsonExample": "uvxcdv12344412b"
-                                                },
-                                                "originalTypeDeclaration": {
-                                                    "typeId": "type_realtime:SendEvent",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "name": "SendEvent",
-                                                    "displayName": null
-                                                },
-                                                "propertyAccess": null
-                                            },
-                                            {
-                                                "name": "sendParam",
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "integer",
-                                                            "integer": 123
-                                                        }
-                                                    },
-                                                    "jsonExample": 123
-                                                },
-                                                "originalTypeDeclaration": {
-                                                    "typeId": "type_realtime:SendEvent",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "name": "SendEvent",
-                                                    "displayName": null
-                                                },
-                                                "propertyAccess": null
-                                            }
-                                        ],
-                                        "extraProperties": null
-                                    }
-                                },
-                                "jsonExample": {
-                                    "sendText": "uvxcdv12344412b",
-                                    "sendParam": 123
-                                }
-                            }
-                        },
-                        {
-                            "type": "receive",
-                            "body": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "named",
-                                    "typeName": {
-                                        "typeId": "type_realtime:ReceiveEvent",
-                                        "fernFilepath": {
-                                            "allParts": [
-                                                "realtime"
-                                            ],
-                                            "packagePath": [],
-                                            "file": "realtime"
-                                        },
-                                        "name": "ReceiveEvent",
-                                        "displayName": null
-                                    },
-                                    "shape": {
-                                        "type": "object",
-                                        "properties": [
-                                            {
-                                                "name": "alpha",
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "The weather for today..."
-                                                            }
-                                                        }
-                                                    },
-                                                    "jsonExample": "The weather for today..."
-                                                },
-                                                "originalTypeDeclaration": {
-                                                    "typeId": "type_realtime:ReceiveEvent",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "name": "ReceiveEvent",
-                                                    "displayName": null
-                                                },
-                                                "propertyAccess": null
-                                            },
-                                            {
-                                                "name": "beta",
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "integer",
-                                                            "integer": 123
-                                                        }
-                                                    },
-                                                    "jsonExample": 123
-                                                },
-                                                "originalTypeDeclaration": {
-                                                    "typeId": "type_realtime:ReceiveEvent",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "name": "ReceiveEvent",
-                                                    "displayName": null
-                                                },
-                                                "propertyAccess": null
-                                            }
-                                        ],
-                                        "extraProperties": null
-                                    }
-                                },
-                                "jsonExample": {
-                                    "alpha": "The weather for today...",
-                                    "beta": 123
-                                }
-                            }
-                        },
-                        {
-                            "type": "send2",
-                            "body": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "named",
-                                    "typeName": {
-                                        "typeId": "type_realtime:SendEvent2",
-                                        "fernFilepath": {
-                                            "allParts": [
-                                                "realtime"
-                                            ],
-                                            "packagePath": [],
-                                            "file": "realtime"
-                                        },
-                                        "name": "SendEvent2",
-                                        "displayName": null
-                                    },
-                                    "shape": {
-                                        "type": "object",
-                                        "properties": [
-                                            {
-                                                "name": "sendText2",
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "uvxcdv12344412b"
-                                                            }
-                                                        }
-                                                    },
-                                                    "jsonExample": "uvxcdv12344412b"
-                                                },
-                                                "originalTypeDeclaration": {
-                                                    "typeId": "type_realtime:SendEvent2",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "name": "SendEvent2",
-                                                    "displayName": null
-                                                },
-                                                "propertyAccess": null
-                                            },
-                                            {
-                                                "name": "sendParam2",
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "boolean",
-                                                            "boolean": true
-                                                        }
-                                                    },
-                                                    "jsonExample": true
-                                                },
-                                                "originalTypeDeclaration": {
-                                                    "typeId": "type_realtime:SendEvent2",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "name": "SendEvent2",
-                                                    "displayName": null
-                                                },
-                                                "propertyAccess": null
-                                            }
-                                        ],
-                                        "extraProperties": null
-                                    }
-                                },
-                                "jsonExample": {
-                                    "sendText2": "uvxcdv12344412b",
-                                    "sendParam2": true
-                                }
-                            }
-                        },
-                        {
-                            "type": "receive2",
-                            "body": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "named",
-                                    "typeName": {
-                                        "typeId": "type_realtime:ReceiveEvent2",
-                                        "fernFilepath": {
-                                            "allParts": [
-                                                "realtime"
-                                            ],
-                                            "packagePath": [],
-                                            "file": "realtime"
-                                        },
-                                        "name": "ReceiveEvent2",
-                                        "displayName": null
-                                    },
-                                    "shape": {
-                                        "type": "object",
-                                        "properties": [
-                                            {
-                                                "name": "gamma",
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "The weather for today..."
-                                                            }
-                                                        }
-                                                    },
-                                                    "jsonExample": "The weather for today..."
-                                                },
-                                                "originalTypeDeclaration": {
-                                                    "typeId": "type_realtime:ReceiveEvent2",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "name": "ReceiveEvent2",
-                                                    "displayName": null
-                                                },
-                                                "propertyAccess": null
-                                            },
-                                            {
-                                                "name": "delta",
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "integer",
-                                                            "integer": 123
-                                                        }
-                                                    },
-                                                    "jsonExample": 123
-                                                },
-                                                "originalTypeDeclaration": {
-                                                    "typeId": "type_realtime:ReceiveEvent2",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "name": "ReceiveEvent2",
-                                                    "displayName": null
-                                                },
-                                                "propertyAccess": null
-                                            },
-                                            {
-                                                "name": "epsilon",
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "boolean",
-                                                            "boolean": true
-                                                        }
-                                                    },
-                                                    "jsonExample": true
-                                                },
-                                                "originalTypeDeclaration": {
-                                                    "typeId": "type_realtime:ReceiveEvent2",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "name": "ReceiveEvent2",
-                                                    "displayName": null
-                                                },
-                                                "propertyAccess": null
-                                            }
-                                        ],
-                                        "extraProperties": null
-                                    }
-                                },
-                                "jsonExample": {
-                                    "gamma": "The weather for today...",
-                                    "delta": 123,
-                                    "epsilon": true
-                                }
-                            }
-                        }
-                    ],
-                    "docs": null
-                },
-                {
-                    "name": null,
-                    "pathParameters": [
-                        {
-                            "name": "session_id",
-                            "value": {
-                                "shape": {
-                                    "type": "primitive",
-                                    "primitive": {
-                                        "type": "string",
-                                        "string": {
-                                            "original": "session_id"
-                                        }
-                                    }
-                                },
-                                "jsonExample": "session_id"
-                            }
-                        }
-                    ],
-                    "headers": [],
-                    "queryParameters": [],
-                    "messages": [
-                        {
-                            "type": "send",
-                            "body": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "named",
-                                    "shape": {
-                                        "type": "object",
-                                        "properties": [
-                                            {
-                                                "name": "sendText",
-                                                "originalTypeDeclaration": {
-                                                    "name": "SendEvent",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_realtime:SendEvent"
-                                                },
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "sendText"
-                                                            }
-                                                        }
-                                                    },
-                                                    "jsonExample": "sendText"
-                                                },
-                                                "propertyAccess": null
-                                            },
-                                            {
-                                                "name": "sendParam",
-                                                "originalTypeDeclaration": {
-                                                    "name": "SendEvent",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_realtime:SendEvent"
-                                                },
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "integer",
-                                                            "integer": 1
-                                                        }
-                                                    },
-                                                    "jsonExample": 1
-                                                },
-                                                "propertyAccess": null
-                                            }
-                                        ],
-                                        "extraProperties": null
-                                    },
-                                    "typeName": {
-                                        "name": "SendEvent",
-                                        "fernFilepath": {
-                                            "allParts": [
-                                                "realtime"
-                                            ],
-                                            "packagePath": [],
-                                            "file": "realtime"
-                                        },
-                                        "displayName": null,
-                                        "typeId": "type_realtime:SendEvent"
-                                    }
-                                },
-                                "jsonExample": {
-                                    "sendText": "sendText",
-                                    "sendParam": 1
-                                }
-                            }
-                        },
-                        {
-                            "type": "receive",
-                            "body": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "named",
-                                    "shape": {
-                                        "type": "object",
-                                        "properties": [
-                                            {
-                                                "name": "alpha",
-                                                "originalTypeDeclaration": {
-                                                    "name": "ReceiveEvent",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_realtime:ReceiveEvent"
-                                                },
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "alpha"
-                                                            }
-                                                        }
-                                                    },
-                                                    "jsonExample": "alpha"
-                                                },
-                                                "propertyAccess": null
-                                            },
-                                            {
-                                                "name": "beta",
-                                                "originalTypeDeclaration": {
-                                                    "name": "ReceiveEvent",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "realtime"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "realtime"
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_realtime:ReceiveEvent"
-                                                },
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "integer",
-                                                            "integer": 1
-                                                        }
-                                                    },
-                                                    "jsonExample": 1
-                                                },
-                                                "propertyAccess": null
-                                            }
-                                        ],
-                                        "extraProperties": null
-                                    },
-                                    "typeName": {
-                                        "name": "ReceiveEvent",
-                                        "fernFilepath": {
-                                            "allParts": [
-                                                "realtime"
-                                            ],
-                                            "packagePath": [],
-                                            "file": "realtime"
-                                        },
-                                        "displayName": null,
-                                        "typeId": "type_realtime:ReceiveEvent"
-                                    }
-                                },
-                                "jsonExample": {
-                                    "alpha": "alpha",
-                                    "beta": 1
-                                }
-                            }
-                        }
-                    ],
-                    "url": "/realtime/session_id",
-                    "docs": null
-                }
-            ],
-            "v2Examples": {
-                "userSpecifiedExamples": {},
-                "autogeneratedExamples": {}
-            },
-            "availability": null,
-            "docs": null
-        }
-    },
+    "websocketChannels": {},
     "readmeConfig": null,
     "sourceConfig": null,
     "publishConfig": null,
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_realtime:SendEvent": {
+            "type_:SendEvent": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1840,47 +871,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "realtime",
-                                "camelCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REALTIME",
-                                    "safeName": "REALTIME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Realtime",
-                                    "safeName": "Realtime"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -1948,11 +941,11 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_realtime:send_snake_case": {
+            "type_:SendSnakeCase": {
                 "type": "object",
                 "declaration": {
                     "name": {
-                        "originalName": "send_snake_case",
+                        "originalName": "SendSnakeCase",
                         "camelCase": {
                             "unsafeName": "sendSnakeCase",
                             "safeName": "sendSnakeCase"
@@ -1971,47 +964,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "realtime",
-                                "camelCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REALTIME",
-                                    "safeName": "REALTIME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Realtime",
-                                    "safeName": "Realtime"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -2079,7 +1034,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_realtime:ReceiveEvent": {
+            "type_:ReceiveEvent": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -2102,47 +1057,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "realtime",
-                                "camelCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REALTIME",
-                                    "safeName": "REALTIME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Realtime",
-                                    "safeName": "Realtime"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -2210,11 +1127,11 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_realtime:receive_snake_case": {
+            "type_:ReceiveSnakeCase": {
                 "type": "object",
                 "declaration": {
                     "name": {
-                        "originalName": "receive_snake_case",
+                        "originalName": "ReceiveSnakeCase",
                         "camelCase": {
                             "unsafeName": "receiveSnakeCase",
                             "safeName": "receiveSnakeCase"
@@ -2233,47 +1150,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "realtime",
-                                "camelCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REALTIME",
-                                    "safeName": "REALTIME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Realtime",
-                                    "safeName": "Realtime"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -2341,7 +1220,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_realtime:SendEvent2": {
+            "type_:SendEvent2": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -2364,47 +1243,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "realtime",
-                                "camelCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REALTIME",
-                                    "safeName": "REALTIME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Realtime",
-                                    "safeName": "Realtime"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -2472,7 +1313,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_realtime:ReceiveEvent2": {
+            "type_:ReceiveEvent2": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -2495,47 +1336,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "realtime",
-                                "camelCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REALTIME",
-                                    "safeName": "REALTIME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Realtime",
-                                    "safeName": "Realtime"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -2633,7 +1436,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_realtime:ReceiveEvent3": {
+            "type_:ReceiveEvent3": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -2656,47 +1459,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "realtime",
-                                "camelCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REALTIME",
-                                    "safeName": "REALTIME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Realtime",
-                                    "safeName": "Realtime"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -2734,7 +1499,60 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_realtime:TranscriptEvent": {
+            "type_:TranscriptEventType": {
+                "type": "enum",
+                "declaration": {
+                    "name": {
+                        "originalName": "TranscriptEventType",
+                        "camelCase": {
+                            "unsafeName": "transcriptEventType",
+                            "safeName": "transcriptEventType"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "transcript_event_type",
+                            "safeName": "transcript_event_type"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TRANSCRIPT_EVENT_TYPE",
+                            "safeName": "TRANSCRIPT_EVENT_TYPE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "TranscriptEventType",
+                            "safeName": "TranscriptEventType"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "values": [
+                    {
+                        "wireValue": "transcript",
+                        "name": {
+                            "originalName": "transcript",
+                            "camelCase": {
+                                "unsafeName": "transcript",
+                                "safeName": "transcript"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "transcript",
+                                "safeName": "transcript"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TRANSCRIPT",
+                                "safeName": "TRANSCRIPT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Transcript",
+                                "safeName": "Transcript"
+                            }
+                        }
+                    }
+                ]
+            },
+            "type_:TranscriptEvent": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -2757,47 +1575,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "realtime",
-                                "camelCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REALTIME",
-                                    "safeName": "REALTIME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Realtime",
-                                    "safeName": "Realtime"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -2825,11 +1605,8 @@
                             }
                         },
                         "typeReference": {
-                            "type": "literal",
-                            "value": {
-                                "type": "string",
-                                "value": "transcript"
-                            }
+                            "type": "named",
+                            "value": "type_:TranscriptEventType"
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -2868,7 +1645,60 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_realtime:FlushedEvent": {
+            "type_:FlushedEventType": {
+                "type": "enum",
+                "declaration": {
+                    "name": {
+                        "originalName": "FlushedEventType",
+                        "camelCase": {
+                            "unsafeName": "flushedEventType",
+                            "safeName": "flushedEventType"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "flushed_event_type",
+                            "safeName": "flushed_event_type"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FLUSHED_EVENT_TYPE",
+                            "safeName": "FLUSHED_EVENT_TYPE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "FlushedEventType",
+                            "safeName": "FlushedEventType"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "values": [
+                    {
+                        "wireValue": "flushed",
+                        "name": {
+                            "originalName": "flushed",
+                            "camelCase": {
+                                "unsafeName": "flushed",
+                                "safeName": "flushed"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "flushed",
+                                "safeName": "flushed"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FLUSHED",
+                                "safeName": "FLUSHED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Flushed",
+                                "safeName": "Flushed"
+                            }
+                        }
+                    }
+                ]
+            },
+            "type_:FlushedEvent": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -2891,47 +1721,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "realtime",
-                                "camelCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REALTIME",
-                                    "safeName": "REALTIME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Realtime",
-                                    "safeName": "Realtime"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -2959,11 +1751,8 @@
                             }
                         },
                         "typeReference": {
-                            "type": "literal",
-                            "value": {
-                                "type": "string",
-                                "value": "flushed"
-                            }
+                            "type": "named",
+                            "value": "type_:FlushedEventType"
                         },
                         "propertyAccess": null,
                         "variable": null
@@ -2972,7 +1761,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_realtime:ErrorEvent": {
+            "type_:ErrorEvent": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -2995,47 +1784,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "realtime",
-                                "camelCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "realtime",
-                                    "safeName": "realtime"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "REALTIME",
-                                    "safeName": "REALTIME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Realtime",
-                                    "safeName": "Realtime"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -3119,86 +1870,7 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {
-        "subpackage_empty": {
-            "name": "empty",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    "empty"
-                ],
-                "packagePath": [
-                    "empty"
-                ],
-                "file": null
-            },
-            "service": null,
-            "types": [],
-            "errors": [],
-            "subpackages": [
-                "subpackage_empty/empty-realtime"
-            ],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": false,
-            "docs": null
-        },
-        "subpackage_empty/empty-realtime": {
-            "name": "empty-realtime",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    "empty",
-                    "empty-realtime"
-                ],
-                "packagePath": [
-                    "empty"
-                ],
-                "file": "empty-realtime"
-            },
-            "service": null,
-            "types": [],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": "channel_empty/empty-realtime",
-            "hasEndpointsInTree": false,
-            "docs": null
-        },
-        "subpackage_realtime": {
-            "name": "realtime",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    "realtime"
-                ],
-                "packagePath": [],
-                "file": "realtime"
-            },
-            "service": null,
-            "types": [
-                "type_realtime:SendEvent",
-                "type_realtime:send_snake_case",
-                "type_realtime:ReceiveEvent",
-                "type_realtime:receive_snake_case",
-                "type_realtime:SendEvent2",
-                "type_realtime:ReceiveEvent2",
-                "type_realtime:ReceiveEvent3",
-                "type_realtime:TranscriptEvent",
-                "type_realtime:FlushedEvent",
-                "type_realtime:ErrorEvent"
-            ],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": "channel_realtime",
-            "hasEndpointsInTree": false,
-            "docs": null
-        }
-    },
+    "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -3207,12 +1879,22 @@
         },
         "websocket": null,
         "service": null,
-        "types": [],
-        "errors": [],
-        "subpackages": [
-            "subpackage_empty",
-            "subpackage_realtime"
+        "types": [
+            "type_:SendEvent",
+            "type_:SendSnakeCase",
+            "type_:ReceiveEvent",
+            "type_:ReceiveSnakeCase",
+            "type_:SendEvent2",
+            "type_:ReceiveEvent2",
+            "type_:ReceiveEvent3",
+            "type_:TranscriptEventType",
+            "type_:TranscriptEvent",
+            "type_:FlushedEventType",
+            "type_:FlushedEvent",
+            "type_:ErrorEvent"
         ],
+        "errors": [],
+        "subpackages": [],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,

@@ -154,7 +154,71 @@
                 "path": "/download-content/{id}"
             },
             "request": {
-                "type": "body",
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ServiceDownloadRequest",
+                        "camelCase": {
+                            "unsafeName": "serviceDownloadRequest",
+                            "safeName": "serviceDownloadRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service_download_request",
+                            "safeName": "service_download_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE_DOWNLOAD_REQUEST",
+                            "safeName": "SERVICE_DOWNLOAD_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ServiceDownloadRequest",
+                            "safeName": "ServiceDownloadRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
                 "pathParameters": [
                     {
                         "name": {
@@ -187,10 +251,16 @@
                         "variable": null
                     }
                 ],
-                "body": null
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
             },
             "response": {
-                "type": "bytes"
+                "type": "fileDownload"
             },
             "examples": null
         }

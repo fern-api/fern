@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "java-optional-query-params-overloads",
-    "apiDisplayName": null,
+    "apiName": "api",
+    "apiDisplayName": "java-optional-query-params-overloads",
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -211,14 +211,16 @@
             "availability": null,
             "name": {
                 "fernFilepath": {
-                    "allParts": [],
+                    "allParts": [
+                        ""
+                    ],
                     "packagePath": [],
-                    "file": null
+                    "file": ""
                 }
             },
             "displayName": null,
             "basePath": {
-                "head": "/api",
+                "head": "",
                 "parts": []
             },
             "headers": [],
@@ -243,7 +245,7 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/users/",
+                        "head": "/api/users/",
                         "parts": [
                             {
                                 "pathParameter": "userId",
@@ -252,7 +254,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "/api/users/",
+                        "head": "api/users/",
                         "parts": [
                             {
                                 "pathParameter": "userId",
@@ -318,12 +320,18 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "BOOLEAN",
-                                            "v2": {
-                                                "type": "boolean",
-                                                "default": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "BOOLEAN",
+                                                    "v2": {
+                                                        "type": "boolean",
+                                                        "default": null
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -377,9 +385,9 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "UserGetLatestInsuranceRequest",
+                            "wrapperName": "GetLatestInsuranceRequest",
                             "bodyKey": "body",
-                            "includePathParameters": false,
+                            "includePathParameters": true,
                             "onlyPathParameters": false
                         },
                         "requestParameterName": "request",
@@ -403,17 +411,218 @@
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": null,
+                                "docs": "",
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null,
+                        "status-code": 200,
                         "isWildcardStatusCode": null,
-                        "docs": null
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "de599909",
+                                "name": null,
+                                "url": "/api/users/userId/insurance",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [
+                                    {
+                                        "name": "userId",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "userId"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "userId"
+                                        }
+                                    }
+                                ],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_:InsurancePolicy",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "name": "InsurancePolicy",
+                                                    "displayName": null
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "id",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "id"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "id"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:InsurancePolicy",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "InsurancePolicy",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "userId",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "userId"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "userId"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:InsurancePolicy",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "InsurancePolicy",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "policyType",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "named",
+                                                                    "typeName": {
+                                                                        "typeId": "type_:PolicyType",
+                                                                        "fernFilepath": {
+                                                                            "allParts": [],
+                                                                            "packagePath": [],
+                                                                            "file": null
+                                                                        },
+                                                                        "name": "PolicyType",
+                                                                        "displayName": null
+                                                                    },
+                                                                    "shape": {
+                                                                        "type": "enum",
+                                                                        "value": "HEALTH"
+                                                                    }
+                                                                },
+                                                                "jsonExample": "HEALTH"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:InsurancePolicy",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "InsurancePolicy",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "isExpired",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "boolean",
+                                                                        "boolean": true
+                                                                    }
+                                                                },
+                                                                "jsonExample": true
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:InsurancePolicy",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "InsurancePolicy",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "coverageAmount",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "double",
+                                                                        "double": 1.1
+                                                                    }
+                                                                },
+                                                                "jsonExample": 1.1
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:InsurancePolicy",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "InsurancePolicy",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "id": "id",
+                                                "userId": "userId",
+                                                "policyType": "HEALTH",
+                                                "isExpired": true,
+                                                "coverageAmount": 1.1
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
                     "autogeneratedExamples": [
                         {
                             "example": {
@@ -638,11 +847,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/policies/search",
+                        "head": "/api/policies/search",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/api/policies/search",
+                        "head": "api/policies/search",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -678,13 +887,19 @@
                                 "container": {
                                     "_type": "optional",
                                     "optional": {
-                                        "_type": "primitive",
-                                        "primitive": {
-                                            "v1": "INTEGER",
-                                            "v2": {
-                                                "type": "integer",
-                                                "default": null,
-                                                "validation": null
+                                        "_type": "container",
+                                        "container": {
+                                            "_type": "nullable",
+                                            "nullable": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "INTEGER",
+                                                    "v2": {
+                                                        "type": "integer",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -739,17 +954,253 @@
                                         }
                                     }
                                 },
-                                "docs": null,
+                                "docs": "",
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null,
+                        "status-code": 200,
                         "isWildcardStatusCode": null,
-                        "docs": null
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "48d8f8d2",
+                                "name": null,
+                                "url": "/api/policies/search",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [
+                                    {
+                                        "name": "query",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "query"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "query"
+                                        },
+                                        "shape": {
+                                            "type": "single"
+                                        }
+                                    }
+                                ],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "list",
+                                                    "list": [
+                                                        {
+                                                            "shape": {
+                                                                "type": "named",
+                                                                "typeName": {
+                                                                    "typeId": "type_:InsurancePolicy",
+                                                                    "fernFilepath": {
+                                                                        "allParts": [],
+                                                                        "packagePath": [],
+                                                                        "file": null
+                                                                    },
+                                                                    "name": "InsurancePolicy",
+                                                                    "displayName": null
+                                                                },
+                                                                "shape": {
+                                                                    "type": "object",
+                                                                    "properties": [
+                                                                        {
+                                                                            "name": "id",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "id"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "id"
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:InsurancePolicy",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "InsurancePolicy",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        },
+                                                                        {
+                                                                            "name": "userId",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "userId"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "userId"
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:InsurancePolicy",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "InsurancePolicy",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        },
+                                                                        {
+                                                                            "name": "policyType",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "typeName": {
+                                                                                        "typeId": "type_:PolicyType",
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "name": "PolicyType",
+                                                                                        "displayName": null
+                                                                                    },
+                                                                                    "shape": {
+                                                                                        "type": "enum",
+                                                                                        "value": "HEALTH"
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "HEALTH"
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:InsurancePolicy",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "InsurancePolicy",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        },
+                                                                        {
+                                                                            "name": "isExpired",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "boolean",
+                                                                                        "boolean": true
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": true
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:InsurancePolicy",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "InsurancePolicy",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        },
+                                                                        {
+                                                                            "name": "coverageAmount",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "double",
+                                                                                        "double": 1.1
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": 1.1
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:InsurancePolicy",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "InsurancePolicy",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        }
+                                                                    ],
+                                                                    "extraProperties": null
+                                                                }
+                                                            },
+                                                            "jsonExample": {
+                                                                "id": "id",
+                                                                "userId": "userId",
+                                                                "policyType": "HEALTH",
+                                                                "isExpired": true,
+                                                                "coverageAmount": 1.1
+                                                            }
+                                                        }
+                                                    ],
+                                                    "itemType": {
+                                                        "_type": "named",
+                                                        "name": "InsurancePolicy",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_:InsurancePolicy",
+                                                        "default": null,
+                                                        "inline": null
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": [
+                                                {
+                                                    "id": "id",
+                                                    "userId": "userId",
+                                                    "policyType": "HEALTH",
+                                                    "isExpired": true,
+                                                    "coverageAmount": 1.1
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
                     "autogeneratedExamples": [
                         {
                             "example": {
@@ -1178,11 +1629,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/policies",
+                        "head": "/api/policies",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/api/policies",
+                        "head": "api/policies",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -1216,17 +1667,234 @@
                                         }
                                     }
                                 },
-                                "docs": null,
+                                "docs": "",
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null,
+                        "status-code": 200,
                         "isWildcardStatusCode": null,
-                        "docs": null
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "43a6d099",
+                                "name": null,
+                                "url": "/api/policies",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "list",
+                                                    "list": [
+                                                        {
+                                                            "shape": {
+                                                                "type": "named",
+                                                                "typeName": {
+                                                                    "typeId": "type_:InsurancePolicy",
+                                                                    "fernFilepath": {
+                                                                        "allParts": [],
+                                                                        "packagePath": [],
+                                                                        "file": null
+                                                                    },
+                                                                    "name": "InsurancePolicy",
+                                                                    "displayName": null
+                                                                },
+                                                                "shape": {
+                                                                    "type": "object",
+                                                                    "properties": [
+                                                                        {
+                                                                            "name": "id",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "id"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "id"
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:InsurancePolicy",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "InsurancePolicy",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        },
+                                                                        {
+                                                                            "name": "userId",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "userId"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "userId"
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:InsurancePolicy",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "InsurancePolicy",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        },
+                                                                        {
+                                                                            "name": "policyType",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "typeName": {
+                                                                                        "typeId": "type_:PolicyType",
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [],
+                                                                                            "packagePath": [],
+                                                                                            "file": null
+                                                                                        },
+                                                                                        "name": "PolicyType",
+                                                                                        "displayName": null
+                                                                                    },
+                                                                                    "shape": {
+                                                                                        "type": "enum",
+                                                                                        "value": "HEALTH"
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "HEALTH"
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:InsurancePolicy",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "InsurancePolicy",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        },
+                                                                        {
+                                                                            "name": "isExpired",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "boolean",
+                                                                                        "boolean": true
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": true
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:InsurancePolicy",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "InsurancePolicy",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        },
+                                                                        {
+                                                                            "name": "coverageAmount",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "double",
+                                                                                        "double": 1.1
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": 1.1
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:InsurancePolicy",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "InsurancePolicy",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        }
+                                                                    ],
+                                                                    "extraProperties": null
+                                                                }
+                                                            },
+                                                            "jsonExample": {
+                                                                "id": "id",
+                                                                "userId": "userId",
+                                                                "policyType": "HEALTH",
+                                                                "isExpired": true,
+                                                                "coverageAmount": 1.1
+                                                            }
+                                                        }
+                                                    ],
+                                                    "itemType": {
+                                                        "_type": "named",
+                                                        "name": "InsurancePolicy",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_:InsurancePolicy",
+                                                        "default": null,
+                                                        "inline": null
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": [
+                                                {
+                                                    "id": "id",
+                                                    "userId": "userId",
+                                                    "policyType": "HEALTH",
+                                                    "isExpired": true,
+                                                    "coverageAmount": 1.1
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
                     "autogeneratedExamples": [
                         {
                             "example": {
@@ -1983,9 +2651,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "location": {
@@ -1996,28 +2702,66 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "UserGetLatestInsuranceRequest",
+                            "originalName": "GetLatestInsuranceRequest",
                             "camelCase": {
-                                "unsafeName": "userGetLatestInsuranceRequest",
-                                "safeName": "userGetLatestInsuranceRequest"
+                                "unsafeName": "getLatestInsuranceRequest",
+                                "safeName": "getLatestInsuranceRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "user_get_latest_insurance_request",
-                                "safeName": "user_get_latest_insurance_request"
+                                "unsafeName": "get_latest_insurance_request",
+                                "safeName": "get_latest_insurance_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "USER_GET_LATEST_INSURANCE_REQUEST",
-                                "safeName": "USER_GET_LATEST_INSURANCE_REQUEST"
+                                "unsafeName": "GET_LATEST_INSURANCE_REQUEST",
+                                "safeName": "GET_LATEST_INSURANCE_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "UserGetLatestInsuranceRequest",
-                                "safeName": "UserGetLatestInsuranceRequest"
+                                "unsafeName": "GetLatestInsuranceRequest",
+                                "safeName": "GetLatestInsuranceRequest"
                             }
                         },
                         "fernFilepath": {
-                            "allParts": [],
+                            "allParts": [
+                                {
+                                    "originalName": "",
+                                    "camelCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    }
+                                }
+                            ],
                             "packagePath": [],
-                            "file": null
+                            "file": {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
                         }
                     },
                     "pathParameters": [
@@ -2079,8 +2823,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "BOOLEAN"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "BOOLEAN"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2123,7 +2870,7 @@
                     "headers": [],
                     "body": null,
                     "metadata": {
-                        "includePathParameters": false,
+                        "includePathParameters": true,
                         "onlyPathParameters": false
                     }
                 },
@@ -2155,9 +2902,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "location": {
@@ -2187,9 +2972,47 @@
                             }
                         },
                         "fernFilepath": {
-                            "allParts": [],
+                            "allParts": [
+                                {
+                                    "originalName": "",
+                                    "camelCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "",
+                                        "safeName": ""
+                                    }
+                                }
+                            ],
                             "packagePath": [],
-                            "file": null
+                            "file": {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
                         }
                     },
                     "pathParameters": [],
@@ -2250,8 +3073,11 @@
                             "typeReference": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "INTEGER"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "INTEGER"
+                                    }
                                 }
                             },
                             "propertyAccess": null,
@@ -2293,9 +3119,47 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [],
+                        "allParts": [
+                            {
+                                "originalName": "",
+                                "camelCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "",
+                                    "safeName": ""
+                                }
+                            }
+                        ],
                         "packagePath": [],
-                        "file": null
+                        "file": {
+                            "originalName": "",
+                            "camelCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "snakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            },
+                            "pascalCase": {
+                                "unsafeName": "",
+                                "safeName": ""
+                            }
+                        }
                     }
                 },
                 "location": {
@@ -2326,7 +3190,28 @@
         "keywords": null,
         "smartCasing": true
     },
-    "subpackages": {},
+    "subpackages": {
+        "subpackage_": {
+            "name": "",
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    ""
+                ],
+                "packagePath": [],
+                "file": ""
+            },
+            "service": "service_",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -2334,13 +3219,15 @@
             "file": null
         },
         "websocket": null,
-        "service": "service_",
+        "service": null,
         "types": [
             "type_:PolicyType",
             "type_:InsurancePolicy"
         ],
         "errors": [],
-        "subpackages": [],
+        "subpackages": [
+            "subpackage_"
+        ],
         "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,

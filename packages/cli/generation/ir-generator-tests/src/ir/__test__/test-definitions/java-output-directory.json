@@ -3,7 +3,7 @@
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": "api",
-    "apiDisplayName": null,
+    "apiDisplayName": "java-output-directory",
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -13,19 +13,17 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_service:User": {
+        "type_:User": {
             "inline": null,
             "name": {
                 "name": "User",
                 "fernFilepath": {
-                    "allParts": [
-                        "service"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "service"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_service:User"
+                "typeId": "type_:User"
             },
             "shape": {
                 "_type": "object",
@@ -105,7 +103,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/users",
+                "head": "",
                 "parts": []
             },
             "headers": [],
@@ -119,8 +117,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_service.getUser",
-                    "name": "getUser",
+                    "id": "endpoint_service.getuser",
+                    "name": "getuser",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -130,7 +128,7 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "/",
+                        "head": "/users/",
                         "parts": [
                             {
                                 "pathParameter": "userId",
@@ -139,7 +137,7 @@
                         ]
                     },
                     "fullPath": {
-                        "head": "/users/",
+                        "head": "users/",
                         "parts": [
                             {
                                 "pathParameter": "userId",
@@ -201,7 +199,17 @@
                     "headers": [],
                     "requestBody": null,
                     "v2RequestBodies": null,
-                    "sdkRequest": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": "ServiceGetUserRequest",
+                            "bodyKey": "body",
+                            "includePathParameters": true,
+                            "onlyPathParameters": true
+                        },
+                        "requestParameterName": "request",
+                        "streamParameter": null
+                    },
                     "response": {
                         "body": {
                             "type": "json",
@@ -211,32 +219,146 @@
                                     "_type": "named",
                                     "name": "User",
                                     "fernFilepath": {
-                                        "allParts": [
-                                            "service"
-                                        ],
+                                        "allParts": [],
                                         "packagePath": [],
-                                        "file": "service"
+                                        "file": null
                                     },
                                     "displayName": null,
-                                    "typeId": "type_service:User",
+                                    "typeId": "type_:User",
                                     "default": null,
                                     "inline": null
                                 },
-                                "docs": null,
+                                "docs": "",
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null,
+                        "status-code": 200,
                         "isWildcardStatusCode": null,
-                        "docs": null
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "c271d4f4",
+                                "name": null,
+                                "url": "/users/userId",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [
+                                    {
+                                        "name": "userId",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "userId"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "userId"
+                                        }
+                                    }
+                                ],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_:User",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "name": "User",
+                                                    "displayName": null
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": "id",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "id"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "id"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:User",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "User",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        },
+                                                        {
+                                                            "name": "name",
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "name"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "name"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:User",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": "User",
+                                                                "displayName": null
+                                                            },
+                                                            "propertyAccess": null
+                                                        }
+                                                    ],
+                                                    "extraProperties": null
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "id": "id",
+                                                "name": "name"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "a99b9c12",
+                                "id": "1471e137",
                                 "url": "/users/userId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -277,14 +399,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "User",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:User"
+                                                                "typeId": "type_:User"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -305,14 +425,12 @@
                                                             "originalTypeDeclaration": {
                                                                 "name": "User",
                                                                 "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "service"
-                                                                    ],
+                                                                    "allParts": [],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": null
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:User"
+                                                                "typeId": "type_:User"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -334,14 +452,12 @@
                                                 "typeName": {
                                                     "name": "User",
                                                     "fernFilepath": {
-                                                        "allParts": [
-                                                            "service"
-                                                        ],
+                                                        "allParts": [],
                                                         "packagePath": [],
-                                                        "file": "service"
+                                                        "file": null
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_service:User"
+                                                    "typeId": "type_:User"
                                                 }
                                             },
                                             "jsonExample": {
@@ -383,7 +499,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
-                "type_service:User"
+                "type_:User"
             ]
         },
         "sharedTypes": []
@@ -396,7 +512,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_service:User": {
+            "type_:User": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -419,47 +535,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "service",
-                                "camelCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE",
-                                    "safeName": "SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Service",
-                                    "safeName": "Service"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -530,26 +608,26 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_service.getUser": {
+            "endpoint_service.getuser": {
                 "auth": null,
                 "declaration": {
                     "name": {
-                        "originalName": "getUser",
+                        "originalName": "getuser",
                         "camelCase": {
-                            "unsafeName": "getUser",
-                            "safeName": "getUser"
+                            "unsafeName": "getuser",
+                            "safeName": "getuser"
                         },
                         "snakeCase": {
-                            "unsafeName": "get_user",
-                            "safeName": "get_user"
+                            "unsafeName": "getuser",
+                            "safeName": "getuser"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "GET_USER",
-                            "safeName": "GET_USER"
+                            "unsafeName": "GETUSER",
+                            "safeName": "GETUSER"
                         },
                         "pascalCase": {
-                            "unsafeName": "GetUser",
-                            "safeName": "GetUser"
+                            "unsafeName": "Getuser",
+                            "safeName": "Getuser"
                         }
                     },
                     "fernFilepath": {
@@ -601,7 +679,71 @@
                     "path": "/users/{userId}"
                 },
                 "request": {
-                    "type": "body",
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "ServiceGetUserRequest",
+                            "camelCase": {
+                                "unsafeName": "serviceGetUserRequest",
+                                "safeName": "serviceGetUserRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service_get_user_request",
+                                "safeName": "service_get_user_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE_GET_USER_REQUEST",
+                                "safeName": "SERVICE_GET_USER_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ServiceGetUserRequest",
+                                "safeName": "ServiceGetUserRequest"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [
+                                {
+                                    "originalName": "service",
+                                    "camelCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SERVICE",
+                                        "safeName": "SERVICE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Service",
+                                        "safeName": "Service"
+                                    }
+                                }
+                            ],
+                            "packagePath": [],
+                            "file": {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        }
+                    },
                     "pathParameters": [
                         {
                             "name": {
@@ -634,7 +776,13 @@
                             "variable": null
                         }
                     ],
-                    "body": null
+                    "queryParameters": [],
+                    "headers": [],
+                    "body": null,
+                    "metadata": {
+                        "includePathParameters": true,
+                        "onlyPathParameters": true
+                    }
                 },
                 "response": {
                     "type": "json"
@@ -667,9 +815,7 @@
                 "file": "service"
             },
             "service": "service_service",
-            "types": [
-                "type_service:User"
-            ],
+            "types": [],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -687,7 +833,9 @@
         },
         "websocket": null,
         "service": null,
-        "types": [],
+        "types": [
+            "type_:User"
+        ],
         "errors": [],
         "subpackages": [
             "subpackage_service"

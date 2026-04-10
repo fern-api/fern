@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_realtime:SendEvent": {
+        "type_:SendEvent": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,47 +24,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "realtime",
-                        "camelCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REALTIME",
-                            "safeName": "REALTIME"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Realtime",
-                            "safeName": "Realtime"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -132,11 +94,11 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_realtime:send_snake_case": {
+        "type_:SendSnakeCase": {
             "type": "object",
             "declaration": {
                 "name": {
-                    "originalName": "send_snake_case",
+                    "originalName": "SendSnakeCase",
                     "camelCase": {
                         "unsafeName": "sendSnakeCase",
                         "safeName": "sendSnakeCase"
@@ -155,47 +117,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "realtime",
-                        "camelCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REALTIME",
-                            "safeName": "REALTIME"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Realtime",
-                            "safeName": "Realtime"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -263,7 +187,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_realtime:ReceiveEvent": {
+        "type_:ReceiveEvent": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -286,47 +210,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "realtime",
-                        "camelCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REALTIME",
-                            "safeName": "REALTIME"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Realtime",
-                            "safeName": "Realtime"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -394,11 +280,11 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_realtime:receive_snake_case": {
+        "type_:ReceiveSnakeCase": {
             "type": "object",
             "declaration": {
                 "name": {
-                    "originalName": "receive_snake_case",
+                    "originalName": "ReceiveSnakeCase",
                     "camelCase": {
                         "unsafeName": "receiveSnakeCase",
                         "safeName": "receiveSnakeCase"
@@ -417,47 +303,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "realtime",
-                        "camelCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REALTIME",
-                            "safeName": "REALTIME"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Realtime",
-                            "safeName": "Realtime"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -525,7 +373,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_realtime:SendEvent2": {
+        "type_:SendEvent2": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -548,47 +396,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "realtime",
-                        "camelCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REALTIME",
-                            "safeName": "REALTIME"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Realtime",
-                            "safeName": "Realtime"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -656,7 +466,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_realtime:ReceiveEvent2": {
+        "type_:ReceiveEvent2": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -679,47 +489,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "realtime",
-                        "camelCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REALTIME",
-                            "safeName": "REALTIME"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Realtime",
-                            "safeName": "Realtime"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -817,7 +589,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_realtime:ReceiveEvent3": {
+        "type_:ReceiveEvent3": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -840,47 +612,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "realtime",
-                        "camelCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REALTIME",
-                            "safeName": "REALTIME"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Realtime",
-                            "safeName": "Realtime"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -918,7 +652,60 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_realtime:TranscriptEvent": {
+        "type_:TranscriptEventType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "TranscriptEventType",
+                    "camelCase": {
+                        "unsafeName": "transcriptEventType",
+                        "safeName": "transcriptEventType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "transcript_event_type",
+                        "safeName": "transcript_event_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TRANSCRIPT_EVENT_TYPE",
+                        "safeName": "TRANSCRIPT_EVENT_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TranscriptEventType",
+                        "safeName": "TranscriptEventType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "transcript",
+                    "name": {
+                        "originalName": "transcript",
+                        "camelCase": {
+                            "unsafeName": "transcript",
+                            "safeName": "transcript"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "transcript",
+                            "safeName": "transcript"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TRANSCRIPT",
+                            "safeName": "TRANSCRIPT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Transcript",
+                            "safeName": "Transcript"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:TranscriptEvent": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -941,47 +728,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "realtime",
-                        "camelCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REALTIME",
-                            "safeName": "REALTIME"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Realtime",
-                            "safeName": "Realtime"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -1009,11 +758,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "transcript"
-                        }
+                        "type": "named",
+                        "value": "type_:TranscriptEventType"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -1052,7 +798,60 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_realtime:FlushedEvent": {
+        "type_:FlushedEventType": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "FlushedEventType",
+                    "camelCase": {
+                        "unsafeName": "flushedEventType",
+                        "safeName": "flushedEventType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "flushed_event_type",
+                        "safeName": "flushed_event_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FLUSHED_EVENT_TYPE",
+                        "safeName": "FLUSHED_EVENT_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "FlushedEventType",
+                        "safeName": "FlushedEventType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "flushed",
+                    "name": {
+                        "originalName": "flushed",
+                        "camelCase": {
+                            "unsafeName": "flushed",
+                            "safeName": "flushed"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "flushed",
+                            "safeName": "flushed"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FLUSHED",
+                            "safeName": "FLUSHED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Flushed",
+                            "safeName": "Flushed"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:FlushedEvent": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -1075,47 +874,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "realtime",
-                        "camelCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REALTIME",
-                            "safeName": "REALTIME"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Realtime",
-                            "safeName": "Realtime"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -1143,11 +904,8 @@
                         }
                     },
                     "typeReference": {
-                        "type": "literal",
-                        "value": {
-                            "type": "string",
-                            "value": "flushed"
-                        }
+                        "type": "named",
+                        "value": "type_:FlushedEventType"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -1156,7 +914,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_realtime:ErrorEvent": {
+        "type_:ErrorEvent": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -1179,47 +937,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "realtime",
-                            "camelCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "realtime",
-                                "safeName": "realtime"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REALTIME",
-                                "safeName": "REALTIME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Realtime",
-                                "safeName": "Realtime"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "realtime",
-                        "camelCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "realtime",
-                            "safeName": "realtime"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "REALTIME",
-                            "safeName": "REALTIME"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Realtime",
-                            "safeName": "Realtime"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [

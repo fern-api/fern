@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_service:HelloResponse": {
+        "type_:HelloResponse": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -24,47 +24,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": null
                 }
             },
             "properties": [
@@ -235,54 +197,6 @@
                         }
                     },
                     "url": "https://api.example.com",
-                    "docs": null
-                },
-                {
-                    "id": "Development",
-                    "name": {
-                        "originalName": "Development",
-                        "camelCase": {
-                            "unsafeName": "development",
-                            "safeName": "development"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "development",
-                            "safeName": "development"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "DEVELOPMENT",
-                            "safeName": "DEVELOPMENT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Development",
-                            "safeName": "Development"
-                        }
-                    },
-                    "url": "https://api.${DEV_NAMESPACE}.example.com",
-                    "docs": null
-                },
-                {
-                    "id": "Staging",
-                    "name": {
-                        "originalName": "Staging",
-                        "camelCase": {
-                            "unsafeName": "staging",
-                            "safeName": "staging"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "staging",
-                            "safeName": "staging"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "STAGING",
-                            "safeName": "STAGING"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Staging",
-                            "safeName": "Staging"
-                        }
-                    },
-                    "url": "https://api.${STAGE_ENV}.example.com",
                     "docs": null
                 }
             ]

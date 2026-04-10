@@ -28,30 +28,26 @@ for dir in fern/apis/*/; do
         continue
     fi
 
+    api_block="api:\n  specs:\n    - openapi: ./openapi.yml"
+
     if [ ! -f "$gen_file" ]; then
         # Create a new generators.yml with just the specs section
-        cat > "$gen_file" <<'EOF'
-# yaml-language-server: $schema=../../../../generators-yml.schema.json
-api:
-  specs:
-    - openapi: ./openapi.yml
-EOF
-    elif head -1 "$gen_file" | grep -q "^# yaml-language-server"; then
-        # Insert after the schema comment line
-        sed -i '' '1 a\
-api:\
-  specs:\
-    - openapi: ./openapi.yml
-' "$gen_file"
+        printf '# yaml-language-server: $schema=../../../../generators-yml.schema.json\n%b\n' "$api_block" > "$gen_file"
     else
-        # No schema comment — prepend at the top
+        # Build a new file: keep schema comment if present, add api block, then
+        # append remaining non-comment non-empty-doc lines
         tmp=$(mktemp)
-        {
-            echo "api:"
-            echo "  specs:"
-            echo "    - openapi: ./openapi.yml"
-            cat "$gen_file"
-        } > "$tmp"
+        first_line=$(head -1 "$gen_file")
+        if echo "$first_line" | grep -q "^# yaml-language-server"; then
+            echo "$first_line" > "$tmp"
+            printf '%b\n' "$api_block" >> "$tmp"
+            # Append rest of file, skipping the schema comment line and bare {}
+            tail -n +2 "$gen_file" | grep -v "^{}$" >> "$tmp" || true
+        else
+            printf '%b\n' "$api_block" > "$tmp"
+            # Append existing content, skipping bare {} and existing api: blocks
+            grep -v "^{}$" "$gen_file" | grep -v "^api:" >> "$tmp" || true
+        fi
         mv "$tmp" "$gen_file"
     fi
 
