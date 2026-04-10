@@ -1,3 +1,4 @@
+import { setSentryRunIdTags } from "@fern-api/cli-telemetry";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import * as Sentry from "@sentry/node";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -46,6 +47,7 @@ export class TelemetryClient {
                 integrations: [Sentry.rewriteFramesIntegration()],
                 tracesSampleRate: 0
             });
+            setSentryRunIdTags();
         }
     }
 

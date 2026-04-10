@@ -46,6 +46,7 @@
     "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-logger": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
+    "@fern-api/cli-telemetry": "workspace:*",
     "@fern-api/config": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/configuration": "workspace:*",
