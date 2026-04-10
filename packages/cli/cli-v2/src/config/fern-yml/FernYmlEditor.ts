@@ -81,7 +81,7 @@ export class FernYmlEditor {
         if (doc == null || typeof doc !== "object") {
             throw new CliError({
                 message: `Invalid ${FERN_YML_FILENAME}: expected a YAML object; run 'fern init' to initialize a new file.`,
-                code: "PARSE_ERROR"
+                code: CliError.Code.ParseError
             });
         }
 
@@ -320,7 +320,7 @@ export class FernYmlEditor {
                 if (!(await doesPathExist(resolvedPath))) {
                     throw new CliError({
                         message: `Referenced file '${refPath}' in ${FERN_YML_FILENAME} does not exist.`,
-                        code: "CONFIG_ERROR"
+                        code: CliError.Code.ConfigError
                     });
                 }
                 const refContent = await readFile(resolvedPath, "utf-8");
@@ -350,7 +350,7 @@ export class FernYmlEditor {
         if (existing == null) {
             throw new CliError({
                 message: `Target '${name}' not found in SDK configuration.`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
     }

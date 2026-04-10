@@ -10,7 +10,7 @@ import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import { getTokenFromAuth0 } from "@fern-api/login";
-import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import inquirer from "inquirer";
@@ -146,7 +146,7 @@ export class Context {
                 this.stderr.info(
                     chalk.dim("  To authenticate, run: 'fern auth login' or set the FERN_TOKEN environment variable")
                 );
-                throw new TaskAbortSignal();
+                throw new CliError({ code: CliError.Code.AuthError });
             }
             return await this.promptAndLogin();
         }
@@ -159,7 +159,7 @@ export class Context {
                 this.stderr.info(
                     chalk.dim("  To authenticate, run: 'fern auth login' or set the FERN_TOKEN environment variable")
                 );
-                throw new TaskAbortSignal();
+                throw new CliError({ code: CliError.Code.AuthError });
             }
             return await this.promptAndLogin();
         }
@@ -178,7 +178,7 @@ export class Context {
         ]);
 
         if (!confirm) {
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.AuthError });
         }
 
         this.stderr.info(`${Icons.info} Opening browser to log in to Fern...`);
@@ -193,13 +193,13 @@ export class Context {
         const payload = await verifyAndDecodeJwt(idToken);
         if (payload == null) {
             this.stderr.error(`${Icons.error} Internal error; could not verify ID token`);
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.InternalError });
         }
 
         const email = payload.email;
         if (email == null) {
             this.stderr.error(`${Icons.error} Internal error; ID token does not contain email claim`);
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.InternalError });
         }
 
         await this.tokenService.login(email, accessToken);

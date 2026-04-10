@@ -1,5 +1,5 @@
 import { createVenusService } from "@fern-api/core";
-import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 import type { FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { spawn } from "child_process";
@@ -21,7 +21,7 @@ export class ListCommand {
             context.stderr.error(
                 `${Icons.error} Organization tokens cannot list organizations. Unset the FERN_TOKEN environment variable and run 'fern auth login' to list your organizations.`
             );
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.AuthError });
         }
 
         const venus = createVenusService({ token: token.value });

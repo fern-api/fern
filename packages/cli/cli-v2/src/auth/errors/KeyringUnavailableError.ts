@@ -10,7 +10,7 @@ export class KeyringUnavailableError extends CliError {
     constructor(platform: NodeJS.Platform, cause?: Error) {
         super({
             message: getKeyringErrorMessage(platform),
-            code: "AUTH_ERROR"
+            code: CliError.Code.AuthError
         });
         Object.setPrototypeOf(this, KeyringUnavailableError.prototype);
         this.platform = platform;

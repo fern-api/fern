@@ -1,4 +1,4 @@
-import { TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
@@ -64,7 +64,7 @@ export class LogoutCommand {
 
         if (!context.isTTY) {
             context.stdout.error(`${Icons.error} Use --force to skip confirmation in non-interactive mode`);
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         const { confirmed } = await inquirer.prompt<{ confirmed: boolean }>([
@@ -90,7 +90,9 @@ export class LogoutCommand {
 
         if (!removed) {
             context.stdout.error(`${Icons.error} Account not found: ${user}`);
-            throw new TaskAbortSignal();
+            throw new CliError({
+                code: CliError.Code.EnvironmentError
+            });
         }
 
         context.stdout.info(`${Icons.success} Logged out of ${chalk.bold(user)}`);
@@ -105,7 +107,9 @@ export class LogoutCommand {
             context.stdout.error(
                 `${Icons.error} Multiple accounts found. Use --user or --all in non-interactive mode.`
             );
-            throw new TaskAbortSignal();
+            throw new CliError({
+                code: CliError.Code.EnvironmentError
+            });
         }
 
         const choices = accounts.map((account) => ({

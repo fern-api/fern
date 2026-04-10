@@ -1,7 +1,7 @@
 import { schemas } from "@fern-api/config";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import inquirer from "inquirer";
@@ -47,14 +47,14 @@ export class AddCommand {
         if (fernYmlPath == null) {
             throw new CliError({
                 message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
         const sdkChecker = new SdkChecker({ context });
         const sdkCheckResult = await sdkChecker.check({ workspace });
         if (sdkCheckResult.errorCount > 0) {
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         const existingTargets = workspace.sdks?.targets ?? [];
@@ -80,7 +80,7 @@ export class AddCommand {
         if (args.target == null) {
             throw new CliError({
                 message: `Missing required flags:\n\n  --target <language>    SDK language (e.g. typescript, python, go)`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -149,7 +149,7 @@ export class AddCommand {
                     `"${value}" looks like a remote reference but is not a recognized git URL.\n\n` +
                     `  Please specify a local path (e.g. ./sdks/my-sdk) or a git URL:\n` +
                     `    https://github.com/owner/repo`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -183,7 +183,7 @@ export class AddCommand {
         if (existingTargets.some((t) => t.name === language)) {
             throw new CliError({
                 message: `Target '${language}' already exists in ${FERN_YML_FILENAME}.`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
     }
@@ -253,7 +253,7 @@ export class AddCommand {
         }
         throw new CliError({
             message: `"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`,
-            code: "CONFIG_ERROR"
+            code: CliError.Code.ConfigError
         });
     }
 }

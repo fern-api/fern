@@ -1,4 +1,4 @@
-import { TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
@@ -20,14 +20,16 @@ export class SwitchCommand {
             context.stdout.warn(`${chalk.yellow("⚠")} You are not logged in to Fern.`);
             context.stdout.info("");
             context.stdout.info(chalk.dim("  To log in, run: fern auth login"));
-            throw new TaskAbortSignal();
+            throw new CliError({
+                code: CliError.Code.ConfigError
+            });
         }
 
         if (accounts.length === 1) {
             const account = accounts[0];
             if (account == null) {
                 context.stdout.error(`${Icons.error} Internal error; no accounts found`);
-                throw new TaskAbortSignal();
+                throw CliError.internalError();
             }
 
             context.stdout.warn(
@@ -59,7 +61,9 @@ export class SwitchCommand {
     ): Promise<void> {
         if (!context.isTTY) {
             context.stdout.error(`${Icons.error} Use --user to specify account in non-interactive mode`);
-            throw new TaskAbortSignal();
+            throw new CliError({
+                code: CliError.Code.EnvironmentError
+            });
         }
 
         const choices = accounts.map((account) => ({
@@ -84,7 +88,9 @@ export class SwitchCommand {
         const success = await context.tokenService.switchAccount(user);
         if (!success) {
             context.stdout.error(`${Icons.error} Account not found: ${user}`);
-            throw new TaskAbortSignal();
+            throw new CliError({
+                code: CliError.Code.EnvironmentError
+            });
         }
         context.stdout.info(`${Icons.success} Switched to ${chalk.bold(user)}`);
     }

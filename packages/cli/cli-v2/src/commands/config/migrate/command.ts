@@ -51,7 +51,7 @@ export class MigrateCommand {
             return;
         }
 
-        throw new CliError({ message: "Migration failed", code: "CONFIG_ERROR" });
+        throw new CliError({ message: "Migration failed", code: CliError.Code.ConfigError });
     }
 }
 

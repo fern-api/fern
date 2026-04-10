@@ -91,7 +91,7 @@ export class DocsChecker {
                 message:
                     "No docs configuration found in fern.yml.\n\n" +
                     "  Add a 'docs:' section to your fern.yml to get started.",
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 

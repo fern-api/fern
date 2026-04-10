@@ -1,7 +1,7 @@
 import { verifyAndDecodeJwt } from "@fern-api/auth";
 import { LogLevel } from "@fern-api/logger";
 import { type Auth0TokenResponse, getTokenFromAuth0 } from "@fern-api/login";
-import { TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter.js";
@@ -41,13 +41,13 @@ export class LoginCommand {
         const payload = await verifyAndDecodeJwt(idToken);
         if (payload == null) {
             context.stdout.error(`${Icons.error} Internal error; could not verify ID token`);
-            throw new TaskAbortSignal();
+            throw CliError.internalError();
         }
 
         const email = payload.email;
         if (email == null) {
             context.stdout.error(`${Icons.error} Internal error; ID token does not contain email claim`);
-            throw new TaskAbortSignal();
+            throw CliError.internalError();
         }
 
         const { isNew, totalAccounts } = await context.tokenService.login(email, accessToken);

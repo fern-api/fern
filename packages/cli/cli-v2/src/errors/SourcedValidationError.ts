@@ -13,7 +13,7 @@ export class SourcedValidationError extends CliError {
     constructor(issues: ValidationIssue[]) {
         super({
             message: issues.map((issue) => issue.toString()).join("\n"),
-            code: "VALIDATION_ERROR"
+            code: CliError.Code.ValidationError
         });
         Object.setPrototypeOf(this, SourcedValidationError.prototype);
         this.issues = issues;

@@ -25,7 +25,7 @@ export class DeleteCommand {
                 message:
                     `Invalid preview URL: ${args.url}\n` +
                     `  Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -48,7 +48,7 @@ export class DeleteCommand {
                 default:
                     throw new CliError({
                         message: `Failed to delete preview site: ${args.url}`,
-                        code: "INTERNAL_ERROR"
+                        code: CliError.Code.InternalError
                     });
             }
         }

@@ -1,5 +1,5 @@
 import { extractErrorMessage } from "@fern-api/core-utils";
-import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import inquirer from "inquirer";
@@ -37,14 +37,14 @@ export class UpdateCommand {
         if (fernYmlPath == null) {
             throw new CliError({
                 message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
         const sdkChecker = new SdkChecker({ context });
         const sdkCheckResult = await sdkChecker.check({ workspace });
         if (sdkCheckResult.errorCount > 0) {
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         const targets = workspace.sdks?.targets;
@@ -65,7 +65,7 @@ export class UpdateCommand {
         if (updates.length === 0 && upToDate.length === 0 && args.target != null) {
             throw new CliError({
                 message: `Target '${args.target}' not found in ${FERN_YML_FILENAME}.`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 

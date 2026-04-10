@@ -18,9 +18,9 @@ export async function loadSpec(filepath: AbsoluteFilePath): Promise<Spec> {
         contents = await readFile(filepath, "utf8");
     } catch (error) {
         if (isEnoentError(error)) {
-            throw new CliError({ message: `File does not exist: ${filepath}`, code: "CONFIG_ERROR" });
+            throw new CliError({ message: `File does not exist: ${filepath}`, code: CliError.Code.ConfigError });
         }
-        throw new CliError({ message: `Failed to read file: ${filepath}`, code: "PARSE_ERROR" });
+        throw new CliError({ message: `Failed to read file: ${filepath}`, code: CliError.Code.ParseError });
     }
     return parseSpec(contents, filepath);
 }
@@ -38,7 +38,7 @@ export function parseSpec(contents: string, filepath: string): Spec {
         } catch {
             throw new CliError({
                 message: `Failed to parse file as JSON or YAML: ${filepath}`,
-                code: "PARSE_ERROR"
+                code: CliError.Code.ParseError
             });
         }
     }

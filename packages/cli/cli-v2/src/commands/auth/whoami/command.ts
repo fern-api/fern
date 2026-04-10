@@ -1,4 +1,4 @@
-import { TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
@@ -18,7 +18,7 @@ export class WhoamiCommand {
             context.stdout.warn(`${chalk.yellow("⚠")} You are not logged in to Fern.`);
             context.stdout.info("");
             context.stdout.info(chalk.dim("  To log in, run: fern auth login"));
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.AuthError });
         }
 
         if (args.json) {

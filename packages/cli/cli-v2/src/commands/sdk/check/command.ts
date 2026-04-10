@@ -1,4 +1,4 @@
-import { TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
@@ -30,7 +30,7 @@ export class CheckCommand {
             const response = this.buildJsonResponse({ sdkCheckResult: result, hasErrors });
             context.stdout.info(JSON.stringify(response, null, 2));
             if (hasErrors) {
-                throw new TaskAbortSignal();
+                throw new CliError({ code: CliError.Code.ValidationError });
             }
             return;
         }
@@ -43,7 +43,7 @@ export class CheckCommand {
         }
 
         if (hasErrors) {
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         if (result.warningCount > 0) {

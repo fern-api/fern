@@ -43,7 +43,7 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
                         reject(
                             new CliError({
                                 message: "Docs preview timed out after 10 minutes.",
-                                code: "NETWORK_ERROR"
+                                code: CliError.Code.NetworkError
                             })
                         ),
                     GENERATE_COMMAND_TIMEOUT_MS

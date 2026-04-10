@@ -14,7 +14,7 @@ export class ValidationError extends CliError {
     constructor(violations: ValidationViolation[]) {
         super({
             message: violations.map((v) => `${v.relativeFilepath}: ${v.message}`).join("\n"),
-            code: "VALIDATION_ERROR"
+            code: CliError.Code.ValidationError
         });
         Object.setPrototypeOf(this, ValidationError.prototype);
         this.violations = violations;

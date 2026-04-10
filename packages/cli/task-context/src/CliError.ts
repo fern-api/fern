@@ -2,7 +2,7 @@ export class CliError extends Error {
     public readonly code: CliError.Code;
     public readonly docsLink?: string;
 
-    constructor({ message, code, docsLink }: { message: string; code: CliError.Code; docsLink?: string }) {
+    constructor({ message, code, docsLink }: { code: CliError.Code; message?: string; docsLink?: string }) {
         super(message);
         Object.setPrototypeOf(this, CliError.prototype);
         this.code = code;
@@ -26,19 +26,19 @@ export class CliError extends Error {
         });
     }
 
-    public static notFound(message: string): CliError {
+    public static notFound(message?: string): CliError {
         return new CliError({ message, code: CliError.Code.ConfigError });
     }
 
-    public static badRequest(message: string): CliError {
+    public static badRequest(message?: string): CliError {
         return new CliError({ message, code: CliError.Code.NetworkError });
     }
 
-    public static validationError(message: string): CliError {
+    public static validationError(message?: string): CliError {
         return new CliError({ message, code: CliError.Code.ValidationError });
     }
 
-    public static internalError(message: string): CliError {
+    public static internalError(message?: string): CliError {
         return new CliError({ message, code: CliError.Code.InternalError });
     }
 }
@@ -62,18 +62,18 @@ export namespace CliError {
 }
 
 const SENTRY_REPORTABLE: Record<CliError.Code, boolean> = {
-    INTERNAL_ERROR: true,
-    RESOLUTION_ERROR: true,
-    IR_CONVERSION_ERROR: true,
-    CONTAINER_ERROR: true,
-    VERSION_ERROR: true,
-    PARSE_ERROR: false,
-    ENVIRONMENT_ERROR: false,
-    REFERENCE_ERROR: false,
-    VALIDATION_ERROR: false,
-    NETWORK_ERROR: false,
-    AUTH_ERROR: false,
-    CONFIG_ERROR: false
+    [CliError.Code.InternalError]: true,
+    [CliError.Code.ResolutionError]: true,
+    [CliError.Code.IrConversionError]: true,
+    [CliError.Code.ContainerError]: true,
+    [CliError.Code.VersionError]: true,
+    [CliError.Code.ParseError]: false,
+    [CliError.Code.EnvironmentError]: false,
+    [CliError.Code.ReferenceError]: false,
+    [CliError.Code.ValidationError]: false,
+    [CliError.Code.NetworkError]: false,
+    [CliError.Code.AuthError]: false,
+    [CliError.Code.ConfigError]: false
 };
 
 export function shouldReportToSentry(code: CliError.Code): boolean {

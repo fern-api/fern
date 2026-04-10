@@ -46,7 +46,7 @@ export class SplitCommand {
         const workspace = await context.loadWorkspaceOrThrow();
 
         if (Object.keys(workspace.apis).length === 0) {
-            throw new CliError({ message: "No APIs found in workspace.", code: "CONFIG_ERROR" });
+            throw new CliError({ message: "No APIs found in workspace.", code: CliError.Code.ConfigError });
         }
 
         const entries = filterSpecs(workspace, { api: args.api });
@@ -61,7 +61,7 @@ export class SplitCommand {
         if (fernYmlPath == null) {
             throw new CliError({
                 message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
         const editor = await FernYmlEditor.load({ fernYmlPath });
@@ -242,7 +242,7 @@ export class SplitCommand {
             const detail = extractErrorMessage(error);
             throw new CliError({
                 message: `Failed to get file from git HEAD: ${absolutePath}. Is the file tracked by git and has at least one commit?\n  Cause: ${detail}`,
-                code: "PARSE_ERROR"
+                code: CliError.Code.ParseError
             });
         }
     }
@@ -261,7 +261,7 @@ function resolvePathOrThrow(context: Context, outputPath: string): AbsoluteFileP
     if (resolved == null) {
         throw new CliError({
             message: `Could not resolve output path: ${outputPath}`,
-            code: "CONFIG_ERROR"
+            code: CliError.Code.ConfigError
         });
     }
     return resolved;

@@ -17,6 +17,7 @@ vi.mock("@sentry/node", () => ({
     setTag: vi.fn()
 }));
 
+import { CliError } from "@fern-api/task-context";
 import { SentryClient } from "../SentryClient.js";
 
 describe("SentryClient (cli-v1)", () => {
@@ -58,10 +59,10 @@ describe("SentryClient (cli-v1)", () => {
         const client = new SentryClient({ release: "cli@1.2.3" });
         const error = new Error("something broke");
 
-        client.captureException(error, "INTERNAL_ERROR");
+        client.captureException(error, CliError.Code.InternalError);
 
         expect(mockSentryCaptureException).toHaveBeenCalledWith(error, {
-            captureContext: { tags: { "error.code": "INTERNAL_ERROR" } }
+            captureContext: { tags: { "error.code": CliError.Code.InternalError } }
         });
     });
 

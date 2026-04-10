@@ -69,7 +69,7 @@ export class CompileCommand {
                 const available = apiNames.join(", ");
                 throw new CliError({
                     message: `API '${args.api}' not found. Available APIs: ${available}`,
-                    code: "CONFIG_ERROR"
+                    code: CliError.Code.ConfigError
                 });
             }
             return { apiName: args.api, definition };
@@ -80,14 +80,14 @@ export class CompileCommand {
             if (apiName == null) {
                 throw new CliError({
                     message: "Internal error; no APIs found in workspace",
-                    code: "INTERNAL_ERROR"
+                    code: CliError.Code.InternalError
                 });
             }
             const definition = workspace.apis[apiName];
             if (definition == null) {
                 throw new CliError({
                     message: `Internal error; API '${apiName}' not found in workspace`,
-                    code: "INTERNAL_ERROR"
+                    code: CliError.Code.InternalError
                 });
             }
             return { apiName, definition };
@@ -96,7 +96,7 @@ export class CompileCommand {
         const available = apiNames.join(", ");
         throw new CliError({
             message: `Multiple APIs found: ${available}. Use --api to select one.`,
-            code: "CONFIG_ERROR"
+            code: CliError.Code.ConfigError
         });
     }
 

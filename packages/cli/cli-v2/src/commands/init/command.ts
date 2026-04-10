@@ -144,7 +144,7 @@ export class InitCommand {
         if (await doesPathExist(fernYmlPath)) {
             throw new CliError({
                 message: `A ${FERN_YML_FILENAME} file already exists at ${fernYmlPath}`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
         if (args.api != null) {
@@ -152,14 +152,14 @@ export class InitCommand {
             if (!api.startsWith("http://") && !api.startsWith("https://")) {
                 const resolved = path.resolve(context.cwd, api);
                 if (!(await doesPathExist(AbsoluteFilePath.of(resolved)))) {
-                    throw new CliError({ message: `File not found: ${api}`, code: "CONFIG_ERROR" });
+                    throw new CliError({ message: `File not found: ${api}`, code: CliError.Code.ConfigError });
                 }
             }
         }
         if (!context.isTTY && !args.yes) {
             throw new CliError({
                 message: "Cannot run interactive init in non-TTY environment. Use --yes for defaults.",
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
     }

@@ -1,4 +1,4 @@
-import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import type { Argv } from "yargs";
@@ -28,7 +28,7 @@ export class CheckCommand {
             const availableApis = Object.keys(workspace.apis).join(", ");
             throw new CliError({
                 message: `API '${args.api}' not found. Available APIs: ${availableApis}`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -45,7 +45,7 @@ export class CheckCommand {
             const response = this.buildJsonResponse({ apiCheckResult: result, hasErrors });
             context.stdout.info(JSON.stringify(response, null, 2));
             if (hasErrors) {
-                throw new TaskAbortSignal();
+                throw CliError.validationError();
             }
             return;
         }
@@ -58,7 +58,7 @@ export class CheckCommand {
         }
 
         if (hasErrors) {
-            throw new TaskAbortSignal();
+            throw CliError.validationError();
         }
 
         if (result.warningCount > 0) {

@@ -3,7 +3,7 @@ import type { Audiences } from "@fern-api/configuration";
 import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 import { ValidationIssue } from "@fern-api/yaml-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
@@ -151,7 +151,7 @@ export class GenerateCommand {
                 message:
                     `No fern.yml found, either run 'fern init' or specify all of the required flags:\n\n` +
                     missingFlags.map((flag) => `  ${flag}`).join("\n"),
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -226,13 +226,13 @@ export class GenerateCommand {
                 }
             }
             if (sdkCheckResult.errorCount > 0) {
-                throw new TaskAbortSignal();
+                throw new CliError({ code: CliError.Code.ValidationError });
             }
         }
 
         const validTargets = targets.filter((t) => checkResult.validApis.has(t.api));
         if (validTargets.length === 0) {
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.ValidationError });
         }
 
         const pipeline = new GeneratorPipeline({
@@ -278,7 +278,7 @@ export class GenerateCommand {
             if (outputPath != null) {
                 const { shouldProceed } = await this.checkOutputDirectory({ context, args, outputPath });
                 if (!shouldProceed) {
-                    throw new CliError({ message: "Generation cancelled.", code: "CONFIG_ERROR" });
+                    throw new CliError({ message: "Generation cancelled.", code: CliError.Code.ConfigError });
                 }
             }
         }
@@ -304,7 +304,7 @@ export class GenerateCommand {
                     // This should be unreachable.
                     throw new CliError({
                         message: `Internal error; task '${target.name}' not found`,
-                        code: "INTERNAL_ERROR"
+                        code: CliError.Code.InternalError
                     });
                 }
 
@@ -357,7 +357,7 @@ export class GenerateCommand {
         });
 
         if (summary.failedCount > 0) {
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.ContainerError });
         }
     }
 
@@ -373,25 +373,25 @@ export class GenerateCommand {
         if (args["container-engine"] != null && !args.local) {
             throw new CliError({
                 message: "The --container-engine flag can only be used with --local",
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
         if (args.group != null && args.target != null) {
             throw new CliError({
                 message: "The --group and --target flags cannot be used together",
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
         if (targets.length > 1 && args.output != null) {
             throw new CliError({
                 message: "The --output flag can only be used when generating a single target",
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
         if (args["skip-fernignore"] && args.fernignore != null) {
             throw new CliError({
                 message: "The --skip-fernignore and --fernignore flags cannot be used together.",
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
         const issues: ValidationIssue[] = [];
@@ -455,7 +455,7 @@ export class GenerateCommand {
                     message:
                         `Remote generation is not supported with a git URL for --output\n\n` +
                         `  Use --local or specify a local filesystem path for --output`,
-                    code: "CONFIG_ERROR"
+                    code: CliError.Code.ConfigError
                 });
             }
             const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
@@ -467,7 +467,7 @@ export class GenerateCommand {
                         `    export GITHUB_TOKEN=ghp_xxx\n\n` +
                         `  Or use a local path:\n` +
                         `    --output ./my-sdk`,
-                    code: "AUTH_ERROR"
+                    code: CliError.Code.AuthError
                 });
             }
             return {
@@ -629,7 +629,7 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                         reject(
                             new CliError({
                                 message: "Generation timed out after 10 minutes.",
-                                code: "NETWORK_ERROR"
+                                code: CliError.Code.NetworkError
                             })
                         ),
                     GENERATE_COMMAND_TIMEOUT_MS

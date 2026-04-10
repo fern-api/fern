@@ -86,7 +86,7 @@ function handleError(context: Context, error: unknown): void {
     }
 
     if (error instanceof CliError) {
-        if (error.message.length > 0) {
+        if (error.message && error.message.length > 0) {
             process.stderr.write(`${chalk.red(error.message)}\n`);
         }
         return;

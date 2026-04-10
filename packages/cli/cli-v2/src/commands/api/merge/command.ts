@@ -28,7 +28,7 @@ export class MergeCommand {
         const workspace = await context.loadWorkspaceOrThrow();
 
         if (Object.keys(workspace.apis).length === 0) {
-            throw new CliError({ message: "No APIs found in workspace.", code: "CONFIG_ERROR" });
+            throw new CliError({ message: "No APIs found in workspace.", code: CliError.Code.ConfigError });
         }
 
         const entries = filterSpecs(workspace, { api: args.api });
@@ -44,7 +44,7 @@ export class MergeCommand {
             if (fernYmlPath == null) {
                 throw new CliError({
                     message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`,
-                    code: "CONFIG_ERROR"
+                    code: CliError.Code.ConfigError
                 });
             }
             editor = await FernYmlEditor.load({ fernYmlPath });

@@ -1,7 +1,7 @@
 import type { FernToken } from "@fern-api/auth";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
-import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import inquirer from "inquirer";
@@ -60,7 +60,7 @@ export class PublishCommand {
                 message:
                     "No docs configuration found in fern.yml.\n\n" +
                     "  Add a 'docs:' section to your fern.yml to get started.",
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -88,7 +88,7 @@ export class PublishCommand {
                 message:
                     "No docs configuration found in fern.yml.\n\n" +
                     "  Add a 'docs:' section to your fern.yml to get started.",
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -107,7 +107,7 @@ export class PublishCommand {
         if (docsTask == null) {
             throw new CliError({
                 message: "Internal error; task 'publish' not found",
-                code: "INTERNAL_ERROR"
+                code: CliError.Code.InternalError
             });
         }
 
@@ -161,7 +161,7 @@ export class PublishCommand {
         });
 
         if (summary.failedCount > 0) {
-            throw new TaskAbortSignal();
+            throw new CliError({ code: CliError.Code.ContainerError });
         }
     }
 
@@ -175,7 +175,7 @@ export class PublishCommand {
         if (instances.length === 0) {
             throw new CliError({
                 message: "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml.",
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -188,7 +188,7 @@ export class PublishCommand {
                         `No docs instance found with URL '${instance}'.\n\n` +
                         `Available instances:\n${available}\n\n` +
                         `  Use --instance <url> with one of the URLs above.`,
-                    code: "CONFIG_ERROR"
+                    code: CliError.Code.ConfigError
                 });
             }
             return match.url;
@@ -201,7 +201,7 @@ export class PublishCommand {
                     `Multiple docs instances configured. Please specify which instance to publish.\n\n` +
                     `Available instances:\n${available}\n\n` +
                     `  Use --instance <url> to select one.`,
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
 
@@ -209,7 +209,7 @@ export class PublishCommand {
         if (first == null) {
             throw new CliError({
                 message: "No docs instances configured.\n\n  Add an instance to the 'docs:' section of your fern.yml.",
-                code: "CONFIG_ERROR"
+                code: CliError.Code.ConfigError
             });
         }
         return first.url;
@@ -259,7 +259,7 @@ export class PublishCommand {
             if (fernToken == null) {
                 throw new CliError({
                     message: "No organization token found. Please set the FERN_TOKEN environment variable.",
-                    code: "AUTH_ERROR"
+                    code: CliError.Code.AuthError
                 });
             }
             return Promise.resolve({ type: "organization", value: fernToken });
@@ -281,7 +281,7 @@ export function addPublishCommand(cli: Argv<GlobalArgs>): void {
                         reject(
                             new CliError({
                                 message: "Docs publish timed out after 10 minutes.",
-                                code: "NETWORK_ERROR"
+                                code: CliError.Code.NetworkError
                             })
                         ),
                     GENERATE_COMMAND_TIMEOUT_MS
