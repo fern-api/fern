@@ -28,8 +28,16 @@ for dir in fern/apis/*/; do
         continue
     fi
 
-    # Insert "api:\n  specs:\n    - openapi: ./openapi.yml" after the schema comment line
-    if head -1 "$gen_file" | grep -q "^# yaml-language-server"; then
+    if [ ! -f "$gen_file" ]; then
+        # Create a new generators.yml with just the specs section
+        cat > "$gen_file" <<'EOF'
+# yaml-language-server: $schema=../../../../generators-yml.schema.json
+api:
+  specs:
+    - openapi: ./openapi.yml
+EOF
+    elif head -1 "$gen_file" | grep -q "^# yaml-language-server"; then
+        # Insert after the schema comment line
         sed -i '' '1 a\
 api:\
   specs:\

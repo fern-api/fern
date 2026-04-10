@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+# yaml-language-server: $schema=../../../../generators-yml.schema.json
 auth-schemes:
   CustomAuth:
     scheme: oauth

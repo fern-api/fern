@@ -1,2 +1,5 @@
 api:
+  specs:
+    - openapi: ./openapi.yml
+api:
   path: definition
