@@ -275,12 +275,16 @@ export class GenerateCommand {
             });
         }
 
+        // When --output is a git/PR URL, it's not a local path — skip directory checks.
+        const isRemoteOutput = args.output != null && (isGithubPrUrl(args.output) || isGitUrl(args.output));
+
         // Check output directories before starting the task UI.
         for (const target of targets) {
-            const outputPath =
-                args.output != null
-                    ? resolve(context.cwd, args.output)
-                    : context.resolveOutputFilePath(target.output.path);
+            const outputPath = isRemoteOutput
+                ? undefined
+                : args.output != null
+                  ? resolve(context.cwd, args.output)
+                  : context.resolveOutputFilePath(target.output.path);
 
             if (outputPath != null) {
                 const { shouldProceed } = await this.checkOutputDirectory({ context, args, outputPath });
@@ -338,7 +342,7 @@ export class GenerateCommand {
                     containerEngine: args["container-engine"] ?? "docker",
                     keepContainer: args["keep-container"],
                     preview: args.preview,
-                    outputPath: args.output != null ? resolve(context.cwd, args.output) : undefined,
+                    outputPath: !isRemoteOutput && args.output != null ? resolve(context.cwd, args.output) : undefined,
                     token,
                     version: args["output-version"],
                     fernignorePath: args.fernignore,
