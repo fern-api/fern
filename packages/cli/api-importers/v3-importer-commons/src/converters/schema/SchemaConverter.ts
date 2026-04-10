@@ -31,6 +31,7 @@ export declare namespace SchemaConverter {
         schema: OpenAPIV3_1.SchemaObject;
         inlined?: boolean;
         nameOverride?: string;
+        visitedRefs?: Set<string>;
     }
 
     export interface ConvertedSchema {
@@ -51,13 +52,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     private readonly inlined: boolean;
     private readonly audiences: string[];
     private readonly nameOverride?: string;
+    private readonly visitedRefs: Set<string>;
 
-    constructor({ context, breadcrumbs, schema, id, inlined = false, nameOverride }: SchemaConverter.Args) {
+    constructor({ context, breadcrumbs, schema, id, inlined = false, nameOverride, visitedRefs }: SchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
         this.id = id;
         this.inlined = inlined;
         this.nameOverride = nameOverride;
+        this.visitedRefs = visitedRefs ?? new Set<string>();
         this.audiences =
             this.context.getAudiences({
                 operation: this.schema,
@@ -179,7 +182,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     breadcrumbs: [...this.breadcrumbs, "allOf", "0"],
                     schema: allOfSchema,
                     id: this.id,
-                    inlined: true
+                    inlined: true,
+                    visitedRefs: this.visitedRefs
                 });
 
                 const allOfResult = allOfConverter.convert();
@@ -197,7 +201,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         if (shouldMergeAllOf) {
             let mergedSchema: Record<string, unknown> = {};
-            const resolvedRefs = new Set<string>();
+            const resolvedRefs = new Set<string>(this.visitedRefs);
             let hasCycle = false;
             for (const allOfSchema of this.schema.allOf ?? []) {
                 let schemaToMerge: OpenAPIV3_1.SchemaObject;
@@ -283,7 +287,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 breadcrumbs: this.breadcrumbs,
                 schema: mergedSchema,
                 id: this.id,
-                inlined: true
+                inlined: true,
+                visitedRefs: resolvedRefs
             });
             return mergedConverter.convert();
         }
