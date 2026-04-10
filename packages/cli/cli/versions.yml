@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+
 - version: 4.65.3
   changelogEntry:
     - summary: |
@@ -7,7 +8,8 @@
         docs pages as broken. Absolute links like `/about` in versioned pages now
         correctly resolve within the version context.
       type: fix
-  createdAt: "2026-04-09"
+  createdAt: "2026-04-10"
+
   irVersion: 66
 
 - version: 4.65.2
