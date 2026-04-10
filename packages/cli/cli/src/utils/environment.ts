@@ -78,7 +78,7 @@ function detectDeploySource(): string | undefined {
         }
     } catch (error) {
         // git not available or not in a repo — log at debug level and continue
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: allow console
         console.debug("detectDeploySource: git log failed", error);
     }
     return undefined;
