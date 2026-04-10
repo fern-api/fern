@@ -1,0 +1,85 @@
+import { createVenusService } from "@fern-api/core";
+import type { Argv } from "yargs";
+
+import type { Context } from "../../../../context/Context.js";
+import type { GlobalArgs } from "../../../../context/GlobalArgs.js";
+import { CliError } from "../../../../errors/CliError.js";
+import { Icons } from "../../../../ui/format.js";
+import { withSpinner } from "../../../../ui/withSpinner.js";
+import { command } from "../../../_internal/command.js";
+
+export declare namespace CreateTokenCommand {
+    export interface Args extends GlobalArgs {
+        org: string;
+        description?: string;
+    }
+}
+
+export class CreateTokenCommand {
+    public async handle(context: Context, args: CreateTokenCommand.Args): Promise<void> {
+        const token = await context.getTokenOrPrompt();
+
+        const venus = createVenusService({ token: token.value });
+
+        const response = await withSpinner({
+            message: `Creating token for organization "${args.org}"`,
+            operation: () =>
+                venus.apiKeys.create({
+                    organizationId: args.org,
+                    description: args.description
+                })
+        });
+
+        if (response.ok) {
+            context.stderr.info(`${Icons.success} Token created successfully`);
+            context.stderr.info("");
+            context.stderr.info(`  Token ID: ${response.body.tokenId}`);
+            context.stderr.info(`  Token:    ${response.body.token}`);
+            context.stderr.info("");
+            context.stderr.info("  Save this token now. You won't be able to see it again.");
+            return;
+        }
+
+        response.error._visit({
+            unauthorizedError: () => {
+                context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
+                throw CliError.exit();
+            },
+            organizationNotFoundError: () => {
+                context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
+                throw CliError.exit();
+            },
+            _other: () => {
+                context.stderr.error(
+                    `${Icons.error} Failed to create token.\n` +
+                        `\n  Please contact support@buildwithfern.com for assistance.`
+                );
+                throw CliError.exit();
+            }
+        });
+    }
+}
+
+export function addCreateTokenCommand(cli: Argv<GlobalArgs>): void {
+    const cmd = new CreateTokenCommand();
+    command(
+        cli,
+        "create <org>",
+        "Create an organization API token",
+        (context, args) => cmd.handle(context, args as CreateTokenCommand.Args),
+        (yargs) =>
+            yargs
+                .usage("\nUsage:\n  $0 org token create <org>")
+                .positional("org", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Organization ID"
+                })
+                .option("description", {
+                    type: "string",
+                    description: "Description for the token"
+                })
+                .example("$0 org token create acme", "# Create a token for the 'acme' organization")
+                .example('$0 org token create acme --description "CI token"', "# Create a token with a description")
+    );
+}
