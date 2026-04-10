@@ -568,14 +568,10 @@ class ClientWrapperGenerator:
                         pass
                     else:
                         username_getter = (
-                            '""'
-                            if username_omitted
-                            else f"self.{names.get_username_getter_name(basic_auth_scheme)}()"
+                            '""' if username_omitted else f"self.{names.get_username_getter_name(basic_auth_scheme)}()"
                         )
                         password_getter = (
-                            '""'
-                            if password_omitted
-                            else f"self.{names.get_password_getter_name(basic_auth_scheme)}()"
+                            '""' if password_omitted else f"self.{names.get_password_getter_name(basic_auth_scheme)}()"
                         )
                         writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
                         writer.write_node(
