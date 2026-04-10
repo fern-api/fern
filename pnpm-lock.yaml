@@ -7816,8 +7816,8 @@ importers:
         specifier: workspace:*
         version: link:../commons/core-utils
       '@fern-api/replay':
-        specifier: 0.10.2
-        version: 0.10.2
+        specifier: 0.10.3
+        version: 0.10.3
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
@@ -9339,8 +9339,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@fern-api/replay@0.10.2':
-    resolution: {integrity: sha512-lUkmqtHqQw5H6Zm6efC+qYcOAVJ+XbeVs+BR/X1Ug39DjupaIjxUT3ADBks0A/2wtWQmkxb1ZSEUdc+J4kBT1g==}
+  '@fern-api/replay@0.10.3':
+    resolution: {integrity: sha512-iR+AwoO6EK+kx/MeO1mudSOXVgFTweME2pAjKFioByiVkTR8ukBIPNOGPCIbjnrvQvVrBXJoglMR13fihTaTfA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -9382,12 +9382,12 @@ packages:
     resolution: {integrity: sha512-uo1+fMnJOw5ApWVmKzb5wcLggjS4te3N8QorMClttA6DcBpgn0x1HbSl823oSyFvdqNV9U7GjmeQ+kzX1lWJUg==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-sdk@66.1.0':
-    resolution: {integrity: sha512-Gq/sxhxFtXIFnsDorSnmkBO9QTAgrM51GDuxx4uGXyUARwoKhGOhSx+AM+6kMVVUHcUHoZ8FDG7sGIOOryDjvQ==}
-    engines: {node: '>=18.0.0'}
-
   '@fern-fern/ir-sdk@66.0.0-alpha.1':
     resolution: {integrity: sha512-scSdUIo0E30ES3Jvx6ox7kby7ZB8jAVDB/52a4TaHquQOMJqrR626NtKHVSfKRCZ7Ut0AjeJ9TR4RRN3zoy6og==}
+    engines: {node: '>=18.0.0'}
+
+  '@fern-fern/ir-sdk@66.1.0':
+    resolution: {integrity: sha512-Gq/sxhxFtXIFnsDorSnmkBO9QTAgrM51GDuxx4uGXyUARwoKhGOhSx+AM+6kMVVUHcUHoZ8FDG7sGIOOryDjvQ==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/ir-v53-sdk@1.0.1':
@@ -9413,9 +9413,6 @@ packages:
   '@fern-fern/ir-v58-sdk@1.0.1':
     resolution: {integrity: sha512-U2U1OwrFyviyaTDzRloDzgBw7Ko6TrbqQZqZfavDBl1Y1S20Q1QfZLqJfJcMhYQcntRbXKJeReNjYsSJFaBGsQ==}
     engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v59-sdk@0.0.8':
-    resolution: {integrity: sha512-rPk7crlijG0PvgYZ7g2y5EdhSMMohjGJGfGKo0g5BzdBnA4KqD/LHdful62aHuibYFdORjtGy6GHu1nEH5SD3Q==}
 
   '@fern-fern/ir-v59-sdk@1.0.1':
     resolution: {integrity: sha512-8qEWF6LW+Hr4Ssk8CjnyKcPNnEAKWQYid0sSLHhpsytCHuoywmId3i8/UsCkj2PCYqd+L2zX1xOQ+nATTVxeAQ==}
@@ -16378,7 +16375,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/replay@0.10.2':
+  '@fern-api/replay@0.10.3':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0
@@ -16482,9 +16479,9 @@ snapshots:
 
   '@fern-fern/ir-sdk@66.0.0': {}
 
-  '@fern-fern/ir-sdk@66.1.0': {}
-
   '@fern-fern/ir-sdk@66.0.0-alpha.1': {}
+
+  '@fern-fern/ir-sdk@66.1.0': {}
 
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 
@@ -16497,16 +16494,6 @@ snapshots:
   '@fern-fern/ir-v57-sdk@1.0.1': {}
 
   '@fern-fern/ir-v58-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v59-sdk@0.0.8':
-    dependencies:
-      form-data: 4.0.5
-      formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.15.0
-      readable-stream: 4.7.0
-    transitivePeerDependencies:
-      - encoding
 
   '@fern-fern/ir-v59-sdk@1.0.1': {}
 
