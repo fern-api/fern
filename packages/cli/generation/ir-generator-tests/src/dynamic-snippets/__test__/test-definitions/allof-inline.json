@@ -1684,6 +1684,582 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_:BaseOrgMetadata": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "BaseOrgMetadata",
+                    "camelCase": {
+                        "unsafeName": "baseOrgMetadata",
+                        "safeName": "baseOrgMetadata"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "base_org_metadata",
+                        "safeName": "base_org_metadata"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BASE_ORG_METADATA",
+                        "safeName": "BASE_ORG_METADATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BaseOrgMetadata",
+                        "safeName": "BaseOrgMetadata"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "region",
+                        "name": {
+                            "originalName": "region",
+                            "camelCase": {
+                                "unsafeName": "region",
+                                "safeName": "region"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "region",
+                                "safeName": "region"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REGION",
+                                "safeName": "REGION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Region",
+                                "safeName": "Region"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "tier",
+                        "name": {
+                            "originalName": "tier",
+                            "camelCase": {
+                                "unsafeName": "tier",
+                                "safeName": "tier"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "tier",
+                                "safeName": "tier"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TIER",
+                                "safeName": "TIER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Tier",
+                                "safeName": "Tier"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:BaseOrg": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "BaseOrg",
+                    "camelCase": {
+                        "unsafeName": "baseOrg",
+                        "safeName": "baseOrg"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "base_org",
+                        "safeName": "base_org"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BASE_ORG",
+                        "safeName": "BASE_ORG"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BaseOrg",
+                        "safeName": "BaseOrg"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "metadata",
+                        "name": {
+                            "originalName": "metadata",
+                            "camelCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METADATA",
+                                "safeName": "METADATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Metadata",
+                                "safeName": "Metadata"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:BaseOrgMetadata"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:DetailedOrgMetadata": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "DetailedOrgMetadata",
+                    "camelCase": {
+                        "unsafeName": "detailedOrgMetadata",
+                        "safeName": "detailedOrgMetadata"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "detailed_org_metadata",
+                        "safeName": "detailed_org_metadata"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DETAILED_ORG_METADATA",
+                        "safeName": "DETAILED_ORG_METADATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "DetailedOrgMetadata",
+                        "safeName": "DetailedOrgMetadata"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "region",
+                        "name": {
+                            "originalName": "region",
+                            "camelCase": {
+                                "unsafeName": "region",
+                                "safeName": "region"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "region",
+                                "safeName": "region"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REGION",
+                                "safeName": "REGION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Region",
+                                "safeName": "Region"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "domain",
+                        "name": {
+                            "originalName": "domain",
+                            "camelCase": {
+                                "unsafeName": "domain",
+                                "safeName": "domain"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "domain",
+                                "safeName": "domain"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DOMAIN",
+                                "safeName": "DOMAIN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Domain",
+                                "safeName": "Domain"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:DetailedOrg": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "DetailedOrg",
+                    "camelCase": {
+                        "unsafeName": "detailedOrg",
+                        "safeName": "detailedOrg"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "detailed_org",
+                        "safeName": "detailed_org"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DETAILED_ORG",
+                        "safeName": "DETAILED_ORG"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "DetailedOrg",
+                        "safeName": "DetailedOrg"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "metadata",
+                        "name": {
+                            "originalName": "metadata",
+                            "camelCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METADATA",
+                                "safeName": "METADATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Metadata",
+                                "safeName": "Metadata"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:DetailedOrgMetadata"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:OrganizationMetadata": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "OrganizationMetadata",
+                    "camelCase": {
+                        "unsafeName": "organizationMetadata",
+                        "safeName": "organizationMetadata"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "organization_metadata",
+                        "safeName": "organization_metadata"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ORGANIZATION_METADATA",
+                        "safeName": "ORGANIZATION_METADATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OrganizationMetadata",
+                        "safeName": "OrganizationMetadata"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "region",
+                        "name": {
+                            "originalName": "region",
+                            "camelCase": {
+                                "unsafeName": "region",
+                                "safeName": "region"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "region",
+                                "safeName": "region"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REGION",
+                                "safeName": "REGION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Region",
+                                "safeName": "Region"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "domain",
+                        "name": {
+                            "originalName": "domain",
+                            "camelCase": {
+                                "unsafeName": "domain",
+                                "safeName": "domain"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "domain",
+                                "safeName": "domain"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DOMAIN",
+                                "safeName": "DOMAIN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Domain",
+                                "safeName": "Domain"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:Organization": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Organization",
+                    "camelCase": {
+                        "unsafeName": "organization",
+                        "safeName": "organization"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "organization",
+                        "safeName": "organization"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ORGANIZATION",
+                        "safeName": "ORGANIZATION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Organization",
+                        "safeName": "Organization"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "metadata",
+                        "name": {
+                            "originalName": "metadata",
+                            "camelCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "metadata",
+                                "safeName": "metadata"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METADATA",
+                                "safeName": "METADATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Metadata",
+                                "safeName": "Metadata"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:OrganizationMetadata"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "name",
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -2007,6 +2583,48 @@
             "location": {
                 "method": "GET",
                 "path": "/entities"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.getOrganization": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getOrganization",
+                    "camelCase": {
+                        "unsafeName": "getOrganization",
+                        "safeName": "getOrganization"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_organization",
+                        "safeName": "get_organization"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_ORGANIZATION",
+                        "safeName": "GET_ORGANIZATION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetOrganization",
+                        "safeName": "GetOrganization"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/organizations"
             },
             "request": {
                 "type": "body",
