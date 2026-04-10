@@ -76,8 +76,10 @@ function detectDeploySource(): string | undefined {
         if (subject.includes("[source:postman]")) {
             return "postman";
         }
-    } catch {
-        // git not available or not in a repo — skip silently
+    } catch (error) {
+        // git not available or not in a repo — log at debug level and continue
+        // eslint-disable-next-line no-console
+        console.debug("detectDeploySource: git log failed", error);
     }
     return undefined;
 }
