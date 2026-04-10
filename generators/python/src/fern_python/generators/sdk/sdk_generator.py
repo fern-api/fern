@@ -605,7 +605,7 @@ class SdkGenerator(AbstractGenerator):
         root_client: "RootClient",
     ) -> AST.ClassDeclaration:
         has_overloaded_init = root_client.init_parameters is not None
-        params = root_client.init_parameters if has_overloaded_init else root_client.parameters
+        params = root_client.init_parameters if root_client.init_parameters is not None else root_client.parameters
 
         named_params = [
             AST.NamedFunctionParameter(
