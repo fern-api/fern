@@ -1,10 +1,11 @@
-import { BaseOpenAPIWorkspace, FernDefinition } from "@fern-api/api-workspace-commons";
+import { AbstractAPIWorkspace, BaseOpenAPIWorkspace, FernDefinition } from "@fern-api/api-workspace-commons";
 import { APIS_DIRECTORY, DEFINITION_DIRECTORY, FERN_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { LogLevel } from "@fern-api/logger";
 import { SourceResolver } from "@fern-api/source-resolver";
+import { TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -23,9 +24,13 @@ export async function inspectFixture({
     direct: boolean;
     logLevel: LogLevel;
 }): Promise<void> {
-    const absolutePathToApiDefinition = AbsoluteFilePath.of(
-        path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY, fixture)
-    );
+    const basePath = path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY);
+    const joinedPath = path.join(basePath, fixture);
+    // Prevent path traversal: ensure the resolved path stays within test-definitions
+    if (!path.resolve(joinedPath).startsWith(path.resolve(basePath) + path.sep)) {
+        throw new Error(`Invalid fixture name: "${fixture}" resolves outside the test-definitions directory`);
+    }
+    const absolutePathToApiDefinition = AbsoluteFilePath.of(joinedPath);
 
     const resolvedOutputPath = outputPath ?? AbsoluteFilePath.of((await tmp.dir()).path);
     await mkdir(resolvedOutputPath, { recursive: true });
@@ -60,9 +65,9 @@ async function runDirectPath({
     outputPath,
     taskContext
 }: {
-    workspace: unknown;
+    workspace: AbstractAPIWorkspace<unknown>;
     outputPath: AbsoluteFilePath;
-    taskContext: { logger: { info: (msg: string) => void; error: (msg: string) => void } };
+    taskContext: TaskContext;
 }): Promise<void> {
     if (!(workspace instanceof OSSWorkspace)) {
         throw new Error(
@@ -73,7 +78,7 @@ async function runDirectPath({
     taskContext.logger.info("Running direct path: OpenAPI → IR (via @fern-api/openapi-to-ir)");
 
     const ir = await workspace.getIntermediateRepresentation({
-        context: taskContext as Parameters<typeof workspace.getIntermediateRepresentation>[0]["context"],
+        context: taskContext,
         audiences: { type: "all" },
         enableUniqueErrorsPerEndpoint: true,
         generateV1Examples: false,
@@ -90,18 +95,16 @@ async function runStandardPath({
     outputPath,
     taskContext
 }: {
-    workspace: unknown;
+    workspace: AbstractAPIWorkspace<unknown>;
     outputPath: AbsoluteFilePath;
-    taskContext: { logger: { info: (msg: string) => void; error: (msg: string) => void } };
+    taskContext: TaskContext;
 }): Promise<void> {
     const isOpenAPIBacked = workspace instanceof BaseOpenAPIWorkspace;
 
     // Stage 1: OpenAPI IR (only for OpenAPI-backed fixtures)
     if (isOpenAPIBacked) {
         taskContext.logger.info("Stage 1: Generating OpenAPI IR (via @fern-api/openapi-ir-parser)");
-        const openApiIr = await workspace.getOpenAPIIr({
-            context: taskContext as Parameters<typeof workspace.getOpenAPIIr>[0]["context"]
-        });
+        const openApiIr = await workspace.getOpenAPIIr({ context: taskContext });
         const openApiIrPath = join(outputPath, RelativeFilePath.of("openapi-ir.json"));
         await streamObjectToFile(openApiIrPath, openApiIr, { pretty: true });
         taskContext.logger.info(`Wrote OpenAPI IR to ${openApiIrPath}`);
@@ -112,9 +115,7 @@ async function runStandardPath({
     // Stage 2: Fern definition (only for OpenAPI-backed fixtures)
     if (isOpenAPIBacked) {
         taskContext.logger.info("Stage 2: Generating Fern definition (via @fern-api/openapi-ir-to-fern)");
-        const definition = await workspace.getDefinition({
-            context: taskContext as Parameters<typeof workspace.getDefinition>[0]["context"]
-        });
+        const definition = await workspace.getDefinition({ context: taskContext });
         const definitionPath = join(outputPath, RelativeFilePath.of(DEFINITION_DIRECTORY));
         await writeFernDefinition({ definition, absolutePathToOutputDirectory: definitionPath });
         taskContext.logger.info(`Wrote Fern definition to ${definitionPath}`);
@@ -124,11 +125,7 @@ async function runStandardPath({
 
     // Stage 3: Fern IR (always runs)
     taskContext.logger.info("Stage 3: Generating Fern IR (via @fern-api/ir-generator)");
-    const fernWorkspace = await (
-        workspace as { toFernWorkspace: (args: { context: unknown }) => Promise<unknown> }
-    ).toFernWorkspace({
-        context: taskContext
-    });
+    const fernWorkspace = await workspace.toFernWorkspace({ context: taskContext });
 
     const noopSourceResolver: SourceResolver = {
         resolveSource: () => undefined,
@@ -136,7 +133,7 @@ async function runStandardPath({
     };
 
     const ir = generateIntermediateRepresentation({
-        workspace: fernWorkspace as Parameters<typeof generateIntermediateRepresentation>[0]["workspace"],
+        workspace: fernWorkspace,
         generationLanguage: undefined,
         keywords: undefined,
         smartCasing: false,
@@ -145,7 +142,7 @@ async function runStandardPath({
         readme: undefined,
         packageName: undefined,
         version: undefined,
-        context: taskContext as Parameters<typeof generateIntermediateRepresentation>[0]["context"],
+        context: taskContext,
         sourceResolver: noopSourceResolver
     });
 
