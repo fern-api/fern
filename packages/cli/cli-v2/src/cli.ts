@@ -1,3 +1,4 @@
+import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
 import type { Argv } from "yargs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -15,6 +16,7 @@ import { GlobalArgs } from "./context/GlobalArgs.js";
 import { Version } from "./version.js";
 
 export async function runCliV2(argv?: string[]): Promise<void> {
+    getOrCreateFernRunId();
     const cli = createCliV2(argv);
     await cli.parse();
 }

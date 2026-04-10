@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Upgrade @fern-api/replay to 0.10.1.
+      type: chore
+  createdAt: "2026-04-09"
+  version: 0.9.4
+
+- changelogEntry:
+    - summary: |
         Add .gitattributes with linguist-generated markers for replay lockfile. Sync .fernignore entries with fern-replay to include .fern/replay.yml and .gitattributes.
       type: fix
   createdAt: "2026-04-07"

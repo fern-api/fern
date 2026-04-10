@@ -227,6 +227,8 @@ export async function visitDocsConfigFileYamlAst({
                 return;
             }
 
+            const navStart = performance.now();
+            context.logger.debug("[docs-ast] Starting main navigation traversal...");
             await visitNavigationAst({
                 absolutePathToFernFolder,
                 navigation,
@@ -236,12 +238,17 @@ export async function visitDocsConfigFileYamlAst({
                 apiWorkspaces,
                 context
             });
+            context.logger.debug(
+                `[docs-ast] Main navigation traversal complete in ${(performance.now() - navStart).toFixed(0)}ms`
+            );
         },
         products: async (products) => {
             if (products == null) {
                 return;
             }
 
+            const productsStart = performance.now();
+            context.logger.debug(`[docs-ast] Processing ${products.length} products...`);
             await Promise.all(
                 products.map(async (product, idx) => {
                     if ("path" in product) {
@@ -277,6 +284,9 @@ export async function visitDocsConfigFileYamlAst({
                         }
                     }
                 })
+            );
+            context.logger.debug(
+                `[docs-ast] Products processing complete in ${(performance.now() - productsStart).toFixed(0)}ms`
             );
         },
         check: noop,
@@ -328,6 +338,8 @@ export async function visitDocsConfigFileYamlAst({
                 return;
             }
 
+            const versionsStart = performance.now();
+            context.logger.debug(`[docs-ast] Processing ${versions.length} versions...`);
             await Promise.all(
                 versions.map(async (version, idx) => {
                     await visitFilepath({
@@ -361,6 +373,9 @@ export async function visitDocsConfigFileYamlAst({
                         });
                     }
                 })
+            );
+            context.logger.debug(
+                `[docs-ast] Versions processing complete in ${(performance.now() - versionsStart).toFixed(0)}ms`
             );
         },
         roles: noop,

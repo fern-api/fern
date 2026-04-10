@@ -657,10 +657,16 @@ export class DynamicLiteralMapper extends WithGeneration {
         value: unknown;
     }): { valueTypeReference: FernIr.dynamic.TypeReference; typeLiteral: ast.Literal } | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
+            const errorsBefore = this.context.errors.size();
             try {
                 const typeLiteral = this.convert({ typeReference, value });
+                if (is.Literal.nop(typeLiteral) || this.context.errors.size() > errorsBefore) {
+                    this.context.errors.truncate(errorsBefore);
+                    continue;
+                }
                 return { valueTypeReference: typeReference, typeLiteral };
             } catch (e) {
+                this.context.errors.truncate(errorsBefore);
                 continue;
             }
         }

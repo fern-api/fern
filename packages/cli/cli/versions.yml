@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.62.5
+  changelogEntry:
+    - summary: |
+        Fix GraphQL converter to properly handle interface types. Interfaces
+        with implementing types (e.g., `CatalogProductOption` with
+        `CheckboxOption`, `MultipleChoiceOption`, etc.) are now converted to
+        `undiscriminatedUnion` shapes so that all possible concrete types are
+        discoverable in generated docs. Interfaces with no implementations
+        fall back to plain object types.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 66
 
 - version: 4.66.0
   changelogEntry:
@@ -8,6 +20,33 @@
   createdAt: "2026-04-10"
   irVersion: 66
 
+- version: 4.65.3
+  changelogEntry:
+    - summary: |
+        Fix broken-link checker incorrectly flagging absolute links in versioned
+        docs pages as broken.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
+- version: 4.65.2
+  changelogEntry:
+    - summary: |
+        Improve error messages for `fern docs preview list` command. The default
+        error now suggests checking authentication instead of network connectivity,
+        and the full error response is logged at debug level for easier diagnosis.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+- version: 4.65.1
+  changelogEntry:
+    - summary: |
+        Fixed a performance issue in `fern check` where `valid-markdown-links`
+        repeatedly reprocessed duplicate API descriptions and pathnames in API
+        sections, significantly improving runtime on large docs sites.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
 - version: 4.65.0
   changelogEntry:
     - summary: |
@@ -18,7 +57,6 @@
       type: feat
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.64.1
   changelogEntry:
     - summary: |
@@ -30,7 +68,6 @@
       type: chore
   createdAt: "2026-04-09"
   irVersion: 66
-
 - version: 4.64.0
   changelogEntry:
     - summary: |
@@ -41,7 +78,6 @@
       type: feat
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.63.5
   changelogEntry:
     - summary: |
@@ -50,7 +86,6 @@
       type: fix
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.63.4
   changelogEntry:
     - summary: |
@@ -63,7 +98,6 @@
       type: fix
   createdAt: "2026-04-08"
   irVersion: 66
-
 - version: 4.63.3
   changelogEntry:
     - summary: |
@@ -1431,6 +1465,7 @@
       type: feat
   createdAt: "2026-03-09"
   irVersion: 65
+
 - version: 4.15.5
   changelogEntry:
     - summary: |

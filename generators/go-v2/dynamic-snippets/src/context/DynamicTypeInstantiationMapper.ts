@@ -578,14 +578,16 @@ export class DynamicTypeInstantiationMapper {
         value: unknown;
     }): { valueTypeReference: FernIr.dynamic.TypeReference; typeInstantiation: go.TypeInstantiation } | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
+            const errorsBefore = this.context.errors.size();
             try {
                 const typeInstantiation = this.convert({ typeReference, value });
-                // Skip types that result in nop() - this means the value didn't match the type
-                if (go.TypeInstantiation.isNop(typeInstantiation)) {
+                if (go.TypeInstantiation.isNop(typeInstantiation) || this.context.errors.size() > errorsBefore) {
+                    this.context.errors.truncate(errorsBefore);
                     continue;
                 }
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
+                this.context.errors.truncate(errorsBefore);
                 continue;
             }
         }
