@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Callable, Generic, Optional, Tuple, TypeVar
 
 from fern_python.codegen import AST, ExportStrategy, Filepath
+from fern_python.utils import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -64,7 +65,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         return (
             Filepath.DirectoryFilepathPart(
-                module_name=fern_filepath_part.snake_case.safe_name,
+                module_name=resolve_name(fern_filepath_part).snake_case.safe_name,
                 export_strategy=export_strategy,
             ),
         )

@@ -2,6 +2,7 @@ from typing import Generic, Tuple, TypeVar
 
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
+from fern_python.utils import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -21,7 +22,7 @@ class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
         if self.skip_resources_module:
             return (
                 Filepath.DirectoryFilepathPart(
-                    module_name=fern_filepath_part.snake_case.safe_name,
+                    module_name=resolve_name(fern_filepath_part).snake_case.safe_name,
                     export_strategy=export_strategy,
                 ),
             )
@@ -31,7 +32,7 @@ class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
                 export_strategy=ExportStrategy(export_all=True),
             ),
             Filepath.DirectoryFilepathPart(
-                module_name=fern_filepath_part.snake_case.safe_name,
+                module_name=resolve_name(fern_filepath_part).snake_case.safe_name,
                 export_strategy=export_strategy,
             ),
         )

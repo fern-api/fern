@@ -39,7 +39,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
-from fern_python.utils import build_snippet_writer
+from fern_python.utils import build_snippet_writer, resolve_name
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
@@ -83,7 +83,7 @@ class SdkGenerator(AbstractGenerator):
         return (
             (
                 cleaned_org_name,
-                ir.api_name.snake_case.safe_name,
+                resolve_name(ir.api_name).snake_case.safe_name,
             )
             if custom_config.use_api_name_in_package
             else (cleaned_org_name,)

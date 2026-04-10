@@ -19,6 +19,8 @@ from typing_extensions import Never
 
 import fern.ir.resources as ir_types
 
+from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
+
 VISITOR_RETURN_TYPE = AST.GenericTypeVar(name="T_Result")
 BUILDER_ARGUMENT_NAME = "value"
 
@@ -133,7 +135,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         dummy_parent = self._source_file.get_dummy_class_declaration(parent)
         local_dummy_references = []
         for single_union_type in self._union.types:
-            name = single_union_type.discriminant_value.name.pascal_case.safe_name
+            name = resolve_name(get_name_from_wire_value(single_union_type.discriminant_value)).pascal_case.safe_name
             dummy_class_declaration = AST.ClassDeclaration(name=name)
             local_dummy_references.append(dummy_parent.add_class_declaration(dummy_class_declaration))
         return local_dummy_references
@@ -174,7 +176,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             for single_union_type in self._union.types:
                 with PydanticModel(
                     version=self._custom_config.version,
-                    name=single_union_type.discriminant_value.name.pascal_case.safe_name,
+                    name=resolve_name(get_name_from_wire_value(single_union_type.discriminant_value)).pascal_case.safe_name,
                     source_file=self._source_file,
                     base_models=single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: [
@@ -210,9 +212,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     if shape.properties_type == "singleProperty":
                         internal_pydantic_model_for_single_union_type.add_field(
                             PydanticField(
-                                name=shape.name.name.snake_case.safe_name,
-                                pascal_case_field_name=shape.name.name.pascal_case.safe_name,
-                                json_field_name=shape.name.wire_value,
+                                name=resolve_name(get_name_from_wire_value(shape.name)).snake_case.safe_name,
+                                pascal_case_field_name=resolve_name(get_name_from_wire_value(shape.name)).pascal_case.safe_name,
+                                json_field_name=get_wire_value(shape.name),
                                 type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
                             )
                         )
@@ -221,7 +223,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
                     factory_declaration.add_method(
                         AST.FunctionDeclaration(
-                            name=single_union_type.discriminant_value.name.snake_case.safe_name,
+                            name=resolve_name(get_name_from_wire_value(single_union_type.discriminant_value)).snake_case.safe_name,
                             signature=AST.FunctionSignature(
                                 parameters=single_union_properties.visit(
                                     same_properties_as_object=lambda declared_type_name: [
@@ -323,8 +325,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 get_visit_method(
                     items=[
                         VisitableItem(
-                            parameter_name=single_union_type.discriminant_value.name.snake_case.safe_name,
-                            expected_value=f'"{single_union_type.discriminant_value.wire_value}"',
+                            parameter_name=resolve_name(get_name_from_wire_value(single_union_type.discriminant_value)).snake_case.safe_name,
+                            expected_value=f'"{get_wire_value(single_union_type.discriminant_value)}"',
                             visitor_argument=single_union_type.shape.visit(
                                 same_properties_as_object=lambda declared_type_name: VisitorArgument(
                                     expression=AST.Expression(
@@ -334,7 +336,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                             ),
                                             args=[
                                                 AST.Expression(
-                                                    f'unioned_value.dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}})',
+                                                    f'unioned_value.dict(exclude_unset=True, exclude={{"{get_wire_value(self._union.discriminant)}"}})',
                                                     spread=AST.ExpressionSpread.TWO_ASTERISKS,
                                                 )
                                             ],
@@ -456,20 +458,20 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         discriminant_value = self._get_discriminant_value_for_single_union_type(single_union_type)
         return PydanticField(
             name=self._get_discriminant_attr_name(),
-            pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
+            pascal_case_field_name=resolve_name(get_name_from_wire_value(self._union.discriminant)).pascal_case.safe_name,
             type_hint=AST.TypeHint.literal(discriminant_value),
-            json_field_name=self._union.discriminant.wire_value,
+            json_field_name=get_wire_value(self._union.discriminant),
             default_value=discriminant_value,
         )
 
     def _get_discriminant_attr_name(self) -> str:
-        return self._union.discriminant.name.snake_case.safe_name
+        return resolve_name(get_name_from_wire_value(self._union.discriminant)).snake_case.safe_name
 
     def _get_discriminant_value_for_single_union_type(
         self,
         single_union_type: ir_types.SingleUnionType,
     ) -> AST.Expression:
-        return AST.Expression(f'"{single_union_type.discriminant_value.wire_value}"')
+        return AST.Expression(f'"{get_wire_value(single_union_type.discriminant_value)}"')
 
     def add_statements_v1_v2_or_both(
         self,
@@ -502,4 +504,4 @@ def assert_never(arg: Never) -> Never:
 
 
 def get_field_name_for_single_property(property: ir_types.SingleUnionTypeProperty) -> str:
-    return property.name.name.snake_case.safe_name
+    return resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name

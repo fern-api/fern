@@ -16,6 +16,8 @@ from fern_python.snippet.snippet_writer import SnippetWriter
 
 import fern.ir.resources as ir_types
 
+from fern_python.utils import get_name_from_wire_value, resolve_name
+
 TYPING_EXTENSIONS_MODULE = AST.Module.external(
     module_path=("typing_extensions",),
     dependency=TYPING_EXTENSIONS_DEPENDENCY,
@@ -231,7 +233,7 @@ class FernTypedDict:
     ) -> AST.Expression:
         example_properties = [
             SimpleObjectProperty(
-                name=property.name.name.snake_case.safe_name,
+                name=resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name,
                 value=property.value,
             )
             for property in example.properties

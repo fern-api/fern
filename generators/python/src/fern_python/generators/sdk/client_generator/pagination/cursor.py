@@ -3,6 +3,7 @@ from typing import Optional
 from .abstract_paginator import PaginationSnippetConfig, Paginator
 from fern_python.codegen import AST
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -53,7 +54,8 @@ class CursorPagination(Paginator):
 
     def write_get_next_body(self, *, writer: AST.NodeWriter) -> None:
         page_parameter_name = self.cursor.page.property.visit(
-            body=lambda b: b.name.name.snake_case.safe_name, query=lambda q: q.name.name.snake_case.safe_name
+            body=lambda b: resolve_name(get_name_from_wire_value(b.name)).snake_case.safe_name,
+            query=lambda q: resolve_name(get_name_from_wire_value(q.name)).snake_case.safe_name,
         )
         writer.write(f"self.{self._config.endpoint_name}(")
         for parameter in self._config.parameters:

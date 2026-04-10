@@ -21,6 +21,8 @@ from fern_python.snippet import SnippetRegistry, SnippetWriter
 import fern.ir.resources as ir_types
 from fern.generator_exec.config import GeneratorConfig
 
+from fern_python.utils import resolve_name
+
 
 class PydanticModelGenerator(AbstractGenerator):
     def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
@@ -57,7 +59,7 @@ class PydanticModelGenerator(AbstractGenerator):
         cleaned_org_name = self._clean_organization_name(generator_config.organization)
         return (
             cleaned_org_name,
-            ir.api_name.snake_case.safe_name,
+            resolve_name(ir.api_name).snake_case.safe_name,
         )
 
     def run(

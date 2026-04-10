@@ -13,6 +13,8 @@ from fern_python.snippet import SnippetWriter
 
 import fern.ir.resources as ir_types
 
+from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
+
 
 class PydanticModelObjectGenerator(AbstractObjectGenerator):
     def __init__(
@@ -76,10 +78,10 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         ) as pydantic_model:
             for property in properties:
                 pydantic_model.add_field(
-                    name=property.name.name.snake_case.safe_name,
-                    pascal_case_field_name=property.name.name.pascal_case.safe_name,
+                    name=resolve_name(get_name_from_wire_value(property.name)).snake_case.safe_name,
+                    pascal_case_field_name=resolve_name(get_name_from_wire_value(property.name)).pascal_case.safe_name,
                     type_reference=property.value_type,
-                    json_field_name=property.name.wire_value,
+                    json_field_name=get_wire_value(property.name),
                     description=property.docs,
                 )
 

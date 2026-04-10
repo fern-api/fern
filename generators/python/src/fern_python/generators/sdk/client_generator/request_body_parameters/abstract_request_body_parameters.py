@@ -3,8 +3,6 @@ from typing import Dict, List, Optional
 
 from fern_python.codegen import AST
 
-import fern.ir.resources as ir_types
-
 
 class AbstractRequestBodyParameters:
     @abstractmethod
@@ -23,4 +21,4 @@ class AbstractRequestBodyParameters:
     def get_content(self) -> Optional[AST.Expression]: ...
 
     @abstractmethod
-    def get_parameter_name_rewrites(self) -> Dict[ir_types.Name, str]: ...
+    def get_parameter_name_rewrites(self) -> Dict: ...
