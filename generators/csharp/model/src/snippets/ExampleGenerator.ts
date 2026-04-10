@@ -243,7 +243,7 @@ export class ExampleGenerator extends WithGeneration {
             long: (p) => this.csharp.InstantiatedPrimitive.long(p),
             uint: (p) => this.csharp.InstantiatedPrimitive.uint(p),
             uint64: (p) => this.csharp.InstantiatedPrimitive.ulong(p),
-            float: (p) => this.csharp.InstantiatedPrimitive.double(p),
+            float: (p) => this.csharp.InstantiatedPrimitive.float(p),
             double: (p) => this.csharp.InstantiatedPrimitive.double(p),
             boolean: (p) => this.csharp.InstantiatedPrimitive.boolean(p),
             string: (p) => this.csharp.InstantiatedPrimitive.string(p.original),

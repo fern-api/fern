@@ -26,7 +26,7 @@ public record QueryRequest
     public IEnumerable<QueryColumn>? Queries { get; set; }
 
     [JsonPropertyName("column")]
-    public IEnumerable<double>? Column { get; set; }
+    public IEnumerable<float>? Column { get; set; }
 
     [JsonPropertyName("id")]
     public string? Id { get; set; }

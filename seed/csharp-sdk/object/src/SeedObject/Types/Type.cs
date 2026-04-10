@@ -79,7 +79,7 @@ public record Type : IJsonOnDeserialized
     public required ulong Twentyone { get; set; }
 
     [JsonPropertyName("twentytwo")]
-    public required double Twentytwo { get; set; }
+    public required float Twentytwo { get; set; }
 
     [JsonPropertyName("twentythree")]
     public required string Twentythree { get; set; }

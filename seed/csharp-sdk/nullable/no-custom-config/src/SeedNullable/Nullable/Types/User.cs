@@ -28,7 +28,7 @@ public record User : IJsonOnDeserialized
     public string? Email { get; set; }
 
     [JsonPropertyName("favorite-number")]
-    public required OneOf<int, double?, string?, double> FavoriteNumber { get; set; }
+    public required OneOf<int, float?, string?, double> FavoriteNumber { get; set; }
 
     [JsonPropertyName("numbers")]
     public IEnumerable<int>? Numbers { get; set; }

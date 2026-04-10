@@ -951,7 +951,7 @@ function isReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }
         return writer.isReadOnlyMemoryType("float");
     }
     if (value instanceof Primitive.Double) {
-        return writer.isReadOnlyMemoryType("double") || writer.isReadOnlyMemoryType("float");
+        return writer.isReadOnlyMemoryType("double");
     }
     return false;
 }

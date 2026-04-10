@@ -19,7 +19,7 @@ public record DescribeResponse : IJsonOnDeserialized
     public uint? Dimension { get; set; }
 
     [JsonPropertyName("fullness")]
-    public double? Fullness { get; set; }
+    public float? Fullness { get; set; }
 
     [JsonPropertyName("total_count")]
     public uint? TotalCount { get; set; }
@@ -67,7 +67,7 @@ public record DescribeResponse : IJsonOnDeserialized
         }
         if (Fullness != null)
         {
-            result.Fullness = Fullness ?? 0.0;
+            result.Fullness = Fullness ?? 0.0f;
         }
         if (TotalCount != null)
         {

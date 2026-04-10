@@ -13,7 +13,7 @@ public record QueryColumn : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("values")]
-    public IEnumerable<double> Values { get; set; } = new List<double>();
+    public IEnumerable<float> Values { get; set; } = new List<float>();
 
     [JsonPropertyName("top_k")]
     public uint? TopK { get; set; }
@@ -37,7 +37,7 @@ public record QueryColumn : IJsonOnDeserialized
     {
         return new QueryColumn
         {
-            Values = value.Values?.ToList() ?? Enumerable.Empty<double>(),
+            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
             TopK = value.TopK,
             Namespace = value.Namespace,
             Filter = value.Filter != null ? SeedApi.Metadata.FromProto(value.Filter) : null,

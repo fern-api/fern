@@ -14,7 +14,7 @@ public record UpdateRequest
     public required string Id { get; set; }
 
     [JsonPropertyName("values")]
-    public ReadOnlyMemory<double>? Values { get; set; }
+    public ReadOnlyMemory<float>? Values { get; set; }
 
     [JsonPropertyName("set_metadata")]
     public Metadata? SetMetadata { get; set; }

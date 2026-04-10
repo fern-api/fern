@@ -610,7 +610,7 @@ export class DynamicLiteralMapper extends WithGeneration {
             case "UINT_64":
                 return this.csharp.Literal.ulong(0);
             case "FLOAT":
-                return this.csharp.Literal.double(0);
+                return this.csharp.Literal.float(0);
             case "DOUBLE":
                 return this.csharp.Literal.double(0);
             case "BOOLEAN":
@@ -733,10 +733,10 @@ export class DynamicLiteralMapper extends WithGeneration {
                 const num = this.getValueAsNumber({ value, as });
                 if (num == null) {
                     return fallbackToDefault
-                        ? this.Primitive.double.getDeterminsticDefault(fallbackToDefault)
+                        ? this.Primitive.float.getDeterminsticDefault(fallbackToDefault)
                         : this.csharp.Literal.nop();
                 }
-                return this.csharp.Literal.double(num);
+                return this.csharp.Literal.float(num);
             }
             case "DOUBLE": {
                 const num = this.getValueAsNumber({ value, as });

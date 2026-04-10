@@ -174,7 +174,7 @@ export class CsharpTypeMapper extends WithGeneration {
             long: () => this.Primitive.long,
             uint: () => this.Primitive.uint,
             uint64: () => this.Primitive.ulong,
-            float: () => this.Primitive.double,
+            float: () => this.Primitive.float,
             double: () => this.Primitive.double,
             boolean: () => this.Primitive.boolean,
             string: () => this.Primitive.string,

@@ -16,7 +16,7 @@ public record IndexedData : IJsonOnDeserialized
     public IEnumerable<uint> Indices { get; set; } = new List<uint>();
 
     [JsonPropertyName("values")]
-    public ReadOnlyMemory<double> Values { get; set; }
+    public ReadOnlyMemory<float> Values { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -29,7 +29,7 @@ public record IndexedData : IJsonOnDeserialized
         return new IndexedData
         {
             Indices = value.Indices?.ToList() ?? Enumerable.Empty<uint>(),
-            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<double>(),
+            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
         };
     }
 

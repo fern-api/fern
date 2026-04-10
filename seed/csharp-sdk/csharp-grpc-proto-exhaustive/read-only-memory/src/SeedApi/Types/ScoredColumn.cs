@@ -16,10 +16,10 @@ public record ScoredColumn : IJsonOnDeserialized
     public required string Id { get; set; }
 
     [JsonPropertyName("score")]
-    public double? Score { get; set; }
+    public float? Score { get; set; }
 
     [JsonPropertyName("values")]
-    public ReadOnlyMemory<double>? Values { get; set; }
+    public ReadOnlyMemory<float>? Values { get; set; }
 
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
@@ -58,7 +58,7 @@ public record ScoredColumn : IJsonOnDeserialized
         result.Id = Id;
         if (Score != null)
         {
-            result.Score = Score ?? 0.0;
+            result.Score = Score ?? 0.0f;
         }
         if (Values != null && !Values.Value.IsEmpty)
         {
