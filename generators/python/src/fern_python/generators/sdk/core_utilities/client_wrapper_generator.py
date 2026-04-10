@@ -563,24 +563,32 @@ class ClientWrapperGenerator:
                         pass
                 else:
                     # Auth is mandatory - omitted fields use empty string
-                    username_getter = (
-                        '""' if username_omitted else f"self.{names.get_username_getter_name(basic_auth_scheme)}()"
-                    )
-                    password_getter = (
-                        '""' if password_omitted else f"self.{names.get_password_getter_name(basic_auth_scheme)}()"
-                    )
-                    writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
-                    writer.write_node(
-                        AST.ClassInstantiation(
-                            class_=httpx.HttpX.BASIC_AUTH,
-                            args=[
-                                AST.Expression(username_getter),
-                                AST.Expression(password_getter),
-                            ],
+                    if username_omitted and password_omitted:
+                        # Both fields omitted - skip header entirely
+                        pass
+                    else:
+                        username_getter = (
+                            '""'
+                            if username_omitted
+                            else f"self.{names.get_username_getter_name(basic_auth_scheme)}()"
                         )
-                    )
-                    writer.write("._auth_header")
-                    writer.write_newline_if_last_line_not()
+                        password_getter = (
+                            '""'
+                            if password_omitted
+                            else f"self.{names.get_password_getter_name(basic_auth_scheme)}()"
+                        )
+                        writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
+                        writer.write_node(
+                            AST.ClassInstantiation(
+                                class_=httpx.HttpX.BASIC_AUTH,
+                                args=[
+                                    AST.Expression(username_getter),
+                                    AST.Expression(password_getter),
+                                ],
+                            )
+                        )
+                        writer.write("._auth_header")
+                        writer.write_newline_if_last_line_not()
             for param in constructor_parameters:
                 if param.is_basic:
                     continue
