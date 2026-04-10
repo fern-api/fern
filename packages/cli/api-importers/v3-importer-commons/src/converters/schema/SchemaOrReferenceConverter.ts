@@ -122,7 +122,14 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 schemaOrReference: singleRef,
                 breadcrumbs: this.breadcrumbs
             });
-            if (resolved != null && resolved.type !== "object" && !resolved.properties) {
+            if (
+                resolved != null &&
+                resolved.type !== "object" &&
+                !resolved.properties &&
+                !resolved.allOf &&
+                !resolved.oneOf &&
+                !resolved.anyOf
+            ) {
                 const response = this.context.convertReferenceToTypeReference({
                     reference: singleRef as OpenAPIV3_1.ReferenceObject,
                     breadcrumbs: this.breadcrumbs

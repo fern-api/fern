@@ -290,6 +290,25 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 return undefined;
             }
 
+            // Deduplicate $ref entries in the merged allOf array to avoid false-positive
+            // cycle detection in diamond inheritance patterns (A → B, C; B, C → D).
+            // The mergeWith array-concatenation can produce duplicate $ref entries when
+            // two sibling allOf elements both reference the same base schema.
+            if (Array.isArray(mergedSchema.allOf)) {
+                const seenRefs = new Set<string>();
+                mergedSchema.allOf = (
+                    mergedSchema.allOf as (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[]
+                ).filter((element) => {
+                    if (this.context.isReferenceObject(element)) {
+                        if (seenRefs.has(element.$ref)) {
+                            return false;
+                        }
+                        seenRefs.add(element.$ref);
+                    }
+                    return true;
+                });
+            }
+
             const mergedConverter = new SchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
