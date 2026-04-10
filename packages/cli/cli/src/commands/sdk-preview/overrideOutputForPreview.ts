@@ -63,6 +63,26 @@ function createNpmOverrideOutputMode({
 }
 
 /**
+ * Overrides a generator group's output mode to downloadFiles (disk-only, no publish).
+ * Used for remote generation with --output when no registry URL is provided.
+ */
+export function overrideGroupOutputForDownload({
+    group
+}: {
+    group: generatorsYml.GeneratorGroup;
+}): generatorsYml.GeneratorGroup {
+    const modifiedGenerators = group.generators.map((generator) => ({
+        ...generator,
+        outputMode: FernFiddle.remoteGen.OutputMode.downloadFiles({}),
+        absolutePathToLocalOutput: undefined
+    }));
+    return {
+        ...group,
+        generators: modifiedGenerators
+    };
+}
+
+/**
  * Overrides a generator group's output mode to publish to the preview registry.
  *
  * Used for both local Docker generation and remote Fiddle generation.

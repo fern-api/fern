@@ -1,6 +1,10 @@
 import { getPackageNameFromGeneratorConfig } from "@fern-api/api-workspace-commons";
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
-import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
+import {
+    DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
+    GENERATORS_CONFIGURATION_FILENAME,
+    generatorsYml
+} from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
@@ -16,6 +20,7 @@ import { getPreviewId } from "./getPreviewId.js";
 import {
     getGithubOwnerRepo,
     isNpmGenerator,
+    overrideGroupOutputForDownload,
     overrideGroupOutputForPreview,
     PREVIEW_REGISTRY_URL
 } from "./overrideOutputForPreview.js";
@@ -242,16 +247,23 @@ export async function sdkPreview({
                     );
                 }
 
-                const modifiedGroup =
-                    publishToRegistry && registryUrl != null
-                        ? overrideGroupOutputForPreview({
-                              group: singleGeneratorGroup,
-                              packageName: previewPackageName,
-                              token: token.value,
-                              registryUrl,
-                              pushDiff: useRemoteGeneration ? pushDiff : undefined
-                          })
-                        : singleGeneratorGroup;
+                let modifiedGroup: generatorsYml.GeneratorGroup;
+                if (publishToRegistry && registryUrl != null) {
+                    modifiedGroup = overrideGroupOutputForPreview({
+                        group: singleGeneratorGroup,
+                        packageName: previewPackageName,
+                        token: token.value,
+                        registryUrl,
+                        pushDiff: useRemoteGeneration ? pushDiff : undefined
+                    });
+                } else if (useRemoteGeneration) {
+                    // Remote generation, disk-only (--output with no registry URL):
+                    // override to downloadFiles so the generator doesn't try to publish
+                    // using its original output mode.
+                    modifiedGroup = overrideGroupOutputForDownload({ group: singleGeneratorGroup });
+                } else {
+                    modifiedGroup = singleGeneratorGroup;
+                }
 
                 if (useRemoteGeneration) {
                     // Remote generation through Fiddle — matches the `fern generate` pattern.
