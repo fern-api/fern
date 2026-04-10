@@ -1,12 +1,12 @@
 import re
 from typing import Dict, List, Optional
 
+import fern.generator_exec as generator_exec
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import AST
 from fern_python.snippet.snippet_endpoint_expression import EndpointExpression
 from fern_python.source_file_factory import SourceFileFactory
-
-import fern.generator_exec as generator_exec
-import fern.ir.resources as ir_types
 
 
 class SnippetRegistry:

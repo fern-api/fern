@@ -10,9 +10,8 @@ import keyword
 from typing import Union
 
 import fern.ir.resources as ir_types
-
-from .snake_case import snake_case as to_snake
 from .pascal_case import pascal_case as to_pascal
+from .snake_case import snake_case as to_snake
 
 
 def _to_camel(s: str) -> str:

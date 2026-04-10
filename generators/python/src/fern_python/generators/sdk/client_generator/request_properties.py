@@ -1,6 +1,6 @@
-from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
-
 import fern.ir.resources as ir_types
+
+from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
 
 
 def request_property_to_name(request_property: ir_types.RequestPropertyValue) -> str:

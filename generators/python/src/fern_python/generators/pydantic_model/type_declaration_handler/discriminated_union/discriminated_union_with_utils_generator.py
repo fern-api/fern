@@ -1,10 +1,13 @@
 from typing import Callable, List, Optional, Sequence, Set
 
+import fern.ir.resources as ir_types
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ...fern_aware_pydantic_model import FernAwarePydanticModel
 from ..abc.abstract_type_generator import AbstractTypeGenerator
 from ..get_visit_method import VisitableItem, VisitorArgument, get_visit_method
+from typing_extensions import Never
+
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.codegen.ast.nodes.declarations.class_.class_declaration import (
     ClassDeclaration,
@@ -15,10 +18,6 @@ from fern_python.generators.pydantic_model.type_declaration_handler.type_utiliti
     declared_type_name_to_named_type,
 )
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
-from typing_extensions import Never
-
-import fern.ir.resources as ir_types
-
 from fern_python.utils import get_name_from_wire_value, get_wire_value, resolve_name
 
 VISITOR_RETURN_TYPE = AST.GenericTypeVar(name="T_Result")
@@ -174,7 +173,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             internal_union = self._source_file.add_class_declaration(declaration=internal_union_class_declaration)
 
             for single_union_type in self._union.types:
-                resolved_discriminant_value = resolve_name(get_name_from_wire_value(single_union_type.discriminant_value))
+                resolved_discriminant_value = resolve_name(
+                    get_name_from_wire_value(single_union_type.discriminant_value)
+                )
                 with PydanticModel(
                     version=self._custom_config.version,
                     name=resolved_discriminant_value.pascal_case.safe_name,
@@ -327,7 +328,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 get_visit_method(
                     items=[
                         VisitableItem(
-                            parameter_name=resolve_name(get_name_from_wire_value(single_union_type.discriminant_value)).snake_case.safe_name,
+                            parameter_name=resolve_name(
+                                get_name_from_wire_value(single_union_type.discriminant_value)
+                            ).snake_case.safe_name,
                             expected_value=f'"{get_wire_value(single_union_type.discriminant_value)}"',
                             visitor_argument=single_union_type.shape.visit(
                                 same_properties_as_object=lambda declared_type_name: VisitorArgument(
@@ -460,7 +463,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         discriminant_value = self._get_discriminant_value_for_single_union_type(single_union_type)
         return PydanticField(
             name=self._get_discriminant_attr_name(),
-            pascal_case_field_name=resolve_name(get_name_from_wire_value(self._union.discriminant)).pascal_case.safe_name,
+            pascal_case_field_name=resolve_name(
+                get_name_from_wire_value(self._union.discriminant)
+            ).pascal_case.safe_name,
             type_hint=AST.TypeHint.literal(discriminant_value),
             json_field_name=get_wire_value(self._union.discriminant),
             default_value=discriminant_value,

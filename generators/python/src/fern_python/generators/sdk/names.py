@@ -1,4 +1,5 @@
 import fern.ir.resources as ir_types
+
 from fern_python.utils import get_name_from_wire_value, resolve_name
 
 

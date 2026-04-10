@@ -5,6 +5,7 @@ from types import TracebackType
 from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Union
 
 from .pydantic_field import PydanticField
+
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility

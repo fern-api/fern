@@ -4,7 +4,9 @@ from dataclasses import dataclass
 from types import TracebackType
 from typing import Dict, List, Optional, Sequence, Type
 
+import fern.ir.resources as ir_types
 from ..context.pydantic_generator_context import PydanticGeneratorContext
+
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.codegen.local_class_reference import LocalClassReference
@@ -13,9 +15,6 @@ from fern_python.external_dependencies.typing_extensions import (
 )
 from fern_python.generators.pydantic_model.model_utilities import can_be_fern_model
 from fern_python.snippet.snippet_writer import SnippetWriter
-
-import fern.ir.resources as ir_types
-
 from fern_python.utils import get_name_from_wire_value, resolve_name
 
 TYPING_EXTENSIONS_MODULE = AST.Module.external(

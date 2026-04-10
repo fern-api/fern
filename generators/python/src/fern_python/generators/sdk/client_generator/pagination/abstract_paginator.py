@@ -1,11 +1,11 @@
 from abc import abstractmethod
 from typing import List, Optional
 
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import AST
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.utils.name_resolver import get_name_from_wire_value, resolve_name
-
-import fern.ir.resources as ir_types
 
 
 # Duplicative of snippets,

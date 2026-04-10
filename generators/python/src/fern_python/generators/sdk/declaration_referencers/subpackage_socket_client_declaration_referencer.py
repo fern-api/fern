@@ -1,8 +1,8 @@
+import fern.ir.resources as ir_types
 from .sdk_declaration_referencer import SdkDeclarationReferencer
+
 from fern_python.codegen import Filepath
 from fern_python.utils import resolve_name
-
-import fern.ir.resources as ir_types
 
 
 class SubpackageSocketClientDeclarationReferencer(SdkDeclarationReferencer[ir_types.Subpackage]):

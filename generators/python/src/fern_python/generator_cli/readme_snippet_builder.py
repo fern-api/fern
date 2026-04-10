@@ -1,6 +1,9 @@
 from typing import Dict, List, Optional, Tuple
 
+import fern.generator_exec as generator_exec
+import fern.ir.resources as ir_types
 import generatorcli
+
 from fern_python.codegen import AST
 from fern_python.external_dependencies.httpx import HttpX
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
@@ -13,9 +16,6 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 from fern_python.utils import resolve_name
 from fern_python.utils.snake_case import snake_case
-
-import fern.generator_exec as generator_exec
-import fern.ir.resources as ir_types
 
 
 class ReadmeSnippetBuilder:
