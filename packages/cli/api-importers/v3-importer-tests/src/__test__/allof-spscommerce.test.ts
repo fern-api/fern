@@ -90,7 +90,16 @@ describe("allOf SPS Commerce edge cases", () => {
             generateV1Examples: true,
             logWarnings: false
         });
-        ir = intermediateRepresentation as unknown as IR;
+        // Serialize to JSON, renaming discriminant `type` → `_type` on union objects
+        ir = JSON.parse(
+            JSON.stringify(intermediateRepresentation, (_key, value) => {
+                if (value && typeof value === "object" && "_visit" in value && "type" in value) {
+                    const { type, _visit, ...rest } = value;
+                    return { _type: type, ...rest };
+                }
+                return value;
+            })
+        ) as IR;
     }, 30_000);
 
     describe("Case A: array items narrowing via allOf", () => {

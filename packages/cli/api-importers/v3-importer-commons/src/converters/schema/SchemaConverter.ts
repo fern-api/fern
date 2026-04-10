@@ -197,17 +197,36 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         if (shouldMergeAllOf) {
             let mergedSchema: Record<string, unknown> = {};
+            const resolvedRefs = new Set<string>();
+            let hasCycle = false;
             for (const allOfSchema of this.schema.allOf ?? []) {
+                let schemaToMerge: OpenAPIV3_1.SchemaObject;
+
                 if (this.context.isReferenceObject(allOfSchema)) {
-                    return undefined;
+                    const refPath = allOfSchema.$ref;
+                    if (resolvedRefs.has(refPath)) {
+                        hasCycle = true;
+                        break;
+                    }
+                    resolvedRefs.add(refPath);
+
+                    const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                        schemaOrReference: allOfSchema,
+                        breadcrumbs: this.breadcrumbs
+                    });
+                    if (resolved == null) {
+                        return undefined;
+                    }
+                    schemaToMerge = resolved;
+                } else {
+                    schemaToMerge = allOfSchema;
                 }
 
                 // Handle bare oneOf/anyOf elements used for mutual exclusion patterns
                 // (e.g., oneOf with variants containing `not: {}` properties).
                 // Flatten variant properties into the merged schema as optional properties.
-                const variants =
-                    (allOfSchema as OpenAPIV3_1.SchemaObject).oneOf ?? (allOfSchema as OpenAPIV3_1.SchemaObject).anyOf;
-                if (variants != null && allOfSchema.type == null && allOfSchema.properties == null) {
+                const variants = schemaToMerge.oneOf ?? schemaToMerge.anyOf;
+                if (variants != null && schemaToMerge.type == null && schemaToMerge.properties == null) {
                     const flattenedProperties: Record<string, unknown> = {};
                     for (const variantSchemaOrRef of variants) {
                         const variantSchema = this.context.isReferenceObject(variantSchemaOrRef)
@@ -243,8 +262,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     continue;
                 }
 
-                mergedSchema = mergeWith(mergedSchema, allOfSchema, (objValue, srcValue) => {
-                    if (srcValue === allOfSchema) {
+                mergedSchema = mergeWith(mergedSchema, schemaToMerge, (objValue, srcValue) => {
+                    if (srcValue === schemaToMerge) {
                         return objValue;
                     }
                     if (Array.isArray(objValue) && Array.isArray(srcValue)) {
@@ -252,6 +271,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     }
                     return undefined;
                 });
+            }
+
+            // If a circular reference was detected, fall back to the ObjectSchemaConverter path
+            if (hasCycle) {
+                return undefined;
             }
 
             const mergedConverter = new SchemaConverter({
