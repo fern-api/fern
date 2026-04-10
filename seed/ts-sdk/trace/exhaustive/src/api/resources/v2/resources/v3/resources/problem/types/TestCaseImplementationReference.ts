@@ -18,6 +18,6 @@ export namespace TestCaseImplementationReference {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

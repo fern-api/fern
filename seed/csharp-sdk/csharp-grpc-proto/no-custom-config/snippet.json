@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_userService.Create"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.UserService.CreateAsync(new CreateRequest());\n"
+            }
+        }
+    ]
+}

@@ -26,7 +26,8 @@ public class Example8
                         },
                     }
 
-                }
+                },
+                Ending = "$ending"
             }
         );
     }

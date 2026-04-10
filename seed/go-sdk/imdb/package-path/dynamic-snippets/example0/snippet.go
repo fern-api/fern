@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    inhereplease "github.com/imdb/fern/inhereplease"
     client "github.com/imdb/fern/inhereplease/client"
     option "github.com/imdb/fern/inhereplease/option"
-    inhereplease "github.com/imdb/fern/inhereplease"
-    context "context"
 )
 
 func do() {

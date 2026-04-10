@@ -6,12 +6,20 @@ import uuid
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.object.types.documented_unknown_type import DocumentedUnknownType
+from ...types.object.types.map_of_documented_unknown_type import MapOfDocumentedUnknownType
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
 from ...types.object.types.object_with_datetime_like_string import ObjectWithDatetimeLikeString
+from ...types.object.types.object_with_documented_unknown_type import ObjectWithDocumentedUnknownType
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
+from ...types.object.types.object_with_mixed_required_and_optional_fields import (
+    ObjectWithMixedRequiredAndOptionalFields,
+)
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.object.types.object_with_required_nested_object import ObjectWithRequiredNestedObject
+from ...types.object.types.object_with_unknown_field import ObjectWithUnknownField
 from .raw_client import AsyncRawObjectClient, RawObjectClient
 
 # this is used as the default value for optional parameters
@@ -44,7 +52,7 @@ class ObjectClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -71,7 +79,7 @@ class ObjectClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -114,7 +122,7 @@ class ObjectClient:
             uuid_=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
-            base_64="SGVsbG8gd29ybGQh",
+            base64="SGVsbG8gd29ybGQh",
             list_=["list", "list"],
             set_={"set"},
             map_={1: "map"},
@@ -130,7 +138,7 @@ class ObjectClient:
             datetime=datetime,
             date=date,
             uuid_=uuid_,
-            base_64=base_64,
+            base64=base64,
             list_=list_,
             set_=set_,
             map_=map_,
@@ -249,7 +257,7 @@ class ObjectClient:
                 uuid_=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
-                base_64="SGVsbG8gd29ybGQh",
+                base64="SGVsbG8gd29ybGQh",
                 list_=["list", "list"],
                 set_={"set"},
                 map_={1: "map"},
@@ -316,7 +324,7 @@ class ObjectClient:
                 uuid_=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
-                base_64="SGVsbG8gd29ybGQh",
+                base64="SGVsbG8gd29ybGQh",
                 list_=["list", "list"],
                 set_={"set"},
                 map_={1: "map"},
@@ -381,7 +389,7 @@ class ObjectClient:
                         uuid_=uuid.UUID(
                             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         ),
-                        base_64="SGVsbG8gd29ybGQh",
+                        base64="SGVsbG8gd29ybGQh",
                         list_=["list", "list"],
                         set_={"set"},
                         map_={1: "map"},
@@ -405,7 +413,7 @@ class ObjectClient:
                         uuid_=uuid.UUID(
                             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         ),
-                        base_64="SGVsbG8gd29ybGQh",
+                        base64="SGVsbG8gd29ybGQh",
                         list_=["list", "list"],
                         set_={"set"},
                         map_={1: "map"},
@@ -417,6 +425,205 @@ class ObjectClient:
         """
         _response = self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
+        )
+        return _response.data
+
+    def get_and_return_with_unknown_field(
+        self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> ObjectWithUnknownField:
+        """
+        Parameters
+        ----------
+        unknown : typing.Any
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithUnknownField
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_unknown_field(
+            unknown={"$ref": "https://example.com/schema"},
+        )
+        """
+        _response = self._raw_client.get_and_return_with_unknown_field(unknown=unknown, request_options=request_options)
+        return _response.data
+
+    def get_and_return_with_documented_unknown_type(
+        self, *, documented_unknown_type: DocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
+    ) -> ObjectWithDocumentedUnknownType:
+        """
+        Parameters
+        ----------
+        documented_unknown_type : DocumentedUnknownType
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithDocumentedUnknownType
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_documented_unknown_type(
+            documented_unknown_type={"key": "value"},
+        )
+        """
+        _response = self._raw_client.get_and_return_with_documented_unknown_type(
+            documented_unknown_type=documented_unknown_type, request_options=request_options
+        )
+        return _response.data
+
+    def get_and_return_map_of_documented_unknown_type(
+        self, *, request: MapOfDocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
+    ) -> MapOfDocumentedUnknownType:
+        """
+        Parameters
+        ----------
+        request : MapOfDocumentedUnknownType
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MapOfDocumentedUnknownType
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_map_of_documented_unknown_type(
+            request={"string": {"key": "value"}},
+        )
+        """
+        _response = self._raw_client.get_and_return_map_of_documented_unknown_type(
+            request=request, request_options=request_options
+        )
+        return _response.data
+
+    def get_and_return_with_mixed_required_and_optional_fields(
+        self,
+        *,
+        required_string: str,
+        required_integer: int,
+        required_long: int,
+        optional_string: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithMixedRequiredAndOptionalFields:
+        """
+        Tests that dynamic snippets include all required properties in the
+        object initializer, even when the example omits some required fields.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_integer : int
+
+        required_long : int
+
+        optional_string : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithMixedRequiredAndOptionalFields
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+            required_string="hello",
+            required_integer=0,
+            optional_string="world",
+            required_long=0,
+        )
+        """
+        _response = self._raw_client.get_and_return_with_mixed_required_and_optional_fields(
+            required_string=required_string,
+            required_integer=required_integer,
+            required_long=required_long,
+            optional_string=optional_string,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def get_and_return_with_required_nested_object(
+        self,
+        *,
+        required_string: str,
+        required_object: NestedObjectWithRequiredField,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithRequiredNestedObject:
+        """
+        Tests that dynamic snippets recursively construct default objects for
+        required properties whose type is a named object. When the example
+        omits the nested object, the generator should construct a default
+        initializer with the nested object's required properties filled in.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_object : NestedObjectWithRequiredField
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithRequiredNestedObject
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+        from seed.types.object import (
+            NestedObjectWithRequiredField,
+            ObjectWithOptionalField,
+        )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_required_nested_object(
+            required_string="hello",
+            required_object=NestedObjectWithRequiredField(
+                string="nested",
+                nested_object=ObjectWithOptionalField(),
+            ),
+        )
+        """
+        _response = self._raw_client.get_and_return_with_required_nested_object(
+            required_string=required_string, required_object=required_object, request_options=request_options
         )
         return _response.data
 
@@ -496,7 +703,7 @@ class AsyncObjectClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -523,7 +730,7 @@ class AsyncObjectClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -570,7 +777,7 @@ class AsyncObjectClient:
                 uuid_=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
-                base_64="SGVsbG8gd29ybGQh",
+                base64="SGVsbG8gd29ybGQh",
                 list_=["list", "list"],
                 set_={"set"},
                 map_={1: "map"},
@@ -589,7 +796,7 @@ class AsyncObjectClient:
             datetime=datetime,
             date=date,
             uuid_=uuid_,
-            base_64=base_64,
+            base64=base64,
             list_=list_,
             set_=set_,
             map_=map_,
@@ -730,7 +937,7 @@ class AsyncObjectClient:
                     uuid_=uuid.UUID(
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
-                    base_64="SGVsbG8gd29ybGQh",
+                    base64="SGVsbG8gd29ybGQh",
                     list_=["list", "list"],
                     set_={"set"},
                     map_={1: "map"},
@@ -804,7 +1011,7 @@ class AsyncObjectClient:
                     uuid_=uuid.UUID(
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
-                    base_64="SGVsbG8gd29ybGQh",
+                    base64="SGVsbG8gd29ybGQh",
                     list_=["list", "list"],
                     set_={"set"},
                     map_={1: "map"},
@@ -876,7 +1083,7 @@ class AsyncObjectClient:
                             uuid_=uuid.UUID(
                                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             ),
-                            base_64="SGVsbG8gd29ybGQh",
+                            base64="SGVsbG8gd29ybGQh",
                             list_=["list", "list"],
                             set_={"set"},
                             map_={1: "map"},
@@ -900,7 +1107,7 @@ class AsyncObjectClient:
                             uuid_=uuid.UUID(
                                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                             ),
-                            base_64="SGVsbG8gd29ybGQh",
+                            base64="SGVsbG8gd29ybGQh",
                             list_=["list", "list"],
                             set_={"set"},
                             map_={1: "map"},
@@ -915,6 +1122,247 @@ class AsyncObjectClient:
         """
         _response = await self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def get_and_return_with_unknown_field(
+        self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> ObjectWithUnknownField:
+        """
+        Parameters
+        ----------
+        unknown : typing.Any
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithUnknownField
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_unknown_field(
+                unknown={"$ref": "https://example.com/schema"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_with_unknown_field(
+            unknown=unknown, request_options=request_options
+        )
+        return _response.data
+
+    async def get_and_return_with_documented_unknown_type(
+        self, *, documented_unknown_type: DocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
+    ) -> ObjectWithDocumentedUnknownType:
+        """
+        Parameters
+        ----------
+        documented_unknown_type : DocumentedUnknownType
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithDocumentedUnknownType
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_documented_unknown_type(
+                documented_unknown_type={"key": "value"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_with_documented_unknown_type(
+            documented_unknown_type=documented_unknown_type, request_options=request_options
+        )
+        return _response.data
+
+    async def get_and_return_map_of_documented_unknown_type(
+        self, *, request: MapOfDocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
+    ) -> MapOfDocumentedUnknownType:
+        """
+        Parameters
+        ----------
+        request : MapOfDocumentedUnknownType
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MapOfDocumentedUnknownType
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_map_of_documented_unknown_type(
+                request={"string": {"key": "value"}},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_map_of_documented_unknown_type(
+            request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def get_and_return_with_mixed_required_and_optional_fields(
+        self,
+        *,
+        required_string: str,
+        required_integer: int,
+        required_long: int,
+        optional_string: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithMixedRequiredAndOptionalFields:
+        """
+        Tests that dynamic snippets include all required properties in the
+        object initializer, even when the example omits some required fields.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_integer : int
+
+        required_long : int
+
+        optional_string : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithMixedRequiredAndOptionalFields
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+                required_string="hello",
+                required_integer=0,
+                optional_string="world",
+                required_long=0,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_with_mixed_required_and_optional_fields(
+            required_string=required_string,
+            required_integer=required_integer,
+            required_long=required_long,
+            optional_string=optional_string,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def get_and_return_with_required_nested_object(
+        self,
+        *,
+        required_string: str,
+        required_object: NestedObjectWithRequiredField,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithRequiredNestedObject:
+        """
+        Tests that dynamic snippets recursively construct default objects for
+        required properties whose type is a named object. When the example
+        omits the nested object, the generator should construct a default
+        initializer with the nested object's required properties filled in.
+
+        Parameters
+        ----------
+        required_string : str
+
+        required_object : NestedObjectWithRequiredField
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithRequiredNestedObject
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+        from seed.types.object import (
+            NestedObjectWithRequiredField,
+            ObjectWithOptionalField,
+        )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_required_nested_object(
+                required_string="hello",
+                required_object=NestedObjectWithRequiredField(
+                    string="nested",
+                    nested_object=ObjectWithOptionalField(),
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_with_required_nested_object(
+            required_string=required_string, required_object=required_object, request_options=request_options
         )
         return _response.data
 

@@ -8,7 +8,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 /**
  * Interface for validation errors from the ExampleValidator

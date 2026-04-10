@@ -14,6 +14,7 @@ async fn main() {
                 payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
                     method: "card".to_string(),
                     card_number: "1234567890123456".to_string(),
+                    ..Default::default()
                 }),
             },
             None,

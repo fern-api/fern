@@ -4,6 +4,7 @@ package simple
 
 import (
 	context "context"
+
 	core "github.com/inferred-auth-explicit/fern/core"
 	internal "github.com/inferred-auth-explicit/fern/internal"
 	option "github.com/inferred-auth-explicit/fern/option"

@@ -2,7 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { beforeEach, describe, expect, it } from "vitest";
 import { parseDocument } from "yaml";
-import { YamlDocument } from "../YamlDocument";
+import { YamlDocument } from "../YamlDocument.js";
 
 const SAMPLE_YAML = `edition: 2026-01-01
 org: acme

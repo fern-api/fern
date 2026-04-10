@@ -1,7 +1,7 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-go-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "enableWireTests": false,
     "packageName": "undiscriminated",
@@ -9,5 +9,6 @@
       "path": "github.com/fern-api/undiscriminated-go"
     }
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
 }

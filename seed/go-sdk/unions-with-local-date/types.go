@@ -32,6 +32,9 @@ func (b *Bar) GetName() string {
 }
 
 func (b *Bar) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
 	return b.extraProperties
 }
 
@@ -77,6 +80,9 @@ func (b *Bar) MarshalJSON() ([]byte, error) {
 }
 
 func (b *Bar) String() string {
+	if b == nil {
+		return "<nil>"
+	}
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
 			return value
@@ -110,6 +116,9 @@ func (f *Foo) GetName() string {
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -155,6 +164,9 @@ func (f *Foo) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Foo) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -197,6 +209,9 @@ func (f *FooExtended) GetAge() int {
 }
 
 func (f *FooExtended) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -249,6 +264,9 @@ func (f *FooExtended) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FooExtended) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -398,7 +416,7 @@ func (u *Union) validate() error {
 
 type UnionWithBaseProperties struct {
 	Type        string
-	Id          string
+	ID          string
 	Integer     int
 	FieldString string
 	Foo         *Foo
@@ -411,11 +429,11 @@ func (u *UnionWithBaseProperties) GetType() string {
 	return u.Type
 }
 
-func (u *UnionWithBaseProperties) GetId() string {
+func (u *UnionWithBaseProperties) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UnionWithBaseProperties) GetInteger() int {
@@ -442,13 +460,13 @@ func (u *UnionWithBaseProperties) GetFoo() *Foo {
 func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
-		Id   string `json:"id"`
+		ID   string `json:"id"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
 	u.Type = unmarshaler.Type
-	u.Id = unmarshaler.Id
+	u.ID = unmarshaler.ID
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", u)
 	}
@@ -486,11 +504,11 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 	if u.Integer != 0 {
 		var marshaler = struct {
 			Type    string `json:"type"`
-			Id      string `json:"id"`
+			ID      string `json:"id"`
 			Integer int    `json:"value"`
 		}{
 			Type:    "integer",
-			Id:      u.Id,
+			ID:      u.ID,
 			Integer: u.Integer,
 		}
 		return json.Marshal(marshaler)
@@ -498,11 +516,11 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 	if u.FieldString != "" {
 		var marshaler = struct {
 			Type        string `json:"type"`
-			Id          string `json:"id"`
+			ID          string `json:"id"`
 			FieldString string `json:"value"`
 		}{
 			Type:        "string",
-			Id:          u.Id,
+			ID:          u.ID,
 			FieldString: u.FieldString,
 		}
 		return json.Marshal(marshaler)

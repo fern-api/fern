@@ -1,16 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, JsonResponse } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export function getRawEndpointReturnTypeReference({
     context,
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): go.TypeReference {
     const response = endpoint.response;
     if (response?.body == null) {
@@ -46,7 +45,7 @@ function getRawEndpointReturnTypeReferenceJson({
     responseBody
 }: {
     context: SdkGeneratorContext;
-    responseBody: JsonResponse;
+    responseBody: FernIr.JsonResponse;
 }): go.TypeReference {
     switch (responseBody.type) {
         case "response":

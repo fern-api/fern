@@ -12,6 +12,9 @@ type RequestOption interface {
 	applyRequestOptions(*RequestOptions)
 }
 
+// TokenGetter is a function that returns an access token.
+type TokenGetter func() (string, error)
+
 // RequestOptions defines all of the possible request options.
 //
 // This type is primarily used by the generated code and is not meant
@@ -23,6 +26,10 @@ type RequestOptions struct {
 	BodyProperties  map[string]interface{}
 	QueryParameters url.Values
 	MaxAttempts     uint
+	MaxBufSize      int
+	tokenGetter     TokenGetter
+	ClientID        string
+	ClientSecret    string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -45,6 +52,11 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
+	if r.tokenGetter != nil {
+		if token, err := r.tokenGetter(); err == nil && token != "" {
+			header.Set("Authorization", "Bearer "+token)
+		}
+	}
 	return header
 }
 
@@ -109,4 +121,37 @@ type MaxAttemptsOption struct {
 
 func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
+}
+
+// MaxBufSizeOption implements the RequestOption interface.
+type MaxBufSizeOption struct {
+	MaxBufSize int
+}
+
+func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxBufSize = m.MaxBufSize
+}
+
+// ClientIDOption implements the RequestOption interface.
+type ClientIDOption struct {
+	ClientID string
+}
+
+func (c *ClientIDOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientID = c.ClientID
+}
+
+// ClientSecretOption implements the RequestOption interface.
+type ClientSecretOption struct {
+	ClientSecret string
+}
+
+func (c *ClientSecretOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientSecret = c.ClientSecret
+}
+
+// SetTokenGetter sets the token getter function for inferred auth.
+// This is an internal method and should not be called directly.
+func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {
+	r.tokenGetter = getter
 }

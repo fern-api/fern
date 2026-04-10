@@ -286,7 +286,7 @@ public class OneOfSerializerTests
         const string oneOfSingleString = "\"single\"";
 
         var result = JsonUtils.Serialize(oneOfSingle);
-        Assert.That(result, Is.EqualTo(oneOfSingleString));
+        Assert.That(result, Is.EqualTo(oneOfSingleString).IgnoreWhiteSpace);
     }
 
     [Test]

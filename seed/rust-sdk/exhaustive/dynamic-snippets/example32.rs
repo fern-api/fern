@@ -10,7 +10,14 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .primitive
-        .get_and_return_int(&1, None)
+        .pagination
+        .list_items(
+            &ListItemsQueryRequest {
+                cursor: Some("cursor".to_string()),
+                limit: Some(1),
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }

@@ -59,6 +59,7 @@ describe("UserClient", () => {
         const client = new SeedRequestParametersClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server.mockEndpoint().get("/user").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.getUsername({
@@ -105,9 +106,6 @@ describe("UserClient", () => {
             longParam: BigInt("1000000"),
             bigIntParam: BigInt("1000000"),
         });
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.urls.withEndingSlash()
+    _ = try await client.endpoints.params.getWithPathAndErrors(param: "param")
 }
 
 try await main()

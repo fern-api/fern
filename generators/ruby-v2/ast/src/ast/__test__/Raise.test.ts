@@ -1,6 +1,6 @@
-import { ruby } from "../..";
-import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema";
-import { Writer } from "../core/Writer";
+import { BaseRubyCustomConfigSchema } from "../../custom-config/BaseRubyCustomConfigSchema.js";
+import { ruby } from "../../index.js";
+import { Writer } from "../core/Writer.js";
 
 describe("Raise", () => {
     let writerConfig: Writer.Args;

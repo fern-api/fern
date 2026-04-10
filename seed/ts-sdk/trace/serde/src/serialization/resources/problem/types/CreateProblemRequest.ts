@@ -15,7 +15,7 @@ export const CreateProblemRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     problemName: core.serialization.string(),
     problemDescription: ProblemDescription,
-    files: core.serialization.record(Language, ProblemFiles.optional()),
+    files: core.serialization.partialRecord(Language, ProblemFiles.optional()),
     inputParams: core.serialization.list(VariableTypeAndName),
     outputType: core.serialization.lazy(() => serializers.VariableType),
     testcases: core.serialization.list(TestCaseWithExpectedResult),

@@ -1,7 +1,7 @@
 import { CodeBlock as CommonCodeBlock } from "@fern-api/browser-compatible-base-generator";
-import { type Generation } from "../../context/generation-info";
-import { AstNode } from "../core/AstNode";
-import { type Writer } from "../core/Writer";
+import { type Generation } from "../../context/generation-info.js";
+import { AstNode } from "../core/AstNode.js";
+import { type Writer } from "../core/Writer.js";
 export declare namespace CodeBlock {
     /* Write arbitrary code */
     type Arg = CommonCodeBlock.Arg<Writer>;

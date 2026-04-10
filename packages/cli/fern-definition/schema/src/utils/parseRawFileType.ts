@@ -1,4 +1,4 @@
-import { FernContainerRegex } from "./visitRawTypeReference";
+import { FernContainerRegex } from "./visitRawTypeReference.js";
 
 export interface RawFileType {
     isOptional: boolean;

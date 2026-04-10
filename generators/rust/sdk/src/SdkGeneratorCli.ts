@@ -14,21 +14,23 @@ import {
     DynamicSnippetsGeneratorContext,
     EndpointSnippetGenerator
 } from "@fern-api/rust-dynamic-snippets";
-import { generateModels } from "@fern-api/rust-model";
+import { generateModels, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { dynamic, HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { exec } from "child_process";
 import { promisify } from "util";
-import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
-import { ErrorGenerator } from "./error/ErrorGenerator";
-import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
-import { RootClientGenerator } from "./generators/RootClientGenerator";
-import { SubClientGenerator } from "./generators/SubClientGenerator";
-import { ReferenceConfigAssembler } from "./reference";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
-import { WireTestGenerator } from "./wire-tests";
+import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
+import { ErrorGenerator } from "./error/ErrorGenerator.js";
+import { ApiClientBuilderGenerator } from "./generators/ApiClientBuilderGenerator.js";
+import { ClientConfigGenerator } from "./generators/ClientConfigGenerator.js";
+import { RootClientGenerator } from "./generators/RootClientGenerator.js";
+import { SubClientGenerator } from "./generators/SubClientGenerator.js";
+import { WebSocketChannelGenerator } from "./generators/WebSocketChannelGenerator.js";
+import { ReferenceConfigAssembler } from "./reference/index.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils/index.js";
+import { WireTestGenerator } from "./wire-tests/index.js";
 
 const execAsync = promisify(exec);
 
@@ -43,7 +45,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -131,7 +133,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 context.logger.warn(stderr);
             }
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             context.logger.debug(`Cargo publish failed with error: ${errorMessage}`);
             throw new Error(`Failed to publish crate: ${errorMessage}`);
         }
@@ -195,7 +197,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         context.logger.debug(
-            `Starting SDK generation for ${context.ir.apiName.pascalCase.safeName} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
+            `Starting SDK generation for ${context.case.pascalSafe(context.ir.apiName)} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
         );
 
         const projectFiles = await this.generateProjectFiles(context);
@@ -229,9 +231,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const files: RustFile[] = [];
 
         // Core files
-        context.logger.debug("Generating core files (lib.rs, error.rs, api/mod.rs)...");
+        context.logger.debug("Generating core files (lib.rs, error.rs, core/mod.rs, api/mod.rs)...");
         files.push(this.generateLibFile(context));
         files.push(this.generateErrorFile(context));
+        files.push(this.generateCoreModFile(context));
         files.push(this.generateApiModFile(context));
 
         // Environment.rs (if environments are defined)
@@ -249,6 +252,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug("Generating client configuration files...");
         const clientConfigGenerator = new ClientConfigGenerator(context);
         files.push(clientConfigGenerator.generate());
+        const apiClientBuilderGenerator = new ApiClientBuilderGenerator(context);
+        files.push(apiClientBuilderGenerator.generate());
 
         // Client.rs and nested mod.rs files
         context.logger.debug(`Generating root client: ${context.getClientName()}...`);
@@ -265,6 +270,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const typeCount = Object.keys(context.ir.types).length;
             context.logger.debug(`Generating ${typeCount} type definition(s)...`);
             files.push(...this.generateTypeFiles(context));
+        }
+
+        // WebSocket channels
+        if (this.hasWebSocketChannels(context)) {
+            const wsChannelCount = Object.keys(context.ir.websocketChannels ?? {}).length;
+            context.logger.debug(`Generating ${wsChannelCount} WebSocket channel client(s)...`);
+            files.push(...this.generateWebSocketFiles(context));
         }
 
         return files;
@@ -296,6 +308,74 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         });
     }
 
+    /**
+     * Generates core/mod.rs dynamically based on which features are active.
+     *
+     * The static asIs mod.rs always declares `mod sse_stream` and `mod websocket` behind
+     * cfg feature gates. While this works for compilation (the compiler respects #[cfg]),
+     * cargo fmt does NOT evaluate feature flags — it tries to parse all declared modules
+     * and fails when the corresponding .rs file doesn't exist. Generating this file
+     * dynamically ensures we only declare modules for files that are actually present.
+     */
+    private generateCoreModFile(context: SdkGeneratorContext): RustFile {
+        const hasStreaming = context.hasStreamingEndpoints();
+        const hasWebSocket = context.hasWebSocketChannels();
+        const hasDateTime = context.usesDateTime();
+        const hasBase64 = context.usesBase64();
+        const hasBigInteger = context.usesBigInteger();
+        const hasFloatingPoint = context.usesFloatingPoint();
+
+        const lines: string[] = [];
+        lines.push("//! Core client infrastructure");
+        lines.push("");
+        lines.push("mod http_client;");
+        lines.push("mod oauth_token_provider;");
+        lines.push("mod request_options;");
+        lines.push("mod query_parameter_builder;");
+        if (hasStreaming) {
+            lines.push('#[cfg(feature = "sse")]');
+            lines.push("mod sse_stream;");
+        }
+        if (hasWebSocket) {
+            lines.push('#[cfg(feature = "websocket")]');
+            lines.push("mod websocket;");
+        }
+        lines.push("mod utils;");
+        if (hasDateTime) {
+            lines.push("pub mod flexible_datetime;");
+        }
+        if (hasBase64) {
+            lines.push("pub mod base64_bytes;");
+        }
+        if (hasBigInteger) {
+            lines.push("pub mod bigint_string;");
+        }
+        if (hasFloatingPoint) {
+            lines.push("pub mod number_serializers;");
+        }
+        lines.push("");
+        lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig};");
+        lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
+        lines.push("pub use request_options::RequestOptions;");
+        lines.push("pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};");
+        if (hasStreaming) {
+            lines.push('#[cfg(feature = "sse")]');
+            lines.push("pub use sse_stream::SseStream;");
+        }
+        if (hasWebSocket) {
+            lines.push('#[cfg(feature = "websocket")]');
+            lines.push("pub use websocket::{DisconnectInfo, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState};");
+        }
+        lines.push("pub use utils::join_url;");
+        lines.push("");
+
+        return new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of("src/core"),
+            fileContents: lines.join("\n")
+        });
+    }
+
     private generateApiModFile(context: SdkGeneratorContext): RustFile {
         const hasTypes = this.hasTypes(context);
         const moduleDeclarations: ModuleDeclaration[] = [];
@@ -303,7 +383,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Build module documentation
         const moduleDoc: string[] = [];
-        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiNameRaw = context.ir.apiName;
+        const apiName = context.ir.apiDisplayName ?? (apiNameRaw != null ? context.case.pascalSafe(apiNameRaw) : null) ?? "API";
         const apiDescription = context.ir.apiDocs;
 
         moduleDoc.push(`API client and types for the ${apiName}`);
@@ -332,11 +413,17 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         if (hasTypes) {
             moduleDoc.push("- [`types`] - Request, response, and model types");
         }
+        if (this.hasWebSocketChannels(context)) {
+            moduleDoc.push("- [`websocket`] - WebSocket channel clients");
+        }
 
         // Add module declarations
         moduleDeclarations.push(new ModuleDeclaration({ name: "resources", isPublic: true }));
         if (hasTypes) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
+        }
+        if (this.hasWebSocketChannels(context)) {
+            moduleDeclarations.push(new ModuleDeclaration({ name: "websocket", isPublic: true }));
         }
 
         // Add named re-exports for resources
@@ -349,6 +436,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
+
+        // WebSocket channel clients are accessible via the `websocket` submodule
+        // (e.g. `crate::websocket::RealtimeClient`). We intentionally do NOT
+        // glob re-export them here to keep the WebSocket API separate from
+        // the HTTP resource clients.
 
         const apiModule = new Module({
             moduleDoc,
@@ -386,30 +478,34 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateTypeFiles(context: SdkGeneratorContext): RustFile[] {
         const files: RustFile[] = [];
 
-        // Generate model files
-        const modelFiles = this.generateModelFiles(context);
+        // Generate model files (includes build_error.rs for builders)
+        // This also populates inlinedUnionVariantTypeIds on the model context
+        const modelContext = context.toModelGeneratorContext();
+        const modelFiles = this.generateModelFilesWithContext(context, modelContext);
         files.push(...modelFiles);
 
-        // Generate types module file
-        const typesModFile = this.generateTypesModFile(context);
+        // Generate types module file, passing inlined type IDs so we skip their mod declarations
+        const typesModFile = this.generateTypesModFile(context, modelContext.inlinedUnionVariantTypeIds);
         files.push(typesModFile);
 
         return files;
     }
 
-    private generateModelFiles(context: SdkGeneratorContext): RustFile[] {
-        return generateModels({ context: context.toModelGeneratorContext() }).map(
-            (file) =>
-                new RustFile({
-                    filename: file.filename,
-                    directory: RelativeFilePath.of("src/api/types"),
-                    fileContents: this.getFileContents(file)
-                })
-        );
+    private generateModelFilesWithContext(context: SdkGeneratorContext, modelContext: ModelGeneratorContext): RustFile[] {
+        return generateModels({ context: modelContext })
+            .filter((file) => file.filename !== "error.rs")
+            .map(
+                (file) =>
+                    new RustFile({
+                        filename: file.filename,
+                        directory: RelativeFilePath.of("src/api/types"),
+                        fileContents: this.getFileContents(file)
+                    })
+            );
     }
 
-    private generateTypesModFile(context: SdkGeneratorContext): RustFile {
-        const typesModule = this.buildTypesModule(context);
+    private generateTypesModFile(context: SdkGeneratorContext, inlinedTypeIds?: Set<string>): RustFile {
+        const typesModule = this.buildTypesModule(context, inlinedTypeIds);
         return new RustFile({
             filename: "mod.rs",
             directory: RelativeFilePath.of("src/api/types"),
@@ -428,7 +524,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Build module documentation
         const moduleDoc: string[] = [];
-        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiNameRaw2 = context.ir.apiName;
+        const apiName = context.ir.apiDisplayName ?? (apiNameRaw2 != null ? context.case.pascalSafe(apiNameRaw2) : null) ?? "API";
         const apiDescription = context.ir.apiDocs;
 
         // Add main title
@@ -487,11 +584,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Add all sub-clients
         subpackages.forEach((subpackage) => {
-            const subClientName = `${subpackage.name.pascalCase.safeName}Client`;
+            const subClientName = `${context.case.pascalSafe(subpackage.name)}Client`;
             clientExports.push(subClientName);
         });
 
-        useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "error", items: ["ApiError", "BuildError"], isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             useStatements.push(new UseStatement({ path: "environment", items: ["*"], isPublic: true }));
@@ -515,7 +612,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         });
     }
 
-    private buildTypesModule(context: SdkGeneratorContext): Module {
+    private buildTypesModule(context: SdkGeneratorContext, inlinedTypeIds?: Set<string>): Module {
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
         const rawDeclarations: string[] = [];
@@ -524,7 +621,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const uniqueModuleNames = new Set<string>();
 
         // Add regular IR types
-        for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+        for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+            // Skip types that are inlined into discriminated union variants
+            if (inlinedTypeIds?.has(typeId)) {
+                continue;
+            }
             // Use centralized method to get unique filename and extract module name from it
             const filename = context.getUniqueFilenameForType(typeDeclaration);
             const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
@@ -550,7 +651,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         for (const service of Object.values(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
-                    const inlinedRequestBody = endpoint.requestBody as HttpRequestBody.InlinedRequestBody;
+                    const inlinedRequestBody = endpoint.requestBody as FernIr.HttpRequestBody.InlinedRequestBody;
                     // Get the unique type name (may have suffix if there's a collision)
                     const uniqueRequestName = context.getInlineRequestTypeName(endpoint.id);
 
@@ -653,6 +754,29 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         }
 
+        // Add bytes request body types for bytes endpoints with query parameters
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
+                    const uniqueRequestName = context.getBytesRequestTypeName(endpoint.id);
+                    const rawModuleName = context.getModuleNameForBytesRequestBody(endpoint.id);
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: [uniqueRequestName],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
         return new Module({
             moduleDeclarations,
             useStatements,
@@ -667,20 +791,24 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private async generateReadme(context: SdkGeneratorContext): Promise<void> {
         try {
             const snippetCount = context.ir.dynamic?.endpoints ? Object.keys(context.ir.dynamic.endpoints).length : 0;
-            context.logger.debug(`Generating README.md with ${snippetCount} endpoint example(s)...`);
+            const hasWebSocket = this.hasWebSocketChannels(context);
+            context.logger.debug(`Generating README.md with ${snippetCount} endpoint example(s), websocket=${hasWebSocket}...`);
 
-            // If there are no endpoints, generate a simplified README
-            if (!snippetCount) {
-                context.logger.debug(`Generated simplified README.md for SDK with no endpoints`);
+            // If there are no endpoints and no WebSocket channels, skip README generation
+            if (!snippetCount && !hasWebSocket) {
+                context.logger.debug(`Generated simplified README.md for SDK with no endpoints and no WebSocket channels`);
                 return;
             }
 
-            // Generate endpoint snippets
-            const endpointSnippets = this.generateSnippets(context);
+            // Generate endpoint snippets (may be empty for WebSocket-only SDKs)
+            let endpointSnippets: FernGeneratorExec.Endpoint[] = [];
+            if (snippetCount) {
+                endpointSnippets = this.generateSnippets(context);
+            }
 
-            // If there are no endpoint snippets (i.e., no examples defined), skip README generation
-            if (endpointSnippets.length === 0) {
-                context.logger.debug(`Skipping README.md generation - no endpoint examples defined`);
+            // If there are no endpoint snippets and no WebSocket channels, skip README generation
+            if (endpointSnippets.length === 0 && !hasWebSocket) {
+                context.logger.debug(`Skipping README.md generation - no endpoint examples defined and no WebSocket channels`);
                 return;
             }
 
@@ -703,9 +831,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
             context.logger.debug("Successfully added README.md to project");
         } catch (error) {
-            const errorMsg = extractErrorMessage(error);
-            context.logger.debug(`README generation failed: ${errorMsg}`);
-            throw new Error(`Failed to generate README.md: ${errorMsg}`);
+            throw new Error(`Failed to generate README.md: ${extractErrorMessage(error)}`);
         }
     }
 
@@ -713,7 +839,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const endpointSnippets: FernGeneratorExec.Endpoint[] = [];
         const dynamicIr = context.ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            throw new Error("Cannot generate FernIr.dynamic snippets without FernIr.dynamic IR");
         }
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertIr(dynamicIr),
@@ -770,9 +896,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.project.addSourceFiles(referenceFile);
             context.logger.debug("Successfully added reference.md to project");
         } catch (error) {
-            const errorMsg = extractErrorMessage(error);
-            context.logger.debug(`Reference generation failed: ${errorMsg}`);
-            throw new Error(`Failed to generate reference.md: ${errorMsg}`);
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
     }
 
@@ -816,7 +940,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         let firstEndpointId: string | undefined;
-        let firstExample: dynamic.EndpointSnippetRequest | undefined;
+        let firstExample: FernIr.dynamic.EndpointSnippetRequest | undefined;
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             if (endpoint.examples && endpoint.examples.length > 0) {
@@ -859,25 +983,31 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
     }
 
+    private generateWebSocketFiles(context: SdkGeneratorContext): RustFile[] {
+        const generator = new WebSocketChannelGenerator(context);
+        return generator.generateAll();
+    }
+
+    private hasWebSocketChannels(context: SdkGeneratorContext): boolean {
+        return context.hasWebSocketChannels();
+    }
+
     private hasTypes(context: SdkGeneratorContext): boolean {
         // Check for regular IR types
         if (Object.keys(context.ir.types).length > 0) {
             return true;
         }
 
-        // Check for inline request bodies
+        // Check for endpoints that generate request types
         for (const service of Object.values(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     return true;
                 }
-            }
-        }
-
-        // Check for query-only endpoints that generate request types
-        for (const service of Object.values(context.ir.services)) {
-            for (const endpoint of service.endpoints) {
                 if (endpoint.queryParameters?.length > 0 && !endpoint.requestBody) {
+                    return true;
+                }
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
                     return true;
                 }
             }
@@ -896,6 +1026,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private getResourceExports(context: SdkGeneratorContext): string[] {
         const exports: string[] = [];
+        const seen = new Set<string>();
 
         // Only export top-level subpackages from the root package
         const topLevelSubpackageIds = context.ir.rootPackage.subpackages;
@@ -903,9 +1034,19 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         topLevelSubpackageIds.forEach((subpackageId) => {
             const subpackage = context.ir.subpackages[subpackageId];
             if (subpackage) {
+                // Skip WebSocket-only subpackages — they don't generate HTTP client stubs
+                // in resources/, so there's nothing to re-export.
+                if (context.isWebSocketOnlySubpackage(subpackage)) {
+                    return;
+                }
                 // Use registered client name from context
+                // Deduplicate - multiple subpackages can resolve to the same client name
+                // (e.g., HTTP and AsyncAPI sources both creating a "market_data" subpackage)
                 const subClientName = context.getUniqueClientNameForSubpackage(subpackage);
-                exports.push(subClientName);
+                if (!seen.has(subClientName)) {
+                    seen.add(subClientName);
+                    exports.push(subClientName);
+                }
             }
         });
 

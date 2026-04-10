@@ -11,11 +11,11 @@ import (
 )
 
 var (
-	getEventMetadataRequestFieldId = big.NewInt(1 << 0)
+	getEventMetadataRequestFieldID = big.NewInt(1 << 0)
 )
 
 type GetEventMetadataRequest struct {
-	Id fern.Id `json:"-" url:"id"`
+	ID fern.ID `json:"-" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -28,21 +28,21 @@ func (g *GetEventMetadataRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetEventMetadataRequest) SetId(id fern.Id) {
-	g.Id = id
-	g.require(getEventMetadataRequestFieldId)
+func (g *GetEventMetadataRequest) SetID(id fern.ID) {
+	g.ID = id
+	g.require(getEventMetadataRequestFieldID)
 }
 
 var (
-	metadataFieldId    = big.NewInt(1 << 0)
+	metadataFieldID    = big.NewInt(1 << 0)
 	metadataFieldValue = big.NewInt(1 << 1)
 )
 
 type Metadata struct {
-	Id    fern.Id     `json:"id" url:"id"`
-	Value interface{} `json:"value" url:"value"`
+	ID    fern.ID `json:"id" url:"id"`
+	Value any     `json:"value" url:"value"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -51,14 +51,14 @@ type Metadata struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *Metadata) GetId() fern.Id {
+func (m *Metadata) GetID() fern.ID {
 	if m == nil {
 		return ""
 	}
-	return m.Id
+	return m.ID
 }
 
-func (m *Metadata) GetValue() interface{} {
+func (m *Metadata) GetValue() any {
 	if m == nil {
 		return nil
 	}
@@ -66,6 +66,9 @@ func (m *Metadata) GetValue() interface{} {
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -76,16 +79,16 @@ func (m *Metadata) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Metadata) SetId(id fern.Id) {
-	m.Id = id
-	m.require(metadataFieldId)
+func (m *Metadata) SetID(id fern.ID) {
+	m.ID = id
+	m.require(metadataFieldID)
 }
 
 // SetValue sets the Value field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Metadata) SetValue(value interface{}) {
+func (m *Metadata) SetValue(value any) {
 	m.Value = value
 	m.require(metadataFieldValue)
 }
@@ -118,6 +121,9 @@ func (m *Metadata) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Metadata) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value

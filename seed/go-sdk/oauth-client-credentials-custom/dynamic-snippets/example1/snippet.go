@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/oauth-client-credentials-custom/fern"
     client "github.com/oauth-client-credentials-custom/fern/client"
     option "github.com/oauth-client-credentials-custom/fern/option"
-    fern "github.com/oauth-client-credentials-custom/fern"
-    context "context"
 )
 
 func do() {
@@ -18,7 +19,7 @@ func do() {
         ),
     )
     request := &fern.RefreshTokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
         RefreshToken: "refresh_token",
         Scope: fern.String(

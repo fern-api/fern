@@ -4,4 +4,4 @@ imports:
 types:
   Constants:
     properties:
-      errorInstanceIdKey: commons.NameAndWireValue
+      errorInstanceIdKey: commons.NameAndWireValueOrString

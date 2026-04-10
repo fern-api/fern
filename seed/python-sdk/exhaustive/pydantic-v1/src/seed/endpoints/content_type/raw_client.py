@@ -8,7 +8,9 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -29,7 +31,7 @@ class RawContentTypeClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -56,7 +58,7 @@ class RawContentTypeClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -85,7 +87,7 @@ class RawContentTypeClient:
                 "datetime": datetime,
                 "date": date,
                 "uuid": uuid_,
-                "base64": base_64,
+                "base64": base64,
                 "list": list_,
                 "set": set_,
                 "map": map_,
@@ -103,6 +105,10 @@ class RawContentTypeClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def post_json_patch_content_with_charset_type(
@@ -116,7 +122,7 @@ class RawContentTypeClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -143,7 +149,7 @@ class RawContentTypeClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -172,7 +178,7 @@ class RawContentTypeClient:
                 "datetime": datetime,
                 "date": date,
                 "uuid": uuid_,
-                "base64": base_64,
+                "base64": base64,
                 "list": list_,
                 "set": set_,
                 "map": map_,
@@ -190,6 +196,10 @@ class RawContentTypeClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -208,7 +218,7 @@ class AsyncRawContentTypeClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -235,7 +245,7 @@ class AsyncRawContentTypeClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -264,7 +274,7 @@ class AsyncRawContentTypeClient:
                 "datetime": datetime,
                 "date": date,
                 "uuid": uuid_,
-                "base64": base_64,
+                "base64": base64,
                 "list": list_,
                 "set": set_,
                 "map": map_,
@@ -282,6 +292,10 @@ class AsyncRawContentTypeClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def post_json_patch_content_with_charset_type(
@@ -295,7 +309,7 @@ class AsyncRawContentTypeClient:
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
         uuid_: typing.Optional[uuid.UUID] = OMIT,
-        base_64: typing.Optional[str] = OMIT,
+        base64: typing.Optional[str] = OMIT,
         list_: typing.Optional[typing.Sequence[str]] = OMIT,
         set_: typing.Optional[typing.Set[str]] = OMIT,
         map_: typing.Optional[typing.Dict[int, str]] = OMIT,
@@ -322,7 +336,7 @@ class AsyncRawContentTypeClient:
 
         uuid_ : typing.Optional[uuid.UUID]
 
-        base_64 : typing.Optional[str]
+        base64 : typing.Optional[str]
 
         list_ : typing.Optional[typing.Sequence[str]]
 
@@ -351,7 +365,7 @@ class AsyncRawContentTypeClient:
                 "datetime": datetime,
                 "date": date,
                 "uuid": uuid_,
-                "base64": base_64,
+                "base64": base64,
                 "list": list_,
                 "set": set_,
                 "map": map_,
@@ -369,4 +383,8 @@ class AsyncRawContentTypeClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

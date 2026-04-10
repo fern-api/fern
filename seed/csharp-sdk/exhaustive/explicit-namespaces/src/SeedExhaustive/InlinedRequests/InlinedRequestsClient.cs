@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.GeneralErrors;
@@ -8,7 +8,7 @@ namespace SeedExhaustive.InlinedRequests;
 
 public partial class InlinedRequestsClient : IInlinedRequestsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal InlinedRequestsClient(RawClient client)
     {
@@ -33,7 +33,6 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/req-bodies/object",
                     Body = request,
@@ -45,7 +44,9 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
@@ -71,7 +72,9 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 switch (response.StatusCode)

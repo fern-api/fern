@@ -1,6 +1,8 @@
 export * as container from "./container/index.js";
 export * as httpMethods from "./httpMethods/index.js";
 export * as object from "./object/index.js";
+export * as pagination from "./pagination/index.js";
+export * from "./pagination/types/index.js";
 export * as params from "./params/index.js";
 export * as primitive from "./primitive/index.js";
 export * as put from "./put/index.js";

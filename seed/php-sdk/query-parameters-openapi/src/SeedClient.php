@@ -2,7 +2,7 @@
 
 namespace Seed;
 
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Requests\SearchRequest;
 use Seed\Types\SearchResponse;
@@ -15,7 +15,6 @@ use Seed\Types\NestedUser;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
-use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
 class SeedClient
@@ -77,11 +76,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return SearchResponse
+     * @return ?SearchResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function search(SearchRequest $request, ?array $options = null): SearchResponse
+    public function search(SearchRequest $request, ?array $options = null): ?SearchResponse
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -116,6 +115,12 @@ class SeedClient
         if ($request->filter != null) {
             $query['filter'] = $request->filter;
         }
+        if ($request->tags != null) {
+            $query['tags'] = $request->tags;
+        }
+        if ($request->optionalTags != null) {
+            $query['optionalTags'] = $request->optionalTags;
+        }
         if ($request->neighbor != null) {
             $query['neighbor'] = JsonSerializer::serializeUnion($request->neighbor, new Union(User::class, NestedUser::class, 'string', 'integer'));
         }
@@ -132,20 +137,13 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return SearchResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

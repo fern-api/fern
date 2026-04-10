@@ -1,4 +1,4 @@
-import { ModelGeneratorCli } from "./ModelGeneratorCli";
+import { ModelGeneratorCli } from "./ModelGeneratorCli.js";
 
 void runCli();
 

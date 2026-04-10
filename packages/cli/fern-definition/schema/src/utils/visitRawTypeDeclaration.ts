@@ -6,7 +6,7 @@ import {
     ObjectSchema,
     TypeDeclarationSchema,
     UndiscriminatedUnionSchema
-} from "../schemas";
+} from "../schemas/index.js";
 
 export interface RawTypeDeclarationVisitor<R> {
     alias: (schema: string | AliasSchema) => R;

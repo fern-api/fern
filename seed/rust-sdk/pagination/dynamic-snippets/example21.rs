@@ -11,10 +11,11 @@ async fn main() {
     client
         .users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest2 {
+            &UsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
+                ..Default::default()
             },
             None,
         )

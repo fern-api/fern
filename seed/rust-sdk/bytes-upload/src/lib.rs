@@ -13,10 +13,7 @@
 //!         ..Default::default()
 //!     };
 //!     let client = BytesUploadClient::new(config).expect("Failed to build client");
-//!     client
-//!         .service
-//!         .upload(&todo!("Invalid bytes value"), None)
-//!         .await;
+//!     client.service.upload(&vec![], None).await;
 //! }
 //! ```
 //!
@@ -30,14 +27,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
-pub use error::{ApiError};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
+pub use error::{ApiError, BuildError};

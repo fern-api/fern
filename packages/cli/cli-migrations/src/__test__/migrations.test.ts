@@ -2,9 +2,9 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { readdir } from "fs/promises";
 
-import { ALL_MIGRATIONS } from "../migrations";
-import { Migration } from "../types/Migration";
-import { VersionMigrations } from "../types/VersionMigrations";
+import { ALL_MIGRATIONS } from "../migrations/index.js";
+import { Migration } from "../types/Migration.js";
+import { VersionMigrations } from "../types/VersionMigrations.js";
 
 const MIGRATIONS_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../migrations"));
 

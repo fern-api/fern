@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { BaseAuthScheme } from "./BaseAuthScheme.js";
 import { EnvironmentVariable } from "./EnvironmentVariable.js";
 
@@ -12,14 +12,14 @@ export const BearerAuthScheme: core.serialization.ObjectSchema<
     FernIr.BearerAuthScheme
 > = core.serialization
     .objectWithoutOptionalProperties({
-        token: Name,
+        token: NameOrString,
         tokenEnvVar: EnvironmentVariable.optional(),
     })
     .extend(BaseAuthScheme);
 
 export declare namespace BearerAuthScheme {
     export interface Raw extends BaseAuthScheme.Raw {
-        token: Name.Raw;
+        token: NameOrString.Raw;
         tokenEnvVar?: EnvironmentVariable.Raw | null;
     }
 }

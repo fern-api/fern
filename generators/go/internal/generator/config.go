@@ -28,6 +28,8 @@ type Config struct {
 	UseReaderForBytesRequest     bool
 	GettersPassByValue           bool
 	ExportAllRequestsAtRoot      bool
+	OmitEmptyRequestWrappers     bool
+	OmitFernHeaders              bool
 	Organization                 string
 	Version                      string
 	IRFilepath                   string
@@ -74,6 +76,8 @@ func NewConfig(
 	useReaderForBytesRequest bool,
 	gettersPassByValue bool,
 	exportAllRequestsAtRoot bool,
+	omitEmptyRequestWrappers bool,
+	omitFernHeaders bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -105,6 +109,8 @@ func NewConfig(
 		UseReaderForBytesRequest:     useReaderForBytesRequest,
 		GettersPassByValue:           gettersPassByValue,
 		ExportAllRequestsAtRoot:      exportAllRequestsAtRoot,
+		OmitEmptyRequestWrappers:     omitEmptyRequestWrappers,
+		OmitFernHeaders:              omitFernHeaders,
 		Version:                      version,
 		IRFilepath:                   irFilepath,
 		SnippetFilepath:              snippetFilepath,

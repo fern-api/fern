@@ -1,11 +1,10 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { HttpEndpoint, HttpService, TypeReference } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
 
 export class ReferenceConfigAssembler {
     private context: SdkGeneratorContext;
@@ -45,14 +44,14 @@ export class ReferenceConfigAssembler {
         return builder;
     }
 
-    private getReferenceSectionTitle(service: HttpService): string {
+    private getReferenceSectionTitle(service: FernIr.HttpService): string {
         return (
-            service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ")
+            service.displayName ?? service.name.fernFilepath.allParts.map((part) => this.context.case.pascalSafe(part)).join(" ")
         );
     }
 
     private getEndpointReferencesForService(
-        service: HttpService,
+        service: FernIr.HttpService,
         serviceId: string
     ): FernGeneratorCli.EndpointReference[] {
         return service.endpoints
@@ -81,8 +80,8 @@ export class ReferenceConfigAssembler {
         serviceId,
         endpointSnippet
     }: {
-        endpoint: HttpEndpoint;
-        service: HttpService;
+        endpoint: FernIr.HttpEndpoint;
+        service: FernIr.HttpService;
         serviceId: string;
         endpointSnippet: string;
     }): FernGeneratorCli.EndpointReference {
@@ -114,8 +113,8 @@ export class ReferenceConfigAssembler {
     }
 
     private buildMethodSignature(
-        endpoint: HttpEndpoint,
-        service: HttpService,
+        endpoint: FernIr.HttpEndpoint,
+        service: FernIr.HttpService,
         serviceId: string
     ): {
         clientPath: string;
@@ -128,7 +127,7 @@ export class ReferenceConfigAssembler {
         const clientPath = servicePath ? `client.${servicePath}.` : "client.";
 
         // Method name in snake_case
-        const methodName = endpoint.name.snakeCase.safeName;
+        const methodName = this.context.case.snakeSafe(endpoint.name);
 
         // Build parameters - simplified for reference docs
         const parameters = this.buildParameterSignature(endpoint);
@@ -144,29 +143,29 @@ export class ReferenceConfigAssembler {
         };
     }
 
-    private getServicePath(service: HttpService, serviceId: string): string | undefined {
+    private getServicePath(service: FernIr.HttpService, serviceId: string): string | undefined {
         // If this is the root service, no path needed
         if (this.context.ir.rootPackage.service === serviceId) {
             return undefined;
         }
 
         // For subpackage services, use snake_case path
-        return service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("().");
+        return service.name.fernFilepath.allParts.map((part) => this.context.case.snakeSafe(part)).join("().");
     }
 
-    private buildParameterSignature(endpoint: HttpEndpoint): string {
+    private buildParameterSignature(endpoint: FernIr.HttpEndpoint): string {
         const params: string[] = [];
 
         // Add path parameters
         endpoint.allPathParameters.forEach((pathParam) => {
             const rustType = this.getRustTypeForTypeReference(pathParam.valueType);
-            params.push(`${pathParam.name.snakeCase.safeName}: ${rustType}`);
+            params.push(`${this.context.case.snakeSafe(pathParam.name)}: ${rustType}`);
         });
 
         // Add request body parameter
         if (endpoint.requestBody) {
             if (endpoint.requestBody.type === "inlinedRequestBody") {
-                params.push(`request: ${endpoint.requestBody.name.pascalCase.safeName}`);
+                params.push(`request: ${this.context.case.pascalSafe(endpoint.requestBody.name)}`);
             } else if (endpoint.requestBody.type === "reference") {
                 const typeName = this.getRustTypeForTypeReference(endpoint.requestBody.requestBodyType);
                 params.push(`request: ${typeName}`);
@@ -179,13 +178,13 @@ export class ReferenceConfigAssembler {
             .forEach((qp) => {
                 const rustType = this.getRustTypeForTypeReference(qp.valueType);
                 const optional = qp.allowMultiple ? rustType : `Option<${rustType}>`;
-                params.push(`${qp.name.name.snakeCase.safeName}: ${optional}`);
+                params.push(`${this.context.case.snakeSafe(qp.name)}: ${optional}`);
             });
 
         return `(${params.join(", ")})`;
     }
 
-    private buildReturnTypeSignature(endpoint: HttpEndpoint): string {
+    private buildReturnTypeSignature(endpoint: FernIr.HttpEndpoint): string {
         if (endpoint.response?.body) {
             return endpoint.response.body._visit<string>({
                 json: (jsonResponse) => {
@@ -203,13 +202,13 @@ export class ReferenceConfigAssembler {
         return "Result<(), ApiError>";
     }
 
-    private buildParameterDocs(endpoint: HttpEndpoint): FernGeneratorCli.EndpointReference["parameters"] {
+    private buildParameterDocs(endpoint: FernIr.HttpEndpoint): FernGeneratorCli.EndpointReference["parameters"] {
         const params: FernGeneratorCli.EndpointReference["parameters"] = [];
 
         // Path parameters
         endpoint.allPathParameters.forEach((pathParam) => {
             params.push({
-                name: pathParam.name.snakeCase.safeName,
+                name: this.context.case.snakeSafe(pathParam.name),
                 type: this.getRustTypeForTypeReference(pathParam.valueType),
                 required: true,
                 description: pathParam.docs
@@ -220,7 +219,7 @@ export class ReferenceConfigAssembler {
         if (endpoint.requestBody?.type === "inlinedRequestBody") {
             endpoint.requestBody.properties.forEach((prop) => {
                 params.push({
-                    name: prop.name.name.snakeCase.safeName,
+                    name: this.context.case.snakeSafe(prop.name),
                     type: this.getRustTypeForTypeReference(prop.valueType),
                     required: !this.isOptionalType(prop.valueType),
                     description: prop.docs
@@ -231,7 +230,7 @@ export class ReferenceConfigAssembler {
         // Query parameters
         endpoint.queryParameters.forEach((qp) => {
             params.push({
-                name: qp.name.name.snakeCase.safeName,
+                name: this.context.case.snakeSafe(qp.name),
                 type: this.getRustTypeForTypeReference(qp.valueType),
                 required: !qp.allowMultiple,
                 description: qp.docs
@@ -241,7 +240,7 @@ export class ReferenceConfigAssembler {
         return params;
     }
 
-    private getEndpointFilepath(endpoint: HttpEndpoint, service: HttpService, serviceId: string): string {
+    private getEndpointFilepath(endpoint: FernIr.HttpEndpoint, service: FernIr.HttpService, serviceId: string): string {
         // Determine the file location based on service structure
         if (this.context.ir.rootPackage.service === serviceId) {
             // Root service endpoint
@@ -253,7 +252,7 @@ export class ReferenceConfigAssembler {
         }
     }
 
-    private getRustTypeForTypeReference(typeRef: TypeReference): string {
+    private getRustTypeForTypeReference(typeRef: FernIr.TypeReference): string {
         return typeRef._visit<string>({
             primitive: (primitive) => {
                 switch (primitive.v1) {
@@ -276,7 +275,7 @@ export class ReferenceConfigAssembler {
                 }
             },
             named: (named) => {
-                return named.name.pascalCase.safeName;
+                return this.context.case.pascalSafe(named.name);
             },
             container: (container) => {
                 return container._visit<string>({
@@ -316,7 +315,7 @@ export class ReferenceConfigAssembler {
         });
     }
 
-    private isOptionalType(typeRef: TypeReference): boolean {
+    private isOptionalType(typeRef: FernIr.TypeReference): boolean {
         return typeRef._visit<boolean>({
             primitive: () => false,
             named: () => false,

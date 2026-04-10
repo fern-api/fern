@@ -1,10 +1,5 @@
-import {
-    NameAndWireValue,
-    SingleUnionType,
-    SingleUnionTypeProperties,
-    SingleUnionTypeProperty,
-    UnionTypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { BaseContext } from "@fern-typescript/contexts";
 import {
     AbstractKnownSingleUnionType,
@@ -13,26 +8,28 @@ import {
     SingleUnionTypeGenerator
 } from "@fern-typescript/union-generator";
 
-import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator";
+import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator.js";
 
 export declare namespace ParsedSingleUnionTypeForUnion {
     export interface Init {
-        singleUnionType: SingleUnionType;
-        union: UnionTypeDeclaration;
+        singleUnionType: FernIr.SingleUnionType;
+        union: FernIr.UnionTypeDeclaration;
         includeUtilsOnUnionMembers: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
     }
 }
 
 export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends AbstractKnownSingleUnionType<Context> {
-    private singleUnionTypeFromUnion: SingleUnionType;
+    private singleUnionTypeFromUnion: FernIr.SingleUnionType;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
-    protected union: UnionTypeDeclaration;
+    private case: CaseConverter;
+    protected union: FernIr.UnionTypeDeclaration;
 
     constructor({
         singleUnionType,
@@ -42,10 +39,11 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         retainOriginalCasing,
         noOptionalProperties,
         enableInlineTypes,
-        generateReadWriteOnlyTypes
+        generateReadWriteOnlyTypes,
+        caseConverter
     }: ParsedSingleUnionTypeForUnion.Init) {
         super({
-            singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
+            singleUnionType: FernIr.SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
                 singleUnionType.shape,
                 {
                     noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
@@ -56,7 +54,8 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
                             getTypeName: () => this.getTypeName(),
                             propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
                                 includeSerdeLayer,
-                                retainOriginalCasing
+                                retainOriginalCasing,
+                                caseConverter
                             }),
                             getReferenceToPropertyType: (context) =>
                                 context.type.getReferenceToType(singleProperty.type),
@@ -78,6 +77,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         this.singleUnionTypeFromUnion = singleUnionType;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.case = caseConverter;
     }
 
     public getDocs(): string | null | undefined {
@@ -85,7 +85,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     }
 
     public getTypeName(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.safeName;
+        return sanitizeIdentifier(this.case.pascalUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
     }
 
     public needsRequestResponse(context: Context): { request: boolean; response: boolean } {
@@ -93,37 +93,50 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     }
 
     public getDiscriminantValue(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
+        return getWireValue(this.singleUnionTypeFromUnion.discriminantValue);
     }
 
     public getBuilderName(): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
+            return sanitizeIdentifier(this.case.camelUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
         } else {
-            return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
+            return sanitizeIdentifier(getWireValue(this.singleUnionTypeFromUnion.discriminantValue));
         }
     }
 
     public getVisitorKey(): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
+            return sanitizeIdentifier(this.case.camelUnsafe(this.singleUnionTypeFromUnion.discriminantValue));
         } else {
-            return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
+            return sanitizeIdentifier(getWireValue(this.singleUnionTypeFromUnion.discriminantValue));
         }
     }
 
-    protected getDiscriminant(): NameAndWireValue {
+    protected getDiscriminant(): FernIr.NameAndWireValueOrString {
         return this.union.discriminant;
     }
 
     public static getSinglePropertyKey(
-        singleProperty: SingleUnionTypeProperty,
-        { includeSerdeLayer, retainOriginalCasing }: { includeSerdeLayer: boolean; retainOriginalCasing: boolean }
+        singleProperty: FernIr.SingleUnionTypeProperty,
+        {
+            includeSerdeLayer,
+            retainOriginalCasing,
+            caseConverter
+        }: { includeSerdeLayer: boolean; retainOriginalCasing: boolean; caseConverter: CaseConverter }
     ): string {
         if (includeSerdeLayer && !retainOriginalCasing) {
-            return singleProperty.name.name.camelCase.unsafeName;
+            return caseConverter.camelUnsafe(singleProperty.name);
         } else {
-            return singleProperty.name.wireValue;
+            return getWireValue(singleProperty.name);
         }
     }
+}
+
+const STARTS_WITH_DIGIT = /^\d/;
+
+function sanitizeIdentifier(name: string): string {
+    if (STARTS_WITH_DIGIT.test(name)) {
+        return `_${name}`;
+    }
+    return name;
 }

@@ -31,6 +31,9 @@ func (c *Circle) GetRadius() float64 {
 }
 
 func (c *Circle) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (c *Circle) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Circle) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -88,11 +94,11 @@ func (c *Circle) String() string {
 }
 
 var (
-	getShapeRequestFieldId = big.NewInt(1 << 0)
+	getShapeRequestFieldID = big.NewInt(1 << 0)
 )
 
 type GetShapeRequest struct {
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -101,14 +107,17 @@ type GetShapeRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetShapeRequest) GetId() string {
+func (g *GetShapeRequest) GetID() string {
 	if g == nil {
 		return ""
 	}
-	return g.Id
+	return g.ID
 }
 
 func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -119,11 +128,11 @@ func (g *GetShapeRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetShapeRequest) SetId(id string) {
-	g.Id = id
-	g.require(getShapeRequestFieldId)
+func (g *GetShapeRequest) SetID(id string) {
+	g.ID = id
+	g.require(getShapeRequestFieldID)
 }
 
 func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
@@ -154,6 +163,9 @@ func (g *GetShapeRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetShapeRequest) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -168,7 +180,7 @@ func (g *GetShapeRequest) String() string {
 type Shape struct {
 	Type   string
 	Name   string
-	Id     string
+	ID     string
 	Circle *Circle
 	Square *Square
 }
@@ -187,11 +199,11 @@ func (s *Shape) GetName() string {
 	return s.Name
 }
 
-func (s *Shape) GetId() string {
+func (s *Shape) GetID() string {
 	if s == nil {
 		return ""
 	}
-	return s.Id
+	return s.ID
 }
 
 func (s *Shape) GetCircle() *Circle {
@@ -212,14 +224,14 @@ func (s *Shape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 		Name string `json:"name" url:"name"`
-		Id   string `json:"id"`
+		ID   string `json:"id"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
 	s.Type = unmarshaler.Type
 	s.Name = unmarshaler.Name
-	s.Id = unmarshaler.Id
+	s.ID = unmarshaler.ID
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", s)
 	}
@@ -324,6 +336,9 @@ func (s *Square) GetLength() float64 {
 }
 
 func (s *Square) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -369,6 +384,9 @@ func (s *Square) MarshalJSON() ([]byte, error) {
 }
 
 func (s *Square) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -402,6 +420,9 @@ func (w *WithName) GetName() string {
 }
 
 func (w *WithName) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
 	return w.extraProperties
 }
 
@@ -447,6 +468,9 @@ func (w *WithName) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WithName) String() string {
+	if w == nil {
+		return "<nil>"
+	}
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
 			return value

@@ -1,25 +1,52 @@
-import { AbstractFormatter, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import {
+    AbstractFormatter,
+    CaseConverter,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/base-generator";
 import { AsIsFiles, GeneratorContext } from "@fern-api/csharp-base";
 import { CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { CsharpFormatter } from "@fern-api/csharp-formatter";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { FernFilepath, IntermediateRepresentation, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type FernFilepath = FernIr.FernFilepath;
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+type TypeId = FernIr.TypeId;
+type WellKnownProtobufType = FernIr.WellKnownProtobufType;
+const WellKnownProtobufType = FernIr.WellKnownProtobufType;
 
 export class ModelGeneratorContext extends GeneratorContext {
-    public readonly formatter: AbstractFormatter;
+    /**
+     * Lazily initializes the CsharpFormatter on first access.
+     * The formatter resolves the csharpier tool path and is only needed
+     * during code formatting, not during context construction.
+     */
+    public get formatter(): AbstractFormatter {
+        if (this._formatter === undefined) {
+            this._formatter = new CsharpFormatter();
+        }
+        return this._formatter;
+    }
+
     public constructor(
         ir: IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
         customConfig: CsharpConfigSchema,
         generatorNotificationService: GeneratorNotificationService
     ) {
+        const caseConverter = new CaseConverter({
+            generationLanguage: "csharp",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         super(
             ir,
             config,
             customConfig,
             generatorNotificationService,
-            new Generation(ir, ir.apiName.pascalCase.unsafeName, customConfig, config, {
+            new Generation(ir, caseConverter.pascalUnsafe(ir.apiName), customConfig, config, {
                 makeRelativeFilePath: (path: string) => RelativeFilePath.of(path),
                 makeAbsoluteFilePath: (path: string) => AbsoluteFilePath.of(path),
                 getNamespaceForTypeId: (typeId: TypeId) => this.getNamespaceForTypeId(typeId),
@@ -31,7 +58,6 @@ export class ModelGeneratorContext extends GeneratorContext {
                 getChildNamespaceSegments: (fernFilepath: FernFilepath) => this.getChildNamespaceSegments(fernFilepath)
             })
         );
-        this.formatter = new CsharpFormatter();
     }
 
     override getAsyncCoreAsIsFiles(): string[] {
@@ -48,7 +74,7 @@ export class ModelGeneratorContext extends GeneratorContext {
     public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return RelativeFilePath.of(
-            [...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
+            [...typeDeclaration.name.fernFilepath.allParts.map((path) => this.case.pascalSafe(path))].join("/")
         );
     }
 
@@ -56,7 +82,7 @@ export class ModelGeneratorContext extends GeneratorContext {
         const typeDeclaration = this.model.dereferenceType(typeId).typeDeclaration;
         return [
             this.namespaces.root,
-            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)
+            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => this.case.pascalSafe(path))
         ].join(".");
     }
 
@@ -66,24 +92,25 @@ export class ModelGeneratorContext extends GeneratorContext {
         // JSON stuff
         files.push(
             ...[
-                AsIsFiles.Json.CollectionItemSerializer,
                 AsIsFiles.Json.DateOnlyConverter,
                 AsIsFiles.Json.DateTimeSerializer,
                 AsIsFiles.Json.JsonAccessAttribute,
                 AsIsFiles.Json.JsonConfiguration,
                 AsIsFiles.Json.Nullable,
-                AsIsFiles.Json.OneOfSerializer,
                 AsIsFiles.Json.Optional,
                 AsIsFiles.Json.OptionalAttribute
             ]
         );
 
+        // When use-undiscriminated-unions is false, include OneOf serialization support
+        if (!this.settings.shouldGenerateUndiscriminatedUnions) {
+            files.push(AsIsFiles.Json.CollectionItemSerializer);
+            files.push(AsIsFiles.Json.OneOfSerializer);
+        }
+
         if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Json.StringEnumSerializer);
             files.push(AsIsFiles.StringEnum);
             files.push(AsIsFiles.StringEnumExtensions);
-        } else {
-            files.push(AsIsFiles.Json.EnumSerializer);
         }
 
         const resolvedProtoAnyType = this.protobufResolver.resolveWellKnownProtobufType(WellKnownProtobufType.any());
@@ -98,13 +125,12 @@ export class ModelGeneratorContext extends GeneratorContext {
             AsIsFiles.Test.Json.AdditionalPropertiesTests,
             AsIsFiles.Test.Json.DateOnlyJsonTests,
             AsIsFiles.Test.Json.DateTimeJsonTests,
-            AsIsFiles.Test.Json.JsonAccessAttributeTests,
-            AsIsFiles.Test.Json.OneOfSerializerTests
+            AsIsFiles.Test.Json.JsonAccessAttributeTests
         ];
-        if (this.settings.isForwardCompatibleEnumsEnabled) {
-            files.push(AsIsFiles.Test.Json.StringEnumSerializerTests);
-        } else {
-            files.push(AsIsFiles.Test.Json.EnumSerializerTests);
+
+        // Only include OneOfSerializerTests when OneOf serialization is in use
+        if (!this.settings.shouldGenerateUndiscriminatedUnions) {
+            files.push(AsIsFiles.Test.Json.OneOfSerializerTests);
         }
 
         return files;
@@ -115,7 +141,7 @@ export class ModelGeneratorContext extends GeneratorContext {
     }
 
     public override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
-        return fernFilepath.packagePath.map((segmentName) => segmentName.pascalCase.safeName);
+        return fernFilepath.packagePath.map((segmentName) => this.case.pascalSafe(segmentName));
     }
 
     public override shouldCreateCustomPagination(): boolean {

@@ -7,12 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
-        .init(
-            name: "name",
-            likesToWoof: true
-        )
-    ))
+    _ = try await client.endpoints.params.uploadWithPath(
+        param: "upload-path",
+        request: Data("data".utf8)
+    )
 }
 
 try await main()

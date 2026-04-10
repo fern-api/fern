@@ -1,4 +1,4 @@
-import { AuthSchemeDeclarationSchema, OAuthSchemeSchema } from "../../schemas";
+import { AuthSchemeDeclarationSchema, OAuthSchemeSchema } from "../../schemas/index.js";
 
 export function isOAuthScheme(
     rawOAuthSchemeSchema: AuthSchemeDeclarationSchema

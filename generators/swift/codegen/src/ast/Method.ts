@@ -1,12 +1,12 @@
-import { escapeReservedKeyword } from "../syntax";
-import { AccessLevel } from "./AccessLevel";
-import { CodeBlock } from "./CodeBlock";
-import { AstNode, Writer } from "./core";
-import { DocComment } from "./DocComment";
-import { Expression } from "./Expression";
-import { FunctionArgument } from "./FunctionArgument";
-import { FunctionParameter } from "./FunctionParameter";
-import { TypeReference } from "./TypeReference";
+import { escapeReservedKeyword } from "../syntax/index.js";
+import { AccessLevel } from "./AccessLevel.js";
+import { CodeBlock } from "./CodeBlock.js";
+import { AstNode, Writer } from "./core/index.js";
+import { DocComment } from "./DocComment.js";
+import { Expression } from "./Expression.js";
+import { FunctionArgument } from "./FunctionArgument.js";
+import { FunctionParameter } from "./FunctionParameter.js";
+import { TypeReference } from "./TypeReference.js";
 
 export declare namespace Method {
     interface Attribute {

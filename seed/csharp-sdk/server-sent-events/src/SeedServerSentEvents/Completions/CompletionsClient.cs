@@ -1,11 +1,12 @@
-using System.Net.ServerSentEvents;
+using global::System.Net.ServerSentEvents;
+using global::System.Text.Json;
 using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
 
 public partial class CompletionsClient : ICompletionsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal CompletionsClient(RawClient client)
     {
@@ -13,7 +14,7 @@ public partial class CompletionsClient : ICompletionsClient
     }
 
     /// <example><code>
-    /// client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
+    /// client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
     /// </code></example>
     public async IAsyncEnumerable<StreamedCompletion> StreamAsync(
         StreamCompletionRequest request,
@@ -31,7 +32,6 @@ public partial class CompletionsClient : ICompletionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "stream",
                     Body = request,
@@ -60,7 +60,7 @@ public partial class CompletionsClient : ICompletionsClient
                     {
                         result = JsonUtils.Deserialize<StreamedCompletion>(item.Data);
                     }
-                    catch (System.Text.Json.JsonException)
+                    catch (JsonException)
                     {
                         throw new SeedServerSentEventsException(
                             $"Unable to deserialize JSON response 'item.Data'"
@@ -71,7 +71,76 @@ public partial class CompletionsClient : ICompletionsClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            throw new SeedServerSentEventsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <example><code>
+    /// client.Completions.StreamWithoutTerminatorAsync(
+    ///     new StreamCompletionRequestWithoutTerminator { Query = "query" }
+    /// );
+    /// </code></example>
+    public async IAsyncEnumerable<StreamedCompletion> StreamWithoutTerminatorAsync(
+        StreamCompletionRequestWithoutTerminator request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedServerSentEvents.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "stream-no-terminator",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            await foreach (
+                var item in SseParser
+                    .Create(await response.Raw.Content.ReadAsStreamAsync())
+                    .EnumerateAsync(cancellationToken)
+            )
+            {
+                if (!string.IsNullOrEmpty(item.Data))
+                {
+                    StreamedCompletion? result;
+                    try
+                    {
+                        result = JsonUtils.Deserialize<StreamedCompletion>(item.Data);
+                    }
+                    catch (JsonException)
+                    {
+                        throw new SeedServerSentEventsException(
+                            $"Unable to deserialize JSON response 'item.Data'"
+                        );
+                    }
+                }
+            }
+            yield break;
+        }
+        {
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

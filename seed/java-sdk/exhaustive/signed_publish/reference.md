@@ -277,6 +277,50 @@ client.endpoints().container().getAndReturnMapOfPrimToObject(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion(request) -> Map&amp;lt;String, MixedType&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().container().getAndReturnMapOfPrimToUndiscriminatedUnion(
+    new HashMap<String, MixedType>() {{
+        put("string", MixedType.of(1.1));
+    }}
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Map<String, MixedType>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.getAndReturnOptional(request) -> Optional&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>
@@ -1198,6 +1242,284 @@ client.endpoints().object().getAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.getAndReturnWithUnknownField(request) -> ObjectWithUnknownField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithUnknownField(
+    ObjectWithUnknownField
+        .builder()
+        .unknown(new 
+            HashMap<String, Object>() {{put("$ref", "https://example.com/schema");
+            }})
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithUnknownField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.getAndReturnWithDocumentedUnknownType(request) -> ObjectWithDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithDocumentedUnknownType(
+    ObjectWithDocumentedUnknownType
+        .builder()
+        .documentedUnknownType(
+            DocumentedUnknownType.of(new 
+            HashMap<String, Object>() {{put("key", "value");
+            }})
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.getAndReturnMapOfDocumentedUnknownType(request) -> Map&amp;lt;String, Object&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnMapOfDocumentedUnknownType(
+    new HashMap<String, Object>() {{
+        put("string", DocumentedUnknownType.of(new 
+        HashMap<String, Object>() {{put("key", "value");
+        }}));
+    }}
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Map<String, Object>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(request) -> ObjectWithMixedRequiredAndOptionalFields</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets include all required properties in the
+object initializer, even when the example omits some required fields.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithMixedRequiredAndOptionalFields(
+    ObjectWithMixedRequiredAndOptionalFields
+        .builder()
+        .requiredString("hello")
+        .requiredInteger(0)
+        .requiredLong(0L)
+        .optionalString("world")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithMixedRequiredAndOptionalFields` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.getAndReturnWithRequiredNestedObject(request) -> ObjectWithRequiredNestedObject</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets recursively construct default objects for
+required properties whose type is a named object. When the example
+omits the nested object, the generator should construct a default
+initializer with the nested object's required properties filled in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithRequiredNestedObject(
+    ObjectWithRequiredNestedObject
+        .builder()
+        .requiredString("hello")
+        .requiredObject(
+            NestedObjectWithRequiredField
+                .builder()
+                .string("nested")
+                .nestedObject(
+                    ObjectWithOptionalField
+                        .builder()
+                        .build()
+                )
+                .build()
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithRequiredNestedObject` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.object.getAndReturnWithDatetimeLikeString(request) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
@@ -1249,6 +1571,75 @@ client.endpoints().object().getAndReturnWithDatetimeLikeString(
 <dd>
 
 **request:** `ObjectWithDatetimeLikeString` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Pagination
+<details><summary><code>client.endpoints.pagination.listItems() -> SyncPagingIterable&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().pagination().listItems(
+    ListItemsRequest
+        .builder()
+        .cursor("cursor")
+        .limit(1)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `Optional<String>` — The cursor for pagination
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `Optional<Integer>` — Maximum number of items to return
     
 </dd>
 </dl>
@@ -1754,6 +2145,168 @@ client.endpoints().params().modifyWithPath("param", "string");
 <dd>
 
 **request:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.uploadWithPath(param, request) -> ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().params().uploadWithPath("upload-path", "".getBytes());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.getWithBooleanPath(param) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().params().getWithBooleanPath(true);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `Boolean` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.getWithPathAndErrors(param) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param that can throw errors
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().params().getWithPath("param");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
     
 </dd>
 </dl>
@@ -2592,3 +3145,4 @@ client.reqWithHeaders().getWithCustomHeader(
 </dd>
 </dl>
 </details>
+

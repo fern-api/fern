@@ -41,13 +41,7 @@ private func main() async throws {
             name: "name"
         ),
         metadata: MetadataType.html(
-            .init(
-                extra: [
-                    "extra": "extra"
-                ],
-                tags: ,
-                html: 
-            )
+
         ),
         commonMetadata: Metadata(
             id: "id",
@@ -57,7 +51,7 @@ private func main() async throws {
             jsonString: "jsonString"
         ),
         eventInfo: EventInfo.metadata(
-            .init(
+            Metadata(
                 id: "id",
                 data: [
                     "data": "data"
@@ -66,25 +60,21 @@ private func main() async throws {
             )
         ),
         data: Data.string(
-            .init(
-                string: 
-            )
+
         ),
         migration: Migration(
             name: "name",
             status: .running
         ),
         exception: Exception.generic(
-            .init(
+            ExceptionInfo(
                 exceptionType: "exceptionType",
                 exceptionMessage: "exceptionMessage",
                 exceptionStacktrace: "exceptionStacktrace"
             )
         ),
         test: Test.and(
-            .init(
-                and: 
-            )
+
         ),
         node: Node(
             name: "name",
@@ -93,14 +83,10 @@ private func main() async throws {
                     name: "name",
                     nodes: [
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         ),
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         )
                     ],
                     trees: [
@@ -116,14 +102,10 @@ private func main() async throws {
                     name: "name",
                     nodes: [
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         ),
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         )
                     ],
                     trees: [
@@ -194,14 +176,10 @@ private func main() async throws {
                     ],
                     directories: [
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         ),
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         )
                     ]
                 ),
@@ -219,14 +197,10 @@ private func main() async throws {
                     ],
                     directories: [
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         ),
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         )
                     ]
                 )

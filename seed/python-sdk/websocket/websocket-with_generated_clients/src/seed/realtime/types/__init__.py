@@ -6,21 +6,27 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .error_event import ErrorEvent
+    from .flushed_event import FlushedEvent
     from .receive_event import ReceiveEvent
-    from .receive_event_2 import ReceiveEvent2
-    from .receive_event_3 import ReceiveEvent3
+    from .receive_event2 import ReceiveEvent2
+    from .receive_event3 import ReceiveEvent3
     from .receive_snake_case import ReceiveSnakeCase
     from .send_event import SendEvent
-    from .send_event_2 import SendEvent2
+    from .send_event2 import SendEvent2
     from .send_snake_case import SendSnakeCase
+    from .transcript_event import TranscriptEvent
 _dynamic_imports: typing.Dict[str, str] = {
+    "ErrorEvent": ".error_event",
+    "FlushedEvent": ".flushed_event",
     "ReceiveEvent": ".receive_event",
-    "ReceiveEvent2": ".receive_event_2",
-    "ReceiveEvent3": ".receive_event_3",
+    "ReceiveEvent2": ".receive_event2",
+    "ReceiveEvent3": ".receive_event3",
     "ReceiveSnakeCase": ".receive_snake_case",
     "SendEvent": ".send_event",
-    "SendEvent2": ".send_event_2",
+    "SendEvent2": ".send_event2",
     "SendSnakeCase": ".send_snake_case",
+    "TranscriptEvent": ".transcript_event",
 }
 
 
@@ -46,6 +52,8 @@ def __dir__():
 
 
 __all__ = [
+    "ErrorEvent",
+    "FlushedEvent",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
@@ -53,4 +61,5 @@ __all__ = [
     "SendEvent",
     "SendEvent2",
     "SendSnakeCase",
+    "TranscriptEvent",
 ]

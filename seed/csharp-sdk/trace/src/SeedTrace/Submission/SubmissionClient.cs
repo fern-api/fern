@@ -1,11 +1,11 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedTrace.Core;
 
 namespace SeedTrace;
 
 public partial class SubmissionClient : ISubmissionClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SubmissionClient(RawClient client)
     {
@@ -28,7 +28,6 @@ public partial class SubmissionClient : ISubmissionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "/sessions/create-session/{0}",
@@ -42,7 +41,9 @@ public partial class SubmissionClient : ISubmissionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ExecutionSessionResponse>(responseBody)!;
@@ -68,7 +69,9 @@ public partial class SubmissionClient : ISubmissionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -93,7 +96,6 @@ public partial class SubmissionClient : ISubmissionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/sessions/{0}",
@@ -107,7 +109,9 @@ public partial class SubmissionClient : ISubmissionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ExecutionSessionResponse?>(responseBody)!;
@@ -133,7 +137,9 @@ public partial class SubmissionClient : ISubmissionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -159,7 +165,6 @@ public partial class SubmissionClient : ISubmissionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/sessions/execution-sessions-state",
                     Headers = _headers,
@@ -170,7 +175,9 @@ public partial class SubmissionClient : ISubmissionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<GetExecutionSessionStateResponse>(
@@ -198,7 +205,9 @@ public partial class SubmissionClient : ISubmissionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -263,7 +272,6 @@ public partial class SubmissionClient : ISubmissionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
                     Path = string.Format(
                         "/sessions/stop/{0}",
@@ -280,7 +288,9 @@ public partial class SubmissionClient : ISubmissionClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

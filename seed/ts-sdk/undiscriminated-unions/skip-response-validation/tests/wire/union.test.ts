@@ -9,6 +9,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("")
@@ -19,7 +20,7 @@ describe("UnionClient", () => {
             .build();
 
         const response = await client.union.get("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getMetadata", async () => {
@@ -27,14 +28,11 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { name: "exampleName", value: "exampleValue", default: "exampleDefault" };
+
         server.mockEndpoint().get("/metadata").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.union.getMetadata();
-        expect(response).toEqual({
-            name: "exampleName",
-            value: "exampleValue",
-            default: "exampleDefault",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("updateMetadata", async () => {
@@ -42,6 +40,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { string: { key: "value" } };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .put("/metadata")
@@ -56,7 +55,7 @@ describe("UnionClient", () => {
                 key: "value",
             },
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("call", async () => {
@@ -64,6 +63,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { union: { string: { key: "value" } } };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .post("/call")
@@ -80,7 +80,7 @@ describe("UnionClient", () => {
                 },
             },
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("duplicateTypesUnion", async () => {
@@ -88,6 +88,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/duplicate")
@@ -98,7 +99,7 @@ describe("UnionClient", () => {
             .build();
 
         const response = await client.union.duplicateTypesUnion("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("nestedUnions", async () => {
@@ -106,6 +107,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/nested")
@@ -116,7 +118,7 @@ describe("UnionClient", () => {
             .build();
 
         const response = await client.union.nestedUnions("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("testCamelCaseProperties", async () => {
@@ -124,6 +126,7 @@ describe("UnionClient", () => {
         const client = new SeedUndiscriminatedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { paymentMethod: { method: "card", cardNumber: "1234567890123456" } };
         const rawResponseBody = "success";
+
         server
             .mockEndpoint()
             .post("/camel-case")
@@ -139,6 +142,6 @@ describe("UnionClient", () => {
                 cardNumber: "1234567890123456",
             },
         });
-        expect(response).toEqual("success");
+        expect(response).toEqual(rawResponseBody);
     });
 });

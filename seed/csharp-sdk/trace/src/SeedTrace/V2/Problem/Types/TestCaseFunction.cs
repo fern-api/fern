@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace.V2;
@@ -64,7 +64,7 @@ public record TestCaseFunction
     public SeedTrace.V2.TestCaseWithActualResultImplementation AsWithActualResult() =>
         IsWithActualResult
             ? (SeedTrace.V2.TestCaseWithActualResultImplementation)Value!
-            : throw new System.Exception("TestCaseFunction.Type is not 'withActualResult'");
+            : throw new global::System.Exception("TestCaseFunction.Type is not 'withActualResult'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.V2.VoidFunctionDefinition"/> if <see cref="Type"/> is 'custom', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record TestCaseFunction
     public SeedTrace.V2.VoidFunctionDefinition AsCustom() =>
         IsCustom
             ? (SeedTrace.V2.VoidFunctionDefinition)Value!
-            : throw new System.Exception("TestCaseFunction.Type is not 'custom'");
+            : throw new global::System.Exception("TestCaseFunction.Type is not 'custom'");
 
     public T Match<T>(
         Func<SeedTrace.V2.TestCaseWithActualResultImplementation, T> onWithActualResult,
@@ -149,12 +149,12 @@ public record TestCaseFunction
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestCaseFunction>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestCaseFunction).IsAssignableFrom(typeToConvert);
 
         public override TestCaseFunction Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -179,17 +179,28 @@ public record TestCaseFunction
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "withActualResult" =>
-                    json.Deserialize<SeedTrace.V2.TestCaseWithActualResultImplementation?>(options)
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.TestCaseWithActualResultImplementation?>(
+                        options
+                    )
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.V2.TestCaseWithActualResultImplementation"
                         ),
-                "custom" => json.Deserialize<SeedTrace.V2.VoidFunctionDefinition?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.VoidFunctionDefinition"
-                    ),
+                "custom" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.VoidFunctionDefinition?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.VoidFunctionDefinition"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new TestCaseFunction(discriminator, value);
@@ -210,6 +221,27 @@ public record TestCaseFunction
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override TestCaseFunction ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new TestCaseFunction(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            TestCaseFunction value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

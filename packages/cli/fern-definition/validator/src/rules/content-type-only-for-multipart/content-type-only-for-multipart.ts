@@ -1,6 +1,6 @@
 import { isInlineRequestBody, parseFileUploadRequest } from "@fern-api/fern-definition-schema";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const ContentTypeOnlyForMultipartRule: Rule = {
     name: "content-type-only-for-multipart",

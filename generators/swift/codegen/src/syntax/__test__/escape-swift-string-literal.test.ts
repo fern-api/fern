@@ -1,4 +1,4 @@
-import { escapeSwiftStringLiteral } from "../escape-swift-string-literal";
+import { escapeSwiftStringLiteral } from "../escape-swift-string-literal.js";
 
 describe("escapeSwiftStringLiteral", () => {
     it("should not modify strings that do not contain special characters", () => {

@@ -1,6 +1,6 @@
 import { FernRcSchema, schemas } from "@fern-api/config";
 
-import { FernRcSchemaLoader } from "./FernRcSchemaLoader";
+import { FernRcSchemaLoader } from "./FernRcSchemaLoader.js";
 
 export namespace FernRcAccountManager {
     export interface AddResult {

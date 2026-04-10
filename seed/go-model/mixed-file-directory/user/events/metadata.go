@@ -5,23 +5,24 @@ package events
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	fern "github.com/mixed-file-directory/fern"
 	internal "github.com/mixed-file-directory/fern/internal"
 )
 
 type Metadata struct {
-	Id    fern.Id `json:"id" url:"id"`
+	ID    fern.ID `json:"id" url:"id"`
 	Value any     `json:"value" url:"value"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (m *Metadata) GetId() fern.Id {
+func (m *Metadata) GetID() fern.ID {
 	if m == nil {
 		return ""
 	}
-	return m.Id
+	return m.ID
 }
 
 func (m *Metadata) GetValue() any {

@@ -73,7 +73,7 @@ class OffsetPagination(Paginator):
         writer.write_line("")
 
     def get_step(self) -> str:
-        if self.offset.step is not None:
+        if self.offset.step is not None and self._context.custom_config.offset_semantics == "item-index":
             return f"len({Paginator.PAGINATION_ITEMS_VARIABLE} or [])"
         return "1"
 

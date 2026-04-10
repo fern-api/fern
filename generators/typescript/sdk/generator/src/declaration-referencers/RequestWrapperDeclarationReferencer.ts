@@ -1,15 +1,15 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, PackageId } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
-import { DeclarationReferencer } from "./DeclarationReferencer";
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer.js";
+import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
 export declare namespace RequestWrapperDeclarationReferencer {
     export interface Name {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
     }
 
     export interface Init extends AbstractSdkClientClassDeclarationReferencer.Init {
@@ -61,7 +61,7 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
         if (name.endpoint.sdkRequest == null || name.endpoint.sdkRequest.shape.type !== "wrapper") {
             throw new Error("Cannot get exported name for request wrapper, because endpoint request is not wrapped");
         }
-        return name.endpoint.sdkRequest.shape.wrapperName.pascalCase.unsafeName;
+        return this.case.pascalUnsafe(name.endpoint.sdkRequest.shape.wrapperName);
     }
 
     public getAggregatedRequestsFilepath(): ExportedFilePath {

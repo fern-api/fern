@@ -23,6 +23,11 @@ types:
       service: optional<service.HttpServiceSchema>
       errors: optional<map<string, errors.ErrorDeclarationSchema>>
       webhooks: optional<map<string, webhooks.WebhookSchema>>
+      webhook-signature:
+        type: optional<webhooks.WebhookSignatureSchema>
+        docs: |
+          Default webhook signature verification configuration.
+          Applied to all webhooks in this file that do not declare their own signature.
       channel: optional<websocket.WebSocketChannelSchema>
 
   ## Package marker file ##

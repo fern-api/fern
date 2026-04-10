@@ -1,4 +1,4 @@
-import { lazy } from "../lazy";
+import { lazy } from "../lazy.js";
 
 describe("lazy", () => {
     describe("zero-parameter functions", () => {

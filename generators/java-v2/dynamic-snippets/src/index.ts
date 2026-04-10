@@ -1,2 +1,2 @@
-export { type Config } from "./Config";
-export { DynamicSnippetsGenerator } from "./DynamicSnippetsGenerator";
+export { type Config } from "./Config.js";
+export { DynamicSnippetsGenerator } from "./DynamicSnippetsGenerator.js";

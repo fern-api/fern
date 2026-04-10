@@ -1,18 +1,19 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractJavaGeneratorCli } from "@fern-api/java-base";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { writeFile } from "fs/promises";
-import { buildReference } from "./reference/buildReference";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { SdkWireTestGenerator } from "./sdk-wire-tests/SdkWireTestGenerator";
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
-import { convertIr } from "./utils/convertIr";
+import { buildReference } from "./reference/buildReference.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { SdkWireTestGenerator } from "./sdk-wire-tests/SdkWireTestGenerator.js";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "./utils/convertIr.js";
 
 export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -21,7 +22,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -47,45 +48,56 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         if (context.config.output.snippetFilepath != null) {
-            // Pre-populate snippets cache following C# approach
-            await context.snippetGenerator.populateSnippetsCache();
+            const dynamicIr = context.ir.dynamic;
+            if (!dynamicIr) {
+                throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            }
+
+            // Single IR conversion and generator instance shared across all snippet consumers.
+            // Previously, populateSnippetsCache() and generateSnippets() each created their own
+            // DynamicSnippetsGenerator (duplicating convertIr() and constructor work).
+            // Type cast needed: java-v2/sdk uses ir-sdk@65.4.0, dynamic-snippets uses dynamic-ir-sdk@61.7.0.
+            // Runtime data shapes are compatible; only TS types diverge across SDK versions.
+            // biome-ignore lint/suspicious/noExplicitAny: version boundary cast
+            const convertedIr: any = convertIr(dynamicIr);
+            const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
+                ir: convertedIr,
+                config: context.config
+            });
+
+            // Pre-populate snippets cache with the shared generator (used by reference.md)
+            await context.snippetGenerator.populateSnippetsCache(sharedSnippetsGenerator);
 
             const snippetFilepath = context.config.output.snippetFilepath;
             let endpointSnippets: Endpoint[] = [];
             try {
-                endpointSnippets = await this.generateSnippets({ context });
+                endpointSnippets = await this.generateSnippets({
+                    context,
+                    dynamicIr,
+                    dynamicSnippetsGenerator: sharedSnippetsGenerator
+                });
             } catch (e) {
                 context.logger.warn("Failed to generate snippets, this is OK.");
             }
 
-            try {
-                context.logger.debug("Starting README.md generation...");
-                await this.generateReadme({
-                    context,
-                    endpointSnippets
-                });
-                context.logger.debug("Successfully generated README.md");
-            } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                const errorStack = e instanceof Error ? e.stack : undefined;
-                context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
-                if (errorStack) {
-                    context.logger.debug(`README.md generation error stack: ${errorStack}`);
-                }
-            }
+            // Run README and reference generation in parallel
+            context.logger.debug("Starting README.md and reference.md generation...");
+            const [readmeResult, referenceResult] = await Promise.allSettled([
+                this.generateReadme({ context, endpointSnippets }),
+                this.generateReference({ context })
+            ]);
 
-            try {
-                context.logger.debug("Starting reference.md generation...");
-                await this.generateReference({ context });
-                context.logger.debug("Successfully generated reference.md");
-            } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                const errorStack = e instanceof Error ? e.stack : undefined;
-                context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
-                if (errorStack) {
-                    context.logger.debug(`reference.md generation error stack: ${errorStack}`);
-                }
+            const docErrors: string[] = [];
+            if (readmeResult.status === "rejected") {
+                docErrors.push(`README.md: ${extractErrorMessage(readmeResult.reason)}`);
             }
+            if (referenceResult.status === "rejected") {
+                docErrors.push(`reference.md: ${extractErrorMessage(referenceResult.reason)}`);
+            }
+            if (docErrors.length > 0) {
+                throw new Error(`Failed to generate documentation:\n${docErrors.join("\n")}`);
+            }
+            context.logger.debug("Successfully generated README.md and reference.md");
 
             try {
                 await this.generateSnippetsJson({
@@ -104,20 +116,16 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         await context.project.persist();
     }
 
-    private async generateSnippets({ context }: { context: SdkGeneratorContext }): Promise<Endpoint[]> {
+    private async generateSnippets({
+        context,
+        dynamicIr,
+        dynamicSnippetsGenerator
+    }: {
+        context: SdkGeneratorContext;
+        dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
+        dynamicSnippetsGenerator: DynamicSnippetsGenerator;
+    }): Promise<Endpoint[]> {
         const endpointSnippets: Endpoint[] = [];
-        const dynamicIr = context.ir.dynamic;
-
-        if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
-        }
-
-        const convertedIr = convertIr(dynamicIr);
-        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // NOTE: This will eventually become a shared library. See the generators/go-v2/sdk/src/SdkGeneratorCli.ts
-            ir: convertedIr,
-            config: context.config
-        });
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const method = endpoint.location.method;
@@ -157,6 +165,11 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         context: SdkGeneratorContext;
         endpointSnippets: Endpoint[];
     }): Promise<void> {
+        const dynamicEndpoints = context.ir.dynamic?.endpoints;
+        if (!dynamicEndpoints || Object.keys(dynamicEndpoints).length === 0) {
+            context.logger.debug("No endpoints found; skipping README.md generation.");
+            return;
+        }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)

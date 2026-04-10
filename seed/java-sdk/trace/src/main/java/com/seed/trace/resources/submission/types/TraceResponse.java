@@ -136,6 +136,10 @@ public final class TraceResponse {
     public interface _FinalStage {
         TraceResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage returnValue(Optional<DebugVariableValue> returnValue);
 
         _FinalStage returnValue(DebugVariableValue returnValue);
@@ -243,6 +247,18 @@ public final class TraceResponse {
         public TraceResponse build() {
             return new TraceResponse(
                     submissionId, lineNumber, returnValue, expressionLocation, stack, stdout, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

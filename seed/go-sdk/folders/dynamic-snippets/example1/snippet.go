@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/folders/fern/client"
     option "github.com/folders/fern/option"
-    context "context"
 )
 
 func do() {
@@ -12,7 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Foo(
+    client.A.B.Foo(
         context.TODO(),
     )
 }

@@ -1,6 +1,6 @@
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 
-import { downloadBundle } from "../downloadLocalDocsBundle";
+import { downloadBundle } from "../downloadLocalDocsBundle.js";
 
 describe("preview", () => {
     it("download frontend", async () => {

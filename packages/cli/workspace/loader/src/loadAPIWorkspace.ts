@@ -1,6 +1,7 @@
 import { getAPIDefinitionSettings, OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     loadGeneratorsConfiguration,
     OPENAPI_DIRECTORY
@@ -14,7 +15,7 @@ import {
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { loadAPIChangelog } from "./loadAPIChangelog";
+import { loadAPIChangelog } from "./loadAPIChangelog.js";
 
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
@@ -28,10 +29,17 @@ export async function loadSingleNamespaceAPIWorkspace({
     const specs: Spec[] = [];
 
     for (const definition of definitions) {
-        const absoluteFilepathToOverrides =
-            definition.overrides != null
-                ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
-                : undefined;
+        // Handle both single override path and array of override paths
+        let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+        if (definition.overrides != null) {
+            if (Array.isArray(definition.overrides)) {
+                absoluteFilepathToOverrides = definition.overrides.map((override) =>
+                    join(absolutePathToWorkspace, RelativeFilePath.of(override))
+                );
+            } else {
+                absoluteFilepathToOverrides = join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides));
+            }
+        }
         const absoluteFilepathToOverlays =
             definition.overlays != null
                 ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overlays))
@@ -132,19 +140,29 @@ export async function loadSingleNamespaceAPIWorkspace({
                 }
             };
         }
-        if (
-            definition.overrides != null &&
-            absoluteFilepathToOverrides != null &&
-            !(await doesPathExist(absoluteFilepathToOverrides))
-        ) {
-            return {
-                didSucceed: false,
-                failures: {
-                    [RelativeFilePath.of(definition.overrides)]: {
-                        type: WorkspaceLoaderFailureType.FILE_MISSING
-                    }
+        // Check if override files exist
+        if (definition.overrides != null && absoluteFilepathToOverrides != null) {
+            const overridePaths = Array.isArray(absoluteFilepathToOverrides)
+                ? absoluteFilepathToOverrides
+                : [absoluteFilepathToOverrides];
+            const overrideRelativePaths = Array.isArray(definition.overrides)
+                ? definition.overrides
+                : [definition.overrides];
+
+            for (let i = 0; i < overridePaths.length; i++) {
+                const overridePath = overridePaths[i];
+                const relativeOverridePath = overrideRelativePaths[i];
+                if (overridePath != null && relativeOverridePath != null && !(await doesPathExist(overridePath))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(relativeOverridePath)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
+                        }
+                    };
                 }
-            };
+            }
         }
         if (
             definition.overlays != null &&
@@ -185,23 +203,24 @@ export async function loadAPIWorkspace({
     absolutePathToWorkspace,
     context,
     cliVersion,
-    workspaceName
+    workspaceName,
+    lenient
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     cliVersion: string;
     workspaceName: string | undefined;
+    /** If true, use lenient parsing that tolerates unrecognized keys/union members */
+    lenient?: boolean;
 }): Promise<WorkspaceLoader.Result> {
-    const generatorsConfiguration = await loadGeneratorsConfiguration({
-        absolutePathToWorkspace,
-        context
-    });
-
-    let changelog = undefined;
-    try {
-        changelog = await loadAPIChangelog({ absolutePathToWorkspace });
-        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
-    } catch (err) {}
+    const [generatorsConfiguration, changelog] = await Promise.all([
+        loadGeneratorsConfiguration({
+            absolutePathToWorkspace,
+            context,
+            lenient
+        }),
+        loadAPIChangelog({ absolutePathToWorkspace }).catch(() => undefined)
+    ]);
 
     if (generatorsConfiguration?.api != null && generatorsConfiguration?.api.type === "conjure") {
         return {
@@ -237,12 +256,17 @@ export async function loadAPIWorkspace({
             }
             specs.push(...maybeSpecs);
         } else {
-            for (const [namespace, definitions] of Object.entries(generatorsConfiguration.api.definitions)) {
-                const maybeSpecs = await loadSingleNamespaceAPIWorkspace({
-                    absolutePathToWorkspace,
-                    namespace,
-                    definitions
-                });
+            const namespaceEntries = Object.entries(generatorsConfiguration.api.definitions);
+            const namespaceResults = await Promise.all(
+                namespaceEntries.map(([namespace, definitions]) =>
+                    loadSingleNamespaceAPIWorkspace({
+                        absolutePathToWorkspace,
+                        namespace,
+                        definitions
+                    })
+                )
+            );
+            for (const maybeSpecs of namespaceResults) {
                 if (!Array.isArray(maybeSpecs)) {
                     return maybeSpecs;
                 }
@@ -318,7 +342,26 @@ export async function loadAPIWorkspace({
     // check if directory is empty
     if (await isPathEmpty(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
         const apiFolderName = absolutePathToWorkspace.split("/").pop();
-        context.logger.warn(`Detected empty API definiton: ${apiFolderName}. Remove to resolve error.`);
+        context.logger.warn(`Detected empty API definition: ${apiFolderName}. Remove to resolve error.`);
+    }
+
+    // Build a detailed diagnostic message so users know exactly what was checked
+    const hints: string[] = [];
+    if (generatorsConfiguration == null) {
+        hints.push(`No ${GENERATORS_CONFIGURATION_FILENAME} was found.`);
+    } else if (generatorsConfiguration.api == null) {
+        hints.push(`${GENERATORS_CONFIGURATION_FILENAME} was found but does not contain an "api" section.`);
+    } else {
+        hints.push(
+            `${GENERATORS_CONFIGURATION_FILENAME} has an "api" section but no valid API specs could be resolved from it.`
+        );
+    }
+    const defDirExists = await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)));
+    if (!defDirExists) {
+        hints.push(`No "${DEFINITION_DIRECTORY}/" directory was found.`);
+    }
+    if (hints.length > 0) {
+        context.logger.debug(`Workspace diagnostic: ${hints.join(" ")}`);
     }
 
     return {

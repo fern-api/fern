@@ -1,3 +1,4 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import {
@@ -18,14 +19,10 @@ import {
     Type,
     UseStatement
 } from "@fern-api/rust-codegen";
-import {
-    EnvironmentBaseUrlWithId,
-    MultipleBaseUrlsEnvironment,
-    MultipleBaseUrlsEnvironments,
-    SingleBaseUrlEnvironment,
-    SingleBaseUrlEnvironments
-} from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+/** The default URL getter method name, used for single-URL environments or the primary URL */
+export const DEFAULT_URL_METHOD = "url";
 
 export declare namespace EnvironmentGenerator {
     interface Args {
@@ -38,6 +35,30 @@ export class EnvironmentGenerator {
 
     constructor({ context }: EnvironmentGenerator.Args) {
         this.context = context;
+    }
+
+    /**
+     * Returns the name of the URL getter method for a specific base URL ID in a multi-URL
+     * environment. For example, if the base URL ID maps to "wss", returns "wss_url".
+     * Returns "url" as fallback for single-URL environments or if the ID is not found.
+     */
+    public getUrlMethodNameForBaseUrlId(baseUrlId: string | undefined): string {
+        const environmentsConfig = this.context.ir.environments;
+        if (!environmentsConfig?.environments || !baseUrlId) {
+            return DEFAULT_URL_METHOD;
+        }
+
+        return environmentsConfig.environments._visit({
+            singleBaseUrl: () => DEFAULT_URL_METHOD,
+            multipleBaseUrls: (config) => {
+                const baseUrl = config.baseUrls.find((b) => b.id === baseUrlId);
+                if (baseUrl) {
+                    return `${this.context.case.snakeSafe(baseUrl.name)}_url`;
+                }
+                return DEFAULT_URL_METHOD;
+            },
+            _other: () => DEFAULT_URL_METHOD
+        });
     }
 
     public generate(): RustFile | null {
@@ -55,7 +76,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private generateSingleUrlEnvironment(config: SingleBaseUrlEnvironments): RustFile {
+    private generateSingleUrlEnvironment(config: FernIr.SingleBaseUrlEnvironments): RustFile {
         const useStatements = [
             new UseStatement({
                 path: "serde",
@@ -79,7 +100,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private generateMultiUrlEnvironment(config: MultipleBaseUrlsEnvironments): RustFile {
+    private generateMultiUrlEnvironment(config: FernIr.MultipleBaseUrlsEnvironments): RustFile {
         const useStatements = [
             new UseStatement({
                 path: "crate::prelude",
@@ -116,7 +137,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createEnvironmentEnum(environments: SingleBaseUrlEnvironment[]): Enum {
+    private createEnvironmentEnum(environments: FernIr.SingleBaseUrlEnvironment[]): Enum {
         const environmentEnumName = this.getEnvironmentEnumName();
         return rust.enum_({
             name: environmentEnumName,
@@ -126,16 +147,16 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createEnumVariant(env: SingleBaseUrlEnvironment): EnumVariant {
-        const needsRename = env.name.pascalCase.safeName !== env.name.camelCase.safeName;
+    private createEnumVariant(env: FernIr.SingleBaseUrlEnvironment): EnumVariant {
+        const needsRename = this.context.case.pascalSafe(env.name) !== this.context.case.camelSafe(env.name);
 
         return rust.enumVariant({
-            name: env.name.pascalCase.safeName,
-            attributes: needsRename ? [Attribute.serde.rename(env.name.camelCase.safeName)] : []
+            name: this.context.case.pascalSafe(env.name),
+            attributes: needsRename ? [Attribute.serde.rename(this.context.case.camelSafe(env.name))] : []
         });
     }
 
-    private createEnvironmentImplBlock(environments: SingleBaseUrlEnvironment[]): ImplBlock {
+    private createEnvironmentImplBlock(environments: FernIr.SingleBaseUrlEnvironment[]): ImplBlock {
         const urlMethod = this.createUrlMethod(environments);
         const environmentEnumName = this.getEnvironmentEnumName();
 
@@ -145,10 +166,10 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createUrlMethod(environments: SingleBaseUrlEnvironment[]): Method {
+    private createUrlMethod(environments: FernIr.SingleBaseUrlEnvironment[]): Method {
         // Create match arms for each environment using proper AST
         const matchArms = environments.map((env) => {
-            const pattern = Pattern.variable(`Self::${env.name.pascalCase.safeName}`);
+            const pattern = Pattern.variable(`Self::${this.context.case.pascalSafe(env.name)}`);
             const expression = Expression.stringLiteral(env.url);
             return MatchArm.withExpression(pattern, expression);
         });
@@ -171,7 +192,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createDefaultImplBlock(environments: SingleBaseUrlEnvironment[]): ImplBlock {
+    private createDefaultImplBlock(environments: FernIr.SingleBaseUrlEnvironment[]): ImplBlock {
         const defaultEnvId = this.context.ir.environments?.defaultEnvironment;
         const defaultEnv = environments.find((env) => env.id === defaultEnvId) || environments[0];
         const environmentEnumName = this.getEnvironmentEnumName();
@@ -184,7 +205,7 @@ export class EnvironmentGenerator {
             name: "default",
             parameters: [],
             returnType: Type.reference(new Reference({ name: "Self" })),
-            body: CodeBlock.fromExpression(Expression.reference(`Self::${defaultEnv.name.pascalCase.safeName}`))
+            body: CodeBlock.fromExpression(Expression.reference(`Self::${this.context.case.pascalSafe(defaultEnv.name)}`))
         });
 
         return rust.implBlock({
@@ -194,14 +215,14 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createUrlStruct(env: MultipleBaseUrlsEnvironment, baseUrls: EnvironmentBaseUrlWithId[]): Struct {
+    private createUrlStruct(env: FernIr.MultipleBaseUrlsEnvironment, baseUrls: FernIr.EnvironmentBaseUrlWithId[]): Struct {
         return rust.struct({
-            name: `${env.name.pascalCase.safeName}Urls`,
+            name: `${this.context.case.pascalSafe(env.name)}Urls`,
             visibility: PUBLIC,
             attributes: [Attribute.derive(["Debug", "Clone", "Serialize", "Deserialize"])],
             fields: baseUrls.map((baseUrl) =>
                 rust.field({
-                    name: baseUrl.name.snakeCase.safeName,
+                    name: this.context.case.snakeSafe(baseUrl.name),
                     type: Type.string(),
                     visibility: PUBLIC
                 })
@@ -209,7 +230,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createMultiUrlEnvironmentEnum(environments: MultipleBaseUrlsEnvironment[]): Enum {
+    private createMultiUrlEnvironmentEnum(environments: FernIr.MultipleBaseUrlsEnvironment[]): Enum {
         const environmentEnumName = this.getEnvironmentEnumName();
         return rust.enum_({
             name: environmentEnumName,
@@ -217,28 +238,63 @@ export class EnvironmentGenerator {
             attributes: [Attribute.derive(["Debug", "Clone", "Serialize", "Deserialize"])],
             variants: environments.map((env) =>
                 rust.enumVariant({
-                    name: env.name.pascalCase.safeName,
-                    data: [Type.reference(new Reference({ name: `${env.name.pascalCase.safeName}Urls` }))]
+                    name: this.context.case.pascalSafe(env.name),
+                    data: [Type.reference(new Reference({ name: `${this.context.case.pascalSafe(env.name)}Urls` }))]
                 })
             )
         });
     }
 
-    private createMultiUrlImplBlock(config: MultipleBaseUrlsEnvironments): ImplBlock {
+    private createMultiUrlImplBlock(config: FernIr.MultipleBaseUrlsEnvironments): ImplBlock {
         const getUrlMethod = this.createMultiUrlGetUrlMethod(config);
+        const perUrlMethods = this.createPerBaseUrlGetterMethods(config);
         const environmentEnumName = this.getEnvironmentEnumName();
 
         return rust.implBlock({
             targetType: Type.reference(new Reference({ name: environmentEnumName })),
-            methods: [getUrlMethod]
+            methods: [getUrlMethod, ...perUrlMethods]
         });
     }
 
-    private createMultiUrlGetUrlMethod(config: MultipleBaseUrlsEnvironments): Method {
+    /**
+     * Creates a getter method for each base URL in a multi-URL environment.
+     * For example, if there are "rest" and "wss" base URLs, this generates
+     * `rest_url(&self) -> &str` and `wss_url(&self) -> &str`.
+     */
+    private createPerBaseUrlGetterMethods(config: FernIr.MultipleBaseUrlsEnvironments): Method[] {
+        return config.baseUrls.map((baseUrl) => {
+            const fieldName = this.context.case.snakeSafe(baseUrl.name);
+            const matchArms = config.environments.map((env) => {
+                const pattern = Pattern.raw(`Self::${this.context.case.pascalSafe(env.name)}(urls)`);
+                const expression = Expression.reference(`&urls.${fieldName}`);
+                return MatchArm.withExpression(pattern, expression);
+            });
+
+            const matchStatement = Statement.matchEnhanced(Expression.self(), matchArms);
+
+            return rust.method({
+                name: `${fieldName}_url`,
+                visibility: PUBLIC,
+                parameters: [
+                    {
+                        name: "self",
+                        parameterType: Type.str(),
+                        isSelf: true,
+                        isRef: true
+                    }
+                ],
+                returnType: Type.reference(new Reference({ name: "&str" })),
+                body: CodeBlock.fromStatements([matchStatement])
+            });
+        });
+    }
+
+    private createMultiUrlGetUrlMethod(config: FernIr.MultipleBaseUrlsEnvironments): Method {
         const matchArms = config.environments.map((env) => {
             // Use tuple pattern for tuple enum variants
-            const pattern = Pattern.raw(`Self::${env.name.pascalCase.safeName}(urls)`);
-            const fieldName = config.baseUrls[0]?.name.snakeCase.safeName || "default";
+            const pattern = Pattern.raw(`Self::${this.context.case.pascalSafe(env.name)}(urls)`);
+            const firstBaseUrl = config.baseUrls[0];
+            const fieldName = firstBaseUrl?.name != null ? this.context.case.snakeSafe(firstBaseUrl.name) : "default";
             // Need to add reference since we're borrowing from urls
             const expression = Expression.reference(`&urls.${fieldName}`);
             return MatchArm.withExpression(pattern, expression);
@@ -262,7 +318,7 @@ export class EnvironmentGenerator {
         });
     }
 
-    private createMultiUrlDefaultImplBlock(config: MultipleBaseUrlsEnvironments): ImplBlock {
+    private createMultiUrlDefaultImplBlock(config: FernIr.MultipleBaseUrlsEnvironments): ImplBlock {
         const defaultEnvId = this.context.ir.environments?.defaultEnvironment;
         const defaultEnv = config.environments.find((env) => env.id === defaultEnvId) || config.environments[0];
         const environmentEnumName = this.getEnvironmentEnumName();
@@ -274,14 +330,14 @@ export class EnvironmentGenerator {
         // Create the URL struct instance with all base URLs
         const urlFields = config.baseUrls
             .map((baseUrl) => {
-                const fieldName = baseUrl.name.snakeCase.safeName;
+                const fieldName = this.context.case.snakeSafe(baseUrl.name);
                 const url = defaultEnv.urls[baseUrl.id] || "";
                 return `${fieldName}: "${url}".to_string()`;
             })
             .join(", ");
 
-        const structName = `${defaultEnv.name.pascalCase.safeName}Urls`;
-        const defaultExpr = `Self::${defaultEnv.name.pascalCase.safeName}(${structName} { ${urlFields} })`;
+        const structName = `${this.context.case.pascalSafe(defaultEnv.name)}Urls`;
+        const defaultExpr = `Self::${this.context.case.pascalSafe(defaultEnv.name)}(${structName} { ${urlFields} })`;
 
         const defaultMethod = rust.method({
             name: "default",
@@ -298,7 +354,6 @@ export class EnvironmentGenerator {
     }
 
     private getEnvironmentEnumName(): string {
-        const customConfig = this.context.customConfig;
-        return customConfig.environmentEnumName || "Environment";
+        return this.context.getEnvironmentEnumName();
     }
 }

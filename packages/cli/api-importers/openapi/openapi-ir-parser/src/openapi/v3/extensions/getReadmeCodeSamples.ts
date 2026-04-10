@@ -3,8 +3,8 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { CustomCodeSample } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
-import { ReadmeOpenAPIExtension } from "./readmeExtensions";
+import { getExtension } from "../../../getExtension.js";
+import { ReadmeOpenAPIExtension } from "./readmeExtensions.js";
 
 // https://docs.readme.com/main/docs/openapi-extensions#custom-code-samples
 interface ReadmeCodeSample {

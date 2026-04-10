@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -12,8 +13,8 @@ public class Example10
             }
         );
 
-        await client.Endpoints.HttpMethods.TestGetAsync(
-            "id"
+        await client.Endpoints.Enum.GetAndReturnEnumAsync(
+            WeatherReport.Sunny
         );
     }
 

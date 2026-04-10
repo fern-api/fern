@@ -9,6 +9,7 @@ describe("SeedValidationClient", () => {
         const client = new SeedValidationClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { decimal: 2.2, even: 100, name: "fern", shape: "SQUARE" };
         const rawResponseBody = { decimal: 2.2, even: 100, name: "fern", shape: "SQUARE" };
+
         server
             .mockEndpoint()
             .post("/create")
@@ -24,12 +25,7 @@ describe("SeedValidationClient", () => {
             name: "fern",
             shape: "SQUARE",
         });
-        expect(response).toEqual({
-            decimal: 2.2,
-            even: 100,
-            name: "fern",
-            shape: "SQUARE",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("get", async () => {
@@ -37,6 +33,7 @@ describe("SeedValidationClient", () => {
         const client = new SeedValidationClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { decimal: 2.2, even: 100, name: "fern", shape: "SQUARE" };
+
         server.mockEndpoint().get("").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.get({
@@ -44,11 +41,6 @@ describe("SeedValidationClient", () => {
             even: 100,
             name: "fern",
         });
-        expect(response).toEqual({
-            decimal: 2.2,
-            even: 100,
-            name: "fern",
-            shape: "SQUARE",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

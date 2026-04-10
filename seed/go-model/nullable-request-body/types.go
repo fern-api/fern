@@ -5,22 +5,23 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/nullable-request-body/fern/internal"
 )
 
 type PlainObject struct {
-	Id   *string `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string `json:"id,omitempty" url:"id,omitempty"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (p *PlainObject) GetId() *string {
+func (p *PlainObject) GetID() *string {
 	if p == nil {
 		return nil
 	}
-	return p.Id
+	return p.ID
 }
 
 func (p *PlainObject) GetName() *string {

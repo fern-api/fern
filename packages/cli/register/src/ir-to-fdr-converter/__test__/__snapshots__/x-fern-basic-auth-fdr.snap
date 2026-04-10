@@ -30,6 +30,7 @@
         "description": undefined,
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.plantstore.example.com/v1",
             "id": "https://api.plantstore.example.com/v1",
           },
@@ -184,6 +185,7 @@
         "description": undefined,
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.plantstore.example.com/v1",
             "id": "https://api.plantstore.example.com/v1",
           },

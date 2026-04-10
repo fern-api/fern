@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:file-upload-openapi'
+  implementation 'com.fern:file-upload-openapi:0.0.1'
 }
 ```
 
@@ -201,7 +201,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-UploadFileHttpResponse response = client.fileUploadExample().withRawResponse().uploadFile(...);
+SeedApiHttpResponse response = client.fileUploadExample().withRawResponse().uploadFile(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

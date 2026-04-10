@@ -2,8 +2,8 @@ import { TaskContext } from "@fern-api/task-context";
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
-import { RemoteTaskHandler } from "./RemoteTaskHandler";
-import { REMOTE_GENERATION_SERVICE } from "./service";
+import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
+import { REMOTE_GENERATION_SERVICE } from "./service.js";
 
 const MAX_UNSUCCESSFUL_ATTEMPTS = 3;
 

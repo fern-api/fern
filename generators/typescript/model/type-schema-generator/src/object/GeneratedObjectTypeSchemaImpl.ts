@@ -1,13 +1,14 @@
-import { ObjectTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getPropertyKey, getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { GeneratedObjectTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
 
 export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
-    extends AbstractGeneratedTypeSchema<ObjectTypeDeclaration, Context>
+    extends AbstractGeneratedTypeSchema<FernIr.ObjectTypeDeclaration, Context>
     implements GeneratedObjectTypeSchema<Context>
 {
     public readonly type = "object";
@@ -21,8 +22,10 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
         const properties = this.shape.properties.map(
             (property): Zurg.Property => ({
                 key: {
-                    raw: property.name.wireValue,
-                    parsed: generatedType.getPropertyKey({ propertyWireKey: property.name.wireValue })
+                    raw: getWireValue(property.name),
+                    parsed: generatedType.getPropertyKey({
+                        propertyWireKey: getWireValue(property.name)
+                    })
                 },
                 value: context.typeSchema.getSchemaOfTypeReference(property.valueType)
             })
@@ -55,7 +58,7 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
                 ...this.shape.properties.map((property) => {
                     const type = context.typeSchema.getReferenceToRawType(property.valueType);
                     return {
-                        name: getPropertyKey(property.name.wireValue),
+                        name: getPropertyKey(getWireValue(property.name)),
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     };

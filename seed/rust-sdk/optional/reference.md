@@ -69,6 +69,7 @@ async fn main() {
         .send_optional_typed_body(
             &Some(SendOptionalBodyRequest {
                 message: "message".to_string(),
+                ..Default::default()
             }),
             None,
         )
@@ -126,9 +127,10 @@ async fn main() {
         .send_optional_nullable_with_all_optional_properties(
             &"actionId".to_string(),
             &"id".to_string(),
-            &Some(Some(DeployParams {
+            &Some(DeployParams {
                 update_draft: Some(true),
-            })),
+                ..Default::default()
+            }),
             None,
         )
         .await;
@@ -166,3 +168,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

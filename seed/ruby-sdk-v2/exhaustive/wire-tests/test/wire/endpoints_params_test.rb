@@ -6,7 +6,7 @@ class EndpointsParamsWireTest < WireMockTestCase
   def setup
     super
 
-    @client = Seed::Client.new(
+    @client = Seed::MyClient.new(
       token: "<token>",
       base_url: WIREMOCK_BASE_URL
     )
@@ -180,6 +180,69 @@ class EndpointsParamsWireTest < WireMockTestCase
     verify_request_count(
       test_id: test_id,
       method: "PUT",
+      url_path: "/params/path/param",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_params_upload_with_path_with_wiremock
+    test_id = "endpoints.params.upload_with_path.0"
+
+    @client.endpoints.params.upload_with_path(
+      param: "upload-path",
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.params.upload_with_path.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/params/path/{param}",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_params_get_with_boolean_path_with_wiremock
+    test_id = "endpoints.params.get_with_boolean_path.0"
+
+    @client.endpoints.params.get_with_boolean_path(
+      param: true,
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.params.get_with_boolean_path.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "GET",
+      url_path: "/params/path-bool/true",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_params_get_with_path_and_errors_with_wiremock
+    test_id = "endpoints.params.get_with_path_and_errors.0"
+
+    @client.endpoints.params.get_with_path(
+      param: "param",
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.params.get_with_path_and_errors.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "GET",
       url_path: "/params/path/param",
       query_params: nil,
       expected: 1

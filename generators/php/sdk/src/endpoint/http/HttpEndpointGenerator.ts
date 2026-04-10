@@ -1,32 +1,21 @@
-import { Arguments, UnnamedArgument } from "@fern-api/base-generator";
+import { Arguments, getOriginalName, NameInput, UnnamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
-import {
-    CursorPagination,
-    CustomPagination,
-    HttpEndpoint,
-    HttpRequestBody,
-    HttpService,
-    Name,
-    OffsetPagination,
-    RequestProperty,
-    ResponseProperty,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { upperFirst } from "lodash-es";
 
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
 
-type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
+type PagingEndpoint = FernIr.HttpEndpoint & { pagination: NonNullable<FernIr.HttpEndpoint["pagination"]> };
 
 export declare namespace EndpointGenerator {
     export interface Args {
         /** the reference to the client */
         clientReference: string;
         /** the endpoint for the endpoint */
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         /** reference to a variable that is the body */
         bodyReference?: string;
     }
@@ -46,10 +35,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         service,
         endpoint
     }: {
-        serviceId: ServiceId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
     }): php.Method[] {
+        if (this.isUnsupportedPaginationType(endpoint)) {
+            this.context.logger.warn(
+                `Pagination type '${endpoint.pagination?.type}' is not supported for PHP, falling back to unpaged endpoint for ${getOriginalName(endpoint.name)}`
+            );
+        }
         const methods: php.Method[] = [];
         if (this.hasPagination(endpoint)) {
             methods.push(this.generatePagedEndpointMethod({ serviceId, service, endpoint }));
@@ -60,14 +54,62 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return methods;
     }
 
+    public generateSignatures({
+        serviceId,
+        service,
+        endpoint
+    }: {
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
+    }): php.Method[] {
+        const methods: php.Method[] = [];
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        parameters.push(
+            php.parameter({
+                name: this.context.getRequestOptionsName(),
+                type: php.Type.optional(this.context.getRequestOptionsType({ endpoint }))
+            })
+        );
+
+        if (this.hasPagination(endpoint)) {
+            const return_ = this.getPagerReturnType(endpoint);
+            methods.push(
+                php.method({
+                    name: this.context.getPagedEndpointMethodName(endpoint),
+                    access: "public",
+                    parameters,
+                    docs: endpoint.docs,
+                    return_,
+                    noBody: true
+                })
+            );
+        } else {
+            const return_ = getEndpointReturnType({ context: this.context, endpoint });
+            methods.push(
+                php.method({
+                    name: this.context.getEndpointMethodName(endpoint),
+                    access: "public",
+                    parameters,
+                    docs: endpoint.docs,
+                    return_,
+                    noBody: true
+                })
+            );
+        }
+
+        return methods;
+    }
+
     public generateUnpagedEndpointMethod({
         serviceId,
         service,
         endpoint
     }: {
-        serviceId: ServiceId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
     }): php.Method {
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
@@ -140,49 +182,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
                 writer.dedent();
                 writer.write("} catch (");
-                writer.writeNode(this.context.guzzleClient.getRequestExceptionClassReference());
-                writer.writeLine(" $e) {");
-                writer.indent();
-                writer.writeNodeStatement(php.assignVariable(php.variable("response"), "$e->getResponse()"));
-                writer.controlFlow("if", php.codeblock("$response === null"));
-                writer.writeNodeStatement(
-                    php.throwException({
-                        classReference: this.context.getBaseExceptionClassReference(),
-                        arguments_: [
-                            {
-                                name: "message",
-                                assignment: "$e->getMessage()"
-                            },
-                            {
-                                name: "previous",
-                                assignment: php.variable("e")
-                            }
-                        ]
-                    })
-                );
-                writer.endControlFlow();
-                writer.writeNodeStatement(
-                    php.throwException({
-                        classReference: this.context.getBaseApiExceptionClassReference(),
-                        arguments_: [
-                            {
-                                name: "message",
-                                assignment: php.string("API request failed")
-                            },
-                            {
-                                name: "statusCode",
-                                assignment: "$response->getStatusCode()"
-                            },
-                            {
-                                name: "body",
-                                assignment: "$response->getBody()->getContents()"
-                            }
-                        ],
-                        multiline: true
-                    })
-                );
-                writer.dedent();
-                writer.write("} catch (");
                 writer.writeNode(this.context.getClientExceptionInterfaceClassReference());
                 writer.writeLine(" $e) {");
                 writer.indent();
@@ -204,9 +203,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         service,
         endpoint
     }: {
-        serviceId: ServiceId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
     }): php.Method {
         this.assertHasPagination(endpoint);
         const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, service, endpoint });
@@ -288,6 +287,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             unpagedEndpointMethodName
                         });
                         break;
+                    case "uri":
+                    case "path":
+                        this.context.logger.warn(
+                            `Pagination type '${endpoint.pagination.type}' is not supported for PHP, skipping`
+                        );
+                        break;
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -303,7 +308,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer,
         unpagedEndpointMethodName
     }: {
-        pagination: CursorPagination;
+        pagination: FernIr.CursorPagination;
         requestParam: php.Parameter;
         parameters: php.Parameter[];
         unpagedEndpointResponseType: php.Type;
@@ -394,7 +399,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer,
         unpagedEndpointMethodName
     }: {
-        pagination: OffsetPagination;
+        pagination: FernIr.OffsetPagination;
         requestParam: php.Parameter;
         parameters: php.Parameter[];
         unpagedEndpointResponseType: php.Type;
@@ -510,7 +515,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer,
         unpagedEndpointMethodName
     }: {
-        pagination: CustomPagination;
+        pagination: FernIr.CustomPagination;
         parameters: php.Parameter[];
         unpagedEndpointResponseType: php.Type;
         writer: php.Writer;
@@ -548,13 +553,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         );
     }
 
-    private getFullPropertyPath(property: RequestProperty | ResponseProperty): Name[] {
-        return [...(property.propertyPath?.map((elem) => elem.name) ?? []), property.property.name.name];
+    private getFullPropertyPath(property: FernIr.RequestProperty | FernIr.ResponseProperty): NameInput[] {
+        return [...(property.propertyPath?.map((elem) => elem.name) ?? []), property.property.name];
     }
 
     private nullableGet(
         variableName: string,
-        { property, propertyPath }: RequestProperty | ResponseProperty
+        { property, propertyPath }: FernIr.RequestProperty | FernIr.ResponseProperty
     ): php.AstNode {
         return php.codeblock((writer) => {
             writer.writeNode(php.variable(variableName));
@@ -565,17 +570,17 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 }
             }
             writer.write("?");
-            writer.writeNode(this.context.getTypeGetter(property.name.name));
+            writer.writeNode(this.context.getTypeGetter(property.name));
         });
     }
 
-    protected getPagerReturnType(endpoint: HttpEndpoint): php.Type {
+    protected getPagerReturnType(endpoint: FernIr.HttpEndpoint): php.Type {
         const itemType = this.getPaginationItemType(endpoint);
         const pager = this.context.getPagerClassReference(itemType);
         return php.Type.reference(pager);
     }
 
-    protected getPaginationItemType(endpoint: HttpEndpoint): php.Type {
+    protected getPaginationItemType(endpoint: FernIr.HttpEndpoint): php.Type {
         this.assertHasPagination(endpoint);
         const listItemType = this.context.phpTypeMapper.convert({
             reference: (() => {
@@ -586,6 +591,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         return endpoint.pagination.results.property.valueType;
                     case "custom":
                         return endpoint.pagination.results.property.valueType;
+                    case "uri":
+                    case "path":
+                        // unreachable: hasPagination() returns false for uri/path
+                        throw new Error(`Pagination type ${endpoint.pagination.type} is not supported`);
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -598,7 +607,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             }
 
             throw new Error(
-                `Pagination result type for endpoint ${endpoint.name.originalName} must be an array, but is an optional ${listItemType.internalType.value.internalType.type}.`
+                `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be an array, but is an optional ${listItemType.internalType.value.internalType.type}.`
             );
         }
 
@@ -607,25 +616,37 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
 
         throw new Error(
-            `Pagination result type for endpoint ${endpoint.name.originalName} must be an array, but is ${listItemType.internalType.type}.`
+            `Pagination result type for endpoint ${getOriginalName(endpoint.name)} must be an array, but is ${listItemType.internalType.type}.`
         );
     }
 
-    protected hasPagination(endpoint: HttpEndpoint): endpoint is PagingEndpoint {
+    protected hasPagination(endpoint: FernIr.HttpEndpoint): endpoint is PagingEndpoint {
         if (!this.context.config.generatePaginatedClients) {
             return false;
         }
-        return endpoint.pagination !== undefined;
+        if (endpoint.pagination == null) {
+            return false;
+        }
+        if (this.isUnsupportedPaginationType(endpoint)) {
+            return false;
+        }
+        return true;
     }
 
-    protected assertHasPagination(endpoint: HttpEndpoint): asserts endpoint is PagingEndpoint {
+    private isUnsupportedPaginationType(endpoint: FernIr.HttpEndpoint): boolean {
+        return (
+            endpoint.pagination != null && (endpoint.pagination.type === "uri" || endpoint.pagination.type === "path")
+        );
+    }
+
+    protected assertHasPagination(endpoint: FernIr.HttpEndpoint): asserts endpoint is PagingEndpoint {
         if (this.hasPagination(endpoint)) {
             return;
         }
-        throw new Error(`Endpoint ${endpoint.name.originalName} is not a paginated endpoint`);
+        throw new Error(`Endpoint ${getOriginalName(endpoint.name)} is not a paginated endpoint`);
     }
 
-    private getRequestTypeClassReference(requestBody: HttpRequestBody): php.ClassReference {
+    private getRequestTypeClassReference(requestBody: FernIr.HttpRequestBody): php.ClassReference {
         return requestBody._visit({
             inlinedRequestBody: () => this.context.getJsonApiRequestClassReference(),
             reference: () => this.context.getJsonApiRequestClassReference(),
@@ -635,7 +656,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): php.CodeBlock {
+    private getBaseURLForEndpoint({ endpoint }: { endpoint: FernIr.HttpEndpoint }): php.CodeBlock {
         return php.codeblock((writer) => {
             const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
             const hasEndpointBaseUrl = endpoint.baseUrl != null;
@@ -658,7 +679,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         });
     }
 
-    private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): php.CodeBlock {
+    private getEndpointErrorHandling({ endpoint }: { endpoint: FernIr.HttpEndpoint }): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.writeNodeStatement(
                 this.throwNewBaseAPiException({
@@ -673,7 +694,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint,
         return_
     }: {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         return_: php.Type | undefined;
     }): php.CodeBlock | undefined {
         if (endpoint.response?.body == null) {
@@ -689,9 +710,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const body = endpoint.response.body;
         return php.codeblock((writer) => {
             body._visit({
-                bytes: () => this.context.logger.error("Bytes not supported"),
+                bytes: () => {
+                    writer.controlFlow(
+                        "if",
+                        php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
+                    );
+                    writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+                    writer.endControlFlow();
+                },
                 streamParameter: () => this.context.logger.error("Stream parameters not supported"),
-                fileDownload: () => this.context.logger.error("File download not supported"),
+                fileDownload: () => {
+                    writer.controlFlow(
+                        "if",
+                        php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
+                    );
+                    writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+                    writer.endControlFlow();
+                },
                 json: (_reference) => {
                     writer.controlFlow(
                         "if",
@@ -703,11 +738,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         return;
                     }
                     writer.writeNodeStatement(this.getResponseBodyContent());
-                    if (return_.isOptional()) {
-                        writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIABLE_NAME})`));
-                        writer.writeTextStatement("return null");
-                        writer.endControlFlow();
-                    }
+                    writer.controlFlow("if", php.codeblock(`empty(${JSON_VARIABLE_NAME})`));
+                    writer.writeTextStatement("return null");
+                    writer.endControlFlow();
                     writer.write("return ");
                     writer.writeNode(this.decodeJsonResponse(return_));
                     writer.endControlFlow();

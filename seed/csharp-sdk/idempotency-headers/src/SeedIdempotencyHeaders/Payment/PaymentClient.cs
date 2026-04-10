@@ -1,11 +1,11 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
 
 public partial class PaymentClient : IPaymentClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PaymentClient(RawClient client)
     {
@@ -29,7 +29,6 @@ public partial class PaymentClient : IPaymentClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/payment",
                     Body = request,
@@ -41,7 +40,9 @@ public partial class PaymentClient : IPaymentClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -67,7 +68,9 @@ public partial class PaymentClient : IPaymentClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedIdempotencyHeadersApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -109,7 +112,6 @@ public partial class PaymentClient : IPaymentClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
                     Path = string.Format(
                         "/payment/{0}",
@@ -126,7 +128,9 @@ public partial class PaymentClient : IPaymentClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedIdempotencyHeadersApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

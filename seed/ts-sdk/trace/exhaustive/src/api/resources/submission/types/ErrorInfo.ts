@@ -26,6 +26,6 @@ export namespace ErrorInfo {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

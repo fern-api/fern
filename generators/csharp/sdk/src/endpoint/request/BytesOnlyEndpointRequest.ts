@@ -1,13 +1,17 @@
 import { ast } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type SdkRequest = FernIr.SdkRequest;
+
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export class BytesOnlyEndpointRequest extends EndpointRequest {
     // biome-ignore lint/complexity/noUselessConstructor: allow
@@ -32,7 +36,7 @@ export class BytesOnlyEndpointRequest extends EndpointRequest {
             code: this.csharp.codeblock((writer) => {
                 // Start with HeadersBuilder.Builder instance
                 writer.write(
-                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.qualifiedCore}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
 

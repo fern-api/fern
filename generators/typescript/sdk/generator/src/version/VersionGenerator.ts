@@ -1,12 +1,12 @@
-import { ApiVersionScheme } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GeneratedVersion } from "@fern-typescript/contexts";
 
-import { GeneratedVersionImpl } from "./GeneratedVersionImpl";
+import { GeneratedVersionImpl } from "./GeneratedVersionImpl.js";
 
 export declare namespace VersionGenerator {
     export namespace generateVersion {
         export interface Args {
-            apiVersion: ApiVersionScheme;
+            apiVersion: FernIr.ApiVersionScheme;
             versionEnumName: string;
             firstEnumValue: string;
         }

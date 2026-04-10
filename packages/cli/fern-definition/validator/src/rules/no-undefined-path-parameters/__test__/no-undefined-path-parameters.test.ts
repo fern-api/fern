@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoUndefinedPathParametersRule } from "../no-undefined-path-parameters";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoUndefinedPathParametersRule } from "../no-undefined-path-parameters.js";
 
 describe("no-undefined-path-parameters", () => {
     it("simple", async () => {
@@ -19,30 +19,35 @@ describe("no-undefined-path-parameters", () => {
                 message: "File has missing path-parameter: bar.",
                 nodePath: [],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "no-undefined-path-parameters",
                 severity: "fatal"
             },
             {
                 message: "Service has missing path-parameter: baseParameter.",
                 nodePath: ["service"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-path-parameters",
                 severity: "fatal"
             },
             {
                 message: "Path parameter is unreferenced in service: fakeBaseParameter.",
                 nodePath: ["service"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-path-parameters",
                 severity: "fatal"
             },
             {
                 message: "Endpoint has missing path-parameter: parameter2.",
                 nodePath: ["service", "endpoints", "missingPathParameters"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-path-parameters",
                 severity: "fatal"
             },
             {
                 message: "Path parameter is unreferenced in endpoint: parameter1.",
                 nodePath: ["service", "endpoints", "unusedPathParameters"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-path-parameters",
                 severity: "fatal"
             }
         ]);

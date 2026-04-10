@@ -4,6 +4,7 @@ package user
 
 import (
 	context "context"
+
 	fern "github.com/query-parameters/fern"
 	core "github.com/query-parameters/fern/core"
 	internal "github.com/query-parameters/fern/internal"

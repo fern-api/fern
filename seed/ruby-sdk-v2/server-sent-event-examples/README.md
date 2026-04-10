@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
-client.completions.stream(query: 'foo');
+client.completions.stream(query: "foo")
 ```
 
 ## Environments

@@ -1,9 +1,10 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { BaseOptionsGenerator } from "./BaseOptionsGenerator.js";
 
 export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
@@ -48,7 +49,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile>
                     // unless the type is optional
                     const nullConditionalOperator = !isString && type.isOptional ? "?" : "";
                     writer.writeLine(
-                        `["${header.name.wireValue}"] = ${header.name.name.pascalCase.safeName}${nullConditionalOperator}${toString},`
+                        `["${getWireValue(header.name)}"] = ${this.case.pascalSafe(header.name)}${nullConditionalOperator}${toString},`
                     );
                 }
                 writer.popScope();

@@ -53,7 +53,7 @@ public final class CreateUserWithOptionsRequest {
     /**
      * @return Whether to validate the request
      */
-    @JsonProperty("validate")
+    @JsonIgnore
     public Optional<Boolean> getValidate() {
         return validate;
     }
@@ -100,6 +100,10 @@ public final class CreateUserWithOptionsRequest {
 
     public interface _FinalStage {
         CreateUserWithOptionsRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
          * <p>Optional request ID</p>
@@ -186,6 +190,18 @@ public final class CreateUserWithOptionsRequest {
         @java.lang.Override
         public CreateUserWithOptionsRequest build() {
             return new CreateUserWithOptionsRequest(xRequestId, validate, body, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

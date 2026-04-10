@@ -1,2 +1,2 @@
-export * from "./DiscriminatedUnionGenerator";
-export * from "./UndiscriminatedUnionGenerator";
+export * from "./DiscriminatedUnionGenerator.js";
+export * from "./UndiscriminatedUnionGenerator.js";

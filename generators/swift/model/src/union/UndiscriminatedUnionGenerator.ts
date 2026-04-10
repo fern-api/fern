@@ -1,13 +1,13 @@
 import { assertDefined } from "@fern-api/core-utils";
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { LiteralEnumGenerator } from "../literal";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { LiteralEnumGenerator } from "../literal/index.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export declare namespace UndiscriminatedUnionGenerator {
     interface Args {
         symbol: swift.Symbol;
-        typeDeclaration: UndiscriminatedUnionTypeDeclaration;
+        typeDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration;
         docsContent?: string;
         context: ModelGeneratorContext;
     }
@@ -15,7 +15,7 @@ export declare namespace UndiscriminatedUnionGenerator {
 
 export class UndiscriminatedUnionGenerator {
     private readonly symbol: swift.Symbol;
-    private readonly typeDeclaration: UndiscriminatedUnionTypeDeclaration;
+    private readonly typeDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration;
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
     private readonly referencer: Referencer;

@@ -1,15 +1,16 @@
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir";
-import { OpenAPIV3 } from "openapi-types";
+import type { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir";
+import type { OpenAPIV3 } from "openapi-types";
 
-import { getSchemaIdFromReference } from "../../../../schema/convertSchemas";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension";
-import { OperationContext } from "../contexts";
-import { getApplicationJsonSchemaMediaObjectFromContent } from "../endpoint/getApplicationJsonSchema";
-import { convertHttpOperation } from "./convertHttpOperation";
+import { getExtension } from "../../../../getExtension.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import type { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import type { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension.js";
+import type { OperationContext } from "../contexts.js";
+import { getApplicationJsonSchemaMediaObjectFromContent } from "../endpoint/getApplicationJsonSchema.js";
+import { convertHttpOperation } from "./convertHttpOperation.js";
 
 const STREAM_SUFFIX = "stream";
 
@@ -33,6 +34,7 @@ export function convertStreamingOperation({
                 operationContext,
                 context,
                 streamFormat: streamingExtension.format,
+                streamTerminator: streamingExtension.terminator,
                 source: context.source
             });
             return {
@@ -47,16 +49,30 @@ export function convertStreamingOperation({
                 streamingExtension,
                 isStreaming: true
             });
-            if (streamingRequestBody?.schemaReference != null) {
-                const schemaId = getSchemaIdFromReference(streamingRequestBody.schemaReference);
-                if (schemaId != null) {
-                    context.excludeSchema(schemaId);
-                }
-            }
             const streamingResponses = getResponses({
                 operation: operationContext.operation,
                 response: streamingExtension.responseStream
             });
+            // Auto-disambiguate the streaming request name when the request body is a $ref
+            // to a named schema that has x-fern-type-name. Without this, both streaming and
+            // non-streaming variants would resolve to the same nameOverride (e.g., "ChatRequest"),
+            // causing duplicate declaration errors. We only need this when x-fern-type-name is
+            // present because without it, the generatedName values are already differentiated
+            // by breadcrumbs in convertHttpOperation.
+            const autoStreamRequestName = (() => {
+                if (streamingExtension.streamRequestName != null) {
+                    return streamingExtension.streamRequestName;
+                }
+                if (streamingRequestBody?.schemaReference != null) {
+                    const resolvedSchema = context.resolveSchemaReference(streamingRequestBody.schemaReference);
+                    const typeName = getExtension<string>(resolvedSchema, FernOpenAPIExtension.TYPE_NAME);
+                    if (typeName != null) {
+                        return `${typeName}Streaming`;
+                    }
+                }
+                return undefined;
+            })();
+
             const streamingOperations = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
@@ -77,8 +93,10 @@ export function convertStreamingOperation({
                 },
                 context,
                 streamFormat: streamingExtension.format,
+                streamTerminator: streamingExtension.terminator,
                 suffix: STREAM_SUFFIX,
-                source: context.source
+                source: context.source,
+                streamRequestNameOverride: autoStreamRequestName
             });
             streamingOperations.forEach((streamingOperation) => {
                 streamingOperation.examples = streamingOperation.examples.filter(
@@ -149,7 +167,7 @@ function getRequestBody({
         ? context.resolveRequestBodyReference(operation.requestBody)
         : operation.requestBody;
 
-    let jsonMediaObject = getApplicationJsonSchemaMediaObjectFromContent({
+    const jsonMediaObject = getApplicationJsonSchemaMediaObjectFromContent({
         content: resolvedRequestBody.content,
         context
     });
@@ -176,9 +194,9 @@ function getRequestBody({
         properties: {
             ...resolvedRequestBodySchema.properties,
             [streamingExtension.streamConditionProperty]: {
+                ...(streamingProperty ?? {}),
                 type: "boolean",
-                "x-fern-boolean-literal": isStreaming,
-                ...(streamingProperty ?? {})
+                "x-fern-boolean-literal": isStreaming
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any
         },

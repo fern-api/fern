@@ -11,13 +11,13 @@ import (
 )
 
 var (
-	nodeFieldId       = big.NewInt(1 << 0)
+	nodeFieldID       = big.NewInt(1 << 0)
 	nodeFieldLabel    = big.NewInt(1 << 1)
 	nodeFieldMetadata = big.NewInt(1 << 2)
 )
 
 type Node struct {
-	Id       string            `json:"id" url:"id"`
+	ID       string            `json:"id" url:"id"`
 	Label    *string           `json:"label,omitempty" url:"label,omitempty"`
 	Metadata *commons.Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 
@@ -28,11 +28,11 @@ type Node struct {
 	rawJSON         json.RawMessage
 }
 
-func (n *Node) GetId() string {
+func (n *Node) GetID() string {
 	if n == nil {
 		return ""
 	}
-	return n.Id
+	return n.ID
 }
 
 func (n *Node) GetLabel() *string {
@@ -50,6 +50,9 @@ func (n *Node) GetMetadata() *commons.Metadata {
 }
 
 func (n *Node) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -60,11 +63,11 @@ func (n *Node) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (n *Node) SetId(id string) {
-	n.Id = id
-	n.require(nodeFieldId)
+func (n *Node) SetID(id string) {
+	n.ID = id
+	n.require(nodeFieldID)
 }
 
 // SetLabel sets the Label field and marks it as non-optional;
@@ -109,6 +112,9 @@ func (n *Node) MarshalJSON() ([]byte, error) {
 }
 
 func (n *Node) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -142,6 +148,9 @@ func (t *Tree) GetNodes() []*Node {
 }
 
 func (t *Tree) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -187,6 +196,9 @@ func (t *Tree) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Tree) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value

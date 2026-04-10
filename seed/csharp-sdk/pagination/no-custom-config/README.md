@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedPagination)](https://nuget.org/packages/SeedPagination)
+[![nuget shield](https://img.shields.io/nuget/v/Fernpagination)](https://nuget.org/packages/Fernpagination)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -17,6 +17,8 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Raw Response](#raw-response)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query Parameters](#additional-query-parameters)
   - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
@@ -27,7 +29,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedPagination
+dotnet add package Fernpagination
 ```
 
 ## Reference
@@ -170,6 +172,38 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 
 // For the default behavior, simply await without .WithRawResponse()
 var data = await client.Complex.SearchAsync(...);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
+
+```csharp
+var response = await client.Complex.SearchAsync(
+    ...,
+    new RequestOptions {
+        AdditionalHeaders = new Dictionary<string, string?>
+        {
+            { "X-Custom-Header", "custom-value" }
+        }
+    }
+);
+```
+
+### Additional Query Parameters
+
+If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
+
+```csharp
+var response = await client.Complex.SearchAsync(
+    ...,
+    new RequestOptions {
+        AdditionalQueryParameters = new Dictionary<string, string>
+        {
+            { "custom_param", "custom-value" }
+        }
+    }
+);
 ```
 
 ### Forward Compatible Enums

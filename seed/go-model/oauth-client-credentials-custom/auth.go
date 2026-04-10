@@ -5,6 +5,7 @@ package oauthclientcredentials
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/oauth-client-credentials-custom/fern/internal"
 )
 

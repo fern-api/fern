@@ -26,6 +26,7 @@ async fn main() {
             &EchoRequest {
                 name: "Hello world!".to_string(),
                 size: 20,
+                ..Default::default()
             },
             None,
         )
@@ -117,3 +118,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

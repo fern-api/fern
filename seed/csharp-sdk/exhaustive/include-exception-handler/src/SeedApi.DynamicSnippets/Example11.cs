@@ -1,5 +1,4 @@
 using SeedExhaustive;
-using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -13,10 +12,8 @@ public class Example11
             }
         );
 
-        await client.Endpoints.HttpMethods.TestPostAsync(
-            new ObjectWithRequiredField {
-                String = "string"
-            }
+        await client.Endpoints.HttpMethods.TestGetAsync(
+            "id"
         );
     }
 

@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
-    pleaseinhere "github.com/examples/fern/pleaseinhere"
-    context "context"
 )
 
 func do() {
@@ -17,7 +18,7 @@ func do() {
         ),
     )
     request := &pleaseinhere.Movie{
-        Id: "id",
+        ID: "id",
         Prequel: pleaseinhere.String(
             "prequel",
         ),

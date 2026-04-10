@@ -1,7 +1,7 @@
 import { docsYml, getColorFromRawConfig, getColorType } from "@fern-api/configuration-loader";
 import tinycolor from "tinycolor2";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const AccentColorContrastRule: Rule = {
     name: "accent-color-contrast",

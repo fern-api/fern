@@ -1,4 +1,6 @@
 using SeedExhaustive;
+using SeedExhaustive.Types.Object;
+using System.Globalization;
 
 namespace Usage;
 
@@ -12,8 +14,11 @@ public class Example31
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnStringAsync(
-            "string"
+        await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
+            new ObjectWithDatetimeLikeString {
+                DatetimeLikeString = "datetimeLikeString",
+                ActualDatetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal)
+            }
         );
     }
 

@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:22.12-slim
 
 ENV PNPM_STORE_PATH=/.pnpm-cache
 ENV YARN_CACHE_FOLDER=/.yarn-cache
@@ -12,10 +12,10 @@ RUN corepack prepare yarn@1.22.22
 
 RUN pnpm add -g typescript@~5.7.2 \
   prettier@3.7.4 \
-  oxfmt@0.27.0 \
-  @biomejs/biome@2.3.11 \
-  oxlint@1.42.0 \
-  oxlint-tsgolint@0.11.4 \
+  oxfmt@0.42.0 \
+  @biomejs/biome@2.4.3 \
+  oxlint@1.57.0 \
+  oxlint-tsgolint@0.17.4 \
   @types/node@^18.19.70 \
   webpack@^5.97.1 \
   msw@2.11.2 \

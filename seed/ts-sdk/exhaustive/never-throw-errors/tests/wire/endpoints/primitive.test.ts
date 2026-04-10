@@ -9,6 +9,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/primitive/string")
@@ -20,7 +21,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnString("string");
         expect(response).toEqual({
-            body: "string",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -32,6 +33,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = 1;
         const rawResponseBody = 1;
+
         server
             .mockEndpoint()
             .post("/primitive/integer")
@@ -43,7 +45,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnInt(1);
         expect(response).toEqual({
-            body: 1,
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -55,6 +57,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = 1000000;
         const rawResponseBody = 1000000;
+
         server
             .mockEndpoint()
             .post("/primitive/long")
@@ -66,7 +69,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnLong(1000000);
         expect(response).toEqual({
-            body: 1000000,
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -78,6 +81,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = 1.1;
         const rawResponseBody = 1.1;
+
         server
             .mockEndpoint()
             .post("/primitive/double")
@@ -89,7 +93,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnDouble(1.1);
         expect(response).toEqual({
-            body: 1.1,
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -101,6 +105,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = true;
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .post("/primitive/boolean")
@@ -112,7 +117,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnBool(true);
         expect(response).toEqual({
-            body: true,
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -124,6 +129,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "2024-01-15T09:30:00Z";
         const rawResponseBody = "2024-01-15T09:30:00Z";
+
         server
             .mockEndpoint()
             .post("/primitive/datetime")
@@ -135,7 +141,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
         expect(response).toEqual({
-            body: "2024-01-15T09:30:00Z",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -147,6 +153,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "2023-01-15";
         const rawResponseBody = "2023-01-15";
+
         server
             .mockEndpoint()
             .post("/primitive/date")
@@ -158,7 +165,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnDate("2023-01-15");
         expect(response).toEqual({
-            body: "2023-01-15",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -170,6 +177,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
         const rawResponseBody = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
+
         server
             .mockEndpoint()
             .post("/primitive/uuid")
@@ -181,7 +189,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
         expect(response).toEqual({
-            body: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -193,6 +201,7 @@ describe("PrimitiveClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "SGVsbG8gd29ybGQh";
         const rawResponseBody = "SGVsbG8gd29ybGQh";
+
         server
             .mockEndpoint()
             .post("/primitive/base64")
@@ -204,7 +213,7 @@ describe("PrimitiveClient", () => {
 
         const response = await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
         expect(response).toEqual({
-            body: "SGVsbG8gd29ybGQh",
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

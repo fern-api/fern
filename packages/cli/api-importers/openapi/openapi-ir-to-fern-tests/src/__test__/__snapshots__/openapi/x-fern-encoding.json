@@ -6,6 +6,25 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
+          "Any": {
+            "docs": undefined,
+            "encoding": {
+              "proto": {
+                "type": "google.protobuf.Any",
+              },
+            },
+            "extra-properties": true,
+            "inline": undefined,
+            "properties": {
+              "@type": {
+                "docs": "The type of the serialized message.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "Metadata": {
             "encoding": {
               "proto": {
@@ -53,6 +72,17 @@
         type: google.protobuf.Value
     source:
       openapi: ../openapi.yml
+  Any:
+    properties:
+      '@type':
+        type: optional<string>
+        docs: The type of the serialized message.
+    extra-properties: true
+    source:
+      openapi: ../openapi.yml
+    encoding:
+      proto:
+        type: google.protobuf.Any
 ",
     },
   },

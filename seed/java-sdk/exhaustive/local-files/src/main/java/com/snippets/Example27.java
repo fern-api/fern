@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
+import com.fern.sdk.resources.types.object.types.ObjectWithMixedRequiredAndOptionalFields;
 
 public class Example27 {
     public static void main(String[] args) {
@@ -11,11 +11,13 @@ public class Example27 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().params().getWithPathAndQuery(
-            "param",
-            GetWithPathAndQuery
+        client.endpoints().object().getAndReturnWithMixedRequiredAndOptionalFields(
+            ObjectWithMixedRequiredAndOptionalFields
                 .builder()
-                .query("query")
+                .requiredString("requiredString")
+                .requiredInteger(1)
+                .requiredLong(1000000L)
+                .optionalString("optionalString")
                 .build()
         );
     }

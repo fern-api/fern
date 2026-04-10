@@ -21,6 +21,7 @@ export const WebSocketChannel: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: WebSocketName,
         displayName: core.serialization.string().optional(),
+        connectMethodName: core.serialization.string().optional(),
         baseUrl: EnvironmentBaseUrlId.optional(),
         path: HttpPath,
         auth: core.serialization.boolean(),
@@ -37,6 +38,7 @@ export declare namespace WebSocketChannel {
     export interface Raw extends Declaration.Raw {
         name: WebSocketName.Raw;
         displayName?: string | null;
+        connectMethodName?: string | null;
         baseUrl?: EnvironmentBaseUrlId.Raw | null;
         path: HttpPath.Raw;
         auth: boolean;

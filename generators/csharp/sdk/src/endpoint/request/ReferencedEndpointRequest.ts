@@ -1,13 +1,18 @@
 import { ast } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type HttpEndpoint = FernIr.HttpEndpoint;
+type SdkRequest = FernIr.SdkRequest;
+type TypeReference = FernIr.TypeReference;
+
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export class ReferencedEndpointRequest extends EndpointRequest {
     private requestBodyShape: TypeReference;
@@ -41,7 +46,7 @@ export class ReferencedEndpointRequest extends EndpointRequest {
             code: this.csharp.codeblock((writer) => {
                 // Start with HeadersBuilder.Builder instance
                 writer.write(
-                    `var ${this.names.variables.headers} = await new ${this.namespaces.core}.HeadersBuilder.Builder()`
+                    `var ${this.names.variables.headers} = await new ${this.namespaces.qualifiedCore}.HeadersBuilder.Builder()`
                 );
                 writer.indent();
 
@@ -86,6 +91,9 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getRequestType(): RawClient.RequestBodyType | undefined {
+        if (this.endpoint.requestBody?.contentType === "application/x-www-form-urlencoded") {
+            return "urlencoded";
+        }
         return "json";
     }
 }

@@ -6,13 +6,12 @@ on:
     branches:
       - main
 
-  # Runs when triggered manually
+  # Runs when triggered manually (supports testing from any branch)
   workflow_dispatch:
     inputs:
       branch:
-        description: "Branch to test (defaults to main)"
+        description: "Branch to test (defaults to the branch the workflow is dispatched from)"
         required: false
-        default: "main"
         type: string
 
   # Runs when a generator is published successfully
@@ -27,14 +26,17 @@ on:
     branches:
       - main
 
-# Cancel previous workflows when another is triggered
+# Let the current run finish, but cancel any queued (pending) runs in favor of the newest
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
+  DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
 
 jobs:
   # Determine which generator to test based on the triggering workflow
@@ -72,19 +74,15 @@ jobs:
             echo 'generators=["ts-sdk", "java-sdk", "go-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
           fi
 
-  test-remote-local-parity:
+  compile-and-build:
     needs: determine-generator
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    strategy:
-      fail-fast: false
-      matrix:
-        generator: ${{ fromJson(needs.determine-generator.outputs.generators) }}
+    runs-on: Seed
+    timeout-minutes: 30
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.branch || 'main' }}
+          ref: ${{ inputs.branch || github.ref }}
 
       - name: Install
         uses: ./.github/actions/install
@@ -98,8 +96,61 @@ jobs:
       - name: Build Seed CLI
         run: pnpm seed:build
 
+      - name: Upload Seed CLI
+        uses: actions/upload-artifact@v6
+        with:
+          name: seed-cli
+          path: packages/seed/dist/
+          retention-days: 1
+
+      - name: Upload Fern CLI
+        uses: actions/upload-artifact@v6
+        with:
+          name: fern-cli
+          path: packages/cli/cli/dist/prod/
+          retention-days: 1
+
+  test-remote-local-parity:
+    needs: [determine-generator, compile-and-build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      # Run one generator at a time to prevent branch name collisions on the remote
+      # (Fiddle) target repo. Fiddle uses minute-level timestamps for branch names
+      # (e.g. fern-bot/2026-02-17T16-39Z) without a generator-specific prefix, so
+      # concurrent jobs can overwrite each other's branches and produce false parity
+      # failures. This can be removed once Fiddle includes the generator name in its
+      # branch naming (matching the local generation fix in PR #12331).
+      max-parallel: 1
+      matrix:
+        generator: ${{ fromJson(needs.determine-generator.outputs.generators) }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.branch || github.ref }}
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Download Seed CLI
+        uses: actions/download-artifact@v7
+        with:
+          name: seed-cli
+          path: packages/seed/dist/
+
+      - name: Download Fern CLI
+        uses: actions/download-artifact@v7
+        with:
+          name: fern-cli
+          path: packages/cli/cli/dist/prod/
+
+      - name: Restore artifact permissions
+        run: chmod +x packages/cli/cli/dist/prod/cli.cjs packages/seed/dist/cli.cjs
+
       - name: Run Seed Test Remote-Local (${{ matrix.generator }})
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           timeout_minutes: 30
           max_attempts: 5

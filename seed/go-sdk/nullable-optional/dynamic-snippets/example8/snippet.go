@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/nullable-optional/fern"
     client "github.com/nullable-optional/fern/client"
     option "github.com/nullable-optional/fern/option"
-    fern "github.com/nullable-optional/fern"
-    context "context"
 )
 
 func do() {
@@ -30,14 +31,14 @@ func do() {
             Email: &fern.EmailNotification{
                 EmailAddress: "emailAddress",
                 Subject: "subject",
-                HtmlContent: fern.String(
+                HTMLContent: fern.String(
                     "htmlContent",
                 ),
             },
         },
         OptionalUnion: &fern.SearchResult{
             User: &fern.UserResponse{
-                Id: "id",
+                ID: "id",
                 Username: "username",
                 Email: fern.String(
                     "email",
@@ -65,10 +66,10 @@ func do() {
                     Country: fern.String(
                         "country",
                     ),
-                    BuildingId: fern.String(
+                    BuildingID: fern.String(
                         "buildingId",
                     ),
-                    TenantId: fern.String(
+                    TenantID: fern.String(
                         "tenantId",
                     ),
                 },
@@ -93,15 +94,15 @@ func do() {
             Country: fern.String(
                 "country",
             ),
-            BuildingId: fern.String(
+            BuildingID: fern.String(
                 "buildingId",
             ),
-            TenantId: fern.String(
+            TenantID: fern.String(
                 "tenantId",
             ),
         },
         OptionalObject: &fern.Organization{
-            Id: "id",
+            ID: "id",
             Name: "name",
             Domain: fern.String(
                 "domain",

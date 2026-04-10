@@ -1,11 +1,11 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
 public partial class ReferenceClient : IReferenceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ReferenceClient(RawClient client)
     {
@@ -28,7 +28,6 @@ public partial class ReferenceClient : IReferenceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "reference",
                     Body = request,
@@ -40,7 +39,9 @@ public partial class ReferenceClient : IReferenceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<SendResponse>(responseBody)!;
@@ -66,7 +67,9 @@ public partial class ReferenceClient : IReferenceClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedLiteralApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -79,20 +82,12 @@ public partial class ReferenceClient : IReferenceClient
     /// await client.Reference.SendAsync(
     ///     new SendRequest
     ///     {
-    ///         Prompt = "You are a helpful assistant",
-    ///         Stream = false,
-    ///         Context = "You're super wise",
     ///         Query = "What is the weather today",
     ///         ContainerObject = new ContainerObject
     ///         {
     ///             NestedObjects = new List&lt;NestedObjectWithLiterals&gt;()
     ///             {
-    ///                 new NestedObjectWithLiterals
-    ///                 {
-    ///                     Literal1 = "literal1",
-    ///                     Literal2 = "literal2",
-    ///                     StrProp = "strProp",
-    ///                 },
+    ///                 new NestedObjectWithLiterals { StrProp = "strProp" },
     ///             },
     ///         },
     ///     }

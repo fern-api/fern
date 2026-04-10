@@ -7,12 +7,12 @@ import {
 } from "@fern-api/ir-sdk";
 import { AbstractSpecConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
-import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter";
-import { ExampleConverter } from "./message/ExampleConverter";
-import { ProtofileConverterContext } from "./ProtofileConverterContext";
-import { ServiceConverter } from "./service/ServiceConverter";
-import { initializeEmptyServiceExample } from "./utils/InitializeEmptyServiceExample";
-import { SOURCE_CODE_INFO_PATH_STARTERS } from "./utils/PathFieldNumbers";
+import { EnumOrMessageConverter } from "./message/EnumOrMessageConverter.js";
+import { ExampleConverter } from "./message/ExampleConverter.js";
+import { ProtofileConverterContext } from "./ProtofileConverterContext.js";
+import { ServiceConverter } from "./service/ServiceConverter.js";
+import { initializeEmptyServiceExample } from "./utils/InitializeEmptyServiceExample.js";
+import { SOURCE_CODE_INFO_PATH_STARTERS } from "./utils/PathFieldNumbers.js";
 
 export declare namespace ProtofileConverter {
     interface Args extends AbstractSpecConverter.Args<ProtofileConverterContext> {}

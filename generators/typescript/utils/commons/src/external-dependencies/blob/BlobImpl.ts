@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { ExternalDependency } from "../ExternalDependency";
-import { Blob_ } from "./Blob";
+import { ExternalDependency } from "../ExternalDependency.js";
+import { Blob_ } from "./Blob.js";
 
 export class BlobImpl extends ExternalDependency implements Blob_ {
     protected override PACKAGE = { name: "buffer" };

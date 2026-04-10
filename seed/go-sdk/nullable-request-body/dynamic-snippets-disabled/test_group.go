@@ -67,12 +67,12 @@ func (t *TestMethodNameTestGroupRequest) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	plainObjectFieldId   = big.NewInt(1 << 0)
+	plainObjectFieldID   = big.NewInt(1 << 0)
 	plainObjectFieldName = big.NewInt(1 << 1)
 )
 
 type PlainObject struct {
-	Id   *string `json:"id,omitempty" url:"id,omitempty"`
+	ID   *string `json:"id,omitempty" url:"id,omitempty"`
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -82,11 +82,11 @@ type PlainObject struct {
 	rawJSON         json.RawMessage
 }
 
-func (p *PlainObject) GetId() *string {
+func (p *PlainObject) GetID() *string {
 	if p == nil {
 		return nil
 	}
-	return p.Id
+	return p.ID
 }
 
 func (p *PlainObject) GetName() *string {
@@ -97,6 +97,9 @@ func (p *PlainObject) GetName() *string {
 }
 
 func (p *PlainObject) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -107,11 +110,11 @@ func (p *PlainObject) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PlainObject) SetId(id *string) {
-	p.Id = id
-	p.require(plainObjectFieldId)
+func (p *PlainObject) SetID(id *string) {
+	p.ID = id
+	p.require(plainObjectFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -149,6 +152,9 @@ func (p *PlainObject) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PlainObject) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value

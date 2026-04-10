@@ -53,7 +53,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Commons::Types::ProblemId] :problem_id
+      # @option params [Seed::Commons::Types::ProblemID] :problem_id
       #
       # @return [Seed::Problem::Types::UpdateProblemResponse]
       def update_problem(request_options: {}, **params)
@@ -61,7 +61,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/problem-crud/update/#{params[:problem_id]}",
+          path: "/problem-crud/update/#{URI.encode_uri_component(params[:problem_id].to_s)}",
           body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h,
           request_options: request_options
         )
@@ -88,7 +88,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Commons::Types::ProblemId] :problem_id
+      # @option params [Seed::Commons::Types::ProblemID] :problem_id
       #
       # @return [untyped]
       def delete_problem(request_options: {}, **params)
@@ -96,7 +96,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/problem-crud/delete/#{params[:problem_id]}",
+          path: "/problem-crud/delete/#{URI.encode_uri_component(params[:problem_id].to_s)}",
           request_options: request_options
         )
         begin

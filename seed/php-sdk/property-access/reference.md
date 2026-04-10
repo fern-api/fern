@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-&gt;createUser($request) -> User</code></summary>
+<details><summary><code>$client-&gt;createUser($request) -> ?User</code></summary>
 <dl>
 <dd>
 
@@ -51,3 +51,4 @@ $client->createUser(
 </dd>
 </dl>
 </details>
+

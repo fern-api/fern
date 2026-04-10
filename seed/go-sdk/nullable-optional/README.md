@@ -30,9 +30,10 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/nullable-optional/fern/client"
-    fern "github.com/nullable-optional/fern"
     context "context"
+
+    fern "github.com/nullable-optional/fern"
+    client "github.com/nullable-optional/fern/client"
 )
 
 func do() {
@@ -57,10 +58,10 @@ func do() {
             Country: fern.String(
                 "country",
             ),
-            BuildingId: fern.String(
+            BuildingID: fern.String(
                 "buildingId",
             ),
-            TenantId: fern.String(
+            TenantID: fern.String(
                 "tenantId",
             ),
         },

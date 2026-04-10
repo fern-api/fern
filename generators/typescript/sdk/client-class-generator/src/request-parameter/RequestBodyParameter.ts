@@ -1,25 +1,25 @@
-import { ExampleEndpointCall, HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { AbstractRequestParameter } from "./AbstractRequestParameter";
+import { AbstractRequestParameter } from "./AbstractRequestParameter.js";
 
 export declare namespace RequestBodyParameter {
     export interface Init extends AbstractRequestParameter.Init {
-        requestBodyReference: HttpRequestBodyReference;
+        requestBodyReference: FernIr.HttpRequestBodyReference;
     }
 }
 
 export class RequestBodyParameter extends AbstractRequestParameter {
-    private requestBodyReference: HttpRequestBodyReference;
+    private requestBodyReference: FernIr.HttpRequestBodyReference;
 
     constructor({ requestBodyReference, ...superInit }: RequestBodyParameter.Init) {
         super(superInit);
         this.requestBodyReference = requestBodyReference;
     }
 
-    public getType(context: SdkContext): ts.TypeNode {
+    public getType(context: FileContext): ts.TypeNode {
         const type = context.type.getReferenceToType(this.requestBodyReference.requestBodyType);
         return type.requestTypeNode ?? type.typeNode;
     }
@@ -36,7 +36,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         throw new Error("Cannot get reference to header because request is not wrapped");
     }
 
-    public getAllQueryParameters(): QueryParameter[] {
+    public getAllQueryParameters(): FernIr.QueryParameter[] {
         return [];
     }
 
@@ -52,7 +52,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         throw new Error("Cannot reference query parameter because request is not wrapped");
     }
 
-    public isOptional({ context }: { context: SdkContext }): boolean {
+    public isOptional({ context }: { context: FileContext }): boolean {
         const type = context.type.getReferenceToType(this.requestBodyReference.requestBodyType);
         return type.isOptional;
     }
@@ -62,8 +62,8 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         example,
         opts
     }: {
-        context: SdkContext;
-        example: ExampleEndpointCall;
+        context: FileContext;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined {
         if (example.request == null || example.request.type !== "reference") {
@@ -73,7 +73,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         return generatedExample.build(context, opts);
     }
 
-    protected getParameterType(context: SdkContext): { type: ts.TypeNode; hasQuestionToken: boolean } {
+    protected getParameterType(context: FileContext): { type: ts.TypeNode; hasQuestionToken: boolean } {
         const type = context.type.getReferenceToType(this.requestBodyReference.requestBodyType);
         return {
             type: type.requestTypeNodeWithoutUndefined ?? type.typeNodeWithoutUndefined,

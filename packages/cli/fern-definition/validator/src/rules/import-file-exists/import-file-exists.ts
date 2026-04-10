@@ -2,7 +2,7 @@ import { getAllDefinitionFiles } from "@fern-api/api-workspace-commons";
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import chalk from "chalk";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const ImportFileExistsRule: Rule = {
     name: "import-file-exists",

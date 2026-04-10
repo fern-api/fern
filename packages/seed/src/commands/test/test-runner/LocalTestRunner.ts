@@ -4,11 +4,11 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { runNativeGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import path from "path";
-import { LocalBuildInfo } from "../../../config/api";
-import { runScript } from "../../../runScript";
-import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";
-import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
-import { TestRunner } from "./TestRunner";
+import { LocalBuildInfo } from "../../../config/api/index.js";
+import { runScript } from "../../../runScript.js";
+import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants.js";
+import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation.js";
+import { TestRunner } from "./TestRunner.js";
 
 export class LocalTestRunner extends TestRunner {
     public async build(): Promise<void> {
@@ -18,8 +18,8 @@ export class LocalTestRunner extends TestRunner {
         );
         const result = await runScript({
             commands: localConfig.buildCommand,
-            doNotPipeOutput: false,
-            logger: CONSOLE_LOGGER,
+            doNotPipeOutput: !this.shouldPipeOutput(),
+            logger: this.shouldPipeOutput() ? CONSOLE_LOGGER : undefined,
             workingDir
         });
         if (result.exitCode !== 0) {
@@ -55,7 +55,10 @@ export class LocalTestRunner extends TestRunner {
             shouldGenerateDynamicSnippetTests,
             inspect = false,
             license,
-            smartCasing
+            smartCasing,
+            organization,
+            absolutePathToFernConfig,
+            skipAutogenerationIfManualExamplesExist
         } = args;
 
         const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -83,8 +86,8 @@ export class LocalTestRunner extends TestRunner {
 
         await runNativeGenerationForSeed(
             {
-                organization: DUMMY_ORGANIZATION,
-                absolutePathToFernConfig: absolutePathToFernDefinition,
+                organization: organization ?? DUMMY_ORGANIZATION,
+                absolutePathToFernConfig: absolutePathToFernConfig ?? absolutePathToFernDefinition,
                 workspace: fernWorkspace,
                 generatorGroup,
                 context: taskContext,
@@ -93,7 +96,8 @@ export class LocalTestRunner extends TestRunner {
                 shouldGenerateDynamicSnippetTests,
                 skipUnstableDynamicSnippetTests: true,
                 inspect,
-                ai: undefined
+                ai: undefined,
+                skipAutogenerationIfManualExamplesExist
             },
             commands,
             this.generator.workspaceConfig.test.local?.workingDirectory,

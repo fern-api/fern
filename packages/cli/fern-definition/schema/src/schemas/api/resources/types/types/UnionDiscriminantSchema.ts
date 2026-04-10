@@ -4,4 +4,10 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface UnionDiscriminantSchema extends FernDefinition.WithName {
     value: string;
+    /**
+     * Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+     * "data" means the discriminator is within the union data itself.
+     * "protocol" means the discriminator is at the SSE protocol level.
+     */
+    context?: FernDefinition.UnionDiscriminatorContext;
 }

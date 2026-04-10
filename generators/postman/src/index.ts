@@ -1,1 +1,0 @@
-export { convertToPostmanCollection } from "./convertToPostmanCollection";

@@ -1,4 +1,4 @@
-irVersion: v62
+irVersion: v66
 displayName: PHP Model
 image: fernapi/fern-php-model
 changelogLocation: ../../generators/php/model/versions.yml
@@ -46,3 +46,4 @@ allowedFailures:
   - circular-references-advanced
   # Java-specific fixture for staged builder ordering
   - java-staged-builder-ordering
+  - server-sent-events-openapi

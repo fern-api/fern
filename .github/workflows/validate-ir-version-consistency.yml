@@ -22,19 +22,23 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   validate-ir-versions:
     name: Validate IR Version Consistency
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             seed
             generators
             scripts
             .github
+          filter: tree:0
 
       - name: Validate IR version consistency
         run: ./scripts/validate-ir-version-consistency.sh

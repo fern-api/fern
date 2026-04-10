@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/oauth-client-credentials-nested-root/fern/client"
     option "github.com/oauth-client-credentials-nested-root/fern/option"
-    context "context"
 )
 
 func do() {
@@ -16,7 +17,7 @@ func do() {
             "<clientSecret>",
         ),
     )
-    client.Nested.Api.GetSomething(
+    client.Nested.API.GetSomething(
         context.TODO(),
     )
 }

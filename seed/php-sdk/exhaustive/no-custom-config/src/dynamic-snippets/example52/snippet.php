@@ -3,7 +3,6 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,10 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->reqWithHeaders->getWithCustomHeader(
-    new ReqWithHeaders([
-        'xTestServiceHeader' => 'X-TEST-SERVICE-HEADER',
-        'xTestEndpointHeader' => 'X-TEST-ENDPOINT-HEADER',
-        'body' => 'string',
-    ]),
+$client->endpoints->primitive->getAndReturnUuid(
+    'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
 );

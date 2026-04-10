@@ -14,9 +14,10 @@ public class Example40
             }
         );
 
-        await client.Endpoints.Put.AddAsync(
-            new PutRequest {
-                Id = "id"
+        await client.Endpoints.Params.ModifyWithInlinePathAsync(
+            new ModifyResourceAtInlinedPath {
+                Param = "param",
+                Body = "string"
             }
         );
     }

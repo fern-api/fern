@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { getRequestPropertyComponents, getResponsePropertyComponents } from "./services/convertProperty";
+import { getRequestPropertyComponents, getResponsePropertyComponents } from "./services/convertProperty.js";
 
 const DEFAULT_TOKEN_ENDPOINT: Omit<TokenEndpoint, "endpoint"> = {
     requestProperties: {

@@ -2,9 +2,9 @@ import { assertNever } from "@fern-api/core-utils";
 import { PrimitiveTypeV1, TypeReference } from "@fern-api/ir-sdk";
 import { JSONSchema4 } from "json-schema";
 
-import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext";
-import { convertContainerToJsonSchema } from "./containerToJsonSchema";
-import { convertTypeDeclarationToJsonSchema } from "./convertTypeDeclarationToJsonSchema";
+import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext.js";
+import { convertContainerToJsonSchema } from "./containerToJsonSchema.js";
+import { convertTypeDeclarationToJsonSchema } from "./convertTypeDeclarationToJsonSchema.js";
 
 export declare namespace convertTypeReferenceToJsonSchema {
     interface Args {
@@ -119,6 +119,10 @@ function convertPrimitiveTypeReferenceToJsonSchema(primitive: PrimitiveTypeV1): 
             return {
                 type: "string",
                 pattern: "^-?[0-9]+$"
+            };
+        case PrimitiveTypeV1.DateTimeRfc2822:
+            return {
+                type: "string"
             };
         default:
             assertNever(primitive);

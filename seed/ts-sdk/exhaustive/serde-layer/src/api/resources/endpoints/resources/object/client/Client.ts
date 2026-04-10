@@ -576,6 +576,415 @@ export class ObjectClient {
     }
 
     /**
+     * @param {SeedExhaustive.types.ObjectWithUnknownField} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithUnknownField({
+     *         unknown: {
+     *             "$ref": "https://example.com/schema"
+     *         }
+     *     })
+     */
+    public getAndReturnWithUnknownField(
+        request: SeedExhaustive.types.ObjectWithUnknownField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithUnknownField> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithUnknownField(request, requestOptions));
+    }
+
+    private async __getAndReturnWithUnknownField(
+        request: SeedExhaustive.types.ObjectWithUnknownField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithUnknownField>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-unknown-field",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.types.ObjectWithUnknownField.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.types.ObjectWithUnknownField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/object/get-and-return-with-unknown-field",
+        );
+    }
+
+    /**
+     * @param {SeedExhaustive.types.ObjectWithDocumentedUnknownType} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
+     *         documentedUnknownType: {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    public getAndReturnWithDocumentedUnknownType(
+        request: SeedExhaustive.types.ObjectWithDocumentedUnknownType,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithDocumentedUnknownType> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnWithDocumentedUnknownType(request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnWithDocumentedUnknownType(
+        request: SeedExhaustive.types.ObjectWithDocumentedUnknownType,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithDocumentedUnknownType>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-documented-unknown-type",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.types.ObjectWithDocumentedUnknownType.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.types.ObjectWithDocumentedUnknownType.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/object/get-and-return-with-documented-unknown-type",
+        );
+    }
+
+    /**
+     * @param {SeedExhaustive.types.MapOfDocumentedUnknownType} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnMapOfDocumentedUnknownType({
+     *         "string": {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    public getAndReturnMapOfDocumentedUnknownType(
+        request: SeedExhaustive.types.MapOfDocumentedUnknownType,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.MapOfDocumentedUnknownType> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnMapOfDocumentedUnknownType(request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnMapOfDocumentedUnknownType(
+        request: SeedExhaustive.types.MapOfDocumentedUnknownType,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.MapOfDocumentedUnknownType>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-map-of-documented-unknown-type",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.types.MapOfDocumentedUnknownType.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.types.MapOfDocumentedUnknownType.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/object/get-and-return-map-of-documented-unknown-type",
+        );
+    }
+
+    /**
+     * Tests that dynamic snippets include all required properties in the
+     * object initializer, even when the example omits some required fields.
+     *
+     * @param {SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields({
+     *         requiredString: "hello",
+     *         requiredInteger: 0,
+     *         optionalString: "world",
+     *         requiredLong: 0
+     *     })
+     */
+    public getAndReturnWithMixedRequiredAndOptionalFields(
+        request: SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnWithMixedRequiredAndOptionalFields(request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnWithMixedRequiredAndOptionalFields(
+        request: SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithMixedRequiredAndOptionalFields>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-mixed-required-and-optional-fields",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.types.ObjectWithMixedRequiredAndOptionalFields.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.types.ObjectWithMixedRequiredAndOptionalFields.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/object/get-and-return-with-mixed-required-and-optional-fields",
+        );
+    }
+
+    /**
+     * Tests that dynamic snippets recursively construct default objects for
+     * required properties whose type is a named object. When the example
+     * omits the nested object, the generator should construct a default
+     * initializer with the nested object's required properties filled in.
+     *
+     * @param {SeedExhaustive.types.ObjectWithRequiredNestedObject} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithRequiredNestedObject({
+     *         requiredString: "hello",
+     *         requiredObject: {
+     *             string: "nested",
+     *             nestedObject: {}
+     *         }
+     *     })
+     */
+    public getAndReturnWithRequiredNestedObject(
+        request: SeedExhaustive.types.ObjectWithRequiredNestedObject,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredNestedObject> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnWithRequiredNestedObject(request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnWithRequiredNestedObject(
+        request: SeedExhaustive.types.ObjectWithRequiredNestedObject,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredNestedObject>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-required-nested-object",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.types.ObjectWithRequiredNestedObject.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.types.ObjectWithRequiredNestedObject.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/object/get-and-return-with-required-nested-object",
+        );
+    }
+
+    /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".

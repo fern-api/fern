@@ -24,10 +24,12 @@
 //!                 user: User {
 //!                     name: Some("name".to_string()),
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+//!                     ..Default::default()
 //!                 },
 //!                 user_list: vec![Some(User {
 //!                     name: Some("name".to_string()),
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+//!                     ..Default::default()
 //!                 })],
 //!                 optional_deadline: Some(
 //!                     DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
@@ -42,24 +44,32 @@
 //!                     user: Some(User {
 //!                         name: Some("name".to_string()),
 //!                         tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+//!                         ..Default::default()
 //!                     }),
+//!                     ..Default::default()
 //!                 }),
 //!                 optional_user: Some(User {
 //!                     name: Some("name".to_string()),
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+//!                     ..Default::default()
 //!                 }),
 //!                 exclude_user: vec![Some(User {
 //!                     name: Some("name".to_string()),
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+//!                     ..Default::default()
 //!                 })],
 //!                 filter: vec![Some("filter".to_string())],
+//!                 tags: vec![Some("tags".to_string())],
+//!                 optional_tags: vec![Some("optionalTags".to_string())],
 //!                 neighbor: Some(SearchRequestNeighbor::User(User {
 //!                     name: Some("name".to_string()),
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+//!                     ..Default::default()
 //!                 })),
 //!                 neighbor_required: SearchRequestNeighborRequired::User(User {
 //!                     name: Some("name".to_string()),
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
+//!                     ..Default::default()
 //!                 }),
 //!             },
 //!             None,
@@ -78,15 +88,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
-pub use error::{ApiError};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
+pub use error::{ApiError, BuildError};

@@ -5,11 +5,11 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { join } from "path";
 import { describe, expect, it } from "vitest";
-import { LegacyApiSpecAdapter } from "../api/adapter/LegacyApiSpecAdapter";
-import { isOpenApiSpec } from "../api/config/OpenApiSpec";
-import { loadFernYml } from "../config/fern-yml/loadFernYml";
-import { WorkspaceLoader } from "../workspace/WorkspaceLoader";
-import { createTestContext } from "./utils/createTestContext";
+import { LegacyApiSpecAdapter } from "../api/adapter/LegacyApiSpecAdapter.js";
+import { isOpenApiSpec } from "../api/config/OpenApiSpec.js";
+import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
+import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
+import { createTestContext } from "./utils/createTestContext.js";
 
 const FIXTURES_DIR = AbsoluteFilePath.of(join(__dirname, "fixtures"));
 

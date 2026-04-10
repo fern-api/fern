@@ -1,1 +1,1 @@
-export * from "./name-registry";
+export * from "./name-registry.js";

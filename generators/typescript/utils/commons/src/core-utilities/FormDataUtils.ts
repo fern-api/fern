@@ -1,10 +1,10 @@
 import { ts } from "ts-morph";
 
-import { DependencyManager } from "../dependency-manager/DependencyManager";
-import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as FileManifest } from "./FileUtils";
-import { MANIFEST as RuntimeManifest } from "./Runtime";
-import { MANIFEST as UrlManifest } from "./UrlUtils";
+import { DependencyManager } from "../dependency-manager/DependencyManager.js";
+import { CoreUtility } from "./CoreUtility.js";
+import { MANIFEST as FileManifest } from "./FileUtils.js";
+import { MANIFEST as RuntimeManifest } from "./Runtime.js";
+import { MANIFEST as UrlManifest } from "./UrlUtils.js";
 
 export interface FormDataUtils {
     newFormData: () => ts.AwaitExpression;
@@ -30,7 +30,7 @@ export const MANIFEST: CoreUtility.Manifest = {
         if (formDataSupport === "Node16") {
             dependencyManager.addDependency("form-data", "^4.0.4");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
-            dependencyManager.addDependency("form-data-encoder", "^4.0.2");
+            dependencyManager.addDependency("form-data-encoder", "^4.1.0");
         }
     },
     dependsOn: [RuntimeManifest, UrlManifest, FileManifest],

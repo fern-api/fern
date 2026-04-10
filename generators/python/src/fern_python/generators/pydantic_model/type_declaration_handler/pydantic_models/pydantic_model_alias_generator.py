@@ -46,6 +46,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                     name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
                     type_hint=self._type_hint,
                     snippet=self._snippet,
+                    docs=self._docs,
                 ),
                 should_export=True,
             )
@@ -107,6 +108,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 boolean=lambda: "from_bool",
                 long_=lambda: "from_int",
                 date_time=lambda: "from_datetime",
+                date_time_rfc_2822=lambda: "from_datetime",
                 date=lambda: "from_date",
                 uuid_=lambda: "from_uuid",
                 base_64=lambda: "from_str",
@@ -136,6 +138,7 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
                 boolean=lambda: "get_as_bool",
                 long_=lambda: "get_as_int",
                 date_time=lambda: "get_as_datetime",
+                date_time_rfc_2822=lambda: "get_as_datetime",
                 date=lambda: "get_as_date",
                 uuid_=lambda: "get_as_uuid",
                 base_64=lambda: "get_as_str",

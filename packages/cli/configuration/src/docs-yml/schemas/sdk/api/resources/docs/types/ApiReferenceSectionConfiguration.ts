@@ -16,6 +16,12 @@ export interface ApiReferenceSectionConfiguration
     icon?: string;
     hidden?: boolean;
     skipSlug?: boolean;
+    /** Deprecated. Use `collapsible` and `collapsed-by-default` instead. */
+    collapsed?: FernDocsConfig.CollapsedValue;
+    /** Whether the section can be expanded/collapsed by the user in the sidebar. */
+    collapsible?: boolean;
+    /** Whether the section starts collapsed. Only meaningful when collapsible is true. */
+    collapsedByDefault?: boolean;
     availability?: FernDocsConfig.Availability;
     /** Settings for the api playground that affects all endpoints. */
     playground?: FernDocsConfig.PlaygroundSettings;

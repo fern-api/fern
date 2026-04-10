@@ -5,26 +5,27 @@ package alias
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/alias/fern/internal"
 )
 
 // An alias for type IDs.
-type TypeId = string
+type TypeID = string
 
 // A simple type with just a name.
 type Type struct {
-	Id   TypeId `json:"id" url:"id"`
+	ID   TypeID `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (t *Type) GetId() TypeId {
+func (t *Type) GetID() TypeID {
 	if t == nil {
 		return ""
 	}
-	return t.Id
+	return t.ID
 }
 
 func (t *Type) GetName() string {

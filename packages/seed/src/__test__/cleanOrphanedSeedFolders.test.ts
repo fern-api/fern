@@ -25,8 +25,8 @@ vi.mock("fs", () => ({
 import fs from "fs";
 import { rm } from "fs/promises";
 
-import * as Clean from "../commands/clean/cleanOrphanedSeedFolders";
-import { GeneratorWorkspace } from "../loadGeneratorWorkspaces";
+import * as Clean from "../commands/clean/cleanOrphanedSeedFolders.js";
+import { GeneratorWorkspace } from "../loadGeneratorWorkspaces.js";
 
 describe("cleanOrphanedSeedFolders", () => {
     beforeEach(() => {

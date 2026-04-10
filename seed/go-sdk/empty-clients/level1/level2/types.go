@@ -72,6 +72,9 @@ func (a *Address) Country() string {
 }
 
 func (a *Address) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
@@ -156,6 +159,9 @@ func (a *Address) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Address) String() string {
+	if a == nil {
+		return "<nil>"
+	}
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -198,6 +204,9 @@ func (p *Person) GetAddress() *Address {
 }
 
 func (p *Person) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -250,6 +259,9 @@ func (p *Person) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Person) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value

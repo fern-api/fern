@@ -44,6 +44,7 @@
           "description": "Demonstrates oneOf without discriminator or mapping.",
           "environments": [
             {
+              "audiences": undefined,
               "baseUrl": "https://api.example.com/v1",
               "id": "https://api.example.com/v1",
             },
@@ -317,7 +318,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": undefined,
+            "displayName": "ErrorVariantA",
             "type": {
               "default": undefined,
               "type": "id",
@@ -328,7 +329,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": undefined,
+            "displayName": "ErrorVariantB",
             "type": {
               "default": undefined,
               "type": "id",
@@ -411,7 +412,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": undefined,
+            "displayName": "OneOfVariantA",
             "type": {
               "default": undefined,
               "type": "id",
@@ -422,7 +423,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "displayName": undefined,
+            "displayName": "OneOfVariantB",
             "type": {
               "default": undefined,
               "type": "id",

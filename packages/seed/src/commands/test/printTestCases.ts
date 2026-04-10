@@ -1,6 +1,6 @@
 import { printTable } from "console-table-printer";
 
-import { TestRunner } from "./test-runner";
+import { TestRunner } from "./test-runner/index.js";
 
 export function printTestCases(result: TestRunner.TestResult[]): void {
     const items = result.map((r) => {

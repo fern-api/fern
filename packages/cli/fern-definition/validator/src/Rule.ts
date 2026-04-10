@@ -3,7 +3,7 @@ import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 
-import { DefinitionFileAstNodeTypes, PackageMarkerAstNodeTypes, RootApiFileAstNodeTypes } from "./ast";
+import { DefinitionFileAstNodeTypes, PackageMarkerAstNodeTypes, RootApiFileAstNodeTypes } from "./ast/index.js";
 
 export interface Rule {
     name: string;
@@ -34,4 +34,9 @@ export interface RuleRunnerArgs<FileSchema> {
 export interface RuleViolation {
     severity: "fatal" | "error" | "warning";
     message: string;
+}
+
+export interface NamedRuleVisitors {
+    name: string;
+    visitors: RuleVisitors;
 }

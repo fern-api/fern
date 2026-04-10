@@ -1,9 +1,12 @@
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { CsharpConfigSchema, is } from "../..";
-import { Generation } from "../../context/generation-info";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { Type } from "../types/IType";
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+
+import { Generation } from "../../context/generation-info.js";
+import { CsharpConfigSchema, is } from "../../index.js";
+
+import { Type } from "../types/IType.js";
 
 const generation = new Generation(
     {} as unknown as IntermediateRepresentation,
@@ -513,12 +516,12 @@ describe("Type support", () => {
     describe("systemType", () => {
         it("systemType", () => {
             const type = generation.System.Type;
-            expect(getTypeOutput(type)).toBe("System.Type");
+            expect(getTypeOutput(type)).toBe("global::System.Type");
         });
 
         it("optional systemType", () => {
             const type = generation.System.Type.asOptional();
-            expect(getTypeOutput(type)).toBe("System.Type?");
+            expect(getTypeOutput(type)).toBe("global::System.Type?");
         });
     });
 
@@ -1092,7 +1095,7 @@ describe("Type support", () => {
             it("Optional<SystemType>", () => {
                 const type = generation.System.Type.asOptional();
                 expect(type.isOptional).toBe(true);
-                expect(getTypeOutput(type)).toBe("System.Type?");
+                expect(getTypeOutput(type)).toBe("global::System.Type?");
             });
 
             it("Optional<Action>", () => {

@@ -5,6 +5,7 @@ package com.seed.javaRequiredBodyOptionalHeaders.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,7 +38,7 @@ public final class UpdateUserRequest {
     /**
      * @return If true, validate the update without persisting
      */
-    @JsonProperty("dryRun")
+    @JsonIgnore
     public Optional<Boolean> getDryRun() {
         return dryRun;
     }
@@ -84,6 +85,10 @@ public final class UpdateUserRequest {
 
     public interface _FinalStage {
         UpdateUserRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         /**
          * <p>If true, validate the update without persisting</p>
@@ -141,6 +146,18 @@ public final class UpdateUserRequest {
         @java.lang.Override
         public UpdateUserRequest build() {
             return new UpdateUserRequest(dryRun, body, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -39,6 +39,7 @@ from seed import SeedValidation
 client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.create(
     decimal=2.2,
     even=100,
@@ -98,9 +99,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedValidation
 
-client = SeedValidation(
-    ...,
-)
+client = SeedValidation(...)
 response = client.with_raw_response.create(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -132,14 +131,9 @@ client.create(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedValidation
 
-client = SeedValidation(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedValidation(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.create(..., request_options={

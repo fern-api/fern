@@ -1,7 +1,7 @@
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Type } from "./Type";
-import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Type } from "./Type.js";
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName.js";
 
 export type TagType = "param" | "property" | "return" | "throws" | "var";
 

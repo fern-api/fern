@@ -5,6 +5,7 @@ package com.seed.requestParameters.resources.user.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -45,7 +46,7 @@ public final class CreateUsernameRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("tags")
+    @JsonIgnore
     public List<String> getTags() {
         return tags;
     }
@@ -113,6 +114,10 @@ public final class CreateUsernameRequest {
 
     public interface _FinalStage {
         CreateUsernameRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage tags(List<String> tags);
 
@@ -193,6 +198,18 @@ public final class CreateUsernameRequest {
         @java.lang.Override
         public CreateUsernameRequest build() {
             return new CreateUsernameRequest(tags, username, password, name, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

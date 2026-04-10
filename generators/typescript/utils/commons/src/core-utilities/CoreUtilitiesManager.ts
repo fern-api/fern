@@ -4,26 +4,27 @@ import { glob } from "glob";
 import path, { join } from "path";
 import { SourceFile } from "ts-morph";
 
-import { DependencyManager } from "../dependency-manager/DependencyManager";
-import { ExportsManager } from "../exports-manager";
-import { ImportsManager } from "../imports-manager";
-import { getReferenceToExportViaNamespaceImport } from "../referencing";
-import { AuthImpl } from "./Auth";
-import { CallbackQueueImpl } from "./CallbackQueue";
-import { CoreUtilities } from "./CoreUtilities";
-import { CoreUtility, CoreUtilityName } from "./CoreUtility";
-import { CustomPaginationImpl } from "./CustomPagination";
-import { FetcherImpl } from "./Fetcher";
-import { FileUtilsImpl } from "./FileUtils";
-import { FormDataUtilsImpl } from "./FormDataUtils";
-import { LoggingImpl } from "./Logging";
-import { PaginationImpl } from "./Pagination";
-import { RuntimeImpl } from "./Runtime";
-import { StreamImpl } from "./Stream";
-import { UrlUtilsImpl } from "./UrlUtils";
-import { UtilsImpl } from "./Utils";
-import { WebsocketImpl } from "./Websocket";
-import { ZurgImpl } from "./Zurg";
+import { DependencyManager } from "../dependency-manager/DependencyManager.js";
+import { ExportsManager } from "../exports-manager/index.js";
+import { ImportsManager } from "../imports-manager/index.js";
+import { getReferenceToExportViaNamespaceImport } from "../referencing/index.js";
+import { AuthImpl } from "./Auth.js";
+import { CallbackQueueImpl } from "./CallbackQueue.js";
+import { CoreUtilities } from "./CoreUtilities.js";
+import { CoreUtility, CoreUtilityName } from "./CoreUtility.js";
+import { CustomPaginationImpl } from "./CustomPagination.js";
+import { FetcherImpl } from "./Fetcher.js";
+import { FileUtilsImpl } from "./FileUtils.js";
+import { FormDataUtilsImpl } from "./FormDataUtils.js";
+import { LoggingImpl } from "./Logging.js";
+import { PaginationImpl } from "./Pagination.js";
+import { RuntimeImpl } from "./Runtime.js";
+import { StreamImpl } from "./Stream.js";
+import { UrlUtilsImpl } from "./UrlUtils.js";
+import { UtilsImpl } from "./Utils.js";
+import { WebhookCryptoImpl } from "./WebhookCrypto.js";
+import { WebsocketImpl } from "./Websocket.js";
+import { ZurgImpl } from "./Zurg.js";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -53,6 +54,7 @@ export class CoreUtilitiesManager {
     private readonly relativeTestPath: string;
     private readonly generateEndpointMetadata: boolean;
     private readonly customPagerName: string;
+    private readonly maxRetries: number | undefined;
 
     constructor({
         streamType,
@@ -61,7 +63,8 @@ export class CoreUtilitiesManager {
         relativePackagePath = DEFAULT_PACKAGE_PATH,
         relativeTestPath = DEFAULT_TEST_PATH,
         generateEndpointMetadata,
-        customPagerName
+        customPagerName,
+        maxRetries
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
@@ -70,6 +73,7 @@ export class CoreUtilitiesManager {
         relativeTestPath?: string;
         generateEndpointMetadata: boolean;
         customPagerName: string;
+        maxRetries?: number;
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
@@ -78,6 +82,7 @@ export class CoreUtilitiesManager {
         this.relativeTestPath = relativeTestPath;
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.customPagerName = customPagerName;
+        this.maxRetries = maxRetries;
     }
 
     public getCoreUtilities({
@@ -132,6 +137,10 @@ export class CoreUtilitiesManager {
                 generateEndpointMetadata: this.generateEndpointMetadata
             }),
             logging: new LoggingImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            webhookCrypto: new WebhookCryptoImpl({
                 getReferenceToExport,
                 generateEndpointMetadata: this.generateEndpointMetadata
             })
@@ -213,21 +222,47 @@ export class CoreUtilitiesManager {
 
                 // Update import paths after copying (customize findAndReplace as needed)
                 if (isCustomPackagePath) {
-                    const findAndReplace: Record<string, { importPath: string; body: string }> = {
-                        [DEFAULT_PACKAGE_PATH]: {
-                            importPath: this.getPackagePathImport(),
-                            body: this.relativePackagePath
-                        },
-                        [DEFAULT_TEST_PATH]: {
-                            importPath: this.getTestPathImport(),
-                            body: this.relativeTestPath
-                        }
-                    };
+                    const isTestFile = destinationFile.includes(this.relativeTestPath);
+                    if (isTestFile) {
+                        await this.updateTestFileImportPaths(destPath, destinationFile);
+                    } else {
+                        const findAndReplace: Record<string, { importPath: string; body: string }> = {
+                            [DEFAULT_PACKAGE_PATH]: {
+                                importPath: this.getPackagePathImport(),
+                                body: this.relativePackagePath
+                            },
+                            [DEFAULT_TEST_PATH]: {
+                                importPath: this.getTestPathImport(),
+                                body: this.relativeTestPath
+                            }
+                        };
 
-                    await this.updateImportPaths(destPath, findAndReplace);
+                        await this.updateImportPaths(destPath, findAndReplace);
+                    }
                 }
             })
         );
+
+        // Handle maxRetries override in requestWithRetries.ts
+        if (this.maxRetries != null && this.referencedCoreUtilities["fetcher"] != null) {
+            const requestWithRetriesPath = path.join(
+                pathToRoot,
+                this.relativePackagePath,
+                "core",
+                "fetcher",
+                "requestWithRetries.ts"
+            );
+            try {
+                let contents = await readFile(requestWithRetriesPath, "utf8");
+                contents = contents.replace(
+                    /const DEFAULT_MAX_RETRIES = \d+;/,
+                    `const DEFAULT_MAX_RETRIES = ${this.maxRetries};`
+                );
+                await writeFile(requestWithRetriesPath, contents, { encoding: "utf8" });
+            } catch (_error) {
+                // File may not exist if fetcher utility doesn't include requestWithRetries
+            }
+        }
 
         // Handle auth overrides
         if (this.referencedCoreUtilities["auth"] != null) {
@@ -240,19 +275,57 @@ export class CoreUtilitiesManager {
         }
 
         if (this.referencedCoreUtilities["customPagination"] != null) {
-            let contents = await readFile(path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"), "utf8");
-            contents = contents.replaceAll("CustomPager", this.customPagerName);
-            const customPagerPath = path.join(
-                pathToRoot,
-                this.getPackagePathImport(),
-                "core",
-                "pagination",
-                `${this.customPagerName}.ts`
+            const paginationDir = path.join(pathToRoot, this.relativePackagePath, "core", "pagination");
+            await mkdir(paginationDir, { recursive: true });
+
+            let customPagerContents = await readFile(
+                path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"),
+                "utf8"
             );
-            await mkdir(path.dirname(customPagerPath), { recursive: true });
-            await writeFile(customPagerPath, contents, {
+            customPagerContents = customPagerContents.replaceAll("CustomPager", this.customPagerName);
+            await writeFile(path.join(paginationDir, `${this.customPagerName}.ts`), customPagerContents, {
                 encoding: "utf8"
             });
+        }
+
+        if (this.referencedCoreUtilities["pagination"] != null) {
+            const hasCustomPagination = this.referencedCoreUtilities["customPagination"] != null;
+            const paginationDir = path.join(pathToRoot, this.relativePackagePath, "core", "pagination");
+            await mkdir(paginationDir, { recursive: true });
+
+            if (hasCustomPagination) {
+                await writeFile(
+                    path.join(paginationDir, "index.ts"),
+                    `export { ${this.customPagerName}, create${this.customPagerName} } from "./${this.customPagerName}";\nexport { Page } from "./Page";\n`,
+                    { encoding: "utf8" }
+                );
+            } else {
+                await writeFile(path.join(paginationDir, "index.ts"), `export { Page } from "./Page";\n`, {
+                    encoding: "utf8"
+                });
+            }
+        }
+    }
+
+    // Helper to update import paths in test files that use relative imports to source files.
+    // When both test and source files are moved under a custom package path (e.g. src/management),
+    // relative imports like "../../../src/core/..." need to strip the "src/" prefix since both
+    // files are already under the same custom prefix.
+    private async updateTestFileImportPaths(filePath: string, destinationFile: string) {
+        const testDir = path.dirname(destinationFile);
+        const relativePathToPackage = path.relative(testDir, this.relativePackagePath);
+        const normalizedPath = relativePathToPackage.replace(/\\/g, "/");
+
+        let contents = await readFile(filePath, "utf8");
+        const originalContents = contents;
+
+        // Replace relative import paths that reference the default package path (src/)
+        // e.g. from "../../../src/core/fetcher/makeRequest" -> from "../../../core/fetcher/makeRequest"
+        // where ../../../ resolves to the custom package path
+        contents = contents.replace(/from "([^"]*\/)src\/([^"]*)"/g, `from "${normalizedPath}/$2"`);
+
+        if (contents !== originalContents) {
+            await writeFile(filePath, contents);
         }
     }
 

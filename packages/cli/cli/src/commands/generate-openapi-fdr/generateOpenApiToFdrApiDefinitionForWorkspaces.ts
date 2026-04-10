@@ -4,7 +4,7 @@ import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import path from "path";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
     project,

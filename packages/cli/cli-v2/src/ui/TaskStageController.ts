@@ -1,4 +1,4 @@
-import type { TaskGroup } from "./TaskGroup";
+import type { TaskGroup } from "./TaskGroup.js";
 
 /**
  * Controls a single task stage's status.
@@ -44,7 +44,8 @@ export class TaskStageController {
         this.taskGroup.updateStage({
             taskId: this.taskId,
             stageId: this.stageId,
-            status: "error"
+            status: "error",
+            options: { error }
         });
         // If at least one stage fails, the task should fail.
         const task = this.taskGroup.getTask(this.taskId);

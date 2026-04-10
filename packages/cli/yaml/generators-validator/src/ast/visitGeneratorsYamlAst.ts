@@ -1,8 +1,8 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { noop, visitObjectAsync } from "@fern-api/core-utils";
 
-import { GeneratorsYmlFileAstVisitor } from "./GeneratorsYmlAstVisitor";
-import { visitGeneratorGroups } from "./visitors/visitGeneratorGroups";
+import { GeneratorsYmlFileAstVisitor } from "./GeneratorsYmlAstVisitor.js";
+import { visitGeneratorGroups } from "./visitors/visitGeneratorGroups.js";
 
 export async function visitGeneratorsYamlAst(
     contents: generatorsYml.GeneratorsConfigurationSchema,
@@ -26,6 +26,8 @@ export async function visitGeneratorsYamlAst(
         "api-settings": noop,
         ai: noop,
         autorelease: noop,
+        replay: noop,
+        automation: noop,
         groups: async (groups) => {
             await visitGeneratorGroups({ groups, visitor, nodePath: ["groups"], cliVersion });
         }

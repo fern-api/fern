@@ -1,6 +1,6 @@
 import { FileUploadRequest, HttpResponse, V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
 
-import { AbstractOperationConverter } from "./AbstractOperationConverter";
+import { AbstractOperationConverter } from "./AbstractOperationConverter.js";
 
 export declare namespace WebhookConverter {
     export interface Output extends AbstractOperationConverter.Output {
@@ -107,6 +107,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 method: httpMethod,
                 headers,
                 payload,
+                signatureVerification: undefined,
                 fileUploadPayload,
                 responses: responses.length > 0 ? responses : undefined,
                 examples: [],

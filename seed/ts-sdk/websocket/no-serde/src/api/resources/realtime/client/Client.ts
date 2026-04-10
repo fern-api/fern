@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { RealtimeSocket } from "./Socket.js";
 
@@ -13,6 +14,8 @@ export declare namespace RealtimeClient {
         model?: string;
         temperature?: number;
         "language-code"?: string;
+        /** WebSocket subprotocols to use for the connection. */
+        protocols?: string | string[];
         /** Additional query parameters to send with the websocket connect request. */
         queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
@@ -21,6 +24,10 @@ export declare namespace RealtimeClient {
         debug?: boolean;
         /** Number of reconnect attempts. Defaults to 30. */
         reconnectAttempts?: number;
+        /** The timeout for establishing the WebSocket connection in seconds. */
+        connectionTimeoutInSeconds?: number;
+        /** A signal to abort the WebSocket connection. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -31,33 +38,41 @@ export class RealtimeClient {
         this._options = normalizeClientOptions(options);
     }
 
-    public async connect(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {
+    public async createRealtimeConnection(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {
         const {
             session_id: sessionId,
             model,
             temperature,
             "language-code": languageCode,
+            protocols,
             queryParams,
             headers,
             debug,
             reconnectAttempts,
+            connectionTimeoutInSeconds,
+            abortSignal,
         } = args;
         const _queryParams: Record<string, unknown> = {
             model,
             temperature,
             "language-code": languageCode,
         };
-        const _headers: Record<string, unknown> = { ...headers };
+        const _headers: Record<string, unknown> = mergeHeaders(this._options?.headers, headers);
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
                 `/realtime/${core.url.encodePathParam(sessionId)}`,
             ),
-            protocols: [],
+            protocols: protocols ?? [],
             queryParameters: { ..._queryParams, ...queryParams },
             headers: _headers,
-            options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
+            options: {
+                debug: debug ?? false,
+                maxRetries: reconnectAttempts ?? 30,
+                connectionTimeout: connectionTimeoutInSeconds != null ? connectionTimeoutInSeconds * 1000 : undefined,
+            },
+            abortSignal: abortSignal,
         });
         return new RealtimeSocket({ socket });
     }

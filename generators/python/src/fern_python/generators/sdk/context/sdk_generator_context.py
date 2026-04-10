@@ -51,15 +51,19 @@ class SdkGeneratorContext(ABC):
             pydantic_compatibility=custom_config.pydantic_config.version,
         )
 
-        # This should be replaced with `hasPaginatedEndpoints` in the IR, but that's on IR44, not 39, which is what Python's on
-        _has_paginated_endpoints = any(
-            map(
-                lambda service: any(map(lambda ep: ep.pagination is not None, service.endpoints)),
-                ir.services.values(),
-            )
+        _has_standard_paginated_endpoints = any(
+            ep.pagination is not None and ep.pagination.get_as_union().type != "custom"
+            for service in ir.services.values()
+            for ep in service.endpoints
+        )
+        _has_custom_paginated_endpoints = any(
+            ep.pagination is not None and ep.pagination.get_as_union().type == "custom"
+            for service in ir.services.values()
+            for ep in service.endpoints
         )
         self.core_utilities = CoreUtilities(
-            has_paginated_endpoints=_has_paginated_endpoints,
+            has_standard_paginated_endpoints=_has_standard_paginated_endpoints,
+            has_custom_paginated_endpoints=_has_custom_paginated_endpoints,
             project_module_path=project_module_path,
             custom_config=custom_config,
         )

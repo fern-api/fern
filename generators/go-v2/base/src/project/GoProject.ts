@@ -1,15 +1,15 @@
 import { AbstractProject, FernGeneratorExec, File } from "@fern-api/base-generator";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema, resolveRootImportPath, resolveRootModulePath } from "@fern-api/go-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { OutputMode } from "@fern-fern/generator-exec-sdk/api";
 import { copyFile, mkdir, readFile } from "fs/promises";
 import path from "path";
-import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
-import { ModuleConfig } from "../module/ModuleConfig";
-import { ModuleConfigWriter } from "../module/ModuleConfigWriter";
-import { GoFile } from "./GoFile";
+import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext.js";
+import { ModuleConfig } from "../module/ModuleConfig.js";
+import { ModuleConfigWriter } from "../module/ModuleConfigWriter.js";
+import { GoFile } from "./GoFile.js";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 
@@ -91,7 +91,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
                 });
             } catch (error) {
                 this.context.logger.warn(
-                    `Failed to format Go files with 'go fmt': ${error instanceof Error ? error.message : String(error)}. ` +
+                    `Failed to format Go files with 'go fmt': ${extractErrorMessage(error)}. ` +
                         "The generated files have been written but may not be properly formatted."
                 );
             }
@@ -171,7 +171,10 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await this.writeAsIsFiles({
             filenames: this.context.getRootAsIsFiles(),
             getPackageName: () => this.context.getRootPackageName(),
-            getImportPath: () => this.getRootImportPath()
+            getImportPath: () => this.getRootImportPath(),
+            templateVariables: {
+                DefaultRetryAttempts: String((this.context.customConfig.maxRetries ?? 1) + 1)
+            }
         });
     }
 
@@ -249,7 +252,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             } else {
                 // Log other errors for debugging while maintaining backwards compatibility
                 this.context.logger.warn(
-                    `Failed to copy custom license file from ${dockerLicensePath} to ${destinationPath}: ${error instanceof Error ? error.message : String(error)}`
+                    `Failed to copy custom license file from ${dockerLicensePath} to ${destinationPath}: ${extractErrorMessage(error)}`
                 );
             }
         }

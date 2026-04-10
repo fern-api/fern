@@ -1,4 +1,4 @@
-import { ApiConfigurationSchema, ProtobufApiDefinitionSchema } from "./schemas";
+import { ApiConfigurationSchema, ProtobufApiDefinitionSchema } from "./schemas/index.js";
 
 export function isRawProtobufAPIDefinitionSchema(
     rawApiConfiguration: ApiConfigurationSchema

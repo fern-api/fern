@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -64,7 +64,7 @@ public record UnionWithoutKey
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new System.Exception("UnionWithoutKey.Type is not 'foo'");
+            : throw new global::System.Exception("UnionWithoutKey.Type is not 'foo'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Bar"/> if <see cref="Type"/> is 'bar', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithoutKey
     public SeedUnions.Bar AsBar() =>
         IsBar
             ? (SeedUnions.Bar)Value!
-            : throw new System.Exception("UnionWithoutKey.Type is not 'bar'");
+            : throw new global::System.Exception("UnionWithoutKey.Type is not 'bar'");
 
     public T Match<T>(
         Func<SeedUnions.Foo, T> onFoo,
@@ -146,12 +146,12 @@ public record UnionWithoutKey
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithoutKey>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithoutKey).IsAssignableFrom(typeToConvert);
 
         public override UnionWithoutKey Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -176,11 +176,17 @@ public record UnionWithoutKey
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "foo" => json.Deserialize<SeedUnions.Foo?>(options)
+                "foo" => jsonWithoutDiscriminator.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
-                "bar" => json.Deserialize<SeedUnions.Bar?>(options)
+                "bar" => jsonWithoutDiscriminator.Deserialize<SeedUnions.Bar?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Bar"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -202,6 +208,27 @@ public record UnionWithoutKey
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override UnionWithoutKey ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new UnionWithoutKey(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UnionWithoutKey value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

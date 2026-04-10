@@ -14,5 +14,5 @@ export interface LocalBuildInfo {
      */
     runCommand: string;
     /** Environment variables to set when running the generator locally. */
-    env?: Record<string, string>;
+    env?: Record<string, string> | undefined;
 }

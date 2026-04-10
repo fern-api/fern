@@ -7,5 +7,5 @@ export interface FeatureImplementationWithDetails {
      * Any useful information about the implementation status, if it's begun, if it's behind
      * a feature flag, etc.
      */
-    details?: string;
+    details?: string | undefined;
 }

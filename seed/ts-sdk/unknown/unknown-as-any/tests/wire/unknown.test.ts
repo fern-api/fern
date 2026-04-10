@@ -9,6 +9,7 @@ describe("UnknownClient", () => {
         const client = new SeedUnknownAsAnyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = [{ key: "value" }, { key: "value" }];
+
         server
             .mockEndpoint()
             .post("")
@@ -21,14 +22,7 @@ describe("UnknownClient", () => {
         const response = await client.unknown.post({
             key: "value",
         });
-        expect(response).toEqual([
-            {
-                key: "value",
-            },
-            {
-                key: "value",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("postObject", async () => {
@@ -36,6 +30,7 @@ describe("UnknownClient", () => {
         const client = new SeedUnknownAsAnyClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { unknown: { key: "value" } };
         const rawResponseBody = [{ key: "value" }, { key: "value" }];
+
         server
             .mockEndpoint()
             .post("/with-object")
@@ -50,13 +45,6 @@ describe("UnknownClient", () => {
                 key: "value",
             },
         });
-        expect(response).toEqual([
-            {
-                key: "value",
-            },
-            {
-                key: "value",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

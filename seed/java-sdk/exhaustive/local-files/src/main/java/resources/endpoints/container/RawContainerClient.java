@@ -14,6 +14,7 @@ import com.fern.sdk.core.SeedExhaustiveApiException;
 import com.fern.sdk.core.SeedExhaustiveException;
 import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.resources.types.union.types.MixedType;
 import java.io.IOException;
 import java.lang.Object;
 import java.lang.String;
@@ -312,36 +313,23 @@ public class RawContainerClient {
                 }
               }
 
-              public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
-                  ) {
-                return getAndReturnOptional(Optional.empty());
+              public SeedExhaustiveHttpResponse<Map<String, MixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
+                  Map<String, MixedType> request) {
+                return getAndReturnMapOfPrimToUndiscriminatedUnion(request,null);
               }
 
-              public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
-                  RequestOptions requestOptions) {
-                return getAndReturnOptional(Optional.empty(),requestOptions);
-              }
-
-              public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
-                  Optional<ObjectWithRequiredField> request) {
-                return getAndReturnOptional(request,null);
-              }
-
-              public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
-                  Optional<ObjectWithRequiredField> request, RequestOptions requestOptions) {
+              public SeedExhaustiveHttpResponse<Map<String, MixedType>> getAndReturnMapOfPrimToUndiscriminatedUnion(
+                  Map<String, MixedType> request, RequestOptions requestOptions) {
                 HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                   .addPathSegments("container")
-                  .addPathSegments("opt-objects");if (requestOptions != null) {
+                  .addPathSegments("map-prim-to-union");if (requestOptions != null) {
                     requestOptions.getQueryParameters().forEach((_key, _value) -> {
                       httpUrl.addQueryParameter(_key, _value);
                     } );
                   }
                   RequestBody body;
                   try {
-                    body = RequestBody.create("", null);
-                    if (request.isPresent()) {
-                      body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-                    }
+                    body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
                   }
                   catch(JsonProcessingException e) {
                     throw new SeedExhaustiveException("Failed to serialize request", e);
@@ -361,7 +349,7 @@ public class RawContainerClient {
                     ResponseBody responseBody = response.body();
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                      return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<Optional<ObjectWithRequiredField>>() {}), response);
+                      return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<Map<String, MixedType>>() {}), response);
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
@@ -370,4 +358,63 @@ public class RawContainerClient {
                     throw new SeedExhaustiveException("Network error executing HTTP request", e);
                   }
                 }
-              }
+
+                public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
+                    ) {
+                  return getAndReturnOptional(Optional.empty());
+                }
+
+                public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
+                    RequestOptions requestOptions) {
+                  return getAndReturnOptional(Optional.empty(),requestOptions);
+                }
+
+                public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
+                    Optional<ObjectWithRequiredField> request) {
+                  return getAndReturnOptional(request,null);
+                }
+
+                public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
+                    Optional<ObjectWithRequiredField> request, RequestOptions requestOptions) {
+                  HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+                    .addPathSegments("container")
+                    .addPathSegments("opt-objects");if (requestOptions != null) {
+                      requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                        httpUrl.addQueryParameter(_key, _value);
+                      } );
+                    }
+                    RequestBody body;
+                    try {
+                      body = RequestBody.create("", null);
+                      if (request.isPresent()) {
+                        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                      }
+                    }
+                    catch(JsonProcessingException e) {
+                      throw new SeedExhaustiveException("Failed to serialize request", e);
+                    }
+                    Request okhttpRequest = new Request.Builder()
+                      .url(httpUrl.build())
+                      .method("POST", body)
+                      .headers(Headers.of(clientOptions.headers(requestOptions)))
+                      .addHeader("Content-Type", "application/json")
+                      .addHeader("Accept", "application/json")
+                      .build();
+                    OkHttpClient client = clientOptions.httpClient();
+                    if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                      client = clientOptions.httpClientWithTimeout(requestOptions);
+                    }
+                    try (Response response = client.newCall(okhttpRequest).execute()) {
+                      ResponseBody responseBody = response.body();
+                      String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                      if (response.isSuccessful()) {
+                        return new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, new TypeReference<Optional<ObjectWithRequiredField>>() {}), response);
+                      }
+                      Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                      throw new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response);
+                    }
+                    catch (IOException e) {
+                      throw new SeedExhaustiveException("Network error executing HTTP request", e);
+                    }
+                  }
+                }

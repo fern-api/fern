@@ -93,6 +93,11 @@ public class ZeroValueUtils {
         }
 
         @Override
+        public CodeBlock visitDateTimeRfc2822() {
+            return CodeBlock.of("!$L.isEmpty()", variableName);
+        }
+
+        @Override
         public CodeBlock visitUuid() {
             // TODO(ajgateno): Maybe come back and test to make sure this is the right zero value
             return CodeBlock.of("!$L.isEmpty()", variableName);
@@ -172,6 +177,11 @@ public class ZeroValueUtils {
         @Override
         public CodeBlock visitDateTime(DateTimeType dateTimeType) {
             // TODO(ajgateno): Maybe come back and test to make sure this is the right zero value
+            return CodeBlock.of("!$L.isEmpty()", variableName);
+        }
+
+        @Override
+        public CodeBlock visitDateTimeRfc2822(com.fern.ir.model.types.DateTimeRfc2822Type dateTimeRfc2822Type) {
             return CodeBlock.of("!$L.isEmpty()", variableName);
         }
 

@@ -32,6 +32,6 @@ export namespace SubmissionRequest {
     }
 
     export interface _Unknown {
-        type: void;
+        type: string;
     }
 }

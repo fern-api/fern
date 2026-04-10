@@ -51,12 +51,13 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/examples/fern/client"
-    option "github.com/examples/fern/option"
-    fern "github.com/examples/fern"
-    commons "github.com/examples/fern/commons"
-    uuid "github.com/google/uuid"
     context "context"
+
+    fern "github.com/examples/fern"
+    client "github.com/examples/fern/client"
+    commons "github.com/examples/fern/commons"
+    option "github.com/examples/fern/option"
+    uuid "github.com/google/uuid"
 )
 
 func do() {
@@ -69,7 +70,7 @@ func do() {
         CastMember: &fern.CastMember{
             Actor: &fern.Actor{
                 Name: "name",
-                Id: "id",
+                ID: "id",
             },
         },
         ExtendedMovie: &fern.ExtendedMovie{
@@ -77,7 +78,7 @@ func do() {
                 "cast",
                 "cast",
             },
-            Id: "id",
+            ID: "id",
             Prequel: fern.String(
                 "prequel",
             ),
@@ -110,21 +111,21 @@ func do() {
             },
         },
         CommonMetadata: &commons.Metadata{
-            Id: "id",
+            ID: "id",
             Data: map[string]string{
                 "data": "data",
             },
-            JsonString: fern.String(
+            JSONString: fern.String(
                 "jsonString",
             ),
         },
         EventInfo: &commons.EventInfo{
             Metadata: &commons.Metadata{
-                Id: "id",
+                ID: "id",
                 Data: map[string]string{
                     "data": "data",
                 },
-                JsonString: fern.String(
+                JSONString: fern.String(
                     "jsonString",
                 ),
             },
@@ -150,13 +151,9 @@ func do() {
                     Nodes: []*fern.Node{
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                     },
                     Trees: []*fern.Tree{
@@ -173,13 +170,9 @@ func do() {
                     Nodes: []*fern.Node{
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                     },
                     Trees: []*fern.Tree{
@@ -251,13 +244,9 @@ func do() {
                     Directories: []*fern.Directory{
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                     },
                 },
@@ -276,20 +265,16 @@ func do() {
                     Directories: []*fern.Directory{
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                     },
                 },
             },
         },
         Moment: &fern.Moment{
-            Id: uuid.MustParse(
+            ID: uuid.MustParse(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             Date: fern.MustParseDate(
@@ -448,3 +433,4 @@ request.SetName(nil)
 
 response, err := client.Service.CreateBigEntity(ctx, request, ...)
 ```
+

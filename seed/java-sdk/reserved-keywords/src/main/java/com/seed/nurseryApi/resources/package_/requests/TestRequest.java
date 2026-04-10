@@ -5,9 +5,9 @@ package com.seed.nurseryApi.resources.package_.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.nurseryApi.core.ObjectMappers;
@@ -28,7 +28,7 @@ public final class TestRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("for")
+    @JsonIgnore
     public String getFor() {
         return for_;
     }
@@ -70,6 +70,10 @@ public final class TestRequest {
 
     public interface _FinalStage {
         TestRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -97,6 +101,18 @@ public final class TestRequest {
         @java.lang.Override
         public TestRequest build() {
             return new TestRequest(for_, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

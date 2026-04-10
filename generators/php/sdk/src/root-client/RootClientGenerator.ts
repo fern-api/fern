@@ -1,24 +1,12 @@
+import { CaseConverter, getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    AuthScheme,
-    ContainerType,
-    HttpEndpoint,
-    HttpHeader,
-    HttpService,
-    InferredAuthScheme,
-    Literal,
-    OAuthScheme,
-    PrimitiveTypeV1,
-    Subpackage,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface ConstructorParameters {
     all: ConstructorParameter[];
@@ -30,7 +18,7 @@ interface ConstructorParameters {
 interface ConstructorParameter {
     name: string;
     isOptional: boolean;
-    typeReference: TypeReference;
+    typeReference: FernIr.TypeReference;
     docs?: string;
     header?: HeaderInfo;
     environmentVariable?: string;
@@ -38,7 +26,7 @@ interface ConstructorParameter {
 
 interface LiteralParameter {
     name: string;
-    value: Literal;
+    value: FernIr.Literal;
     docs?: string;
     header?: HeaderInfo;
     environmentVariable?: string;
@@ -49,8 +37,8 @@ interface HeaderInfo {
     prefix?: string;
 }
 
-const STRING_TYPE_REFERENCE = TypeReference.primitive({
-    v1: PrimitiveTypeV1.String,
+const STRING_TYPE_REFERENCE = FernIr.TypeReference.primitive({
+    v1: FernIr.PrimitiveTypeV1.String,
     v2: undefined
 });
 
@@ -62,6 +50,13 @@ const BEARER_HEADER_INFO: HeaderInfo = {
 const GET_FROM_ENV_OR_THROW = "getFromEnvOrThrow";
 
 export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private readonly case: CaseConverter;
+
+    constructor(context: SdkGeneratorContext) {
+        super(context);
+        this.case = context.case;
+    }
+
     protected getFilepath(): RelativeFilePath {
         return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".php"));
     }
@@ -69,7 +64,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     public doGenerate(): PhpFile {
         const class_ = php.class_({
             name: this.context.getRootClientClassName(),
-            namespace: this.context.getRootNamespace()
+            namespace: this.context.getRootNamespace(),
+            interfaceReferences: this.context.customConfig.generateClientInterfaces
+                ? [this.context.getRootClientInterfaceClassReference()]
+                : undefined
         });
 
         if (!this.context.ir.rootPackage.hasEndpointsInTree) {
@@ -158,6 +156,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             }
         }
 
+        if (this.context.customConfig.generateClientInterfaces) {
+            for (const subpackage of subpackages) {
+                class_.addMethod(this.getSubpackageGetterMethod(subpackage));
+            }
+        }
+
         if (constructorParameters.optional.some((parameter) => parameter.environmentVariable != null)) {
             class_.addMethod(this.getFromEnvOrThrowMethod());
         }
@@ -170,7 +174,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         subpackages
     }: {
         constructorParameters: ConstructorParameters;
-        subpackages: Subpackage[];
+        subpackages: FernIr.Subpackage[];
     }): php.Class.Constructor {
         const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
         const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment != null;
@@ -246,34 +250,36 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             }
         }
 
-        const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
-        headerEntries.push({
-            key: php.codeblock(`'${platformHeaders.language}'`),
-            value: php.codeblock("'PHP'")
-        });
-        headerEntries.push({
-            key: php.codeblock(`'${platformHeaders.sdkName}'`),
-            value: php.codeblock(`'${this.context.getRootNamespace()}'`)
-        });
-        if (this.context.version != null) {
+        if (!this.context.customConfig.omitFernHeaders) {
+            const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
             headerEntries.push({
-                key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
-                value: php.codeblock(`'${this.context.version}'`)
+                key: php.codeblock(`'${platformHeaders.language}'`),
+                value: php.codeblock("'PHP'")
             });
-        }
-        const userAgent = this.context.getUserAgent();
-        if (userAgent != null) {
             headerEntries.push({
-                key: php.codeblock(`'${userAgent.header}'`),
-                value: php.codeblock(`'${userAgent.value}'`)
+                key: php.codeblock(`'${platformHeaders.sdkName}'`),
+                value: php.codeblock(`'${this.context.getRootNamespace()}'`)
             });
+            if (this.context.version != null) {
+                headerEntries.push({
+                    key: php.codeblock(`'${platformHeaders.sdkVersion}'`),
+                    value: php.codeblock(`'${this.context.version}'`)
+                });
+            }
+            const userAgent = this.context.getUserAgent();
+            if (userAgent != null) {
+                headerEntries.push({
+                    key: php.codeblock(`'${userAgent.header}'`),
+                    value: php.codeblock(`'${userAgent.value}'`)
+                });
+            }
         }
 
         if (this.context.ir.apiVersion != null) {
             const apiVersion = this.context.ir.apiVersion;
             const headerKey = apiVersion._visit({
                 header: (header) => {
-                    return header.header.name.wireValue;
+                    return getWireValue(header.header.name);
                 },
                 _other: () => {
                     return undefined;
@@ -281,7 +287,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             });
             const headerValue = apiVersion._visit({
                 header: (header) => {
-                    return header.value.default?.name.wireValue;
+                    return header.value.default?.name != null ? getWireValue(header.value.default.name) : undefined;
                 },
                 _other: () => {
                     return undefined;
@@ -342,6 +348,34 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
                         );
                         writer.endControlFlow();
+                    }
+                }
+
+                // Add Basic Auth header if applicable
+                const basicAuthSchemes = this.context.ir.auth.schemes.filter(
+                    (s): s is typeof s & { type: "basic" } => s.type === "basic"
+                );
+                const resolvedBasicAuthSchemes = basicAuthSchemes
+                    .map((scheme) => this.resolveBasicAuthScheme(scheme))
+                    .filter((resolved) => resolved != null);
+                if (resolvedBasicAuthSchemes.length > 0) {
+                    const isAuthOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+                    const needsControlFlow = isAuthOptional || resolvedBasicAuthSchemes.length > 1;
+                    for (let i = 0; i < resolvedBasicAuthSchemes.length; i++) {
+                        const resolved = resolvedBasicAuthSchemes[i];
+                        if (resolved == null) {
+                            continue;
+                        }
+                        const { condition, credentialExpr } = resolved;
+                        if (needsControlFlow) {
+                            writer.controlFlow(i === 0 ? "if" : "else if", php.codeblock(condition));
+                        }
+                        writer.writeLine(
+                            `$defaultHeaders['Authorization'] = "Basic " . base64_encode(${credentialExpr});`
+                        );
+                        if (needsControlFlow) {
+                            writer.endControlFlow();
+                        }
                     }
                 }
 
@@ -447,7 +481,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
 
                 for (const subpackage of subpackages) {
-                    writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
+                    writer.write(`$this->${this.case.camelSafe(subpackage.name)} = `);
 
                     const subClientArgs: php.AstNode[] = [
                         php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)
@@ -468,6 +502,18 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
             })
         };
+    }
+
+    private getSubpackageGetterMethod(subpackage: FernIr.Subpackage): php.Method {
+        return php.method({
+            name: this.context.getSubpackageGetterName(subpackage),
+            access: "public",
+            parameters: [],
+            return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
+            body: php.codeblock((writer) => {
+                writer.writeTextStatement(`return $this->${this.case.camelSafe(subpackage.name)}`);
+            })
+        });
     }
 
     private getFromEnvOrThrowMethod(): php.Method {
@@ -535,7 +581,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         };
     }
 
-    private getParameterForAuthScheme(scheme: AuthScheme): ConstructorParameter[] {
+    private getParameterForAuthScheme(scheme: FernIr.AuthScheme): ConstructorParameter[] {
         const isOptional = !this.context.ir.sdkConfig.isAuthMandatory;
         switch (scheme.type) {
             case "bearer": {
@@ -558,8 +604,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             case "basic": {
                 const username = this.context.getParameterName(scheme.username);
                 const password = this.context.getParameterName(scheme.password);
-                return [
-                    {
+                // When omit is true, the field is completely removed from the end-user API.
+                const usernameOmitted = !!scheme.usernameOmit;
+                const passwordOmitted = !!scheme.passwordOmit;
+                const params: ConstructorParameter[] = [];
+                if (!usernameOmitted) {
+                    params.push({
                         name: username,
                         docs: this.getAuthParameterDocs({ docs: scheme.docs, name: username }),
                         isOptional,
@@ -569,10 +619,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             isOptional
                         }),
                         environmentVariable: scheme.usernameEnvVar
-                    },
-                    {
+                    });
+                }
+                if (!passwordOmitted) {
+                    params.push({
                         name: password,
-                        docs: this.getAuthParameterDocs({ docs: scheme.docs, name: username }),
+                        docs: this.getAuthParameterDocs({ docs: scheme.docs, name: password }),
                         isOptional,
                         typeReference: this.getAuthParameterTypeReference({
                             typeReference: STRING_TYPE_REFERENCE,
@@ -580,18 +632,19 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             isOptional
                         }),
                         environmentVariable: scheme.passwordEnvVar
-                    }
-                ];
+                    });
+                }
+                return params;
             }
             case "header": {
-                const name = this.context.getParameterName(scheme.name.name);
+                const name = this.context.getParameterName(scheme.name);
                 return [
                     {
                         name,
                         docs: this.getAuthParameterDocs({ docs: scheme.docs, name }),
                         isOptional,
                         header: {
-                            name: scheme.name.wireValue,
+                            name: getWireValue(scheme.name),
                             prefix: scheme.prefix
                         },
                         typeReference: this.getAuthParameterTypeReference({
@@ -655,11 +708,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         }
     }
 
-    private getParameterForHeader(header: HttpHeader): ConstructorParameter {
+    private getParameterForHeader(header: FernIr.HttpHeader): ConstructorParameter {
         return {
-            name: this.context.getParameterName(header.name.name),
+            name: this.context.getParameterName(header.name),
             header: {
-                name: header.name.wireValue
+                name: getWireValue(header.name)
             },
             docs: header.docs,
             isOptional: this.context.isOptional(header.valueType),
@@ -682,18 +735,18 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         envVar,
         isOptional
     }: {
-        typeReference: TypeReference;
+        typeReference: FernIr.TypeReference;
         envVar: string | undefined;
         isOptional: boolean;
-    }): TypeReference {
+    }): FernIr.TypeReference {
         // If the parameter is backed by an environment variable,
         // it should be treated as optional.
         return envVar != null || isOptional
-            ? TypeReference.container(ContainerType.optional(typeReference))
+            ? FernIr.TypeReference.container(FernIr.ContainerType.optional(typeReference))
             : typeReference;
     }
 
-    private getLiteralRootClientParameterType({ literal }: { literal: Literal }): php.Type {
+    private getLiteralRootClientParameterType({ literal }: { literal: FernIr.Literal }): php.Type {
         switch (literal.type) {
             case "string":
                 return php.Type.optional(php.Type.string());
@@ -708,7 +761,47 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         return docs ?? `The ${name} to use for authentication.`;
     }
 
-    private getRootSubpackages(): Subpackage[] {
+    /**
+     * Resolves a basic auth scheme into its null-check condition and credential expressions,
+     * accounting for omitted username/password fields. Returns undefined if both fields are omitted.
+     */
+    private resolveBasicAuthScheme(
+        scheme: FernIr.AuthScheme & { type: "basic" }
+    ): { condition: string; credentialExpr: string } | undefined {
+        const usernameName = this.context.getParameterName(scheme.username);
+        const passwordName = this.context.getParameterName(scheme.password);
+        const usernameOmitted = !!scheme.usernameOmit;
+        const passwordOmitted = !!scheme.passwordOmit;
+
+        if (usernameOmitted && passwordOmitted) {
+            return undefined;
+        }
+
+        const conditions: string[] = [];
+        if (!usernameOmitted) {
+            conditions.push(`$${usernameName} !== null`);
+        }
+        if (!passwordOmitted) {
+            conditions.push(`$${passwordName} !== null`);
+        }
+
+        // Build a clean credential expression without redundant empty-string concatenation.
+        let credentialExpr: string;
+        if (usernameOmitted) {
+            credentialExpr = `":" . $${passwordName}`;
+        } else if (passwordOmitted) {
+            credentialExpr = `$${usernameName} . ":"`;
+        } else {
+            credentialExpr = `$${usernameName} . ":" . $${passwordName}`;
+        }
+
+        return {
+            condition: conditions.join(" && "),
+            credentialExpr
+        };
+    }
+
+    private getRootSubpackages(): FernIr.Subpackage[] {
         return this.context.ir.rootPackage.subpackages
             .map((subpackageId) => {
                 return this.context.getSubpackageOrThrow(subpackageId);
@@ -716,7 +809,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 
-    private writeOAuthProviderSetup(writer: php.Writer, oauth: OAuthScheme, isMultiUrl: boolean): void {
+    private writeOAuthProviderSetup(writer: php.Writer, oauth: FernIr.OAuthScheme, isMultiUrl: boolean): void {
         const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
         const subpackageId = tokenEndpointReference.subpackageId;
 
@@ -754,7 +847,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer.writeLine();
     }
 
-    private getParametersForInferredAuth(scheme: InferredAuthScheme): ConstructorParameter[] {
+    private getParametersForInferredAuth(scheme: FernIr.InferredAuthScheme): ConstructorParameter[] {
         const isOptional = !this.context.ir.sdkConfig.isAuthMandatory;
         const parameters: ConstructorParameter[] = [];
 
@@ -785,7 +878,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     if (literal == null) {
                         // Only add non-literal properties as constructor parameters
                         parameters.push({
-                            name: this.context.getParameterName(property.name.name),
+                            name: this.context.getParameterName(property.name),
                             docs: property.docs,
                             isOptional: isOptional || this.context.isOptional(property.valueType),
                             typeReference: this.getAuthParameterTypeReference({
@@ -803,11 +896,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const literal = this.context.maybeLiteral(header.valueType);
                 if (literal == null) {
                     parameters.push({
-                        name: this.context.getParameterName(header.name.name),
+                        name: this.context.getParameterName(header.name),
                         docs: header.docs,
                         isOptional: isOptional || this.context.isOptional(header.valueType),
                         header: {
-                            name: header.name.wireValue
+                            name: getWireValue(header.name)
                         },
                         typeReference: this.getAuthParameterTypeReference({
                             typeReference: header.valueType,
@@ -824,7 +917,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
     private writeInferredAuthProviderSetup(
         writer: php.Writer,
-        inferredAuth: InferredAuthScheme,
+        inferredAuth: FernIr.InferredAuthScheme,
         isMultiUrl: boolean,
         constructorParameters: ConstructorParameters
     ): void {
@@ -873,7 +966,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     const requestBody = endpoint.requestBody;
                     if (requestBody != null && requestBody.type === "inlinedRequestBody") {
                         for (const property of requestBody.properties) {
-                            const paramName = this.context.getParameterName(property.name.name);
+                            const paramName = this.context.getParameterName(property.name);
                             const literal = this.context.maybeLiteral(property.valueType);
                             if (literal != null) {
                                 writer.writeLine(`'${paramName}' => ${this.context.getLiteralAsString(literal)},`);
@@ -893,7 +986,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
                     // Also add header parameters
                     for (const header of endpoint.headers) {
-                        const paramName = this.context.getParameterName(header.name.name);
+                        const paramName = this.context.getParameterName(header.name);
                         const literal = this.context.maybeLiteral(header.valueType);
                         if (literal != null) {
                             writer.writeLine(`'${paramName}' => ${this.context.getLiteralAsString(literal)},`);
@@ -923,8 +1016,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
     }
 
     private getInferredAuthTokenEndpoint(
-        scheme: InferredAuthScheme
-    ): { service: HttpService; endpoint: HttpEndpoint } | undefined {
+        scheme: FernIr.InferredAuthScheme
+    ): { service: FernIr.HttpService; endpoint: FernIr.HttpEndpoint } | undefined {
         const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
         const service = this.context.ir.services[tokenEndpointReference.serviceId];
         if (service == null) {

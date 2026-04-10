@@ -30,9 +30,12 @@ async fn main() {
                     name: "name".to_string(),
                     verification: UserProfileVerification {
                         verified: "verified".to_string(),
+                        ..Default::default()
                     },
                     ssn: "ssn".to_string(),
+                    ..Default::default()
                 },
+                ..Default::default()
             },
             None,
         )
@@ -48,3 +51,4 @@ async fn main() {
 </dd>
 </dl>
 </details>
+

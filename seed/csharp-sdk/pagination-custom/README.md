@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedPagination)](https://nuget.org/packages/SeedPagination)
+[![nuget shield](https://img.shields.io/nuget/v/Fernpagination-custom)](https://nuget.org/packages/Fernpagination-custom)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -17,6 +17,8 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Raw Response](#raw-response)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query Parameters](#additional-query-parameters)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -26,7 +28,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedPagination
+dotnet add package Fernpagination-custom
 ```
 
 ## Reference
@@ -41,8 +43,8 @@ Instantiate and use the client with the following:
 using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
-var items = await client.Users.ListUsernamesCustomAsync(
-    new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
+var items = await client.Users.ListWithCustomPagerAsync(
+    new ListWithCustomPagerRequest { Limit = 1, StartingAfter = "starting_after" }
 );
 
 await foreach (var item in items)
@@ -60,7 +62,7 @@ will be thrown.
 using SeedPagination;
 
 try {
-    var response = await client.Users.ListUsernamesCustomAsync(...);
+    var response = await client.Users.ListWithCustomPagerAsync(...);
 } catch (SeedPaginationApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -75,8 +77,8 @@ List endpoints are paginated. The SDK provides an async enumerable so that you c
 using SeedPagination;
 
 var client = new SeedPaginationClient("TOKEN");
-var items = await client.Users.ListUsernamesCustomAsync(
-    new ListUsernamesRequestCustom { StartingAfter = "starting_after" }
+var items = await client.Users.ListWithCustomPagerAsync(
+    new ListWithCustomPagerRequest { Limit = 1, StartingAfter = "starting_after" }
 );
 
 await foreach (var item in items)
@@ -102,7 +104,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Users.ListUsernamesCustomAsync(
+var response = await client.Users.ListWithCustomPagerAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -115,7 +117,7 @@ var response = await client.Users.ListUsernamesCustomAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Users.ListUsernamesCustomAsync(
+var response = await client.Users.ListWithCustomPagerAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -131,7 +133,7 @@ Access raw HTTP response data (status code, headers, URL) alongside parsed respo
 using SeedPagination;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Users.ListUsernamesCustomAsync(...).WithRawResponse();
+var result = await client.Users.ListWithCustomPagerAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -148,7 +150,39 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Users.ListUsernamesCustomAsync(...);
+var data = await client.Users.ListWithCustomPagerAsync(...);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
+
+```csharp
+var response = await client.Users.ListWithCustomPagerAsync(
+    ...,
+    new RequestOptions {
+        AdditionalHeaders = new Dictionary<string, string?>
+        {
+            { "X-Custom-Header", "custom-value" }
+        }
+    }
+);
+```
+
+### Additional Query Parameters
+
+If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
+
+```csharp
+var response = await client.Users.ListWithCustomPagerAsync(
+    ...,
+    new RequestOptions {
+        AdditionalQueryParameters = new Dictionary<string, string>
+        {
+            { "custom_param", "custom-value" }
+        }
+    }
+);
 ```
 
 ## Contributing

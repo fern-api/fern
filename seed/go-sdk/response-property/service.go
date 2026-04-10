@@ -33,6 +33,9 @@ func (s *StringResponse) GetData() string {
 }
 
 func (s *StringResponse) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -78,6 +81,9 @@ func (s *StringResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (s *StringResponse) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -111,6 +117,9 @@ func (w *WithMetadata) GetMetadata() map[string]string {
 }
 
 func (w *WithMetadata) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
 	return w.extraProperties
 }
 
@@ -156,6 +165,9 @@ func (w *WithMetadata) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WithMetadata) String() string {
+	if w == nil {
+		return "<nil>"
+	}
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
 			return value
@@ -168,12 +180,12 @@ func (w *WithMetadata) String() string {
 }
 
 var (
-	movieFieldId   = big.NewInt(1 << 0)
+	movieFieldID   = big.NewInt(1 << 0)
 	movieFieldName = big.NewInt(1 << 1)
 )
 
 type Movie struct {
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -183,11 +195,11 @@ type Movie struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *Movie) GetId() string {
+func (m *Movie) GetID() string {
 	if m == nil {
 		return ""
 	}
-	return m.Id
+	return m.ID
 }
 
 func (m *Movie) GetName() string {
@@ -198,6 +210,9 @@ func (m *Movie) GetName() string {
 }
 
 func (m *Movie) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -208,11 +223,11 @@ func (m *Movie) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Movie) SetId(id string) {
-	m.Id = id
-	m.require(movieFieldId)
+func (m *Movie) SetID(id string) {
+	m.ID = id
+	m.require(movieFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -250,6 +265,9 @@ func (m *Movie) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Movie) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -303,6 +321,9 @@ func (r *Response) GetData() *Movie {
 }
 
 func (r *Response) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -362,6 +383,9 @@ func (r *Response) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Response) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -395,6 +419,9 @@ func (w *WithDocs) GetDocs() string {
 }
 
 func (w *WithDocs) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
 	return w.extraProperties
 }
 
@@ -440,6 +467,9 @@ func (w *WithDocs) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WithDocs) String() string {
+	if w == nil {
+		return "<nil>"
+	}
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
 			return value

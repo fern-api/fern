@@ -81,6 +81,10 @@ public final class MyObjectWithOptional {
     public interface _FinalStage {
         MyObjectWithOptional build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage optionalProp(Optional<String> optionalProp);
 
         _FinalStage optionalProp(String optionalProp);
@@ -127,6 +131,18 @@ public final class MyObjectWithOptional {
         @java.lang.Override
         public MyObjectWithOptional build() {
             return new MyObjectWithOptional(prop, optionalProp, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

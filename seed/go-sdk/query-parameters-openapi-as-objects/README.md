@@ -30,16 +30,17 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/query-parameters-openapi-as-objects/fern/client"
-    fern "github.com/query-parameters-openapi-as-objects/fern"
     context "context"
+
+    fern "github.com/query-parameters-openapi-as-objects/fern"
+    client "github.com/query-parameters-openapi-as-objects/fern/client"
 )
 
 func do() {
     client := client.NewClient()
     request := &fern.SearchRequest{
         Limit: 1,
-        Id: "id",
+        ID: "id",
         Date: fern.MustParseDate(
             "2023-01-15",
         ),
@@ -115,6 +116,16 @@ func do() {
         Filter: []*string{
             fern.String(
                 "filter",
+            ),
+        },
+        Tags: []*string{
+            fern.String(
+                "tags",
+            ),
+        },
+        OptionalTags: []*string{
+            fern.String(
+                "optionalTags",
             ),
         },
         Neighbor: &fern.SearchRequestNeighbor{

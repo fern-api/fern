@@ -9,6 +9,7 @@ describe("QueryClient", () => {
         const client = new SeedLiteralClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { message: "The weather is sunny", status: 200, success: true };
+
         server.mockEndpoint().post("/query").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.query.send({
@@ -22,10 +23,6 @@ describe("QueryClient", () => {
             alias_optional_stream: false,
             query: "What is the weather today",
         });
-        expect(response).toEqual({
-            message: "The weather is sunny",
-            status: 200,
-            success: true,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

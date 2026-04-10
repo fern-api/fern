@@ -1,5 +1,5 @@
-import { AstNode } from "./AstNode";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Writer } from "./Writer.js";
 
 export declare namespace DocComment {
     interface Parameter {

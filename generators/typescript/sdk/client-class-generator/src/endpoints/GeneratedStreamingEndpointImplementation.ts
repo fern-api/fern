@@ -1,24 +1,26 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { getOriginalName } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Fetcher, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
-import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { EndpointSampleCode, FileContext, GeneratedEndpointImplementation } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { getReadableTypeNode } from "../getReadableTypeNode";
-import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
-import { buildUrl } from "./utils/buildUrl";
-import { generateEndpointMetadata } from "./utils/generateEndpointMetadata";
+import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest.js";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
+import { getReadableTypeNode } from "../getReadableTypeNode.js";
+import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse.js";
+import { buildUrl } from "./utils/buildUrl.js";
+import { generateEndpointMetadata } from "./utils/generateEndpointMetadata.js";
+import { getAvailabilityDocs } from "./utils/getAvailabilityDocs.js";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
-} from "./utils/requestOptionsParameter";
+} from "./utils/requestOptionsParameter.js";
 
 export declare namespace GeneratedStreamingEndpointImplementation {
     export interface Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         response: GeneratedEndpointResponse;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
@@ -36,7 +38,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
 export class GeneratedStreamingEndpointImplementation implements GeneratedEndpointImplementation {
     public static readonly DATA_PARAMETER_NAME = "data";
 
-    public readonly endpoint: HttpEndpoint;
+    public readonly endpoint: FernIr.HttpEndpoint;
 
     public readonly response: GeneratedEndpointResponse;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
@@ -78,13 +80,13 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.parameterNaming = parameterNaming;
     }
 
-    public isPaginated(context: SdkContext): boolean {
+    public isPaginated(context: FileContext): boolean {
         return false;
     }
 
     public getExample(args: {
-        context: SdkContext;
-        example: ExampleEndpointCall;
+        context: FileContext;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
     }): EndpointSampleCode | undefined {
@@ -109,7 +111,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                         this.generatedSdkClientClass.accessFromRootClient({
                             referenceToRootClient: args.clientReference
                         }),
-                        ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
+                        ts.factory.createIdentifier(args.context.case.camelUnsafe(this.endpoint.name))
                     ),
                     undefined,
                     exampleParameters
@@ -123,7 +125,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         context
     }: {
         invocation: ts.Expression;
-        context: SdkContext;
+        context: FileContext;
     }): ts.Node[] {
         const responseVariableName = "response";
         const itemVariableName = "item";
@@ -179,7 +181,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         return [];
     }
 
-    public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
+    public getSignature(context: FileContext): GeneratedEndpointImplementation.EndpointSignature {
         const returnType = this.response.getReturnType(context);
         return {
             parameters: this.getEndpointParameters(context),
@@ -187,7 +189,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         };
     }
 
-    private getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
+    private getEndpointParameters(context: FileContext): OptionalKind<ParameterDeclarationStructure>[] {
         return [
             ...this.request.getEndpointParameters(context),
             getRequestOptionsParameter({
@@ -197,10 +199,21 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     public getDocs(): string | undefined {
-        return this.endpoint.docs;
+        const groups: string[] = [];
+        const availabilityDoc = getAvailabilityDocs(this.endpoint);
+        if (availabilityDoc != null) {
+            groups.push(availabilityDoc);
+        }
+        if (this.endpoint.docs) {
+            groups.push(this.endpoint.docs);
+        }
+        if (groups.length === 0) {
+            return undefined;
+        }
+        return groups.join("\n\n");
     }
 
-    public getStatements(context: SdkContext): ts.Statement[] {
+    public getStatements(context: FileContext): ts.Statement[] {
         return [
             ...(this.generateEndpointMetadata
                 ? generateEndpointMetadata({
@@ -214,11 +227,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         ];
     }
 
-    public getRequestBuilderStatements(context: SdkContext): ts.Statement[] {
+    public getRequestBuilderStatements(context: FileContext): ts.Statement[] {
         return this.request.getBuildRequestStatements(context);
     }
 
-    private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
+    private getReferenceToBaseUrl(context: FileContext): ts.Expression {
         const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
         const url = buildUrl({
             endpoint: this.endpoint,
@@ -228,7 +241,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+                return this.request.getReferenceToPathParameter(getOriginalName(pathParameter.name), context);
             },
             parameterNaming: this.parameterNaming
         });
@@ -239,7 +252,18 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         }
     }
 
-    public invokeFetcher(context: SdkContext): ts.Statement[] {
+    private getResponseTypeForStreaming(): Fetcher.Args["responseType"] {
+        const responseBody = this.endpoint.response?.body;
+        if (responseBody?.type === "streaming" && responseBody.value.type === "sse") {
+            return "sse";
+        }
+        if (responseBody?.type === "streamParameter" && responseBody.streamResponse.type === "sse") {
+            return "sse";
+        }
+        return "streaming";
+    }
+
+    public invokeFetcher(context: FileContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
             url: this.getReferenceToBaseUrl(context),
@@ -264,7 +288,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
             logging: this.generatedSdkClientClass.getReferenceToLogger(context),
-            responseType: "sse",
+            responseType: this.getResponseTypeForStreaming(),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
@@ -296,15 +320,15 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         ];
     }
 
-    public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
+    public getReferenceToRequestBody(context: FileContext): ts.Expression | undefined {
         return this.request.getReferenceToRequestBody(context);
     }
 
-    public getReferenceToPathParameter(pathParameterKey: string, context: SdkContext): ts.Expression {
+    public getReferenceToPathParameter(pathParameterKey: string, context: FileContext): ts.Expression {
         return this.request.getReferenceToPathParameter(pathParameterKey, context);
     }
 
-    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
+    public getReferenceToQueryParameter(queryParameterKey: string, context: FileContext): ts.Expression {
         return this.request.getReferenceToQueryParameter(queryParameterKey, context);
     }
 }

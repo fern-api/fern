@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { FernFileContext } from "../FernFileContext";
+import { FernFileContext } from "../FernFileContext.js";
 
 export interface ResolvedEndpoint {
     endpointId: string;

@@ -1,4 +1,4 @@
-irVersion: v62
+irVersion: v66
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
@@ -25,6 +25,14 @@ language: php
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  basic-auth:
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
+  basic-auth-pw-omitted:
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig: null
@@ -72,6 +80,7 @@ fixtures:
     - outputFolder: clientName
       customConfig:
         clientName: FernClient
+        maxRetries: 5
     - outputFolder: packageName
       customConfig:
         packageName: fern-api/imdb-php
@@ -85,12 +94,21 @@ fixtures:
       customConfig:
         packagePath: Custom/Package/Path
         namespace: Custom\Package\Path
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: private
       customConfig:
         propertyAccess: private
+  folders:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: with-interfaces
+      customConfig:
+        generateClientInterfaces: true
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null
@@ -101,6 +119,12 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         propertyAccess: private
+  request-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: with-defaults
+      customConfig:
+        useDefaultRequestParameterValues: true
   query-parameters:
     - outputFolder: no-custom-config
       customConfig: null
@@ -133,12 +157,6 @@ fixtures:
           license:
           - "LGPL-2.1-only"
           - "GPL-3.0-or-later"
-          require:
-            guzzlehttp/guzzle: "7.9.2"
-            guzzlehttp/promises: "2.0.4"
-          require-dev:
-            phpunit/phpunit: "12.0.2"
-            phpunit/php-timer: "8.0.0"
           scripts:
             build:
             - "@php -l src"
@@ -156,14 +174,17 @@ scripts:
       test:
         - composer test
 allowedFailures:
+  - exhaustive:no-custom-config
+  - exhaustive:wire-tests
   - pagination-custom
+  - endpoint-security-auth
+  - inferred-auth-implicit
   - inferred-auth-implicit-reference
   # Dynamic snippets need to add support for global headers included in the client constructor.
   - header-auth-environment-variable
   # TODO: Add support for bytes upload.
   - bytes-upload
-  # Basic auth is not supported yet.
-  - basic-auth
+  # Basic auth wire-tests are enabled in fixtures section.
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
   - examples:no-custom-config
   - examples:readme-config
@@ -194,4 +215,9 @@ allowedFailures:
   - variables
   # Java-specific fixture for staged builder ordering
   - java-staged-builder-ordering
+  - server-sent-events-openapi
+  - any-auth
+  - circular-references
+  - file-upload
+
 

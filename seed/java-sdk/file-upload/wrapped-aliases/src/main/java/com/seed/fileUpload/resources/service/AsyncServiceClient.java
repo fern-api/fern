@@ -15,6 +15,7 @@ import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
+import com.seed.fileUpload.resources.service.requests.WithJsonPropertyRequest;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Optional;
@@ -255,6 +256,35 @@ public class AsyncServiceClient {
             InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
         return this.rawClient
                 .withInlineType(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(File file, WithJsonPropertyRequest request) {
+        return this.rawClient.withJsonProperty(file, request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            File file, WithJsonPropertyRequest request, RequestOptions requestOptions) {
+        return this.rawClient.withJsonProperty(file, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(InputStream stream, String filename) {
+        return this.rawClient.withJsonProperty(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withJsonProperty(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withJsonProperty(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withJsonProperty(stream, filename, mediaType, requestOptions)
                 .thenApply(response -> response.body());
     }
 

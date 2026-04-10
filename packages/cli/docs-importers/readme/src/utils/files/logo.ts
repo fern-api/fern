@@ -3,7 +3,7 @@ import { stripLeadingSlash } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Browser } from "puppeteer";
 
-import { findLogosFromHtml } from "../../extract/logo";
+import { findLogosFromHtml } from "../../extract/logo.js";
 
 const LOGO_DEFAULT_HEIGHT = 28;
 

@@ -1,4 +1,4 @@
-import { assertDefined, assertNever } from "./assert";
+import { assertDefined, assertNever } from "./assert.js";
 
 type SymbolId = string;
 type SymbolName = string;

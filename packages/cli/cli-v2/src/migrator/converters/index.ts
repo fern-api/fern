@@ -4,10 +4,10 @@ export type {
     ConvertMultiApiResult,
     ConvertSingleApiOptions,
     ConvertSingleApiResult
-} from "./convertApiSpecs";
-export { convertApiSpecs, convertMultiApi, convertSingleApi } from "./convertApiSpecs";
-export type { ConvertGitOutputResult } from "./convertGitOutput";
-export { convertGitOutput } from "./convertGitOutput";
+} from "./convertApiSpecs.js";
+export { convertApiSpecs, convertMultiApi, convertSingleApi } from "./convertApiSpecs.js";
+export type { ConvertGitOutputResult } from "./convertGitOutput.js";
+export { convertGitOutput } from "./convertGitOutput.js";
 export type {
     ConvertSdkTargetsFromRawOptions,
     ConvertSdkTargetsOptions,
@@ -18,7 +18,7 @@ export type {
     RawGithubConfig,
     RawOutputConfig,
     RawReadmeConfig
-} from "./convertSdkTargets";
-export { convertSdkTargets, convertSdkTargetsFromRaw } from "./convertSdkTargets";
-export type { ConvertSettingsResult } from "./convertSettings";
-export { convertOpenApiSpecSettings, convertSettings } from "./convertSettings";
+} from "./convertSdkTargets.js";
+export { convertSdkTargets, convertSdkTargetsFromRaw } from "./convertSdkTargets.js";
+export type { ConvertSettingsResult } from "./convertSettings.js";
+export { convertOpenApiSpecSettings, convertSettings } from "./convertSettings.js";

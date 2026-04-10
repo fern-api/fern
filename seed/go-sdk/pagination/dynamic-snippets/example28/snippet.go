@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/pagination/fern"
     client "github.com/pagination/fern/client"
     option "github.com/pagination/fern/option"
-    fern "github.com/pagination/fern"
-    context "context"
 )
 
 func do() {
@@ -16,12 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersOptionalDataRequest{
-        Page: fern.Int(
-            1,
+    request := &fern.ListUsernamesWithOptionalResponseRequest{
+        StartingAfter: fern.String(
+            "starting_after",
         ),
     }
-    client.Users.ListWithOptionalData(
+    client.Users.ListUsernamesWithOptionalResponse(
         context.TODO(),
         request,
     )

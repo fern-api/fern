@@ -1,9 +1,9 @@
 import { ts } from "ts-morph";
 
-import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
-import { CoreUtility } from "./CoreUtility";
-import { MANIFEST as RuntimeManifest } from "./Runtime";
-import { MANIFEST as UrlManifest } from "./UrlUtils";
+import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager.js";
+import { CoreUtility } from "./CoreUtility.js";
+import { MANIFEST as RuntimeManifest } from "./Runtime.js";
+import { MANIFEST as UrlManifest } from "./UrlUtils.js";
 
 export interface Websocket {
     readonly ReconnectingWebSocket: {
@@ -14,6 +14,7 @@ export interface Websocket {
             options: ts.ObjectLiteralExpression;
             headers: ts.Expression;
             queryParameters: ts.Expression;
+            abortSignal?: ts.Expression;
         }) => ts.Expression;
     };
     readonly CloseEvent: {
@@ -39,8 +40,8 @@ export const MANIFEST: CoreUtility.Manifest = {
     name: "websocket",
     pathInCoreUtilities: { nameOnDisk: "websocket", exportDeclaration: { exportAll: true } },
     addDependencies: (dependencyManager: DependencyManager): void => {
-        dependencyManager.addDependency("ws", "^8.16.0");
-        dependencyManager.addDependency("@types/ws", "^8.5.10", { type: DependencyType.DEV });
+        dependencyManager.addDependency("ws", "^8.20.0");
+        dependencyManager.addDependency("@types/ws", "^8.18.1", { type: DependencyType.DEV });
     },
     dependsOn: [RuntimeManifest, UrlManifest],
     getFilesPatterns: () => {
@@ -64,16 +65,22 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
                     options: ts.ObjectLiteralExpression;
                     headers: ts.Expression;
                     queryParameters: ts.Expression;
-                }) =>
-                    ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
-                        ts.factory.createObjectLiteralExpression([
-                            ts.factory.createPropertyAssignment("url", args.url),
-                            ts.factory.createPropertyAssignment("protocols", args.protocols),
-                            ts.factory.createPropertyAssignment("queryParameters", args.queryParameters),
-                            ts.factory.createPropertyAssignment("headers", args.headers),
-                            ts.factory.createPropertyAssignment("options", args.options)
-                        ])
-                    ])
+                    abortSignal?: ts.Expression;
+                }) => {
+                    const properties = [
+                        ts.factory.createPropertyAssignment("url", args.url),
+                        ts.factory.createPropertyAssignment("protocols", args.protocols),
+                        ts.factory.createPropertyAssignment("queryParameters", args.queryParameters),
+                        ts.factory.createPropertyAssignment("headers", args.headers),
+                        ts.factory.createPropertyAssignment("options", args.options)
+                    ];
+                    if (args.abortSignal != null) {
+                        properties.push(ts.factory.createPropertyAssignment("abortSignal", args.abortSignal));
+                    }
+                    return ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
+                        ts.factory.createObjectLiteralExpression(properties)
+                    ]);
+                }
         )
     };
 

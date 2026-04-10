@@ -113,6 +113,10 @@ public final class WorkspaceSubmitRequest {
     public interface _FinalStage {
         WorkspaceSubmitRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage submissionFiles(List<SubmissionFileInfo> submissionFiles);
 
         _FinalStage addSubmissionFiles(SubmissionFileInfo submissionFiles);
@@ -202,6 +206,18 @@ public final class WorkspaceSubmitRequest {
         @java.lang.Override
         public WorkspaceSubmitRequest build() {
             return new WorkspaceSubmitRequest(submissionId, language, submissionFiles, userId, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

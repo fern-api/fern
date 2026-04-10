@@ -3,6 +3,7 @@
 namespace Seed\Tests\Core\Json;
 
 use PHPUnit\Framework\TestCase;
+use Seed\Core\Json\JsonEncoder;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Types\ArrayType;
@@ -33,11 +34,10 @@ class NullableArrayTest extends TestCase
 {
     public function testNullableArray(): void
     {
-        $expectedJson = json_encode(
+        $expectedJson = JsonEncoder::encode(
             [
                 'nullable_string_array' => ['one', null, 'three']
             ],
-            JSON_THROW_ON_ERROR
         );
 
         $object = NullableArray::fromJson($expectedJson);

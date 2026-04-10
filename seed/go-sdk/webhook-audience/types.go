@@ -31,6 +31,9 @@ func (n *NoAudiencePayload) GetData() string {
 }
 
 func (n *NoAudiencePayload) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (n *NoAudiencePayload) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NoAudiencePayload) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -109,6 +115,9 @@ func (p *PrivatePayload) GetSecret() string {
 }
 
 func (p *PrivatePayload) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -154,6 +163,9 @@ func (p *PrivatePayload) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PrivatePayload) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
@@ -187,6 +199,9 @@ func (p *PublicPayload) GetMessage() string {
 }
 
 func (p *PublicPayload) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -232,6 +247,9 @@ func (p *PublicPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PublicPayload) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value

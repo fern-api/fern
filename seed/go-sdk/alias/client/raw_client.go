@@ -4,11 +4,12 @@ package client
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/alias/fern"
 	core "github.com/alias/fern/core"
 	internal "github.com/alias/fern/internal"
 	option "github.com/alias/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -32,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Get(
 	ctx context.Context,
-	typeId fern.TypeId,
+	typeID fern.TypeID,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -43,7 +44,7 @@ func (r *RawClient) Get(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v",
-		typeId,
+		typeID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

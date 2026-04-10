@@ -8,19 +8,19 @@ import {
 import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../../getExtension";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getFernAsyncExtension } from "../../extensions/getFernAsyncExtension";
-import { FernStreamingExtension, getFernStreamingExtension } from "../../extensions/getFernStreamingExtension";
-import { getFernPaginationExtension } from "../../extensions/getPaginationExtension";
-import { OperationContext, PathItemContext } from "../contexts";
-import { hasTextEventStreamWithItemSchema } from "../endpoint/getApplicationJsonSchema";
-import { convertAsyncSyncOperation } from "./convertAsyncSyncOperation";
-import { convertHttpOperation } from "./convertHttpOperation";
-import { convertStreamingOperation } from "./convertStreamingOperation";
-import { convertWebhookOperation } from "./convertWebhookOperation";
+import { getExtension } from "../../../../getExtension.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import { getFernAsyncExtension } from "../../extensions/getFernAsyncExtension.js";
+import { FernStreamingExtension, getFernStreamingExtension } from "../../extensions/getFernStreamingExtension.js";
+import { getFernPaginationExtension } from "../../extensions/getPaginationExtension.js";
+import { OperationContext, PathItemContext } from "../contexts.js";
+import { hasTextEventStream } from "../endpoint/getApplicationJsonSchema.js";
+import { convertAsyncSyncOperation } from "./convertAsyncSyncOperation.js";
+import { convertHttpOperation } from "./convertHttpOperation.js";
+import { convertStreamingOperation } from "./convertStreamingOperation.js";
+import { convertWebhookOperation } from "./convertWebhookOperation.js";
 
 export type ConvertedOperation =
     | ConvertedAsyncAndSyncOperation
@@ -98,12 +98,12 @@ export function convertOperation({
 
     let streamingExtension: FernStreamingExtension | undefined = getFernStreamingExtension(operation);
 
-    // If no streaming extension is specified, check if the response has text/event-stream with itemSchema
-    // This is the OAS 3.2 standard for SSE endpoints
+    // If no streaming extension is specified, check if the response has text/event-stream content type.
+    // This infers streaming based on the MIME type.
     if (streamingExtension == null) {
-        const hasItemSchemaStreaming = checkOperationForItemSchemaStreaming({ operation, context });
-        if (hasItemSchemaStreaming) {
-            streamingExtension = { type: "stream", format: "sse" };
+        const hasEventStreamResponse = checkOperationForTextEventStream({ operation, context });
+        if (hasEventStreamResponse) {
+            streamingExtension = { type: "stream", format: "sse", terminator: undefined };
         }
     }
 
@@ -199,10 +199,10 @@ function getBaseBreadcrumbs({
 }
 
 /**
- * Checks if the operation has a response with text/event-stream content type
- * that uses itemSchema instead of schema. This is the OAS 3.2 standard for SSE endpoints.
+ * Checks if the operation has a response with text/event-stream content type.
+ * This infers streaming based on the MIME type.
  */
-function checkOperationForItemSchemaStreaming({
+function checkOperationForTextEventStream({
     operation,
     context
 }: {
@@ -213,14 +213,18 @@ function checkOperationForItemSchemaStreaming({
         return false;
     }
 
-    for (const response of Object.values(operation.responses)) {
+    for (const [statusCode, response] of Object.entries(operation.responses)) {
+        const statusCodeNum = parseInt(statusCode);
+        if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+            continue;
+        }
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
 
         if (resolvedResponse.content == null) {
             continue;
         }
 
-        if (hasTextEventStreamWithItemSchema(resolvedResponse.content)) {
+        if (hasTextEventStream(resolvedResponse.content)) {
             return true;
         }
     }

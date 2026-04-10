@@ -1,10 +1,10 @@
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Func } from "./Func";
-import { Identifier } from "./Identifier";
-import { Method } from "./Method";
-import { TypeInstantiation } from "./TypeInstantiation";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Func } from "./Func.js";
+import { Identifier } from "./Identifier.js";
+import { Method } from "./Method.js";
+import { TypeInstantiation } from "./TypeInstantiation.js";
 
 export declare namespace Enum {
     interface Args {

@@ -11,12 +11,15 @@ on:
 permissions:
   pull-requests: read
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   run:
     name: Lint PR title
     runs-on: ubuntu-latest
     steps:
-      - uses: amannn/action-semantic-pull-request@v5
+      - uses: amannn/action-semantic-pull-request@v6
         with:
           types: |
             fix
@@ -37,20 +40,19 @@ jobs:
             php
             ruby
             seed
-            postman
             ci
             lint
-            fastapi
-            spring
-            express
             openapi
             deps
             deps-dev
-            fiber
             pydantic
             ai-search
             swift
             rust
+            generator-cli
+            parser
+            ir
+            cli-v2
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

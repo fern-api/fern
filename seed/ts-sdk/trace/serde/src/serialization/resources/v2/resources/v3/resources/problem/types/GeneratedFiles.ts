@@ -10,9 +10,9 @@ export const GeneratedFiles: core.serialization.ObjectSchema<
     serializers.v2.v3.GeneratedFiles.Raw,
     SeedTrace.v2.v3.GeneratedFiles
 > = core.serialization.object({
-    generatedTestCaseFiles: core.serialization.record(Language, Files.optional()),
-    generatedTemplateFiles: core.serialization.record(Language, Files.optional()),
-    other: core.serialization.record(Language, Files.optional()),
+    generatedTestCaseFiles: core.serialization.partialRecord(Language, Files.optional()),
+    generatedTemplateFiles: core.serialization.partialRecord(Language, Files.optional()),
+    other: core.serialization.partialRecord(Language, Files.optional()),
 });
 
 export declare namespace GeneratedFiles {

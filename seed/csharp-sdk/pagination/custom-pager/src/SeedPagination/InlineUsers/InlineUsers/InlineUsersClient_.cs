@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedPagination;
 using SeedPagination.Core;
 
@@ -6,7 +6,7 @@ namespace SeedPagination.InlineUsers;
 
 public partial class InlineUsersClient_ : IInlineUsersClient_
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal InlineUsersClient_(RawClient client)
     {
@@ -49,7 +49,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -61,7 +60,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -89,7 +90,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -131,7 +134,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -143,7 +145,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersMixedTypePaginationResponse>(
@@ -171,7 +175,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -209,7 +215,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/inline-users",
                     Body = request,
@@ -221,7 +226,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -249,7 +256,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -294,7 +303,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -306,7 +314,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -334,7 +344,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -379,7 +391,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -391,7 +402,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -419,7 +432,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -457,7 +472,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/inline-users",
                     Body = request,
@@ -469,7 +483,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -497,7 +513,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -541,7 +559,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -553,7 +570,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -581,7 +600,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -629,7 +650,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -641,7 +661,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -669,7 +691,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -711,7 +735,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -723,7 +746,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersExtendedResponse>(responseBody)!;
@@ -749,7 +774,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -795,7 +822,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -807,7 +833,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersExtendedOptionalListResponse>(
@@ -835,7 +863,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -875,7 +905,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -887,7 +916,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
@@ -913,7 +944,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -953,7 +986,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -965,7 +997,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<UsernameContainer>(responseBody)!;
@@ -991,7 +1025,9 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -1032,11 +1068,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 request,
                 options,
                 async (request, options, cancellationToken) =>
-                    await ListWithCursorPaginationInternalAsync(
-                        request,
-                        options,
-                        cancellationToken
-                    ),
+                    await ListWithCursorPaginationInternalAsync(request, options, cancellationToken)
+                        .WithRawResponse(),
                 (request, cursor) =>
                 {
                     request.StartingAfter = cursor;
@@ -1076,10 +1109,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 options,
                 async (request, options, cancellationToken) =>
                     await ListWithMixedTypeCursorPaginationInternalAsync(
-                        request,
-                        options,
-                        cancellationToken
-                    ),
+                            request,
+                            options,
+                            cancellationToken
+                        )
+                        .WithRawResponse(),
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;
@@ -1122,10 +1156,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 options,
                 async (request, options, cancellationToken) =>
                     await ListWithBodyCursorPaginationInternalAsync(
-                        request,
-                        options,
-                        cancellationToken
-                    ),
+                            request,
+                            options,
+                            cancellationToken
+                        )
+                        .WithRawResponse(),
                 (request, cursor) =>
                 {
                     request.Pagination ??= new WithCursor();
@@ -1169,11 +1204,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 request,
                 options,
                 async (request, options, cancellationToken) =>
-                    await ListWithOffsetPaginationInternalAsync(
-                        request,
-                        options,
-                        cancellationToken
-                    ),
+                    await ListWithOffsetPaginationInternalAsync(request, options, cancellationToken)
+                        .WithRawResponse(),
                 request => request.Page ?? 0,
                 (request, offset) =>
                 {
@@ -1219,10 +1251,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 options,
                 async (request, options, cancellationToken) =>
                     await ListWithDoubleOffsetPaginationInternalAsync(
-                        request,
-                        options,
-                        cancellationToken
-                    ),
+                            request,
+                            options,
+                            cancellationToken
+                        )
+                        .WithRawResponse(),
                 request => request.Page ?? 0,
                 (request, offset) =>
                 {
@@ -1265,10 +1298,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 options,
                 async (request, options, cancellationToken) =>
                     await ListWithBodyOffsetPaginationInternalAsync(
-                        request,
-                        options,
-                        cancellationToken
-                    ),
+                            request,
+                            options,
+                            cancellationToken
+                        )
+                        .WithRawResponse(),
                 request => request.Pagination?.Page ?? 0,
                 (request, offset) =>
                 {
@@ -1314,10 +1348,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 options,
                 async (request, options, cancellationToken) =>
                     await ListWithOffsetStepPaginationInternalAsync(
-                        request,
-                        options,
-                        cancellationToken
-                    ),
+                            request,
+                            options,
+                            cancellationToken
+                        )
+                        .WithRawResponse(),
                 request => request.Page ?? 0,
                 (request, offset) =>
                 {
@@ -1362,10 +1397,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 options,
                 async (request, options, cancellationToken) =>
                     await ListWithOffsetPaginationHasNextPageInternalAsync(
-                        request,
-                        options,
-                        cancellationToken
-                    ),
+                            request,
+                            options,
+                            cancellationToken
+                        )
+                        .WithRawResponse(),
                 request => request.Page ?? 0,
                 (request, offset) =>
                 {
@@ -1409,7 +1445,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 request,
                 options,
                 async (request, options, cancellationToken) =>
-                    await ListWithExtendedResultsInternalAsync(request, options, cancellationToken),
+                    await ListWithExtendedResultsInternalAsync(request, options, cancellationToken)
+                        .WithRawResponse(),
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;
@@ -1452,10 +1489,11 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 options,
                 async (request, options, cancellationToken) =>
                     await ListWithExtendedResultsAndOptionalDataInternalAsync(
-                        request,
-                        options,
-                        cancellationToken
-                    ),
+                            request,
+                            options,
+                            cancellationToken
+                        )
+                        .WithRawResponse(),
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;
@@ -1494,7 +1532,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 request,
                 options,
                 async (request, options, cancellationToken) =>
-                    await ListUsernamesInternalAsync(request, options, cancellationToken),
+                    await ListUsernamesInternalAsync(request, options, cancellationToken)
+                        .WithRawResponse(),
                 (request, cursor) =>
                 {
                     request.StartingAfter = cursor;
@@ -1531,7 +1570,8 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
                 request,
                 options,
                 async (request, options, cancellationToken) =>
-                    await ListWithGlobalConfigInternalAsync(request, options, cancellationToken),
+                    await ListWithGlobalConfigInternalAsync(request, options, cancellationToken)
+                        .WithRawResponse(),
                 request => request.Offset ?? 0,
                 (request, offset) =>
                 {

@@ -82,6 +82,10 @@ public final class Response {
     public interface _FinalStage {
         Response build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage identifiers(List<Identifier> identifiers);
 
         _FinalStage addIdentifiers(Identifier identifiers);
@@ -141,6 +145,18 @@ public final class Response {
         @java.lang.Override
         public Response build() {
             return new Response(response, identifiers, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

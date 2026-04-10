@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.put.requests.PutRequest;
+import com.fern.sdk.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
 
 public class Example40 {
     public static void main(String[] args) {
@@ -11,10 +11,11 @@ public class Example40 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().put().add(
-            PutRequest
+        client.endpoints().params().modifyWithInlinePath(
+            ModifyResourceAtInlinedPath
                 .builder()
-                .id("id")
+                .param("param")
+                .body("string")
                 .build()
         );
     }

@@ -1,26 +1,26 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
-import { GeneratedSdkErrorSchema, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedSdkErrorSchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
 export declare namespace GeneratedSdkErrorSchemaImpl {
     export interface Init {
         errorName: string;
-        errorDeclaration: ErrorDeclaration;
-        type: TypeReference;
+        errorDeclaration: FernIr.ErrorDeclaration;
+        type: FernIr.TypeReference;
         skipValidation: boolean;
         includeSerdeLayer: boolean;
     }
 }
 
 export class GeneratedSdkErrorSchemaImpl
-    extends AbstractGeneratedSchema<SdkContext>
+    extends AbstractGeneratedSchema<FileContext>
     implements GeneratedSdkErrorSchema
 {
-    private errorDeclaration: ErrorDeclaration;
-    private type: TypeReference;
+    private errorDeclaration: FernIr.ErrorDeclaration;
+    private type: FernIr.TypeReference;
     private skipValidation: boolean;
     private includeSerdeLayer: boolean;
 
@@ -38,7 +38,7 @@ export class GeneratedSdkErrorSchemaImpl
         this.includeSerdeLayer = includeSerdeLayer;
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         // named errors are not generated - consumers should
         // (de)serialize the named type directly.
         // unknown request bodies don't need to be serialized.
@@ -59,7 +59,7 @@ export class GeneratedSdkErrorSchemaImpl
     }
 
     public deserializeBody(
-        context: SdkContext,
+        context: FileContext,
         { referenceToBody }: { referenceToBody: ts.Expression }
     ): ts.Expression {
         if (!this.includeSerdeLayer) {
@@ -94,11 +94,11 @@ export class GeneratedSdkErrorSchemaImpl
         }
     }
 
-    protected getReferenceToSchema(context: SdkContext): Reference {
+    protected getReferenceToSchema(context: FileContext): Reference {
         return context.sdkErrorSchema.getReferenceToSdkErrorSchema(this.errorDeclaration.name);
     }
 
-    protected generateRawTypeDeclaration(context: SdkContext, module: ModuleDeclaration): void {
+    protected generateRawTypeDeclaration(context: FileContext, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
             type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode),
@@ -106,11 +106,11 @@ export class GeneratedSdkErrorSchemaImpl
         });
     }
 
-    protected getReferenceToParsedShape(context: SdkContext): ts.TypeNode {
+    protected getReferenceToParsedShape(context: FileContext): ts.TypeNode {
         return context.type.getReferenceToType(this.type).typeNode;
     }
 
-    protected buildSchema(context: SdkContext): Zurg.Schema {
+    protected buildSchema(context: FileContext): Zurg.Schema {
         return context.typeSchema.getSchemaOfTypeReference(this.type);
     }
 }

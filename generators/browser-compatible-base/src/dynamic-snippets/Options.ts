@@ -1,4 +1,4 @@
-import { AbstractFormatter } from "../ast/AbstractFormatter";
+import { AbstractFormatter } from "../ast/AbstractFormatter.js";
 
 // Style of the generated snippets.
 export enum Style {

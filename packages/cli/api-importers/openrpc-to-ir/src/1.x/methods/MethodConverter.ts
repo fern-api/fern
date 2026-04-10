@@ -11,7 +11,7 @@ import {
     PathParameter,
     TypeId
 } from "@fern-api/ir-sdk";
-import { constructHttpPath } from "@fern-api/ir-utils";
+import { constructHttpPath, getOriginalName } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 import {
     ContentDescriptorObject,
@@ -22,7 +22,7 @@ import {
 } from "@open-rpc/meta-schema";
 import { OpenAPIV3 } from "openapi-types";
 
-import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
+import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1.js";
 
 export declare namespace MethodConverter {
     export interface Args extends AbstractConverter.Args<OpenRPCConverterContext3_1> {
@@ -70,7 +70,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         // Construct the path with all path parameters
         let pathString = "";
         for (const pathParam of this.pathParameters) {
-            pathString += `/{${pathParam.name.originalName}}`;
+            pathString += `/{${getOriginalName(pathParam.name)}}`;
         }
         const path: HttpPath = constructHttpPath(pathString);
 

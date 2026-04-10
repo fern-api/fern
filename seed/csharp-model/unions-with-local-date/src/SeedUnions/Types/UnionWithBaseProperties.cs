@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -81,7 +81,7 @@ public record UnionWithBaseProperties
     public int AsInteger() =>
         IsInteger
             ? (int)Value!
-            : throw new System.Exception("UnionWithBaseProperties.Type is not 'integer'");
+            : throw new global::System.Exception("UnionWithBaseProperties.Type is not 'integer'");
 
     /// <summary>
     /// Returns the value as a <see cref="string"/> if <see cref="Type"/> is 'string', otherwise throws an exception.
@@ -90,7 +90,7 @@ public record UnionWithBaseProperties
     public string AsString() =>
         IsString
             ? (string)Value!
-            : throw new System.Exception("UnionWithBaseProperties.Type is not 'string'");
+            : throw new global::System.Exception("UnionWithBaseProperties.Type is not 'string'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Foo"/> if <see cref="Type"/> is 'foo', otherwise throws an exception.
@@ -99,7 +99,7 @@ public record UnionWithBaseProperties
     public SeedUnions.Foo AsFoo() =>
         IsFoo
             ? (SeedUnions.Foo)Value!
-            : throw new System.Exception("UnionWithBaseProperties.Type is not 'foo'");
+            : throw new global::System.Exception("UnionWithBaseProperties.Type is not 'foo'");
 
     public T Match<T>(
         Func<int, T> onInteger,
@@ -198,12 +198,12 @@ public record UnionWithBaseProperties
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithBaseProperties>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithBaseProperties).IsAssignableFrom(typeToConvert);
 
         public override UnionWithBaseProperties Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -228,12 +228,18 @@ public record UnionWithBaseProperties
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "integer" => json.GetProperty("value").Deserialize<int>(options),
                 "string" => json.GetProperty("value").Deserialize<string?>(options)
-                ?? throw new JsonException("Failed to deserialize string"),
-                "foo" => json.Deserialize<SeedUnions.Foo?>(options)
+                    ?? throw new JsonException("Failed to deserialize string"),
+                "foo" => jsonWithoutDiscriminator.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -279,6 +285,27 @@ public record UnionWithBaseProperties
                 json[property.Key] = property.Value;
             }
             json.WriteTo(writer, options);
+        }
+
+        public override UnionWithBaseProperties ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new UnionWithBaseProperties(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UnionWithBaseProperties value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

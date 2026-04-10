@@ -275,6 +275,32 @@ await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
 "
 `;
 
+exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"using Acme;
+using System.Collections.Generic;
+using OneOf;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>(){
+        ["test"] = 0,
+        ["test2"] = true,
+        ["test3"] = "Test",
+        ["test4"] = new List<string>(){
+            "1",
+            "1",
+            "1",
+            "1",
+        }
+        ,
+    }
+);
+"
+`;
+
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "using Acme;
 using Acme.Service;
@@ -547,9 +573,13 @@ await client.CreateUserAsync(
         Password = "password",
         Profile = new UserProfile {
             Name = "name",
-            Verification = new UserProfileVerification(),
+            Verification = new UserProfileVerification {
+                Verified = ""
+            },
             Ssn = "ssn"
-        }
+        },
+        ID = "",
+        Email = ""
     }
 );
 "
@@ -570,9 +600,42 @@ await client.CreateUserAsync(
         Password = "password",
         Profile = new UserProfile {
             Name = "name",
-            Verification = new UserProfileVerification(),
+            Verification = new UserProfileVerification {
+                Verified = ""
+            },
             Ssn = "ssn"
-        }
+        },
+        Email = ""
+    }
+);
+"
+`;
+
+exports[`snippets (default) > required-headers > 'GET /plants (simple)' 1`] = `
+"using Acme;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    tenantId: "my-tenant-id"
+);
+
+await client.Plantstore.ListAsync();
+"
+`;
+
+exports[`snippets (default) > required-headers > 'POST /plants (simple)' 1`] = `
+"using Acme;
+using Acme.Plantstore;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>",
+    tenantId: "my-tenant-id"
+);
+
+await client.Plantstore.CreateAsync(
+    new CreatePlantRequest {
+        Name = "Fern",
+        Price = 12.99
     }
 );
 "
@@ -638,4 +701,66 @@ exports[`snippets (default) > single-url-environment-default > 'invalid environm
     "message": "Environment \\"Unrecognized\\" was not found"
   }
 ]"
+`;
+
+exports[`snippets (endpoint with examples) > generates snippet for EndpointSnippetRequest when endpoint has examples 1`] = `
+"using Acme;
+using Acme.Imdb;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Imdb.CreateMovieAsync(
+    new CreateMovieRequest {
+        Title = "The Matrix",
+        Rating = 8.2
+    }
+);
+"
+`;
+
+exports[`snippets (use-undiscriminated-unions) > POST /container/map-prim-to-union (mixed values) 1`] = `
+"using Acme;
+using System.Collections.Generic;
+using Acme.Types.Union;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    new Dictionary<string, MixedType>(){
+        ["test"] = 0,
+        ["test2"] = true,
+        ["test3"] = "Test",
+        ["test4"] = new List<string>(){
+            "1",
+            "1",
+            "1",
+            "1",
+        }
+        ,
+    }
+);
+"
+`;
+
+exports[`snippets (use-undiscriminated-unions) > POST /container/map-prim-to-union (numeric values) 1`] = `
+"using Acme;
+using System.Collections.Generic;
+using Acme.Types.Union;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    new Dictionary<string, MixedType>(){
+        ["test"] = 0,
+        ["test2"] = 1.5,
+        ["test3"] = 42,
+    }
+);
+"
 `;

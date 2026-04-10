@@ -36,4 +36,6 @@ export interface ExperimentalConfig {
     aiExampleStyleInstructions?: string;
     /** Experimental flag to exclude API reference sections from documentation generation. When enabled, API reference content will be omitted from the generated documentation. */
     excludeApis?: boolean;
+    /** When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths. */
+    basepathAware?: boolean;
 }

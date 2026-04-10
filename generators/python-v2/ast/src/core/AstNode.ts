@@ -1,7 +1,7 @@
 import { AbstractAstNode, AbstractFormatter } from "@fern-api/browser-compatible-base-generator";
 
-import { Reference } from "../Reference";
-import { Writer } from "./Writer";
+import { Reference } from "../Reference.js";
+import { Writer } from "./Writer.js";
 
 export abstract class AstNode extends AbstractAstNode {
     protected references: Reference[] = [];

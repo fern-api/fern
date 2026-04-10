@@ -1,11 +1,11 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { FernFileContext } from "../FernFileContext";
-import { ExampleResolver } from "../resolvers/ExampleResolver";
-import { TypeResolver } from "../resolvers/TypeResolver";
-import { ExampleViolation } from "./exampleViolation";
-import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
+import { FernFileContext } from "../FernFileContext.js";
+import { ExampleResolver } from "../resolvers/ExampleResolver.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
+import { ExampleViolation } from "./exampleViolation.js";
+import { validateTypeReferenceExample } from "./validateTypeReferenceExample.js";
 
 export function validateAliasExample({
     rawAlias,

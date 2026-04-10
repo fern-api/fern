@@ -1,5 +1,5 @@
-import { TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
 /**
  * Represents an extracted default value with its C# representation
@@ -9,7 +9,7 @@ export interface ExtractedDefault {
     value: string;
     /** The C# type name (e.g., 'string', 'int', 'bool') */
     csharpType: string;
-    /** Whether the value can be used as a const (true for primitives except BigInteger) */
+    /** Whether the value can be used as a const (true for primitives) */
     isConst: boolean;
 }
 
@@ -28,12 +28,12 @@ export class DefaultValueExtractor {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
-     * Extracts the default value from a TypeReference, if one exists.
+     * Extracts the default value from a FernIr.TypeReference, if one exists.
      *
      * @param typeReference - The type reference to extract the default from
      * @returns The extracted default with its C# representation, or undefined if no default exists
      */
-    public extractDefault(typeReference: TypeReference): ExtractedDefault | undefined {
+    public extractDefault(typeReference: FernIr.TypeReference): ExtractedDefault | undefined {
         return typeReference._visit<ExtractedDefault | undefined>({
             primitive: (primitive) => {
                 const v2 = primitive.v2;
@@ -64,9 +64,9 @@ export class DefaultValueExtractor {
                     bigInteger: (t) =>
                         t.default != null
                             ? {
-                                  value: `BigInteger.Parse("${t.default}")`,
-                                  csharpType: "BigInteger",
-                                  isConst: false
+                                  value: `"${t.default}"`,
+                                  csharpType: "string",
+                                  isConst: true
                               }
                             : undefined,
                     // Types not yet supported in IR SDK for defaults
@@ -76,6 +76,7 @@ export class DefaultValueExtractor {
                     // Other primitive types don't support defaults
                     date: () => undefined,
                     dateTime: () => undefined,
+                    dateTimeRfc2822: () => undefined,
                     uuid: () => undefined,
                     base64: () => undefined,
                     _other: () => undefined

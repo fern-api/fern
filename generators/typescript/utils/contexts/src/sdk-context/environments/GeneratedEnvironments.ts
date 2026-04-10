@@ -1,15 +1,15 @@
-import { EnvironmentBaseUrlId } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ts } from "ts-morph";
 
-import { GeneratedFile } from "../../commons/GeneratedFile";
-import { SdkContext } from "../SdkContext";
+import { GeneratedFile } from "../../commons/GeneratedFile.js";
+import { FileContext } from "../file-context/FileContext.js";
 
-export interface GeneratedEnvironments extends GeneratedFile<SdkContext> {
+export interface GeneratedEnvironments extends GeneratedFile<FileContext> {
     hasDefaultEnvironment: () => boolean;
-    getReferenceToDefaultEnvironment: (context: SdkContext) => ts.Expression | undefined;
-    getTypeForUserSuppliedEnvironment: (context: SdkContext) => ts.TypeNode;
+    getReferenceToDefaultEnvironment: (context: FileContext) => ts.Expression | undefined;
+    getTypeForUserSuppliedEnvironment: (context: FileContext) => ts.TypeNode;
     getReferenceToEnvironmentUrl: (args: {
         referenceToEnvironmentValue: ts.Expression;
-        baseUrlId: EnvironmentBaseUrlId | undefined;
+        baseUrlId: FernIr.EnvironmentBaseUrlId | undefined;
     }) => ts.Expression;
 }

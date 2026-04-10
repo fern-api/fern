@@ -85,7 +85,7 @@ class StepOffsetPagerTest extends TestCase
                 $responses->next();
                 return $response;
             },
-            fn(Request $request) => $request->pagination?->itemOffset ?? 0,
+            fn(Request $request) => $request->pagination->itemOffset ?? 0,
             function (Request $request, int $offset) {
                 if ($request->pagination === null) {
                     $request->pagination = new Pagination(0, 2);
@@ -126,6 +126,6 @@ class StepOffsetPagerTest extends TestCase
 
         // no more pages
         $pages->next();
-        $this->assertNull($pages->current());
+        $this->assertFalse($pages->valid());
     }
 }

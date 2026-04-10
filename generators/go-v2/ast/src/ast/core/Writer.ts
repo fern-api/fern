@@ -1,7 +1,7 @@
 import { AbstractFormatter, AbstractWriter, NopFormatter } from "@fern-api/browser-compatible-base-generator";
 import { basename } from "@fern-api/path-utils";
 
-import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema";
+import { BaseGoCustomConfigSchema } from "../../custom-config/BaseGoCustomConfigSchema.js";
 
 type Alias = string;
 type ImportPath = string;

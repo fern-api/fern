@@ -1,25 +1,21 @@
-import {
-    EnvironmentBaseUrlId,
-    EnvironmentId,
-    SingleBaseUrlEnvironment,
-    SingleBaseUrlEnvironments
-} from "@fern-fern/ir-sdk/api";
+import { CaseConverter } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedEnvironments } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace GeneratedSingleUrlEnvironmentsImpl {
     export interface Init {
         environmentEnumName: string;
-        defaultEnvironmentId: EnvironmentId | undefined;
-        environments: SingleBaseUrlEnvironments;
+        defaultEnvironmentId: FernIr.EnvironmentId | undefined;
+        environments: FernIr.SingleBaseUrlEnvironments;
     }
 }
 
 export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments {
     private environmentEnumName: string;
-    private environments: SingleBaseUrlEnvironments;
-    private defaultEnvironmentId: EnvironmentId | undefined;
+    private environments: FernIr.SingleBaseUrlEnvironments;
+    private defaultEnvironmentId: FernIr.EnvironmentId | undefined;
 
     constructor({ environments, environmentEnumName, defaultEnvironmentId }: GeneratedSingleUrlEnvironmentsImpl.Init) {
         this.environments = environments;
@@ -27,11 +23,11 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         this.defaultEnvironmentId = defaultEnvironmentId;
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         const objectWriter = FernWriters.object.writer({ asConst: true });
         for (const environment of this.environments.environments) {
             objectWriter.addProperty({
-                key: this.getNameOfEnvironment(environment),
+                key: this.getNameOfEnvironment(environment, context.case),
                 value: `"${environment.url}"`,
                 docs: environment.docs ?? undefined
             });
@@ -57,7 +53,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
                         ts.factory.createTypeQueryNode(
                             ts.factory.createQualifiedName(
                                 ts.factory.createIdentifier(this.environmentEnumName),
-                                ts.factory.createIdentifier(this.getNameOfEnvironment(environment))
+                                ts.factory.createIdentifier(this.getNameOfEnvironment(environment, context.case))
                             ),
                             undefined
                         )
@@ -67,7 +63,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         });
     }
 
-    public getReferenceToDefaultEnvironment(context: SdkContext): ts.Expression | undefined {
+    public getReferenceToDefaultEnvironment(context: FileContext): ts.Expression | undefined {
         if (this.defaultEnvironmentId == null) {
             return undefined;
         }
@@ -79,11 +75,11 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         }
         return ts.factory.createPropertyAccessExpression(
             context.environments.getReferenceToEnvironmentsEnum().getExpression(),
-            this.getNameOfEnvironment(defaultEnvironment)
+            this.getNameOfEnvironment(defaultEnvironment, context.case)
         );
     }
 
-    public getTypeForUserSuppliedEnvironment(context: SdkContext): ts.TypeNode {
+    public getTypeForUserSuppliedEnvironment(context: FileContext): ts.TypeNode {
         return ts.factory.createUnionTypeNode([
             context.environments.getReferenceToEnvironmentsEnum().getTypeNode(),
             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
@@ -99,17 +95,15 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         baseUrlId
     }: {
         referenceToEnvironmentValue: ts.Expression;
-        baseUrlId: EnvironmentBaseUrlId | undefined;
+        baseUrlId: FernIr.EnvironmentBaseUrlId | undefined;
     }): ts.Expression {
-        if (baseUrlId != null) {
-            throw new Error(
-                `Cannot get reference to single environment URL because baseUrlId is defined ("${baseUrlId}")`
-            );
-        }
+        // For single URL environments, baseUrlId is irrelevant since there's only one URL.
+        // This can happen when an AsyncAPI spec defines a named server (e.g. "production")
+        // which gets converted to a baseUrlId on the WebSocket channel.
         return referenceToEnvironmentValue;
     }
 
-    private getNameOfEnvironment(environment: SingleBaseUrlEnvironment): string {
-        return environment.name.pascalCase.unsafeName;
+    private getNameOfEnvironment(environment: FernIr.SingleBaseUrlEnvironment, caseConverter: CaseConverter): string {
+        return caseConverter.pascalUnsafe(environment.name);
     }
 }

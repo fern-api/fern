@@ -1,25 +1,16 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { GeneratorNotificationService, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { java } from "@fern-api/java-ast";
 import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import {
-    ExampleEndpointCall,
-    FernFilepath,
-    HttpEndpoint,
-    IntermediateRepresentation,
-    Name,
-    Pagination,
-    TypeDeclaration,
-    TypeId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { camelCase } from "lodash-es";
-import { TYPES_DIRECTORY } from "./constants";
-import { JavaGeneratorAgent } from "./JavaGeneratorAgent";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
+
+import { TYPES_DIRECTORY } from "./constants.js";
+import { JavaGeneratorAgent } from "./JavaGeneratorAgent.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: JavaGeneratorAgent;
@@ -27,7 +18,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     private paginationPackageCache?: string;
 
     public constructor(
-        public readonly ir: IntermediateRepresentation,
+        public readonly ir: FernIr.IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
         public readonly customConfig: SdkCustomConfigSchema,
         public readonly generatorNotificationService: GeneratorNotificationService
@@ -42,7 +33,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         });
     }
 
-    public getReturnTypeForEndpoint(httpEndpoint: HttpEndpoint): java.Type {
+    public getReturnTypeForEndpoint(httpEndpoint: FernIr.HttpEndpoint): java.Type {
         if (httpEndpoint.pagination != null) {
             if (httpEndpoint.pagination.type === "custom") {
                 const responseBody = httpEndpoint.response?.body;
@@ -111,7 +102,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         }
     }
 
-    public getPackageNameForTypeId(typeId: TypeId): string {
+    public getPackageNameForTypeId(typeId: FernIr.TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return this.getTypesPackageName(typeDeclaration.name.fernFilepath);
     }
@@ -119,19 +110,19 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     public getJavaClassReferenceFromDeclaration({
         typeDeclaration
     }: {
-        typeDeclaration: TypeDeclaration;
+        typeDeclaration: FernIr.TypeDeclaration;
     }): java.ClassReference {
         return java.classReference({
-            name: typeDeclaration.name.name.pascalCase.unsafeName,
+            name: this.caseConverter.pascalUnsafe(typeDeclaration.name.name),
             packageName: this.getTypesPackageName(typeDeclaration.name.fernFilepath)
         });
     }
 
-    public getTypesPackageName(fernFilePath: FernFilepath): string {
+    public getTypesPackageName(fernFilePath: FernIr.FernFilepath): string {
         return this.getResourcesPackage(fernFilePath, TYPES_DIRECTORY);
     }
 
-    public getPaginationClassReference(paginationType?: Pagination): java.ClassReference {
+    public getPaginationClassReference(paginationType?: FernIr.Pagination): java.ClassReference {
         return java.classReference({
             name: this.getPaginationClassName(paginationType),
             packageName: this.getPaginationPackageName()
@@ -201,7 +192,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
         const serviceCount = Object.keys(this.ir.services).length;
         const serviceNames = Object.values(this.ir.services).map(
-            (service) => service.name?.fernFilepath?.allParts?.map((part) => part.originalName).join("") || ""
+            (service) => service.name?.fernFilepath?.allParts?.map((part) => getOriginalName(part)).join("") || ""
         );
 
         if (
@@ -216,7 +207,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return false;
     }
 
-    public getPaginationClassName(paginationType?: Pagination): string {
+    public getPaginationClassName(paginationType?: FernIr.Pagination): string {
         if (paginationType?.type === "custom") {
             return this.customConfig?.["custom-pager-name"] ?? "CustomPager";
         }
@@ -249,7 +240,16 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     public getApiExceptionClassName(): string {
-        return this.customConfig?.["base-api-exception-class-name"] ?? `${this.getBaseNamePrefix()}ApiException`;
+        return (
+            this.customConfig?.["base-api-exception-class-name"] ??
+            `${this.customConfig?.["client-class-name"] ?? this.getBaseNamePrefix()}ApiException`
+        );
+    }
+
+    public getHttpResponseClassName(): string {
+        return this.customConfig?.["client-class-name"]
+            ? `${this.customConfig["client-class-name"]}HttpResponse`
+            : `${this.getBaseNamePrefix()}HttpResponse`;
     }
 
     public getEnvironmentClassReference(): java.ClassReference {
@@ -330,7 +330,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return kebab.replace(/-([a-z])/g, (_, char) => char.toUpperCase()).replace(/^[a-z]/, (c) => c.toUpperCase());
     }
 
-    protected getResourcesPackage(fernFilepath: FernFilepath, suffix?: string): string {
+    protected getResourcesPackage(fernFilepath: FernIr.FernFilepath, suffix?: string): string {
         const tokens = this.getPackagePrefixTokens();
         switch (this.getPackageLayout()) {
             case "flat":
@@ -353,11 +353,11 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return this.joinPackageTokens(tokens);
     }
 
-    private getPackageNameSegment(name: Name): string {
-        return name.camelCase.safeName.toLowerCase();
+    private getPackageNameSegment(name: NameInput): string {
+        return this.caseConverter.camelSafe(name).toLowerCase();
     }
 
-    public getExampleEndpointCallOrThrow(endpoint: HttpEndpoint): ExampleEndpointCall {
+    public getExampleEndpointCallOrThrow(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall {
         // Try user-specified examples first
         if (endpoint.userSpecifiedExamples.length > 0) {
             const exampleEndpointCall = endpoint.userSpecifiedExamples[0]?.example;
@@ -373,7 +373,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return exampleEndpointCall;
     }
 
-    private getPaginationItemType(pagination: Pagination): java.Type | undefined {
+    private getPaginationItemType(pagination: FernIr.Pagination): java.Type | undefined {
         if (pagination.type === "cursor") {
             const resultsProperty = pagination.results;
             if (resultsProperty?.property?.valueType) {
@@ -384,13 +384,23 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             if (resultsProperty?.property?.valueType) {
                 return this.extractPaginationItemType(resultsProperty.property.valueType);
             }
+        } else if (pagination.type === "uri") {
+            const resultsProperty = pagination.results;
+            if (resultsProperty?.property?.valueType) {
+                return this.extractPaginationItemType(resultsProperty.property.valueType);
+            }
+        } else if (pagination.type === "path") {
+            const resultsProperty = pagination.results;
+            if (resultsProperty?.property?.valueType) {
+                return this.extractPaginationItemType(resultsProperty.property.valueType);
+            }
         } else if (pagination.type === "custom") {
             return undefined;
         }
         return undefined;
     }
 
-    private extractPaginationItemType(valueType: TypeReference): java.Type | undefined {
+    private extractPaginationItemType(valueType: FernIr.TypeReference): java.Type | undefined {
         if (!valueType) {
             return undefined;
         }

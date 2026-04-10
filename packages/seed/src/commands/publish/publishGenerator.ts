@@ -5,10 +5,10 @@ import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources
 import path from "path";
 import semver from "semver";
 
-import { PublishDockerConfiguration } from "../../config/api";
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
-import { runCommands, subVersion } from "../../utils/publishUtilities";
+import { PublishDockerConfiguration } from "../../config/api/index.js";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases.js";
+import { runCommands, subVersion } from "../../utils/publishUtilities.js";
 
 interface VersionFilePair {
     latestChangelogPath: string;

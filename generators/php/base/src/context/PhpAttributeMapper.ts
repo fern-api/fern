@@ -1,16 +1,17 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { BasePhpCustomConfigSchema, php } from "@fern-api/php-codegen";
-import { ObjectProperty } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { isEqual, uniqWith } from "lodash-es";
 
-import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext";
+import { AbstractPhpGeneratorContext } from "./AbstractPhpGeneratorContext.js";
 
 export declare namespace PhpAttributeMapper {
     interface Args {
         type: php.Type;
 
         // TODO: Remove the 'Pick' once 'availability' is available on the InlinedRequestBodyProperty.
-        property: Pick<ObjectProperty, "name">;
+        property: Pick<FernIr.ObjectProperty, "name">;
     }
 }
 
@@ -26,7 +27,7 @@ export class PhpAttributeMapper {
         attributes.push(
             php.attribute({
                 reference: this.context.getJsonPropertyAttributeClassReference(),
-                arguments: [`'${property.name.wireValue}'`]
+                arguments: [`'${getWireValue(property.name)}'`]
             })
         );
         const underlyingInternalType = type.underlyingType().internalType;

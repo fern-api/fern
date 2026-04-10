@@ -4,12 +4,13 @@ package payment
 
 import (
 	context "context"
+	http "net/http"
+
 	uuid "github.com/google/uuid"
 	fern "github.com/idempotency-headers/fern"
 	core "github.com/idempotency-headers/fern/core"
 	internal "github.com/idempotency-headers/fern/internal"
 	option "github.com/idempotency-headers/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -74,7 +75,7 @@ func (r *RawClient) Create(
 
 func (r *RawClient) Delete(
 	ctx context.Context,
-	paymentId string,
+	paymentID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -85,7 +86,7 @@ func (r *RawClient) Delete(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/payment/%v",
-		paymentId,
+		paymentID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

@@ -189,6 +189,7 @@
               "response-stream": {
                 "docs": "",
                 "format": "json",
+                "terminator": undefined,
                 "type": "root.StreamUser",
               },
               "source": {
@@ -292,7 +293,7 @@ service:
         "another_header": {
           "env": "MY_HEADER_ENV",
           "name": undefined,
-          "type": "optional<string>",
+          "type": "string",
         },
         "my-api-key": {
           "env": undefined,
@@ -336,7 +337,7 @@ headers:
     type: optional<string>
   another_header:
     env: MY_HEADER_ENV
-    type: optional<string>
+    type: string
   version:
     name: Square-Version
     env: SQUARE_VERSION

@@ -2,16 +2,17 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import {
-    EndpointReference,
-    HttpEndpoint,
-    HttpService,
-    InferredAuthScheme,
-    ResponseProperty
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type EndpointReference = FernIr.EndpointReference;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type HttpService = FernIr.HttpService;
+type InferredAuthScheme = FernIr.InferredAuthScheme;
+type ResponseProperty = FernIr.ResponseProperty;
+
 import { fail } from "assert";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 
 export declare namespace InferredAuthTokenProviderGenerator {
     interface Args {
@@ -329,17 +330,17 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
 
         if (responseProperty.propertyPath != null && responseProperty.propertyPath.length > 0) {
             for (const pathElement of responseProperty.propertyPath) {
-                accessor += `.${pathElement.name.pascalCase.safeName}`;
+                accessor += `.${this.case.pascalSafe(pathElement.name)}`;
             }
         }
 
-        accessor += `.${responseProperty.property.name.name.pascalCase.safeName}`;
+        accessor += `.${this.case.pascalSafe(responseProperty.property.name)}`;
 
         return accessor;
     }
 
     private getRequestType(): ast.ClassReference {
-        const requestWrapper = this.requestWrapperName();
+        const requestWrapper = this.getRequestBody();
         if (requestWrapper) {
             return this.context.getRequestWrapperReference(this.tokenEndpointReference.serviceId, requestWrapper);
         }
@@ -364,19 +365,19 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         );
     }
 
-    private requestWrapperName() {
+    private getRequestBody() {
         return (
             this.tokenEndpoint.sdkRequest?.shape._visit({
                 _other: () => undefined,
                 justRequestBody: () => undefined,
-                wrapper: (value) => value.wrapperName
+                wrapper: (value) => value
             }) ??
             this.tokenEndpoint.requestBody?._visit({
                 _other: () => undefined,
                 reference: () => undefined,
                 fileUpload: () => undefined,
                 bytes: () => undefined,
-                inlinedRequestBody: (value) => value.name
+                inlinedRequestBody: (value) => value
             })
         );
     }

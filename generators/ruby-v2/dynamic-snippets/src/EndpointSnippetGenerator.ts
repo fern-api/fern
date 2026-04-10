@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ruby } from "@fern-api/ruby-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 
 const CLIENT_VAR_NAME = "client";
 const INSTANCE_CLIENT_VAR_NAME = "@client";
@@ -213,16 +213,28 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): ruby.KeywordArgument[] {
-        return [
-            ruby.keywordArgument({
-                name: auth.username.snakeCase.safeName,
-                value: ruby.TypeLiteral.string(values.username)
-            }),
-            ruby.keywordArgument({
-                name: auth.password.snakeCase.safeName,
-                value: ruby.TypeLiteral.string(values.password)
-            })
-        ];
+        // usernameOmit/passwordOmit may exist in newer IR versions
+        const authRecord = auth as unknown as Record<string, unknown>;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
+        const args: ruby.KeywordArgument[] = [];
+        if (!usernameOmitted) {
+            args.push(
+                ruby.keywordArgument({
+                    name: auth.username.snakeCase.safeName,
+                    value: ruby.TypeLiteral.string(values.username)
+                })
+            );
+        }
+        if (!passwordOmitted) {
+            args.push(
+                ruby.keywordArgument({
+                    name: auth.password.snakeCase.safeName,
+                    value: ruby.TypeLiteral.string(values.password)
+                })
+            );
+        }
+        return args;
     }
 
     private getRootClientBearerAuthArgs({
@@ -285,7 +297,7 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
         for (const header of headers) {
-            const value = values[header.name.name.originalName];
+            const value = values[header.name.wireValue];
             if (value != null && typeof value === "string") {
                 args.push(
                     ruby.keywordArgument({

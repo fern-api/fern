@@ -84,6 +84,10 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
     public interface _FinalStage {
         PlaylistCreateRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage problems(List<String> problems);
 
         _FinalStage addProblems(String problems);
@@ -143,6 +147,18 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
         @java.lang.Override
         public PlaylistCreateRequest build() {
             return new PlaylistCreateRequest(name, problems, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

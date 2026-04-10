@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.upload_json_document();
+client.upload_json_document
 ```
 </dd>
 </dl>
@@ -62,3 +62,4 @@ client.upload_json_document();
 </dd>
 </dl>
 </details>
+

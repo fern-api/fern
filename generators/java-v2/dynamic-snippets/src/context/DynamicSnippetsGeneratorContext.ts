@@ -9,9 +9,9 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseJavaCustomConfigSchema, java } from "@fern-api/java-ast";
 import { camelCase } from "lodash-es";
 
-import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
-import { DynamicTypeMapper } from "./DynamicTypeMapper";
-import { FilePropertyMapper } from "./FilePropertyMapper";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
+import { DynamicTypeMapper } from "./DynamicTypeMapper.js";
+import { FilePropertyMapper } from "./FilePropertyMapper.js";
 
 const RESERVED_NAMES = new Set([
     "enum",
@@ -41,15 +41,17 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     constructor({
         ir,
         config,
-        options
+        options,
+        sharedCustomConfig
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         options?: Options;
+        sharedCustomConfig?: BaseJavaCustomConfigSchema;
     }) {
         super({ ir, config, options });
         this.ir = ir;
-        this.customConfig = BaseJavaCustomConfigSchema.parse(config.customConfig ?? {});
+        this.customConfig = sharedCustomConfig ?? BaseJavaCustomConfigSchema.parse(config.customConfig ?? {});
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
@@ -59,7 +61,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return new DynamicSnippetsGeneratorContext({
             ir: this.ir,
             config: this.config,
-            options: this.options
+            options: this.options,
+            sharedCustomConfig: this.customConfig
         });
     }
 

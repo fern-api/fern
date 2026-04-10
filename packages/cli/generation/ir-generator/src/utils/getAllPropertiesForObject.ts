@@ -2,10 +2,10 @@ import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-common
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/path-utils";
-import { getPropertyName } from "../converters/type-declarations/convertObjectTypeDeclaration";
-import { constructFernFileContext } from "../FernFileContext";
-import { ResolvedType } from "../resolvers/ResolvedType";
-import { TypeResolver } from "../resolvers/TypeResolver";
+import { getPropertyName } from "../converters/type-declarations/convertObjectTypeDeclaration.js";
+import { constructFernFileContext } from "../FernFileContext.js";
+import { ResolvedType } from "../resolvers/ResolvedType.js";
+import { TypeResolver } from "../resolvers/TypeResolver.js";
 
 // Note: using this exported variable is NOT recommended, but its included for convenience
 // when the call-site doesn't care about the language nor special casing convention.

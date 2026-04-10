@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -92,7 +92,7 @@ public record TestSubmissionStatus
     public object AsStopped() =>
         IsStopped
             ? Value!
-            : throw new System.Exception("TestSubmissionStatus.Type is not 'stopped'");
+            : throw new global::System.Exception("TestSubmissionStatus.Type is not 'stopped'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.ErrorInfo"/> if <see cref="Type"/> is 'errored', otherwise throws an exception.
@@ -101,7 +101,7 @@ public record TestSubmissionStatus
     public SeedTrace.ErrorInfo AsErrored() =>
         IsErrored
             ? (SeedTrace.ErrorInfo)Value!
-            : throw new System.Exception("TestSubmissionStatus.Type is not 'errored'");
+            : throw new global::System.Exception("TestSubmissionStatus.Type is not 'errored'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.RunningSubmissionState"/> if <see cref="Type"/> is 'running', otherwise throws an exception.
@@ -110,7 +110,7 @@ public record TestSubmissionStatus
     public SeedTrace.RunningSubmissionState AsRunning() =>
         IsRunning
             ? (SeedTrace.RunningSubmissionState)Value!
-            : throw new System.Exception("TestSubmissionStatus.Type is not 'running'");
+            : throw new global::System.Exception("TestSubmissionStatus.Type is not 'running'");
 
     /// <summary>
     /// Returns the value as a <see cref="Dictionary<string, SubmissionStatusForTestCase>"/> if <see cref="Type"/> is 'testCaseIdToState', otherwise throws an exception.
@@ -119,7 +119,9 @@ public record TestSubmissionStatus
     public Dictionary<string, SubmissionStatusForTestCase> AsTestCaseIdToState() =>
         IsTestCaseIdToState
             ? (Dictionary<string, SubmissionStatusForTestCase>)Value!
-            : throw new System.Exception("TestSubmissionStatus.Type is not 'testCaseIdToState'");
+            : throw new global::System.Exception(
+                "TestSubmissionStatus.Type is not 'testCaseIdToState'"
+            );
 
     public T Match<T>(
         Func<object, T> onStopped,
@@ -238,12 +240,12 @@ public record TestSubmissionStatus
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<TestSubmissionStatus>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(TestSubmissionStatus).IsAssignableFrom(typeToConvert);
 
         public override TestSubmissionStatus Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -272,15 +274,15 @@ public record TestSubmissionStatus
             {
                 "stopped" => new { },
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
                 "running" => json.GetProperty("value")
                     .Deserialize<SeedTrace.RunningSubmissionState?>(options)
-                ?? throw new JsonException(
+                    ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.RunningSubmissionState"
                     ),
                 "testCaseIdToState" => json.GetProperty("value")
                     .Deserialize<Dictionary<string, SubmissionStatusForTestCase>?>(options)
-                ?? throw new JsonException(
+                    ?? throw new JsonException(
                         "Failed to deserialize Dictionary<string, SubmissionStatusForTestCase>"
                     ),
                 _ => json.Deserialize<object?>(options),
@@ -314,6 +316,27 @@ public record TestSubmissionStatus
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override TestSubmissionStatus ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new TestSubmissionStatus(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            TestSubmissionStatus value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

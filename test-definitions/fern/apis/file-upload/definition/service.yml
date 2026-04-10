@@ -199,6 +199,20 @@ service:
 
         # add one non-file endpoint to force snippet generation
 
+    withJsonProperty:
+      path: /with-json-property
+      method: POST
+      request:
+        name: WithJsonPropertyRequest
+        body:
+          properties:
+            file: file
+            json: optional<MyObject>
+        content-type: multipart/form-data
+      response:
+        status-code: 200
+        type: string
+
     simple:
       path: "/snippet"
       method: POST

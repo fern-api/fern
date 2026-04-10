@@ -493,11 +493,11 @@ export function validateAgainstJsonSchema(
                     // Look for oneOf or anyOf errors to extract the union schemas
                     // First check all errors, not just at the current path
                     const allUnionErrors = (validate.errors ?? []).filter(
-                        (e) => e.keyword === "oneOf" || e.keyword === "anyOf"
+                        (e: ErrorObject) => e.keyword === "oneOf" || e.keyword === "anyOf"
                     );
                     // Look for union error specifically at the current path
                     const relevantUnionError = allUnionErrors.find(
-                        (e) => e.instancePath === mostGranularError.instancePath
+                        (e: ErrorObject) => e.instancePath === mostGranularError.instancePath
                     );
 
                     if (allUnionErrors.length > 0) {
@@ -773,7 +773,7 @@ export function validateAgainstJsonSchema(
 
                     // Navigate to nested schemas if needed (for complex nested structures)
                     if (!unionSchemas && mostGranularError.instancePath) {
-                        const pathSegments = mostGranularError.instancePath.split("/").filter((s) => s);
+                        const pathSegments = mostGranularError.instancePath.split("/").filter((s: string) => s);
                         let currentSchema = schema;
 
                         for (const segment of pathSegments) {

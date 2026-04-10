@@ -6,9 +6,9 @@ import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fe
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readdir, readFile, stat } from "fs/promises";
-import { asyncPool } from "../utils/asyncPool";
-import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
-import { visitFilepath } from "./visitFilepath";
+import { asyncPool } from "../utils/asyncPool.js";
+import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
+import { visitFilepath } from "./visitFilepath.js";
 
 const VALIDATION_CONCURRENCY = parseInt(process.env.FERN_DOCS_VALIDATION_CONCURRENCY ?? "32", 10);
 

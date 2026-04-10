@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { YAMLException } from "js-yaml";
 
-import { parseYamlFiles } from "../utils/parseYamlFiles";
+import { parseYamlFiles } from "../utils/parseYamlFiles.js";
 
 const FILEPATH = RelativeFilePath.of("duplicate-key.yml");
 

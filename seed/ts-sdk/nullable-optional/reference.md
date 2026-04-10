@@ -1061,3 +1061,4 @@ await client.nullableOptional.getSearchResults({
 </dd>
 </dl>
 </details>
+

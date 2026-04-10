@@ -4,8 +4,8 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { kebabCase } from "lodash-es";
 
-import { NodeIdGenerator } from "../NodeIdGenerator";
-import { toRelativeFilepath } from "./toRelativeFilepath";
+import { NodeIdGenerator } from "../NodeIdGenerator.js";
+import { toRelativeFilepath } from "./toRelativeFilepath.js";
 
 export function toPageNode({
     docsWorkspace,

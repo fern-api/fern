@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Seed
-  class Client
+  class MyClient
     # @param base_url [String, nil]
     # @param token [String]
     #

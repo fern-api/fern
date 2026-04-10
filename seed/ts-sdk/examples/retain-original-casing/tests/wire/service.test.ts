@@ -23,6 +23,7 @@ describe("ServiceClient", () => {
             },
             revenue: 1000000,
         };
+
         server
             .mockEndpoint()
             .get("/movie/movie-c06a4ad7")
@@ -32,24 +33,7 @@ describe("ServiceClient", () => {
             .build();
 
         const response = await client.service.getMovie("movie-c06a4ad7");
-        expect(response).toEqual({
-            id: "movie-c06a4ad7",
-            prequel: "movie-cv9b914f",
-            title: "The Boy and the Heron",
-            from: "Hayao Miyazaki",
-            rating: 8,
-            type: "movie",
-            tag: "tag-wf9as23d",
-            metadata: {
-                actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-                releaseDate: "2023-12-08",
-                ratings: {
-                    rottenTomatoes: 97,
-                    imdb: 7.6,
-                },
-            },
-            revenue: 1000000,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createMovie", async () => {
@@ -71,6 +55,7 @@ describe("ServiceClient", () => {
             revenue: 1000000,
         };
         const rawResponseBody = "movie-c06a4ad7";
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -98,7 +83,7 @@ describe("ServiceClient", () => {
             },
             revenue: 1000000,
         });
-        expect(response).toEqual("movie-c06a4ad7");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getMetadata", async () => {
@@ -111,6 +96,7 @@ describe("ServiceClient", () => {
             tags: ["development", "public"],
             value: "<head>...</head>",
         };
+
         server
             .mockEndpoint()
             .get("/metadata")
@@ -125,15 +111,7 @@ describe("ServiceClient", () => {
             shallow: false,
             tag: "development",
         });
-        expect(response).toEqual({
-            type: "html",
-            extra: {
-                version: "0.0.1",
-                tenancy: "test",
-            },
-            tags: ["development", "public"],
-            value: "<head>...</head>",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createBigEntity", async () => {
@@ -172,18 +150,12 @@ describe("ServiceClient", () => {
                 nodes: [
                     {
                         name: "name",
-                        nodes: [
-                            { name: "name", nodes: [], trees: [] },
-                            { name: "name", nodes: [], trees: [] },
-                        ],
+                        nodes: [{ name: "name" }, { name: "name" }],
                         trees: [{ nodes: [] }, { nodes: [] }],
                     },
                     {
                         name: "name",
-                        nodes: [
-                            { name: "name", nodes: [], trees: [] },
-                            { name: "name", nodes: [], trees: [] },
-                        ],
+                        nodes: [{ name: "name" }, { name: "name" }],
                         trees: [{ nodes: [] }, { nodes: [] }],
                     },
                 ],
@@ -215,10 +187,7 @@ describe("ServiceClient", () => {
                             { name: "name", contents: "contents" },
                             { name: "name", contents: "contents" },
                         ],
-                        directories: [
-                            { name: "name", files: [], directories: [] },
-                            { name: "name", files: [], directories: [] },
-                        ],
+                        directories: [{ name: "name" }, { name: "name" }],
                     },
                     {
                         name: "name",
@@ -226,10 +195,7 @@ describe("ServiceClient", () => {
                             { name: "name", contents: "contents" },
                             { name: "name", contents: "contents" },
                         ],
-                        directories: [
-                            { name: "name", files: [], directories: [] },
-                            { name: "name", files: [], directories: [] },
-                        ],
+                        directories: [{ name: "name" }, { name: "name" }],
                     },
                 ],
             },
@@ -246,6 +212,7 @@ describe("ServiceClient", () => {
                 { type: "primitive", value: "value", label: "label" },
             ],
         };
+
         server
             .mockEndpoint()
             .post("/big-entity")
@@ -330,13 +297,9 @@ describe("ServiceClient", () => {
                         nodes: [
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                         ],
                         trees: [
@@ -353,13 +316,9 @@ describe("ServiceClient", () => {
                         nodes: [
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                             {
                                 name: "name",
-                                nodes: [],
-                                trees: [],
                             },
                         ],
                         trees: [
@@ -431,13 +390,9 @@ describe("ServiceClient", () => {
                         directories: [
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                         ],
                     },
@@ -456,13 +411,9 @@ describe("ServiceClient", () => {
                         directories: [
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                             {
                                 name: "name",
-                                files: [],
-                                directories: [],
                             },
                         ],
                     },
@@ -474,23 +425,7 @@ describe("ServiceClient", () => {
                 datetime: "2024-01-15T09:30:00Z",
             },
         });
-        expect(response).toEqual({
-            response: {
-                key: "value",
-            },
-            identifiers: [
-                {
-                    type: "primitive",
-                    value: "value",
-                    label: "label",
-                },
-                {
-                    type: "primitive",
-                    value: "value",
-                    label: "label",
-                },
-            ],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("refreshToken (1)", async () => {

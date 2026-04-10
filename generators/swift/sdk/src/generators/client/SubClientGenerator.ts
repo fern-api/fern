@@ -1,20 +1,20 @@
 import { Referencer, swift } from "@fern-api/swift-codegen";
-import { Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { ClientGeneratorContext } from "./ClientGeneratorContext";
-import { EndpointMethodGenerator } from "./EndpointMethodGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
+import { EndpointMethodGenerator } from "./EndpointMethodGenerator.js";
 
 export declare namespace SubClientGenerator {
     interface Args {
         symbol: swift.Symbol;
-        subpackage: Subpackage;
+        subpackage: FernIr.Subpackage;
         sdkGeneratorContext: SdkGeneratorContext;
     }
 }
 
 export class SubClientGenerator {
     private readonly symbol: swift.Symbol;
-    private readonly subpackage: Subpackage;
+    private readonly subpackage: FernIr.Subpackage;
     private readonly sdkGeneratorContext: SdkGeneratorContext;
     private readonly clientGeneratorContext: ClientGeneratorContext;
     private readonly referencer: Referencer;
@@ -58,7 +58,7 @@ export class SubClientGenerator {
                 swift.functionParameter({
                     argumentLabel: "config",
                     unsafeName: "config",
-                    type: this.referencer.referenceAsIsType("ClientConfig")
+                    type: this.referencer.referenceSourceTemplateType("ClientConfig")
                 })
             ],
             body: swift.CodeBlock.withStatements([
@@ -90,7 +90,8 @@ export class SubClientGenerator {
         const endpointMethodGenerator = new EndpointMethodGenerator({
             parentClassSymbol: this.symbol,
             clientGeneratorContext: this.clientGeneratorContext,
-            sdkGeneratorContext: this.sdkGeneratorContext
+            sdkGeneratorContext: this.sdkGeneratorContext,
+            service: this.service
         });
         return (this.service?.endpoints ?? []).map((endpoint) => {
             return endpointMethodGenerator.generateMethod(endpoint);

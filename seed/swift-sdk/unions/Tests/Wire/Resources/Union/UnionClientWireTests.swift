@@ -20,9 +20,13 @@ import Unions
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = .circle(
+        let expectedResponse = Shape.circle(
             .init(
-                radius: 1.1
+                radius: 1.1,
+                additionalProperties: [
+                    "type": JSONValue.string("circle"), 
+                    "id": JSONValue.string("id")
+                ]
             )
         )
         let response = try await client.union.get(
@@ -48,8 +52,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.union.update(
             request: Shape.circle(
-                .init(
-                    id: "id",
+                Circle(
                     radius: 1.1
                 )
             ),

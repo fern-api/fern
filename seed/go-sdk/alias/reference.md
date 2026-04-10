@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Get(TypeId) -> error</code></summary>
+<details><summary><code>client.Get(TypeID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -31,7 +31,7 @@ client.Get(
 <dl>
 <dd>
 
-**typeId:** `fern.TypeId` 
+**typeID:** `fern.TypeID` 
     
 </dd>
 </dl>
@@ -42,3 +42,4 @@ client.Get(
 </dd>
 </dl>
 </details>
+

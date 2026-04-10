@@ -1,0 +1,220 @@
+{
+  "patch_transformers_module_dir": {
+    "name": "patch_transformers_module_dir",
+    "path": "nemo_rl.patch_transformers_module_dir",
+    "signature": "def nemo_rl.patch_transformers_module_dir(env_vars: dict[str, str])",
+    "parameters": [
+      {
+        "name": "env_vars",
+        "typeInfo": {
+          "display": "dict[str, str]",
+          "resolvedPath": "dict[str, str]",
+          "basePath": null
+        },
+        "kind": "POSITIONAL",
+        "default": null,
+        "description": null
+      }
+    ],
+    "isAsync": false,
+    "decorators": [],
+    "isClassmethod": false,
+    "isStaticmethod": false,
+    "isProperty": false,
+    "docstring": null,
+    "returnTypeInfo": null
+  },
+  "_check_container_fingerprint": {
+    "name": "_check_container_fingerprint",
+    "path": "nemo_rl._check_container_fingerprint",
+    "signature": "def nemo_rl._check_container_fingerprint()",
+    "docstring": {
+      "summary": "Check if container dependencies match the current code (container-only).",
+      "description": "Check if container dependencies match the current code (container-only).\n\nThis check only runs when NRL_CONTAINER=1 is set (inside containers).\nIt compares the container's fingerprint (computed at build time) with\nthe current code's fingerprint to detect dependency drift.\n\nThis check is also skipped entirely if NRL_FORCE_REBUILD_VENVS=true is set,\nsince environment rebuilding will ensure dependencies are consistent regardless\nof a mismatch.\n\nIf there's a mismatch, raises RuntimeError unless NRL_IGNORE_VERSION_MISMATCH is set.",
+      "params": [],
+      "raises": [],
+      "examples": [],
+      "notes": [],
+      "warnings": [],
+      "returns": null
+    },
+    "parameters": [],
+    "isAsync": false,
+    "decorators": [],
+    "isClassmethod": false,
+    "isStaticmethod": false,
+    "isProperty": false,
+    "returnTypeInfo": null
+  },
+  "concat": {
+    "name": "concat",
+    "path": "nemo_rl.data.multimodal_utils.PackedTensor.concat",
+    "signature": "def nemo_rl.data.multimodal_utils.PackedTensor.concat(\n    cls,\n    from_packed_tensors: list[nemo_rl.data.multimodal_utils.PackedTensor]\n) -> nemo_rl.data.multimodal_utils.PackedTensor",
+    "docstring": {
+      "summary": "Concatenate a list of PackedTensor objects into a single PackedTensor.",
+      "description": "Concatenate a list of PackedTensor objects into a single PackedTensor.\n\nThe underlying tensors from the PackedTensors are combined into a single list of tensors and used to create a new PackedTensor.\n\nEach batch must have the same dim_to_pack.",
+      "params": [],
+      "raises": [],
+      "examples": [],
+      "notes": [],
+      "warnings": [],
+      "returns": null
+    },
+    "parameters": [
+      {
+        "name": "cls",
+        "kind": "POSITIONAL",
+        "typeInfo": null,
+        "default": null,
+        "description": null
+      },
+      {
+        "name": "from_packed_tensors",
+        "typeInfo": {
+          "display": "list[PackedTensor]",
+          "resolvedPath": "list[nemo_rl.data.multimodal_utils.PackedTensor]",
+          "basePath": null
+        },
+        "kind": "POSITIONAL",
+        "default": null,
+        "description": null
+      }
+    ],
+    "returnTypeInfo": {
+      "display": "PackedTensor",
+      "resolvedPath": "nemo_rl.data.multimodal_utils.PackedTensor",
+      "basePath": "nemo_rl.data.multimodal_utils.PackedTensor"
+    },
+    "isAsync": false,
+    "decorators": ["classmethod"],
+    "isClassmethod": true,
+    "isStaticmethod": false,
+    "isProperty": false
+  },
+  "backward": {
+    "name": "backward",
+    "path": "nemo_rl.distributed.model_utils.ChunkedDistributedEntropy.backward",
+    "signature": "def nemo_rl.distributed.model_utils.ChunkedDistributedEntropy.backward(ctx: typing.Any, *grad_outputs: torch.Tensor = ()) -> tuple[torch.Tensor, None, None, None]",
+    "parameters": [
+      {
+        "name": "ctx",
+        "typeInfo": {
+          "display": "Any",
+          "resolvedPath": "typing.Any",
+          "basePath": null
+        },
+        "kind": "POSITIONAL",
+        "default": null,
+        "description": null
+      },
+      {
+        "name": "grad_outputs",
+        "typeInfo": {
+          "display": "Tensor",
+          "resolvedPath": "torch.Tensor",
+          "basePath": null
+        },
+        "default": "()",
+        "kind": "VAR_POSITIONAL",
+        "description": null
+      }
+    ],
+    "returnTypeInfo": {
+      "display": "tuple[Tensor, None, None, None]",
+      "resolvedPath": "tuple[torch.Tensor, None, None, None]",
+      "basePath": null
+    },
+    "isAsync": false,
+    "decorators": ["staticmethod"],
+    "isClassmethod": false,
+    "isStaticmethod": true,
+    "isProperty": false,
+    "docstring": null
+  },
+  "push_with_wait_signal": {
+    "name": "push_with_wait_signal",
+    "path": "nemo_rl.algorithms.async_utils.ReplayBuffer.push_with_wait_signal",
+    "signature": "def nemo_rl.algorithms.async_utils.ReplayBuffer.push_with_wait_signal(\n    self,\n    trajectory: dict[str, typing.Any],\n    weight_version: int,\n    target_weight_version: int\n) -> str",
+    "docstring": {
+      "summary": "Add a per-prompt trajectory group with metadata.",
+      "description": "Add a per-prompt trajectory group with metadata.",
+      "params": [
+        {
+          "name": "trajectory",
+          "type": "dict[str, Any]",
+          "description": "data dict",
+          "default": null
+        },
+        {
+          "name": "weight_version",
+          "type": "int",
+          "description": "version of the model weights used for generation",
+          "default": null
+        },
+        {
+          "name": "target_weight_version",
+          "type": "int",
+          "description": "version of the model weights this trajectory is intended for training",
+          "default": null
+        }
+      ],
+      "raises": [],
+      "examples": [],
+      "notes": [],
+      "warnings": [],
+      "returns": null
+    },
+    "parameters": [
+      {
+        "name": "self",
+        "kind": "POSITIONAL",
+        "typeInfo": null,
+        "default": null,
+        "description": null
+      },
+      {
+        "name": "trajectory",
+        "typeInfo": {
+          "display": "dict[str, Any]",
+          "resolvedPath": "dict[str, typing.Any]",
+          "basePath": null
+        },
+        "kind": "POSITIONAL",
+        "default": null,
+        "description": null
+      },
+      {
+        "name": "weight_version",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "kind": "POSITIONAL",
+        "default": null,
+        "description": null
+      },
+      {
+        "name": "target_weight_version",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "kind": "POSITIONAL",
+        "default": null,
+        "description": null
+      }
+    ],
+    "returnTypeInfo": {
+      "display": "str",
+      "resolvedPath": "str",
+      "basePath": null
+    },
+    "isAsync": false,
+    "decorators": [],
+    "isClassmethod": false,
+    "isStaticmethod": false,
+    "isProperty": false
+  }
+}

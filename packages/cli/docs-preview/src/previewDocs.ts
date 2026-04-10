@@ -1,9 +1,14 @@
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import {
-    createPythonDocsSectionPlaceholder,
-    DocsDefinitionResolver,
-    filterOssWorkspaces
-} from "@fern-api/docs-resolver";
+    isValidRelativeSlug,
+    parseImagePaths,
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown,
+    stripMdxComments,
+    transformAtPrefixImports
+} from "@fern-api/docs-markdown-utils";
+import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -24,15 +29,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
 import { v4 as uuidv4 } from "uuid";
-
-import {
-    isValidRelativeSlug,
-    parseImagePaths,
-    replaceImagePathsAndUrls,
-    replaceReferencedCode,
-    replaceReferencedMarkdown,
-    transformAtPrefixImports
-} from "../../docs-markdown-utils/src";
 
 const frontmatterPositionCache = new Map<string, number | undefined>();
 const frontmatterSidebarTitleCache = new Map<string, string | undefined>();
@@ -243,10 +239,10 @@ export async function getPreviewDocsDefinition({
             );
 
             previousDocsDefinition.pages[pageId] = {
-                markdown: finalMarkdown,
+                markdown: stripMdxComments(finalMarkdown),
                 editThisPageUrl: previousValue.editThisPageUrl,
                 editThisPageLaunch: previousValue.editThisPageLaunch,
-                rawMarkdown: markdown
+                rawMarkdown: stripMdxComments(markdown)
             };
         }
 
@@ -283,8 +279,7 @@ export async function getPreviewDocsDefinition({
                 };
             }),
         registerApi: async (opts) => apiCollector.addReferencedAPI(opts),
-        targetAudiences: undefined,
-        pythonDocsSectionHandler: createPythonDocsSectionPlaceholder
+        targetAudiences: undefined
     });
 
     const writeDocsDefinition = await resolver.resolve();

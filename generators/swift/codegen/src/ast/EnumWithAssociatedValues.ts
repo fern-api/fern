@@ -1,18 +1,18 @@
-import { isReservedKeyword } from "../syntax";
-import { AccessLevel } from "./AccessLevel";
-import { AstNode, Writer } from "./core";
-import { DocComment } from "./DocComment";
-import { EnumWithRawValues } from "./EnumWithRawValues";
-import { Initializer } from "./Initializer";
-import { Method } from "./Method";
-import { Protocol } from "./Protocol";
-import { Struct } from "./Struct";
-import { TypeReference } from "./TypeReference";
+import { isReservedKeyword } from "../syntax/index.js";
+import { AccessLevel } from "./AccessLevel.js";
+import { AstNode, Writer } from "./core/index.js";
+import { DocComment } from "./DocComment.js";
+import { EnumWithRawValues } from "./EnumWithRawValues.js";
+import { Initializer } from "./Initializer.js";
+import { Method } from "./Method.js";
+import { Protocol } from "./Protocol.js";
+import { Struct } from "./Struct.js";
+import { TypeReference } from "./TypeReference.js";
 
 export declare namespace EnumWithAssociatedValues {
     interface Case {
         unsafeName: string;
-        associatedValue: [TypeReference, ...TypeReference[]];
+        associatedValue?: [TypeReference, ...TypeReference[]];
         docs?: DocComment;
     }
 
@@ -96,14 +96,16 @@ export class EnumWithAssociatedValues extends AstNode {
             } else {
                 writer.write(case_.unsafeName);
             }
-            writer.write("(");
-            case_.associatedValue.forEach((type, index) => {
-                if (index > 0) {
-                    writer.write(", ");
-                }
-                type.write(writer);
-            });
-            writer.write(")");
+            if (case_.associatedValue != null) {
+                writer.write("(");
+                case_.associatedValue.forEach((type, index) => {
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
+                    type.write(writer);
+                });
+                writer.write(")");
+            }
             writer.newLine();
         });
         if (this.initializers.length > 0) {

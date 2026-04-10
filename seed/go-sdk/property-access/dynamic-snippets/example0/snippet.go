@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/property-access/fern"
     client "github.com/property-access/fern/client"
     option "github.com/property-access/fern/option"
-    fern "github.com/property-access/fern"
-    context "context"
 )
 
 func do() {
@@ -14,7 +15,7 @@ func do() {
         ),
     )
     request := &fern.User{
-        Id: "id",
+        ID: "id",
         Email: "email",
         Password: "password",
         Profile: &fern.UserProfile{

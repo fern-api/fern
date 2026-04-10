@@ -349,3 +349,4 @@ await client.union.testCamelCaseProperties({
 </dd>
 </dl>
 </details>
+

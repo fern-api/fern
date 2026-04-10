@@ -1,3 +1,3 @@
-export { generateModels } from "./generateModels";
-export { generateTraits } from "./generateTraits";
-export * from "./ModelGeneratorCli";
+export { generateModels } from "./generateModels.js";
+export { generateTraits } from "./generateTraits.js";
+export * from "./ModelGeneratorCli.js";

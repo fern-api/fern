@@ -1,7 +1,7 @@
 {
     "cliVersion": "DUMMY",
     "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
+    "generatorVersion": "local",
     "generatorConfig": {
         "useBrandedStringAliases": true,
         "neverThrowErrors": true,
@@ -10,5 +10,6 @@
         "includeOtherInUnionTypes": true,
         "timeoutInSeconds": "infinity"
     },
+    "originGitCommit": "DUMMY",
     "sdkVersion": "0.0.1"
 }

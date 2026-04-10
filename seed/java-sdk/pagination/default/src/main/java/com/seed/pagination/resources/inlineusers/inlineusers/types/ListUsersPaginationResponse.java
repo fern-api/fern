@@ -115,6 +115,10 @@ public final class ListUsersPaginationResponse {
     public interface _FinalStage {
         ListUsersPaginationResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage hasNextPage(Optional<Boolean> hasNextPage);
 
         _FinalStage hasNextPage(Boolean hasNextPage);
@@ -196,6 +200,18 @@ public final class ListUsersPaginationResponse {
         @java.lang.Override
         public ListUsersPaginationResponse build() {
             return new ListUsersPaginationResponse(hasNextPage, page, totalCount, data, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

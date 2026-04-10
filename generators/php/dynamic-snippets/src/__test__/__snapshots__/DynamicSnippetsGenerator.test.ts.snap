@@ -276,6 +276,32 @@ $client->endpoints->container->getAndReturnListOfPrimitives(
 "
 `;
 
+exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
+    [
+        'test' => 0,
+        'test2' => true,
+        'test3' => 'Test',
+        'test4' => [
+            '1',
+            '1',
+            '1',
+            '1',
+        ],
+    ],
+);
+"
+`;
+
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "<?php
 
@@ -557,9 +583,13 @@ $client->createUser(
         'password' => 'password',
         'profile' => new UserProfile([
             'name' => 'name',
-            'verification' => new UserProfileVerification([]),
+            'verification' => new UserProfileVerification([
+                'verified' => 'value',
+            ]),
             'ssn' => 'ssn',
         ]),
+        'id' => 'value',
+        'email' => 'value',
     ]),
 );
 "
@@ -586,9 +616,52 @@ $client->createUser(
         'password' => 'password',
         'profile' => new UserProfile([
             'name' => 'name',
-            'verification' => new UserProfileVerification([]),
+            'verification' => new UserProfileVerification([
+                'verified' => 'value',
+            ]),
             'ssn' => 'ssn',
         ]),
+        'email' => 'value',
+    ]),
+);
+"
+`;
+
+exports[`snippets (default) > required-headers > 'GET /plants (simple)' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+    options: [
+        'tenantId' => 'my-tenant-id',
+    ],
+);
+$client->plantstore->list();
+"
+`;
+
+exports[`snippets (default) > required-headers > 'POST /plants (simple)' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Plantstore\\Types\\CreatePlantRequest;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+    options: [
+        'tenantId' => 'my-tenant-id',
+    ],
+);
+$client->plantstore->create(
+    new CreatePlantRequest([
+        'name' => 'Fern',
+        'price' => 12.99,
     ]),
 );
 "

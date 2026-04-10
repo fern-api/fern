@@ -1,17 +1,10 @@
+import { getNameFromWireValue, getWireValue } from "@fern-api/base-generator";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    Literal,
-    Name,
-    NameAndWireValue,
-    ObjectProperty,
-    ObjectTypeDeclaration,
-    TypeDeclaration,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { AbstractModelGenerator } from "../AbstractModelGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { AbstractModelGenerator } from "../AbstractModelGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 const EMBED_TYPE_NAME = "embed";
 const MARSHALER_TYPE_NAME = "marshaler";
@@ -46,8 +39,8 @@ export class ObjectGenerator extends AbstractModelGenerator {
 
     constructor(
         context: ModelGeneratorContext,
-        typeDeclaration: TypeDeclaration,
-        private readonly objectDeclaration: ObjectTypeDeclaration
+        typeDeclaration: FernIr.TypeDeclaration,
+        private readonly objectDeclaration: FernIr.ObjectTypeDeclaration
     ) {
         super(context, typeDeclaration);
         this.receiver = this.context.getReceiverName(this.typeDeclaration.name.name);
@@ -450,8 +443,8 @@ export class ObjectGenerator extends AbstractModelGenerator {
         name,
         typeReference
     }: {
-        name: NameAndWireValue;
-        typeReference: TypeReference;
+        name: FernIr.NameAndWireValueOrString;
+        typeReference: FernIr.TypeReference;
     }): ObjectGenerator.Serde | undefined {
         const literal = this.context.maybeLiteral(typeReference);
         if (literal != null) {
@@ -471,19 +464,20 @@ export class ObjectGenerator extends AbstractModelGenerator {
         typeReference,
         literal
     }: {
-        name: NameAndWireValue;
-        typeReference: TypeReference;
-        literal: Literal;
+        name: FernIr.NameAndWireValueOrString;
+        typeReference: FernIr.TypeReference;
+        literal: FernIr.Literal;
     }): ObjectGenerator.Serde | undefined {
-        const unmarshalerFieldName = `${UNMARSHALER_TYPE_NAME}.${this.context.getFieldName(name.name)}`;
+        const nameInner = getNameFromWireValue(name);
+        const unmarshalerFieldName = `${UNMARSHALER_TYPE_NAME}.${this.context.getFieldName(nameInner)}`;
         return {
             field: go.field({
-                name: this.context.getFieldName(name.name),
+                name: this.context.getFieldName(nameInner),
                 type: this.context.goTypeMapper.convert({ reference: typeReference }),
                 tags: [
                     {
                         name: "json",
-                        value: name.wireValue
+                        value: getWireValue(name)
                     }
                 ]
             }),
@@ -505,7 +499,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
                 writer.dedent();
                 writer.writeLine("}");
                 writer.writeLine(
-                    `${this.receiver}.${this.context.getLiteralFieldName(name.name)} = ${unmarshalerFieldName}`
+                    `${this.receiver}.${this.context.getLiteralFieldName(nameInner)} = ${unmarshalerFieldName}`
                 );
             }),
             isLiteral: true
@@ -516,20 +510,21 @@ export class ObjectGenerator extends AbstractModelGenerator {
         name,
         typeReference
     }: {
-        name: NameAndWireValue;
-        typeReference: TypeReference;
+        name: FernIr.NameAndWireValueOrString;
+        typeReference: FernIr.TypeReference;
     }): ObjectGenerator.Serde | undefined {
-        const unmarshalerFieldName = `${UNMARSHALER_TYPE_NAME}.${this.context.getFieldName(name.name)}`;
-        const fieldReference = this.getFieldReference(name.name);
+        const nameInner = getNameFromWireValue(name);
+        const unmarshalerFieldName = `${UNMARSHALER_TYPE_NAME}.${this.context.getFieldName(nameInner)}`;
+        const fieldReference = this.getFieldReference(nameInner);
         const isOptional = this.context.isOptional(typeReference);
         return {
             field: go.field({
-                name: this.context.getFieldName(name.name),
+                name: this.context.getFieldName(nameInner),
                 type: go.Type.pointer(go.Type.reference(this.context.getDateTypeReference())),
                 tags: [
                     {
                         name: "json",
-                        value: name.wireValue
+                        value: getWireValue(name)
                     }
                 ]
             }),
@@ -546,20 +541,21 @@ export class ObjectGenerator extends AbstractModelGenerator {
         name,
         typeReference
     }: {
-        name: NameAndWireValue;
-        typeReference: TypeReference;
+        name: FernIr.NameAndWireValueOrString;
+        typeReference: FernIr.TypeReference;
     }): ObjectGenerator.Serde | undefined {
-        const unmarshalerFieldName = `${UNMARSHALER_TYPE_NAME}.${this.context.getFieldName(name.name)}`;
-        const fieldReference = this.getFieldReference(name.name);
+        const nameInner = getNameFromWireValue(name);
+        const unmarshalerFieldName = `${UNMARSHALER_TYPE_NAME}.${this.context.getFieldName(nameInner)}`;
+        const fieldReference = this.getFieldReference(nameInner);
         const isOptional = this.context.isOptional(typeReference);
         return {
             field: go.field({
-                name: this.context.getFieldName(name.name),
+                name: this.context.getFieldName(nameInner),
                 type: go.Type.pointer(go.Type.reference(this.context.getDateTimeTypeReference())),
                 tags: [
                     {
                         name: "json",
-                        value: name.wireValue
+                        value: getWireValue(name)
                     }
                 ]
             }),
@@ -616,7 +612,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
         return `Get${field.name.charAt(0).toUpperCase()}${field.name.slice(1)}`;
     }
 
-    private getFieldReference(name: Name): go.AstNode {
+    private getFieldReference(name: FernIr.NameOrString): go.AstNode {
         return go.selector({
             on: go.identifier(this.receiver),
             selector: go.identifier(this.context.getFieldName(name))
@@ -635,7 +631,7 @@ export class ObjectGenerator extends AbstractModelGenerator {
         return this.objectDeclaration.extraProperties || fields.some((field) => field.serde?.unmarshal != null);
     }
 
-    private getAllObjectProperties(): ObjectProperty[] {
+    private getAllObjectProperties(): FernIr.ObjectProperty[] {
         return [...(this.objectDeclaration.extendedProperties ?? []), ...this.objectDeclaration.properties];
     }
 }

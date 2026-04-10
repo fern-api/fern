@@ -266,8 +266,8 @@ class ServiceClient:
         self,
         id: str,
         *,
-        field_1: typing.Optional[str] = OMIT,
-        field_2: typing.Optional[int] = OMIT,
+        field1: typing.Optional[str] = OMIT,
+        field2: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -277,9 +277,9 @@ class ServiceClient:
         ----------
         id : str
 
-        field_1 : typing.Optional[str]
+        field1 : typing.Optional[str]
 
-        field_2 : typing.Optional[int]
+        field2 : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -297,13 +297,11 @@ class ServiceClient:
         )
         client.service.regular_patch(
             id="id",
-            field_1="field1",
-            field_2=1,
+            field1="field1",
+            field2=1,
         )
         """
-        _response = self._raw_client.regular_patch(
-            id, field_1=field_1, field_2=field_2, request_options=request_options
-        )
+        _response = self._raw_client.regular_patch(id, field1=field1, field2=field2, request_options=request_options)
         return _response.data
 
 
@@ -595,8 +593,8 @@ class AsyncServiceClient:
         self,
         id: str,
         *,
-        field_1: typing.Optional[str] = OMIT,
-        field_2: typing.Optional[int] = OMIT,
+        field1: typing.Optional[str] = OMIT,
+        field2: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -606,9 +604,9 @@ class AsyncServiceClient:
         ----------
         id : str
 
-        field_1 : typing.Optional[str]
+        field1 : typing.Optional[str]
 
-        field_2 : typing.Optional[int]
+        field2 : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -631,14 +629,14 @@ class AsyncServiceClient:
         async def main() -> None:
             await client.service.regular_patch(
                 id="id",
-                field_1="field1",
-                field_2=1,
+                field1="field1",
+                field2=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.regular_patch(
-            id, field_1=field_1, field_2=field_2, request_options=request_options
+            id, field1=field1, field2=field2, request_options=request_options
         )
         return _response.data

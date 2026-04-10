@@ -23,6 +23,7 @@ describe("AuthClient", () => {
             scope: "scope",
         };
         const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
+
         server
             .mockEndpoint()
             .post("/token")
@@ -38,11 +39,7 @@ describe("AuthClient", () => {
             scope: "scope",
         });
         expect(response).toEqual({
-            body: {
-                access_token: "access_token",
-                expires_in: 1,
-                refresh_token: "refresh_token",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

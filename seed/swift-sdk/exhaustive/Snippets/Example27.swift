@@ -7,10 +7,12 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.params.getWithPathAndQuery(
-        param: "param",
-        query: "query"
-    )
+    _ = try await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(request: ObjectWithMixedRequiredAndOptionalFields(
+        requiredString: "requiredString",
+        requiredInteger: 1,
+        optionalString: "optionalString",
+        requiredLong: 1000000
+    ))
 }
 
 try await main()

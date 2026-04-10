@@ -2,7 +2,7 @@ import { ExampleEndpointCall } from "@fern-api/ir-sdk";
 import { Request } from "express";
 import { isEqualWith } from "lodash-es";
 
-import { EqualResponse } from "./EqualRequestResponse";
+import { EqualResponse } from "./EqualRequestResponse.js";
 
 export declare namespace queryParametersEqual {
     interface Args {
@@ -13,7 +13,11 @@ export declare namespace queryParametersEqual {
 
 export function queryParametersEqual({ request, example }: queryParametersEqual.Args): EqualResponse {
     for (const exampleQueryParameter of [...example.queryParameters]) {
-        const requestQueryParameter = request.query[exampleQueryParameter.name.wireValue];
+        const wireValue =
+            typeof exampleQueryParameter.name === "string"
+                ? exampleQueryParameter.name
+                : exampleQueryParameter.name.wireValue;
+        const requestQueryParameter = request.query[wireValue];
         if (
             !isEqualWith(
                 requestQueryParameter,
@@ -24,7 +28,7 @@ export function queryParametersEqual({ request, example }: queryParametersEqual.
         ) {
             return {
                 type: "notEqual",
-                parameter: [exampleQueryParameter.name.wireValue],
+                parameter: [wireValue],
                 actualValue: requestQueryParameter,
                 expectedValue: exampleQueryParameter.value.jsonExample,
                 location: "query"

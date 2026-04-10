@@ -104,6 +104,9 @@ func (f *FilteredType) GetPrivateProperty() int {
 }
 
 func (f *FilteredType) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -156,6 +159,9 @@ func (f *FilteredType) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FilteredType) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -189,6 +195,9 @@ func (i *ImportingType) GetImported() Imported {
 }
 
 func (i *ImportingType) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
 	return i.extraProperties
 }
 
@@ -234,6 +243,9 @@ func (i *ImportingType) MarshalJSON() ([]byte, error) {
 }
 
 func (i *ImportingType) String() string {
+	if i == nil {
+		return "<nil>"
+	}
 	if len(i.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
 			return value

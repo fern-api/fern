@@ -1,9 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.types.types.ObjectWithMapOfMap;
-import java.util.HashMap;
-import java.util.Map;
+import com.seed.exhaustive.types.types.ObjectWithRequiredField;
 
 public class Example17 {
     public static void main(String[] args) {
@@ -14,16 +12,7 @@ public class Example17 {
 
         client.endpoints()
                 .object()
-                .getAndReturnWithMapOfMap(ObjectWithMapOfMap.builder()
-                        .map(new HashMap<String, Map<String, String>>() {
-                            {
-                                put("map", new HashMap<String, String>() {
-                                    {
-                                        put("map", "map");
-                                    }
-                                });
-                            }
-                        })
-                        .build());
+                .getAndReturnWithRequiredField(
+                        ObjectWithRequiredField.builder().string("string").build());
     }
 }

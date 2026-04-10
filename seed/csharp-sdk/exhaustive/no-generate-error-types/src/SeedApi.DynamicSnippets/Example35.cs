@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -12,8 +13,11 @@ public class Example35
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnBoolAsync(
-            true
+        await client.Endpoints.Params.GetWithQueryAsync(
+            new GetWithQuery {
+                Query = "query",
+                Number = 1
+            }
         );
     }
 

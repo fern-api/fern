@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -12,8 +13,11 @@ public class Example32
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnIntAsync(
-            1
+        await client.Endpoints.Pagination.ListItemsAsync(
+            new ListItemsRequest {
+                Cursor = "cursor",
+                Limit = 1
+            }
         );
     }
 

@@ -8,7 +8,7 @@ import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMeta
 import { readFile } from "fs/promises";
 import path from "path";
 
-import { addDefaultDockerOrgIfNotPresent } from "./getGeneratorName";
+import { addDefaultDockerOrgIfNotPresent, correctIncorrectDockerOrgWithWarning } from "./getGeneratorName.js";
 
 /**
  * Union type representing any spec-level settings schema.
@@ -43,12 +43,15 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
     groupEnvironmentsByHost: undefined,
+    inferDefaultEnvironment: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
     removeDiscriminantsFromSchemas: undefined,
     pathParameterOrder: undefined,
     defaultIntegerFormat: undefined,
-    resolveSchemaCollisions: undefined
+    resolveSchemaCollisions: undefined,
+    inferForwardCompatible: undefined,
+    coerceConstsTo: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -82,7 +85,9 @@ export async function convertGeneratorsConfiguration({
                               group,
                               maybeTopLevelMetadata,
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
-                              readme
+                              maybeRootAutomation: rawGeneratorsConfiguration.automation,
+                              readme,
+                              context
                           })
                       )
                   )
@@ -93,7 +98,8 @@ export async function convertGeneratorsConfiguration({
                       github: rawGeneratorsConfiguration.whitelabel.github
                   }
                 : undefined,
-        ai: rawGeneratorsConfiguration.ai
+        ai: rawGeneratorsConfiguration.ai,
+        replay: rawGeneratorsConfiguration.replay
     };
 }
 
@@ -167,6 +173,7 @@ export function parseBaseApiDefinitionSettingsSchema(
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        inferDefaultEnvironment: settings?.["infer-default-environment"],
         groupMultiApiEnvironments:
             settings != null && "group-multi-api-environments" in settings
                 ? settings["group-multi-api-environments"]
@@ -175,7 +182,9 @@ export function parseBaseApiDefinitionSettingsSchema(
             settings?.["remove-discriminants-from-schemas"]
         ),
         pathParameterOrder: settings?.["path-parameter-order"],
-        resolveSchemaCollisions: settings?.["resolve-schema-collisions"]
+        resolveSchemaCollisions: settings?.["resolve-schema-collisions"],
+        inferForwardCompatible: settings?.["infer-forward-compatible"],
+        coerceConstsTo: settings?.["coerce-consts-to"]
     };
 }
 
@@ -458,10 +467,10 @@ async function parseApiConfigurationV2Schema({
         } else {
             continue;
         }
-        // Handle namespace for most specs, but use "resource" for GraphQL specs
+        // Handle namespace for most specs, but use "name" for GraphQL specs
         const namespaceValue =
-            generatorsYml.isGraphQLSpecSchema(spec) && "resource" in spec
-                ? spec.resource
+            generatorsYml.isGraphQLSpecSchema(spec) && "name" in spec
+                ? spec.name
                 : "namespace" in spec
                   ? spec.namespace
                   : undefined;
@@ -546,14 +555,18 @@ async function convertGroup({
     group,
     maybeTopLevelMetadata,
     maybeTopLevelReviewers,
-    readme
+    maybeRootAutomation,
+    readme,
+    context
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: generatorsYml.GeneratorGroupSchema;
     maybeTopLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
+    context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
     const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
@@ -569,10 +582,41 @@ async function convertGroup({
                     maybeGroupLevelMetadata,
                     maybeTopLevelReviewers,
                     maybeGroupLevelReviewers: group.reviewers,
-                    readme
+                    maybeRootAutomation,
+                    maybeGroupAutomation: group.automation,
+                    readme,
+                    context
                 })
             )
         )
+    };
+}
+
+function getGeneratorNameAndImage(
+    generator: generatorsYml.GeneratorInvocationSchema,
+    context: TaskContext
+): {
+    normalizedName: string;
+    containerImage: string | undefined;
+} {
+    if ("image" in generator) {
+        // CustomGeneratorInvocationSchema — normalize the image name for IR version resolution
+        // (FDR expects fully-qualified names like "fernapi/fern-typescript-sdk"), but use the
+        // corrected (non-prefixed) name for the containerImage since the fernapi/ Docker Hub
+        // org should not appear in custom registry paths.
+        const correctedImageName = correctIncorrectDockerOrgWithWarning(generator.image.name, context);
+        const normalizedImageName = addDefaultDockerOrgIfNotPresent(correctedImageName);
+        return {
+            normalizedName: normalizedImageName,
+            containerImage: `${generator.image.registry}/${correctedImageName}`
+        };
+    }
+    // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization
+    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
+    const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
+    return {
+        normalizedName,
+        containerImage: undefined
     };
 }
 
@@ -583,7 +627,10 @@ async function convertGenerator({
     maybeTopLevelMetadata,
     maybeGroupLevelReviewers,
     maybeTopLevelReviewers,
-    readme
+    maybeRootAutomation,
+    maybeGroupAutomation,
+    readme,
+    context
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: generatorsYml.GeneratorInvocationSchema;
@@ -591,13 +638,21 @@ async function convertGenerator({
     maybeTopLevelMetadata: OutputMetadata | undefined;
     maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
+    maybeGroupAutomation: generatorsYml.AutomationSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
+    context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
-    // Normalize the generator name by adding the default Docker org prefix if not present
-    const normalizedName = addDefaultDockerOrgIfNotPresent(generator.name);
+    const { normalizedName, containerImage } = getGeneratorNameAndImage(generator, context);
     return {
         raw: generator,
+        automation: generatorsYml.resolveAutomationConfig({
+            rootAutomation: maybeRootAutomation,
+            groupAutomation: maybeGroupAutomation,
+            generatorAutomation: generator.automation
+        }),
         name: normalizedName,
+        containerImage,
         version: generator.version,
         config: generator.config,
         outputMode: await convertOutputMode({
@@ -624,15 +679,31 @@ async function convertGenerator({
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
         settings: generator.api?.settings ?? undefined,
-        apiOverride:
-            generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null
-                ? {
-                      specs: generator.api?.specs,
-                      auth: generator.api?.auth,
-                      "auth-schemes": generator.api?.["auth-schemes"]
-                  }
-                : undefined
+        apiOverride: getApiOverride({ generator })
     };
+}
+
+function getApiOverride({
+    generator
+}: {
+    generator: generatorsYml.GeneratorInvocationSchema;
+}): generatorsYml.GeneratorInvocation["apiOverride"] {
+    // Generator-level overrides take priority
+    if (
+        generator.api?.specs != null ||
+        generator.api?.auth != null ||
+        generator.api?.["auth-schemes"] != null ||
+        generator.api?.headers != null
+    ) {
+        return {
+            specs: generator.api?.specs,
+            auth: generator.api?.auth,
+            "auth-schemes": generator.api?.["auth-schemes"],
+            headers: generator.api?.headers
+        };
+    }
+
+    return undefined;
 }
 
 function getPublishMetadata({

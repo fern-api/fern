@@ -1,4 +1,4 @@
-import { HttpEndpointSchema, HttpRequestBodySchema } from "../schemas";
+import { HttpEndpointSchema, HttpRequestBodySchema } from "../schemas/index.js";
 
 export function getRequestBody(endpoint: HttpEndpointSchema): HttpRequestBodySchema | string | undefined {
     if (endpoint.request == null) {

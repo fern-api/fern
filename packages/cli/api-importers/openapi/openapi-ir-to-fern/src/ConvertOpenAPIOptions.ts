@@ -60,6 +60,13 @@ export interface ConvertOpenAPIOptions {
     authSchemes?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
 
     /**
+     * Overrides or extends the global headers for this generator.
+     * When provided, these headers are merged with the top-level api.headers configuration,
+     * with per-generator headers taking precedence for same-key headers.
+     */
+    headers?: Record<string, RawSchemas.HttpHeaderSchema>;
+
+    /**
      * If true, the converter will convert nullable schemas to optional nullable.
      * If false, the converter will convert nullable schemas to required nullable.
      * Defaults to true.
@@ -91,6 +98,12 @@ export interface ConvertOpenAPIOptions {
      * Defaults to `always`.
      */
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas;
+
+    /**
+     * Whether to automatically infer the default environment from the first server.
+     * Defaults to true. When false, SDK users must explicitly provide a base URL.
+     */
+    inferDefaultEnvironment: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -106,7 +119,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     wrapReferencesToNullableInOptional: false,
     coerceOptionalSchemasToNullable: false,
     groupEnvironmentsByHost: false,
-    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
+    inferDefaultEnvironment: true
 };
 
 function mergeOptions<T extends object>(params: {

@@ -1,12 +1,10 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "types": ["vitest/globals"]
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
-  "references": []
+  "exclude": ["./src/**/__test__/**/generated"]
 }

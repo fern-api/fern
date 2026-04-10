@@ -1,6 +1,6 @@
 import type { schemas } from "@fern-api/config";
 import type { generatorsYml } from "@fern-api/configuration";
-import type { MigratorWarning } from "../types";
+import type { MigratorWarning } from "../types/index.js";
 
 export interface ConvertGitOutputResult {
     gitOutput?: schemas.GitOutputSchema;

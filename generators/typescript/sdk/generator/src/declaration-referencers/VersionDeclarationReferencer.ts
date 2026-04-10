@@ -1,4 +1,5 @@
-import { ApiVersionScheme } from "@fern-fern/ir-sdk/api";
+import { getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExportedFilePath,
     ExportsManager,
@@ -8,18 +9,18 @@ import {
 } from "@fern-typescript/commons";
 import { SourceFile, ts } from "ts-morph";
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer.js";
 
 export declare namespace VersionDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
-        apiVersion: ApiVersionScheme | undefined;
+        apiVersion: FernIr.ApiVersionScheme | undefined;
         relativePackagePath: string;
         relativeTestPath: string;
     }
 }
 
 export class VersionDeclarationReferencer extends AbstractDeclarationReferencer {
-    private apiVersion: ApiVersionScheme | undefined;
+    private apiVersion: FernIr.ApiVersionScheme | undefined;
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
 
@@ -53,7 +54,7 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
     }
 
     public getExportedNameOfVersionEnum(): string {
-        return `${this.namespaceExport}Version`;
+        return this.namingOverride ?? `${this.namespaceExport}Version`;
     }
 
     public getExportedNameOfFirstVersionEnum(): string | undefined {
@@ -117,10 +118,12 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
         });
     }
 
-    private getFirstVersionName(apiVersion: ApiVersionScheme): string {
+    private getFirstVersionName(apiVersion: FernIr.ApiVersionScheme): string {
         switch (apiVersion.type) {
-            case "header":
-                return apiVersion.value.values[0]?.name.wireValue ?? "1.0.0";
+            case "header": {
+                const firstName = apiVersion.value.values[0]?.name;
+                return (firstName != null ? getWireValue(firstName) : undefined) ?? "1.0.0";
+            }
         }
     }
 }

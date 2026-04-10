@@ -28,12 +28,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.dummy.generate_stream(
   stream: true,
   num_events: 1
-);
+)
 ```
 
 ## Environments

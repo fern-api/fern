@@ -1,8 +1,8 @@
 import { Server, ServerVariable } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../getExtension";
-import { FernOpenAPIExtension } from "../extensions/fernExtensions";
+import { getExtension } from "../../../getExtension.js";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions.js";
 
 const X_FERN_DEFAULT_URL = "x-fern-default-url";
 

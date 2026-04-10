@@ -116,6 +116,10 @@ public final class CreateUserInlinedRequest {
     public interface _FinalStage {
         CreateUserInlinedRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Optional trace ID for request tracing</p>
          */
@@ -211,6 +215,18 @@ public final class CreateUserInlinedRequest {
         @java.lang.Override
         public CreateUserInlinedRequest build() {
             return new CreateUserInlinedRequest(xTraceId, name, email, age, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

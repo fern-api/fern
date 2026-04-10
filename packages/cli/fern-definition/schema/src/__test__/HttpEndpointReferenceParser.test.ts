@@ -1,4 +1,4 @@
-import { HttpEndpointReferenceParser } from "../utils/HttpEndpointReferenceParser";
+import { HttpEndpointReferenceParser } from "../utils/HttpEndpointReferenceParser.js";
 
 describe("HttpEndpointReferenceParser", () => {
     describe("validate", () => {

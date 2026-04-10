@@ -1,7 +1,7 @@
-export { ArraySchemaConverter } from "./ArraySchemaConverter";
-export { EnumSchemaConverter } from "./EnumSchemaConverter";
-export { ObjectSchemaConverter } from "./ObjectSchemaConverter";
-export { OneOfSchemaConverter } from "./OneOfSchemaConverter";
-export { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
-export { SchemaConverter } from "./SchemaConverter";
-export { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
+export { ArraySchemaConverter } from "./ArraySchemaConverter.js";
+export { EnumSchemaConverter } from "./EnumSchemaConverter.js";
+export { ObjectSchemaConverter } from "./ObjectSchemaConverter.js";
+export { OneOfSchemaConverter } from "./OneOfSchemaConverter.js";
+export { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter.js";
+export { SchemaConverter } from "./SchemaConverter.js";
+export { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter.js";

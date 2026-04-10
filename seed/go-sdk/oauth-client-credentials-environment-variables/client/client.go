@@ -5,6 +5,8 @@ package client
 import (
 	context "context"
 	errors "errors"
+	os "os"
+
 	fern "github.com/oauth-client-credentials-environment-variables/fern"
 	auth "github.com/oauth-client-credentials-environment-variables/fern/auth"
 	core "github.com/oauth-client-credentials-environment-variables/fern/core"
@@ -13,7 +15,6 @@ import (
 	client "github.com/oauth-client-credentials-environment-variables/fern/nestednoauth/client"
 	option "github.com/oauth-client-credentials-environment-variables/fern/option"
 	simple "github.com/oauth-client-credentials-environment-variables/fern/simple"
-	os "os"
 )
 
 type Client struct {
@@ -35,9 +36,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.ClientSecret == "" {
 		options.ClientSecret = os.Getenv("CLIENT_SECRET")
 	}
-	oauthTokenProvider := core.NewOAuthTokenProvider(
-		options.ClientID,
-		options.ClientSecret,
+	oauthTokenProvider := core.NewTokenProvider(
+		0,
 	)
 	authOptions := *options
 	authClient := auth.NewClient(
@@ -46,7 +46,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options.SetTokenGetter(func() (string, error) {
 		return oauthTokenProvider.GetOrFetch(func() (string, int, error) {
 			response, err := authClient.GetTokenWithClientCredentials(context.Background(), &fern.GetTokenRequest{
-				ClientId:     options.ClientID,
+				ClientID:     options.ClientID,
 				ClientSecret: options.ClientSecret,
 			})
 			if err != nil {

@@ -5,9 +5,9 @@ package com.seed.exhaustive.endpoints.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.exhaustive.core.ObjectMappers;
@@ -31,12 +31,12 @@ public final class GetWithQuery {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("query")
+    @JsonIgnore
     public String getQuery() {
         return query;
     }
 
-    @JsonProperty("number")
+    @JsonIgnore
     public int getNumber() {
         return number;
     }
@@ -82,6 +82,10 @@ public final class GetWithQuery {
 
     public interface _FinalStage {
         GetWithQuery build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -119,6 +123,18 @@ public final class GetWithQuery {
         @java.lang.Override
         public GetWithQuery build() {
             return new GetWithQuery(query, number, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

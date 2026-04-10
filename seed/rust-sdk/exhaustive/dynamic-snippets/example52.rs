@@ -9,14 +9,11 @@ async fn main() {
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .req_with_headers
-        .get_with_custom_header(
-            &"string".to_string(),
-            Some(
-                RequestOptions::new()
-                    .additional_header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
-                    .additional_header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER"),
-            ),
+        .endpoints
+        .primitive
+        .get_and_return_uuid(
+            &Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+            None,
         )
         .await;
 }

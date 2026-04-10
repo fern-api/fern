@@ -77,4 +77,60 @@ export class CompletionsClient {
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/stream");
     }
+
+    public streamWithoutTerminator(
+        request: SeedServerSentEvents.StreamCompletionRequestWithoutTerminator,
+        requestOptions?: CompletionsClient.RequestOptions,
+    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
+        return core.HttpResponsePromise.fromPromise(this.__streamWithoutTerminator(request, requestOptions));
+    }
+
+    private async __streamWithoutTerminator(
+        request: SeedServerSentEvents.StreamCompletionRequestWithoutTerminator,
+        requestOptions?: CompletionsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _response = await core.fetcher<ReadableStream>({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "stream-no-terminator",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            responseType: "sse",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: (data) => data as any,
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "sse",
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedServerSentEventsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/stream-no-terminator");
+    }
 }

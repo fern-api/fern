@@ -4,6 +4,7 @@ package pathparam
 
 import (
 	context "context"
+
 	fern "github.com/enum/fern"
 	core "github.com/enum/fern/core"
 	internal "github.com/enum/fern/internal"

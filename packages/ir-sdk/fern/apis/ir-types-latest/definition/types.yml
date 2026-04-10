@@ -44,7 +44,7 @@ types:
     properties:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
-      name: commons.Name
+      name: commons.NameOrString
       displayName: optional<commons.DisplayName>
 
   Type:
@@ -93,11 +93,18 @@ types:
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
+      forwardCompatible:
+        docs: |
+          If true, the enum is forward-compatible (i.e., the API may return values
+          not listed in `values`). This is inferred from OpenAPI specs that express
+          an enum as `oneOf: [enum, string]` or `anyOf: [enum, string]`, or from
+          Fern Definition enums marked with `forward-compatible: true`.
+        type: optional<boolean>
 
   EnumValue:
     extends: commons.Declaration
     properties:
-      name: commons.NameAndWireValue
+      name: commons.NameAndWireValueOrString
 
   ObjectTypeDeclaration:
     properties:
@@ -115,7 +122,7 @@ types:
   ObjectProperty:
     extends: commons.Declaration
     properties:
-      name: commons.NameAndWireValue
+      name: commons.NameAndWireValueOrString
       valueType: TypeReference
       propertyAccess: optional<ObjectPropertyAccess>
       v2Examples: optional<examples.V2SchemaExamples>
@@ -127,17 +134,29 @@ types:
 
   UnionTypeDeclaration:
     properties:
-      discriminant: commons.NameAndWireValue
+      discriminant: commons.NameAndWireValueOrString
       extends:
         docs: "A list of other types to inherit from"
         type: list<DeclaredTypeName>
       types: list<SingleUnionType>
       baseProperties: list<ObjectProperty>
+      default:
+        docs: |
+          The default union variant to use when the discriminant field is missing from input.
+          When set, generators should fall back to this variant rather than an unknown/error type.
+        type: optional<SingleUnionType>
+      discriminatorContext:
+        docs: |
+          Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+          "data" means discriminator is within the union data itself.
+          "protocol" means discriminator is at the protocol level (e.g., SSE event field).
+        type: optional<UnionDiscriminatorContext>
+        default: data
 
   SingleUnionType:
     extends: commons.WithDocs
     properties:
-      discriminantValue: commons.NameAndWireValue
+      discriminantValue: commons.NameAndWireValueOrString
       shape: SingleUnionTypeProperties
       displayName: optional<string>
       availability: optional<commons.Availability>
@@ -153,8 +172,16 @@ types:
 
   SingleUnionTypeProperty:
     properties:
-      name: commons.NameAndWireValue
+      name: commons.NameAndWireValueOrString
       type: TypeReference
+
+  UnionDiscriminatorContext:
+    docs: Location of the discriminator relative to the union type
+    enum:
+      - value: data
+        docs: Discriminator is within the union data itself (e.g., data.type field)
+      - value: protocol
+        docs: Discriminator is at the protocol level (e.g., SSE event field, HTTP path)
 
   UndiscriminatedUnionTypeDeclaration:
     properties:
@@ -186,7 +213,7 @@ types:
     properties:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
-      name: commons.Name
+      name: commons.NameOrString
       displayName: optional<commons.DisplayName>
       default: optional<NamedTypeDefault>
       inline:
@@ -248,6 +275,7 @@ types:
       - STRING
       - DATE
       - DATE_TIME
+      - DATE_TIME_RFC_2822
       - UUID
       - BASE_64
       - BIG_INTEGER
@@ -264,6 +292,7 @@ types:
       string: StringType
       date: DateType
       dateTime: DateTimeType
+      dateTimeRfc2822: DateTimeRfc2822Type
       uuid: UuidType
       base64: Base64Type
       bigInteger: BigIntegerType
@@ -368,6 +397,9 @@ types:
   DateTimeType:
     properties: {}
 
+  DateTimeRfc2822Type:
+    properties: {}
+
   UuidType:
     properties: {}
 
@@ -394,7 +426,7 @@ types:
       - commons.WithJsonExample
       - commons.WithDocs
     properties:
-      name: optional<commons.Name>
+      name: optional<commons.NameOrString>
       shape: ExampleTypeShape
 
   ExampleTypeShape:
@@ -411,7 +443,7 @@ types:
 
   ExampleEnumType:
     properties:
-      value: commons.NameAndWireValue
+      value: commons.NameAndWireValueOrString
 
   ExampleObjectType:
     properties:
@@ -420,7 +452,7 @@ types:
 
   ExampleObjectProperty:
     properties:
-      name: commons.NameAndWireValue
+      name: commons.NameAndWireValueOrString
       value: ExampleTypeReference
       propertyAccess: optional<ObjectPropertyAccess>
       originalTypeDeclaration:
@@ -431,12 +463,12 @@ types:
 
   ExampleExtraObjectProperty:
     properties:
-      name: commons.NameAndWireValue
+      name: commons.NameAndWireValueOrString
       value: ExampleTypeReference
 
   ExampleUnionType:
     properties:
-      discriminant: commons.NameAndWireValue
+      discriminant: commons.NameAndWireValueOrString
       singleUnionType: ExampleSingleUnionType
       extendProperties:
         docs: A list of properties inherited from other types
@@ -447,7 +479,7 @@ types:
 
   ExampleUnionBaseProperty:
     properties:
-      name: commons.NameAndWireValue
+      name: commons.NameAndWireValueOrString
       value: ExampleTypeReference
 
   ExampleUndiscriminatedUnionType:
@@ -470,7 +502,7 @@ types:
 
   ExampleSingleUnionType:
     properties:
-      wireDiscriminantValue: commons.NameAndWireValue
+      wireDiscriminantValue: commons.NameAndWireValueOrString
       shape: ExampleSingleUnionTypeProperties
 
   ExampleSingleUnionTypeProperties:
@@ -571,6 +603,7 @@ types:
         type: date
         key: date
       datetime: ExampleDatetime
+      datetimeRfc2822: ExampleDatetimeRfc2822
       uuid:
         type: uuid
         key: uuid
@@ -582,6 +615,11 @@ types:
         key: bigInteger
 
   ExampleDatetime:
+    properties:
+      datetime: datetime
+      raw: optional<string>
+
+  ExampleDatetimeRfc2822:
     properties:
       datetime: datetime
       raw: optional<string>

@@ -1,21 +1,22 @@
-import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import {
     getPropertyKey,
     getSchemaOptions,
     getTextOfTsNode,
+    getWireValue,
     PackageId,
     Reference,
     Zurg
 } from "@fern-typescript/commons";
-import { GeneratedSdkInlinedRequestBodySchema, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedSdkInlinedRequestBodySchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
 export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
-        inlinedRequestBody: InlinedRequestBody;
+        endpoint: FernIr.HttpEndpoint;
+        inlinedRequestBody: FernIr.InlinedRequestBody;
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
@@ -23,12 +24,12 @@ export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
 }
 
 export class GeneratedSdkInlinedRequestBodySchemaImpl
-    extends AbstractGeneratedSchema<SdkContext>
+    extends AbstractGeneratedSchema<FileContext>
     implements GeneratedSdkInlinedRequestBodySchema
 {
     private packageId: PackageId;
-    private endpoint: HttpEndpoint;
-    private inlinedRequestBody: InlinedRequestBody;
+    private endpoint: FernIr.HttpEndpoint;
+    private inlinedRequestBody: FernIr.InlinedRequestBody;
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
@@ -51,11 +52,11 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         this.omitUndefined = omitUndefined;
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         this.writeSchemaToFile(context);
     }
 
-    public serializeRequest(referenceToParsedRequest: ts.Expression, context: SdkContext): ts.Expression {
+    public serializeRequest(referenceToParsedRequest: ts.Expression, context: FileContext): ts.Expression {
         if (!this.includeSerdeLayer) {
             return referenceToParsedRequest;
         }
@@ -67,11 +68,11 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         });
     }
 
-    protected getReferenceToSchema(context: SdkContext): Reference {
+    protected getReferenceToSchema(context: FileContext): Reference {
         return context.sdkInlinedRequestBodySchema.getReferenceToInlinedRequestBody(this.packageId, this.endpoint.name);
     }
 
-    protected generateRawTypeDeclaration(context: SdkContext, module: ModuleDeclaration): void {
+    protected generateRawTypeDeclaration(context: FileContext, module: ModuleDeclaration): void {
         const nonLiteralProperties = this.getAllNonLiteralPropertiesFromInlinedRequest({
             context,
             inlinedRequestBody: this.inlinedRequestBody
@@ -81,7 +82,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             properties: nonLiteralProperties.map((property) => {
                 const type = context.typeSchema.getReferenceToRawType(property.valueType);
                 return {
-                    name: getPropertyKey(property.name.wireValue),
+                    name: getPropertyKey(getWireValue(property.name)),
                     type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                     hasQuestionToken: type.isOptional
                 };
@@ -93,7 +94,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         });
     }
 
-    protected getReferenceToParsedShape(context: SdkContext): ts.TypeNode {
+    protected getReferenceToParsedShape(context: FileContext): ts.TypeNode {
         const referenceToRequestWrapper = context.requestWrapper.getReferenceToRequestWrapper(
             this.packageId,
             this.endpoint.name
@@ -117,7 +118,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         }
     }
 
-    protected buildSchema(context: SdkContext): Zurg.Schema {
+    protected buildSchema(context: FileContext): Zurg.Schema {
         const nonLiteralProperties = this.getAllNonLiteralPropertiesFromInlinedRequest({
             context,
             inlinedRequestBody: this.inlinedRequestBody
@@ -128,7 +129,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
                     parsed: context.requestWrapper
                         .getGeneratedRequestWrapper(this.packageId, this.endpoint.name)
                         .getInlinedRequestBodyPropertyKey(property).propertyName,
-                    raw: property.name.wireValue
+                    raw: getWireValue(property.name)
                 },
                 value: context.typeSchema.getSchemaOfTypeReference(property.valueType)
             }))
@@ -145,9 +146,9 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         context,
         inlinedRequestBody
     }: {
-        context: SdkContext;
-        inlinedRequestBody: InlinedRequestBody;
-    }): InlinedRequestBodyProperty[] {
+        context: FileContext;
+        inlinedRequestBody: FernIr.InlinedRequestBody;
+    }): FernIr.InlinedRequestBodyProperty[] {
         return inlinedRequestBody.properties.filter((property) => {
             const resolvedType = context.type.resolveTypeReference(property.valueType);
             const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";

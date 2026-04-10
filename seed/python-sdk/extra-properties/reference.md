@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -18,6 +18,7 @@ from seed import SeedExtraProperties
 client = SeedExtraProperties(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.create_user(
     name="Alice",
 )
@@ -32,6 +33,22 @@ client.user.create_user(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**type:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Literal` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

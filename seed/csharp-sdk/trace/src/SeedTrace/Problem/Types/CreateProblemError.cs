@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -30,7 +30,7 @@ public record CreateProblemError
     /// <summary>
     /// Discriminant value
     /// </summary>
-    [JsonPropertyName("errorType")]
+    [JsonPropertyName("_type")]
     public string ErrorType { get; internal set; }
 
     /// <summary>
@@ -50,7 +50,7 @@ public record CreateProblemError
     public SeedTrace.GenericCreateProblemError AsGeneric() =>
         IsGeneric
             ? (SeedTrace.GenericCreateProblemError)Value!
-            : throw new System.Exception("CreateProblemError.ErrorType is not 'generic'");
+            : throw new global::System.Exception("CreateProblemError.ErrorType is not 'generic'");
 
     public T Match<T>(
         Func<SeedTrace.GenericCreateProblemError, T> onGeneric,
@@ -102,12 +102,12 @@ public record CreateProblemError
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<CreateProblemError>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(CreateProblemError).IsAssignableFrom(typeToConvert);
 
         public override CreateProblemError Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -132,12 +132,21 @@ public record CreateProblemError
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property '_type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("_type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "generic" => json.Deserialize<SeedTrace.GenericCreateProblemError?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.GenericCreateProblemError"
-                    ),
+                "generic" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.GenericCreateProblemError?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.GenericCreateProblemError"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new CreateProblemError(discriminator, value);
@@ -157,6 +166,27 @@ public record CreateProblemError
                 } ?? new JsonObject();
             json["_type"] = value.ErrorType;
             json.WriteTo(writer, options);
+        }
+
+        public override CreateProblemError ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new CreateProblemError(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            CreateProblemError value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.ErrorType);
         }
     }
 

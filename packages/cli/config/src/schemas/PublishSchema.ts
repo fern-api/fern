@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { CratesPublishSchema } from "./CratesPublishSchema";
-import { MavenPublishSchema } from "./MavenPublishSchema";
-import { NpmPublishSchema } from "./NpmPublishSchema";
-import { NugetPublishSchema } from "./NugetPublishSchema";
-import { PypiPublishSchema } from "./PypiPublishSchema";
-import { RubygemsPublishSchema } from "./RubygemsPublishSchema";
+import { CratesPublishSchema } from "./CratesPublishSchema.js";
+import { MavenPublishSchema } from "./MavenPublishSchema.js";
+import { NpmPublishSchema } from "./NpmPublishSchema.js";
+import { NugetPublishSchema } from "./NugetPublishSchema.js";
+import { PypiPublishSchema } from "./PypiPublishSchema.js";
+import { RubygemsPublishSchema } from "./RubygemsPublishSchema.js";
 
 export const PublishSchema = z.object({
     npm: NpmPublishSchema.optional(),

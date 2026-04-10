@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedOauthClientCredentials)](https://nuget.org/packages/SeedOauthClientCredentials)
+[![nuget shield](https://img.shields.io/nuget/v/Fernoauth-client-credentials-custom)](https://nuget.org/packages/Fernoauth-client-credentials-custom)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -16,6 +16,8 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Retries](#retries)
   - [Timeouts](#timeouts)
   - [Raw Response](#raw-response)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query Parameters](#additional-query-parameters)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -25,7 +27,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedOauthClientCredentials
+dotnet add package Fernoauth-client-credentials-custom
 ```
 
 ## Reference
@@ -39,7 +41,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedOauthClientCredentials;
 
-var client = new SeedOauthClientCredentialsClient("client_id", "client_secret");
+var client = new SeedOauthClientCredentialsClient("client_id", "client_secret", "entityId", "scp");
 await client.Auth.GetTokenWithClientCredentialsAsync(
     new GetTokenRequest
     {
@@ -134,6 +136,38 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 
 // For the default behavior, simply await without .WithRawResponse()
 var data = await client.Auth.GetTokenWithClientCredentialsAsync(...);
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
+
+```csharp
+var response = await client.Auth.GetTokenWithClientCredentialsAsync(
+    ...,
+    new RequestOptions {
+        AdditionalHeaders = new Dictionary<string, string?>
+        {
+            { "X-Custom-Header", "custom-value" }
+        }
+    }
+);
+```
+
+### Additional Query Parameters
+
+If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
+
+```csharp
+var response = await client.Auth.GetTokenWithClientCredentialsAsync(
+    ...,
+    new RequestOptions {
+        AdditionalQueryParameters = new Dictionary<string, string>
+        {
+            { "custom_param", "custom-value" }
+        }
+    }
+);
 ```
 
 ## Contributing

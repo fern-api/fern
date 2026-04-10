@@ -1,23 +1,24 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { ruby } from "@fern-api/ruby-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, SdkRequest, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../http/RawClient";
+import { DefaultValueExtractor } from "../../DefaultValueExtractor.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { RawClient } from "../http/RawClient.js";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
     QueryParameterCodeBlock,
     RequestBodyCodeBlock
-} from "./EndpointRequest";
+} from "./EndpointRequest.js";
 
 export declare namespace WrappedEndpointRequest {
     interface Args {
         context: SdkGeneratorContext;
-        serviceId: ServiceId;
-        sdkRequest: SdkRequest;
-        wrapper: SdkRequestWrapper;
-        endpoint: HttpEndpoint;
+        serviceId: FernIr.ServiceId;
+        sdkRequest: FernIr.SdkRequest;
+        wrapper: FernIr.SdkRequestWrapper;
+        endpoint: FernIr.HttpEndpoint;
     }
 }
 
@@ -27,8 +28,8 @@ const PATH_PARAM_NAMES_VN = "path_param_names";
 const HEADER_BAG_NAME = "headers";
 
 export class WrappedEndpointRequest extends EndpointRequest {
-    private serviceId: ServiceId;
-    private wrapper: SdkRequestWrapper;
+    private serviceId: FernIr.ServiceId;
+    private wrapper: FernIr.SdkRequestWrapper;
 
     public constructor({ context, sdkRequest, serviceId, wrapper, endpoint }: WrappedEndpointRequest.Args) {
         super(context, sdkRequest, endpoint);
@@ -56,17 +57,33 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined;
         }
 
+        const defaultExtractor = this.context.customConfig.useDefaultRequestParameterValues
+            ? new DefaultValueExtractor(this.context)
+            : undefined;
+
         return {
             code: ruby.codeblock((writer) => {
                 writer.write(`${QUERY_PARAM_NAMES_VN} = `);
                 writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
                 writer.writeLine(`${queryParameterBagName} = {}`);
                 for (const queryParam of this.endpoint.queryParameters) {
-                    const snakeCaseName = queryParam.name.name.snakeCase.safeName;
-                    const wireValue = queryParam.name.wireValue;
-                    writer.writeLine(
-                        `${queryParameterBagName}["${wireValue}"] = params[:${snakeCaseName}] if params.key?(:${snakeCaseName})`
-                    );
+                    const snakeCaseName = this.case.snakeSafe(queryParam.name);
+                    const wireValue = getWireValue(queryParam.name);
+
+                    const extracted =
+                        defaultExtractor != null && !queryParam.allowMultiple
+                            ? defaultExtractor.extractDefault(queryParam.valueType)
+                            : undefined;
+
+                    if (extracted != null) {
+                        writer.writeLine(
+                            `${queryParameterBagName}["${wireValue}"] = params.fetch(:${snakeCaseName}, ${extracted.value})`
+                        );
+                    } else {
+                        writer.writeLine(
+                            `${queryParameterBagName}["${wireValue}"] = params[:${snakeCaseName}] if params.key?(:${snakeCaseName})`
+                        );
+                    }
                 }
                 writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
             }),
@@ -79,15 +96,28 @@ export class WrappedEndpointRequest extends EndpointRequest {
             return undefined;
         }
 
+        const defaultExtractor = this.context.customConfig.useDefaultRequestParameterValues
+            ? new DefaultValueExtractor(this.context)
+            : undefined;
+
         return {
             code: ruby.codeblock((writer) => {
                 writer.writeLine(`${HEADER_BAG_NAME} = {}`);
                 for (const header of this.endpoint.headers) {
-                    const snakeCaseName = header.name.name.snakeCase.safeName;
-                    const wireValue = header.name.wireValue;
-                    writer.writeLine(
-                        `${HEADER_BAG_NAME}["${wireValue}"] = params[:${snakeCaseName}] if params[:${snakeCaseName}]`
-                    );
+                    const snakeCaseName = this.case.snakeSafe(header.name);
+                    const wireValue = getWireValue(header.name);
+
+                    const extracted = defaultExtractor?.extractDefault(header.valueType);
+
+                    if (extracted != null) {
+                        writer.writeLine(
+                            `${HEADER_BAG_NAME}["${wireValue}"] = params.fetch(:${snakeCaseName}, ${extracted.value})`
+                        );
+                    } else {
+                        writer.writeLine(
+                            `${HEADER_BAG_NAME}["${wireValue}"] = params[:${snakeCaseName}] if params[:${snakeCaseName}]`
+                        );
+                    }
                 }
             }),
             headerParameterBagReference: HEADER_BAG_NAME
@@ -198,11 +228,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     private getPathParameterNames(): string[] {
-        return this.endpoint.allPathParameters.map((pathParameter) => pathParameter.name.snakeCase.safeName);
+        return this.endpoint.allPathParameters.map((pathParameter) => this.case.snakeSafe(pathParameter.name));
     }
 
     private getQueryParameterNames(): string[] {
-        return this.endpoint.queryParameters.map((queryParameter) => queryParameter.name.name.snakeCase.safeName);
+        return this.endpoint.queryParameters.map((queryParameter) => this.case.snakeSafe(queryParameter.name));
     }
 
     private hasPathParameters(): boolean {
@@ -223,17 +253,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         // Path parameters use originalName as wireValue
         for (const pathParam of this.endpoint.allPathParameters) {
-            wireNames.push(pathParam.name.originalName);
+            wireNames.push(getOriginalName(pathParam.name));
         }
 
         // Query parameters have explicit wireValue
         for (const queryParam of this.endpoint.queryParameters) {
-            wireNames.push(queryParam.name.wireValue);
+            wireNames.push(getWireValue(queryParam.name));
         }
 
         // Headers have explicit wireValue
         for (const header of this.endpoint.headers) {
-            wireNames.push(header.name.wireValue);
+            wireNames.push(getWireValue(header.name));
         }
 
         return wireNames;

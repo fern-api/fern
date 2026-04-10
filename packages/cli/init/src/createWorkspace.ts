@@ -14,16 +14,19 @@ import { TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { SAMPLE_IMDB_API } from "./sampleImdbApi";
+import { SAMPLE_IMDB_API } from "./sampleImdbApi.js";
+import { SAMPLE_OPENAPI } from "./sampleOpenApi.js";
 
 export async function createFernWorkspace({
     directoryOfWorkspace,
     cliVersion,
-    context
+    context,
+    apiName = "api"
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
+    apiName?: string;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
@@ -35,7 +38,8 @@ export async function createFernWorkspace({
     });
     const directoryOfDefinition = join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
     await writeSampleApiDefinition({
-        directoryOfDefinition
+        directoryOfDefinition,
+        apiName
     });
 }
 
@@ -59,6 +63,30 @@ export async function createOpenAPIWorkspace({
         context,
         apiConfiguration: {
             specs: [{ openapi: relative(directoryOfWorkspace, openAPIFilePath) }]
+        }
+    });
+}
+
+export async function createDefaultOpenAPIWorkspace({
+    directoryOfWorkspace,
+    cliVersion,
+    context
+}: {
+    directoryOfWorkspace: AbsoluteFilePath;
+    cliVersion: string;
+    context: TaskContext;
+}): Promise<void> {
+    if (!(await doesPathExist(directoryOfWorkspace))) {
+        await mkdir(directoryOfWorkspace, { recursive: true });
+    }
+    const openApiFilePath = join(directoryOfWorkspace, RelativeFilePath.of("openapi.yml"));
+    await writeFile(openApiFilePath, SAMPLE_OPENAPI);
+    await writeGeneratorsConfiguration({
+        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+        cliVersion,
+        context,
+        apiConfiguration: {
+            specs: [{ openapi: "openapi.yml" }]
         }
     });
 }
@@ -140,20 +168,21 @@ async function writeGeneratorsConfiguration({
     );
 }
 
-const ROOT_API: RootApiFileSchema = {
-    name: "api",
-    "error-discrimination": {
-        strategy: "status-code"
-    }
-};
-
 async function writeSampleApiDefinition({
-    directoryOfDefinition
+    directoryOfDefinition,
+    apiName
 }: {
     directoryOfDefinition: AbsoluteFilePath;
+    apiName: string;
 }): Promise<void> {
+    const rootApi: RootApiFileSchema = {
+        name: apiName,
+        "error-discrimination": {
+            strategy: "status-code"
+        }
+    };
     await mkdir(directoryOfDefinition);
-    await writeFile(join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)), yaml.dump(ROOT_API));
+    await writeFile(join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)), yaml.dump(rootApi));
 
     const absoluteFilepathToImdbYaml = join(directoryOfDefinition, RelativeFilePath.of("imdb.yml"));
     await writeFile(

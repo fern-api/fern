@@ -79,6 +79,9 @@ func (d *Docs) GetDocs() string {
 }
 
 func (d *Docs) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -124,6 +127,9 @@ func (d *Docs) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Docs) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -166,6 +172,9 @@ func (e *ExampleType) GetName() string {
 }
 
 func (e *ExampleType) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -218,6 +227,9 @@ func (e *ExampleType) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ExampleType) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -230,11 +242,11 @@ func (e *ExampleType) String() string {
 }
 
 var (
-	jsonFieldDocs = big.NewInt(1 << 0)
-	jsonFieldRaw  = big.NewInt(1 << 1)
+	jSONFieldDocs = big.NewInt(1 << 0)
+	jSONFieldRaw  = big.NewInt(1 << 1)
 )
 
-type Json struct {
+type JSON struct {
 	Docs string `json:"docs" url:"docs"`
 	Raw  string `json:"raw" url:"raw"`
 
@@ -245,25 +257,28 @@ type Json struct {
 	rawJSON         json.RawMessage
 }
 
-func (j *Json) GetDocs() string {
+func (j *JSON) GetDocs() string {
 	if j == nil {
 		return ""
 	}
 	return j.Docs
 }
 
-func (j *Json) GetRaw() string {
+func (j *JSON) GetRaw() string {
 	if j == nil {
 		return ""
 	}
 	return j.Raw
 }
 
-func (j *Json) GetExtraProperties() map[string]interface{} {
+func (j *JSON) GetExtraProperties() map[string]interface{} {
+	if j == nil {
+		return nil
+	}
 	return j.extraProperties
 }
 
-func (j *Json) require(field *big.Int) {
+func (j *JSON) require(field *big.Int) {
 	if j.explicitFields == nil {
 		j.explicitFields = big.NewInt(0)
 	}
@@ -272,25 +287,25 @@ func (j *Json) require(field *big.Int) {
 
 // SetDocs sets the Docs field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (j *Json) SetDocs(docs string) {
+func (j *JSON) SetDocs(docs string) {
 	j.Docs = docs
-	j.require(jsonFieldDocs)
+	j.require(jSONFieldDocs)
 }
 
 // SetRaw sets the Raw field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (j *Json) SetRaw(raw string) {
+func (j *JSON) SetRaw(raw string) {
 	j.Raw = raw
-	j.require(jsonFieldRaw)
+	j.require(jSONFieldRaw)
 }
 
-func (j *Json) UnmarshalJSON(data []byte) error {
-	type unmarshaler Json
+func (j *JSON) UnmarshalJSON(data []byte) error {
+	type unmarshaler JSON
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*j = Json(value)
+	*j = JSON(value)
 	extraProperties, err := internal.ExtractExtraProperties(data, *j)
 	if err != nil {
 		return err
@@ -300,8 +315,8 @@ func (j *Json) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (j *Json) MarshalJSON() ([]byte, error) {
-	type embed Json
+func (j *JSON) MarshalJSON() ([]byte, error) {
+	type embed JSON
 	var marshaler = struct {
 		embed
 	}{
@@ -311,7 +326,10 @@ func (j *Json) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-func (j *Json) String() string {
+func (j *JSON) String() string {
+	if j == nil {
+		return "<nil>"
+	}
 	if len(j.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(j.rawJSON); err == nil {
 			return value
@@ -363,6 +381,9 @@ func (n *NestedType) GetName() string {
 }
 
 func (n *NestedType) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -422,6 +443,9 @@ func (n *NestedType) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedType) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value

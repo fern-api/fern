@@ -1,8 +1,8 @@
 import { isRawObjectDefinition } from "@fern-api/fern-definition-schema";
 import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
 
-import { Rule } from "../../Rule";
-import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
+import { Rule } from "../../Rule.js";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator.js";
 
 export const OnlyObjectExtensionsRule: Rule = {
     name: "only-object-extensions",

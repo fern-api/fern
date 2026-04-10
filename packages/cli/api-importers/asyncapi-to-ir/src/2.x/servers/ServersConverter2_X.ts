@@ -1,8 +1,8 @@
 import { SingleBaseUrlEnvironment } from "@fern-api/ir-sdk";
 
-import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
-import { AbstractServerConverter } from "../../converters/AbstractServerConverter";
-import { ServerV2 } from "../types";
+import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext.js";
+import { AbstractServerConverter } from "../../converters/AbstractServerConverter.js";
+import { ServerV2 } from "../types.js";
 
 export class ServersConverter2_X extends AbstractServerConverter<ServerV2> {
     constructor({ context, breadcrumbs, servers }: AbstractServerConverter.Args<ServerV2>) {
@@ -19,6 +19,7 @@ export class ServersConverter2_X extends AbstractServerConverter<ServerV2> {
             name: context.casingsGenerator.generateName(serverId),
             url: this.constructServerUrl(server.protocol, server.url),
             docs: undefined,
+            audiences: undefined,
             defaultUrl: undefined,
             urlTemplate: undefined,
             urlVariables: undefined

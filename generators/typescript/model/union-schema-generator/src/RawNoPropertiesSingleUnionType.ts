@@ -2,7 +2,7 @@ import { Zurg } from "@fern-typescript/commons";
 import { BaseContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-import { AbstractRawSingleUnionType } from "./AbstractRawSingleUnionType";
+import { AbstractRawSingleUnionType } from "./AbstractRawSingleUnionType.js";
 
 export class RawNoPropertiesSingleUnionType<Context extends BaseContext> extends AbstractRawSingleUnionType<Context> {
     protected getExtends(): ts.TypeNode[] {

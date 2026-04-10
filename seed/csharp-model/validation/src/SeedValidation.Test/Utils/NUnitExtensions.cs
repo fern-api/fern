@@ -26,5 +26,7 @@ public static class NUnitExtensions
             .UsingOneOfComparer()
             .UsingJsonElementComparer()
             .UsingOptionalComparer()
-            .UsingAdditionalPropertiesComparer();
+            .UsingObjectDictionaryComparer()
+            .UsingAdditionalPropertiesComparer()
+            .UsingJsonSerializationComparer();
 }

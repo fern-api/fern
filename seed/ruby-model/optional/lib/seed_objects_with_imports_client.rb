@@ -1,5 +1,0 @@
-# frozen_string_literal: true
-
-require_relative "seed_objects_with_imports_client/optional/types/send_optional_body_request"
-require_relative "seed_objects_with_imports_client/optional/types/deploy_params"
-require_relative "seed_objects_with_imports_client/optional/types/deploy_response"

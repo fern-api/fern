@@ -34,6 +34,7 @@ apng
 apos
 appveyor
 aread
+argz
 aries
 armando
 armandobelardo
@@ -54,6 +55,8 @@ Axios
 BAAI
 babbage*
 babbagedocs
+baml
+Baml
 BAML
 Bbaz
 Bcontact
@@ -73,6 +76,7 @@ blueprintjs
 Bmapkey
 boolish
 boto
+boundaryml
 bsinghvi
 bufbuild
 bufio
@@ -615,6 +619,7 @@ thead
 thollander
 tiangolo
 tina
+tjdbdc
 tlsv
 tmpl
 Tokenid

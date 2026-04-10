@@ -1,6 +1,6 @@
 import { doesPathExist } from "@fern-api/fs-utils";
 
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 export const FilepathsExistRule: Rule = {
     name: "filepaths-exist",

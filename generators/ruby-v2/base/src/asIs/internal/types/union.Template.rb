@@ -21,7 +21,7 @@ module <%= gem_namespace %>
           self
         end
 
-        def member?(type)
+        def type_member?(type)
           members.any? { |_key, type_fn| type == type_fn.call }
         end
 
@@ -162,4 +162,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end                
+end                                

@@ -67,6 +67,22 @@ public final class Resource {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof Resource && value.equals(((Resource) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;
@@ -95,6 +111,7 @@ public final class Resource {
     @JsonIgnoreProperties("resource_type")
     private static final class UserValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "resource_type", allowSetters = true)
         private User value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -134,6 +151,7 @@ public final class Resource {
     @JsonIgnoreProperties("resource_type")
     private static final class OrganizationValue implements Value {
         @JsonUnwrapped
+        @JsonIgnoreProperties(value = "resource_type", allowSetters = true)
         private Organization value;
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

@@ -62,6 +62,8 @@ export class SeedApiClient {
      *             tags: ["tags", "tags"]
      *         },
      *         filter: "filter",
+     *         tags: "tags",
+     *         optionalTags: "optionalTags",
      *         neighbor: {
      *             name: "name",
      *             tags: ["tags", "tags"]
@@ -98,6 +100,8 @@ export class SeedApiClient {
             optionalUser,
             excludeUser,
             filter,
+            tags,
+            optionalTags,
             neighbor,
             neighborRequired,
         } = request;
@@ -116,6 +120,8 @@ export class SeedApiClient {
             optionalUser,
             excludeUser,
             filter,
+            tags,
+            optionalTags,
             neighbor: neighbor != null ? (typeof neighbor === "string" ? neighbor : toJson(neighbor)) : undefined,
             neighborRequired: typeof neighborRequired === "string" ? neighborRequired : toJson(neighborRequired),
         };
@@ -148,5 +154,35 @@ export class SeedApiClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/user/getUsername");
+    }
+
+    /**
+     * Make a passthrough request using the SDK's configured auth, retry, logging, etc.
+     * This is useful for making requests to endpoints not yet supported in the SDK.
+     * The input can be a URL string, URL object, or Request object. Relative paths are resolved against the configured base URL.
+     *
+     * @param {Request | string | URL} input - The URL, path, or Request object.
+     * @param {RequestInit} init - Standard fetch RequestInit options.
+     * @param {core.PassthroughRequest.RequestOptions} requestOptions - Per-request overrides (timeout, retries, headers, abort signal).
+     * @returns {Promise<Response>} A standard Response object.
+     */
+    public async fetch(
+        input: Request | string | URL,
+        init?: RequestInit,
+        requestOptions?: core.PassthroughRequest.RequestOptions,
+    ): Promise<Response> {
+        return core.makePassthroughRequest(
+            input,
+            init,
+            {
+                baseUrl: this._options.baseUrl ?? this._options.environment,
+                headers: this._options.headers,
+                timeoutInSeconds: this._options.timeoutInSeconds,
+                maxRetries: this._options.maxRetries,
+                fetch: this._options.fetch,
+                logging: this._options.logging,
+            },
+            requestOptions,
+        );
     }
 }

@@ -1,0 +1,54 @@
+# Build outputs and dependencies
+node_modules/
+.turbo/
+.tsup/
+.nx/
+.yarn/
+.yarn-cache/
+.pnpm-cache/
+.pnpm-store/
+**/build/
+**/dist/
+**/lib/
+**/out/
+**/generated/
+**/*.tsbuildinfo
+
+# Massive test fixtures (seed contains generated code for all languages)
+seed/
+seed-remote-local/
+test-remote-local-logs-*/
+**/__snapshots__/
+**/__test__/**/fixtures/
+**/__test__/**/output/
+
+# Language-specific build outputs
+**/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/*.egg-info/
+**/.gradle/
+**/gradle/
+**/gradlew
+**/gradlew.bat
+**/bin/
+**/obj/
+**/target/
+
+# Lock files
+pnpm-lock.yaml
+
+# Large files
+seed/python-sdk/trace/snippet-templates.json
+**/*.prof
+
+# Cache files
+.php-cs-fixer.cache
+
+# IDE files
+.DS_Store
+.idea/
+.cursor/
+.local/
+.preview/

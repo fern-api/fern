@@ -85,6 +85,10 @@ public final class ListType {
     public interface _FinalStage {
         ListType build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.</p>
          */
@@ -141,6 +145,18 @@ public final class ListType {
         @java.lang.Override
         public ListType build() {
             return new ListType(valueType, isFixedLength, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

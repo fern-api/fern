@@ -1,9 +1,8 @@
-import { Writable } from "node:stream";
 import type fs from "fs";
 
-import type { FernGeneratorCli } from "../configuration/sdk";
-import { ReadmeGenerator } from "../readme/ReadmeGenerator";
-import { ReadmeParser } from "../readme/ReadmeParser";
+import type { FernGeneratorCli } from "../configuration/sdk/index.js";
+import { ReadmeGenerator } from "../readme/ReadmeGenerator.js";
+import { ReadmeParser } from "../readme/ReadmeParser.js";
 
 export interface GenerateReadmeToStreamParams {
     originalReadmeContent?: string;
@@ -31,24 +30,10 @@ export interface GenerateReadmeParams {
 export async function generateReadme(params: GenerateReadmeParams): Promise<string> {
     const { originalReadmeContent, readmeConfig } = params;
 
-    const content: string[] = [];
-
-    const sink = new Writable({
-        write(chunk, _encoding, callback) {
-            if (typeof chunk === "string") {
-                content.push(chunk);
-            } else {
-                content.push(Buffer.from(chunk).toString("utf8"));
-            }
-            callback();
-        }
-    });
-
-    await generateReadmeToStream({
-        originalReadmeContent,
+    const generator = new ReadmeGenerator({
+        readmeParser: new ReadmeParser(),
         readmeConfig,
-        outputStream: sink as fs.WriteStream
+        originalReadme: originalReadmeContent
     });
-
-    return content.join("");
+    return generator.generateReadmeToString();
 }

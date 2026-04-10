@@ -1,6 +1,6 @@
 import { snakeCase } from "es-toolkit/string";
 
-import { Block } from "./Block";
+import { Block } from "./Block.js";
 
 export interface ParseResult {
     header: string;

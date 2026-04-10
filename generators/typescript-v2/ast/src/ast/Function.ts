@@ -1,9 +1,9 @@
-import { CodeBlock } from "./CodeBlock";
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Parameter } from "./Parameter";
-import { Type } from "./Type";
+import { CodeBlock } from "./CodeBlock.js";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Parameter } from "./Parameter.js";
+import { Type } from "./Type.js";
 
 export declare namespace Function {
     interface Args {

@@ -19,11 +19,9 @@
 //!             &"path_param".to_string(),
 //!             &TestMethodNameRequest {
 //!                 body: Some(PlainObject {
-//!                     id: None,
-//!                     name: None,
+//!                     ..Default::default()
 //!                 }),
-//!                 query_param_object: None,
-//!                 query_param_integer: None,
+//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )
@@ -41,15 +39,14 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
+pub mod config;
+pub mod core;
+pub mod error;
 pub mod prelude;
 
-pub use error::{ApiError};
-pub use api::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-
+pub use api::*;
+pub use client::*;
+pub use config::*;
+pub use core::*;
+pub use error::{ApiError, BuildError};

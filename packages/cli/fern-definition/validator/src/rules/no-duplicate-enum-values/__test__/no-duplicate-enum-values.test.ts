@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoDuplicateEnumValuesRule } from "../no-duplicate-enum-values";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoDuplicateEnumValuesRule } from "../no-duplicate-enum-values.js";
 
 describe("no-duplicate-enum-values", () => {
     it("simple", async () => {
@@ -19,6 +19,7 @@ describe("no-duplicate-enum-values", () => {
                 message: "Duplicated enum value: A.",
                 nodePath: ["types", "MyEnum"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-duplicate-enum-values",
                 severity: "fatal"
             }
         ]);

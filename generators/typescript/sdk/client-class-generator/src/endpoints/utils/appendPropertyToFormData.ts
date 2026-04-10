@@ -1,9 +1,10 @@
-import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@fern-fern/ir-sdk/api";
-import { SdkContext } from "@fern-typescript/contexts";
+import { getWireValue } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { FileUploadRequestParameter } from "../../request-parameter/FileUploadRequestParameter";
-import { getParameterNameForFile } from "./getParameterNameForFile";
+import { FileUploadRequestParameter } from "../../request-parameter/FileUploadRequestParameter.js";
+import { getParameterNameForFile } from "./getParameterNameForFile.js";
 
 export function appendPropertyToFormData({
     property,
@@ -15,8 +16,8 @@ export function appendPropertyToFormData({
     allowExtraFields,
     omitUndefined
 }: {
-    property: FileUploadRequestProperty;
-    context: SdkContext;
+    property: FernIr.FileUploadRequestProperty;
+    context: FileContext;
     referenceToFormData: ts.Expression;
     wrapperName: string;
     requestParameter: FileUploadRequestParameter | undefined;
@@ -24,20 +25,21 @@ export function appendPropertyToFormData({
     allowExtraFields: boolean;
     omitUndefined: boolean;
 }): ts.Statement {
-    return FileUploadRequestProperty._visit(property, {
+    return FernIr.FileUploadRequestProperty._visit(property, {
         file: (property) => {
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_file";
 
             let statement = context.coreUtilities.formDataUtils.appendFile({
                 referenceToFormData,
-                key: property.key.wireValue,
+                key: getWireValue(property.key),
                 value: ts.factory.createIdentifier(
                     getParameterNameForFile({
                         property,
                         wrapperName,
                         includeSerdeLayer: context.includeSerdeLayer,
                         retainOriginalCasing: context.retainOriginalCasing,
-                        inlineFileProperties: context.inlineFileProperties
+                        inlineFileProperties: context.inlineFileProperties,
+                        caseConverter: context.case
                     })
                 )
             });
@@ -62,14 +64,15 @@ export function appendPropertyToFormData({
                             wrapperName,
                             includeSerdeLayer: context.includeSerdeLayer,
                             retainOriginalCasing: context.retainOriginalCasing,
-                            inlineFileProperties: context.inlineFileProperties
+                            inlineFileProperties: context.inlineFileProperties,
+                            caseConverter: context.case
                         })
                     ),
                     ts.factory.createBlock(
                         [
                             context.coreUtilities.formDataUtils.appendFile({
                                 referenceToFormData,
-                                key: property.key.wireValue,
+                                key: getWireValue(property.key),
                                 value: ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME)
                             })
                         ],
@@ -87,7 +90,8 @@ export function appendPropertyToFormData({
                                 wrapperName,
                                 includeSerdeLayer: context.includeSerdeLayer,
                                 retainOriginalCasing: context.retainOriginalCasing,
-                                inlineFileProperties: context.inlineFileProperties
+                                inlineFileProperties: context.inlineFileProperties,
+                                caseConverter: context.case
                             })
                         ),
                         ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
@@ -136,7 +140,7 @@ export function appendPropertyToFormData({
                             context.coreUtilities.formDataUtils.encodeAsFormParameter({
                                 referenceToArgument: ts.factory.createObjectLiteralExpression([
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createStringLiteral(property.name.wireValue),
+                                        ts.factory.createStringLiteral(getWireValue(property.name)),
                                         referenceToBodyProperty
                                     )
                                 ])
@@ -158,7 +162,7 @@ export function appendPropertyToFormData({
                 // if JSON, always serialize to JSON, regardless of whether the property is iterable or not
                 statement = context.coreUtilities.formDataUtils.append({
                     referenceToFormData,
-                    key: property.name.wireValue,
+                    key: getWireValue(property.name),
                     value: ts.factory.createCallExpression(
                         context.jsonContext.getReferenceToToJson().getExpression(),
                         [],
@@ -184,7 +188,7 @@ export function appendPropertyToFormData({
                         [
                             context.coreUtilities.formDataUtils.append({
                                 referenceToFormData,
-                                key: property.name.wireValue,
+                                key: getWireValue(property.name),
                                 value: stringifyIterableItemType(
                                     ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME),
                                     property.valueType,
@@ -229,7 +233,7 @@ export function appendPropertyToFormData({
             } else {
                 statement = context.coreUtilities.formDataUtils.append({
                     referenceToFormData,
-                    key: property.name.wireValue,
+                    key: getWireValue(property.name),
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {
                         includeNullCheckIfOptional: false
                     })
@@ -255,10 +259,10 @@ export function appendPropertyToFormData({
     });
 }
 
-function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boolean {
-    return TypeReference._visit<boolean>(typeReference, {
+function isMaybeIterable(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+    return FernIr.TypeReference._visit<boolean>(typeReference, {
         container: (container) =>
-            ContainerType._visit<boolean>(container, {
+            FernIr.ContainerType._visit<boolean>(container, {
                 list: () => true,
                 set: () => true,
                 map: () => false,
@@ -271,7 +275,7 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boo
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName);
-            return Type._visit(typeDeclaration.shape, {
+            return FernIr.Type._visit(typeDeclaration.shape, {
                 object: () => false,
                 enum: () => false,
                 union: () => false,
@@ -290,10 +294,14 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boo
     });
 }
 
-function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference, context: SdkContext): ts.Expression {
-    return TypeReference._visit(iterable, {
+function stringifyIterableItemType(
+    value: ts.Expression,
+    iterable: FernIr.TypeReference,
+    context: FileContext
+): ts.Expression {
+    return FernIr.TypeReference._visit(iterable, {
         container: (container) =>
-            ContainerType._visit(container, {
+            FernIr.ContainerType._visit(container, {
                 list: (itemType) => context.type.stringify(value, itemType, { includeNullCheckIfOptional: false }),
                 set: (itemType) => context.type.stringify(value, itemType, { includeNullCheckIfOptional: false }),
                 map: () => {
@@ -310,7 +318,7 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName);
-            return Type._visit(typeDeclaration.shape, {
+            return FernIr.Type._visit(typeDeclaration.shape, {
                 object: () => {
                     throw new Error("Object is not iterable.");
                 },
@@ -322,26 +330,29 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
                 },
                 alias: ({ aliasOf }) => stringifyIterableItemType(value, aliasOf, context),
                 undiscriminatedUnion: () =>
-                    context.type.stringify(value, TypeReference.unknown(), { includeNullCheckIfOptional: false }),
+                    context.type.stringify(value, FernIr.TypeReference.unknown(), {
+                        includeNullCheckIfOptional: false
+                    }),
                 _other: () => {
-                    throw new Error("Unknown Type: " + typeDeclaration.shape.type);
+                    throw new Error("Unknown FernIr.Type: " + typeDeclaration.shape.type);
                 }
             });
         },
         primitive: () => {
             throw new Error("Primitive is not iterable.");
         },
-        unknown: () => context.type.stringify(value, TypeReference.unknown(), { includeNullCheckIfOptional: false }),
+        unknown: () =>
+            context.type.stringify(value, FernIr.TypeReference.unknown(), { includeNullCheckIfOptional: false }),
         _other: () => {
             throw new Error("Unknown TypeReference: " + iterable.type);
         }
     });
 }
 
-function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext): boolean {
-    return TypeReference._visit<boolean>(typeReference, {
+function isDefinitelyIterable(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+    return FernIr.TypeReference._visit<boolean>(typeReference, {
         container: (container) =>
-            ContainerType._visit<boolean>(container, {
+            FernIr.ContainerType._visit<boolean>(container, {
                 list: () => true,
                 set: () => true,
                 map: () => false,
@@ -354,7 +365,7 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext)
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName);
-            return Type._visit(typeDeclaration.shape, {
+            return FernIr.Type._visit(typeDeclaration.shape, {
                 object: () => false,
                 enum: () => false,
                 union: () => false,
@@ -374,10 +385,10 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext)
     });
 }
 
-function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean {
-    return TypeReference._visit<boolean>(typeReference, {
+function isMaybeList(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+    return FernIr.TypeReference._visit<boolean>(typeReference, {
         container: (container) =>
-            ContainerType._visit<boolean>(container, {
+            FernIr.ContainerType._visit<boolean>(container, {
                 list: () => true,
                 set: () => false,
                 map: () => false,
@@ -390,7 +401,7 @@ function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName);
-            return Type._visit(typeDeclaration.shape, {
+            return FernIr.Type._visit(typeDeclaration.shape, {
                 object: () => false,
                 enum: () => false,
                 union: () => false,
@@ -409,10 +420,10 @@ function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean
     });
 }
 
-function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean {
-    return TypeReference._visit<boolean>(typeReference, {
+function isMaybeSet(typeReference: FernIr.TypeReference, context: FileContext): boolean {
+    return FernIr.TypeReference._visit<boolean>(typeReference, {
         container: (container) =>
-            ContainerType._visit<boolean>(container, {
+            FernIr.ContainerType._visit<boolean>(container, {
                 list: () => false,
                 set: () => true,
                 map: () => false,
@@ -425,7 +436,7 @@ function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean 
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName);
-            return Type._visit(typeDeclaration.shape, {
+            return FernIr.Type._visit(typeDeclaration.shape, {
                 object: () => false,
                 enum: () => false,
                 union: () => false,

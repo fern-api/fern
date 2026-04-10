@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "617b9d45",
+            "example_identifier": "d175c2e7",
             "id": {
                 "method": "POST",
                 "path": "/foo1",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "4e75de6",
+            "example_identifier": "92384fa9",
             "id": {
                 "method": "POST",
                 "path": "/foo1",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "8b9daef4",
+            "example_identifier": "bc19fa7f",
             "id": {
                 "method": "POST",
                 "path": "/foo1",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "504f8710",
+            "example_identifier": "10a642ef",
             "id": {
                 "method": "POST",
                 "path": "/foo1",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "617b9d45",
+            "example_identifier": "d175c2e7",
             "id": {
                 "method": "POST",
                 "path": "/foo2",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "83c44330",
+            "example_identifier": "37e09d01",
             "id": {
                 "method": "POST",
                 "path": "/foo2",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "b5ba6158",
+            "example_identifier": "22747d41",
             "id": {
                 "method": "POST",
                 "path": "/foo2",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "4e75de6",
+            "example_identifier": "92384fa9",
             "id": {
                 "method": "POST",
                 "path": "/foo2",
@@ -105,7 +105,7 @@
             }
         },
         {
-            "example_identifier": "8b9daef4",
+            "example_identifier": "bc19fa7f",
             "id": {
                 "method": "POST",
                 "path": "/foo2",
@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "504f8710",
+            "example_identifier": "10a642ef",
             "id": {
                 "method": "POST",
                 "path": "/foo2",
@@ -170,7 +170,7 @@
             }
         },
         {
-            "example_identifier": "617b9d45",
+            "example_identifier": "d175c2e7",
             "id": {
                 "method": "POST",
                 "path": "/foo3",
@@ -183,7 +183,7 @@
             }
         },
         {
-            "example_identifier": "83c44330",
+            "example_identifier": "37e09d01",
             "id": {
                 "method": "POST",
                 "path": "/foo3",
@@ -196,7 +196,7 @@
             }
         },
         {
-            "example_identifier": "b5ba6158",
+            "example_identifier": "22747d41",
             "id": {
                 "method": "POST",
                 "path": "/foo3",
@@ -209,7 +209,7 @@
             }
         },
         {
-            "example_identifier": "4e75de6",
+            "example_identifier": "92384fa9",
             "id": {
                 "method": "POST",
                 "path": "/foo3",
@@ -222,7 +222,7 @@
             }
         },
         {
-            "example_identifier": "8b9daef4",
+            "example_identifier": "bc19fa7f",
             "id": {
                 "method": "POST",
                 "path": "/foo3",
@@ -235,7 +235,7 @@
             }
         },
         {
-            "example_identifier": "504f8710",
+            "example_identifier": "10a642ef",
             "id": {
                 "method": "POST",
                 "path": "/foo3",

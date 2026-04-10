@@ -75,7 +75,9 @@ public final class PoetTypeNameMapper {
                 if (isAlias) {
                     AliasTypeDeclaration aliasTypeDeclaration =
                             typeDeclaration.getShape().getAlias().get();
-                    return aliasTypeDeclaration.getResolvedType().visit(this);
+                    if (!aliasTypeDeclaration.getAliasOf().isUnknown()) {
+                        return aliasTypeDeclaration.getResolvedType().visit(this);
+                    }
                 }
             }
             return applyEnclosing(
@@ -181,6 +183,11 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitDateTime() {
+            return ClassName.get(OffsetDateTime.class);
+        }
+
+        @Override
+        public TypeName visitDateTimeRfc2822() {
             return ClassName.get(OffsetDateTime.class);
         }
 

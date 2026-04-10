@@ -5,13 +5,14 @@ package propertyaccess
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/property-access/fern/internal"
 )
 
 // User object
 type User struct {
 	// The unique identifier for the user.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// The email address of the user.
 	Email string `json:"email" url:"email"`
 	// The password for the user.
@@ -23,11 +24,11 @@ type User struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetId() string {
+func (u *User) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetEmail() string {
@@ -221,7 +222,7 @@ type UserOrAdmin struct {
 // Admin user object
 type Admin struct {
 	// The unique identifier for the user.
-	Id string `json:"id" url:"id"`
+	ID string `json:"id" url:"id"`
 	// The email address of the user.
 	Email string `json:"email" url:"email"`
 	// The password for the user.
@@ -235,11 +236,11 @@ type Admin struct {
 	rawJSON         json.RawMessage
 }
 
-func (a *Admin) GetId() string {
+func (a *Admin) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *Admin) GetEmail() string {

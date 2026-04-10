@@ -2,7 +2,7 @@
 
 namespace Seed\Problem;
 
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Problem\Types\CreateProblemRequest;
 use Seed\Problem\Types\CreateProblemResponse;
@@ -12,7 +12,6 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
-use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Problem\Types\UpdateProblemResponse;
 use Seed\Problem\Requests\GetDefaultStarterFilesRequest;
@@ -66,11 +65,11 @@ class ProblemClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return CreateProblemResponse
+     * @return ?CreateProblemResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createProblem(CreateProblemRequest $request, ?array $options = null): CreateProblemResponse
+    public function createProblem(CreateProblemRequest $request, ?array $options = null): ?CreateProblemResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -86,20 +85,13 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return CreateProblemResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -123,11 +115,11 @@ class ProblemClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return UpdateProblemResponse
+     * @return ?UpdateProblemResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): UpdateProblemResponse
+    public function updateProblem(string $problemId, CreateProblemRequest $request, ?array $options = null): ?UpdateProblemResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -143,20 +135,13 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return UpdateProblemResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -198,16 +183,6 @@ class ProblemClient
             if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }
@@ -230,11 +205,11 @@ class ProblemClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return GetDefaultStarterFilesResponse
+     * @return ?GetDefaultStarterFilesResponse
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): GetDefaultStarterFilesResponse
+    public function getDefaultStarterFiles(GetDefaultStarterFilesRequest $request, ?array $options = null): ?GetDefaultStarterFilesResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -250,20 +225,13 @@ class ProblemClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return GetDefaultStarterFilesResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-            if ($response === null) {
-                throw new SeedException(message: $e->getMessage(), previous: $e);
-            }
-            throw new SeedApiException(
-                message: "API request failed",
-                statusCode: $response->getStatusCode(),
-                body: $response->getBody()->getContents(),
-            );
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

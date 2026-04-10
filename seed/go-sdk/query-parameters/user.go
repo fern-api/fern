@@ -13,7 +13,7 @@ import (
 
 var (
 	getUsersRequestFieldLimit            = big.NewInt(1 << 0)
-	getUsersRequestFieldId               = big.NewInt(1 << 1)
+	getUsersRequestFieldID               = big.NewInt(1 << 1)
 	getUsersRequestFieldDate             = big.NewInt(1 << 2)
 	getUsersRequestFieldDeadline         = big.NewInt(1 << 3)
 	getUsersRequestFieldBytes            = big.NewInt(1 << 4)
@@ -30,7 +30,7 @@ var (
 
 type GetUsersRequest struct {
 	Limit            int               `json:"-" url:"limit"`
-	Id               uuid.UUID         `json:"-" url:"id"`
+	ID               uuid.UUID         `json:"-" url:"id"`
 	Date             time.Time         `json:"-" url:"date" format:"date"`
 	Deadline         time.Time         `json:"-" url:"deadline"`
 	Bytes            []byte            `json:"-" url:"bytes"`
@@ -62,11 +62,11 @@ func (g *GetUsersRequest) SetLimit(limit int) {
 	g.require(getUsersRequestFieldLimit)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUsersRequest) SetId(id uuid.UUID) {
-	g.Id = id
-	g.require(getUsersRequestFieldId)
+func (g *GetUsersRequest) SetID(id uuid.UUID) {
+	g.ID = id
+	g.require(getUsersRequestFieldID)
 }
 
 // SetDate sets the Date field and marks it as non-optional;
@@ -184,6 +184,9 @@ func (n *NestedUser) GetUser() *User {
 }
 
 func (n *NestedUser) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -236,6 +239,9 @@ func (n *NestedUser) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NestedUser) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -278,6 +284,9 @@ func (u *User) GetTags() []string {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -330,6 +339,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

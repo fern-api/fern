@@ -1,6 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 
-import { GeneratorName } from "./GeneratorName";
+import { GeneratorName } from "./GeneratorName.js";
 
 export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.GeneratorInvocationSchema, "name">> = {
     [GeneratorName.JAVA]: {
@@ -71,9 +71,6 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
             path: "../sdks/python"
         }
     },
-    [GeneratorName.GO_FIBER]: {
-        version: "0.23.5"
-    },
     [GeneratorName.GO_MODEL]: {
         version: "0.23.5"
     },
@@ -88,9 +85,6 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
                 path: "sdk"
             }
         }
-    },
-    [GeneratorName.RUBY_MODEL]: {
-        version: "0.0.8"
     },
     [GeneratorName.RUBY_SDK]: {
         version: "0.8.2",

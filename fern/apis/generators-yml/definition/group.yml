@@ -1,8 +1,10 @@
 imports:
+  automation: ./automation.yml
   reviewers: ./reviewers.yml
   generators: ./generators.yml
   license: ./license.yml
   auth: ./fernDefinition/auth.yml
+  service: ./fernDefinition/service.yml
 
 types:
   GeneratorGroupSchema:
@@ -15,10 +17,24 @@ types:
         type: optional<generators.OutputMetadataSchema>
       reviewers:
         type: optional<reviewers.ReviewersSchema>
+      automation:
+        type: optional<automation.AutomationSchema>
+        docs: |
+          Controls which automation features are enabled for this group.
+          Overrides root-level automation settings.
+          Can be further overridden at the generator level.
 
   GeneratorInvocationSchema:
+    discriminated: false
+    docs: |
+      A generator invocation. Either uses a well-known generator `name` (default)
+      or specifies a custom `image` with an optional container registry.
+    union:
+      - DefaultGeneratorInvocationSchema
+      - CustomGeneratorInvocationSchema
+
+  BaseGeneratorInvocationSchema:
     properties:
-      name: string
       version: string
       output: optional<GeneratorOutputSchema>
       github: optional<GithubConfigurationSchema>
@@ -50,6 +66,32 @@ types:
         docs: |
           If true, automatically release this SDK when changes are detected.
           Overrides the top-level autorelease setting if specified.
+      automation:
+        type: optional<automation.AutomationSchema>
+        docs: |
+          Controls which automation features are enabled for this generator.
+          Overrides group-level and root-level automation settings.
+
+  DefaultGeneratorInvocationSchema:
+    extends: BaseGeneratorInvocationSchema
+    docs: |
+      A generator invocation that uses a well-known generator name
+      (e.g., `fernapi/fern-typescript-sdk`) and pulls from Docker Hub.
+    properties:
+      name:
+        type: string
+        docs: The generator name (e.g., `fernapi/fern-typescript-sdk`).
+
+  CustomGeneratorInvocationSchema:
+    extends: BaseGeneratorInvocationSchema
+    docs: |
+      A generator invocation that specifies a custom Docker image,
+      optionally from a custom container registry.
+    properties:
+      image:
+        type: generators.GeneratorImageObjectSchema
+        docs: |
+          The Docker image to use for this generator, with an optional custom container registry.
 
   GeneratorAPISettingsSchema:
     docs: |
@@ -58,6 +100,12 @@ types:
     properties:
       auth: optional<auth.ApiAuthSchema>
       auth-schemes: optional<map<string, auth.AuthSchemeDeclarationSchema>>
+      headers:
+        type: optional<map<string, service.HttpHeaderSchema>>
+        docs: |
+          Override or extend the global headers for this generator.
+          When provided, these headers are merged with the top-level api.headers configuration,
+          with per-generator headers taking precedence for same-key headers.
       settings: optional<generators.APIConfigurationV2SettingsSchema>
       specs:
         type: optional<generators.APIConfigurationV2SpecsSchema>

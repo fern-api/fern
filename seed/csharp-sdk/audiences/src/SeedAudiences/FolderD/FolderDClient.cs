@@ -4,7 +4,7 @@ namespace SeedAudiences.FolderD;
 
 public partial class FolderDClient : IFolderDClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FolderDClient(RawClient client)
     {

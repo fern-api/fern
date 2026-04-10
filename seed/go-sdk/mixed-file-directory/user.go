@@ -36,13 +36,13 @@ func (l *ListUsersRequest) SetLimit(limit *int) {
 }
 
 var (
-	userFieldId   = big.NewInt(1 << 0)
+	userFieldID   = big.NewInt(1 << 0)
 	userFieldName = big.NewInt(1 << 1)
 	userFieldAge  = big.NewInt(1 << 2)
 )
 
 type User struct {
-	Id   Id     `json:"id" url:"id"`
+	ID   ID     `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 	Age  int    `json:"age" url:"age"`
 
@@ -53,11 +53,11 @@ type User struct {
 	rawJSON         json.RawMessage
 }
 
-func (u *User) GetId() Id {
+func (u *User) GetID() ID {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetName() string {
@@ -75,6 +75,9 @@ func (u *User) GetAge() int {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -85,11 +88,11 @@ func (u *User) require(field *big.Int) {
 	u.explicitFields.Or(u.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetId(id Id) {
-	u.Id = id
-	u.require(userFieldId)
+func (u *User) SetID(id ID) {
+	u.ID = id
+	u.require(userFieldID)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -134,6 +137,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

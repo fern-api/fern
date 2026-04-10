@@ -1,6 +1,6 @@
 import { swift } from "@fern-api/swift-codegen";
-import { LiteralEnumGenerator } from "../../literal";
-import { StructGenerator } from "./StructGenerator";
+import { LiteralEnumGenerator } from "../../literal/index.js";
+import { StructGenerator } from "./StructGenerator.js";
 
 export function generateStringLiteralEnums(generatorArgs: StructGenerator.Args): swift.EnumWithRawValues[] {
     const { symbol, context } = generatorArgs;

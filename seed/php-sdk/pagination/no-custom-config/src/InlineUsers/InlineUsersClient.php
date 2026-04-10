@@ -2,7 +2,7 @@
 
 namespace Seed\InlineUsers;
 
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class InlineUsersClient

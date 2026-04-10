@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 
-import { MintJsonSchema } from "./mintlify";
+import { MintJsonSchema } from "./mintlify.js";
 
 export function convertColors(colors: MintJsonSchema["colors"]): docsYml.RawSchemas.ColorsConfiguration {
     return {

@@ -4,6 +4,7 @@ package fileuploadexample
 
 import (
 	context "context"
+
 	fern "github.com/file-upload-openapi/fern"
 	core "github.com/file-upload-openapi/fern/core"
 	internal "github.com/file-upload-openapi/fern/internal"
@@ -37,7 +38,7 @@ func (c *Client) UploadFile(
 	ctx context.Context,
 	request *fern.UploadFileRequest,
 	opts ...option.RequestOption,
-) (fern.FileId, error) {
+) (fern.FileID, error) {
 	response, err := c.WithRawResponse.UploadFile(
 		ctx,
 		request,

@@ -56,6 +56,9 @@ func (p *Package) GetName() string {
 }
 
 func (p *Package) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -101,6 +104,9 @@ func (p *Package) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Package) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value
@@ -143,6 +149,9 @@ func (r *Record) GetField3D() int {
 }
 
 func (r *Record) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -195,6 +204,9 @@ func (r *Record) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Record) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value

@@ -7,6 +7,7 @@ export interface WebsocketChannel extends FernOpenapiIr.WithDescription, FernOpe
     path: string;
     groupName: FernOpenapiIr.SdkGroupName;
     summary: string | undefined;
+    connectMethodName: string | undefined;
     handshake: FernOpenapiIr.WebsocketHandshake;
     messages: FernOpenapiIr.WebsocketMessageSchema[];
     servers: FernOpenapiIr.WebsocketServer[];

@@ -1,4 +1,549 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.34.3
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant matching in dynamic snippets selecting
+        incorrect variants when errors are added during conversion. The matcher
+        now checks whether errors were added (via `errors.size() > errorsBefore`)
+        alongside the existing `isNop` check, preventing empty objects from being
+        returned for union fields like `options` in generated code snippets.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 1.34.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet NPM package bundle pulling in Node-only `form-data`
+        dependency via a runtime import of `FernGeneratorExec.OutputMode.github()`.
+        The output mode is now constructed as a plain object literal with a
+        type-only import, preventing `Dynamic require of "fs" is not supported`
+        errors in browser/ESM environments.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 1.34.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet import paths receiving a spurious `/v` suffix when
+        the SDK version is empty or invalid (e.g. `""`). The major-version
+        parser now returns `undefined` for empty and bare-`v` version strings
+        instead of producing an erroneous `v` suffix.
+      type: fix
+    - summary: |
+        Fix dynamic snippet import path resolution to use Go publish info from
+        the dynamic IR's generatorConfig directly, rather than depending solely
+        on the externally-constructed FernGeneratorExec config. This ensures
+        the correct repoUrl and version are used for import paths even when the
+        external config conversion layer does not populate them correctly,
+        eliminating the spurious `/v` suffix in generated Go snippet imports.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 1.34.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
+- version: 1.33.4
+  changelogEntry:
+    - summary: |
+        Fix wire test client construction to include auth options (e.g.
+        WithToken) when the endpoint requires authentication, so that
+        requests match WireMock stub header matchers.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 61
+
+- version: 1.33.3
+  changelogEntry:
+    - summary: |
+        Fix nil pointer dereference panic when optional file fields are not
+        provided in multipart form-data requests. The generated code now wraps
+        `WriteFile` calls for optional binary fields in a nil guard, matching
+        the existing behavior for optional non-file body properties. Required
+        file fields remain unconditional.
+      type: fix
+  createdAt: "2026-04-07"
+  irVersion: 61
+
+- version: 1.33.2
+  changelogEntry:
+    - summary: |
+        Fix custom pager interface to use `*int` instead of `*float64` for
+        `GetLimit()` and `GetCount()` return types. These fields represent
+        integer pagination values (page size and total count) and should match
+        the `*int` getters generated on concrete response types when the spec
+        defines them as `type: integer`.
+      type: fix
+  createdAt: "2026-04-06"
+  irVersion: 61
+
+- version: 1.33.1
+  changelogEntry:
+    - summary: |
+        Fix `module.imports` to merge with bundled default dependencies instead
+        of replacing them. Previously, specifying any custom module imports would
+        discard all default dependencies (uuid, testify, yaml). Now user-specified
+        versions correctly override individual bundled defaults while preserving
+        the rest, matching the v2 generator behavior.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 61
+- version: 1.33.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 1 retry
+        (2 total attempts) when not specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 61
+- version: 1.32.2
+  changelogEntry:
+    - summary: |
+        Fix doubled major version suffix in import paths when module.path
+        already contains a /vN suffix and packagePath is configured. The
+        /vN suffix is now applied to the module path before appending the
+        packagePath, preventing paths like github.com/owner/repo/v2/pkg/v2.
+      type: fix
+  createdAt: "2026-04-01"
+  irVersion: 61
+- version: 1.32.1
+  changelogEntry:
+    - summary: |
+        Include internal in reserved words so that top level packages named internal
+        are not attempted to be exported which violates go's rules.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 61
+
+- version: 1.32.0-rc1
+  changelogEntry:
+    - summary: |
+        Fix SSE event discriminator injection skipping when the discriminator key
+        exists in a nested object. Previously, `injectDiscriminator` used a naive
+        substring check that matched the key at any nesting depth, causing
+        deserialization failures for payloads like
+        `{"event":{"type":"user.created"}}` where `"type"` only appears nested.
+        The check now only considers top-level JSON keys.
+      type: fix
+  createdAt: "2026-03-31"
+  irVersion: 61
+
+- version: 1.32.0-rc0
+  changelogEntry:
+    - summary: |
+        Add context cancellation support to streams. `NewStream` now accepts a
+        `context.Context` so that blocking `Recv()` calls unblock when the context
+        is cancelled or times out.
+      type: feat
+    - summary: |
+        Add `RecvEvent()` and `RecvEventRaw()` methods that return SSE metadata
+        (id, event type, retry) alongside the data payload. Also add `LastEventID()`
+        for tracking the most recent event ID across reconnections.
+      type: feat
+    - summary: |
+        Fix SSE comment lines (`: heartbeat`) crashing the stream. Comment-only
+        events are now silently skipped per the WHATWG SSE specification.
+      type: fix
+    - summary: |
+        Fix SSE streams to handle all spec-compliant line endings (LF, CR, CRLF).
+        Previously only LF was supported, causing parse failures with servers that
+        use Windows-style or bare CR line endings.
+      type: fix
+    - summary: |
+        Fix SSE `id:` and `retry:` fields being parsed but discarded. The `id:`
+        field now persists across events per spec, and `retry:` is parsed as an
+        integer milliseconds value.
+      type: fix
+    - summary: |
+        Ship `core/stream_test.go` into generated SDKs so that streaming logic
+        is verified by user CI alongside the rest of the SDK.
+      type: feat
+  createdAt: "2026-03-30"
+  irVersion: 61
+
+- version: 1.31.5
+  changelogEntry:
+    - summary: |
+        Pretty-print generated wiremock-mappings.json with 2-space indentation
+        to reduce diff sizes on subsequent SDK generations.
+      type: chore
+  createdAt: "2026-03-27"
+  irVersion: 61
+
+- version: 1.31.4
+  changelogEntry:
+    - summary: |
+        Fix sub-package ErrorCodes maps being empty when errors are declared in a
+        different namespace than the endpoints that reference them. The generator now
+        groups errors by the service namespace that uses them (via endpoint error
+        references) instead of by where they are declared. This ensures that
+        sub-packages like `audio/` correctly get populated ErrorCodes with typed
+        errors (e.g. BadRequestError, UnauthorizedError) instead of an empty map
+        that would cause API errors to be returned as generic `*core.APIError`.
+      type: fix
+  createdAt: "2026-03-26"
+  irVersion: 61
+
+- version: 1.31.3
+  changelogEntry:
+    - summary: |
+        Fix inferred auth wire test generation for endpoints that require a request
+        parameter. The generator now correctly passes an empty request struct when the
+        test endpoint has query parameters, headers, or a request body.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 61
+
+- version: 1.31.2
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 61
+- version: 1.31.1
+  changelogEntry:
+    - summary: |
+        Sort generated Go imports following goimports conventions. Standard library
+        imports are now grouped separately from third-party imports with a blank line
+        separator between them, matching the canonical Go import style.
+      type: fix
+  createdAt: "2026-03-24"
+  irVersion: 61
+
+- version: 1.31.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred auth. When an API definition includes an inferred auth
+        scheme, the generated Go SDK will automatically fetch tokens from the designated
+        token endpoint and inject `Authorization: Bearer <token>` headers on all
+        authenticated requests. Tokens are cached with automatic refresh based on
+        `expires_in` from the token response (defaults to 1 hour when omitted).
+
+        The generator produces `WithXxx()` client options for each credential parameter
+        defined on the token endpoint (e.g., `WithClientId`, `WithClientSecret`,
+        `WithXApiKey`), environment variable fallbacks when configured, and a
+        `core/token_provider.go` with thread-safe caching.
+
+        To use inferred auth, define an inferred auth scheme in your Fern API definition:
+
+        ```yaml
+        auth:
+          scheme: inferred
+          token-endpoint:
+            endpoint: auth.getToken
+            response-properties:
+              access-token: access_token
+              expires-in: expires_in
+        ```
+
+        Wire tests are also generated when `enableWireTests: true` is set in
+        custom config, validating automatic token fetch, caching, and custom
+        header passthrough.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.30.3
+  changelogEntry:
+    - summary: |
+        Use `any` instead of `interface{}` for unknown type schemas. Since Go 1.18+,
+        `any` is the idiomatic alias for `interface{}`. This is a purely cosmetic
+        modernization with no behavioral change.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 61
+
+- version: 1.30.2
+  changelogEntry:
+    - summary: |
+        Fix Basic Auth header not being sent when the username is an empty string.
+        Per RFC 7617, an empty user-id is valid in Basic Auth (e.g., `:password`).
+        The condition in `ToHeader()` now uses `||` instead of `&&`, so the
+        Authorization header is set whenever either the username or password is
+        non-empty.
+      type: fix
+  createdAt: "2026-03-16"
+  irVersion: 61
+
+- version: 1.30.1
+  changelogEntry:
+    - summary: |
+        Fix non-deterministic ordering in generated requests.go and requests_test.go.
+        Go maps randomize iteration order, causing type ordering to vary across runs
+        when exportAllRequestsAtRoot is enabled. Map keys are now sorted before
+        iteration to ensure deterministic output.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 61
+
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Add `omitFernHeaders` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, User-Agent) are omitted
+        from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 61
+- version: 1.29.3
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.29.2
+  changelogEntry:
+    - summary: |
+        Fix datetime query parameter serialization to always include milliseconds.
+        The `valueString` function in `internal/query.go` now formats `time.Time`
+        values with `"2006-01-02T15:04:05.000Z07:00"` instead of `time.RFC3339`,
+        ensuring the Go SDK sends timestamps with millisecond precision (e.g.,
+        `2024-07-01T15:30:00.000Z`) that match the WireMock stub mappings.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.29.1
+  changelogEntry:
+    - summary: |
+        Remove redundant `req.WithContext(ctx)` call in the generated HTTP caller.
+        `http.NewRequestWithContext` already sets the context on the request, so
+        the subsequent `req.WithContext(ctx)` was creating an unnecessary shallow
+        copy of the request with the same context.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.29.0
+  changelogEntry:
+    - summary: |
+        Bump the default streaming buffer size from 64KB to 1MB and add a new
+        `WithMaxStreamBufSize` request option so SDK users can configure the
+        maximum buffer size for streaming responses at runtime. This controls
+        the maximum size of a single SSE event (in bytes) that the stream can
+        process. Also fixes a bug where `SseStreamReader` would return a
+        misleading `io.EOF` error instead of the underlying `bufio.ErrTooLong`
+        when a message exceeded the buffer limit.
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.28.7
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.28.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+- version: 1.28.5
+  changelogEntry:
+    - summary: |
+        Improve error logging for reference.md generation failures. The generator
+        now logs the actual error message and stack trace instead of a generic
+        "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 61
+
+- version: 1.28.4
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 61
+
+- version: 1.28.3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation crash for endpoints with bytes request bodies.
+        The wire test generator now skips bytes endpoints, consistent with the
+        wiremock mapping generation which also excludes them. Previously, the
+        generator would throw "No wiremock mapping found" when an API contained
+        file upload endpoints using `application/octet-stream`.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 61
+
+- version: 1.28.2
+  changelogEntry:
+    - summary: |
+        Upgrade generated CI workflow to use `golangci/golangci-lint-action@v9`
+        (from `@v6`) for proper compatibility with golangci-lint v2.x.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 61
+
+- version: 1.28.1
+  changelogEntry:
+    - summary: |
+        Resolve datetime aliases in marshal/unmarshal code generation. Fields typed as
+        aliases of `datetime` or `date` (e.g. `DatetimeAlias: type: datetime`) now
+        correctly use the custom `internal.DateTime` / `internal.Date` serialization
+        helpers instead of falling back to default `time.Time` JSON handling. Also
+        relaxes `DateTime.UnmarshalJSON` to accept ISO 8601 timestamps without a
+        timezone suffix (e.g. `2024-01-15T09:30:00`), falling back from RFC 3339
+        when the timezone is absent.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 61
+
+- version: 1.28.0
+  changelogEntry:
+    - summary: |
+        Improve DateTime deserialization to handle multiple timestamp formats instead of
+        only strict RFC3339. The UnmarshalJSON method now tries RFC3339Nano first (which
+        is a superset of RFC3339 and supports fractional seconds), then falls back to
+        ISO 8601 without timezone (assuming UTC), then date-only format, and finally
+        Unix epoch seconds (integer). This matches the flexibility of other Fern SDK
+        generators (Java, Python, TypeScript, C#) and prevents deserialization failures
+        when APIs return timestamps in slightly different ISO 8601 variants.
+      type: feat
+  createdAt: "2026-03-04"
+  irVersion: 61
+
+- version: 1.27.0
+  changelogEntry:
+    - summary: |
+        Add golangci-lint to seed tests for generated Go SDK code; adjust various
+        internal files to comply with golangci-lint. (The upshot of this is that
+        `golangci-lint run` should now pass for any Fern-generated Go SDKs.)
+      type: feat
+  createdAt: "2026-03-04"
+  irVersion: 61
+
+- version: 1.26.1
+  changelogEntry:
+    - summary: |
+        Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
+        (e.g., `http://localhost:8080`) instead of `WIREMOCK_PORT`. The CI workflow now
+        sets `WIREMOCK_URL` after discovering the dynamically assigned port. Falls back
+        to `http://localhost:8080` if the variable is not set.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 61
+
+- version: 1.26.0
+  changelogEntry:
+    - summary: |
+        Fix backslash escaping in Go string literals. When example data contains backslashes
+        (e.g., `\$ref` in JSON schema references), the generator now correctly outputs `\\`
+        in double-quoted Go strings instead of producing invalid escape sequences.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 61
+
+- version: 1.25.0-rc4
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 61
+- version: 1.25.0-rc3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet and wire test generation for endpoints with bytes body and path
+        parameters. Previously, the generator produced `nil` for the `io.Reader` body argument
+        instead of a valid `bytes.NewReader([]byte(...))` call, causing wire test failures.
+        Also fixed the nop request branch to include option arguments (e.g. test ID headers)
+        in the method invocation, fixed path parameter resolution to use
+        associateByWireValueOrDefault so missing path parameter values are synthesized, and
+        fixed WireMock stub response generation to return an empty JSON object `{}` instead
+        of a JSON string `""` when the example response body is null but the endpoint declares
+        a named (struct) response type.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 61
+
+- version: 1.25.0-rc2
+  changelogEntry:
+    - summary: |
+        Fix literal property doc comments leaking into the next field's comments in generated
+        Go structs. When a property has a literal type (e.g. stream boolean) and is excluded
+        from the struct, its documentation was still being written, causing it to appear as
+        part of the next field's comments.
+      type: fix
+  createdAt: "2026-02-19"
+  irVersion: 61
+
+- version: 1.25.0-rc1
+  changelogEntry:
+    - summary: |
+        Fix non-deterministic ordering of generated test functions. The test generation
+        for JSON marshaling, String methods, enum validation, and extra properties tests
+        now sorts type names before iterating, ensuring consistent output across runs.
+      type: fix
+  createdAt: "2026-02-16"
+  irVersion: 61
+
+- version: 1.25.0-rc0
+  changelogEntry:
+    - summary: |
+        Add automated test generation for all Go SDK types. The generator now creates test files
+        alongside generated code, covering getter and setter methods, JSON marshaling, String methods,
+        enum validation, extra properties, and pointer helper functions. Generated tests include
+        comprehensive scenarios for nil handling and edge cases. Also includes performance optimizations
+        for regex compilation, slice allocation, and improved API design with struct-based configuration.
+      type: feat
+  createdAt: "2026-02-14"
+  irVersion: 61
+
+- version: 1.24.0
+  changelogEntry:
+    - summary: |
+        Add support for protocol-level SSE discrimination via the new `discriminatorContext`
+        IR field. When a streaming endpoint returns a discriminated union with
+        `discriminatorContext: "protocol"`, the SSE `event:` field value is injected into
+        the JSON data payload as the discriminant key before unmarshaling, so the union's
+        existing `UnmarshalJSON` works unchanged. If the data already contains the
+        discriminant key, injection is skipped. Existing SSE endpoints using data-level
+        discrimination (the default) are unaffected.
+      type: feat
+  createdAt: "2026-02-13"
+  irVersion: 61
+
+- version: 1.23.8
+  changelogEntry:
+    - summary: |
+        Add `omitEmptyRequestWrappers` configuration flag to skip generating empty request structs
+        for endpoints where the SDK request wrapper has no user-facing fields. When enabled, endpoints
+        whose wrapper was created (e.g., due to service headers) but where all fields are handled
+        globally via RequestOptions will no longer produce an empty struct parameter in the method
+        signature. The flag defaults to false for backward compatibility.
+      type: feat
+  createdAt: "2026-02-13"
+  irVersion: 61
+
 - version: 1.23.7
   changelogEntry:
     - summary: |

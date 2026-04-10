@@ -5,6 +5,7 @@ package com.seed.fileUpload.resources.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -61,27 +62,27 @@ public final class JustFileWithQueryParamsRequest {
         return file;
     }
 
-    @JsonProperty("listOfStrings")
+    @JsonIgnore
     public List<String> getListOfStrings() {
         return listOfStrings;
     }
 
-    @JsonProperty("optionalListOfStrings")
+    @JsonIgnore
     public Optional<List<String>> getOptionalListOfStrings() {
         return optionalListOfStrings;
     }
 
-    @JsonProperty("maybeString")
+    @JsonIgnore
     public Optional<String> getMaybeString() {
         return maybeString;
     }
 
-    @JsonProperty("integer")
+    @JsonIgnore
     public int getInteger() {
         return integer;
     }
 
-    @JsonProperty("maybeInteger")
+    @JsonIgnore
     public Optional<Integer> getMaybeInteger() {
         return maybeInteger;
     }
@@ -138,6 +139,10 @@ public final class JustFileWithQueryParamsRequest {
 
     public interface _FinalStage {
         JustFileWithQueryParamsRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
 
         _FinalStage listOfStrings(List<String> listOfStrings);
 
@@ -291,6 +296,18 @@ public final class JustFileWithQueryParamsRequest {
                     integer,
                     maybeInteger,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

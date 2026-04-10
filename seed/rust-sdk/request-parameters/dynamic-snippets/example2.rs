@@ -10,11 +10,9 @@ async fn main() {
     client
         .user
         .create_username_optional(
-            &Some(Some(CreateUsernameBodyOptionalProperties {
-                username: None,
-                password: None,
-                name: None,
-            })),
+            &Some(CreateUsernameBodyOptionalProperties {
+                ..Default::default()
+            }),
             None,
         )
         .await;

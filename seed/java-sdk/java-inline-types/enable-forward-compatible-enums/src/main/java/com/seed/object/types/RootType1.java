@@ -166,6 +166,10 @@ public final class RootType1 {
     public interface _FinalStage {
         RootType1 build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>lorem ipsum</p>
          */
@@ -369,6 +373,18 @@ public final class RootType1 {
         public RootType1 build() {
             return new RootType1(foo, bar, fooMap, fooList, fooSet, ref, additionalProperties);
         }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
@@ -449,6 +465,10 @@ public final class RootType1 {
 
         public interface _FinalStage {
             FooMapValue build();
+
+            _FinalStage additionalProperty(String key, Object value);
+
+            _FinalStage additionalProperties(Map<String, Object> additionalProperties);
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -496,6 +516,18 @@ public final class RootType1 {
             @java.lang.Override
             public FooMapValue build() {
                 return new FooMapValue(foo, ref, additionalProperties);
+            }
+
+            @java.lang.Override
+            public Builder additionalProperty(String key, Object value) {
+                this.additionalProperties.put(key, value);
+                return this;
+            }
+
+            @java.lang.Override
+            public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                this.additionalProperties.putAll(additionalProperties);
+                return this;
             }
         }
     }
@@ -596,6 +628,10 @@ public final class RootType1 {
 
         public interface _FinalStage {
             Bar build();
+
+            _FinalStage additionalProperty(String key, Object value);
+
+            _FinalStage additionalProperties(Map<String, Object> additionalProperties);
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -658,6 +694,18 @@ public final class RootType1 {
             @java.lang.Override
             public Bar build() {
                 return new Bar(foo, bar, ref, additionalProperties);
+            }
+
+            @java.lang.Override
+            public Builder additionalProperty(String key, Object value) {
+                this.additionalProperties.put(key, value);
+                return this;
+            }
+
+            @java.lang.Override
+            public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                this.additionalProperties.putAll(additionalProperties);
+                return this;
             }
         }
 
@@ -783,6 +831,10 @@ public final class RootType1 {
 
             public interface _FinalStage {
                 Bar_ build();
+
+                _FinalStage additionalProperty(String key, Object value);
+
+                _FinalStage additionalProperties(Map<String, Object> additionalProperties);
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
@@ -860,6 +912,18 @@ public final class RootType1 {
                 @java.lang.Override
                 public Bar_ build() {
                     return new Bar_(foo, bar, myEnum, ref, additionalProperties);
+                }
+
+                @java.lang.Override
+                public Builder additionalProperty(String key, Object value) {
+                    this.additionalProperties.put(key, value);
+                    return this;
+                }
+
+                @java.lang.Override
+                public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                    this.additionalProperties.putAll(additionalProperties);
+                    return this;
                 }
             }
 
@@ -1038,6 +1102,10 @@ public final class RootType1 {
 
         public interface _FinalStage {
             FooListItem build();
+
+            _FinalStage additionalProperty(String key, Object value);
+
+            _FinalStage additionalProperties(Map<String, Object> additionalProperties);
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -1085,6 +1153,18 @@ public final class RootType1 {
             @java.lang.Override
             public FooListItem build() {
                 return new FooListItem(foo, ref, additionalProperties);
+            }
+
+            @java.lang.Override
+            public Builder additionalProperty(String key, Object value) {
+                this.additionalProperties.put(key, value);
+                return this;
+            }
+
+            @java.lang.Override
+            public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                this.additionalProperties.putAll(additionalProperties);
+                return this;
             }
         }
     }
@@ -1167,6 +1247,10 @@ public final class RootType1 {
 
         public interface _FinalStage {
             FooSetItem build();
+
+            _FinalStage additionalProperty(String key, Object value);
+
+            _FinalStage additionalProperties(Map<String, Object> additionalProperties);
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -1214,6 +1298,18 @@ public final class RootType1 {
             @java.lang.Override
             public FooSetItem build() {
                 return new FooSetItem(foo, ref, additionalProperties);
+            }
+
+            @java.lang.Override
+            public Builder additionalProperty(String key, Object value) {
+                this.additionalProperties.put(key, value);
+                return this;
+            }
+
+            @java.lang.Override
+            public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                this.additionalProperties.putAll(additionalProperties);
+                return this;
             }
         }
     }

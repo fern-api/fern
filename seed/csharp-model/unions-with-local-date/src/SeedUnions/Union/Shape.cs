@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -67,7 +67,7 @@ public record Shape
     public SeedUnions.Circle AsCircle() =>
         IsCircle
             ? (SeedUnions.Circle)Value!
-            : throw new System.Exception("Shape.Type is not 'circle'");
+            : throw new global::System.Exception("Shape.Type is not 'circle'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedUnions.Square"/> if <see cref="Type"/> is 'square', otherwise throws an exception.
@@ -76,7 +76,7 @@ public record Shape
     public SeedUnions.Square AsSquare() =>
         IsSquare
             ? (SeedUnions.Square)Value!
-            : throw new System.Exception("Shape.Type is not 'square'");
+            : throw new global::System.Exception("Shape.Type is not 'square'");
 
     public T Match<T>(
         Func<SeedUnions.Circle, T> onCircle,
@@ -155,12 +155,12 @@ public record Shape
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Shape>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Shape).IsAssignableFrom(typeToConvert);
 
         public override Shape Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -185,11 +185,17 @@ public record Shape
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "circle" => json.Deserialize<SeedUnions.Circle?>(options)
+                "circle" => jsonWithoutDiscriminator.Deserialize<SeedUnions.Circle?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Circle"),
-                "square" => json.Deserialize<SeedUnions.Square?>(options)
+                "square" => jsonWithoutDiscriminator.Deserialize<SeedUnions.Square?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Square"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -221,6 +227,27 @@ public record Shape
                 json[property.Key] = property.Value;
             }
             json.WriteTo(writer, options);
+        }
+
+        public override Shape ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new Shape(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            Shape value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

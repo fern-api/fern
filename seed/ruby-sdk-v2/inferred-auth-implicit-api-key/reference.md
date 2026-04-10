@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.auth.get_token(api_key: 'api_key');
+client.auth.get_token(api_key: "api_key")
 ```
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.auth.get_token(api_key: 'api_key');
 </dl>
 </details>
 
-## NestedNoAuth Api
+## NestedNoAuth API
 <details><summary><code>client.nested_no_auth.api.<a href="/lib/seed/nested_no_auth/api/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
@@ -62,7 +62,7 @@ client.auth.get_token(api_key: 'api_key');
 <dd>
 
 ```ruby
-client.nested_no_auth.api.get_something();
+client.nested_no_auth.api.get_something
 ```
 </dd>
 </dl>
@@ -77,7 +77,7 @@ client.nested_no_auth.api.get_something();
 <dl>
 <dd>
 
-**request_options:** `Seed::NestedNoAuth::Api::RequestOptions` 
+**request_options:** `Seed::NestedNoAuth::API::RequestOptions` 
     
 </dd>
 </dl>
@@ -89,7 +89,7 @@ client.nested_no_auth.api.get_something();
 </dl>
 </details>
 
-## Nested Api
+## Nested API
 <details><summary><code>client.nested.api.<a href="/lib/seed/nested/api/client.rb">get_something</a>() -> </code></summary>
 <dl>
 <dd>
@@ -103,7 +103,7 @@ client.nested_no_auth.api.get_something();
 <dd>
 
 ```ruby
-client.nested.api.get_something();
+client.nested.api.get_something
 ```
 </dd>
 </dl>
@@ -118,7 +118,7 @@ client.nested.api.get_something();
 <dl>
 <dd>
 
-**request_options:** `Seed::Nested::Api::RequestOptions` 
+**request_options:** `Seed::Nested::API::RequestOptions` 
     
 </dd>
 </dl>
@@ -144,7 +144,7 @@ client.nested.api.get_something();
 <dd>
 
 ```ruby
-client.simple.get_something();
+client.simple.get_something
 ```
 </dd>
 </dl>
@@ -170,3 +170,4 @@ client.simple.get_something();
 </dd>
 </dl>
 </details>
+

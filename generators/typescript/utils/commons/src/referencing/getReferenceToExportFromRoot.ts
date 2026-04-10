@@ -1,13 +1,13 @@
 import { SourceFile, ts } from "ts-morph";
 
-import { ExportedDirectory, ExportedFilePath, ExportsManager, NamedExport } from "../exports-manager";
-import { ImportsManager } from "../imports-manager/ImportsManager";
-import { getDirectReferenceToExport } from "./getDirectReferenceToExport";
-import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
-import { getExpressionToDirectory } from "./getExpressionToDirectory";
-import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
-import { ModuleSpecifier } from "./ModuleSpecifier";
-import { GetReferenceOpts, Reference } from "./Reference";
+import { ExportedDirectory, ExportedFilePath, ExportsManager, NamedExport } from "../exports-manager/index.js";
+import { ImportsManager } from "../imports-manager/ImportsManager.js";
+import { getDirectReferenceToExport } from "./getDirectReferenceToExport.js";
+import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory.js";
+import { getExpressionToDirectory } from "./getExpressionToDirectory.js";
+import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo.js";
+import { ModuleSpecifier } from "./ModuleSpecifier.js";
+import { GetReferenceOpts, Reference } from "./Reference.js";
 
 const DEFAULT_SRC_DIRECTORY = "src";
 

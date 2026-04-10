@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
-client.package.test(for_: 'for');
+client.package.test(for_: "for")
 ```
 
 ## Environments

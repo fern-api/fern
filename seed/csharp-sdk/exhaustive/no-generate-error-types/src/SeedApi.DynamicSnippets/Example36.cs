@@ -1,5 +1,5 @@
 using SeedExhaustive;
-using System.Globalization;
+using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -13,8 +13,17 @@ public class Example36
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
-            DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal)
+        await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
+            new GetWithMultipleQuery {
+                Query = new List<string>(){
+                    "query",
+                }
+                ,
+                Number = new List<int>(){
+                    1,
+                }
+
+            }
         );
     }
 

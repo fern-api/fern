@@ -4,6 +4,7 @@ package service
 
 import (
 	context "context"
+
 	fern "github.com/mixed-case/fern"
 	core "github.com/mixed-case/fern/core"
 	internal "github.com/mixed-case/fern/internal"
@@ -34,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetResource(
 	ctx context.Context,
-	resourceId string,
+	resourceID string,
 	opts ...option.RequestOption,
 ) (*fern.Resource, error) {
 	response, err := c.WithRawResponse.GetResource(
 		ctx,
-		resourceId,
+		resourceID,
 		opts...,
 	)
 	if err != nil {

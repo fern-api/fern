@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Endpoints;
 
@@ -74,6 +75,34 @@ public partial interface IParamsClient
     /// </summary>
     WithRawResponseTask<string> ModifyWithInlinePathAsync(
         ModifyResourceAtInlinedPath request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// POST bytes with path param returning object
+    /// </summary>
+    WithRawResponseTask<ObjectWithRequiredField> UploadWithPathAsync(
+        string param,
+        Stream request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// GET with boolean path param
+    /// </summary>
+    WithRawResponseTask<string> GetWithBooleanPathAsync(
+        bool param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    );
+
+    /// <summary>
+    /// GET with path param that can throw errors
+    /// </summary>
+    WithRawResponseTask<string> GetWithPathAndErrorsAsync(
+        string param,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     );

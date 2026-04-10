@@ -3,15 +3,15 @@ import { ValidationViolation, validateFernWorkspace } from "@fern-api/fern-defin
 import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { validateOSSWorkspace } from "@fern-api/oss-validator";
-import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter";
-import type { Context } from "../../context/Context";
-import { Task } from "../../ui/Task";
-import { LegacyApiSpecAdapter } from "../adapter/LegacyApiSpecAdapter";
-import type { ApiDefinition } from "../config/ApiDefinition";
-import type { ApiSpec } from "../config/ApiSpec";
-import { isConjureSpec } from "../config/ConjureSpec";
-import type { FernSpec } from "../config/FernSpec";
-import { isFernSpec } from "../config/FernSpec";
+import { TaskContextAdapter } from "../../context/adapter/TaskContextAdapter.js";
+import type { Context } from "../../context/Context.js";
+import { Task } from "../../ui/Task.js";
+import { LegacyApiSpecAdapter } from "../adapter/LegacyApiSpecAdapter.js";
+import type { ApiDefinition } from "../config/ApiDefinition.js";
+import type { ApiSpec } from "../config/ApiSpec.js";
+import { isConjureSpec } from "../config/ConjureSpec.js";
+import type { FernSpec } from "../config/FernSpec.js";
+import { isFernSpec } from "../config/FernSpec.js";
 
 /**
  * Validates ApiDefinitions before generation.

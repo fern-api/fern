@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;
+import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersBodyOffsetPaginationRequest;
+import com.seed.pagination.resources.inlineusers.inlineusers.types.WithPage;
 
 public class Example6 {
     public static void main(String[] args) {
@@ -12,7 +13,8 @@ public class Example6 {
 
         client.inlineUsers()
                 .inlineUsers()
-                .listWithMixedTypeCursorPagination(
-                        ListUsersMixedTypeCursorPaginationRequest.builder().build());
+                .listWithBodyOffsetPagination(ListUsersBodyOffsetPaginationRequest.builder()
+                        .pagination(WithPage.builder().page(1).build())
+                        .build());
     }
 }

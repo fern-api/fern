@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath } from "@fern-typescript/commons";
-import { GeneratedFile, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedFile } from "@fern-typescript/contexts";
 
 import {
     AnyAuthProviderGenerator,
@@ -12,19 +12,19 @@ import {
     InferredAuthProviderGenerator,
     OAuthAuthProviderGenerator,
     RoutingAuthProviderGenerator
-} from "./auth-provider";
+} from "./auth-provider/index.js";
 
 export declare namespace AuthProvidersGenerator {
     export interface Init {
-        ir: IntermediateRepresentation;
-        authScheme: AuthScheme | { type: "any" } | { type: "routing" };
+        ir: FernIr.IntermediateRepresentation;
+        authScheme: FernIr.AuthScheme | { type: "any" } | { type: "routing" };
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
         shouldUseWrapper: boolean;
     }
 }
 
-export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
+export class AuthProvidersGenerator implements GeneratedFile<FileContext> {
     private readonly authProviderGenerator: AuthProviderGenerator | undefined;
     constructor({
         ir,
@@ -92,7 +92,7 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
         return this.authProviderGenerator !== undefined;
     }
 
-    public writeToFile(context: SdkContext) {
+    public writeToFile(context: FileContext) {
         if (!this.shouldWriteFile()) {
             return;
         }

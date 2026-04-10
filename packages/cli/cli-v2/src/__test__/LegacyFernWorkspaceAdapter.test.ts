@@ -1,16 +1,16 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { join } from "path";
 import { describe, expect, it } from "vitest";
-import { LegacyFernWorkspaceAdapter } from "../api/adapter/LegacyFernWorkspaceAdapter";
-import type { ApiDefinition } from "../api/config/ApiDefinition";
-import { isConjureSpec } from "../api/config/ConjureSpec";
-import { isFernSpec } from "../api/config/FernSpec";
-import type { OpenApiSpec } from "../api/config/OpenApiSpec";
-import { isOpenApiSpec } from "../api/config/OpenApiSpec";
-import { FIXTURES_DIR } from "./utils/constants";
-import { createMockTask } from "./utils/createMockTask";
-import { createTestContext } from "./utils/createTestContext";
-import { loadApiDefinition } from "./utils/loadApiDefinition";
+import { LegacyFernWorkspaceAdapter } from "../api/adapter/LegacyFernWorkspaceAdapter.js";
+import type { ApiDefinition } from "../api/config/ApiDefinition.js";
+import { isConjureSpec } from "../api/config/ConjureSpec.js";
+import { isFernSpec } from "../api/config/FernSpec.js";
+import type { OpenApiSpec } from "../api/config/OpenApiSpec.js";
+import { isOpenApiSpec } from "../api/config/OpenApiSpec.js";
+import { FIXTURES_DIR } from "./utils/constants.js";
+import { createMockTask } from "./utils/createMockTask.js";
+import { createTestContext } from "./utils/createTestContext.js";
+import { loadApiDefinition } from "./utils/loadApiDefinition.js";
 
 describe("LegacyFernWorkspaceAdapter", () => {
     describe("Fern Definition Support", () => {

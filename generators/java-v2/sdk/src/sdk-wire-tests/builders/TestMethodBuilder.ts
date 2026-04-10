@@ -1,14 +1,13 @@
-import { java } from "@fern-api/java-ast";
-import { Writer } from "@fern-api/java-ast/src/ast";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { SnippetExtractor } from "../extractors/SnippetExtractor";
-import { WireTestExample } from "../extractors/TestDataExtractor";
-import { TestResourceWriter } from "../resources/TestResourceWriter";
-import { HeaderValidator } from "../validators/HeaderValidator";
-import { JsonValidator } from "../validators/JsonValidator";
-import { PaginationValidator } from "../validators/PaginationValidator";
-import { TestClassBuilder } from "./TestClassBuilder";
+import { java, Writer } from "@fern-api/java-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { SnippetExtractor } from "../extractors/SnippetExtractor.js";
+import { WireTestExample } from "../extractors/TestDataExtractor.js";
+import { TestResourceWriter } from "../resources/TestResourceWriter.js";
+import { HeaderValidator } from "../validators/HeaderValidator.js";
+import { JsonValidator } from "../validators/JsonValidator.js";
+import { PaginationValidator } from "../validators/PaginationValidator.js";
+import { TestClassBuilder } from "./TestClassBuilder.js";
 
 /**
  * Builder for generating individual test methods in wire tests.
@@ -48,12 +47,12 @@ export class TestMethodBuilder {
      * Creates a test method for an endpoint with mock setup and validation.
      */
     public createTestMethod(
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         snippet: string,
         testExample: WireTestExample
     ): (writer: Writer) => void {
         return (writer) => {
-            const testMethodName = `test${this.toJavaMethodName(endpoint.name.pascalCase.safeName)}`;
+            const testMethodName = `test${this.toJavaMethodName(this.context.caseConverter.pascalSafe(endpoint.name))}`;
             const methodCall = this.snippetExtractor.extractMethodCall(snippet);
 
             // If we can't extract a method call, this endpoint should have been filtered out upstream
@@ -81,8 +80,16 @@ export class TestMethodBuilder {
             }
 
             const expectedRequestJson = testExample.request.body;
-            const expectedResponseJson = testExample.response.body;
+            const rawResponseJson = testExample.response.body;
             const responseStatusCode = testExample.response.statusCode;
+
+            // Convert RFC 2822 dates to ISO 8601 in the response JSON BEFORE using it for both
+            // the mock response body (served by MockWebServer) and the expected response assertion.
+            // Jackson's JavaTimeModule expects ISO 8601 for OffsetDateTime fields typed as "dateTime";
+            // RFC 2822 dates would cause DateTimeParseException during deserialization.
+            const expectedResponseJson = rawResponseJson
+                ? (this.convertRfc2822DatesToIso8601(rawResponseJson) as typeof rawResponseJson)
+                : rawResponseJson;
 
             const mockResponseBody = expectedResponseJson
                 ? JSON.stringify(expectedResponseJson)
@@ -159,7 +166,7 @@ export class TestMethodBuilder {
                     const formDataPairs: string[] = [];
                     if (typeof expectedRequestJson === "object" && expectedRequestJson !== null) {
                         for (const [key, value] of Object.entries(expectedRequestJson)) {
-                            formDataPairs.push(`${key}=${encodeURIComponent(String(value))}`);
+                            formDataPairs.push(`${key}=${this.formUrlEncode(value)}`);
                         }
                     }
                     const expectedFormData = formDataPairs.join("&");
@@ -213,7 +220,8 @@ export class TestMethodBuilder {
                 } else {
                     writer.writeLine("String actualResponseJson = objectMapper.writeValueAsString(response);");
 
-                    // Use the same resource file that was registered for mock setup, or inline for small payloads
+                    // RFC 2822 dates are already converted to ISO 8601 upfront (before mock response registration),
+                    // so the response resource file and expected response use the same normalized data.
                     if (responseResourcePath) {
                         writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
                         writer.writeLine(
@@ -252,7 +260,100 @@ export class TestMethodBuilder {
     /**
      * Checks if the endpoint uses application/x-www-form-urlencoded content type.
      */
-    private isFormUrlEncodedEndpoint(endpoint: HttpEndpoint): boolean {
+    /**
+     * Encodes a value for application/x-www-form-urlencoded format, matching Java's URLEncoder.encode() behavior.
+     * - Spaces are encoded as '+' (not '%20' like encodeURIComponent)
+     * - Arrays are serialized as '[val1, val2]' (matching Java's List.toString())
+     * - Objects are serialized as JSON strings
+     */
+    private formUrlEncode(value: unknown): string {
+        const stringValue = this.formValueToString(value);
+        // Match Java's URLEncoder.encode() behavior:
+        // - Spaces as '+' (encodeURIComponent uses %20)
+        // - '!', '~', "'", '(', ')' are encoded (encodeURIComponent leaves them unencoded)
+        return encodeURIComponent(stringValue)
+            .replace(/%20/g, "+")
+            .replace(/!/g, "%21")
+            .replace(/~/g, "%7E")
+            .replace(/'/g, "%27")
+            .replace(/\(/g, "%28")
+            .replace(/\)/g, "%29");
+    }
+
+    /**
+     * Converts a value to its string representation matching Java SDK serialization.
+     */
+    private formValueToString(value: unknown): string {
+        if (Array.isArray(value)) {
+            // Java's List.toString() produces "[val1, val2]"
+            return `[${value.join(", ")}]`;
+        }
+        if (typeof value === "object" && value !== null) {
+            // Java's Map.toString() produces "{key1=value1, key2=value2}"
+            const entries = Object.entries(value);
+            return `{${entries.map(([k, v]) => `${k}=${v}`).join(", ")}}`;
+        }
+        if (typeof value === "string") {
+            return this.normalizeIso8601ForJava(value);
+        }
+        return String(value);
+    }
+
+    /**
+     * Normalizes ISO 8601 date strings to match Java's OffsetDateTime.toString() output.
+     * Java drops zero seconds (e.g. "2015-07-30T20:00:00Z" → "2015-07-30T20:00Z").
+     */
+    private normalizeIso8601ForJava(value: string): string {
+        // Match ISO 8601 with zero seconds: "2015-07-30T20:00:00Z" or "2015-07-30T20:00:00+00:00"
+        return value.replace(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}):00(Z|[+-]\d{2}:\d{2})$/, "$1$2");
+    }
+
+    /**
+     * Recursively converts RFC 2822 date strings to ISO 8601 format with Z suffix
+     * in JSON data. This is needed because Jackson's JavaTimeModule serializes
+     * OffsetDateTime as ISO 8601 (e.g. "2015-07-30T20:00:00Z"), but the IR example
+     * data may contain RFC 2822 dates (e.g. "Thu, 30 Jul 2015 20:00:00 +0000").
+     */
+    private convertRfc2822DatesToIso8601(data: unknown): unknown {
+        if (typeof data === "string") {
+            return this.tryConvertRfc2822Date(data);
+        }
+        if (Array.isArray(data)) {
+            return data.map((item) => this.convertRfc2822DatesToIso8601(item));
+        }
+        if (typeof data === "object" && data !== null) {
+            const result: Record<string, unknown> = {};
+            for (const [key, value] of Object.entries(data)) {
+                result[key] = this.convertRfc2822DatesToIso8601(value);
+            }
+            return result;
+        }
+        return data;
+    }
+
+    /**
+     * Attempts to parse an RFC 2822 date string and convert it to ISO 8601 with Z suffix.
+     * Returns the original string if it's not an RFC 2822 date.
+     */
+    private tryConvertRfc2822Date(value: string): string {
+        // Match RFC 2822 date format: "Thu, 30 Jul 2015 20:00:00 +0000"
+        const rfc2822Pattern =
+            /^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{1,2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4}$/;
+        if (!rfc2822Pattern.test(value)) {
+            return value;
+        }
+        try {
+            const date = new Date(value);
+            if (isNaN(date.getTime())) {
+                return value;
+            }
+            return date.toISOString().replace(".000Z", "Z");
+        } catch {
+            return value;
+        }
+    }
+
+    private isFormUrlEncodedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         const requestBody = endpoint.requestBody;
         if (!requestBody) {
             return false;
@@ -286,7 +387,7 @@ export class TestMethodBuilder {
     /**
      * Generates a mock response body for endpoints without example data.
      */
-    private generateMockResponseForEndpoint(endpoint: HttpEndpoint): string {
+    private generateMockResponseForEndpoint(endpoint: FernIr.HttpEndpoint): string {
         const responseBody = endpoint.response?.body;
 
         if (!responseBody || responseBody.type !== "json") {
@@ -302,7 +403,7 @@ export class TestMethodBuilder {
         });
     }
 
-    private getEndpointReturnType(endpoint: HttpEndpoint): string {
+    private getEndpointReturnType(endpoint: FernIr.HttpEndpoint): string {
         try {
             const javaType = this.context.getReturnTypeForEndpoint(endpoint);
 
@@ -329,7 +430,7 @@ export class TestMethodBuilder {
     /**
      * Gets the return type for an endpoint and collects its imports.
      */
-    public getEndpointReturnTypeWithImports(endpoint: HttpEndpoint): { typeName: string; imports: Set<string> } {
+    public getEndpointReturnTypeWithImports(endpoint: FernIr.HttpEndpoint): { typeName: string; imports: Set<string> } {
         try {
             const imports = new Set<string>();
 

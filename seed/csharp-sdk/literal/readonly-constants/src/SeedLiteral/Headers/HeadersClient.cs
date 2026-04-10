@@ -1,11 +1,11 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
 public partial class HeadersClient : IHeadersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal HeadersClient(RawClient client)
     {
@@ -30,7 +30,6 @@ public partial class HeadersClient : IHeadersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "headers",
                     Body = request,
@@ -42,7 +41,9 @@ public partial class HeadersClient : IHeadersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<SendResponse>(responseBody)!;
@@ -68,7 +69,9 @@ public partial class HeadersClient : IHeadersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedLiteralApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

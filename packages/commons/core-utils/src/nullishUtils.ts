@@ -1,4 +1,4 @@
-import { isNonNullish } from "./isNonNullish";
+import { isNonNullish } from "./isNonNullish.js";
 
 export function nullIfNullish<T>(value: T | null | undefined): T | null {
     return isNonNullish(value) ? value : null;

@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -13,8 +14,14 @@ public class Example23
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAsync(
-            "param"
+        await client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(
+            new ObjectWithUnknownField {
+                Unknown = new Dictionary<string, object>()
+                {
+                    ["key"] = "value",
+                }
+
+            }
         );
     }
 

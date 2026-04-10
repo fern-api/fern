@@ -13,6 +13,7 @@ describe("UserClient", () => {
         });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .get("/tenant_id/user/user_id")
@@ -22,10 +23,7 @@ describe("UserClient", () => {
             .build();
 
         const response = await client.user.getUser("user_id");
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createUser", async () => {
@@ -37,6 +35,7 @@ describe("UserClient", () => {
         });
         const rawRequestBody = { name: "name", tags: ["tags", "tags"] };
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .post("/tenant_id/user/")
@@ -50,10 +49,7 @@ describe("UserClient", () => {
             name: "name",
             tags: ["tags", "tags"],
         });
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("updateUser", async () => {
@@ -65,6 +61,7 @@ describe("UserClient", () => {
         });
         const rawRequestBody = { name: "name", tags: ["tags", "tags"] };
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .patch("/tenant_id/user/user_id")
@@ -80,10 +77,7 @@ describe("UserClient", () => {
                 tags: ["tags", "tags"],
             },
         });
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("searchUsers", async () => {
@@ -98,6 +92,7 @@ describe("UserClient", () => {
             { name: "name", tags: ["tags", "tags"] },
             { name: "name", tags: ["tags", "tags"] },
         ];
+
         server
             .mockEndpoint()
             .get("/tenant_id/user/user_id/search")
@@ -109,16 +104,7 @@ describe("UserClient", () => {
         const response = await client.user.searchUsers("user_id", {
             limit: 1,
         });
-        expect(response).toEqual([
-            {
-                name: "name",
-                tags: ["tags", "tags"],
-            },
-            {
-                name: "name",
-                tags: ["tags", "tags"],
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getUserMetadata", async () => {
@@ -130,6 +116,7 @@ describe("UserClient", () => {
         });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .get("/tenant_id/user/user_id/metadata/v1")
@@ -139,10 +126,7 @@ describe("UserClient", () => {
             .build();
 
         const response = await client.user.getUserMetadata("user_id", 1);
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getUserSpecifics", async () => {
@@ -154,6 +138,7 @@ describe("UserClient", () => {
         });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .get("/tenant_id/user/user_id/specifics/1/thought")
@@ -163,9 +148,6 @@ describe("UserClient", () => {
             .build();
 
         const response = await client.user.getUserSpecifics("user_id", 1, "thought");
-        expect(response).toEqual({
-            name: "name",
-            tags: ["tags", "tags"],
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

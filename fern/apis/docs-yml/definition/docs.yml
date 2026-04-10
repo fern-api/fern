@@ -145,6 +145,61 @@ types:
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+  PageDescriptionSource:
+    enum:
+      - description
+      - subtitle
+
+  AgentsConfig:
+    properties:
+      page-directive:
+        type: optional<string>
+        docs: |
+          Text to prepend to each page when it is served through agent endpoints.
+      page-description-source:
+        type: optional<PageDescriptionSource>
+        docs: |
+          Controls which frontmatter field is preferred for one-line page descriptions
+          in llms.txt. Defaults to "description". If the preferred field is not present
+          in a page's frontmatter, falls back to other fields (description, subtitle,
+          og:description, headline, excerpt).
+
+  CheckRuleSeverity:
+    enum:
+      - warn
+      - error
+
+  CheckRulesConfig:
+    properties:
+      example-validation:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for OpenAPI example validation. Default is warn.
+      broken-links:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for broken link detection. Defaults to error for broken internal links and warn for malformed URLs.
+      no-non-component-refs:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for non-component OpenAPI reference validation. Default is error.
+      valid-local-references:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for local OpenAPI reference validation. Default is warn.
+      no-circular-redirects:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for circular redirect validation. Default is error.
+      valid-docs-endpoints:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for docs endpoint URL validation. Default is warn.
+      missing-redirects:
+        type: optional<CheckRuleSeverity>
+        docs: Severity for detecting previously published URLs that disappeared without an explicit redirect. Default is warn.
+
+  CheckConfig:
+    docs: |
+      Configure the severity of validation rules run by `fern check`.
+      Each rule can be set to `warn` (non-blocking) or `error` (blocking).
+    properties:
+      rules: optional<CheckRulesConfig>
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
@@ -213,9 +268,17 @@ types:
         docs: |
           Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
 
+      agents:
+        type: optional<AgentsConfig>
+        docs: |
+          Configuration for agent-serving endpoints.
+
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
+
+      # validation
+      check: optional<CheckConfig>
 
       # please note: some of the following options represent files provided by the user, which require validation. if someone adds another file record to the spec, please ensure that file is visited in packages/cli/yaml/yaml-schema/src/docsAst/visitDocsConfigFileAst.ts
 
@@ -432,10 +495,6 @@ types:
       "custom-domain":
         type: optional<CustomDomain>
         docs: The custom domain where your documentation is hosted. Learn more about setting up a custom domain.
-      private:
-        type: optional<boolean>
-        docs: This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs.
-        availability: deprecated
       "edit-this-page":
         type: optional<EditThisPageConfig>
         docs: |
@@ -579,7 +638,6 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiReferenceConfiguration
-      - PythonDocsConfiguration
       - LibraryReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
@@ -854,10 +912,27 @@ types:
       - default
       - minimal
 
-  TabsThemeConfig:
+  TabsAlignment:
+    enum:
+      - left
+      - center
+
+  TabsThemeStyle:
     enum:
       - default
       - bubble
+
+  TabsThemeObjectConfig:
+    properties:
+      style: optional<TabsThemeStyle>
+      alignment: optional<TabsAlignment>
+      placement: optional<TabsPlacement>
+
+  TabsThemeConfig:
+    discriminated: false
+    union:
+      - TabsThemeStyle
+      - TabsThemeObjectConfig
 
   BodyThemeConfig:
     enum:
@@ -1094,7 +1169,19 @@ types:
         docs: |
           The relative path to the markdown file that will be displayed when the section is clicked.
       contents: list<NavigationItem>
-      collapsed: optional<boolean>
+      collapsed:
+        type: optional<CollapsedValue>
+        docs: |
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+        availability: deprecated
+      collapsible:
+        type: optional<boolean>
+        docs: |
+          Whether the section can be expanded/collapsed by the user.
+      collapsed-by-default:
+        type: optional<boolean>
+        docs: |
+          Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open).
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
@@ -1120,13 +1207,36 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
-      collapsed: optional<boolean>
+      collapsed:
+        type: optional<CollapsedValue>
+        docs: |
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+        availability: deprecated
+      collapsible:
+        type: optional<boolean>
+        docs: |
+          Whether the section can be expanded/collapsed by the user.
+      collapsed-by-default:
+        type: optional<boolean>
+        docs: |
+          Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open).
       availability: optional<Availability>
 
   TitleSource:
     enum:
       - frontmatter
       - filename
+
+  CollapsedValue:
+    discriminated: false
+    union:
+      - boolean
+      - CollapsedStringValue
+
+  CollapsedStringValue:
+    enum:
+      - name: OpenByDefault
+        value: open-by-default
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -1157,7 +1267,9 @@ types:
         type: optional<list<ApiReferenceLayoutItem>>
         docs: |
           Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
-      collapsed: optional<boolean>
+      collapsed:
+        type: optional<CollapsedValue>
+        availability: deprecated
       icon: optional<string>
       slug: optional<string>
       hidden: optional<boolean>
@@ -1180,28 +1292,6 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
-
-  PythonDocsConfiguration:
-    docs: |
-      Configuration for generating Python library documentation from source code.
-      The docs are generated from a GitHub repository and merged into the navigation.
-    availability: deprecated
-    properties:
-      python-docs:
-        type: string
-        docs: |
-          GitHub URL to the repository containing the Python library source code.
-          Example: https://github.com/django/django
-      title:
-        type: optional<string>
-        docs: |
-          Navigation title for the Python docs section.
-          @default: "Python Reference"
-      slug:
-        type: optional<string>
-        docs: |
-          URL slug for the Python docs pages.
-          @default: "python-docs"
 
   # Library Documentation Types
   LibraryName:
@@ -1253,6 +1343,18 @@ types:
           The output directory where MDX files will be generated.
           Example: ./static/sdk-docs
 
+  LibraryConfig:
+    docs: |
+      Language-specific configuration for library documentation.
+      Valid fields depend on the `lang` value of the parent LibraryConfiguration.
+    properties:
+      doxyfile:
+        type: optional<string>
+        docs: |
+          Path to a Doxyfile for C++ library documentation, relative to the fern/ directory.
+          When provided, the backend uses this Doxyfile instead of auto-generating one.
+          Only valid when lang is cpp.
+
   LibraryConfiguration:
     docs: |
       Configuration for a library documentation source.
@@ -1267,6 +1369,9 @@ types:
       lang:
         type: LibraryLanguage
         docs: The programming language of the library source code.
+      config:
+        type: optional<LibraryConfig>
+        docs: Language-specific configuration options. Valid fields depend on the lang value.
 
   LibraryReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -1299,6 +1404,7 @@ types:
         docs: Keyed by subpackage name, this object allows you to group endpoints and pages together.
       - ApiReferenceSectionConfiguration
       - ApiReferenceEndpointConfiguration
+      - ApiReferenceOperationConfiguration
       - PageConfiguration
       - LinkConfiguration
 
@@ -1320,6 +1426,17 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      collapsed:
+        type: optional<CollapsedValue>
+        docs: |
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+        availability: deprecated
+      collapsible:
+        type: optional<boolean>
+        docs: Whether the section can be expanded/collapsed by the user in the sidebar.
+      collapsed-by-default:
+        type: optional<boolean>
+        docs: Whether the section starts collapsed. Only meaningful when collapsible is true.
       availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
@@ -1361,6 +1478,16 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affect this endpoint specifically.
+
+  ApiReferenceOperationConfiguration:
+    docs: Defines a GraphQL-native schema for selecting operations (REST -> Endpoint === GraphQL -> Operation)
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      operation: string
+      title: optional<string>
+      slug: optional<string>
+      hidden: optional<boolean>
+      availability: optional<Availability>
 
   LinkConfiguration:
     properties:
@@ -1462,6 +1589,78 @@ types:
           @default:
             dark: white/3.5%
             light: white/70%
+
+      accent-1:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 1. This is the lightest accent color, typically used for subtle backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-2:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 2. A very light accent color for backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-3:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 3. A light accent color for UI element backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-4:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 4. Used for hovered UI element backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-5:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 5. Used for active/selected UI element backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-6:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 6. Used for subtle borders and separators.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-7:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 7. Used for UI element borders and focus rings.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-8:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 8. Used for hovered UI element borders.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-9:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 9. The solid accent color, used for solid backgrounds like buttons.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-10:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 10. Used for hovered solid backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-11:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 11. Used for low-contrast text.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-12:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 12. The darkest accent color, used for high-contrast text.
+          By default, this is automatically calculated from the accent-primary color.
 
   ColorConfig:
     discriminated: false
@@ -1726,6 +1925,12 @@ types:
       "twitter:card":
         type: optional<TwitterCardSetting>
         docs: The Twitter Card type. Options are `summary`, `summary_large_image`, `app`, or `player`.
+      "og:dynamic":
+        type: optional<boolean>
+        docs: When true, enables dynamic OG image generation for pages that don't have a custom og:image set.
+      "og:background-image":
+        type: optional<string>
+        docs: A custom background image for dynamically generated OG images. Can be a URL or a file path.
       canonical-host:
         type: optional<string>
         docs: |
@@ -1770,6 +1975,11 @@ types:
   IntegrationsConfig:
     properties:
       intercom: optional<string>
+      context7:
+        type: optional<string>
+        docs: |
+          Relative filepath to a `context7.json` file that Fern should host at `/context7.json`.
+          Fern only checks that the file exists and is valid JSON, then passes it through as-is.
 
   ExperimentalConfig:
     properties:
@@ -1820,6 +2030,10 @@ types:
         availability: pre-release
         docs: |
           Experimental flag to exclude API reference sections from documentation generation. When enabled, API reference content will be omitted from the generated documentation.
+      basepath-aware:
+        type: optional<boolean>
+        docs: |
+          When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
 
   PlaygroundSettings:
     properties:

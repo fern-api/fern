@@ -1,21 +1,9 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/__test__/**/generated"],
-  "references": [
-    {
-      "path": "../../../commons/ir-utils"
-    },
-    {
-      "path": "../../../ir-sdk"
-    },
-    {
-      "path": "../v3-importer-commons"
-    }
-  ]
+  "exclude": ["./src/**/__test__/**/generated"]
 }

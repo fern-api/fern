@@ -15,11 +15,12 @@ describe("HomepageClient", () => {
         });
 
         const rawResponseBody = ["string", "string"];
+
         server.mockEndpoint().get("/homepage-problems").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.homepage.getHomepageProblems();
         expect(response).toEqual({
-            body: [SeedTrace.ProblemId("string"), SeedTrace.ProblemId("string")],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

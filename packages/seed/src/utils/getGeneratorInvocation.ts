@@ -6,8 +6,8 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/api";
 import * as FernFiddleSerialization from "@fern-fern/fiddle-sdk/serialization";
 
-import { OutputMode } from "../config/api";
-import { ParsedDockerName } from "../utils/parseDockerOrThrow";
+import { OutputMode } from "../config/api/index.js";
+import { ParsedDockerName } from "../utils/parseDockerOrThrow.js";
 
 export async function getGeneratorInvocation({
     absolutePathToOutput,
@@ -50,6 +50,7 @@ export async function getGeneratorInvocation({
 
     return {
         name: docker.name,
+        containerImage: undefined,
         version: docker.version,
         config: customConfig,
         outputMode: await getOutputMode({ outputMode, language, fixtureName, publishConfig }),
@@ -57,7 +58,7 @@ export async function getGeneratorInvocation({
         absolutePathToLocalSnippets: undefined,
         language,
         keywords: undefined,
-        smartCasing: smartCasing ?? false,
+        smartCasing: smartCasing ?? true,
         disableExamples: false,
         irVersionOverride: irVersion,
         publishMetadata:
@@ -66,7 +67,13 @@ export async function getGeneratorInvocation({
                 : undefined,
         readme,
         settings: undefined,
-        raw
+        raw,
+        automation: {
+            generate: true,
+            upgrade: true,
+            preview: true,
+            verify: true
+        }
     };
 }
 

@@ -5,16 +5,17 @@ package oauth_wire_test
 import (
 	bytes "bytes"
 	context "context"
-	fern "github.com/oauth-client-credentials/fern"
-	client "github.com/oauth-client-credentials/fern/client"
-	option "github.com/oauth-client-credentials/fern/option"
-	assert "github.com/stretchr/testify/assert"
-	require "github.com/stretchr/testify/require"
 	io "io"
 	http "net/http"
 	url "net/url"
 	strings "strings"
 	testing "testing"
+
+	fern "github.com/oauth-client-credentials/fern"
+	client "github.com/oauth-client-credentials/fern/client"
+	option "github.com/oauth-client-credentials/fern/option"
+	assert "github.com/stretchr/testify/assert"
+	require "github.com/stretchr/testify/require"
 )
 
 // requestCapturingTransport captures HTTP requests for inspection in tests.
@@ -67,7 +68,7 @@ func TestOAuthGetTokenFormEncodedBody(t *testing.T) {
 	)
 
 	request := &fern.GetTokenRequest{
-		ClientId:     "test_client_id",
+		ClientID:     "test_client_id",
 		ClientSecret: "test_client_secret",
 	}
 
@@ -116,7 +117,7 @@ func TestOAuthGetTokenCustomHeaders(t *testing.T) {
 	)
 
 	request := &fern.GetTokenRequest{
-		ClientId:     "test_client_id",
+		ClientID:     "test_client_id",
 		ClientSecret: "test_client_secret",
 	}
 

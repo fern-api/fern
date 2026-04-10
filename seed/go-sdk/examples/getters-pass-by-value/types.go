@@ -99,6 +99,9 @@ func (i *Identifier) GetLabel() string {
 }
 
 func (i *Identifier) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
 	return i.extraProperties
 }
 
@@ -158,6 +161,9 @@ func (i *Identifier) MarshalJSON() ([]byte, error) {
 }
 
 func (i *Identifier) String() string {
+	if i == nil {
+		return "<nil>"
+	}
 	if len(i.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
 			return value
@@ -262,6 +268,9 @@ func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) GetTy() string {
 }
 
 func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -314,6 +323,9 @@ func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) MarshalJSON() ([]b
 }
 
 func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
@@ -327,12 +339,12 @@ func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) String() string {
 
 var (
 	actorFieldName = big.NewInt(1 << 0)
-	actorFieldId   = big.NewInt(1 << 1)
+	actorFieldID   = big.NewInt(1 << 1)
 )
 
 type Actor struct {
 	Name string `json:"name" url:"name"`
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -348,14 +360,17 @@ func (a *Actor) GetName() string {
 	return a.Name
 }
 
-func (a *Actor) GetId() string {
+func (a *Actor) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *Actor) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
@@ -373,11 +388,11 @@ func (a *Actor) SetName(name string) {
 	a.require(actorFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *Actor) SetId(id string) {
-	a.Id = id
-	a.require(actorFieldId)
+func (a *Actor) SetID(id string) {
+	a.ID = id
+	a.require(actorFieldID)
 }
 
 func (a *Actor) UnmarshalJSON(data []byte) error {
@@ -408,6 +423,9 @@ func (a *Actor) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Actor) String() string {
+	if a == nil {
+		return "<nil>"
+	}
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -421,12 +439,12 @@ func (a *Actor) String() string {
 
 var (
 	actressFieldName = big.NewInt(1 << 0)
-	actressFieldId   = big.NewInt(1 << 1)
+	actressFieldID   = big.NewInt(1 << 1)
 )
 
 type Actress struct {
 	Name string `json:"name" url:"name"`
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -442,14 +460,17 @@ func (a *Actress) GetName() string {
 	return a.Name
 }
 
-func (a *Actress) GetId() string {
+func (a *Actress) GetID() string {
 	if a == nil {
 		return ""
 	}
-	return a.Id
+	return a.ID
 }
 
 func (a *Actress) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
 	return a.extraProperties
 }
 
@@ -467,11 +488,11 @@ func (a *Actress) SetName(name string) {
 	a.require(actressFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (a *Actress) SetId(id string) {
-	a.Id = id
-	a.require(actressFieldId)
+func (a *Actress) SetID(id string) {
+	a.ID = id
+	a.require(actressFieldID)
 }
 
 func (a *Actress) UnmarshalJSON(data []byte) error {
@@ -502,6 +523,9 @@ func (a *Actress) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Actress) String() string {
+	if a == nil {
+		return "<nil>"
+	}
 	if len(a.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
 			return value
@@ -643,6 +667,9 @@ func (b *BigEntity) GetMoment() Moment {
 }
 
 func (b *BigEntity) GetExtraProperties() map[string]interface{} {
+	if b == nil {
+		return nil
+	}
 	return b.extraProperties
 }
 
@@ -772,6 +799,9 @@ func (b *BigEntity) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BigEntity) String() string {
+	if b == nil {
+		return "<nil>"
+	}
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
 			return value
@@ -888,6 +918,9 @@ func (c *CronJob) GetExpression() string {
 }
 
 func (c *CronJob) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -933,6 +966,9 @@ func (c *CronJob) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CronJob) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -984,6 +1020,9 @@ func (d *Directory) GetDirectories() []*Directory {
 }
 
 func (d *Directory) GetExtraProperties() map[string]interface{} {
+	if d == nil {
+		return nil
+	}
 	return d.extraProperties
 }
 
@@ -1043,6 +1082,9 @@ func (d *Directory) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Directory) String() string {
+	if d == nil {
+		return "<nil>"
+	}
 	if len(d.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(d.rawJSON); err == nil {
 			return value
@@ -1085,6 +1127,9 @@ func (e *Entity) GetName() string {
 }
 
 func (e *Entity) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -1137,6 +1182,9 @@ func (e *Entity) MarshalJSON() ([]byte, error) {
 }
 
 func (e *Entity) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1312,6 +1360,9 @@ func (e *ExceptionInfo) GetExceptionStacktrace() string {
 }
 
 func (e *ExceptionInfo) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -1371,6 +1422,9 @@ func (e *ExceptionInfo) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ExceptionInfo) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1383,7 +1437,7 @@ func (e *ExceptionInfo) String() string {
 }
 
 var (
-	extendedMovieFieldId       = big.NewInt(1 << 0)
+	extendedMovieFieldID       = big.NewInt(1 << 0)
 	extendedMovieFieldPrequel  = big.NewInt(1 << 1)
 	extendedMovieFieldTitle    = big.NewInt(1 << 2)
 	extendedMovieFieldFrom     = big.NewInt(1 << 3)
@@ -1396,17 +1450,17 @@ var (
 )
 
 type ExtendedMovie struct {
-	Id      MovieId  `json:"id" url:"id"`
-	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
+	ID      MovieID  `json:"id" url:"id"`
+	Prequel *MovieID `json:"prequel,omitempty" url:"prequel,omitempty"`
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
-	Rating   float64                `json:"rating" url:"rating"`
-	Tag      commons.Tag            `json:"tag" url:"tag"`
-	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
-	Metadata map[string]interface{} `json:"metadata" url:"metadata"`
-	Revenue  int64                  `json:"revenue" url:"revenue"`
-	Cast     []string               `json:"cast" url:"cast"`
+	Rating   float64        `json:"rating" url:"rating"`
+	Tag      commons.Tag    `json:"tag" url:"tag"`
+	Book     *string        `json:"book,omitempty" url:"book,omitempty"`
+	Metadata map[string]any `json:"metadata" url:"metadata"`
+	Revenue  int64          `json:"revenue" url:"revenue"`
+	Cast     []string       `json:"cast" url:"cast"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1416,14 +1470,14 @@ type ExtendedMovie struct {
 	rawJSON         json.RawMessage
 }
 
-func (e *ExtendedMovie) GetId() MovieId {
+func (e *ExtendedMovie) GetID() MovieID {
 	if e == nil {
 		return ""
 	}
-	return e.Id
+	return e.ID
 }
 
-func (e *ExtendedMovie) GetPrequel() MovieId {
+func (e *ExtendedMovie) GetPrequel() MovieID {
 	if e == nil || e.Prequel == nil {
 		return ""
 	}
@@ -1465,7 +1519,7 @@ func (e *ExtendedMovie) GetBook() string {
 	return *e.Book
 }
 
-func (e *ExtendedMovie) GetMetadata() map[string]interface{} {
+func (e *ExtendedMovie) GetMetadata() map[string]any {
 	if e == nil {
 		return nil
 	}
@@ -1491,6 +1545,9 @@ func (e *ExtendedMovie) Type() string {
 }
 
 func (e *ExtendedMovie) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
 	return e.extraProperties
 }
 
@@ -1501,16 +1558,16 @@ func (e *ExtendedMovie) require(field *big.Int) {
 	e.explicitFields.Or(e.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExtendedMovie) SetId(id MovieId) {
-	e.Id = id
-	e.require(extendedMovieFieldId)
+func (e *ExtendedMovie) SetID(id MovieID) {
+	e.ID = id
+	e.require(extendedMovieFieldID)
 }
 
 // SetPrequel sets the Prequel field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExtendedMovie) SetPrequel(prequel *MovieId) {
+func (e *ExtendedMovie) SetPrequel(prequel *MovieID) {
 	e.Prequel = prequel
 	e.require(extendedMovieFieldPrequel)
 }
@@ -1552,7 +1609,7 @@ func (e *ExtendedMovie) SetBook(book *string) {
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *ExtendedMovie) SetMetadata(metadata map[string]interface{}) {
+func (e *ExtendedMovie) SetMetadata(metadata map[string]any) {
 	e.Metadata = metadata
 	e.require(extendedMovieFieldMetadata)
 }
@@ -1610,6 +1667,9 @@ func (e *ExtendedMovie) MarshalJSON() ([]byte, error) {
 }
 
 func (e *ExtendedMovie) String() string {
+	if e == nil {
+		return "<nil>"
+	}
 	if len(e.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
 			return value
@@ -1652,6 +1712,9 @@ func (f *File) GetContents() string {
 }
 
 func (f *File) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -1704,6 +1767,9 @@ func (f *File) MarshalJSON() ([]byte, error) {
 }
 
 func (f *File) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -1719,7 +1785,7 @@ type Metadata struct {
 	Type     string
 	Extra    map[string]string
 	Tags     []string
-	Html     string
+	HTML     string
 	Markdown string
 }
 
@@ -1744,11 +1810,11 @@ func (m *Metadata) GetTags() []string {
 	return m.Tags
 }
 
-func (m *Metadata) GetHtml() string {
+func (m *Metadata) GetHTML() string {
 	if m == nil {
 		return ""
 	}
-	return m.Html
+	return m.HTML
 }
 
 func (m *Metadata) GetMarkdown() string {
@@ -1776,12 +1842,12 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "html":
 		var valueUnmarshaler struct {
-			Html string `json:"value"`
+			HTML string `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		m.Html = valueUnmarshaler.Html
+		m.HTML = valueUnmarshaler.HTML
 	case "markdown":
 		var valueUnmarshaler struct {
 			Markdown string `json:"value"`
@@ -1798,17 +1864,17 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
 	if err := m.validate(); err != nil {
 		return nil, err
 	}
-	if m.Html != "" {
+	if m.HTML != "" {
 		var marshaler = struct {
 			Type  string            `json:"type"`
 			Extra map[string]string `json:"extra"`
 			Tags  []string          `json:"tags"`
-			Html  string            `json:"value"`
+			HTML  string            `json:"value"`
 		}{
 			Type:  "html",
 			Extra: m.Extra,
 			Tags:  m.Tags,
-			Html:  m.Html,
+			HTML:  m.HTML,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -1830,13 +1896,13 @@ func (m Metadata) MarshalJSON() ([]byte, error) {
 }
 
 type MetadataVisitor interface {
-	VisitHtml(string) error
+	VisitHTML(string) error
 	VisitMarkdown(string) error
 }
 
 func (m *Metadata) Accept(visitor MetadataVisitor) error {
-	if m.Html != "" {
-		return visitor.VisitHtml(m.Html)
+	if m.HTML != "" {
+		return visitor.VisitHTML(m.HTML)
 	}
 	if m.Markdown != "" {
 		return visitor.VisitMarkdown(m.Markdown)
@@ -1849,7 +1915,7 @@ func (m *Metadata) validate() error {
 		return fmt.Errorf("type %T is nil", m)
 	}
 	var fields []string
-	if m.Html != "" {
+	if m.HTML != "" {
 		fields = append(fields, "html")
 	}
 	if m.Markdown != "" {
@@ -1909,6 +1975,9 @@ func (m *Migration) GetStatus() MigrationStatus {
 }
 
 func (m *Migration) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -1961,6 +2030,9 @@ func (m *Migration) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Migration) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -2000,13 +2072,13 @@ func (m MigrationStatus) Ptr() *MigrationStatus {
 }
 
 var (
-	momentFieldId       = big.NewInt(1 << 0)
+	momentFieldID       = big.NewInt(1 << 0)
 	momentFieldDate     = big.NewInt(1 << 1)
 	momentFieldDatetime = big.NewInt(1 << 2)
 )
 
 type Moment struct {
-	Id       uuid.UUID `json:"id" url:"id"`
+	ID       uuid.UUID `json:"id" url:"id"`
 	Date     time.Time `json:"date" url:"date" format:"date"`
 	Datetime time.Time `json:"datetime" url:"datetime"`
 
@@ -2017,11 +2089,11 @@ type Moment struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *Moment) GetId() uuid.UUID {
+func (m *Moment) GetID() uuid.UUID {
 	if m == nil {
 		return uuid.Nil
 	}
-	return m.Id
+	return m.ID
 }
 
 func (m *Moment) GetDate() time.Time {
@@ -2039,6 +2111,9 @@ func (m *Moment) GetDatetime() time.Time {
 }
 
 func (m *Moment) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -2049,11 +2124,11 @@ func (m *Moment) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Moment) SetId(id uuid.UUID) {
-	m.Id = id
-	m.require(momentFieldId)
+func (m *Moment) SetID(id uuid.UUID) {
+	m.ID = id
+	m.require(momentFieldID)
 }
 
 // SetDate sets the Date field and marks it as non-optional;
@@ -2110,6 +2185,9 @@ func (m *Moment) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Moment) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -2122,7 +2200,7 @@ func (m *Moment) String() string {
 }
 
 var (
-	movieFieldId       = big.NewInt(1 << 0)
+	movieFieldID       = big.NewInt(1 << 0)
 	movieFieldPrequel  = big.NewInt(1 << 1)
 	movieFieldTitle    = big.NewInt(1 << 2)
 	movieFieldFrom     = big.NewInt(1 << 3)
@@ -2134,16 +2212,16 @@ var (
 )
 
 type Movie struct {
-	Id      MovieId  `json:"id" url:"id"`
-	Prequel *MovieId `json:"prequel,omitempty" url:"prequel,omitempty"`
+	ID      MovieID  `json:"id" url:"id"`
+	Prequel *MovieID `json:"prequel,omitempty" url:"prequel,omitempty"`
 	Title   string   `json:"title" url:"title"`
 	From    string   `json:"from" url:"from"`
 	// The rating scale is one to five stars
-	Rating   float64                `json:"rating" url:"rating"`
-	Tag      commons.Tag            `json:"tag" url:"tag"`
-	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
-	Metadata map[string]interface{} `json:"metadata" url:"metadata"`
-	Revenue  int64                  `json:"revenue" url:"revenue"`
+	Rating   float64        `json:"rating" url:"rating"`
+	Tag      commons.Tag    `json:"tag" url:"tag"`
+	Book     *string        `json:"book,omitempty" url:"book,omitempty"`
+	Metadata map[string]any `json:"metadata" url:"metadata"`
+	Revenue  int64          `json:"revenue" url:"revenue"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2153,14 +2231,14 @@ type Movie struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *Movie) GetId() MovieId {
+func (m *Movie) GetID() MovieID {
 	if m == nil {
 		return ""
 	}
-	return m.Id
+	return m.ID
 }
 
-func (m *Movie) GetPrequel() MovieId {
+func (m *Movie) GetPrequel() MovieID {
 	if m == nil || m.Prequel == nil {
 		return ""
 	}
@@ -2202,7 +2280,7 @@ func (m *Movie) GetBook() string {
 	return *m.Book
 }
 
-func (m *Movie) GetMetadata() map[string]interface{} {
+func (m *Movie) GetMetadata() map[string]any {
 	if m == nil {
 		return nil
 	}
@@ -2221,6 +2299,9 @@ func (m *Movie) Type() string {
 }
 
 func (m *Movie) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -2231,16 +2312,16 @@ func (m *Movie) require(field *big.Int) {
 	m.explicitFields.Or(m.explicitFields, field)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Movie) SetId(id MovieId) {
-	m.Id = id
-	m.require(movieFieldId)
+func (m *Movie) SetID(id MovieID) {
+	m.ID = id
+	m.require(movieFieldID)
 }
 
 // SetPrequel sets the Prequel field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Movie) SetPrequel(prequel *MovieId) {
+func (m *Movie) SetPrequel(prequel *MovieID) {
 	m.Prequel = prequel
 	m.require(movieFieldPrequel)
 }
@@ -2282,7 +2363,7 @@ func (m *Movie) SetBook(book *string) {
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *Movie) SetMetadata(metadata map[string]interface{}) {
+func (m *Movie) SetMetadata(metadata map[string]any) {
 	m.Metadata = metadata
 	m.require(movieFieldMetadata)
 }
@@ -2333,6 +2414,9 @@ func (m *Movie) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Movie) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -2344,7 +2428,7 @@ func (m *Movie) String() string {
 	return fmt.Sprintf("%#v", m)
 }
 
-type MovieId = string
+type MovieID = string
 
 var (
 	nodeFieldName  = big.NewInt(1 << 0)
@@ -2386,6 +2470,9 @@ func (n *Node) GetTrees() []*Tree {
 }
 
 func (n *Node) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -2445,6 +2532,9 @@ func (n *Node) MarshalJSON() ([]byte, error) {
 }
 
 func (n *Node) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -2457,11 +2547,11 @@ func (n *Node) String() string {
 }
 
 var (
-	refreshTokenRequestFieldTtl = big.NewInt(1 << 0)
+	refreshTokenRequestFieldTTL = big.NewInt(1 << 0)
 )
 
 type RefreshTokenRequest struct {
-	Ttl int `json:"ttl" url:"ttl"`
+	TTL int `json:"ttl" url:"ttl"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2470,14 +2560,17 @@ type RefreshTokenRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *RefreshTokenRequest) GetTtl() int {
+func (r *RefreshTokenRequest) GetTTL() int {
 	if r == nil {
 		return 0
 	}
-	return r.Ttl
+	return r.TTL
 }
 
 func (r *RefreshTokenRequest) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -2488,11 +2581,11 @@ func (r *RefreshTokenRequest) require(field *big.Int) {
 	r.explicitFields.Or(r.explicitFields, field)
 }
 
-// SetTtl sets the Ttl field and marks it as non-optional;
+// SetTTL sets the TTL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *RefreshTokenRequest) SetTtl(ttl int) {
-	r.Ttl = ttl
-	r.require(refreshTokenRequestFieldTtl)
+func (r *RefreshTokenRequest) SetTTL(ttl int) {
+	r.TTL = ttl
+	r.require(refreshTokenRequestFieldTTL)
 }
 
 func (r *RefreshTokenRequest) UnmarshalJSON(data []byte) error {
@@ -2523,6 +2616,9 @@ func (r *RefreshTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RefreshTokenRequest) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -2539,7 +2635,7 @@ var (
 )
 
 type Request struct {
-	Request interface{} `json:"request" url:"request"`
+	Request any `json:"request" url:"request"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2548,7 +2644,7 @@ type Request struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *Request) GetRequest() interface{} {
+func (r *Request) GetRequest() any {
 	if r == nil {
 		return nil
 	}
@@ -2556,6 +2652,9 @@ func (r *Request) GetRequest() interface{} {
 }
 
 func (r *Request) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -2568,7 +2667,7 @@ func (r *Request) require(field *big.Int) {
 
 // SetRequest sets the Request field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *Request) SetRequest(request interface{}) {
+func (r *Request) SetRequest(request any) {
 	r.Request = request
 	r.require(requestFieldRequest)
 }
@@ -2601,6 +2700,9 @@ func (r *Request) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Request) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -2618,7 +2720,7 @@ var (
 )
 
 type Response struct {
-	Response    interface{}   `json:"response" url:"response"`
+	Response    any           `json:"response" url:"response"`
 	Identifiers []*Identifier `json:"identifiers" url:"identifiers"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -2628,7 +2730,7 @@ type Response struct {
 	rawJSON         json.RawMessage
 }
 
-func (r *Response) GetResponse() interface{} {
+func (r *Response) GetResponse() any {
 	if r == nil {
 		return nil
 	}
@@ -2643,6 +2745,9 @@ func (r *Response) GetIdentifiers() []*Identifier {
 }
 
 func (r *Response) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -2655,7 +2760,7 @@ func (r *Response) require(field *big.Int) {
 
 // SetResponse sets the Response field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *Response) SetResponse(response interface{}) {
+func (r *Response) SetResponse(response any) {
 	r.Response = response
 	r.require(responseFieldResponse)
 }
@@ -2695,6 +2800,9 @@ func (r *Response) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Response) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -2728,6 +2836,9 @@ func (r *ResponseType) GetType() *Type {
 }
 
 func (r *ResponseType) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -2773,6 +2884,9 @@ func (r *ResponseType) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ResponseType) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -2786,12 +2900,12 @@ func (r *ResponseType) String() string {
 
 var (
 	stuntDoubleFieldName             = big.NewInt(1 << 0)
-	stuntDoubleFieldActorOrActressId = big.NewInt(1 << 1)
+	stuntDoubleFieldActorOrActressID = big.NewInt(1 << 1)
 )
 
 type StuntDouble struct {
 	Name             string `json:"name" url:"name"`
-	ActorOrActressId string `json:"actorOrActressId" url:"actorOrActressId"`
+	ActorOrActressID string `json:"actorOrActressId" url:"actorOrActressId"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2807,14 +2921,17 @@ func (s *StuntDouble) GetName() string {
 	return s.Name
 }
 
-func (s *StuntDouble) GetActorOrActressId() string {
+func (s *StuntDouble) GetActorOrActressID() string {
 	if s == nil {
 		return ""
 	}
-	return s.ActorOrActressId
+	return s.ActorOrActressID
 }
 
 func (s *StuntDouble) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -2832,11 +2949,11 @@ func (s *StuntDouble) SetName(name string) {
 	s.require(stuntDoubleFieldName)
 }
 
-// SetActorOrActressId sets the ActorOrActressId field and marks it as non-optional;
+// SetActorOrActressID sets the ActorOrActressID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *StuntDouble) SetActorOrActressId(actorOrActressId string) {
-	s.ActorOrActressId = actorOrActressId
-	s.require(stuntDoubleFieldActorOrActressId)
+func (s *StuntDouble) SetActorOrActressID(actorOrActressID string) {
+	s.ActorOrActressID = actorOrActressID
+	s.require(stuntDoubleFieldActorOrActressID)
 }
 
 func (s *StuntDouble) UnmarshalJSON(data []byte) error {
@@ -2867,6 +2984,9 @@ func (s *StuntDouble) MarshalJSON() ([]byte, error) {
 }
 
 func (s *StuntDouble) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -3035,6 +3155,9 @@ func (t *Tree) GetNodes() []*Node {
 }
 
 func (t *Tree) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -3080,6 +3203,9 @@ func (t *Tree) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Tree) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value

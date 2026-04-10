@@ -3,9 +3,8 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-
-import { generatorsYml } from "..";
-import { Audiences } from "../commons";
+import { Audiences } from "../commons/index.js";
+import { generatorsYml } from "../index.js";
 import {
     ApiConfigurationV2SpecsSchema,
     ApiDefinitionSettingsSchema,
@@ -14,7 +13,7 @@ import {
     OpenApiFilterSchema,
     ReadmeSchema,
     RemoveDiscriminantsFromSchemas
-} from "./schemas";
+} from "./schemas/index.js";
 
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
@@ -28,6 +27,7 @@ export interface GeneratorsConfiguration {
     groups: GeneratorGroup[];
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     ai: generatorsYml.AiServicesSchema | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
 
     rawConfiguration: GeneratorsConfigurationSchema;
     absolutePathToConfiguration: AbsoluteFilePath;
@@ -87,18 +87,21 @@ export interface APIDefinitionSettings {
     resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
     groupEnvironmentsByHost: boolean | undefined;
+    inferDefaultEnvironment: boolean | undefined;
     wrapReferencesToNullableInOptional: boolean | undefined;
     coerceOptionalSchemasToNullable: boolean | undefined;
     removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
     pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     resolveSchemaCollisions: boolean | undefined;
+    inferForwardCompatible: boolean | undefined;
+    coerceConstsTo: "literals" | "enums" | "enums-coerceable-to-literals" | undefined;
 }
 
 export interface APIDefinitionLocation {
     schema: APIDefinitionSchema;
     origin: string | undefined;
-    overrides: string | undefined;
+    overrides: string | string[] | undefined;
     overlays: string | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
@@ -134,6 +137,17 @@ export interface GraphQLDefinitionSchema {
     path: string;
 }
 
+/**
+ * Resolved automation configuration with all fields populated.
+ * Resolution order: generator → group → root → default (all true).
+ */
+export interface ResolvedAutomationConfig {
+    generate: boolean;
+    upgrade: boolean;
+    preview: boolean;
+    verify: boolean;
+}
+
 export interface GeneratorGroup {
     groupName: string;
     audiences: Audiences;
@@ -153,7 +167,11 @@ export interface Reviewers {
 export interface GeneratorInvocation {
     raw?: GeneratorInvocationSchema;
 
+    /** Resolved automation configuration (generator → group → root → default true). */
+    automation: ResolvedAutomationConfig;
     name: string;
+    /** Fully-qualified container image for local generation (e.g., `ghcr.io/myorg/fernapi/fern-typescript-sdk`). Undefined means use Docker Hub default. */
+    containerImage: string | undefined;
     irVersionOverride: string | undefined;
     version: string;
     config: unknown;
@@ -177,6 +195,7 @@ export interface GeneratorInvocation {
         specs?: ApiConfigurationV2SpecsSchema;
         auth?: RawSchemas.ApiAuthSchema;
         "auth-schemes"?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
+        headers?: Record<string, RawSchemas.HttpHeaderSchema>;
     };
 }
 

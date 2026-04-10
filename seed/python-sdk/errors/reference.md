@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_without_endpoint_error</a>(...) -&gt; AsyncHttpResponse[FooResponse]</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_without_endpoint_error</a>(...) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -18,6 +18,7 @@ from seed import SeedErrors
 client = SeedErrors(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.simple.foo_without_endpoint_error(
     bar="bar",
 )
@@ -36,7 +37,7 @@ client.simple.foo_without_endpoint_error(
 <dl>
 <dd>
 
-**bar:** `str` 
+**request:** `FooRequest` 
     
 </dd>
 </dl>
@@ -56,7 +57,7 @@ client.simple.foo_without_endpoint_error(
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo</a>(...) -&gt; AsyncHttpResponse[FooResponse]</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo</a>(...) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -74,6 +75,7 @@ from seed import SeedErrors
 client = SeedErrors(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.simple.foo(
     bar="bar",
 )
@@ -92,7 +94,7 @@ client.simple.foo(
 <dl>
 <dd>
 
-**bar:** `str` 
+**request:** `FooRequest` 
     
 </dd>
 </dl>
@@ -112,7 +114,7 @@ client.simple.foo(
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_with_examples</a>(...) -&gt; AsyncHttpResponse[FooResponse]</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_with_examples</a>(...) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -130,6 +132,7 @@ from seed import SeedErrors
 client = SeedErrors(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.simple.foo_with_examples(
     bar="hello",
 )
@@ -148,7 +151,7 @@ client.simple.foo_with_examples(
 <dl>
 <dd>
 
-**bar:** `str` 
+**request:** `FooRequest` 
     
 </dd>
 </dl>

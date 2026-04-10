@@ -47,6 +47,7 @@ import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -225,6 +226,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 .addAllProperties(queryParameterObjectProperties)
                 .addAllProperties(objectProperties)
                 .build();
+        Set<ObjectProperty> allQueryParameterProperties = new HashSet<>(queryParameterObjectProperties);
+        allQueryParameterProperties.addAll(queryParameterAllowMultipleObjectProperties);
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 objectTypeDeclaration,
                 Optional.empty(),
@@ -238,7 +241,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 Set.of(className.simpleName()),
                 true,
                 fileObjectProperties,
-                queryParameterAllowMultipleObjectProperties);
+                queryParameterAllowMultipleObjectProperties,
+                allQueryParameterProperties);
         GeneratedObject generatedObject = objectGenerator.generateObject();
         RequestBodyGetterFactory requestBodyGetterFactory =
                 new RequestBodyGetterFactory(objectProperties, generatedObject);
@@ -438,7 +442,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         @Override
         public List<ObjectProperty> visitBytes(BytesRequest bytes) {
             TypeReference base64TypeReference = TypeReference.primitive(
-                    PrimitiveType.builder().v1(PrimitiveTypeV1.STRING).build());
+                    PrimitiveType.builder().v1(PrimitiveTypeV1.BASE_64).build());
             return List.of(ObjectProperty.builder()
                     .name(NameAndWireValue.builder()
                             .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())

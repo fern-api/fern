@@ -8,8 +8,8 @@ import {
 } from "@fern-api/ir-generator";
 import { groupBy, noop } from "lodash-es";
 
-import { Rule, RuleViolation } from "../../Rule";
-import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
+import { Rule, RuleViolation } from "../../Rule.js";
+import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString.js";
 
 export const NoDuplicateFieldNamesRule: Rule = {
     name: "no-duplicate-field-names",

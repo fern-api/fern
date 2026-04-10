@@ -5,6 +5,7 @@ import { ContentTypeClient } from "../resources/contentType/client/Client.mjs";
 import { EnumClient } from "../resources/enum/client/Client.mjs";
 import { HttpMethodsClient } from "../resources/httpMethods/client/Client.mjs";
 import { ObjectClient } from "../resources/object/client/Client.mjs";
+import { PaginationClient } from "../resources/pagination/client/Client.mjs";
 import { ParamsClient } from "../resources/params/client/Client.mjs";
 import { PrimitiveClient } from "../resources/primitive/client/Client.mjs";
 import { PutClient } from "../resources/put/client/Client.mjs";
@@ -33,6 +34,10 @@ export class EndpointsClient {
     get object() {
         var _a;
         return ((_a = this._object) !== null && _a !== void 0 ? _a : (this._object = new ObjectClient(this._options)));
+    }
+    get pagination() {
+        var _a;
+        return ((_a = this._pagination) !== null && _a !== void 0 ? _a : (this._pagination = new PaginationClient(this._options)));
     }
     get params() {
         var _a;

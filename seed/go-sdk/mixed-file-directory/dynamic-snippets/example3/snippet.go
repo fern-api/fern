@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/mixed-file-directory/fern/client"
     option "github.com/mixed-file-directory/fern/option"
     events "github.com/mixed-file-directory/fern/user/events"
-    context "context"
 )
 
 func do() {
@@ -14,7 +15,7 @@ func do() {
         ),
     )
     request := &events.GetEventMetadataRequest{
-        Id: "id",
+        ID: "id",
     }
     client.User.Events.Metadata.GetMetadata(
         context.TODO(),

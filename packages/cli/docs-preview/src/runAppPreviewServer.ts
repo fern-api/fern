@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
@@ -5,17 +6,20 @@ import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+import { execSync } from "child_process";
 import cors from "cors";
 import express from "express";
+import fs from "fs";
 import { readFile, rm } from "fs/promises";
-import http from "http";
+import http, { type IncomingMessage } from "http";
 import path from "path";
+import { type Duplex } from "stream";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
-
-import { DebugLogger } from "./DebugLogger";
-import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle";
-import { getPreviewDocsDefinition } from "./previewDocs";
+import { type BunServer, createBunServer } from "./createBunServer.js";
+import { DebugLogger } from "./DebugLogger.js";
+import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
+import { getPreviewDocsDefinition } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -360,6 +364,99 @@ class SnippetDependencyTracker {
     }
 }
 
+/**
+ * Resolves the path to the Fern Docs cache directory within the standalone server bundle.
+ * The standalone server runs from `<bundleRoot>/standalone/packages/fern-docs/bundle/server.js`,
+ * so its runtime cache is written to `<bundleRoot>/standalone/packages/fern-docs/bundle/.next/cache/`.
+ */
+function getFernDocsCachePath(bundleRoot: string): string {
+    return path.join(bundleRoot, "standalone/packages/fern-docs/bundle/.next/cache");
+}
+
+/**
+ * Removes the Fern Docs cache directory.
+ */
+async function cleanFernDocsCache(bundleRoot: string, context: TaskContext): Promise<void> {
+    const cachePath = getFernDocsCachePath(bundleRoot);
+    try {
+        const cacheExists = await doesPathExist(AbsoluteFilePath.of(cachePath));
+        if (cacheExists) {
+            context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
+            await rm(cachePath, { recursive: true });
+            context.logger.debug("Fern Docs cache cleaned successfully");
+        } else {
+            context.logger.debug("No Fern Docs cache to clean");
+        }
+    } catch (err) {
+        context.logger.debug(`Failed to clean Fern Docs cache: ${err}`);
+    }
+}
+
+/**
+ * Synchronous version of cleanFernDocsCache for use in signal handlers
+ * where async operations cannot be awaited.
+ */
+function cleanFernDocsCacheSync(bundleRoot: string, context: TaskContext): void {
+    const cachePath = getFernDocsCachePath(bundleRoot);
+    try {
+        if (fs.existsSync(cachePath)) {
+            context.logger.debug(`Cleaning Fern Docs cache at ${cachePath}`);
+            fs.rmSync(cachePath, { recursive: true, maxRetries: 5, retryDelay: 500 });
+            context.logger.debug("Fern Docs cache cleaned successfully");
+        }
+    } catch (err) {
+        context.logger.debug(`Failed to clean Fern Docs cache: ${err}`);
+    }
+}
+
+/**
+ * Finds and kills any processes still listening on the given port.
+ * This is a best-effort fallback to clean up zombie Next.js worker
+ * processes that may survive after the main server process is killed.
+ */
+function killProcessesOnPort(targetPort: number, context: TaskContext): void {
+    context.logger.debug(`Killing any leftover processes on port ${targetPort}`);
+    const isWindows = process.platform === "win32";
+    const command = isWindows
+        ? `netstat -ano | findstr :${targetPort} | findstr LISTENING`
+        : `lsof -ti tcp:${targetPort}`;
+
+    try {
+        const output = execSync(command, { encoding: "utf-8", timeout: 5000 });
+
+        let pids: string[];
+        if (isWindows) {
+            pids = output
+                .trim()
+                .split("\n")
+                .map((line) => line.trim().split(/\s+/).pop() ?? "")
+                .filter((pid) => pid.length > 0 && pid !== String(process.pid));
+            pids = [...new Set(pids)];
+        } else {
+            pids = output
+                .trim()
+                .split("\n")
+                .map((pid) => pid.trim())
+                .filter((pid) => pid.length > 0 && pid !== String(process.pid));
+        }
+
+        for (const pid of pids) {
+            try {
+                context.logger.debug(`Killing leftover process ${pid} on port ${targetPort}`);
+                if (isWindows) {
+                    execSync(`taskkill /F /PID ${pid}`, { timeout: 5000 });
+                } else {
+                    process.kill(Number(pid), "SIGKILL");
+                }
+            } catch {
+                // Process may have already exited
+            }
+        }
+    } catch {
+        // Command returns non-zero when no matches are found — nothing to kill
+    }
+}
+
 export async function runAppPreviewServer({
     initialProject,
     reloadProject,
@@ -443,19 +540,34 @@ export async function runAppPreviewServer({
 
     // Initialize the debug logger for metrics collection
     const debugLogger = new DebugLogger();
-    await debugLogger.initialize();
+    await debugLogger.initialize({
+        debug: (msg) => context.logger.debug(msg),
+        info: (msg) => context.logger.info(msg)
+    });
     const debugLogPath = debugLogger.getLogFilePath();
     if (debugLogPath) {
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
     }
 
+    let bunServer: BunServer | undefined;
+
     // Set up backend server first (before Next.js) so it's ready to serve requests
     const app = express();
     const httpServer = http.createServer(app);
+
+    // Use noServer mode so we can handle upgrades explicitly.
+    // This ensures compatibility with both Node.js and Bun runtimes.
     const wss = new WebSocketServer({
-        server: httpServer,
+        noServer: true,
         clientTracking: true,
         perMessageDeflate: false
+    });
+
+    // Primary upgrade handler — works in Node.js where http.Server emits 'upgrade'.
+    httpServer.on("upgrade", (request: IncomingMessage, socket: Duplex, head: Buffer) => {
+        wss.handleUpgrade(request, socket, head, (ws) => {
+            wss.emit("connection", ws, request);
+        });
     });
 
     const connections = new Map<
@@ -468,7 +580,7 @@ export async function runAppPreviewServer({
         }
     >();
 
-    function sendData(data: unknown) {
+    let sendData: (data: unknown) => void = (data: unknown) => {
         const message = JSON.stringify(data);
         const deadConnections: WebSocket[] = [];
 
@@ -492,7 +604,7 @@ export async function runAppPreviewServer({
                 connections.delete(conn);
             }
         });
-    }
+    };
 
     wss.on("connection", function connection(ws, req) {
         const connectionId = `${req.socket.remoteAddress}:${req.socket.remotePort}-${Date.now()}`;
@@ -600,9 +712,7 @@ export async function runAppPreviewServer({
                 .catch((err) => {
                     const validationTime = Date.now() - validationStartTime;
                     void debugLogger.logCliValidation(validationTime, false);
-                    context.logger.error(
-                        `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
-                    );
+                    context.logger.error(`Validation failed (took ${validationTime}ms): ${extractErrorMessage(err)}`);
                     // Still log validation errors to help developers
                     if (err instanceof Error && err.stack) {
                         context.logger.debug(`Validation error stack: ${err.stack}`);
@@ -641,7 +751,7 @@ export async function runAppPreviewServer({
             // Log CLI reload finish even on error
             void debugLogger.logCliReloadFinish(totalTime, {
                 error: true,
-                errorMessage: err instanceof Error ? err.message : String(err)
+                errorMessage: extractErrorMessage(err)
             });
             void debugLogger.logCliMemory();
 
@@ -669,7 +779,7 @@ export async function runAppPreviewServer({
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
-    // Create watcher but don't attach the event handler yet - we'll do that after restartNextJsServer is defined
+    // Create watcher but don't attach the event handler yet - we'll do that after the Next.js server starts
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
@@ -679,21 +789,21 @@ export async function runAppPreviewServer({
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
 
+    function buildDocsLoadResponse(): DocsV2Read.LoadDocsForUrlResponse {
+        // Fall back to empty definition if the initial load failed
+        const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
+        return {
+            baseUrl: { domain: instance.host, basePath: instance.pathname },
+            definition,
+            lightModeEnabled: definition.config.colorsV3?.type !== "dark",
+            orgId: FernNavigation.OrgId(initialProject.config.organization)
+        };
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         try {
-            // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
-            const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
-            const response: DocsV2Read.LoadDocsForUrlResponse = {
-                baseUrl: {
-                    domain: instance.host,
-                    basePath: instance.pathname
-                },
-                definition,
-                lightModeEnabled: definition.config.colorsV3?.type !== "dark",
-                orgId: FernNavigation.OrgId(initialProject.config.organization)
-            };
-            res.send(response);
+            res.send(buildDocsLoadResponse());
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
@@ -705,13 +815,26 @@ export async function runAppPreviewServer({
         return res.sendFile(`/${req.params[0]}`);
     });
 
-    // Start backend server first and wait for it to be ready
-    await new Promise<void>((resolve) => {
-        httpServer.listen(backendPort, () => {
-            context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
-            resolve();
+    // Start backend server first and wait for it to be ready.
+    //
+    // In Bun, http.createServer does not emit the 'upgrade' event that
+    // the ws package relies on (re: oven-sh/bun#5951).
+    const bunHandle = createBunServer({ port: backendPort, debugLogger, getDocsLoadResponse: buildDocsLoadResponse });
+    if (bunHandle != null) {
+        sendData = bunHandle.sendData;
+        bunServer = bunHandle;
+        context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
+    } else {
+        await new Promise<void>((resolve) => {
+            httpServer.listen(backendPort, () => {
+                context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
+                resolve();
+            });
         });
-    });
+    }
+
+    // Clean Fern Docs cache from previous runs before starting the server
+    await cleanFernDocsCache(bundleRoot, context);
 
     // Now start Next.js after backend is ready
     const env = {
@@ -728,8 +851,9 @@ export async function runAppPreviewServer({
         NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
     };
 
-    // Track the current server process
+    // Track the current server process and the port it actually bound to
     let serverProcess: ReturnType<typeof runExeca> | null = null;
+    let actualPort: number = port;
 
     // Function to start the Next.js server
     const startNextJsServer = (): Promise<void> => {
@@ -742,6 +866,12 @@ export async function runAppPreviewServer({
             const checkReady = (data: Buffer) => {
                 const output = data.toString();
                 context.logger.debug(`[Next.js] ${output}`);
+
+                const portMatch = output.match(/localhost:(\d+)/);
+                if (portMatch != null) {
+                    actualPort = Number(portMatch[1]);
+                }
+
                 if (output.includes("Ready in") || output.includes("✓ Ready")) {
                     resolve();
                 }
@@ -778,46 +908,10 @@ export async function runAppPreviewServer({
         });
     };
 
-    // Function to stop the current Next.js server
-    const stopNextJsServer = (): Promise<void> => {
-        return new Promise((resolve) => {
-            if (serverProcess == null || serverProcess.killed) {
-                resolve();
-                return;
-            }
-
-            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
-            try {
-                serverProcess.kill();
-                // Give it a moment to clean up
-                setTimeout(() => {
-                    if (serverProcess != null && !serverProcess.killed) {
-                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
-                        try {
-                            serverProcess.kill("SIGKILL");
-                        } catch (err) {
-                            context.logger.error(`Failed to force kill server process: ${err}`);
-                        }
-                    }
-                    resolve();
-                }, 1000);
-            } catch (err) {
-                context.logger.error(`Failed to kill server process: ${err}`);
-                resolve();
-            }
-        });
-    };
-
-    // Function to restart the Next.js server
-    const restartNextJsServer = async (): Promise<void> => {
-        await stopNextJsServer();
-        await startNextJsServer();
-    };
-
     // Start the initial server
     await startNextJsServer();
 
-    // Now that restartNextJsServer is defined, attach the watcher event handler
+    // Attach the watcher event handler
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         // Ignore changes to .fern/logs/ directory (contains debug logs)
@@ -860,20 +954,12 @@ export async function runAppPreviewServer({
 
                 editedAbsoluteFilepaths.length = 0;
 
-                // Restart the docs server
-                context.logger.info("Restarting docs server...");
-                await restartNextJsServer();
-
-                // Wait 1 second for the server to be ready
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-
-                context.logger.info("Refreshing page. Please refresh manually if you don't see changes.");
+                isReloading = false;
 
                 sendData({
                     version: 1,
                     type: "finishReload"
                 });
-                isReloading = false;
 
                 if (reloadedDocsDefinition != null) {
                     // Detect slug changes before updating the docs definition
@@ -899,7 +985,13 @@ export async function runAppPreviewServer({
         }, RELOAD_DEBOUNCE_MS);
     });
 
+    let cleanedUp = false;
     const cleanup = () => {
+        if (cleanedUp) {
+            return;
+        }
+        cleanedUp = true;
+
         if (serverProcess != null && !serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
@@ -919,6 +1011,12 @@ export async function runAppPreviewServer({
             }
         }
 
+        killProcessesOnPort(actualPort, context);
+
+        // Clean Fern Docs cache on shutdown (sync since cleanup runs in signal handlers)
+        // Uses maxRetries to handle ENOTEMPTY if the server process is still writing
+        cleanFernDocsCacheSync(bundleRoot, context);
+
         context.logger.debug("Cleaning up WebSocket connections...");
         for (const [ws, metadata] of connections) {
             clearInterval(metadata.pingInterval);
@@ -927,7 +1025,11 @@ export async function runAppPreviewServer({
             }
         }
         connections.clear();
-        httpServer.close();
+        if (bunServer != null) {
+            bunServer.stop();
+        } else {
+            httpServer.close();
+        }
     };
 
     // handle termination signals

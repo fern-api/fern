@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoDuplicateExampleNamesRule } from "../no-duplicate-example-names";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoDuplicateExampleNamesRule } from "../no-duplicate-example-names.js";
 
 describe("no-duplicate-example-names", () => {
     it("simple", async () => {
@@ -19,12 +19,14 @@ describe("no-duplicate-example-names", () => {
                 message: "Duplicate example name: Example2",
                 nodePath: ["types", "MyObject"],
                 relativeFilepath: RelativeFilePath.of("1.yml"),
+                name: "no-duplicate-example-names",
                 severity: "fatal"
             },
             {
                 message: "Duplicate example name: Example2",
                 nodePath: ["service", "endpoints", "get"],
                 relativeFilepath: RelativeFilePath.of("1.yml"),
+                name: "no-duplicate-example-names",
                 severity: "fatal"
             }
         ]);

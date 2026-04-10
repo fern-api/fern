@@ -1,6 +1,5 @@
-import { FileDescriptorProto } from "@bufbuild/protobuf/dist/cjs/wkt/gen/google/protobuf/descriptor_pb";
-
-import { SOURCE_CODE_INFO_PATH_STARTERS } from "./PathFieldNumbers";
+import { FileDescriptorProto } from "@bufbuild/protobuf/wkt";
+import { SOURCE_CODE_INFO_PATH_STARTERS } from "./PathFieldNumbers.js";
 
 export type PathStarterValues = (typeof SOURCE_CODE_INFO_PATH_STARTERS)[keyof typeof SOURCE_CODE_INFO_PATH_STARTERS];
 

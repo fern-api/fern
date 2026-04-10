@@ -1,19 +1,24 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getExportedDirectoriesForFernFilepath, Reference } from "@fern-typescript/commons";
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
-import { DeclarationReferencer } from "./DeclarationReferencer";
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer.js";
+import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
 export const TYPES_DIRECTORY_NAME = "types";
 
-export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<DeclaredTypeName> {
-    public getExportedFilepath(typeName: DeclaredTypeName): ExportedFilePath {
+export declare namespace TypeDeclarationReferencer {
+    export type Init = AbstractDeclarationReferencer.Init;
+}
+
+export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<FernIr.DeclaredTypeName> {
+    public getExportedFilepath(typeName: FernIr.DeclaredTypeName): ExportedFilePath {
         return {
             directories: [
                 ...this.containingDirectory,
                 ...getExportedDirectoriesForFernFilepath({
                     fernFilepath: typeName.fernFilepath,
+                    caseConverter: this.case,
                     subExports: {
                         [RelativeFilePath.of(TYPES_DIRECTORY_NAME)]: {
                             exportAll: true
@@ -32,15 +37,15 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
         };
     }
 
-    public getFilename(typeName: DeclaredTypeName): string {
+    public getFilename(typeName: FernIr.DeclaredTypeName): string {
         return `${this.getExportedName(typeName)}.ts`;
     }
 
-    public getExportedName(typeName: DeclaredTypeName): string {
-        return typeName.name.pascalCase.safeName;
+    public getExportedName(typeName: FernIr.DeclaredTypeName): string {
+        return this.case.pascalSafe(typeName.name);
     }
 
-    public getReferenceToType(args: DeclarationReferencer.getReferenceTo.Options<DeclaredTypeName>): Reference {
+    public getReferenceToType(args: DeclarationReferencer.getReferenceTo.Options<FernIr.DeclaredTypeName>): Reference {
         return this.getReferenceTo(this.getExportedName(args.name), args);
     }
 }

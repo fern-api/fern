@@ -13,7 +13,7 @@
 
 ```go
 request := &fern.User{
-        Id: "id",
+        ID: "id",
         Email: "email",
         Password: "password",
         Profile: &fern.UserProfile{
@@ -54,3 +54,4 @@ client.CreateUser(
 </dd>
 </dl>
 </details>
+

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.User.GetUser(UserId) -> error</code></summary>
+<details><summary><code>client.User.GetUser(UserID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ client.User.GetUser(
 <dl>
 <dd>
 
-**userId:** `string` 
+**userID:** `string` 
 
 The ID of the user to retrieve.
 This ID is unique to each user.
@@ -140,3 +140,4 @@ This property is not required.
 </dd>
 </dl>
 </details>
+

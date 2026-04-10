@@ -5,9 +5,10 @@ import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { ScriptCommands } from "../../../config/api";
-import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
-import { ScriptRunner } from "./ScriptRunner";
+import { ScriptCommands } from "../../../config/api/index.js";
+import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces.js";
+import { resolveLocalScripts } from "../../../utils/resolveScriptsConfiguration.js";
+import { ScriptRunner } from "./ScriptRunner.js";
 
 interface InternalScriptResult {
     type: "success" | "failure";
@@ -45,7 +46,7 @@ export class LocalScriptRunner extends ScriptRunner {
             return { type: "success" };
         }
 
-        const scripts = this.workspace.workspaceConfig.scripts ?? [];
+        const scripts = resolveLocalScripts(this.workspace.workspaceConfig.scripts);
 
         let buildTimeMs: number | undefined;
         let testTimeMs: number | undefined;

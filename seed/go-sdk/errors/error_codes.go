@@ -28,9 +28,4 @@ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 			APIError: apiError,
 		}
 	},
-	500: func(apiError *core.APIError) error {
-		return &FooTooLittle{
-			APIError: apiError,
-		}
-	},
 }

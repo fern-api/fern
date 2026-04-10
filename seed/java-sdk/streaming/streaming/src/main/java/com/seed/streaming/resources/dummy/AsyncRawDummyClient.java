@@ -18,6 +18,7 @@ import com.seed.streaming.resources.dummy.requests.Generateequest;
 import com.seed.streaming.resources.dummy.types.StreamResponse;
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Headers;
@@ -68,6 +69,7 @@ public class AsyncRawDummyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
+        client = client.newBuilder().callTimeout(0, TimeUnit.SECONDS).build();
         CompletableFuture<SeedStreamingHttpResponse<Iterable<StreamResponse>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override

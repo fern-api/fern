@@ -1,9 +1,9 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock, WireMockMapping, WireMockStubMapping } from "@fern-api/mock-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration
@@ -11,9 +11,9 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
  */
 export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
 
-    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
+    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
         this.ir = ir;
     }
@@ -29,7 +29,9 @@ export class WireTestSetupGenerator {
         this.generateWireTestScript();
     }
 
-    public static getWiremockConfigContent(ir: IntermediateRepresentation) {
+    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+        // @ts-expect-error mock-utils uses ir-sdk v61 while this package uses v65;
+        // the IR is structurally compatible (v65 is a superset) so this is safe.
         return new WireMock().convertToWireMock(ir);
     }
 
@@ -39,10 +41,22 @@ export class WireTestSetupGenerator {
         // Post-process mappings to fix unit type responses
         this.fixUnitTypeResponses(wireMockConfigContent);
 
+        // Post-process mappings to strip milliseconds from datetime strings.
+        // The Rust SDK serializes datetimes using chrono's SecondsFormat::Secs,
+        // which produces "2024-01-15T09:30:00Z" (no milliseconds), but
+        // mock-utils' toISOString() produces "2024-01-15T09:30:00.000Z".
+        this.stripDatetimeMilliseconds(wireMockConfigContent);
+
+        // Add fallback mappings for bytes endpoints. mock-utils skips bytes
+        // endpoints entirely, but the SDK generates tests for them. Add a
+        // low-priority mapping (without query params) for each bytes endpoint
+        // by copying the response from a sibling endpoint at the same path.
+        this.addBytesEndpointFallbackMappings(wireMockConfigContent);
+
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
-            JSON.stringify(wireMockConfigContent)
+            JSON.stringify(wireMockConfigContent, null, 2)
         );
         this.context.project.addRawFiles(wireMockConfigFile);
         this.context.logger.debug("Generated wiremock-mappings.json for WireMock");
@@ -79,7 +93,7 @@ export class WireTestSetupGenerator {
     /**
      * Check if an endpoint returns a unit type ()
      */
-    private isUnitTypeResponse(endpoint: HttpEndpoint): boolean {
+    private isUnitTypeResponse(endpoint: FernIr.HttpEndpoint): boolean {
         // If there's no response field at all, it's not a unit type endpoint
         if (!endpoint.response) {
             return false;
@@ -129,7 +143,7 @@ export class WireTestSetupGenerator {
     /**
      * Build the URL path for an endpoint to match against WireMock mappings
      */
-    private buildEndpointPath(endpoint: HttpEndpoint): string {
+    private buildEndpointPath(endpoint: FernIr.HttpEndpoint): string {
         let path = endpoint.fullPath.head;
         for (const part of endpoint.fullPath.parts || []) {
             path += `{${part.pathParameter}}${part.tail}`;
@@ -138,6 +152,98 @@ export class WireTestSetupGenerator {
             path = "/" + path;
         }
         return path;
+    }
+
+    private static readonly DATETIME_WITH_ZERO_MILLIS_REGEX =
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.000(Z|[+-]\d{2}:\d{2})$/;
+
+    /**
+     * Strip .000 milliseconds from datetime strings in WireMock mappings.
+     * Rust's chrono serializes with SecondsFormat::Secs (no milliseconds),
+     * but JS Date.toISOString() always includes .000.
+     */
+    private stripDatetimeMilliseconds(wireMockConfig: WireMockStubMapping): void {
+        for (const mapping of wireMockConfig.mappings || []) {
+            // Strip from query parameter matchers
+            if (mapping.request.queryParameters) {
+                for (const [_key, matcher] of Object.entries(mapping.request.queryParameters)) {
+                    const m = matcher as { equalTo?: string };
+                    if (m.equalTo && WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(m.equalTo)) {
+                        m.equalTo = m.equalTo.replace(".000", "");
+                    }
+                }
+            }
+            // Strip from response body
+            if (typeof mapping.response.body === "string") {
+                mapping.response.body = mapping.response.body.replace(
+                    /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})\.000(Z|[+-]\d{2}:\d{2})/g,
+                    "$1$2"
+                );
+            }
+        }
+    }
+
+    /**
+     * Add fallback WireMock mappings for bytes endpoints.
+     *
+     * mock-utils skips endpoints with requestBody.type === "bytes" so they get
+     * no mapping. When a bytes endpoint shares a URL path with another endpoint
+     * (e.g. transcribe_file and transcribe_url both at POST /v1/listen), the
+     * bytes endpoint's test fails because the only mapping requires specific
+     * query parameters that the bytes test doesn't send.
+     *
+     * This method finds bytes endpoints, locates an existing sibling mapping
+     * at the same method+path, and adds a low-priority copy without query
+     * parameters so the bytes endpoint test can match.
+     */
+    private addBytesEndpointFallbackMappings(wireMockConfig: WireMockStubMapping): void {
+        // Collect bytes endpoints that need fallback mappings
+        const bytesEndpoints: Array<{ method: string; path: string }> = [];
+        for (const service of Object.values(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "bytes") {
+                    const path = this.buildEndpointPath(endpoint);
+                    bytesEndpoints.push({ method: endpoint.method, path });
+                }
+            }
+        }
+
+        if (bytesEndpoints.length === 0) {
+            return;
+        }
+
+        // Index existing mappings by method+path
+        const existingByKey = new Map<string, WireMockMapping>();
+        for (const mapping of wireMockConfig.mappings || []) {
+            const key = `${mapping.request.method}:${mapping.request.urlPathTemplate}`;
+            // Keep the first (highest-priority) mapping for each key
+            if (!existingByKey.has(key)) {
+                existingByKey.set(key, mapping);
+            }
+        }
+
+        // Add fallback for each bytes endpoint
+        for (const { method, path } of bytesEndpoints) {
+            const key = `${method}:${path}`;
+            const sibling = existingByKey.get(key);
+            if (sibling) {
+                // Clone the sibling but strip query parameters and set lower priority
+                const fallback: WireMockMapping = {
+                    ...sibling,
+                    id: `${sibling.id.slice(0, -4)}fb00`,
+                    name: `${sibling.name} (bytes fallback)`,
+                    uuid: `${sibling.uuid.slice(0, -4)}fb00`,
+                    priority: 5,
+                    request: {
+                        method: sibling.request.method,
+                        urlPathTemplate: sibling.request.urlPathTemplate
+                        // No queryParameters — matches any request to this path
+                    },
+                    response: { ...sibling.response }
+                };
+                wireMockConfig.mappings.push(fallback);
+            }
+        }
     }
 
     /**
@@ -164,7 +270,7 @@ export class WireTestSetupGenerator {
   wiremock:
     image: wiremock/wiremock:3.9.1
     ports:
-      - "8080:8080"
+      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
     command: ["--global-response-templating", "--verbose"]
@@ -291,8 +397,13 @@ use std::process::Command;
 use std::sync::Once;
 
 /// The base URL for WireMock
-pub const WIREMOCK_BASE_URL: &str = "http://localhost:8080";
-const WIREMOCK_ADMIN_URL: &str = "http://localhost:8080/__admin";
+pub fn get_wiremock_base_url() -> String {
+    std::env::var("WIREMOCK_URL").unwrap_or_else(|_| "http://localhost:8080".to_string())
+}
+
+fn get_wiremock_admin_url() -> String {
+    format!("{}/\_\_admin", get_wiremock_base_url())
+}
 const WIREMOCK_COMPOSE_FILE: &str = "wiremock/docker-compose.test.yml";
 
 static START: Once = Once::new();
@@ -300,7 +411,7 @@ static START: Once = Once::new();
 /// Check if WireMock is already running by hitting the health endpoint
 fn is_wiremock_running() -> bool {
     Command::new("curl")
-        .args(["-s", "-f", &format!("{}/__admin/health", WIREMOCK_BASE_URL)])
+        .args(["-s", "-f", &format!("{}/health", get_wiremock_admin_url())])
         .stdout(std::process::Stdio::null())
         .stderr(std::process::Stdio::null())
         .status()
@@ -309,10 +420,15 @@ fn is_wiremock_running() -> bool {
 }
 
 /// Called automatically when test binary loads.
-/// Starts the WireMock container if RUN_WIRE_TESTS=true and not already running.
+/// Starts the WireMock container if RUN_WIRE_TESTS=true and WIREMOCK_URL is not already set.
 #[ctor::ctor]
 fn start_wiremock() {
     if std::env::var("RUN_WIRE_TESTS").as_deref() == Ok("true") {
+        // If WIREMOCK_URL is already set (external orchestration), skip container management
+        if std::env::var("WIREMOCK_URL").is_ok() {
+            return;
+        }
+
         START.call_once(|| {
             // Check if docker-compose file exists
             if !std::path::Path::new(WIREMOCK_COMPOSE_FILE).exists() {
@@ -333,6 +449,23 @@ fn start_wiremock() {
 
             if let Err(e) = status {
                 eprintln!("Failed to start WireMock container: {}", e);
+                return;
+            }
+
+            // Discover the dynamically assigned port and set WIREMOCK_URL
+            let port_output = Command::new("docker")
+                .args(["compose", "-f", WIREMOCK_COMPOSE_FILE, "port", "wiremock", "8080"])
+                .output();
+
+            if let Ok(output) = port_output {
+                let port_str = String::from_utf8_lossy(&output.stdout);
+                let port_str = port_str.trim();
+                if let Some(port) = port_str.split(':').last() {
+                    let url = format!("http://localhost:{}", port.trim());
+                    // Set the env var so get_wiremock_base_url() picks it up
+                    std::env::set_var("WIREMOCK_URL", &url);
+                    println!("WireMock container is ready at {}", url);
+                }
             }
         });
     }
@@ -351,7 +484,7 @@ fn start_wiremock() {
 /// Returns Ok(()) on success, or an error if the reset fails.
 pub async fn reset_wiremock_requests() -> Result<(), Box<dyn std::error::Error>> {
     Client::new()
-        .delete(format!("{}/requests", WIREMOCK_ADMIN_URL))
+        .delete(format!("{}/requests", get_wiremock_admin_url()))
         .send()
         .await?;
     Ok(())
@@ -387,7 +520,7 @@ pub async fn verify_request_count(
     }
 
     let response = Client::new()
-        .post(format!("{}/requests/find", WIREMOCK_ADMIN_URL))
+        .post(format!("{}/requests/find", get_wiremock_admin_url()))
         .json(&request_body)
         .send()
         .await?;

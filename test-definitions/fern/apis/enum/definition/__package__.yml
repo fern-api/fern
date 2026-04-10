@@ -37,6 +37,22 @@ types:
       - name: Red
         value: "red"
 
+  ForwardCompatibleEnum:
+    docs: |
+      Tests forward-compatible enums that accept
+      both known values and arbitrary strings.
+    enum:
+      - value: "active"
+        name: ACTIVE
+      - value: "inactive"
+        name: INACTIVE
+    forward-compatible: true
+    examples:
+      - name: Active
+        value: "active"
+      - name: Inactive
+        value: "inactive"
+
   EnumWithSpecialCharacters:
     enum:
       - value: "\\$bla"

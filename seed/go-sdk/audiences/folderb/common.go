@@ -15,7 +15,7 @@ var (
 )
 
 type Foo struct {
-	Foo *folderc.FolderCFoo `json:"foo,omitempty" url:"foo,omitempty"`
+	Foo *folderc.FolderCfoo `json:"foo,omitempty" url:"foo,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -24,7 +24,7 @@ type Foo struct {
 	rawJSON         json.RawMessage
 }
 
-func (f *Foo) GetFoo() *folderc.FolderCFoo {
+func (f *Foo) GetFoo() *folderc.FolderCfoo {
 	if f == nil {
 		return nil
 	}
@@ -32,6 +32,9 @@ func (f *Foo) GetFoo() *folderc.FolderCFoo {
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -44,7 +47,7 @@ func (f *Foo) require(field *big.Int) {
 
 // SetFoo sets the Foo field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (f *Foo) SetFoo(foo *folderc.FolderCFoo) {
+func (f *Foo) SetFoo(foo *folderc.FolderCfoo) {
 	f.Foo = foo
 	f.require(fooFieldFoo)
 }
@@ -77,6 +80,9 @@ func (f *Foo) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Foo) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value

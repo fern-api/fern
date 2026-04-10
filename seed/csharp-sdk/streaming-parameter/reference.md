@@ -39,3 +39,4 @@ client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 }
 </dd>
 </dl>
 </details>
+

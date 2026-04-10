@@ -1,10 +1,10 @@
-import { Access } from "./Access";
-import { CodeBlock } from "./CodeBlock";
-import { Comment } from "./Comment";
-import { AstNode } from "./core/AstNode";
-import { Writer } from "./core/Writer";
-import { Type } from "./Type";
-import { convertToPhpVariableName } from "./utils/convertToPhpVariableName";
+import { Access } from "./Access.js";
+import { CodeBlock } from "./CodeBlock.js";
+import { Comment } from "./Comment.js";
+import { AstNode } from "./core/AstNode.js";
+import { Writer } from "./core/Writer.js";
+import { Type } from "./Type.js";
+import { convertToPhpVariableName } from "./utils/convertToPhpVariableName.js";
 
 export declare namespace Parameter {
     interface Args {

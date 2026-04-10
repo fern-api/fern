@@ -5,12 +5,13 @@ package objectswithimports
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	commons "github.com/objects-with-imports/fern/commons"
 	internal "github.com/objects-with-imports/fern/internal"
 )
 
 type Node struct {
-	Id       string            `json:"id" url:"id"`
+	ID       string            `json:"id" url:"id"`
 	Label    *string           `json:"label,omitempty" url:"label,omitempty"`
 	Metadata *commons.Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
 
@@ -18,11 +19,11 @@ type Node struct {
 	rawJSON         json.RawMessage
 }
 
-func (n *Node) GetId() string {
+func (n *Node) GetID() string {
 	if n == nil {
 		return ""
 	}
-	return n.Id
+	return n.ID
 }
 
 func (n *Node) GetLabel() *string {

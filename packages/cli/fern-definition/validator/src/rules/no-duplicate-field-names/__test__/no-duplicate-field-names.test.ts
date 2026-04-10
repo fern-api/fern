@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoDuplicateFieldNamesRule } from "../no-duplicate-field-names";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { NoDuplicateFieldNamesRule } from "../no-duplicate-field-names.js";
 
 describe("no-duplicate-field-names", () => {
     it("simple", async () => {
@@ -16,6 +16,7 @@ describe("no-duplicate-field-names", () => {
 
         expect(violations).toEqual([
             {
+                name: "no-duplicate-field-names",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "ObjectWithDuplicateNames"],
@@ -24,6 +25,7 @@ describe("no-duplicate-field-names", () => {
   - ObjectWithDuplicateNames -> c`
             },
             {
+                name: "no-duplicate-field-names",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "ObjectWithDuplicatedNameDirectAndByExtension"],
@@ -32,6 +34,7 @@ describe("no-duplicate-field-names", () => {
   - ObjectWithDuplicatedNameDirectAndByExtension -> (extends) blog.BlogPostAlias -> (alias of) BlogPost -> blogPostName`
             },
             {
+                name: "no-duplicate-field-names",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "ObjectWithDuplicatedNameFooByDifferentExtensions"],
@@ -40,6 +43,7 @@ describe("no-duplicate-field-names", () => {
   - ObjectWithDuplicatedNameFooByDifferentExtensions -> (extends) ObjectWithFooAndBarProperties -> propertyWithFooName`
             },
             {
+                name: "no-duplicate-field-names",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["types", "EnumWithDuplicates"],

@@ -1,19 +1,24 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getExportedDirectoriesForFernFilepath, Reference } from "@fern-typescript/commons";
 
-import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
-import { DeclarationReferencer } from "./DeclarationReferencer";
+import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer.js";
+import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
 export const ERRORS_DIRECTORY_NAME = "errors";
 
-export class SdkErrorDeclarationReferencer extends AbstractDeclarationReferencer<DeclaredErrorName> {
-    public getExportedFilepath(errorName: DeclaredErrorName): ExportedFilePath {
+export declare namespace SdkErrorDeclarationReferencer {
+    export type Init = AbstractDeclarationReferencer.Init;
+}
+
+export class SdkErrorDeclarationReferencer extends AbstractDeclarationReferencer<FernIr.DeclaredErrorName> {
+    public getExportedFilepath(errorName: FernIr.DeclaredErrorName): ExportedFilePath {
         return {
             directories: [
                 ...this.containingDirectory,
                 ...getExportedDirectoriesForFernFilepath({
                     fernFilepath: errorName.fernFilepath,
+                    caseConverter: this.case,
                     subExports: {
                         [RelativeFilePath.of(ERRORS_DIRECTORY_NAME)]: {
                             exportAll: true
@@ -32,15 +37,17 @@ export class SdkErrorDeclarationReferencer extends AbstractDeclarationReferencer
         };
     }
 
-    public getFilename(errorName: DeclaredErrorName): string {
+    public getFilename(errorName: FernIr.DeclaredErrorName): string {
         return `${this.getExportedName(errorName)}.ts`;
     }
 
-    public getExportedName(errorName: DeclaredErrorName): string {
-        return errorName.name.pascalCase.unsafeName;
+    public getExportedName(errorName: FernIr.DeclaredErrorName): string {
+        return this.case.pascalUnsafe(errorName.name);
     }
 
-    public getReferenceToError(args: DeclarationReferencer.getReferenceTo.Options<DeclaredErrorName>): Reference {
+    public getReferenceToError(
+        args: DeclarationReferencer.getReferenceTo.Options<FernIr.DeclaredErrorName>
+    ): Reference {
         return this.getReferenceTo(this.getExportedName(args.name), args);
     }
 }

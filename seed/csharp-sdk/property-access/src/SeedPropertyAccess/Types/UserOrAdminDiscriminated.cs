@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedPropertyAccess.Core;
 
 namespace SeedPropertyAccess;
@@ -87,7 +87,7 @@ public record UserOrAdminDiscriminated
     public SeedPropertyAccess.User AsUser() =>
         IsUser
             ? (SeedPropertyAccess.User)Value!
-            : throw new System.Exception("UserOrAdminDiscriminated.Type is not 'user'");
+            : throw new global::System.Exception("UserOrAdminDiscriminated.Type is not 'user'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedPropertyAccess.Admin"/> if <see cref="Type"/> is 'admin', otherwise throws an exception.
@@ -96,7 +96,7 @@ public record UserOrAdminDiscriminated
     public SeedPropertyAccess.Admin AsAdmin() =>
         IsAdmin
             ? (SeedPropertyAccess.Admin)Value!
-            : throw new System.Exception("UserOrAdminDiscriminated.Type is not 'admin'");
+            : throw new global::System.Exception("UserOrAdminDiscriminated.Type is not 'admin'");
 
     /// <summary>
     /// Returns the value as a <see cref="object"/> if <see cref="Type"/> is 'empty', otherwise throws an exception.
@@ -105,7 +105,7 @@ public record UserOrAdminDiscriminated
     public object AsEmpty() =>
         IsEmpty
             ? Value!
-            : throw new System.Exception("UserOrAdminDiscriminated.Type is not 'empty'");
+            : throw new global::System.Exception("UserOrAdminDiscriminated.Type is not 'empty'");
 
     public T Match<T>(
         Func<SeedPropertyAccess.User, T> onUser,
@@ -207,12 +207,12 @@ public record UserOrAdminDiscriminated
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UserOrAdminDiscriminated>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UserOrAdminDiscriminated).IsAssignableFrom(typeToConvert);
 
         public override UserOrAdminDiscriminated Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -237,12 +237,18 @@ public record UserOrAdminDiscriminated
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "user" => json.Deserialize<SeedPropertyAccess.User?>(options)
+                "user" => jsonWithoutDiscriminator.Deserialize<SeedPropertyAccess.User?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.User"),
                 "admin" => json.GetProperty("admin").Deserialize<SeedPropertyAccess.Admin?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.Admin"),
+                    ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.Admin"),
                 "empty" => new { },
                 _ => json.Deserialize<object?>(options),
             };
@@ -293,6 +299,27 @@ public record UserOrAdminDiscriminated
                 json[property.Key] = property.Value;
             }
             json.WriteTo(writer, options);
+        }
+
+        public override UserOrAdminDiscriminated ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new UserOrAdminDiscriminated(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UserOrAdminDiscriminated value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

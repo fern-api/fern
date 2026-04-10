@@ -6,7 +6,7 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import { PNG } from "pngjs";
 import { Browser, launch } from "puppeteer";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 interface FileSlugMapping {
     filePath: string;

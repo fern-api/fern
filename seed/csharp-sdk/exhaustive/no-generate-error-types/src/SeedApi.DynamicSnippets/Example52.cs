@@ -12,12 +12,8 @@ public class Example52
             }
         );
 
-        await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-            new ReqWithHeaders {
-                XTestServiceHeader = "X-TEST-SERVICE-HEADER",
-                XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
-                Body = "string"
-            }
+        await client.Endpoints.Primitive.GetAndReturnUuidAsync(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
         );
     }
 

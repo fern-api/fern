@@ -13,6 +13,7 @@ import { MultipartFormDataWebhookPayload } from "./MultipartFormDataWebhookPaylo
 import { Response } from "./Response.js";
 import { WebhookExampleCall } from "./WebhookExampleCall.js";
 import { WebhookHttpMethod } from "./WebhookHttpMethod.js";
+import { WebhookSignatureVerification } from "./WebhookSignatureVerification.js";
 
 export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, FernOpenapiIr.Webhook> =
     core.serialization
@@ -28,6 +29,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, F
             payload: core.serialization.lazy(() => serializers.Schema),
             multipartFormData: MultipartFormDataWebhookPayload.optional(),
             response: Response.optional(),
+            signatureVerification: WebhookSignatureVerification.optional(),
             examples: core.serialization.list(WebhookExampleCall),
         })
         .extend(WithDescription)
@@ -47,6 +49,7 @@ export declare namespace Webhook {
         payload: serializers.Schema.Raw;
         multipartFormData?: MultipartFormDataWebhookPayload.Raw | null;
         response?: Response.Raw | null;
+        signatureVerification?: WebhookSignatureVerification.Raw | null;
         examples: WebhookExampleCall.Raw[];
     }
 }

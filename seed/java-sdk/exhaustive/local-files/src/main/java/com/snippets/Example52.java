@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.reqwithheaders.requests.ReqWithHeaders;
+import java.util.UUID;
 
 public class Example52 {
     public static void main(String[] args) {
@@ -11,13 +11,6 @@ public class Example52 {
             .url("https://api.fern.com")
             .build();
 
-        client.reqWithHeaders().getWithCustomHeader(
-            ReqWithHeaders
-                .builder()
-                .xTestServiceHeader("X-TEST-SERVICE-HEADER")
-                .xTestEndpointHeader("X-TEST-ENDPOINT-HEADER")
-                .body("string")
-                .build()
-        );
+        client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"));
     }
 }

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-&gt;service-&gt;getWithBearerToken() -> string</code></summary>
+<details><summary><code>$client-&gt;service-&gt;getWithBearerToken() -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -38,3 +38,4 @@ $client->service->getWithBearerToken();
 </dd>
 </dl>
 </details>
+

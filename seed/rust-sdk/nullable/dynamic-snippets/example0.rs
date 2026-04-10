@@ -14,8 +14,8 @@ async fn main() {
                 usernames: vec![Some("usernames".to_string())],
                 avatar: Some("avatar".to_string()),
                 activated: vec![Some(true)],
-                tags: vec![Some(Some("tags".to_string()))],
-                extra: Some(Some(true)),
+                tags: vec![Some("tags".to_string())],
+                extra: Some(true),
             },
             None,
         )

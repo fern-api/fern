@@ -2,7 +2,6 @@ package com.fern.java.client.generators;
 
 import com.fern.ir.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.model.environment.EnvironmentId;
-import com.fern.ir.model.environment.EnvironmentUrl;
 import com.fern.ir.model.environment.Environments;
 import com.fern.ir.model.environment.EnvironmentsConfig;
 import com.fern.ir.model.environment.MultipleBaseUrlsEnvironment;
@@ -96,9 +95,11 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
             for (SingleBaseUrlEnvironment environment : singleBaseUrl.getEnvironments()) {
                 optionsPresent = true;
                 String constant = environment.getName().getScreamingSnakeCase().getSafeName();
+                String envUrl =
+                        environment.getDefaultUrl().orElse(environment.getUrl().get());
                 environmentsBuilder.addField(
                         FieldSpec.builder(className, constant, Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                                .initializer("new $T($S)", className, environment.getUrl())
+                                .initializer("new $T($S)", className, envUrl)
                                 .build());
                 if (defaultEnvironmentId.isPresent()
                         && defaultEnvironmentId.get().equals(environment.getId())) {
@@ -147,8 +148,16 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
             for (MultipleBaseUrlsEnvironment environment : multipleBaseUrls.getEnvironments()) {
                 optionsPresent = true;
                 String args = multipleBaseUrls.getBaseUrls().stream()
-                        .map(baseUrlWithId -> environment.getUrls().get(baseUrlWithId.getId()))
-                        .map(EnvironmentUrl::get)
+                        .map(baseUrlWithId -> {
+                            if (environment.getDefaultUrls().isPresent()
+                                    && environment.getDefaultUrls().get().containsKey(baseUrlWithId.getId())) {
+                                return environment.getDefaultUrls().get().get(baseUrlWithId.getId());
+                            }
+                            return environment
+                                    .getUrls()
+                                    .get(baseUrlWithId.getId())
+                                    .get();
+                        })
                         .map(url -> "\"" + url + "\"")
                         .collect(Collectors.joining(","));
                 String constant = environment.getName().getScreamingSnakeCase().getSafeName();

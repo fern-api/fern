@@ -11,8 +11,8 @@ import path from "path";
 import Watcher from "watcher";
 import { type WebSocket, WebSocketServer } from "ws";
 
-import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
-import { getPreviewDocsDefinition } from "./previewDocs";
+import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle.js";
+import { getPreviewDocsDefinition } from "./previewDocs.js";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},

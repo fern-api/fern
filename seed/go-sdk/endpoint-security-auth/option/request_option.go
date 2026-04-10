@@ -63,6 +63,15 @@ func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 	}
 }
 
+// WithMaxStreamBufSize configures the maximum buffer size for streaming responses.
+// This controls the maximum size of a single message (in bytes) that the stream
+// can process. By default, this is set to 1MB.
+func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
+	return &core.MaxBufSizeOption{
+		MaxBufSize: size,
+	}
+}
+
 // WithToken sets the 'Authorization: Bearer <token>' request header.
 func WithToken(token string) *core.TokenOption {
 	return &core.TokenOption{
@@ -70,10 +79,10 @@ func WithToken(token string) *core.TokenOption {
 	}
 }
 
-// WithApiKey sets the apiKey auth request header.
-func WithApiKey(apiKey string) *core.ApiKeyOption {
-	return &core.ApiKeyOption{
-		ApiKey: apiKey,
+// WithAPIKey sets the apiKey auth request header.
+func WithAPIKey(apiKey string) *core.APIKeyOption {
+	return &core.APIKeyOption{
+		APIKey: apiKey,
 	}
 }
 

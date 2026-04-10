@@ -1,34 +1,30 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import {
-    ErrorDiscriminationStrategy,
-    HttpEndpoint,
-    HttpService,
-    PrimitiveTypeV1,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
-import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedSdkEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 
-import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
-import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl";
-import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
-import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl";
-import { StatusCodeDiscriminatedEndpointErrorSchema } from "./StatusCodeDiscriminatedEndpointErrorSchema";
+import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema.js";
+import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl.js";
+import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema.js";
+import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl.js";
+import { StatusCodeDiscriminatedEndpointErrorSchema } from "./StatusCodeDiscriminatedEndpointErrorSchema.js";
 
 export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
     export interface Init {
         packageId: PackageId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
         errorResolver: ErrorResolver;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
         shouldGenerateErrors: boolean;
         skipResponseValidation: boolean;
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
         omitUndefined: boolean;
+        caseConverter: CaseConverter;
     }
 }
 
@@ -37,7 +33,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private static RESPONSE_SCHEMA_NAME = "Response";
     private static STREAM_DATA_SCHEMA_NAME = "StreamData";
 
-    private endpoint: HttpEndpoint;
+    private endpoint: FernIr.HttpEndpoint;
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private generatedStreamDataSchema: GeneratedEndpointTypeSchemaImpl | undefined;
@@ -46,6 +42,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
     private omitUndefined: boolean;
+    private case: CaseConverter;
 
     constructor({
         packageId,
@@ -57,13 +54,15 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         skipResponseValidation,
         includeSerdeLayer,
         allowExtraFields,
-        omitUndefined
+        omitUndefined,
+        caseConverter
     }: GeneratedSdkEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.skipResponseValidation = skipResponseValidation;
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
         this.omitUndefined = omitUndefined;
+        this.case = caseConverter;
 
         if (this.includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined
@@ -145,7 +144,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                       packageId,
                       endpoint,
                       errorResolver,
-                      errorDiscriminationStrategy
+                      errorDiscriminationStrategy,
+                      caseConverter
                   })
                 : undefined;
         }
@@ -155,29 +155,32 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         packageId,
         endpoint,
         errorResolver,
-        errorDiscriminationStrategy
+        errorDiscriminationStrategy,
+        caseConverter
     }: {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         errorResolver: ErrorResolver;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
+        caseConverter: CaseConverter;
     }): GeneratedEndpointErrorSchema {
-        return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
+        return FernIr.ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
             property: (propertyDiscriminationStrategy) =>
                 new GeneratedEndpointErrorSchemaImpl({
                     packageId,
                     endpoint,
                     errorResolver,
-                    discriminationStrategy: propertyDiscriminationStrategy
+                    discriminationStrategy: propertyDiscriminationStrategy,
+                    caseConverter
                 }),
             statusCode: () => StatusCodeDiscriminatedEndpointErrorSchema,
             _other: () => {
-                throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
+                throw new Error("Unknown FernIr.ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
             }
         });
     }
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         if (this.generatedRequestSchema != null) {
             this.generatedRequestSchema.writeSchemaToFile(context);
             context.sourceFile.addStatements("\n");
@@ -196,21 +199,21 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         this.generatedSdkErrorSchema?.writeToFile(context);
     }
 
-    public getReferenceToRawResponse(context: SdkContext): ts.TypeNode {
+    public getReferenceToRawResponse(context: FileContext): ts.TypeNode {
         if (this.generatedResponseSchema == null) {
             throw new Error("No response schema was generated");
         }
         return this.generatedResponseSchema.getReferenceToRawShape(context);
     }
 
-    public getReferenceToRawError(context: SdkContext): ts.TypeNode {
+    public getReferenceToRawError(context: FileContext): ts.TypeNode {
         if (this.generatedSdkErrorSchema == null) {
             throw new Error("Cannot get reference to raw endpoint error because it is not defined.");
         }
         return this.generatedSdkErrorSchema.getReferenceToRawShape(context);
     }
 
-    public serializeRequest(referenceToParsedRequest: ts.Expression, context: SdkContext): ts.Expression {
+    public serializeRequest(referenceToParsedRequest: ts.Expression, context: FileContext): ts.Expression {
         if (this.endpoint.requestBody?.type !== "reference") {
             throw new Error("Cannot serialize request because it's not a reference");
         }
@@ -253,7 +256,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         }
     }
 
-    public deserializeResponse(referenceToRawResponse: ts.Expression, context: SdkContext): ts.Expression {
+    public deserializeResponse(referenceToRawResponse: ts.Expression, context: FileContext): ts.Expression {
         if (this.endpoint.response?.body == null) {
             throw new Error("Cannot deserialize response because it's not defined");
         }
@@ -270,8 +273,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         if (this.endpoint.response.body.type === "text") {
             return ts.factory.createAsExpression(
                 referenceToRawResponse,
-                context.type.getReferenceToType(TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined }))
-                    .typeNode
+                context.type.getReferenceToType(
+                    FernIr.TypeReference.primitive({ v1: FernIr.PrimitiveTypeV1.String, v2: undefined })
+                ).typeNode
             );
         }
 
@@ -320,7 +324,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         }
     }
 
-    public deserializeError(referenceToRawError: ts.Expression, context: SdkContext): ts.Expression {
+    public deserializeError(referenceToRawError: ts.Expression, context: FileContext): ts.Expression {
         if (!this.includeSerdeLayer) {
             return referenceToRawError;
         }
@@ -342,7 +346,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         context
     }: {
         referenceToRawStreamData: ts.Expression;
-        context: SdkContext;
+        context: FileContext;
     }): ts.Expression {
         if (this.endpoint.response?.body?.type !== "streaming") {
             throw new Error("Cannot deserialize stream data because it's not defined");

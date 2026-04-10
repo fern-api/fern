@@ -2,7 +2,7 @@ import enum
 
 from fern_python.codegen import AST
 
-PYDANTIC_CORE_DEPENDENCY = AST.Dependency(name="pydantic-core", version=">=2.18.2")
+PYDANTIC_CORE_DEPENDENCY = AST.Dependency(name="pydantic-core", version=">=2.18.2,<2.44.0")
 PYDANTIC_DEPENDENCY = AST.Dependency(name="pydantic", version=">= 1.9.2")
 PYDANTIC_V1_DEPENDENCY = AST.Dependency(name="pydantic", version=">= 1.9.2,<= 1.10.14")
 PYDANTIC_V2_DEPENDENCY = AST.Dependency(name="pydantic", version=">= 2.0.0")
@@ -87,6 +87,18 @@ class Pydantic:
             return "model_validate"
         # V1 and V1_ON_V2 use parse_obj
         return "parse_obj"
+
+    def ValidationError(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            import_=AST.ReferenceImport(
+                module=AST.Module.external(
+                    dependency=_get_dependency(self.version_compatibility),
+                    module_path=_get_module_path(self.version_compatibility),
+                ),
+                named_import="ValidationError",
+            ),
+            qualified_name_excluding_import=(),
+        )
 
     @property
     def extra(self) -> "Pydantic.Extra":

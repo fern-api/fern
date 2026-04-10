@@ -1,4 +1,4 @@
-import { type Generation } from "./context/generation-info";
+import { type Generation } from "./context/generation-info.js";
 
 /**
  * A trivial class of convenience properties that a generator class can inherit from to gain access to the portable context features.
@@ -12,6 +12,10 @@ export class WithGeneration {
     /** Provides access to C# code generation utilities */
     protected get csharp() {
         return this.generation.csharp;
+    }
+
+    protected get case() {
+        return this.generation.case;
     }
 
     /** Provides access to generation settings and configuration */

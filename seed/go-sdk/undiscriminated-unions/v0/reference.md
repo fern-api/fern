@@ -324,3 +324,4 @@ client.Union.TestCamelCaseProperties(
 </dd>
 </dl>
 </details>
+

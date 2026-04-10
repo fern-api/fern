@@ -1,4 +1,3 @@
 pub mod echo_request;
 
-pub use echo_request::{EchoRequest};
-
+pub use echo_request::EchoRequest;

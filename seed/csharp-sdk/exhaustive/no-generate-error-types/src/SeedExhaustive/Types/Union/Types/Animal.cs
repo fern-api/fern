@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types;
@@ -64,7 +64,7 @@ public record Animal
     public SeedExhaustive.Types.Dog AsDog() =>
         IsDog
             ? (SeedExhaustive.Types.Dog)Value!
-            : throw new System.Exception("Animal.Animal_ is not 'dog'");
+            : throw new global::System.Exception("Animal.Animal_ is not 'dog'");
 
     /// <summary>
     /// Returns the value as a <see cref="SeedExhaustive.Types.Cat"/> if <see cref="Animal_"/> is 'cat', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record Animal
     public SeedExhaustive.Types.Cat AsCat() =>
         IsCat
             ? (SeedExhaustive.Types.Cat)Value!
-            : throw new System.Exception("Animal.Animal_ is not 'cat'");
+            : throw new global::System.Exception("Animal.Animal_ is not 'cat'");
 
     public T Match<T>(
         Func<SeedExhaustive.Types.Dog, T> onDog,
@@ -146,12 +146,12 @@ public record Animal
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<Animal>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(Animal).IsAssignableFrom(typeToConvert);
 
         public override Animal Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -176,11 +176,17 @@ public record Animal
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'animal' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("animal");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "dog" => json.Deserialize<SeedExhaustive.Types.Dog?>(options)
+                "dog" => jsonWithoutDiscriminator.Deserialize<SeedExhaustive.Types.Dog?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedExhaustive.Types.Dog"),
-                "cat" => json.Deserialize<SeedExhaustive.Types.Cat?>(options)
+                "cat" => jsonWithoutDiscriminator.Deserialize<SeedExhaustive.Types.Cat?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedExhaustive.Types.Cat"),
                 _ => json.Deserialize<object?>(options),
             };
@@ -202,6 +208,27 @@ public record Animal
                 } ?? new JsonObject();
             json["animal"] = value.Animal_;
             json.WriteTo(writer, options);
+        }
+
+        public override Animal ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new Animal(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            Animal value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Animal_);
         }
     }
 

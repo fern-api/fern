@@ -1,21 +1,22 @@
 import { schemas } from "@fern-api/config";
+import { addDefaultDockerOrgIfNotPresent } from "@fern-api/configuration-loader";
 import type { Logger } from "@fern-api/logger";
 import { isNullish, type Sourced } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
-import { DEFAULT_API_NAME } from "../../../api/config/converter/ApiDefinitionConverter";
-import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader";
-import type { DockerImageReference } from "../DockerImageReference";
-import { LANGUAGES, type Language } from "../Language";
-import type { SdkConfig } from "../SdkConfig";
-import type { Target } from "../Target";
-import { getImageReferenceFromLanguage } from "./getImageReferenceFromLanguage";
-import { getLanguageFromImage } from "./getLanguageFromImage";
+import { DEFAULT_API_NAME } from "../../../api/config/converter/ApiDefinitionConverter.js";
+import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
+import { LANGUAGES, type Language } from "../Language.js";
+import type { SdkConfig } from "../SdkConfig.js";
+import type { Target } from "../Target.js";
+import { getImageReferenceFromLanguage } from "./getImageReferenceFromLanguage.js";
+import { getLanguageFromImage } from "./getLanguageFromImage.js";
 
 export namespace SdkConfigConverter {
     export interface GeneratorInfo {
         lang: Language;
         image: string;
         version: string;
+        registry: string | undefined;
     }
 
     export type Result = Success | Failure;
@@ -51,13 +52,7 @@ export class SdkConfigConverter {
      * @param sourced - The sourced fern.yml schema with source location tracking.
      * @returns Result with either the converted config or validation issues.
      */
-    public convert({ fernYml }: { fernYml: FernYmlSchemaLoader.Result }): SdkConfigConverter.Result {
-        if (!fernYml.success) {
-            return {
-                success: false,
-                issues: fernYml.issues
-            };
-        }
+    public convert({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): SdkConfigConverter.Result {
         const sdks = fernYml.data.sdks;
         const sourced = fernYml.sourced.sdks;
         if (sdks == null || isNullish(sourced)) {
@@ -69,9 +64,11 @@ export class SdkConfigConverter {
         const config: SdkConfig = {
             org: fernYml.data.org,
             defaultGroup: sdks.defaultGroup,
+            defaultGroupLocation: sourced.defaultGroup?.$loc,
             targets: this.convertTargets({
                 targetsConfig: sdks.targets,
-                sourced: sourced.targets
+                sourced: sourced.targets,
+                globalReadme: sdks.readme
             })
         };
         if (this.issues.length > 0) {
@@ -88,10 +85,12 @@ export class SdkConfigConverter {
 
     private convertTargets({
         targetsConfig,
-        sourced
+        sourced,
+        globalReadme
     }: {
         targetsConfig: Record<string, schemas.SdkTargetSchema>;
         sourced: Sourced<Record<string, schemas.SdkTargetSchema>>;
+        globalReadme: schemas.ReadmeSchema | undefined;
     }): Target[] {
         const targets: Target[] = [];
         for (const [name, target] of Object.entries(targetsConfig)) {
@@ -102,7 +101,8 @@ export class SdkConfigConverter {
             const converted = this.convertTarget({
                 name,
                 target,
-                sourced: sourcedTarget
+                sourced: sourcedTarget,
+                globalReadme
             });
             if (converted != null) {
                 targets.push(converted);
@@ -114,28 +114,57 @@ export class SdkConfigConverter {
     private convertTarget({
         name,
         target,
-        sourced
+        sourced,
+        globalReadme
     }: {
         name: string;
         target: schemas.SdkTargetSchema;
         sourced: Sourced<schemas.SdkTargetSchema>;
+        globalReadme: schemas.ReadmeSchema | undefined;
     }): Target | undefined {
         const generatorInfo = this.resolveGeneratorInfo({ name, target, sourced });
         if (generatorInfo == null) {
             return undefined;
         }
+        const readme = this.mergeReadme({ globalReadme, targetReadme: target.readme });
         return {
             name,
             lang: generatorInfo.lang,
             image: generatorInfo.image,
+            registry: generatorInfo.registry,
             version: generatorInfo.version,
             api: this.resolveApi({ api: target.api }),
+            sourceLocation: sourced.$loc,
             config: target.config != null ? this.convertConfig(target.config) : undefined,
-            output: target.output,
+            output: schemas.resolveOutputObjectSchema(target.output),
             publish: target.publish,
             groups: target.group ?? [],
-            metadata: target.metadata
+            metadata: target.metadata,
+            readme
         };
+    }
+
+    private mergeReadme({
+        globalReadme,
+        targetReadme
+    }: {
+        globalReadme: schemas.ReadmeSchema | undefined;
+        targetReadme: schemas.ReadmeSchema | undefined;
+    }): schemas.ReadmeSchema | undefined {
+        if (globalReadme == null && targetReadme == null) {
+            return undefined;
+        }
+        if (globalReadme == null) {
+            return targetReadme;
+        }
+        if (targetReadme == null) {
+            return globalReadme;
+        }
+        const merged: schemas.ReadmeSchema = { ...globalReadme, ...targetReadme };
+        if (globalReadme.customSections != null || targetReadme.customSections != null) {
+            merged.customSections = [...(globalReadme.customSections ?? []), ...(targetReadme.customSections ?? [])];
+        }
+        return merged;
     }
 
     private resolveApi({ api }: { api: string | undefined }): string {
@@ -155,11 +184,35 @@ export class SdkConfigConverter {
         if (lang == null) {
             return undefined;
         }
-        const resolvedDockerImage = this.resolveDockerImage({ name, lang, version: target.version });
+
+        // If user specified an explicit image, normalize with the fernapi/ Docker Hub
+        // org prefix so that IR version resolution (which expects fully-qualified names
+        // like "fernapi/fern-typescript-sdk") works correctly.
+        if (target.image != null) {
+            if (typeof target.image === "string") {
+                return {
+                    lang,
+                    image: addDefaultDockerOrgIfNotPresent(target.image),
+                    version: target.version ?? "latest",
+                    registry: undefined
+                };
+            }
+            // Object form: { name, registry }
+            return {
+                lang,
+                image: addDefaultDockerOrgIfNotPresent(target.image.name),
+                version: target.version ?? "latest",
+                registry: target.image.registry
+            };
+        }
+
+        // Default: resolve from language
+        const resolvedDockerImage = getImageReferenceFromLanguage({ lang, version: target.version });
         return {
             lang,
             image: resolvedDockerImage.image,
-            version: resolvedDockerImage.tag
+            version: resolvedDockerImage.tag,
+            registry: undefined
         };
     }
 
@@ -182,7 +235,8 @@ export class SdkConfigConverter {
             return target.lang;
         }
         if (target.image != null) {
-            return getLanguageFromImage({ image: target.image });
+            const imageName = typeof target.image === "string" ? target.image : target.image.name;
+            return getLanguageFromImage({ image: addDefaultDockerOrgIfNotPresent(imageName) });
         }
         const lang: Language = name as Language;
         if (LANGUAGES.includes(lang)) {
@@ -197,21 +251,5 @@ export class SdkConfigConverter {
             })
         );
         return undefined;
-    }
-
-    private resolveDockerImage({
-        name,
-        lang,
-        version
-    }: {
-        name: string;
-        lang: Language;
-        version: string | undefined;
-    }): DockerImageReference {
-        const dockerImage = getImageReferenceFromLanguage({ lang, version });
-        if (version == null) {
-            this.logger.debug(`Target "${name}" has no version specified, using ${dockerImage}`);
-        }
-        return dockerImage;
     }
 }

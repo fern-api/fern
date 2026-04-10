@@ -4,6 +4,7 @@ package service
 
 import (
 	context "context"
+
 	pleaseinhere "github.com/examples/fern/pleaseinhere"
 	core "github.com/examples/fern/pleaseinhere/core"
 	internal "github.com/examples/fern/pleaseinhere/internal"
@@ -34,12 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) GetException(
 	ctx context.Context,
-	notificationId string,
+	notificationID string,
 	opts ...option.RequestOption,
 ) (*pleaseinhere.Exception, error) {
 	response, err := c.WithRawResponse.GetException(
 		ctx,
-		notificationId,
+		notificationID,
 		opts...,
 	)
 	if err != nil {

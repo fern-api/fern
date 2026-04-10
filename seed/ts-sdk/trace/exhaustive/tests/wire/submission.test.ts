@@ -19,6 +19,7 @@ describe("SubmissionClient", () => {
             language: "JAVA",
             status: "CREATING_CONTAINER",
         };
+
         server
             .mockEndpoint()
             .post("/sessions/create-session/JAVA")
@@ -29,12 +30,7 @@ describe("SubmissionClient", () => {
 
         const response = await client.submission.createExecutionSession("JAVA");
         expect(response).toEqual({
-            body: {
-                sessionId: "sessionId",
-                executionSessionUrl: "executionSessionUrl",
-                language: "JAVA",
-                status: "CREATING_CONTAINER",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -56,6 +52,7 @@ describe("SubmissionClient", () => {
             language: "JAVA",
             status: "CREATING_CONTAINER",
         };
+
         server
             .mockEndpoint()
             .get("/sessions/sessionId")
@@ -66,12 +63,7 @@ describe("SubmissionClient", () => {
 
         const response = await client.submission.getExecutionSession("sessionId");
         expect(response).toEqual({
-            body: {
-                sessionId: "sessionId",
-                executionSessionUrl: "executionSessionUrl",
-                language: "JAVA",
-                status: "CREATING_CONTAINER",
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -121,6 +113,7 @@ describe("SubmissionClient", () => {
             numWarmingInstances: 1,
             warmingSessionIds: ["warmingSessionIds", "warmingSessionIds"],
         };
+
         server
             .mockEndpoint()
             .get("/sessions/execution-sessions-state")
@@ -131,20 +124,7 @@ describe("SubmissionClient", () => {
 
         const response = await client.submission.getExecutionSessionsState();
         expect(response).toEqual({
-            body: {
-                states: {
-                    states: {
-                        lastTimeContacted: "lastTimeContacted",
-                        sessionId: "sessionId",
-                        isWarmInstance: true,
-                        awsTaskId: "awsTaskId",
-                        language: "JAVA",
-                        status: "CREATING_CONTAINER",
-                    },
-                },
-                numWarmingInstances: 1,
-                warmingSessionIds: ["warmingSessionIds", "warmingSessionIds"],
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

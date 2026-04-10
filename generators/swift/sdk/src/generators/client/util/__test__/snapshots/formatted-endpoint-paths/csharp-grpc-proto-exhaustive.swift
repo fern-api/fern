@@ -1,2 +1,0 @@
-// service_dataservice
-"/foo"

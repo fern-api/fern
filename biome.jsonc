@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+    "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
     "root": true,
     "vcs": {
         "enabled": false,
@@ -224,7 +224,7 @@
         "includes": ["**", "!docker/seed/**", "!packages/ir-sdk/**", "!packages/seed/*/**"]
     },
     "javascript": {
-        "globals": ["expect", "describe", "it", "beforeEach", "test", "beforeAll"],
+        "globals": ["expect", "describe", "it", "beforeEach", "test", "beforeAll", "afterAll", "afterEach"],
         "formatter": {
             "jsxQuoteStyle": "double",
             "quoteProperties": "asNeeded",

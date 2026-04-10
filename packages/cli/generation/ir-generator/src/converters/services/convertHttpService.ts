@@ -6,12 +6,12 @@ import {
     ApiAuth,
     AuthSchemesRequirement,
     Encoding,
+    FernIr,
     HttpEndpoint,
     HttpHeader,
     HttpMethod,
     HttpService,
     PathParameter,
-    PathParameterLocation,
     ResponseErrors,
     Transport,
     TypeReference
@@ -19,26 +19,27 @@ import {
 import { constructHttpPath, IdGenerator } from "@fern-api/ir-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
 import urlJoin from "url-join";
-import { FernFileContext } from "../../FernFileContext";
-import { ErrorResolver } from "../../resolvers/ErrorResolver";
-import { ExampleResolver } from "../../resolvers/ExampleResolver";
-import { PropertyResolver } from "../../resolvers/PropertyResolver";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import { VariableResolver } from "../../resolvers/VariableResolver";
-import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters";
-import { IRGenerationSettings } from "../../utils/getIrGenerationSettings";
-import { orderPathParametersByUrl } from "../../utils/orderPathParametersByUrl";
-import { convertAvailability, convertDeclaration } from "../convertDeclaration";
-import { convertCodeSample } from "./convertCodeSamples";
-import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
-import { convertHttpRequestBody } from "./convertHttpRequestBody";
-import { convertHttpResponse } from "./convertHttpResponse";
-import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
-import { convertPagination } from "./convertPagination";
-import { convertQueryParameter } from "./convertQueryParameter";
-import { convertResponseErrors } from "./convertResponseErrors";
-import { convertRetries } from "./convertRetries";
-import { getTransportForEndpoint, getTransportForService } from "./convertTransport";
+import { FernFileContext } from "../../FernFileContext.js";
+import { ErrorResolver } from "../../resolvers/ErrorResolver.js";
+import { ExampleResolver } from "../../resolvers/ExampleResolver.js";
+import { PropertyResolver } from "../../resolvers/PropertyResolver.js";
+import { TypeResolver } from "../../resolvers/TypeResolver.js";
+import { VariableResolver } from "../../resolvers/VariableResolver.js";
+import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters.js";
+import { IRGenerationSettings } from "../../utils/getIrGenerationSettings.js";
+import { orderPathParametersByUrl } from "../../utils/orderPathParametersByUrl.js";
+import { convertAvailability, convertDeclaration } from "../convertDeclaration.js";
+import { convertCodeSample } from "./convertCodeSamples.js";
+import { convertDefaultToLiteral } from "./convertDefaultToLiteral.js";
+import { convertExampleEndpointCall } from "./convertExampleEndpointCall.js";
+import { convertHttpRequestBody } from "./convertHttpRequestBody.js";
+import { convertHttpResponse } from "./convertHttpResponse.js";
+import { convertHttpSdkRequest } from "./convertHttpSdkRequest.js";
+import { convertPagination } from "./convertPagination.js";
+import { convertQueryParameter } from "./convertQueryParameter.js";
+import { convertResponseErrors } from "./convertResponseErrors.js";
+import { convertRetries } from "./convertRetries.js";
+import { getTransportForEndpoint, getTransportForService } from "./convertTransport.js";
 
 export function convertHttpService({
     rootDefaultUrl,
@@ -73,7 +74,7 @@ export function convertHttpService({
 }): HttpService {
     const servicePathParametersRaw = convertPathParameters({
         pathParameters: serviceDefinition["path-parameters"],
-        location: PathParameterLocation.Service,
+        location: FernIr.PathParameterLocation.Service,
         file,
         variableResolver
     });
@@ -124,7 +125,7 @@ export function convertHttpService({
 
             const endpointPathParametersRaw = convertPathParameters({
                 pathParameters: getEndpointPathParameters(endpoint),
-                location: PathParameterLocation.Endpoint,
+                location: FernIr.PathParameterLocation.Endpoint,
                 file,
                 variableResolver
             });
@@ -290,7 +291,7 @@ export function convertPathParameters({
     variableResolver
 }: {
     pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
-    location: PathParameterLocation;
+    location: FernIr.PathParameterLocation;
     file: FernFileContext;
     variableResolver: VariableResolver;
 }): PathParameter[] {
@@ -317,10 +318,11 @@ function convertPathParameter({
 }: {
     parameterName: string;
     parameter: RawSchemas.HttpPathParameterSchema;
-    location: PathParameterLocation;
+    location: FernIr.PathParameterLocation;
     file: FernFileContext;
     variableResolver: VariableResolver;
 }): PathParameter {
+    const defaultValue = typeof parameter !== "string" && "type" in parameter ? parameter.default : undefined;
     return {
         ...convertDeclaration(parameter),
         name: file.casingsGenerator.generateName(parameterName),
@@ -329,6 +331,7 @@ function convertPathParameter({
         variable: isVariablePathParameter(parameter)
             ? variableResolver.getVariableIdOrThrow(typeof parameter === "string" ? parameter : parameter.variable)
             : undefined,
+        clientDefault: convertDefaultToLiteral(defaultValue),
         v2Examples: {
             userSpecifiedExamples: {},
             autogeneratedExamples: {}
@@ -437,6 +440,7 @@ export function convertHttpHeader({
     file: FernFileContext;
 }): HttpHeader {
     const { name } = getHeaderName({ headerKey, header });
+    const defaultValue = typeof header !== "string" ? header.default : undefined;
     return {
         ...convertDeclaration(header),
         name: file.casingsGenerator.generateNameAndWireValue({
@@ -445,6 +449,7 @@ export function convertHttpHeader({
         }),
         valueType: file.parseTypeReference(header),
         env: typeof header === "string" ? undefined : header.env,
+        clientDefault: convertDefaultToLiteral(defaultValue),
         v2Examples: {
             userSpecifiedExamples: {},
             autogeneratedExamples: {}

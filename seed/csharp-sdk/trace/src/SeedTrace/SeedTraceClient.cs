@@ -53,19 +53,19 @@ public partial class SeedTraceClient : ISeedTraceClient
         Sysprop = new SyspropClient(_client);
     }
 
-    public V2Client V2 { get; }
+    public IV2Client V2 { get; }
 
-    public AdminClient Admin { get; }
+    public IAdminClient Admin { get; }
 
-    public HomepageClient Homepage { get; }
+    public IHomepageClient Homepage { get; }
 
-    public MigrationClient Migration { get; }
+    public IMigrationClient Migration { get; }
 
-    public PlaylistClient Playlist { get; }
+    public IPlaylistClient Playlist { get; }
 
-    public ProblemClient Problem { get; }
+    public IProblemClient Problem { get; }
 
-    public SubmissionClient Submission { get; }
+    public ISubmissionClient Submission { get; }
 
-    public SyspropClient Sysprop { get; }
+    public ISyspropClient Sysprop { get; }
 }

@@ -218,6 +218,16 @@
         }
       ]
     },
+    "agents": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AgentsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -235,6 +245,16 @@
           "items": {
             "$ref": "#/definitions/docs.RedirectConfig"
           }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "check": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.CheckConfig"
         },
         {
           "type": "null"
@@ -491,16 +511,6 @@
             }
           ]
         },
-        "private": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "edit-this-page": {
           "oneOf": [
             {
@@ -590,6 +600,22 @@
         "cpp"
       ]
     },
+    "docs.LibraryConfig": {
+      "type": "object",
+      "properties": {
+        "doxyfile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.LibraryConfiguration": {
       "type": "object",
       "properties": {
@@ -601,6 +627,16 @@
         },
         "lang": {
           "$ref": "#/definitions/docs.LibraryLanguage"
+        },
+        "config": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LibraryConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1435,6 +1471,22 @@
       ],
       "additionalProperties": false
     },
+    "docs.CollapsedStringValue": {
+      "type": "string",
+      "enum": [
+        "open-by-default"
+      ]
+    },
+    "docs.CollapsedValue": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/docs.CollapsedStringValue"
+        }
+      ]
+    },
     "docs.SectionConfiguration": {
       "type": "object",
       "properties": {
@@ -1488,6 +1540,26 @@
           }
         },
         "collapsed": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CollapsedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
           "oneOf": [
             {
               "type": "boolean"
@@ -2005,6 +2077,36 @@
             }
           ]
         },
+        "collapsed": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CollapsedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "availability": {
           "oneOf": [
             {
@@ -2133,6 +2235,88 @@
       ],
       "additionalProperties": false
     },
+    "docs.ApiReferenceOperationConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation": {
+          "type": "string"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "operation"
+      ],
+      "additionalProperties": false
+    },
     "docs.LinkConfiguration": {
       "type": "object",
       "properties": {
@@ -2187,6 +2371,9 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceEndpointConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.ApiReferenceOperationConfiguration"
         },
         {
           "$ref": "#/definitions/docs.PageConfiguration"
@@ -2328,7 +2515,7 @@
         "collapsed": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.CollapsedValue"
             },
             {
               "type": "null"
@@ -2428,38 +2615,6 @@
       },
       "required": [
         "api"
-      ],
-      "additionalProperties": false
-    },
-    "docs.PythonDocsConfiguration": {
-      "type": "object",
-      "properties": {
-        "python-docs": {
-          "type": "string"
-        },
-        "title": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "slug": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "required": [
-        "python-docs"
       ],
       "additionalProperties": false
     },
@@ -2716,6 +2871,26 @@
         "collapsed": {
           "oneOf": [
             {
+              "$ref": "#/definitions/docs.CollapsedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
               "type": "boolean"
             },
             {
@@ -2749,9 +2924,6 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceConfiguration"
-        },
-        {
-          "$ref": "#/definitions/docs.PythonDocsConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LibraryReferenceConfiguration"
@@ -4016,6 +4188,16 @@
               "type": "null"
             }
           ]
+        },
+        "basepath-aware": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -4176,6 +4358,39 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.PageDescriptionSource": {
+      "type": "string",
+      "enum": [
+        "description",
+        "subtitle"
+      ]
+    },
+    "docs.AgentsConfig": {
+      "type": "object",
+      "properties": {
+        "page-directive": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page-description-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageDescriptionSource"
             },
             {
               "type": "null"
@@ -4357,6 +4572,26 @@
             }
           ]
         },
+        "og:dynamic": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "og:background-image": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "canonical-host": {
           "oneOf": [
             {
@@ -4394,6 +4629,105 @@
         "source",
         "destination"
       ],
+      "additionalProperties": false
+    },
+    "docs.CheckRuleSeverity": {
+      "type": "string",
+      "enum": [
+        "warn",
+        "error"
+      ]
+    },
+    "docs.CheckRulesConfig": {
+      "type": "object",
+      "properties": {
+        "example-validation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "broken-links": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "no-non-component-refs": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valid-local-references": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "no-circular-redirects": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valid-docs-endpoints": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "missing-redirects": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.CheckConfig": {
+      "type": "object",
+      "properties": {
+        "rules": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRulesConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
       "additionalProperties": false
     },
     "docs.LogoConfiguration": {
@@ -4588,6 +4922,126 @@
           ]
         },
         "card-background": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-3": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-4": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-5": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-6": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-7": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-8": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-9": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-10": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-11": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-12": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.ColorConfig"
@@ -5127,11 +5581,64 @@
         "canvas"
       ]
     },
-    "docs.TabsThemeConfig": {
+    "docs.TabsThemeStyle": {
       "type": "string",
       "enum": [
         "default",
         "bubble"
+      ]
+    },
+    "docs.TabsAlignment": {
+      "type": "string",
+      "enum": [
+        "left",
+        "center"
+      ]
+    },
+    "docs.TabsThemeObjectConfig": {
+      "type": "object",
+      "properties": {
+        "style": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsThemeStyle"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "alignment": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsAlignment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "placement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.TabsThemeConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabsThemeStyle"
+        },
+        {
+          "$ref": "#/definitions/docs.TabsThemeObjectConfig"
+        }
       ]
     },
     "docs.PageActionsThemeConfig": {
@@ -5242,6 +5749,16 @@
       "type": "object",
       "properties": {
         "intercom": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "context7": {
           "oneOf": [
             {
               "type": "string"

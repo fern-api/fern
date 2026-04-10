@@ -38,3 +38,4 @@ client.service().getWithBearerToken();
 </dd>
 </dl>
 </details>
+

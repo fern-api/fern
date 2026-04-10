@@ -13,7 +13,9 @@ public class Example51
             }
         );
 
-        await client.NoReqBody.PostWithNoRequestBodyAsync();
+        await client.Endpoints.Primitive.GetAndReturnDateAsync(
+            DateOnly.Parse("2023-01-15")
+        );
     }
 
 }

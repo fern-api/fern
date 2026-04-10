@@ -11,21 +11,21 @@ import {
     Source
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../../getExtension";
-import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext";
-import { OpenAPIExtension } from "../../extensions/extensions";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension";
-import { getFernAvailability } from "../../extensions/getFernAvailability";
-import { getFernRetriesExtension } from "../../extensions/getFernRetriesExtension";
-import { OperationContext } from "../contexts";
-import { convertServer } from "../convertServer";
-import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters";
-import { convertRequest, convertToSingleRequest } from "../endpoint/convertRequest";
-import { convertResponse } from "../endpoint/convertResponse";
+import { getExtension } from "../../../../getExtension.js";
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext.js";
+import { OpenAPIExtension } from "../../extensions/extensions.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension.js";
+import { getFernAvailability } from "../../extensions/getFernAvailability.js";
+import { getFernRetriesExtension } from "../../extensions/getFernRetriesExtension.js";
+import { OperationContext } from "../contexts.js";
+import { convertServer } from "../convertServer.js";
+import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters.js";
+import { convertRequest, convertToSingleRequest } from "../endpoint/convertRequest.js";
+import { convertResponse } from "../endpoint/convertResponse.js";
 
 export function convertHttpOperation({
     operationContext,
@@ -33,16 +33,20 @@ export function convertHttpOperation({
     responseStatusCode,
     suffix,
     streamFormat,
-    source
+    streamTerminator,
+    source,
+    streamRequestNameOverride
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
     responseStatusCode?: number;
     suffix?: string;
     streamFormat: "sse" | "json" | undefined;
+    streamTerminator?: string;
     source: Source;
+    streamRequestNameOverride?: string;
 }): EndpointWithExample[] {
-    const { document, operation, path, method, baseBreadcrumbs } = operationContext;
+    const { document, operation, path, method, baseBreadcrumbs, pathItem } = operationContext;
 
     const idempotent = getExtension<boolean>(operation, FernOpenAPIExtension.IDEMPOTENT);
     const requestNameOverride = getExtension<string>(operation, [
@@ -101,7 +105,8 @@ export function convertHttpOperation({
                                 title: undefined
                             }),
                             description: undefined,
-                            explode: undefined
+                            explode: undefined,
+                            clientDefault: undefined
                         });
                     }
                 }
@@ -148,7 +153,8 @@ export function convertHttpOperation({
                                     title: undefined
                                 }),
                                 description: undefined,
-                                explode: undefined
+                                explode: undefined,
+                                clientDefault: undefined
                             });
                         }
                     }
@@ -301,6 +307,7 @@ export function convertHttpOperation({
     const convertedResponse = convertResponse({
         operationContext,
         streamFormat,
+        streamTerminator,
         responses: operation.responses,
         context,
         responseBreadcrumbs,
@@ -327,7 +334,7 @@ export function convertHttpOperation({
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
-        requestNameOverride: requestNameOverride ?? undefined,
+        requestNameOverride: streamRequestNameOverride ?? requestNameOverride ?? undefined,
         generatedRequestName: getGeneratedTypeName(
             isMultipleRequests
                 ? getDifferentiatedBreadcrumbs({ breadcrumbs: requestBreadcrumbs, request })
@@ -340,7 +347,7 @@ export function convertHttpOperation({
         servers:
             serverName != null
                 ? [{ name: serverName, url: undefined, audiences: undefined }]
-                : (operation.servers ?? []).map((server) =>
+                : (operation.servers ?? pathItem.servers ?? []).map((server) =>
                       convertServer(server, { groupMultiApiEnvironments: context.options.groupMultiApiEnvironments })
                   ),
         description: operation.description,

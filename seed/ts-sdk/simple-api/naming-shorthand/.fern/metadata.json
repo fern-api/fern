@@ -1,0 +1,10 @@
+{
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "local",
+    "generatorConfig": {
+        "naming": "acme"
+    },
+    "originGitCommit": "DUMMY",
+    "sdkVersion": "0.0.1"
+}

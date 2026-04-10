@@ -1,6 +1,6 @@
 # Reference
 ## FileUploadExample
-<details><summary><code>client.FileUploadExample.UploadFile(request) -> fern.FileId</code></summary>
+<details><summary><code>client.FileUploadExample.UploadFile(request) -> fern.FileID</code></summary>
 <dl>
 <dd>
 
@@ -48,3 +48,4 @@ client.FileUploadExample.UploadFile(
 </dd>
 </dl>
 </details>
+

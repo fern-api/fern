@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidationViolation } from "../../../ValidationViolation";
-import { OnlyObjectExtensionsRule } from "../only-object-extensions";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidationViolation } from "../../../ValidationViolation.js";
+import { OnlyObjectExtensionsRule } from "../only-object-extensions.js";
 
 describe("only-object-extensions", () => {
     it("simple", async () => {
@@ -19,18 +19,21 @@ describe("only-object-extensions", () => {
                 message: "Objects can only extend other objects, and commons.CommonString is not an object.",
                 nodePath: ["types", "MyObject", "extends", "commons.CommonString"],
                 relativeFilepath: RelativeFilePath.of("types.yml"),
+                name: "only-object-extensions",
                 severity: "fatal"
             },
             {
                 message: "Objects can only extend other objects, and LocalString is not an object.",
                 nodePath: ["types", "MyObject", "extends", "LocalString"],
                 relativeFilepath: RelativeFilePath.of("types.yml"),
+                name: "only-object-extensions",
                 severity: "fatal"
             },
             {
                 message: "Objects can only extend other objects, and LocalString is not an object.",
                 nodePath: ["service", "endpoints", "get", "request", "body", "extends", "LocalString"],
                 relativeFilepath: RelativeFilePath.of("types.yml"),
+                name: "only-object-extensions",
                 severity: "fatal"
             }
         ];

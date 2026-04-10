@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
-client.bigunion.get(id: 'id');
+client.bigunion.get(id: "id")
 ```
 
 ## Environments

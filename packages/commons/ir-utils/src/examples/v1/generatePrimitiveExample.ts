@@ -8,7 +8,7 @@ import {
     StringValidationRules
 } from "@fern-api/ir-sdk";
 
-import { ExampleGenerationSuccess } from "./ExampleGenerationResult";
+import { ExampleGenerationSuccess } from "./ExampleGenerationResult.js";
 
 export declare namespace generatePrimitiveExample {
     interface Args {
@@ -86,6 +86,16 @@ export function generatePrimitiveExample({
         }
         case "UUID": {
             return { type: "success", example: ExamplePrimitive.uuid(Examples.UUID), jsonExample: Examples.UUID };
+        }
+        case "DATE_TIME_RFC_2822": {
+            return {
+                type: "success",
+                example: ExamplePrimitive.datetimeRfc2822({
+                    datetime: new Date(Examples.DATE_TIME_RFC_2822),
+                    raw: Examples.DATE_TIME_RFC_2822
+                }),
+                jsonExample: Examples.DATE_TIME_RFC_2822
+            };
         }
         default:
             assertNever(primitiveType.v1);

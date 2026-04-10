@@ -5,8 +5,69 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v64.0.0] - 2026-02-03
+## [v66.1.0] - 2026-04-08
+- Feature: Add optional `default` field to `UnionTypeDeclaration`. When set, specifies the default union
+  variant to fall back to when the discriminant field is missing from input. Populated from OpenAPI specs
+  where a variant's discriminant property has a `default` value matching its `const` value.
+
+## [v66.0.0] - 2026-04-02
+- Feature: Add IR Name compression support via new `NameOrString` and `NameAndWireValueOrString` union types.
+  Throughout the IR, fields previously typed as `Name` or `NameAndWireValue` are now typed as `NameOrString` or
+  `NameAndWireValueOrString` respectively, allowing names to be stored as plain strings (compressed) instead of fully
+  expanded casing objects. Affected fields span `FernFilepath`, auth schemes, environments, errors, HTTP types,
+  webhooks, websockets, and type declarations.
+- Feature: Add `CasingsConfig` type to `IntermediateRepresentation`. Stores the casing generator configuration
+  (target language, reserved keywords, smart casing flag) so that IR migrations can reconstruct the correct
+  `CasingsGenerator` when inflating compressed `NameOrString` values back to full `Name` objects.
+- Feature: Add `NameOrString` and `NameAndWireValueOrString` union types to both the main IR and dynamic IR commons,
+  enabling forward-compatible parsing of either string or structured name objects.
+
+## [v65.7.0] - 2026-03-31
+- Feature: Add optional `clientDefault` field to `HttpHeader`, `PathParameter`, and `QueryParameter`.
+  When present, the parameter/header is optional in the generated SDK and the literal value is sent
+  when the caller does not provide one. Populated from the `x-fern-default` OpenAPI extension.
+
+## [v65.6.0] - 2026-03-10
+
+## [v65.5.0] - 2026-03-10
+- Feature: Add optional `forwardCompatible` field to `EnumTypeDeclaration`. When `true`, the enum is forward-compatible
+  (i.e., the API may return values not listed in `values`). This is inferred from OpenAPI specs that express an enum as
+  `oneOf: [enum, string]` or `anyOf: [enum, string]`, or from Fern Definition enums marked with `forward-compatible: true`.
+
+## [v65.4.0] - 2026-02-25
+- Feature: Add `originGitCommit` field to `GenerationMetadata` to track the git commit hash of the repository at generation time.
+  This field is populated with the HEAD commit hash when `fern generate` is executed in a git repository, allowing generators
+  to include source commit information in generated SDKs and documentation for better traceability and debugging.
+
+## [v65.3.0] - 2026-02-24
+- Feature: Add optional `connectMethodName` field to `WebSocketChannel` for custom WebSocket connection method naming.
+  Supports `x-fern-sdk-method-name` extension on AsyncAPI channels to customize the generated connection method name instead of using the default "connect".
+  This addresses confusing APIs where both the client wrapper creation and actual connection use "connect".
+
+## [v65.2.1] - 2026-02-24
+- Feature: Add document-level `webhook-signature` configuration to Fern definition files.
+  Allows specifying a default signature verification config that applies to all webhooks in a file,
+  with per-webhook `signature` overrides. The IR generator resolves defaults and stamps each webhook
+  with its final `signatureVerification` config.
+
+## [v65.2.0] - 2026-02-23
+- Feature: Add `WebhookSignatureVerification` discriminated union to the `Webhook` type.
+  Supports HMAC-based and asymmetric key signature verification with configurable algorithms,
+  encoding, signature prefix parsing, payload format composition, and timestamp-based replay protection.
+  New types: `HmacSignatureVerification`, `AsymmetricKeySignatureVerification`, `HmacAlgorithm`,
+  `AsymmetricAlgorithm`, `WebhookSignatureEncoding`, `WebhookPayloadFormat`, `WebhookPayloadComponent`,
+  `WebhookTimestampConfig`, `WebhookTimestampFormat`, `AsymmetricKeySource`, `JwksKeySource`, `StaticKeySource`.
+
+## [v65.1.0] - 2026-02-23
+- Feature: Add optional `signatureVerification` field to the `Webhook` type for webhook signature verification.
+  Includes algorithm (SHA256/SHA1/SHA384/SHA512), encoding (base64/hex), signature header name, and payload format (bodyOnly/urlPrefixed).
+
+## [v65.0.0] - 2026-02-03
 - Feature: Add new pagination types where the cursor is to be consumed as the full URI, or full path (HATEOS-style)
+
+## [v64.0.0] - 2026-02-06
+- Internal: Bump to the latest TypeScript SDK generator. While there are no changes in the IR, the way the generated SDK exports CJS and ESM is different, hence the major version bump.
+  We are not duplicating the IR to 63.x.x because there are no changes in the IR itself.
 
 ## [v63.2.0] - 2026-01-13
 - Feature: Add support for min and max validation keywords:

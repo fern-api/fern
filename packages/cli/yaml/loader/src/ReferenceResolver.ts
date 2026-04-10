@@ -2,8 +2,8 @@ import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath, relat
 import { SourceLocation } from "@fern-api/source";
 import { readFile } from "fs/promises";
 import { parseDocument } from "yaml";
-import { ValidationIssue } from "./ValidationIssue";
-import { YamlDocument, type YamlPath } from "./YamlDocument";
+import { ValidationIssue } from "./ValidationIssue.js";
+import { YamlDocument, type YamlPath } from "./YamlDocument.js";
 
 const REF_KEY = "$ref";
 

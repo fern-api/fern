@@ -79,6 +79,7 @@ function convertSingleBaseUrlEnvironments({
                             url: removeTrailingSlash(
                                 isString ? singleBaseUrlEnvironment : singleBaseUrlEnvironment.url
                             ),
+                            audiences: isString ? undefined : singleBaseUrlEnvironment.audiences,
                             defaultUrl: defaultUrl ? removeTrailingSlash(defaultUrl) : undefined,
                             urlTemplate: urlTemplate,
                             urlVariables: variables?.map((v) => ({
@@ -145,6 +146,7 @@ function convertMultipleBaseUrlEnvironments({
                             id: environmentName,
                             name: casingsGenerator.generateName(environmentName),
                             urls: mapValues(multipleBaseUrlsEnvironment.urls, (url) => removeTrailingSlash(url)),
+                            audiences: multipleBaseUrlsEnvironment.audiences,
                             defaultUrls,
                             urlTemplates,
                             urlVariables

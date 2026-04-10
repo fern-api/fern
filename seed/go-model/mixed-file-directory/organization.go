@@ -5,11 +5,12 @@ package mixedfiledirectory
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/mixed-file-directory/fern/internal"
 )
 
 type Organization struct {
-	Id    Id      `json:"id" url:"id"`
+	ID    ID      `json:"id" url:"id"`
 	Name  string  `json:"name" url:"name"`
 	Users []*User `json:"users" url:"users"`
 
@@ -17,11 +18,11 @@ type Organization struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *Organization) GetId() Id {
+func (o *Organization) GetID() ID {
 	if o == nil {
 		return ""
 	}
-	return o.Id
+	return o.ID
 }
 
 func (o *Organization) GetName() string {

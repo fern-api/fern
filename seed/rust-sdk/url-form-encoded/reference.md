@@ -63,3 +63,47 @@ async fn main() {
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.<a href="/src/client.rs">get_token</a>(request: TokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_api::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .get_token(
+            &TokenRequest {
+                client_id: "client_id".to_string(),
+                client_secret: "client_secret".to_string(),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

@@ -3,7 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { filterRequestBody, isEmptyObject, unwrapExampleValue } from "./filterHelpers";
+import { filterRequestBody, isEmptyObject, unwrapExampleValue } from "./filterHelpers.js";
 
 export interface EnhancedExampleRecord {
     endpoint: string;

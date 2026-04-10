@@ -1,1 +1,1 @@
-export { addSdkCommand } from "./command";
+export { addSdkCommand } from "./command.js";

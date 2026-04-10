@@ -1,7 +1,7 @@
 import { isNonNullish } from "@fern-api/core-utils";
 
-import { Rule } from "../../Rule";
-import { getDuplicates } from "../../utils/getDuplicates";
+import { Rule } from "../../Rule.js";
+import { getDuplicates } from "../../utils/getDuplicates.js";
 
 export const NoDuplicateExampleNamesRule: Rule = {
     name: "no-duplicate-example-names",

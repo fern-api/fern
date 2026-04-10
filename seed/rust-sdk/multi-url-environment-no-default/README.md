@@ -10,6 +10,7 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Errors](#errors)
 - [Request Types](#request-types)
 - [Advanced](#advanced)
@@ -53,7 +54,7 @@ async fn main() {
     };
     let client = MultiUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
     client
-        .ec_2
+        .ec2
         .boot_instance(
             &BootInstanceRequest {
                 size: "size".to_string(),
@@ -64,12 +65,26 @@ async fn main() {
 }
 ```
 
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```rust
+use seed_multi_url_environment_no_default::prelude::{*};
+
+let config = ClientConfig {
+    base_url: Environment::Production.url().to_string(),
+    ..Default::default()
+};
+let client = Client::new(config).expect("Failed to build client");
+```
+
 ## Errors
 
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-match client.ec_2.boot_instance(None)?.await {
+match client.ec2.boot_instance(None)?.await {
     Ok(response) => {
         println!("Success: {:?}", response);
     },
@@ -111,7 +126,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` method to configure this behavior.
 
 ```rust
-let response = client.ec_2.boot_instance(
+let response = client.ec2.boot_instance(
     Some(RequestOptions::new().max_retries(3))
 )?.await;
 ```
@@ -121,7 +136,7 @@ let response = client.ec_2.boot_instance(
 The SDK defaults to a 30 second timeout. Use the `timeout` method to configure this behavior.
 
 ```rust
-let response = client.ec_2.boot_instance(
+let response = client.ec2.boot_instance(
     Some(RequestOptions::new().timeout_seconds(30))
 )?.await;
 ```
@@ -131,7 +146,7 @@ let response = client.ec_2.boot_instance(
 You can add custom headers to requests using `RequestOptions`.
 
 ```rust
-let response = client.ec_2.boot_instance(
+let response = client.ec2.boot_instance(
     Some(
         RequestOptions::new()
             .additional_header("X-Custom-Header", "custom-value")
@@ -146,7 +161,7 @@ let response = client.ec_2.boot_instance(
 You can add custom query parameters to requests using `RequestOptions`.
 
 ```rust
-let response = client.ec_2.boot_instance(
+let response = client.ec2.boot_instance(
     Some(
         RequestOptions::new()
             .additional_query_param("filter", "active")

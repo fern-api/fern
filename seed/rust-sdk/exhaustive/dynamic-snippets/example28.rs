@@ -10,11 +10,18 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .params
-        .get_with_path_and_query(
-            &"param".to_string(),
-            &GetWithPathAndQueryQueryRequest {
-                query: "query".to_string(),
+        .object
+        .get_and_return_with_required_nested_object(
+            &ObjectWithRequiredNestedObject {
+                required_string: "hello".to_string(),
+                required_object: NestedObjectWithRequiredField {
+                    string: "nested".to_string(),
+                    nested_object: ObjectWithOptionalField {
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
             },
             None,
         )

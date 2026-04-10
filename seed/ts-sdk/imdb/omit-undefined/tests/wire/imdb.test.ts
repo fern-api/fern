@@ -10,6 +10,7 @@ describe("ImdbClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { title: "title", rating: 1.1 };
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/movies/create-movie")
@@ -23,7 +24,7 @@ describe("ImdbClient", () => {
             title: "title",
             rating: 1.1,
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getMovie (1)", async () => {
@@ -31,14 +32,11 @@ describe("ImdbClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { id: "id", title: "title", rating: 1.1 };
+
         server.mockEndpoint().get("/movies/movieId").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.imdb.getMovie("movieId");
-        expect(response).toEqual({
-            id: "id",
-            title: "title",
-            rating: 1.1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getMovie (2)", async () => {
@@ -46,6 +44,7 @@ describe("ImdbClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/movies/movieId").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {

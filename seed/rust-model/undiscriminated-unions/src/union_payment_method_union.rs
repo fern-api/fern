@@ -9,43 +9,42 @@ pub enum PaymentMethodUnion {
 }
 
 impl PaymentMethodUnion {
-    pub fn is_tokenizecard(&self) -> bool {
+    pub fn is_tokenize_card(&self) -> bool {
         matches!(self, Self::TokenizeCard(_))
     }
 
-    pub fn is_converttoken(&self) -> bool {
+    pub fn is_convert_token(&self) -> bool {
         matches!(self, Self::ConvertToken(_))
     }
 
 
-    pub fn as_tokenizecard(&self) -> Option<&TokenizeCard> {
+    pub fn as_tokenize_card(&self) -> Option<&TokenizeCard> {
         match self {
                     Self::TokenizeCard(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_tokenizecard(self) -> Option<TokenizeCard> {
+    pub fn into_tokenize_card(self) -> Option<TokenizeCard> {
         match self {
                     Self::TokenizeCard(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn as_converttoken(&self) -> Option<&ConvertToken> {
+    pub fn as_convert_token(&self) -> Option<&ConvertToken> {
         match self {
                     Self::ConvertToken(value) => Some(value),
                     _ => None,
                 }
     }
 
-    pub fn into_converttoken(self) -> Option<ConvertToken> {
+    pub fn into_convert_token(self) -> Option<ConvertToken> {
         match self {
                     Self::ConvertToken(value) => Some(value),
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for PaymentMethodUnion {

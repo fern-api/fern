@@ -3,3 +3,6 @@
 import typing
 
 LiteralString = typing.Literal["literally"]
+"""
+A string literal.
+"""

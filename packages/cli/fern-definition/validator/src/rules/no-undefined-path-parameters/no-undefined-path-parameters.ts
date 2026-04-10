@@ -5,7 +5,7 @@ import chalk from "chalk";
 import capitalize from "lodash-es/capitalize";
 import urlJoin from "url-join";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 export const NoUndefinedPathParametersRule: Rule = {
     name: "no-undefined-path-parameters",

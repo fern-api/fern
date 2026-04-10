@@ -28,7 +28,8 @@ public final class Stream<T> implements Iterable<T>, Closeable {
 
     public enum StreamType {
         JSON,
-        SSE
+        SSE,
+        SSE_EVENT_DISCRIMINATED
     }
 
     private final Class<T> valueType;
@@ -37,6 +38,7 @@ public final class Stream<T> implements Iterable<T>, Closeable {
     private final String messageTerminator;
     private final String streamTerminator;
     private final Reader sseReader;
+    private final String discriminatorProperty;
     private boolean isClosed = false;
 
     /**
@@ -53,11 +55,18 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         this.messageTerminator = delimiter;
         this.streamTerminator = null;
         this.sseReader = null;
+        this.discriminatorProperty = null;
     }
 
     private Stream(Class<T> valueType, StreamType type, Reader reader, String terminator) {
+        this(valueType, type, reader, terminator, null);
+    }
+
+    private Stream(
+            Class<T> valueType, StreamType type, Reader reader, String terminator, String discriminatorProperty) {
         this.valueType = valueType;
         this.streamType = type;
+        this.discriminatorProperty = discriminatorProperty;
         if (type == StreamType.JSON) {
             this.scanner = new Scanner(reader).useDelimiter(terminator);
             this.messageTerminator = terminator;
@@ -87,6 +96,38 @@ public final class Stream<T> implements Iterable<T>, Closeable {
         return new Stream<>(valueType, StreamType.SSE, sseReader, streamTerminator);
     }
 
+    /**
+     * Creates a stream from SSE data with event-level discrimination support.
+     * Use this when the SSE payload is a discriminated union where the discriminator
+     * is an SSE envelope field (e.g., 'event').
+     *
+     * @param valueType             The class of the objects in the stream.
+     * @param sseReader             The reader that provides the SSE data.
+     * @param discriminatorProperty The property name used for discrimination (e.g., "event").
+     * @param <T>                   The type of objects in the stream.
+     * @return A new Stream instance configured for SSE with event-level discrimination.
+     */
+    public static <T> Stream<T> fromSseWithEventDiscrimination(
+            Class<T> valueType, Reader sseReader, String discriminatorProperty) {
+        return new Stream<>(valueType, StreamType.SSE_EVENT_DISCRIMINATED, sseReader, null, discriminatorProperty);
+    }
+
+    /**
+     * Creates a stream from SSE data with event-level discrimination support and a stream terminator.
+     *
+     * @param valueType             The class of the objects in the stream.
+     * @param sseReader             The reader that provides the SSE data.
+     * @param discriminatorProperty The property name used for discrimination (e.g., "event").
+     * @param streamTerminator      The terminator string that signals end of stream (e.g., "[DONE]").
+     * @param <T>                   The type of objects in the stream.
+     * @return A new Stream instance configured for SSE with event-level discrimination.
+     */
+    public static <T> Stream<T> fromSseWithEventDiscrimination(
+            Class<T> valueType, Reader sseReader, String discriminatorProperty, String streamTerminator) {
+        return new Stream<>(
+                valueType, StreamType.SSE_EVENT_DISCRIMINATED, sseReader, streamTerminator, discriminatorProperty);
+    }
+
     @Override
     public void close() throws IOException {
         if (!isClosed) {
@@ -112,10 +153,14 @@ public final class Stream<T> implements Iterable<T>, Closeable {
      */
     @Override
     public Iterator<T> iterator() {
-        if (streamType == StreamType.SSE) {
-            return new SSEIterator();
-        } else {
-            return new JsonIterator();
+        switch (streamType) {
+            case SSE:
+                return new SSEIterator();
+            case SSE_EVENT_DISCRIMINATED:
+                return new SSEEventDiscriminatedIterator();
+            case JSON:
+            default:
+                return new JsonIterator();
         }
     }
 
@@ -297,6 +342,172 @@ public final class Stream<T> implements Iterable<T>, Closeable {
                 endOfStream = true;
                 return false;
             }
+        }
+    }
+
+    /**
+     * Iterator for SSE streams with event-level discrimination.
+     * Uses SseEventParser to construct the full SSE envelope for Jackson deserialization.
+     */
+    private final class SSEEventDiscriminatedIterator implements Iterator<T> {
+        private Scanner sseScanner;
+        private T nextItem;
+        private boolean hasNextItem = false;
+        private boolean endOfStream = false;
+        private StringBuilder eventDataBuffer = new StringBuilder();
+        private String currentEventType = null;
+        private String currentEventId = null;
+        private Long currentRetry = null;
+
+        private SSEEventDiscriminatedIterator() {
+            if (sseReader != null && !isStreamClosed()) {
+                this.sseScanner = new Scanner(sseReader);
+            } else {
+                this.endOfStream = true;
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (isStreamClosed() || endOfStream) {
+                return false;
+            }
+
+            if (hasNextItem) {
+                return true;
+            }
+
+            return readNextMessage();
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in stream");
+            }
+
+            T result = nextItem;
+            nextItem = null;
+            hasNextItem = false;
+            return result;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+        private boolean readNextMessage() {
+            if (sseScanner == null || isStreamClosed()) {
+                endOfStream = true;
+                return false;
+            }
+
+            try {
+                while (sseScanner.hasNextLine()) {
+                    String line = sseScanner.nextLine();
+
+                    if (line.trim().isEmpty()) {
+                        if (eventDataBuffer.length() > 0 || currentEventType != null) {
+                            try {
+                                // Use SseEventParser for event-level discrimination
+                                nextItem = SseEventParser.parseEventLevelUnion(
+                                        currentEventType,
+                                        eventDataBuffer.toString(),
+                                        currentEventId,
+                                        currentRetry,
+                                        valueType,
+                                        discriminatorProperty);
+                                hasNextItem = true;
+                                resetEventState();
+                                return true;
+                            } catch (Exception parseEx) {
+                                System.err.println("Failed to parse SSE event: " + parseEx.getMessage());
+                                resetEventState();
+                                continue;
+                            }
+                        }
+                        continue;
+                    }
+
+                    if (line.startsWith(DATA_PREFIX)) {
+                        String dataContent = line.substring(DATA_PREFIX.length());
+                        if (dataContent.startsWith(" ")) {
+                            dataContent = dataContent.substring(1);
+                        }
+
+                        if (eventDataBuffer.length() == 0
+                                && streamTerminator != null
+                                && dataContent.trim().equals(streamTerminator)) {
+                            endOfStream = true;
+                            return false;
+                        }
+
+                        if (eventDataBuffer.length() > 0) {
+                            eventDataBuffer.append('\n');
+                        }
+                        eventDataBuffer.append(dataContent);
+                    } else if (line.startsWith("event:")) {
+                        String eventValue = line.length() > 6 ? line.substring(6) : "";
+                        if (eventValue.startsWith(" ")) {
+                            eventValue = eventValue.substring(1);
+                        }
+                        currentEventType = eventValue;
+                    } else if (line.startsWith("id:")) {
+                        String idValue = line.length() > 3 ? line.substring(3) : "";
+                        if (idValue.startsWith(" ")) {
+                            idValue = idValue.substring(1);
+                        }
+                        currentEventId = idValue;
+                    } else if (line.startsWith("retry:")) {
+                        String retryValue = line.length() > 6 ? line.substring(6) : "";
+                        if (retryValue.startsWith(" ")) {
+                            retryValue = retryValue.substring(1);
+                        }
+                        try {
+                            currentRetry = Long.parseLong(retryValue.trim());
+                        } catch (NumberFormatException e) {
+                            // Ignore invalid retry values
+                        }
+                    } else if (line.startsWith(":")) {
+                        // Comment line (ignored)
+                    }
+                }
+
+                // Handle any remaining buffered data at end of stream
+                if (eventDataBuffer.length() > 0 || currentEventType != null) {
+                    try {
+                        nextItem = SseEventParser.parseEventLevelUnion(
+                                currentEventType,
+                                eventDataBuffer.toString(),
+                                currentEventId,
+                                currentRetry,
+                                valueType,
+                                discriminatorProperty);
+                        hasNextItem = true;
+                        resetEventState();
+                        return true;
+                    } catch (Exception parseEx) {
+                        System.err.println("Failed to parse final SSE event: " + parseEx.getMessage());
+                        resetEventState();
+                    }
+                }
+
+                endOfStream = true;
+                return false;
+
+            } catch (Exception e) {
+                System.err.println("Failed to parse SSE stream: " + e.getMessage());
+                endOfStream = true;
+                return false;
+            }
+        }
+
+        private void resetEventState() {
+            eventDataBuffer.setLength(0);
+            currentEventType = null;
+            currentEventId = null;
+            currentRetry = null;
         }
     }
 }

@@ -1,9 +1,10 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-swift-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "environmentEnumName": "MyCustomEnvironment"
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

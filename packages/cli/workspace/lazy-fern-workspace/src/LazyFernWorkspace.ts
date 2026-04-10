@@ -1,16 +1,17 @@
 import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
+import { generatorsYml } from "@fern-api/configuration";
 import { DEFINITION_DIRECTORY, loadDependenciesConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import hash from "object-hash";
 
-import { OSSWorkspace } from "./OSSWorkspace";
-import { handleFailedWorkspaceParserResultRaw } from "./utils/handleFailedWorkspaceParserResult";
-import { listFernFiles } from "./utils/listFernFiles";
-import { LoadAPIWorkspace } from "./utils/loadAPIWorkspace";
-import { parseYamlFiles } from "./utils/parseYamlFiles";
-import { processPackageMarkers } from "./utils/processPackageMarkers";
-import { validateStructureOfYamlFiles } from "./utils/validateStructureOfYamlFiles";
+import { OSSWorkspace } from "./OSSWorkspace.js";
+import { handleFailedWorkspaceParserResultRaw } from "./utils/handleFailedWorkspaceParserResult.js";
+import { listFernFiles } from "./utils/listFernFiles.js";
+import { LoadAPIWorkspace } from "./utils/loadAPIWorkspace.js";
+import { parseYamlFiles } from "./utils/parseYamlFiles.js";
+import { processPackageMarkers } from "./utils/processPackageMarkers.js";
+import { validateStructureOfYamlFiles } from "./utils/validateStructureOfYamlFiles.js";
 
 export declare namespace LazyFernWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -35,12 +36,15 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         { context }: { context?: TaskContext },
         settings?: OSSWorkspace.Settings
     ): Promise<FernDefinition> {
-        return (await this.toFernWorkspace({ context }, settings)).definition;
+        const defaultedContext = context || this.context;
+        return (await this.toFernWorkspace({ context: defaultedContext }, settings)).definition;
     }
 
     public async toFernWorkspace(
-        { context }: { context?: TaskContext },
-        settings?: OSSWorkspace.Settings
+        { context, skipValidation }: { context?: TaskContext; skipValidation?: boolean },
+        settings?: OSSWorkspace.Settings,
+        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema,
+        generatorOverrides?: generatorsYml.OverridesSchema
     ): Promise<FernWorkspace> {
         const key = hash(settings ?? {});
         let workspace = this.fernWorkspaces[key];
@@ -63,7 +67,8 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
             const structuralValidationResult = validateStructureOfYamlFiles({
                 files: parseResult.files,
-                absolutePathToDefinition
+                absolutePathToDefinition,
+                skipValidation
             });
             if (!structuralValidationResult.didSucceed) {
                 handleFailedWorkspaceParserResultRaw(structuralValidationResult.failures, defaultedContext.logger);

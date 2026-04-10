@@ -1,18 +1,18 @@
-import { File } from "@fern-api/base-generator";
+import { CaseConverter, File, getWireValue } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
-import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation, Literal } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
-import { convertIr } from "../utils/convertIr";
-import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "../utils/convertIr.js";
+import { WireTestSetupGenerator } from "./WireTestSetupGenerator.js";
 
 interface EndpointTestCase {
     snippetAst: ruby.AstNode;
-    endpoint: HttpEndpoint;
-    service: HttpService;
+    endpoint: FernIr.HttpEndpoint;
+    service: FernIr.HttpService;
     exampleIndex: number;
     testId: string;
 }
@@ -21,21 +21,23 @@ interface EndpointTestCase {
  * Generates WireMock-based integration tests for Ruby SDK.
  *
  * Architecture:
- * - Uses dynamic snippets to generate client code
+ * - Uses FernIr.dynamic snippets to generate client code
  * - Generates Ruby test files using Minitest
  * - Creates helper methods for WireMock interaction
  */
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
-    private dynamicIr: dynamic.DynamicIntermediateRepresentation;
+    private readonly case: CaseConverter;
+    private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     private wireMockConfigContent: Record<string, WireMockMapping>;
 
-    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
+    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
+        this.case = context.caseConverter;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without dynamic IR");
+            throw new Error("Cannot generate wire tests without FernIr.dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
@@ -66,7 +68,7 @@ export class WireTestGenerator {
         new WireTestSetupGenerator(this.context, this.context.ir).generate();
     }
 
-    private async generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): Promise<File> {
+    private async generateServiceTestFile(serviceName: string, endpoints: FernIr.HttpEndpoint[]): Promise<File> {
         const endpointTestCases = new Map<string, EndpointTestCase>();
 
         for (const endpoint of endpoints) {
@@ -108,9 +110,13 @@ export class WireTestGenerator {
         return new File(`${serviceName}_test.rb`, RelativeFilePath.of("test/wire"), testFileContent);
     }
 
-    private buildDeterministicTestId(service: HttpService, endpoint: HttpEndpoint, exampleIndex: number): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const endpointName = endpoint.name.snakeCase.safeName;
+    private buildDeterministicTestId(
+        service: FernIr.HttpService,
+        endpoint: FernIr.HttpEndpoint,
+        exampleIndex: number
+    ): string {
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => this.case.snakeSafe(part));
+        const endpointName = this.case.snakeSafe(endpoint.name);
 
         const segments: string[] = [];
         if (servicePathParts.length > 0) {
@@ -170,7 +176,7 @@ export class WireTestGenerator {
 
         // Build auth parameters for the client constructor
         const authParams = this.buildAuthParamsForSetup();
-        const clientClassName = `${this.context.getRootModuleName()}::Client`;
+        const clientClassName = `${this.context.getRootModuleName()}::${this.context.getRootClientClassName()}`;
 
         // Generate client instantiation with auth and base_url
         if (authParams.length > 0) {
@@ -198,14 +204,18 @@ export class WireTestGenerator {
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "bearer":
-                    authParams.push(`${scheme.token.snakeCase.safeName}: "<token>"`);
+                    authParams.push(`${this.case.snakeSafe(scheme.token)}: "<token>"`);
                     break;
                 case "header":
-                    authParams.push(`${scheme.name.name.snakeCase.safeName}: "test-api-key"`);
+                    authParams.push(`${this.case.snakeSafe(scheme.name)}: "test-api-key"`);
                     break;
                 case "basic":
-                    authParams.push(`${scheme.username.snakeCase.safeName}: "test-username"`);
-                    authParams.push(`${scheme.password.snakeCase.safeName}: "test-password"`);
+                    if (!scheme.usernameOmit) {
+                        authParams.push(`${this.case.snakeSafe(scheme.username)}: "test-username"`);
+                    }
+                    if (!scheme.passwordOmit) {
+                        authParams.push(`${this.case.snakeSafe(scheme.password)}: "test-password"`);
+                    }
                     break;
                 case "oauth":
                     authParams.push('client_id: "test-client-id"');
@@ -252,7 +262,7 @@ export class WireTestGenerator {
             for (const property of requestBody.properties) {
                 const literal = this.maybeLiteral(property.valueType);
                 if (literal == null) {
-                    const paramName = property.name.name.snakeCase.safeName;
+                    const paramName = this.case.snakeSafe(property.name);
                     params.push(`${paramName}: "test-${paramName.replace(/_/g, "-")}"`);
                 }
             }
@@ -262,7 +272,7 @@ export class WireTestGenerator {
         for (const header of endpoint.headers) {
             const literal = this.maybeLiteral(header.valueType);
             if (literal == null) {
-                const paramName = header.name.name.snakeCase.safeName;
+                const paramName = this.case.snakeSafe(header.name);
                 params.push(`${paramName}: "test-${paramName.replace(/_/g, "-")}"`);
             }
         }
@@ -275,10 +285,10 @@ export class WireTestGenerator {
      */
     private maybeLiteral(typeReference: {
         type: string;
-        container?: { type: string; literal?: Literal };
-    }): Literal | undefined {
+        container?: { type: string; literal?: FernIr.Literal };
+    }): FernIr.Literal | undefined {
         if (typeReference.type === "container") {
-            const container = typeReference as { type: string; container: { type: string; literal?: Literal } };
+            const container = typeReference as { type: string; container: { type: string; literal?: FernIr.Literal } };
             if (container.container?.type === "literal") {
                 return container.container.literal;
             }
@@ -287,7 +297,7 @@ export class WireTestGenerator {
     }
 
     private async generateEndpointTestMethod(
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         snippetAst: ruby.AstNode,
         serviceName: string,
         testId: string
@@ -342,6 +352,19 @@ export class WireTestGenerator {
             lines.push(`      query_params: ${queryParamsCode},`);
             lines.push(`      expected: 1`);
             lines.push(`    )`);
+
+            // Verify Authorization header when basic auth is configured
+            const expectedAuthHeader = this.buildExpectedAuthorizationHeader();
+            if (expectedAuthHeader != null) {
+                lines.push(``);
+                lines.push(`    verify_authorization_header(`);
+                lines.push(`      test_id: test_id,`);
+                lines.push(`      method: "${endpoint.method}",`);
+                lines.push(`      url_path: "${basePath}",`);
+                lines.push(`      expected_value: "${expectedAuthHeader}"`);
+                lines.push(`    )`);
+            }
+
             lines.push("  end");
 
             return lines;
@@ -351,7 +374,7 @@ export class WireTestGenerator {
         }
     }
 
-    private buildBasePath(endpoint: HttpEndpoint): string {
+    private buildBasePath(endpoint: FernIr.HttpEndpoint): string {
         let basePath =
             endpoint.fullPath.head +
             endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
@@ -380,7 +403,7 @@ export class WireTestGenerator {
                 basePath = basePath.replace(`{${paramName}}`, pathParam.equalTo);
             });
         } else {
-            // Fallback: Get path parameters from dynamic endpoint example
+            // Fallback: Get path parameters from FernIr.dynamic endpoint example
             const dynamicExample = this.getDynamicEndpointExample(endpoint);
             if (dynamicExample?.pathParameters) {
                 Object.entries(dynamicExample.pathParameters).forEach(([paramName, paramValue]) => {
@@ -399,7 +422,7 @@ export class WireTestGenerator {
      * Only includes REQUIRED query params to avoid mismatches with optional params
      * that may not be included in the generated snippet.
      */
-    private buildQueryParamsCode(endpoint: HttpEndpoint): string {
+    private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
         const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
 
         if (!dynamicEndpointExample?.queryParameters) {
@@ -413,7 +436,7 @@ export class WireTestGenerator {
             const isOptional =
                 queryParam.valueType.type === "container" && queryParam.valueType.container.type === "optional";
             if (!isOptional) {
-                requiredQueryParamNames.add(queryParam.name.wireValue);
+                requiredQueryParamNames.add(getWireValue(queryParam.name));
             }
         }
 
@@ -435,12 +458,12 @@ export class WireTestGenerator {
         return `{ ${queryParamEntries.join(", ")} }`;
     }
 
-    private getTestMethodName(endpoint: HttpEndpoint, serviceName: string): string {
-        const endpointName = endpoint.name.snakeCase.safeName;
+    private getTestMethodName(endpoint: FernIr.HttpEndpoint, serviceName: string): string {
+        const endpointName = this.case.snakeSafe(endpoint.name);
         return `test_${serviceName}_${endpointName}_with_wiremock`;
     }
 
-    private getDynamicEndpointExample(endpoint: HttpEndpoint): dynamic.EndpointSnippetRequest | null {
+    private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointSnippetRequest | null {
         const example = this.dynamicIr.endpoints[endpoint.id];
         if (!example) {
             return null;
@@ -458,13 +481,13 @@ export class WireTestGenerator {
         endpoint,
         testId
     }: {
-        example: dynamic.EndpointSnippetRequest;
-        endpoint: HttpEndpoint;
+        example: FernIr.dynamic.EndpointSnippetRequest;
+        endpoint: FernIr.HttpEndpoint;
         testId: string;
     }): Promise<ruby.AstNode> {
         // Inject the X-Test-Id header into the example request
         // Auth is handled in the setup method, so we don't need to inject it here
-        const exampleWithTestId: dynamic.EndpointSnippetRequest = {
+        const exampleWithTestId: FernIr.dynamic.EndpointSnippetRequest = {
             ...example,
             headers: {
                 ...(example.headers ?? {}),
@@ -479,15 +502,15 @@ export class WireTestGenerator {
         return snippetAst as ruby.AstNode;
     }
 
-    private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
-        const endpointsByService = new Map<string, HttpEndpoint[]>();
+    private groupEndpointsByService(): Map<string, FernIr.HttpEndpoint[]> {
+        const endpointsByService = new Map<string, FernIr.HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
             // Skip root-level services (services without a fernFilepath)
             // The Ruby SDK doesn't generate methods for root-level endpoints on the main client
             if (!service.name?.fernFilepath?.allParts || service.name.fernFilepath.allParts.length === 0) {
                 this.context.logger.debug(
-                    `Skipping root-level service for wire tests: ${service.name?.fernFilepath?.file?.snakeCase?.safeName ?? "unknown"}`
+                    `Skipping root-level service for wire tests: ${service.name?.fernFilepath?.file != null ? this.case.snakeSafe(service.name.fernFilepath.file) : "unknown"}`
                 );
                 continue;
             }
@@ -499,8 +522,8 @@ export class WireTestGenerator {
         return endpointsByService;
     }
 
-    private getFormattedServiceName(service: HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+    private getFormattedServiceName(service: FernIr.HttpService): string {
+        return service.name?.fernFilepath?.allParts?.map((part) => this.case.snakeSafe(part)).join("_") || "root";
     }
 
     private wiremockMappingKey({
@@ -524,6 +547,26 @@ export class WireTestGenerator {
             out[key] = mapping;
         }
         return out;
+    }
+
+    /**
+     * Builds the expected Authorization header value for basic auth.
+     * Returns the full header value (e.g., "Basic dGVzdC11c2VybmFtZTp0ZXN0LXBhc3N3b3Jk")
+     * or null if no basic auth scheme is configured.
+     */
+    private buildExpectedAuthorizationHeader(): string | null {
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "basic") {
+                if (scheme.usernameOmit && scheme.passwordOmit) {
+                    continue;
+                }
+                const username = scheme.usernameOmit ? "" : "test-username";
+                const password = scheme.passwordOmit ? "" : "test-password";
+                const encoded = Buffer.from(`${username}:${password}`).toString("base64");
+                return `Basic ${encoded}`;
+            }
+        }
+        return null;
     }
 
     private toPascalCase(str: string): string {

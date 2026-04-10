@@ -1,6 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -14,10 +14,12 @@ public class Example27
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndQueryAsync(
-            "param",
-            new GetWithPathAndQuery {
-                Query = "query"
+        await client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(
+            new ObjectWithMixedRequiredAndOptionalFields {
+                RequiredString = "requiredString",
+                RequiredInteger = 1,
+                OptionalString = "optionalString",
+                RequiredLong = 1000000L
             }
         );
     }

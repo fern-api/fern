@@ -70,7 +70,7 @@ private func main() async throws {
             ]
         ),
         eventInfo: EventInfo.metadata(
-            .init(
+            Metadata(
                 id: "event-12345",
                 data: [
                     "key1": "val1", 
@@ -227,6 +227,35 @@ private func main() async throws {
 
 try await main()
 "
+`;
+
+exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test2"
+    ],
+    "message": "Expected number, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test3"
+    ],
+    "message": "Expected number, got string"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test4"
+    ],
+    "message": "Expected number, got object"
+  }
+]"
 `;
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
@@ -484,6 +513,43 @@ private func main() async throws {
             ),
             ssn: "ssn"
         )
+    ))
+}
+
+try await main()
+"
+`;
+
+exports[`snippets (default) > required-headers > 'GET /plants (simple)' 1`] = `
+"import Foundation
+import Acme
+
+private func main() async throws {
+    let client = AcmeClient(
+        token: "<YOUR_API_KEY>",
+        tenantId: "my-tenant-id"
+    )
+
+    _ = try await client.plantstore.list()
+}
+
+try await main()
+"
+`;
+
+exports[`snippets (default) > required-headers > 'POST /plants (simple)' 1`] = `
+"import Foundation
+import Acme
+
+private func main() async throws {
+    let client = AcmeClient(
+        token: "<YOUR_API_KEY>",
+        tenantId: "my-tenant-id"
+    )
+
+    _ = try await client.plantstore.create(request: CreatePlantRequest(
+        name: "Fern",
+        price: 12.99
     ))
 }
 

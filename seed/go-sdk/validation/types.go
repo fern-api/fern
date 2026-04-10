@@ -208,6 +208,9 @@ func (t *Type) GetShape() Shape {
 }
 
 func (t *Type) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -274,6 +277,9 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Type) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value

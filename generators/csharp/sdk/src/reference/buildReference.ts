@@ -1,20 +1,25 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
 import { is } from "@fern-api/csharp-codegen";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { HttpEndpoint, HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
-import path from "path";
-import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo";
-import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGenerator";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
+type HttpEndpoint = FernIr.HttpEndpoint;
+type HttpService = FernIr.HttpService;
+type ServiceId = FernIr.ServiceId;
+
+import path from "path";
+import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo.js";
+import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGenerator.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder | undefined {
     const builder = new ReferenceConfigBuilder();
     const serviceEntries = Object.entries(context.ir.services);
     let hasEndpoints = false;
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
-            : builder.addSection({ title: getSectionTitle({ service }) });
+            : builder.addSection({ title: getSectionTitle({ context, service }) });
         const endpoints = getEndpointReferencesForService({
             context,
             serviceId,
@@ -26,7 +31,7 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
         }
     });
     if (!hasEndpoints) {
-        throw new Error(`No endpoint references found for any service while building reference.md.`);
+        return undefined;
     }
     return builder;
 }
@@ -42,6 +47,10 @@ function getEndpointReferencesForService({
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
+            // Skip endpoints with unsupported pagination types
+            if (endpoint.pagination?.type === "uri" || endpoint.pagination?.type === "path") {
+                return undefined;
+            }
             const example = context.getExampleEndpointCallIfExists(endpoint);
             if (!example) {
                 // skip endpoints that don't have an example
@@ -177,6 +186,8 @@ function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext;
     return context.ir.rootPackage.service === serviceId;
 }
 
-function getSectionTitle({ service }: { service: HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+function getSectionTitle({ context, service }: { context: SdkGeneratorContext; service: HttpService }): string {
+    return (
+        service.displayName ?? service.name.fernFilepath.allParts.map((part) => context.case.pascalSafe(part)).join(" ")
+    );
 }

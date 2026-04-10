@@ -1,12 +1,13 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { getOriginalName } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SourceFile } from "ts-morph";
 
-import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
-import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer.js";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy.js";
 
 export declare namespace SdkEndpointTypeSchemasContextImpl {
     export interface Init {
@@ -43,13 +44,16 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
         this.sdkEndpointSchemaDeclarationReferencer = sdkEndpointSchemaDeclarationReferencer;
     }
 
-    public getGeneratedEndpointTypeSchemas(packageId: PackageId, endpointName: Name): GeneratedSdkEndpointTypeSchemas {
+    public getGeneratedEndpointTypeSchemas(
+        packageId: PackageId,
+        endpointName: FernIr.NameOrString
+    ): GeneratedSdkEndpointTypeSchemas {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.sdkEndpointTypeSchemasGenerator.generateEndpointTypeSchemas({
             packageId,
@@ -60,15 +64,15 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
 
     public getReferenceToEndpointTypeSchemaExport(
         packageId: PackageId,
-        endpointName: Name,
+        endpointName: FernIr.NameOrString,
         export_: string | string[]
     ): Reference {
         const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
-            (endpoint) => endpoint.name.originalName === endpointName.originalName
+            (endpoint) => getOriginalName(endpoint.name) === getOriginalName(endpointName)
         );
         if (endpoint == null) {
-            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+            throw new Error(`Endpoint ${getOriginalName(endpointName)} does not exist`);
         }
         return this.sdkEndpointSchemaDeclarationReferencer.getReferenceToEndpointExport({
             name: { packageId, endpoint },

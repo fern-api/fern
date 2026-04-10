@@ -1,5 +1,5 @@
-import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager";
-import { ImportDeclaration, ImportsManager } from "../imports-manager/ImportsManager";
+import { DependencyManager, DependencyType } from "../dependency-manager/DependencyManager.js";
+import { ImportDeclaration, ImportsManager } from "../imports-manager/ImportsManager.js";
 
 export declare namespace ExternalDependency {
     export interface Init {

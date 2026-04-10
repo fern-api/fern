@@ -5,8 +5,8 @@ import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { parseDocument } from "yaml";
-import { ReferenceResolver } from "../ReferenceResolver";
-import { YamlDocument } from "../YamlDocument";
+import { ReferenceResolver } from "../ReferenceResolver.js";
+import { YamlDocument } from "../YamlDocument.js";
 
 function createYamlDocument(yaml: string, absoluteFilePath: AbsoluteFilePath, cwd: AbsoluteFilePath): YamlDocument {
     const document = parseDocument(yaml);

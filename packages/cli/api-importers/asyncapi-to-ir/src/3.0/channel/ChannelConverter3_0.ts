@@ -2,11 +2,12 @@ import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketM
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3 } from "openapi-types";
-import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
-import { ParameterConverter } from "../../converters/ParameterConverter";
-import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
-import { AsyncAPIV3 } from "..";
-import { ChannelParameter } from "../types";
+import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter.js";
+import { AbstractServerConverter } from "../../converters/AbstractServerConverter.js";
+import { ParameterConverter } from "../../converters/ParameterConverter.js";
+import { DisplayNameExtension } from "../../extensions/x-fern-display-name.js";
+import { AsyncAPIV3 } from "../index.js";
+import { ChannelParameter } from "../types.js";
 
 export declare namespace ChannelConverter3_0 {
     export interface Args extends AbstractChannelConverter.Args<AsyncAPIV3.ChannelV3> {
@@ -93,8 +94,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         }
 
         const baseUrl =
-            this.resolveChannelServersFromReference(this.channel.servers ?? []) ??
-            Object.keys(this.context.spec.servers ?? {})[0];
+            this.resolveChannelServersFromReference(this.channel.servers ?? []) ?? this.resolveFirstServerName();
 
         const channelAddress = this.transformToValidPath(this.channel.address ?? this.channelPath);
         const path = constructHttpPath(channelAddress);
@@ -105,13 +105,16 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
+        const auth = this.hasServerSecurity() || this.context.authOverrides?.auth != null;
+
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(displayName),
                 displayName,
+                connectMethodName: undefined, // This will be populated from OpenAPI IR layer
                 baseUrl,
                 path,
-                auth: false,
+                auth,
                 headers,
                 queryParameters,
                 pathParameters,
@@ -134,6 +137,29 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             audiences,
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    protected hasServerSecurity(): boolean {
+        const spec = this.context.spec as AsyncAPIV3.DocumentV3;
+        const servers = spec.servers ?? {};
+
+        if (this.channel.servers && this.channel.servers.length > 0) {
+            for (const serverRef of this.channel.servers) {
+                const serverName = serverRef.$ref.replace(SERVER_REFERENCE_PREFIX, "");
+                const server = servers[serverName];
+                if (server?.security && server.security.length > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        for (const server of Object.values(servers)) {
+            if (server.security && server.security.length > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private convertChannelParameters({
@@ -241,15 +267,38 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             });
             return undefined;
         }
-        const serverName = serverRef.$ref.substring(SERVER_REFERENCE_PREFIX.length);
-        if (serverName == null) {
+        const serverKey = serverRef.$ref.substring(SERVER_REFERENCE_PREFIX.length);
+        if (serverKey == null) {
             this.context.errorCollector.collect({
-                message: `Failed to find server with name ${serverName}`,
+                message: `Failed to find server with name ${serverKey}`,
                 path: this.breadcrumbs
             });
             return undefined;
         }
-        return serverName;
+        // Check for x-fern-server-name extension on the referenced server
+        const specServers = this.context.spec.servers;
+        if (specServers != null && serverKey in specServers) {
+            const server = specServers[serverKey];
+            return AbstractServerConverter.getServerName(serverKey, server);
+        }
+        return serverKey;
+    }
+
+    /**
+     * Resolves the effective name of the first server in the spec,
+     * checking for x-fern-server-name extension.
+     */
+    private resolveFirstServerName(): string | undefined {
+        const specServers = this.context.spec.servers;
+        if (specServers == null) {
+            return undefined;
+        }
+        const firstServerKey = Object.keys(specServers)[0];
+        if (firstServerKey == null) {
+            return undefined;
+        }
+        const server = specServers[firstServerKey];
+        return AbstractServerConverter.getServerName(firstServerKey, server);
     }
 
     private getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {

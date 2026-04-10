@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidDefaultEnvironmentRule } from "../valid-default-environment";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidDefaultEnvironmentRule } from "../valid-default-environment.js";
 
 describe("valid-default-environment", () => {
     it("default-env-missing", async () => {
@@ -18,6 +18,7 @@ describe("valid-default-environment", () => {
                 message: "The default-environment dev is not listed as an environment",
                 nodePath: ["default-environment"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "valid-default-environment",
                 severity: "fatal"
             }
         ]);

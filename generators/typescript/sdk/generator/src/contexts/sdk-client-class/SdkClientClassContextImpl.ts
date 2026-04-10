@@ -3,8 +3,8 @@ import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SourceFile } from "ts-morph";
-import { BaseClientTypeDeclarationReferencer } from "../../declaration-referencers/BaseClientTypeDeclarationReferencer";
-import { SdkClientClassDeclarationReferencer } from "../../declaration-referencers/SdkClientClassDeclarationReferencer";
+import { BaseClientTypeDeclarationReferencer } from "../../declaration-referencers/BaseClientTypeDeclarationReferencer.js";
+import { SdkClientClassDeclarationReferencer } from "../../declaration-referencers/SdkClientClassDeclarationReferencer.js";
 
 export declare namespace SdkClientClassContextImpl {
     export interface Init {

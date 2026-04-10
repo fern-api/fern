@@ -1,37 +1,40 @@
-import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { CaseConverter } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 
-import { GeneratedEndpointErrorUnionImpl } from "./GeneratedEndpointErrorUnionImpl";
+import { GeneratedEndpointErrorUnionImpl } from "./GeneratedEndpointErrorUnionImpl.js";
 
 export declare namespace EndpointErrorUnionGenerator {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         errorResolver: ErrorResolver;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
         enableInlineTypes: boolean;
         generateReadWriteOnlyTypes: boolean;
+        caseConverter: CaseConverter;
     }
 
     export namespace generateEndpointErrorUnion {
         export interface Args {
             packageId: PackageId;
-            endpoint: HttpEndpoint;
+            endpoint: FernIr.HttpEndpoint;
         }
     }
 }
 
 export class EndpointErrorUnionGenerator {
-    private readonly intermediateRepresentation: IntermediateRepresentation;
+    private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly errorResolver: ErrorResolver;
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly noOptionalProperties: boolean;
     private readonly enableInlineTypes: boolean;
     private readonly generateReadWriteOnlyTypes: boolean;
+    private readonly case: CaseConverter;
 
     constructor({
         intermediateRepresentation,
@@ -40,7 +43,8 @@ export class EndpointErrorUnionGenerator {
         retainOriginalCasing,
         noOptionalProperties,
         enableInlineTypes,
-        generateReadWriteOnlyTypes
+        generateReadWriteOnlyTypes,
+        caseConverter
     }: EndpointErrorUnionGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -49,6 +53,7 @@ export class EndpointErrorUnionGenerator {
         this.noOptionalProperties = noOptionalProperties;
         this.enableInlineTypes = enableInlineTypes;
         this.generateReadWriteOnlyTypes = generateReadWriteOnlyTypes;
+        this.case = caseConverter;
     }
 
     public generateEndpointErrorUnion({
@@ -64,7 +69,8 @@ export class EndpointErrorUnionGenerator {
             retainOriginalCasing: this.retainOriginalCasing,
             noOptionalProperties: this.noOptionalProperties,
             enableInlineTypes: this.enableInlineTypes,
-            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes
+            generateReadWriteOnlyTypes: this.generateReadWriteOnlyTypes,
+            caseConverter: this.case
         });
     }
 }

@@ -10,6 +10,7 @@ import { WithSource } from "../../commons/types/WithSource.js";
 import { EndpointSdkName } from "../../finalIr/types/EndpointSdkName.js";
 import { WebhookExampleCall } from "../../finalIr/types/WebhookExampleCall.js";
 import { WebhookHttpMethod } from "../../finalIr/types/WebhookHttpMethod.js";
+import { WebhookSignatureVerification } from "../../finalIr/types/WebhookSignatureVerification.js";
 import { HeaderWithExample } from "./HeaderWithExample.js";
 import { MultipartFormDataWebhookPayloadWithExample } from "./MultipartFormDataWebhookPayloadWithExample.js";
 import { ResponseWithExample } from "./ResponseWithExample.js";
@@ -30,6 +31,7 @@ export const WebhookWithExample: core.serialization.ObjectSchema<
         payload: core.serialization.lazy(() => serializers.SchemaWithExample),
         multipartFormData: MultipartFormDataWebhookPayloadWithExample.optional(),
         response: ResponseWithExample.optional(),
+        signatureVerification: WebhookSignatureVerification.optional(),
         examples: core.serialization.list(WebhookExampleCall),
     })
     .extend(WithDescription)
@@ -49,6 +51,7 @@ export declare namespace WebhookWithExample {
         payload: serializers.SchemaWithExample.Raw;
         multipartFormData?: MultipartFormDataWebhookPayloadWithExample.Raw | null;
         response?: ResponseWithExample.Raw | null;
+        signatureVerification?: WebhookSignatureVerification.Raw | null;
         examples: WebhookExampleCall.Raw[];
     }
 }

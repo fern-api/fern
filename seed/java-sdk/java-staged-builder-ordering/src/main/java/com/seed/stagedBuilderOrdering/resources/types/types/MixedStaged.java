@@ -130,6 +130,10 @@ public final class MixedStaged {
 
     public interface _FinalStage {
         MixedStaged build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -198,6 +202,18 @@ public final class MixedStaged {
         @java.lang.Override
         public MixedStaged build() {
             return new MixedStaged(id, name, timestamp, nested, count, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

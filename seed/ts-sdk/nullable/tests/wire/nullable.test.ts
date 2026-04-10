@@ -44,6 +44,7 @@ describe("NullableClient", () => {
                 strings: { strings: { key: "value" } },
             },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.nullable.getUsers({
@@ -53,58 +54,7 @@ describe("NullableClient", () => {
             tags: "tags",
             extra: true,
         });
-        expect(response).toEqual([
-            {
-                name: "name",
-                id: "id",
-                tags: ["tags", "tags"],
-                metadata: {
-                    createdAt: "2024-01-15T09:30:00Z",
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    avatar: "avatar",
-                    activated: true,
-                    status: {
-                        type: "active",
-                    },
-                    values: {
-                        values: "values",
-                    },
-                },
-                email: "email",
-                "favorite-number": 1,
-                numbers: [1, 1],
-                strings: {
-                    strings: {
-                        key: "value",
-                    },
-                },
-            },
-            {
-                name: "name",
-                id: "id",
-                tags: ["tags", "tags"],
-                metadata: {
-                    createdAt: "2024-01-15T09:30:00Z",
-                    updatedAt: "2024-01-15T09:30:00Z",
-                    avatar: "avatar",
-                    activated: true,
-                    status: {
-                        type: "active",
-                    },
-                    values: {
-                        values: "values",
-                    },
-                },
-                email: "email",
-                "favorite-number": 1,
-                numbers: [1, 1],
-                strings: {
-                    strings: {
-                        key: "value",
-                    },
-                },
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createUser", async () => {
@@ -140,6 +90,7 @@ describe("NullableClient", () => {
             numbers: [1, 1],
             strings: { strings: { key: "value" } },
         };
+
         server
             .mockEndpoint()
             .post("/users")
@@ -166,31 +117,7 @@ describe("NullableClient", () => {
             },
             avatar: "avatar",
         });
-        expect(response).toEqual({
-            name: "name",
-            id: "id",
-            tags: ["tags", "tags"],
-            metadata: {
-                createdAt: "2024-01-15T09:30:00Z",
-                updatedAt: "2024-01-15T09:30:00Z",
-                avatar: "avatar",
-                activated: true,
-                status: {
-                    type: "active",
-                },
-                values: {
-                    values: "values",
-                },
-            },
-            email: "email",
-            "favorite-number": 1,
-            numbers: [1, 1],
-            strings: {
-                strings: {
-                    key: "value",
-                },
-            },
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("deleteUser", async () => {
@@ -198,6 +125,7 @@ describe("NullableClient", () => {
         const client = new SeedNullableClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { username: "xy" };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .delete("/users")
@@ -210,6 +138,6 @@ describe("NullableClient", () => {
         const response = await client.nullable.deleteUser({
             username: "xy",
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 });

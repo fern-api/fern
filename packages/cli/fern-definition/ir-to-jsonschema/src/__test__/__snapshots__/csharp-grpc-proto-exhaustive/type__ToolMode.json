@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "enum": [
+    "TOOL_MODE_INVALID",
+    "TOOL_MODE_AUTO",
+    "TOOL_MODE_NONE",
+    "TOOL_MODE_REQUIRED"
+  ],
+  "definitions": {}
+}

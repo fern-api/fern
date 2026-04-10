@@ -20,6 +20,7 @@ describe("PlaylistClient", () => {
             name: "name",
             problems: ["problems", "problems"],
         };
+
         server
             .mockEndpoint()
             .post("/v2/playlist/1/create")
@@ -38,12 +39,7 @@ describe("PlaylistClient", () => {
             },
         });
         expect(response).toEqual({
-            body: {
-                playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                "owner-id": SeedTrace.UserId("owner-id"),
-                name: "name",
-                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -63,6 +59,7 @@ describe("PlaylistClient", () => {
             { playlist_id: "playlist_id", "owner-id": "owner-id", name: "name", problems: ["problems", "problems"] },
             { playlist_id: "playlist_id", "owner-id": "owner-id", name: "name", problems: ["problems", "problems"] },
         ];
+
         server.mockEndpoint().get("/v2/playlist/1/all").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.playlist.getPlaylists(1, {
@@ -73,20 +70,7 @@ describe("PlaylistClient", () => {
             multipleField: "multipleField",
         });
         expect(response).toEqual({
-            body: [
-                {
-                    playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                    "owner-id": SeedTrace.UserId("owner-id"),
-                    name: "name",
-                    problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-                },
-                {
-                    playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                    "owner-id": SeedTrace.UserId("owner-id"),
-                    name: "name",
-                    problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-                },
-            ],
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -108,6 +92,7 @@ describe("PlaylistClient", () => {
             name: "name",
             problems: ["problems", "problems"],
         };
+
         server
             .mockEndpoint()
             .get("/v2/playlist/1/playlistId")
@@ -118,12 +103,7 @@ describe("PlaylistClient", () => {
 
         const response = await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("playlistId"));
         expect(response).toEqual({
-            body: {
-                playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                "owner-id": SeedTrace.UserId("owner-id"),
-                name: "name",
-                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),
@@ -145,6 +125,7 @@ describe("PlaylistClient", () => {
             name: "name",
             problems: ["problems", "problems"],
         };
+
         server
             .mockEndpoint()
             .put("/v2/playlist/1/playlistId")
@@ -159,12 +140,7 @@ describe("PlaylistClient", () => {
             problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
         });
         expect(response).toEqual({
-            body: {
-                playlist_id: SeedTrace.PlaylistId("playlist_id"),
-                "owner-id": SeedTrace.UserId("owner-id"),
-                name: "name",
-                problems: [SeedTrace.ProblemId("problems"), SeedTrace.ProblemId("problems")],
-            },
+            body: rawResponseBody,
             ok: true,
             headers: expect.any(Object),
             rawResponse: expect.any(Object),

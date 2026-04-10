@@ -1,12 +1,13 @@
+import { CaseConverter, getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { HttpPath, PathParameter, PathParameterLocation, SdkRequest } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { getParameterNameForPositionalPathParameter } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
-import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
+import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 
-export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: PathParameter) => ts.Expression;
+export type GetReferenceToPathParameterVariableFromRequest = (pathParameter: FernIr.PathParameter) => ts.Expression;
 
 export function buildUrl({
     endpoint,
@@ -20,13 +21,13 @@ export function buildUrl({
     forceInlinePathParameters = false
 }: {
     endpoint: {
-        sdkRequest: SdkRequest | undefined;
-        fullPath: HttpPath;
-        allPathParameters: PathParameter[];
-        path: HttpPath;
+        sdkRequest: FernIr.SdkRequest | undefined;
+        fullPath: FernIr.HttpPath;
+        allPathParameters: FernIr.PathParameter[];
+        path: FernIr.HttpPath;
     };
     generatedClientClass: GeneratedSdkClientClassImpl;
-    context: SdkContext;
+    context: FileContext;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -44,7 +45,7 @@ export function buildUrl({
         ts.factory.createTemplateHead(endpoint.fullPath.head),
         endpoint.fullPath.parts.map((part, index) => {
             const pathParameter = endpoint.allPathParameters.find(
-                (param) => param.name.originalName === part.pathParameter
+                (param) => getOriginalName(param.name) === part.pathParameter
             );
             if (pathParameter == null) {
                 throw new Error("Could not locate path parameter: " + part.pathParameter);
@@ -55,6 +56,7 @@ export function buildUrl({
                 generatedClientClass,
                 retainOriginalCasing,
                 parameterNaming,
+                caseConverter: context.case,
                 shouldInlinePathParameters:
                     forceInlinePathParameters || context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
                 getReferenceToPathParameterVariableFromRequest
@@ -91,33 +93,36 @@ function getReferenceToPathParameter({
     retainOriginalCasing,
     shouldInlinePathParameters,
     parameterNaming,
+    caseConverter,
     getReferenceToPathParameterVariableFromRequest
 }: {
-    pathParameter: PathParameter;
+    pathParameter: FernIr.PathParameter;
     generatedClientClass: GeneratedSdkClientClassImpl;
     retainOriginalCasing: boolean;
     shouldInlinePathParameters: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    caseConverter: CaseConverter;
     getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
 }): ts.Expression {
     if (pathParameter.variable != null) {
         return generatedClientClass.getReferenceToVariable(pathParameter.variable);
     }
     switch (pathParameter.location) {
-        case PathParameterLocation.Service:
-        case PathParameterLocation.Endpoint: {
+        case FernIr.PathParameterLocation.Service:
+        case FernIr.PathParameterLocation.Endpoint: {
             if (shouldInlinePathParameters) {
                 return getReferenceToPathParameterVariableFromRequest(pathParameter);
             } else {
                 const pathParamName = getParameterNameForPositionalPathParameter({
                     pathParameter,
                     retainOriginalCasing,
-                    parameterNaming
+                    parameterNaming,
+                    caseConverter
                 });
                 return ts.factory.createIdentifier(pathParamName);
             }
         }
-        case PathParameterLocation.Root:
+        case FernIr.PathParameterLocation.Root:
             return generatedClientClass.getReferenceToRootPathParameter(pathParameter);
         default:
             assertNever(pathParameter.location);

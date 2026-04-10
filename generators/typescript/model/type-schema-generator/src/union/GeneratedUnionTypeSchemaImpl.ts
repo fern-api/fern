@@ -1,4 +1,5 @@
-import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { CaseConverter } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { Zurg } from "@fern-typescript/commons";
 import { GeneratedUnionType, GeneratedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import {
@@ -8,27 +9,32 @@ import {
 } from "@fern-typescript/union-schema-generator";
 import { ModuleDeclaration, ts } from "ts-morph";
 
-import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
-import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType";
-import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType";
+import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
+import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType.js";
+import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType.js";
 
 export declare namespace GeneratedUnionTypeSchemaImpl {
     export interface Init<Context extends ModelContext>
-        extends AbstractGeneratedTypeSchema.Init<UnionTypeDeclaration, Context> {
+        extends AbstractGeneratedTypeSchema.Init<FernIr.UnionTypeDeclaration, Context> {
         includeUtilsOnUnionMembers: boolean;
+        caseConverter: CaseConverter;
     }
 }
 
 export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
-    extends AbstractGeneratedTypeSchema<UnionTypeDeclaration, Context>
+    extends AbstractGeneratedTypeSchema<FernIr.UnionTypeDeclaration, Context>
     implements GeneratedUnionTypeSchema<Context>
 {
     public readonly type = "union";
 
     private generatedUnionSchema: GeneratedUnionSchema<Context>;
 
-    constructor({ includeUtilsOnUnionMembers, ...superInit }: GeneratedUnionTypeSchemaImpl.Init<Context>) {
-        super(superInit);
+    constructor({
+        includeUtilsOnUnionMembers,
+        caseConverter,
+        ...superInit
+    }: GeneratedUnionTypeSchemaImpl.Init<Context>) {
+        super({ ...superInit, caseConverter });
         const discriminant = this.shape.discriminant;
 
         this.generatedUnionSchema = new GeneratedUnionSchema({
@@ -40,30 +46,34 @@ export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
             getReferenceToSchema: this.getReferenceToSchema,
             getGeneratedUnion: () => this.getGeneratedUnionType().getGeneratedUnion(),
             baseProperties: this.shape.baseProperties,
+            caseConverter,
             singleUnionTypes: this.shape.types.map((singleUnionType) => {
                 const discriminantValue = singleUnionType.discriminantValue;
-                return SingleUnionTypeProperties._visit<RawSingleUnionType<Context>>(singleUnionType.shape, {
+                return FernIr.SingleUnionTypeProperties._visit<RawSingleUnionType<Context>>(singleUnionType.shape, {
                     noProperties: () =>
                         new RawNoPropertiesSingleUnionType({
                             discriminant,
-                            discriminantValue
+                            discriminantValue,
+                            caseConverter
                         }),
                     samePropertiesAsObject: (extended) =>
                         new RawSamePropertiesAsObjectSingleUnionType({
                             extended,
                             discriminant,
-                            discriminantValue
+                            discriminantValue,
+                            caseConverter
                         }),
                     singleProperty: (singleProperty) =>
                         new RawSinglePropertySingleUnionType({
                             singleProperty,
                             discriminant,
                             discriminantValue,
-                            getGeneratedType: this.getGeneratedType.bind(this)
+                            getGeneratedType: this.getGeneratedType.bind(this),
+                            caseConverter
                         }),
                     _other: () => {
                         throw new Error(
-                            "Unknown SingleUnionTypeProperties type: " + singleUnionType.shape.propertiesType
+                            "Unknown FernIr.SingleUnionTypeProperties type: " + singleUnionType.shape.propertiesType
                         );
                     }
                 });

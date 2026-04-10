@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v66
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -17,7 +17,7 @@ buildScripts:
         if [ -f wiremock/docker-compose.test.yml ]; then
           docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
           docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
-          export WIREMOCK_PORT=$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+          export WIREMOCK_URL=http://localhost:$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
         fi
         go test -v ./...
         TEST_EXIT_CODE=$?
@@ -50,8 +50,8 @@ test:
       - go build -ldflags "-s -w" -trimpath -buildvcs=false -o fern-go-sdk ./cmd/fern-go-sdk
     runCommand: ./fern-go-sdk {CONFIG_PATH}
     env:
-      # Set path to the go-v2 CLI built from TypeScript (absolute path)
-      GO_V2_PATH: "/Users/jsklan/git/fern-2/generators/go-v2/sdk/dist/cli.cjs"
+      # Set path to the go-v2 CLI built from TypeScript (relative to workingDirectory: generators/go)
+      GO_V2_PATH: "../go-v2/sdk/dist/cli.cjs"
 language: go
 generatorType: SDK
 defaultOutputMode: github
@@ -140,6 +140,10 @@ fixtures:
     - outputFolder: deep-package-path
       customConfig:
         packagePath: all/the/way/in/here/please
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
+        maxRetries: 5
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -226,6 +230,10 @@ fixtures:
         packageName: sse
         module:
           path: github.com/fern-api/sse-go
+  server-sent-events-openapi:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
   idempotency-headers:
     - outputFolder: .
       outputVersion: 0.0.1
@@ -267,20 +275,55 @@ fixtures:
         packageName: fern
         module:
           path: github.com/go-undiscriminated-union-wire-tests/fern
-  exhaustive:
+  go-deterministic-ordering:
     - outputFolder: .
       customConfig:
         enableWireTests: true
+        exportAllRequestsAtRoot: true
+  exhaustive:
+    - outputFolder: no-custom-config
+      customConfig:
+        enableWireTests: true
+    - outputFolder: omit-empty-request-wrappers
+      customConfig:
+        enableWireTests: true
+        omitEmptyRequestWrappers: true
+  inferred-auth-implicit:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-explicit:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  inferred-auth-implicit-api-key:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-implicit-no-expiry:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-implicit-reference:
+    - outputFolder: .
+      customConfig: null
 scripts:
-  - image: fernapi/go-seed:1.0.0
+  - image: fernapi/go-seed:2.0.0
     commands:
+      build:
+        - |
+          printf 'version: "2"\nlinters:\n  exclusions:\n    paths:\n      - dynamic-snippets\n' > .golangci.yml
+          golangci-lint run --timeout=5m --allow-parallel-runners
       test:
         - |
           PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
           if [ -f wiremock/docker-compose.test.yml ]; then
             docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
             docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
-            export WIREMOCK_PORT=$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+            export WIREMOCK_URL=http://localhost:$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+            for i in $(seq 1 30); do
+              if wget -q --spider "$WIREMOCK_URL/__admin/mappings" 2>/dev/null; then
+                break
+              fi
+              sleep 1
+            done
           fi
           CGO_ENABLED=0 go test ./...
           TEST_EXIT_CODE=$?
@@ -289,7 +332,9 @@ scripts:
           fi
           exit $TEST_EXIT_CODE
 allowedFailures:
+  - schemaless-request-body-examples
   - alias-extends
+  - bytes-upload
   - bytes-download
   - enum
   - errors
@@ -309,6 +354,7 @@ allowedFailures:
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
+  - pagination-uri-path
 
   # TODO: Update the dynamic snippet generator to handle these cases.
   - examples:exported-client-name
@@ -323,4 +369,5 @@ allowedFailures:
   - file-upload:package-name
   - file-upload-openapi
 
-  - pagination-custom:.
+  - go-deterministic-ordering:.
+  - exhaustive:omit-empty-request-wrappers

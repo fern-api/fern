@@ -1,16 +1,16 @@
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { FernWorkspace, getOriginGitCommit } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { TaskContext } from "@fern-api/task-context";
+import { FernCliError, LoggableFernCliError, TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
-import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests";
-import { ExecutionEnvironment } from "./ExecutionEnvironment";
-import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
-import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";
+import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
+import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
+import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
+import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace.js";
 
 export declare namespace GenerationRunner {
     interface RunArgs {
@@ -25,6 +25,8 @@ export declare namespace GenerationRunner {
         skipUnstableDynamicSnippetTests?: boolean;
         inspect: boolean;
         ai: generatorsYml.AiServicesSchema | undefined;
+        skipFernignore?: boolean;
+        skipAutogenerationIfManualExamplesExist?: boolean;
     }
 }
 
@@ -44,7 +46,9 @@ export class GenerationRunner {
         outputVersionOverride,
         shouldGenerateDynamicSnippetTests,
         skipUnstableDynamicSnippetTests,
-        inspect
+        inspect,
+        skipFernignore,
+        skipAutogenerationIfManualExamplesExist
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -68,7 +72,9 @@ export class GenerationRunner {
                                 irVersionOverride,
                                 outputVersionOverride,
                                 absolutePathToFernConfig,
-                                inspect
+                                inspect,
+                                skipFernignore,
+                                skipAutogenerationIfManualExamplesExist
                             });
 
                             interactiveTaskContext.logger.info(
@@ -93,9 +99,16 @@ export class GenerationRunner {
                                 );
                             }
                         } catch (error) {
-                            interactiveTaskContext.failWithoutThrowing(
-                                `Generation failed: ${error instanceof Error ? error.message : "Unknown error"}`
-                            );
+                            if (error instanceof FernCliError) {
+                                // already logged by failAndThrow, nothing to do
+                            } else if (error instanceof LoggableFernCliError) {
+                                interactiveTaskContext.failWithoutThrowing(`Generation failed: ${error.log}`, error);
+                            } else {
+                                interactiveTaskContext.failWithoutThrowing(
+                                    `Generation failed: ${error instanceof Error ? error.message : "Unknown error"}`,
+                                    error
+                                );
+                            }
                         }
                     }
                 );
@@ -112,7 +125,9 @@ export class GenerationRunner {
         irVersionOverride,
         outputVersionOverride,
         absolutePathToFernConfig,
-        inspect
+        inspect,
+        skipFernignore,
+        skipAutogenerationIfManualExamplesExist
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -123,11 +138,16 @@ export class GenerationRunner {
         outputVersionOverride: string | undefined;
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;
+        skipFernignore?: boolean;
+        skipAutogenerationIfManualExamplesExist?: boolean;
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         shouldCommit: boolean;
         autoVersioningCommitMessage?: string;
+        autoVersioningChangelogEntry?: string;
+        autoVersioningPrDescription?: string;
+        autoVersioningVersionBumpReason?: string;
     }> {
         context.logger.info(`Starting generation for ${generatorInvocation.name}`);
 
@@ -144,7 +164,8 @@ export class GenerationRunner {
             smartCasing: generatorInvocation.smartCasing,
             exampleGeneration: {
                 includeOptionalRequestPropertyExamples: true,
-                disabled: generatorInvocation.disableExamples
+                disabled: generatorInvocation.disableExamples,
+                skipAutogenerationIfManualExamplesExist: skipAutogenerationIfManualExamplesExist ?? false
             },
             readme: generatorInvocation.readme,
             version: outputVersionOverride,
@@ -155,7 +176,8 @@ export class GenerationRunner {
                 cliVersion: workspace.cliVersion,
                 generatorName: generatorInvocation.name,
                 generatorVersion: generatorInvocation.version,
-                generatorConfig: generatorInvocation.config
+                generatorConfig: generatorInvocation.config,
+                originGitCommit: getOriginGitCommit()
             }
         });
 
@@ -189,7 +211,9 @@ export class GenerationRunner {
             executionEnvironment: this.executionEnvironment,
             ir: rawIr,
             runner: undefined,
-            ai: workspace.generatorsConfiguration?.ai
+            ai: workspace.generatorsConfiguration?.ai,
+            absolutePathToSpecRepo: undefined,
+            skipFernignore
         });
     }
 }

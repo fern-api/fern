@@ -5,7 +5,7 @@ import * as serializers from "@fern-fern/generators-sdk/serialization";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
+import { loadCliWorkspace } from "../../loadGeneratorWorkspaces.js";
 
 export async function registerCliRelease({
     fdrClient,

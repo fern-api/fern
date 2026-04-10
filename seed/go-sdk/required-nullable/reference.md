@@ -73,7 +73,7 @@ client.GetFoo(
 </dl>
 </details>
 
-<details><summary><code>client.UpdateFoo(Id, request) -> *fern.Foo</code></summary>
+<details><summary><code>client.UpdateFoo(ID, request) -> *fern.Foo</code></summary>
 <dl>
 <dd>
 
@@ -161,3 +161,4 @@ client.UpdateFoo(
 </dd>
 </dl>
 </details>
+

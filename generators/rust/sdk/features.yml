@@ -3,6 +3,10 @@ features:
     description: |
       Instantiate and use the client with the following:
 
+  - id: ENVIRONMENTS
+    description: |
+      This SDK allows you to configure different environments for API requests.
+
   - id: ERRORS
     description: |
       When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
@@ -40,6 +44,10 @@ features:
     advanced: true
     description: |
       You can add custom query parameters to requests using `RequestOptions`.
+
+  - id: WEBSOCKETS
+    description: |
+      The SDK supports WebSocket connections for real-time communication. Use the generated channel clients to connect, send, and receive messages.
 
   - id: PAGINATION
     description: |

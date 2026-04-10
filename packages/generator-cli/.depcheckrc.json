@@ -1,4 +1,0 @@
-{
-  "ignores": ["@types/jest", "@types/node", "esbuild"],
-  "ignore-patterns": ["lib", "dist"]
-}

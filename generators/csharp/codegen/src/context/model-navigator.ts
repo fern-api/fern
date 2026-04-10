@@ -1,22 +1,11 @@
-import { fail } from "node:assert";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import {
-    DeclaredErrorName,
-    DeclaredTypeName,
-    ExampleEnumType,
-    ExampleNamedType,
-    IntermediateRepresentation,
-    Name,
-    NameAndWireValue,
-    NamedType,
-    ProtobufService,
-    Type,
-    TypeDeclaration,
-    WebSocketChannel
-} from "@fern-fern/ir-sdk/api";
-import { type TypesOf } from "../utils/type-extractor";
-import { is } from "../utils/type-guards";
-import { type Generation } from "./generation-info";
+import { NameInput } from "@fern-api/base-generator";
+import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { fail } from "../utils/fail.js";
+
+import { type TypesOf } from "../utils/type-extractor.js";
+import { is } from "../utils/type-guards.js";
+import { type Generation } from "./generation-info.js";
 
 /**
  * JsonPath is a string that represents a path of nodes in the Intermediate Representation (IR) to a given node.
@@ -59,15 +48,18 @@ export interface Provenance {
  * ensures that undefined is never considered a valid IR node.
  */
 export type IrNode = Exclude<
-    | TypesOf<IntermediateRepresentation>
-    | TypesOf<FernIr.dynamic.DynamicIntermediateRepresentation>
-    | TypeDeclaration
-    | ProtobufService
-    | WebSocketChannel
-    | FernIr.dynamic.NamedType
-    | FernIr.dynamic.Declaration
-    | DeclaredErrorName
-    | DeclaredTypeName, // hack hack hack! Why did it not work without that?
+    | TypesOf<FernIr.IntermediateRepresentation>
+    | TypesOf<DynamicFernIr.dynamic.DynamicIntermediateRepresentation>
+    | FernIr.TypeDeclaration
+    | FernIr.ProtobufService
+    | FernIr.WebSocketChannel
+    | FernIr.SingleUnionType
+    | FernIr.SdkRequestWrapper
+    | FernIr.InlinedRequestBody
+    | DynamicFernIr.dynamic.NamedType
+    | DynamicFernIr.dynamic.Declaration
+    | FernIr.DeclaredErrorName
+    | FernIr.DeclaredTypeName, // hack hack hack! Why did it not work without that?
     undefined
 >;
 
@@ -95,11 +87,29 @@ export type Origin = IrNode | Provenance;
  * @example
  * trim("types.User.name.pascalCase") → "types.User"
  */
-function trim(jsonPath: JsonPath): JsonPath {
-    return jsonPath
-        .split(".")
-        .filter((part) => !["name", "camelCase", "snakeCase", "screamingSnakeCase", "pascalCase"].includes(part))
-        .join(".");
+/**
+ * Set of IR path segments that represent name casing variants.
+ * These segments are "transparent" in path construction - they don't contribute
+ * to the canonical path because all case variants of a name resolve to the same
+ * logical entity. Skipping them during path building avoids the expensive
+ * split/filter/join that the old trim() function performed on every node.
+ */
+const TRIMMED_KEYS = new Set(["name", "camelCase", "snakeCase", "screamingSnakeCase", "pascalCase"]);
+
+/**
+ * Builds a canonical JsonPath by appending a key to a parent path,
+ * skipping keys that are in the TRIMMED_KEYS set.
+ *
+ * This replaces the old trim() function which called split/filter/join
+ * on the entire path string for every node in the IR tree. Since parent
+ * paths are already canonical (built incrementally), we only need to
+ * check the current key.
+ */
+function buildPath(parentPath: string | undefined, key: string): string {
+    if (TRIMMED_KEYS.has(key)) {
+        return parentPath ?? "";
+    }
+    return parentPath ? `${parentPath}.${key}` : key;
 }
 
 /**
@@ -137,7 +147,7 @@ export class ModelNavigator {
     readonly root: Provenance;
 
     /** The Intermediate Representation being navigated */
-    readonly ir: IntermediateRepresentation | FernIr.dynamic.DynamicIntermediateRepresentation;
+    readonly ir: FernIr.IntermediateRepresentation | DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
 
     /**
      * Provides access to C# code generation utilities.
@@ -169,23 +179,24 @@ export class ModelNavigator {
         private readonly generation: Generation
     ) {
         this.root = this.createIndex(instance);
-        this.ir = instance as IntermediateRepresentation | FernIr.dynamic.DynamicIntermediateRepresentation;
+        this.ir = instance as
+            | FernIr.IntermediateRepresentation
+            | DynamicFernIr.dynamic.DynamicIntermediateRepresentation;
     }
 
     /**
      * Recursively builds indexes for all nodes in the IR tree.
      *
      * This private method traverses the entire IR object graph and creates provenance entries
-     * for each node. It handles path collisions by using a trimming strategy - when multiple
-     * paths normalize to the same trimmed path (e.g., "types.User.name.pascalCase" and
-     * "types.User.name.camelCase" both trim to "types.User.name"), only the first encounter
-     * is stored in indexByPath, and subsequent encounters are redirected to the parent provenance.
+     * for each node. It handles path collisions by using an incremental path building strategy -
+     * keys in TRIMMED_KEYS (name casing variants like "camelCase", "pascalCase") are skipped
+     * during path construction, causing them to share the parent's canonical path.
      *
-     * The algorithm:
-     * 1. Trims the current path to normalize it
-     * 2. If the path already exists, map this node to the parent provenance (path collision)
-     * 3. Otherwise, create a new provenance and store it in both indexes
-     * 4. Recursively process all child nodes
+     * Performance optimizations:
+     * - Uses incremental path building (buildPath) instead of split/filter/join on every node
+     * - When a trimmed key's children are also trimmed keys (e.g., name.camelCase, name.pascalCase),
+     *   registers them in indexByObject without recursing further since their children are only
+     *   primitive string values (safeName/unsafeName)
      *
      * @param instance - The current IR node being indexed
      * @param key - The property name/key used to access this node (empty string for root)
@@ -193,7 +204,7 @@ export class ModelNavigator {
      * @returns The provenance for this node (may be parent's provenance if path collision occurred)
      */
     private createIndex(instance: IrNode, key = "", parentProvenance?: Provenance) {
-        const jsonPath = trim(parentProvenance?.jsonPath ? `${parentProvenance.jsonPath}.${key}` : key);
+        const jsonPath = buildPath(parentProvenance?.jsonPath, key);
 
         if (this.indexByPath.has(jsonPath)) {
             // if the name was already taken that means that we've trimmed the path so we're not going to store this node
@@ -207,10 +218,21 @@ export class ModelNavigator {
             // if someone looks up this object, dial them back to the parent provenance
             this.indexByObject.set(instance, parentProvenance);
 
-            // but do continue to process the children nodes
-            for (const [key, value] of Object.entries(instance)) {
-                if (typeof value === "object" && value !== null) {
-                    this.createIndex(value, key, parentProvenance);
+            // Process children, but optimize for trimmed-key branches:
+            // Children of trimmed keys (e.g., "name") that are themselves trimmed keys
+            // (e.g., "camelCase", "pascalCase") only contain primitive string values
+            // (safeName/unsafeName), so we can register them without full recursion.
+            const isTrimmedKey = TRIMMED_KEYS.has(key);
+            for (const [childKey, childValue] of Object.entries(instance)) {
+                if (typeof childValue === "object" && childValue !== null) {
+                    if (isTrimmedKey && TRIMMED_KEYS.has(childKey)) {
+                        // This is a name case variant (e.g., camelCase under name).
+                        // Its children are only strings (safeName/unsafeName),
+                        // so just register the object mapping and skip recursion.
+                        this.indexByObject.set(childValue as IrNode, parentProvenance);
+                    } else {
+                        this.createIndex(childValue as IrNode, childKey, parentProvenance);
+                    }
                 }
             }
 
@@ -228,9 +250,9 @@ export class ModelNavigator {
         this.indexByPath.set(jsonPath, provenance);
 
         // process the children nodes
-        for (const [key, value] of Object.entries(instance)) {
-            if (typeof value === "object" && value !== null) {
-                this.createIndex(value, key, provenance);
+        for (const [childKey, childValue] of Object.entries(instance)) {
+            if (typeof childValue === "object" && childValue !== null) {
+                this.createIndex(childValue as IrNode, childKey, provenance);
             }
         }
 
@@ -275,7 +297,9 @@ export class ModelNavigator {
 
         const element = {
             ...parentProvenance,
-            jsonPath: trim(`${parentProvenance.jsonPath}+${member}`),
+            // The '+' separator means member names won't match TRIMMED_KEYS segments,
+            // so we can directly concatenate without needing to trim.
+            jsonPath: `${parentProvenance.jsonPath}+${member}`,
             name: member,
             node: parentProvenance.node,
             parent: parentProvenance,
@@ -382,13 +406,18 @@ export class ModelNavigator {
      * @returns The property name to use in generated C# code
      * @throws Error if the enum value name cannot be found in the enum definition
      */
-    getEnumValueName(typeEnum: Type.Enum, valueName: NameAndWireValue | ExampleEnumType): string {
-        // get the name of the enum value
-        const name = is.IR.ExampleEnumType(valueName) ? valueName.value.name : valueName.name;
+    getEnumValueName(
+        typeEnum: FernIr.Type.Enum,
+        valueName: FernIr.NameAndWireValueOrString | FernIr.ExampleEnumType
+    ): string {
+        // get the name of the enum value - ExampleEnumType.value is NameAndWireValueOrString
+        const name: NameInput = is.IR.ExampleEnumType(valueName) ? valueName.value : valueName;
         // match the name given to the name in the actual type
-        const member = typeEnum.values.find((v) => this.nameEquals(v.name.name, name));
+        const member = typeEnum.values.find((v) => this.nameEquals(v.name, name));
         // return the property name for that value
-        return member ? this.getPropertyNameFor(member) : fail(`Unexpected - can't find enum value ${name} in enum`);
+        return member
+            ? this.getPropertyNameFor(member)
+            : fail(`Unexpected - can't find enum value ${JSON.stringify(name)} in enum`);
     }
 
     /**
@@ -420,17 +449,17 @@ export class ModelNavigator {
         }
         if ("name" in property) {
             if (is.IR.NameAndWireValue(property.name)) {
-                return property.name.name.pascalCase.safeName;
+                return this.generation.case.pascalSafe(property.name);
             }
             if (is.IR.Name(property.name)) {
-                return property.name.pascalCase.safeName;
+                return this.generation.case.pascalSafe(property.name);
             }
             if (typeof property.name === "string") {
-                return property.name;
+                return this.generation.case.pascalSafe(property.name);
             }
         }
         if ("pascalCase" in property) {
-            return property.pascalCase.safeName;
+            return this.generation.case.pascalSafe(property);
         }
 
         throw new Error(`Unknown property type: ${this.jsonPath(property)}`);
@@ -461,20 +490,20 @@ export class ModelNavigator {
         }
         if ("name" in classDeclaration) {
             if (is.IR.TypeDeclaration(classDeclaration)) {
-                return classDeclaration.name.name.pascalCase.safeName;
+                return this.generation.case.pascalSafe(classDeclaration.name.name);
             }
             if (is.IR.NameAndWireValue(classDeclaration.name)) {
-                return classDeclaration.name.name.pascalCase.safeName;
+                return this.generation.case.pascalSafe(classDeclaration.name);
             }
             if (is.IR.Name(classDeclaration.name)) {
-                return classDeclaration.name.pascalCase.safeName;
+                return this.generation.case.pascalSafe(classDeclaration.name);
             }
             if (typeof classDeclaration.name === "string") {
-                return classDeclaration.name;
+                return this.generation.case.pascalSafe(classDeclaration.name);
             }
         }
         if ("pascalCase" in classDeclaration) {
-            return classDeclaration.pascalCase.safeName;
+            return this.generation.case.pascalSafe(classDeclaration);
         }
 
         throw new Error(`Unknown property type: ${JSON.stringify(classDeclaration)}`);
@@ -492,8 +521,8 @@ export class ModelNavigator {
      * @param name2 - The second Name object to compare
      * @returns true if the names are equal (same camelCase safeName), false otherwise
      */
-    nameEquals(name1: Name, name2: Name): boolean {
-        return name1.camelCase.safeName === name2.camelCase.safeName;
+    nameEquals(name1: NameInput, name2: NameInput): boolean {
+        return this.generation.case.camelSafe(name1) === this.generation.case.camelSafe(name2);
     }
 
     /**
@@ -516,16 +545,23 @@ export class ModelNavigator {
      * @returns An object containing the typeId and the resolved TypeDeclaration
      * @throws Error if the typeId cannot be resolved to a TypeDeclaration
      */
-    dereferenceType(typeIdOrDeclaration: TypeDeclaration | NamedType | DeclaredTypeName | ExampleNamedType | string): {
+    dereferenceType(
+        typeIdOrDeclaration:
+            | FernIr.TypeDeclaration
+            | FernIr.NamedType
+            | FernIr.DeclaredTypeName
+            | FernIr.ExampleNamedType
+            | string
+    ): {
         typeId: string;
-        typeDeclaration: TypeDeclaration;
+        typeDeclaration: FernIr.TypeDeclaration;
     };
     /**
      * Dereferences a type reference to get its full type declaration (dynamic IR variant).
      *
      * This overload is similar to the standard dereferenceType but supports resolving
-     * to either a standard TypeDeclaration or a dynamic FernIr.dynamic.NamedType.
-     * The commented-out FernIr.dynamic.NamedType in the input types suggests this
+     * to either a standard TypeDeclaration or a dynamic DynamicFernIr.dynamic.NamedType.
+     * The commented-out DynamicFernIr.dynamic.NamedType in the input types suggests this
      * may be partially implemented or in transition.
      *
      * @param typeIdOrDeclaration - A type reference in any supported form (excluding ExampleNamedType)
@@ -533,10 +569,14 @@ export class ModelNavigator {
      * @throws Error if the typeId cannot be resolved to a type declaration
      */
     dereferenceType(
-        typeIdOrDeclaration: TypeDeclaration | NamedType | DeclaredTypeName /* | FernIr.dynamic.NamedType */ | string
+        typeIdOrDeclaration:
+            | FernIr.TypeDeclaration
+            | FernIr.NamedType
+            | FernIr.DeclaredTypeName /* | FernIr.dynamic.NamedType */
+            | string
     ): {
         typeId: string;
-        typeDeclaration: TypeDeclaration | FernIr.dynamic.NamedType;
+        typeDeclaration: FernIr.TypeDeclaration | DynamicFernIr.dynamic.NamedType;
     } {
         // get the typeId and name
         const typeId = is.string(typeIdOrDeclaration)

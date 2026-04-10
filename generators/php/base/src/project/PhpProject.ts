@@ -2,13 +2,16 @@ import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
+import { Eta } from "eta";
 import { mkdir, readFile, writeFile } from "fs/promises";
-import { cloneDeep, isArray, mergeWith, template } from "lodash-es";
+import { cloneDeep, isArray, mergeWith } from "lodash-es";
 import path from "path";
 
-import { AsIsFiles } from "../AsIs";
-import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext";
-import { PhpFile } from "./PhpFile";
+import { AsIsFiles } from "../AsIs.js";
+import { AbstractPhpGeneratorContext } from "../context/AbstractPhpGeneratorContext.js";
+import { PhpFile } from "./PhpFile.js";
+
+const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 const CORE_DIRECTORY_NAME = "Core";
@@ -247,7 +250,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         namespace: string;
         extraTemplateVars?: Record<string, string>;
     }): string {
-        return template(contents)({
+        return eta.renderString(contents, {
             namespace,
             coreNamespace: this.context.getCoreNamespace(),
             ...extraTemplateVars
@@ -318,12 +321,19 @@ class ComposerJson {
             require: {
                 php: "^8.1",
                 "ext-json": "*",
-                "guzzlehttp/guzzle": "^7.4"
+                "psr/http-client": "^1.0",
+                "psr/http-client-implementation": "^1.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-factory-implementation": "^1.0",
+                "psr/http-message": "^1.1 || ^2.0",
+                "php-http/discovery": "^1.0",
+                "php-http/multipart-stream-builder": "^1.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.0",
                 "friendsofphp/php-cs-fixer": "3.5.0",
-                "phpstan/phpstan": "^1.12"
+                "phpstan/phpstan": "^1.12",
+                "guzzlehttp/guzzle": "^7.4"
             },
             autoload: {
                 "psr-4": {

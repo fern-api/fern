@@ -6,6 +6,7 @@ from .content_type.client import AsyncContentTypeClient, ContentTypeClient
 from .enum.client import AsyncEnumClient, EnumClient
 from .http_methods.client import AsyncHttpMethodsClient, HttpMethodsClient
 from .object.client import AsyncObjectClient, ObjectClient
+from .pagination.client import AsyncPaginationClient, PaginationClient
 from .params.client import AsyncParamsClient, ParamsClient
 from .primitive.client import AsyncPrimitiveClient, PrimitiveClient
 from .put.client import AsyncPutClient, PutClient
@@ -23,6 +24,7 @@ class EndpointsClient:
         self.enum = EnumClient(client_wrapper=self._client_wrapper)
         self.http_methods = HttpMethodsClient(client_wrapper=self._client_wrapper)
         self.object = ObjectClient(client_wrapper=self._client_wrapper)
+        self.pagination = PaginationClient(client_wrapper=self._client_wrapper)
         self.params = ParamsClient(client_wrapper=self._client_wrapper)
         self.primitive = PrimitiveClient(client_wrapper=self._client_wrapper)
         self.put = PutClient(client_wrapper=self._client_wrapper)
@@ -50,6 +52,7 @@ class AsyncEndpointsClient:
         self.enum = AsyncEnumClient(client_wrapper=self._client_wrapper)
         self.http_methods = AsyncHttpMethodsClient(client_wrapper=self._client_wrapper)
         self.object = AsyncObjectClient(client_wrapper=self._client_wrapper)
+        self.pagination = AsyncPaginationClient(client_wrapper=self._client_wrapper)
         self.params = AsyncParamsClient(client_wrapper=self._client_wrapper)
         self.primitive = AsyncPrimitiveClient(client_wrapper=self._client_wrapper)
         self.put = AsyncPutClient(client_wrapper=self._client_wrapper)

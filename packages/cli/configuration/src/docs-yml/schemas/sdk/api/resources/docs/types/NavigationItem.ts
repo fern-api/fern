@@ -6,7 +6,6 @@ export type NavigationItem =
     | FernDocsConfig.PageConfiguration
     | FernDocsConfig.SectionConfiguration
     | FernDocsConfig.ApiReferenceConfiguration
-    | FernDocsConfig.PythonDocsConfiguration
     | FernDocsConfig.LibraryReferenceConfiguration
     | FernDocsConfig.LinkConfiguration
     | FernDocsConfig.ChangelogConfiguration

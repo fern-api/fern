@@ -1,8 +1,8 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { constructFernFileContext, FernFileContext } from "../FernFileContext";
-import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
+import { constructFernFileContext, FernFileContext } from "../FernFileContext.js";
+import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName.js";
 
 export interface ErrorResolver {
     getDeclarationOrThrow(

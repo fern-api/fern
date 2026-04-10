@@ -1,14 +1,14 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
 import { GeneratedVersion, VersionContext } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";
 
-import { VersionDeclarationReferencer } from "../../declaration-referencers/VersionDeclarationReferencer";
-import { VersionGenerator } from "../../version/VersionGenerator";
+import { VersionDeclarationReferencer } from "../../declaration-referencers/VersionDeclarationReferencer.js";
+import { VersionGenerator } from "../../version/VersionGenerator.js";
 
 export declare namespace VersionContextImpl {
     export interface Init {
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         versionGenerator: VersionGenerator;
         versionDeclarationReferencer: VersionDeclarationReferencer;
         importsManager: ImportsManager;
@@ -18,7 +18,7 @@ export declare namespace VersionContextImpl {
 }
 
 export class VersionContextImpl implements VersionContext {
-    private intermediateRepresentation: IntermediateRepresentation;
+    private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private versionGenerator: VersionGenerator;
     private versionDeclarationReferencer: VersionDeclarationReferencer;
     private importsManager: ImportsManager;

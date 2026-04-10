@@ -54,3 +54,50 @@ export interface ObjectWithDatetimeLikeString {
     /** An actual datetime field for comparison */
     actualDatetime: string;
 }
+
+/**
+ * Tests that unknown/any values containing backslashes in map keys
+ * are properly escaped in Go string literals.
+ */
+export interface ObjectWithUnknownField {
+    unknown?: unknown | undefined;
+}
+
+/**
+ * Tests that unknown types are able to preserve their type names.
+ */
+export interface ObjectWithDocumentedUnknownType {
+    documentedUnknownType?: SeedExhaustive.types.DocumentedUnknownType | undefined;
+}
+
+/**
+ * Tests that unknown types are able to preserve their docstrings.
+ */
+export type DocumentedUnknownType = unknown;
+
+/**
+ * Tests that map value types with unknown types don't get spurious | undefined.
+ */
+export type MapOfDocumentedUnknownType = Record<string, SeedExhaustive.types.DocumentedUnknownType>;
+
+/**
+ * Tests that dynamic snippets include all required properties even when
+ * the example data only provides a subset. In C#, properties marked as
+ * `required` must be set in the object initializer.
+ */
+export interface ObjectWithMixedRequiredAndOptionalFields {
+    requiredString: string;
+    requiredInteger: number;
+    optionalString?: string | undefined;
+    requiredLong: number;
+}
+
+/**
+ * Tests that dynamic snippets recursively construct default objects for
+ * required properties whose type is a named object. The nested object's
+ * own required properties should also be filled with defaults.
+ */
+export interface ObjectWithRequiredNestedObject {
+    requiredString: string;
+    requiredObject: SeedExhaustive.types.NestedObjectWithRequiredField;
+}

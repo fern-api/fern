@@ -4,11 +4,12 @@ package service
 
 import (
 	context "context"
+	http "net/http"
+
 	pleaseinhere "github.com/examples/fern/pleaseinhere"
 	core "github.com/examples/fern/pleaseinhere/core"
 	internal "github.com/examples/fern/pleaseinhere/internal"
 	option "github.com/examples/fern/pleaseinhere/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -32,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetException(
 	ctx context.Context,
-	notificationId string,
+	notificationID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*pleaseinhere.Exception], error) {
 	options := core.NewRequestOptions(opts...)
@@ -43,7 +44,7 @@ func (r *RawClient) GetException(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/file/notification/%v",
-		notificationId,
+		notificationID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

@@ -10,6 +10,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -35,15 +36,26 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedAudiences
-from seed.environment import SeedAudiencesEnvironment
 
-client = SeedAudiences(
-    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
-)
+client = SeedAudiences()
+
 client.foo.find(
     optional_string="optionalString",
     public_property="publicProperty",
     private_property=1,
+)
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from seed import SeedAudiences
+from seed.environment import SeedAudiencesEnvironment
+
+client = SeedAudiences(
+    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
 ```
 
@@ -55,11 +67,8 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedAudiences
-from seed.environment import SeedAudiencesEnvironment
 
-client = AsyncSeedAudiences(
-    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
-)
+client = AsyncSeedAudiences()
 
 
 async def main() -> None:
@@ -98,9 +107,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedAudiences
 
-client = SeedAudiences(
-    ...,
-)
+client = SeedAudiences(...)
 response = client.foo.with_raw_response.find(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -132,14 +139,9 @@ client.foo.find(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedAudiences
 
-client = SeedAudiences(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedAudiences(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.foo.find(..., request_options={

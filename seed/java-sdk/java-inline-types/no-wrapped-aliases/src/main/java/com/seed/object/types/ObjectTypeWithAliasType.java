@@ -70,6 +70,10 @@ public final class ObjectTypeWithAliasType {
 
     public interface _FinalStage {
         ObjectTypeWithAliasType build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -97,6 +101,18 @@ public final class ObjectTypeWithAliasType {
         @java.lang.Override
         public ObjectTypeWithAliasType build() {
             return new ObjectTypeWithAliasType(prop, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 
@@ -154,6 +170,10 @@ public final class ObjectTypeWithAliasType {
 
         public interface _FinalStage {
             Prop build();
+
+            _FinalStage additionalProperty(String key, Object value);
+
+            _FinalStage additionalProperties(Map<String, Object> additionalProperties);
         }
 
         @JsonIgnoreProperties(ignoreUnknown = true)
@@ -181,6 +201,18 @@ public final class ObjectTypeWithAliasType {
             @java.lang.Override
             public Prop build() {
                 return new Prop(prop, additionalProperties);
+            }
+
+            @java.lang.Override
+            public Builder additionalProperty(String key, Object value) {
+                this.additionalProperties.put(key, value);
+                return this;
+            }
+
+            @java.lang.Override
+            public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                this.additionalProperties.putAll(additionalProperties);
+                return this;
             }
         }
     }

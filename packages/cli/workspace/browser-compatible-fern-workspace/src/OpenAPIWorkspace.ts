@@ -7,7 +7,7 @@ import { AbsoluteFilePath } from "@fern-api/path-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPI } from "openapi-types";
 
-import { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader";
+import { InMemoryOpenAPILoader } from "./InMemoryOpenAPILoader.js";
 
 const IN_MEMORY_ABSOLUTE_FILEPATH = AbsoluteFilePath.of("/<memory>");
 
@@ -58,9 +58,11 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas,
             resolveAliases: spec.settings?.resolveAliases,
             groupEnvironmentsByHost: spec.settings?.groupEnvironmentsByHost,
+            inferDefaultEnvironment: spec.settings?.inferDefaultEnvironment,
             removeDiscriminantsFromSchemas: spec.settings?.removeDiscriminantsFromSchemas,
             defaultIntegerFormat: spec.settings?.defaultIntegerFormat,
-            pathParameterOrder: spec.settings?.pathParameterOrder
+            pathParameterOrder: spec.settings?.pathParameterOrder,
+            coerceConstsTo: spec.settings?.coerceConstsTo
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();
@@ -74,7 +76,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             resolveAliases: this.resolveAliases,
             groupEnvironmentsByHost: this.groupEnvironmentsByHost,
             defaultIntegerFormat: this.defaultIntegerFormat,
-            pathParameterOrder: this.pathParameterOrder
+            pathParameterOrder: this.pathParameterOrder,
+            coerceConstsTo: this.coerceConstsTo
         };
     }
 

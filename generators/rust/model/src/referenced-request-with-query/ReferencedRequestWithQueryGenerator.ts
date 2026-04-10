@@ -1,19 +1,14 @@
+import { getOriginalName } from "@fern-api/base-generator";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 
-import {
-    HttpEndpoint,
-    HttpRequestBody,
-    IntermediateRepresentation,
-    ObjectProperty,
-    QueryParameter
-} from "@fern-fern/ir-sdk/api";
-
-import { RequestGenerator } from "../inlined-request-body/RequestGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { RequestGenerator } from "../inlined-request-body/RequestGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
+import { convertQueryParametersToProperties } from "../utils/structUtils.js";
 
 export class ReferencedRequestWithQueryGenerator {
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly context: ModelGeneratorContext;
 
     public constructor(context: ModelGeneratorContext) {
@@ -40,14 +35,15 @@ export class ReferencedRequestWithQueryGenerator {
         return files;
     }
 
-    private generateReferencedRequestWithQueryFile(endpoint: HttpEndpoint, serviceId: string): RustFile | null {
+    private generateReferencedRequestWithQueryFile(endpoint: FernIr.HttpEndpoint, serviceId: string): RustFile | null {
         try {
             const uniqueRequestTypeName = this.context.getReferencedRequestWithQueryTypeName(endpoint.id);
-            const referencedBody = endpoint.requestBody as HttpRequestBody.Reference;
+            const referencedBody = endpoint.requestBody as FernIr.HttpRequestBody.Reference;
 
             // Create properties: query parameters + body field
-            const queryProperties = this.convertQueryParametersToProperties(endpoint.queryParameters);
-            const bodyProperty: ObjectProperty = {
+            const { properties: queryProperties, fieldNames: queryParamFieldNames } =
+                convertQueryParametersToProperties(endpoint.queryParameters, this.context);
+            const bodyProperty: FernIr.ObjectProperty = {
                 name: {
                     name: {
                         originalName: "body",
@@ -71,8 +67,9 @@ export class ReferencedRequestWithQueryGenerator {
                 name: uniqueRequestTypeName,
                 properties,
                 extendedProperties: [],
-                docsContent: `Request for ${endpoint.name.originalName} (body + query parameters)`,
-                context: this.context
+                docsContent: `Request for ${getOriginalName(endpoint.name)} (body + query parameters)`,
+                context: this.context,
+                queryParamFieldNames
             });
 
             const filename = this.context.getFilenameForReferencedRequestWithQuery(endpoint.id);
@@ -83,23 +80,10 @@ export class ReferencedRequestWithQueryGenerator {
                 fileContents: objectGenerator.generateFileContents()
             });
         } catch (error) {
-            // Log error but don't fail the entire generation
             this.context.logger?.warn(
-                `Failed to generate referenced request with query file for endpoint ${endpoint.name.originalName}: ${error}`
+                `Failed to generate referenced request with query file for endpoint ${getOriginalName(endpoint.name)}: ${error}`
             );
             return null;
         }
-    }
-
-    // Helper method to convert query parameters to object properties
-    private convertQueryParametersToProperties(queryParams: QueryParameter[]): ObjectProperty[] {
-        return queryParams.map((queryParam) => ({
-            name: queryParam.name,
-            valueType: queryParam.valueType,
-            docs: queryParam.docs,
-            availability: queryParam.availability,
-            propertyAccess: undefined,
-            v2Examples: undefined
-        }));
     }
 }

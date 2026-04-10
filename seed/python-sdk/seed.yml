@@ -1,4 +1,4 @@
-irVersion: v63
+irVersion: v65
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -33,10 +33,14 @@ test:
       - chmod +x setup-python.sh && ./setup-python.sh
       - poetry config virtualenvs.in-project true
       - poetry install
-    # The envvar is needed to trick the generator to look in the right place for the core_utils files
+      - (cd ../../ && pnpm turbo run dist:cli --filter @fern-api/python-sdk)
     runCommand: poetry run python -m src.fern_python.generators.sdk.cli {CONFIG_PATH}
     env:
       PYTEST_CURRENT_TEST: "some value"
+      PYTHON_V2_PATH: ../../generators/python-v2/sdk/dist/cli.cjs
+      FERN_CORE_UTILITIES_PATH: ../../generators/python/core_utilities/sdk:../../generators/python/core_utilities/shared
+      FERN_ASSETS_PATH: ../../generators/python
+      FERN_FEATURES_YML_PATH: ../../generators/python/sdk/features.yml
 
 language: python
 generatorType: SDK
@@ -73,6 +77,9 @@ fixtures:
   examples:
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig:
+        omit_fern_headers: true
+      outputFolder: omit-fern-headers
     - customConfig:
         additional_init_exports:
           - from: types.types
@@ -273,6 +280,12 @@ fixtures:
           - custom_integration
           - sentry_integration
       outputFolder: import-paths
+    - customConfig:
+        custom_transport: true
+      outputFolder: custom-transport
+    - customConfig:
+        datetime_milliseconds: true
+      outputFolder: datetime-milliseconds
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -309,6 +322,9 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+    - customConfig:
+        offsetSemantics: "page-index"
+      outputFolder: page-index-semantics
   query-parameters:
     - customConfig: null
       outputFolder: no-custom-config
@@ -337,6 +353,10 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+  server-sent-events-openapi:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: with-wire-tests
   server-url-templating:
     - customConfig: null
       outputFolder: no-custom-config
@@ -358,6 +378,11 @@ fixtures:
     - customConfig:
         should_generate_websocket_clients: true
       outputFolder: websocket-with_generated_clients
+    - customConfig:
+        should_generate_websocket_clients: true
+        pydantic_config:
+          skip_validation: true
+      outputFolder: websocket-with_generated_clients-skip_validation
   nullable:
     - outputFolder: no-custom-config
     - customConfig:
@@ -399,6 +424,8 @@ scripts:
         - export NPM_CONFIG_CACHE="$(pwd)/.cache"
         - export HOME="$(pwd)/"
         - poetry run pytest -rP .
+        - poetry install --extras aiohttp
+        - poetry run pytest -rP -n auto -m aiohttp .
   # Test Pydantic V1
   - name: test-pydantic-v1
     image: fernapi/python-seed
@@ -415,18 +442,20 @@ scripts:
         - export NPM_CONFIG_CACHE="$(pwd)/.cache"
         - export HOME="$(pwd)/"
         - poetry run pytest -rP .
+        - poetry install --extras aiohttp
+        - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
+  - schemaless-request-body-examples
   - any-auth
   - endpoint-security-auth
-  - examples:client-filename
   - examples:legacy-wire-tests
   - exhaustive:additional_init_exports
   - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils
   - oauth-client-credentials-custom
+  - oauth-client-credentials-openapi
   - pagination-custom
   - response-property
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
-  - websocket

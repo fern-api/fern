@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ruby } from "@fern-api/ruby-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
@@ -413,7 +413,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 return ruby.TypeLiteral.string(str);
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return ruby.TypeLiteral.nop();

@@ -140,5 +140,15 @@ public final class UploadDocumentRequest {
         public UploadDocumentRequest build() {
             return new UploadDocumentRequest(author, tags, title, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

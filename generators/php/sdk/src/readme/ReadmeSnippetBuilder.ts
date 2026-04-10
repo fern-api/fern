@@ -1,15 +1,14 @@
-import { AbstractReadmeSnippetBuilder } from "@fern-api/base-generator";
+import { AbstractReadmeSnippetBuilder, CaseConverter } from "@fern-api/base-generator";
 import { php } from "@fern-api/php-codegen";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 interface EndpointWithFilepath {
-    endpoint: HttpEndpoint;
-    fernFilepath: FernFilepath;
+    endpoint: FernIr.HttpEndpoint;
+    fernFilepath: FernIr.FernFilepath;
 }
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
@@ -18,9 +17,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
-    private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
-    private readonly snippets: Record<EndpointId, string> = {};
-    private readonly defaultEndpointId: EndpointId;
+    private readonly case: CaseConverter;
+    private readonly endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
+    private readonly snippets: Record<FernIr.EndpointId, string> = {};
+    private readonly defaultEndpointId: FernIr.EndpointId;
     private readonly isPaginationEnabled: boolean;
 
     constructor({
@@ -32,9 +32,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }) {
         super({ endpointSnippets });
         this.context = context;
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.case = context.case;
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
+        this.isPaginationEnabled =
+            (context.config.generatePaginatedClients ?? false) && this.getEndpointWithPagination() != null;
         this.defaultEndpointId =
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
@@ -119,7 +121,7 @@ $response = ${this.getMethodCall(retryEndpoint)}(
 $response = ${this.getMethodCall(timeoutEndpoint)}(
     ...,
     options: [
-        'timeout' => 3.0 // Override timeout to 3 seconds
+        '${this.context.getTimeoutOptionName()}' => 3.0 // Override timeout at the request level
     ]
 );
 `)
@@ -130,25 +132,23 @@ $response = ${this.getMethodCall(timeoutEndpoint)}(
         const snippet = this.writeCode(`
 use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
 
-// Create a custom Guzzle client with specific configuration.
+// Pass any PSR-18 compatible HTTP client implementation.
+// For example, using Guzzle:
 $customClient = new \\GuzzleHttp\\Client([
     'timeout' => 5.0,
 ]);
 
-// Pass the custom client when creating an instance of the class.
 ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
-    '${this.context.getGuzzleClientOptionName()}' => $customClient
+    '${this.context.getHttpClientOptionName()}' => $customClient
 ]);
 
-// You can also utilize the same technique to leverage advanced customizations to the client such as adding middleware
-$handlerStack = \\GuzzleHttp\\HandlerStack::create();
-$handlerStack->push(MyCustomMiddleware::create());
-$customClient = new \\GuzzleHttp\\Client(['handler' => $handlerStack]);
-
-// Pass the custom client when creating an instance of the class.
-${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
-    '${this.context.getGuzzleClientOptionName()}' => $customClient
-]);
+// Or using Symfony HttpClient:
+// $customClient = (new \\Symfony\\Component\\HttpClient\\Psr18Client())
+//     ->withOptions(['timeout' => 5.0]);
+//
+// ${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(options: [
+//     '${this.context.getHttpClientOptionName()}' => $customClient
+// ]);
 `);
         return [snippet];
     }
@@ -269,7 +269,8 @@ foreach ($items->getPages() as $page) {
 
     private getEndpointWithPagination(): EndpointWithFilepath | undefined {
         return this.filterEndpoint((endpointWithFilepath) => {
-            if (endpointWithFilepath.endpoint.pagination != null) {
+            const pagination = endpointWithFilepath.endpoint.pagination;
+            if (pagination != null && pagination.type !== "uri" && pagination.type !== "path") {
                 return endpointWithFilepath;
             }
             return undefined;
@@ -286,7 +287,7 @@ foreach ($items->getPages() as $page) {
         return undefined;
     }
 
-    private getExplicitlyConfiguredSnippets(featureId: FeatureId): string[] | undefined {
+    private getExplicitlyConfiguredSnippets(featureId: FernIr.FeatureId): string[] | undefined {
         const endpointIds = this.getEndpointIdsForFeature(featureId);
         if (endpointIds != null) {
             return endpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId)).filter((e) => e != null);
@@ -294,8 +295,8 @@ foreach ($items->getPages() as $page) {
         return undefined;
     }
 
-    private buildEndpoints(): Record<EndpointId, EndpointWithFilepath> {
-        const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
+    private buildEndpoints(): Record<FernIr.EndpointId, EndpointWithFilepath> {
+        const endpoints: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
         for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = {
@@ -307,8 +308,8 @@ foreach ($items->getPages() as $page) {
         return endpoints;
     }
 
-    private buildSnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): Record<EndpointId, string> {
-        const snippets: Record<EndpointId, string> = {};
+    private buildSnippets(endpointSnippets: FernGeneratorExec.Endpoint[]): Record<FernIr.EndpointId, string> {
+        const snippets: Record<FernIr.EndpointId, string> = {};
         for (const endpointSnippet of Object.values(endpointSnippets)) {
             if (endpointSnippet.id.identifierOverride == null) {
                 throw new Error("Internal error; snippets must define the endpoint id to generate README.md");
@@ -321,7 +322,7 @@ foreach ($items->getPages() as $page) {
         return snippets;
     }
 
-    private getSnippetForEndpointId(endpointId: EndpointId): string {
+    private getSnippetForEndpointId(endpointId: FernIr.EndpointId): string {
         const snippet = this.snippets[endpointId];
         if (snippet == null) {
             throw new Error(`Internal error; missing snippet for endpoint ${endpointId}`);
@@ -329,16 +330,16 @@ foreach ($items->getPages() as $page) {
         return snippet;
     }
 
-    private getEndpointsForFeature(featureId: FeatureId): EndpointWithFilepath[] {
+    private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
         const endpointIds = this.getEndpointIdsForFeature(featureId);
         return endpointIds != null ? this.getEndpoints(endpointIds) : this.getEndpoints([this.defaultEndpointId]);
     }
 
-    private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
+    private getEndpointIdsForFeature(featureId: FernIr.FeatureId): FernIr.EndpointId[] | undefined {
         return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
     }
 
-    private getEndpoints(endpointIds: EndpointId[]): EndpointWithFilepath[] {
+    private getEndpoints(endpointIds: FernIr.EndpointId[]): EndpointWithFilepath[] {
         return endpointIds.map((endpointId) => {
             const endpoint = this.endpoints[endpointId];
             if (endpoint == null) {
@@ -445,14 +446,14 @@ ${environmentsList}
 
         const baseUrlsList = baseUrls
             .map((baseUrl) => {
-                const propertyName = baseUrl.name.camelCase.safeName;
+                const propertyName = this.case.camelSafe(baseUrl.name);
                 return `  - \`${propertyName}\`: The ${propertyName} base URL`;
             })
             .join("\n");
 
         const customEnvParams = baseUrls
             .map((baseUrl, index) => {
-                const propertyName = baseUrl.name.camelCase.safeName;
+                const propertyName = this.case.camelSafe(baseUrl.name);
                 const indent = index === 0 ? "" : "    ";
                 return `${indent}${propertyName}: 'https://your-${propertyName}-url.com'`;
             })

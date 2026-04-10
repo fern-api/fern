@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client-&gt;service-&gt;get()</code></summary>
+<details><summary><code>$client-&gt;service-&gt;get() -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->service->get();
+$client->service->get(): string;
 ```
 </dd>
 </dl>
@@ -24,3 +24,4 @@ $client->service->get();
 </dd>
 </dl>
 </details>
+

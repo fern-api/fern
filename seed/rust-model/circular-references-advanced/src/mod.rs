@@ -5,7 +5,7 @@
 //!
 //! ## Type Categories
 //!
-//! - **Model Types**: 20 types for data representation
+//! - **Model Types**: 19 types for data representation
 
 pub mod importing_a;
 pub mod root_type;
@@ -23,7 +23,6 @@ pub mod ast_leaf_node;
 pub mod ast_nodes_wrapper;
 pub mod ast_container_value;
 pub mod ast_primitive_value;
-pub mod ast_object_value;
 pub mod ast_field_name;
 pub mod ast_field_value;
 pub mod ast_object_field_value;
@@ -44,7 +43,6 @@ pub use ast_leaf_node::LeafNode;
 pub use ast_nodes_wrapper::NodesWrapper;
 pub use ast_container_value::ContainerValue;
 pub use ast_primitive_value::PrimitiveValue;
-pub use ast_object_value::ObjectValue;
 pub use ast_field_name::FieldName;
 pub use ast_field_value::FieldValue;
 pub use ast_object_field_value::ObjectFieldValue;

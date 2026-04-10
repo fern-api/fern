@@ -2,7 +2,7 @@ import { Severity } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { rust } from "@fern-api/rust-codegen";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
@@ -97,7 +97,7 @@ export class DynamicTypeLiteralMapper {
         }
     }
 
-    private generatePrimitivePlaceholder(primitive: FernIr.PrimitiveTypeV1): rust.Expression {
+    private generatePrimitivePlaceholder(primitive: FernIr.dynamic.PrimitiveTypeV1): rust.Expression {
         switch (primitive) {
             case "STRING":
             case "UUID":
@@ -125,6 +125,7 @@ export class DynamicTypeLiteralMapper {
             case "DATE":
                 return rust.Expression.raw('NaiveDate::parse_from_str("2024-01-01", "%Y-%m-%d").unwrap()');
             case "DATE_TIME":
+            case "DATE_TIME_RFC_2822":
                 if (this.context.getDateTimeType() === "utc") {
                     return rust.Expression.raw(
                         'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap().with_timezone(&Utc)'
@@ -144,7 +145,7 @@ export class DynamicTypeLiteralMapper {
         value,
         as
     }: {
-        primitive: FernIr.PrimitiveTypeV1;
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): rust.Expression {
@@ -210,7 +211,8 @@ export class DynamicTypeLiteralMapper {
                     args: []
                 });
             }
-            case "DATE_TIME": {
+            case "DATE_TIME":
+            case "DATE_TIME_RFC_2822": {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return rust.Expression.raw("Default::default()");
@@ -368,6 +370,12 @@ export class DynamicTypeLiteralMapper {
         const innerTypeRef =
             (typeReference as FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable).value ||
             ({ type: "unknown" } as FernIr.dynamic.TypeReference);
+        // If the inner type is also optional or nullable, skip the outer Some() wrapping.
+        // This matches the type generator's behavior where Type.option() collapses
+        // Option<Option<T>> into Option<T>, so the value should be Some(value) not Some(Some(value)).
+        if (innerTypeRef.type === "optional" || innerTypeRef.type === "nullable") {
+            return this.convertOptional({ typeReference: innerTypeRef, value });
+        }
         const innerValue = this.convert({ typeReference: innerTypeRef, value });
         return rust.Expression.functionCall("Some", [innerValue]);
     }
@@ -425,7 +433,11 @@ export class DynamicTypeLiteralMapper {
             });
         }
 
-        // Regular object handling - include ALL properties, setting missing optional ones to None
+        // Use ..Default::default() when the type supports it, or when the struct has
+        // additionalProperties (which generates an `extra: HashMap` field not in the IR)
+        const hasAdditionalProperties = (objectType as { additionalProperties?: boolean }).additionalProperties === true;
+        const useDefault = hasAdditionalProperties || this.context.canObjectTypeUseDefault(objectType);
+
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
         for (const property of objectType.properties) {
@@ -434,7 +446,7 @@ export class DynamicTypeLiteralMapper {
                 const propertyName = this.context.getPropertyName(property.name.name);
                 const wireValue = property.name.wireValue;
 
-                let propertyValue: rust.Expression;
+                let propertyValue: rust.Expression | undefined;
 
                 // Check for _fields properties first (for #[serde(flatten)] support)
                 // These properties don't exist in the JSON but need to be populated from parent data
@@ -461,7 +473,12 @@ export class DynamicTypeLiteralMapper {
                         // Property not in value - check if it's optional
                         const isOptional = this.context.isNullable(property.typeReference);
                         if (isOptional) {
-                            propertyValue = rust.Expression.none();
+                            if (useDefault) {
+                                // Skip - will be filled by ..Default::default()
+                                propertyValue = undefined;
+                            } else {
+                                propertyValue = rust.Expression.none();
+                            }
                         } else {
                             // Required field missing - add error and use default
                             this.context.addScopedError(`Required field '${wireValue}' is missing`, Severity.Critical);
@@ -475,16 +492,18 @@ export class DynamicTypeLiteralMapper {
                     }
                 }
 
-                structFields.push({
-                    name: propertyName,
-                    value: propertyValue
-                });
+                if (propertyValue !== undefined) {
+                    structFields.push({
+                        name: propertyName,
+                        value: propertyValue
+                    });
+                }
             } finally {
                 this.context.unscopeError();
             }
         }
 
-        return rust.Expression.structConstruction(structName, structFields);
+        return rust.Expression.structConstruction(structName, structFields, useDefault);
     }
 
     // Check if object extends another object (for flattening)
@@ -557,42 +576,54 @@ export class DynamicTypeLiteralMapper {
     }): rust.Expression {
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
-        // Create the base object with ALL base properties (not just those with values)
-        // For missing required fields, use Default::default()
-        const baseStructFields = extendsInfo.baseObjectType.properties.map((property) => {
+        // Check if the base type supports Default (e.g. has additionalProperties generating an extra HashMap field)
+        const baseHasAdditionalProperties =
+            (extendsInfo.baseObjectType as { additionalProperties?: boolean }).additionalProperties === true;
+        const baseUseDefault =
+            baseHasAdditionalProperties || this.context.canObjectTypeUseDefault(extendsInfo.baseObjectType);
+
+        // Create the base object with properties that have values or are required
+        // When useDefault is true, skip optional fields without values (they'll be covered by ..Default::default())
+        const baseStructFields: Array<{ name: string; value: rust.Expression }> = [];
+        for (const property of extendsInfo.baseObjectType.properties) {
             this.context.scopeError(property.name.wireValue);
             try {
                 const propertyValue = value[property.name.wireValue];
-                let fieldValue: rust.Expression;
 
                 if (propertyValue !== undefined) {
                     // Value is provided in the example
-                    fieldValue = this.convert({
-                        typeReference: property.typeReference,
-                        value: propertyValue
+                    baseStructFields.push({
+                        name: this.context.getPropertyName(property.name.name),
+                        value: this.convert({
+                            typeReference: property.typeReference,
+                            value: propertyValue
+                        })
                     });
                 } else if (
                     property.typeReference.type === "optional" ||
                     property.typeReference.type === "nullable"
                 ) {
-                    // Optional field without value -> None
-                    fieldValue = rust.Expression.raw("None");
+                    // Optional field without value: skip if useDefault, otherwise add None
+                    if (!baseUseDefault) {
+                        baseStructFields.push({
+                            name: this.context.getPropertyName(property.name.name),
+                            value: rust.Expression.raw("None")
+                        });
+                    }
                 } else {
                     // Required field without value -> Default::default()
-                    fieldValue = rust.Expression.raw("Default::default()");
+                    baseStructFields.push({
+                        name: this.context.getPropertyName(property.name.name),
+                        value: rust.Expression.raw("Default::default()")
+                    });
                 }
-
-                return {
-                    name: this.context.getPropertyName(property.name.name),
-                    value: fieldValue
-                };
             } finally {
                 this.context.unscopeError();
             }
-        });
+        }
 
         const baseStructName = this.context.getStructName(extendsInfo.baseObjectType.declaration.name);
-        const baseStruct = rust.Expression.structConstruction(baseStructName, baseStructFields);
+        const baseStruct = rust.Expression.structConstruction(baseStructName, baseStructFields, baseUseDefault);
 
         // Add the flattened base object field
         structFields.push({
@@ -628,7 +659,13 @@ export class DynamicTypeLiteralMapper {
             }
         });
 
-        return rust.Expression.structConstruction(structName, structFields);
+        // Check if the outer type also needs useDefault
+        const outerHasAdditionalProperties =
+            (objectType as { additionalProperties?: boolean }).additionalProperties === true;
+        const outerUseDefault =
+            outerHasAdditionalProperties || this.context.canObjectTypeUseDefault(objectType);
+
+        return rust.Expression.structConstruction(structName, structFields, outerUseDefault);
     }
 
     // Generate the field name for the flattened base object
@@ -745,6 +782,14 @@ export class DynamicTypeLiteralMapper {
                     return rust.Expression.reference(`${unionName}::${variantName}`);
                 }
 
+                // If the referenced object has no properties, the model generator collapses
+                // it to a no-fields variant. Use the constructor method instead of struct syntax
+                // (needed because variants are #[non_exhaustive]).
+                if (referencedType.properties.length === 0) {
+                    const methodName = this.context.getPropertyName(unionVariant.discriminantValue.name);
+                    return rust.Expression.raw(`${unionName}::${methodName}()`);
+                }
+
                 const convertedObject = this.convertObjectType({
                     objectType: referencedType,
                     value: discriminatedUnionTypeInstance.value
@@ -808,30 +853,85 @@ export class DynamicTypeLiteralMapper {
     }
 
     private getUndiscriminatedUnionVariantName(typeReference: FernIr.dynamic.TypeReference): string {
+        const name = this.getInnerTypeVariantName(typeReference);
+        if (name) {
+            return name;
+        }
+
+        // Handle container types with inner type information
+        switch (typeReference.type) {
+            case "list": {
+                const innerName = this.getInnerTypeVariantName(typeReference.value);
+                return innerName ? `${innerName}List` : "List";
+            }
+            case "set": {
+                const innerName = this.getInnerTypeVariantName(typeReference.value);
+                return innerName ? `${innerName}Set` : "Set";
+            }
+            case "map": {
+                const keyName = this.getInnerTypeVariantName(typeReference.key);
+                const valueName = this.getInnerTypeVariantName(typeReference.value);
+                if (keyName && valueName) {
+                    return `${keyName}To${valueName}Map`;
+                }
+                return "Map";
+            }
+            case "optional": {
+                const innerName = this.getInnerTypeVariantName(typeReference.value);
+                return innerName ? `Optional${innerName}` : "Optional";
+            }
+            case "nullable": {
+                const innerName = this.getInnerTypeVariantName(typeReference.value);
+                return innerName ? `Nullable${innerName}` : "Nullable";
+            }
+            default:
+                return "Unknown";
+        }
+    }
+
+    /**
+     * Gets a meaningful variant name for a named or primitive type reference.
+     * Returns undefined for container or unknown types.
+     */
+    private getInnerTypeVariantName(typeReference: FernIr.dynamic.TypeReference): string | undefined {
         switch (typeReference.type) {
             case "named": {
                 const namedType = this.context.ir.types[typeReference.value];
-                if (namedType) {
-                    return namedType.declaration.name.pascalCase.safeName;
-                }
-                return "Unknown";
+                return namedType?.declaration.name.pascalCase.safeName;
             }
             case "primitive":
-                // Map primitive types to Rust variant names
                 switch (typeReference.value) {
                     case "STRING":
                         return "String";
-                    case "INTEGER":
-                        return "Integer";
                     case "BOOLEAN":
                         return "Boolean";
+                    case "INTEGER":
+                        return "Integer";
+                    case "LONG":
+                        return "Long";
                     case "DOUBLE":
                         return "Double";
+                    case "FLOAT":
+                        return "Float";
+                    case "DATE_TIME":
+                        return "DateTime";
+                    case "DATE":
+                        return "Date";
+                    case "UUID":
+                        return "Uuid";
+                    case "BASE_64":
+                        return "Base64";
+                    case "BIG_INTEGER":
+                        return "BigInteger";
+                    case "UINT":
+                        return "Uint";
+                    case "UINT_64":
+                        return "Uint64";
                     default:
-                        return "Unknown";
+                        return undefined;
                 }
             default:
-                return "Unknown";
+                return undefined;
         }
     }
 

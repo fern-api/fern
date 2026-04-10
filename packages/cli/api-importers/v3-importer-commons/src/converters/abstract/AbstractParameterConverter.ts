@@ -1,9 +1,9 @@
 import { HttpHeader, PathParameter, QueryParameter, TypeId, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext } from "../..";
-import { ExampleConverter } from "../ExampleConverter";
-import { SchemaConverter } from "../schema/SchemaConverter";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { ExampleConverter } from "../ExampleConverter.js";
+import { SchemaConverter } from "../schema/SchemaConverter.js";
 
 export declare namespace AbstractParameterConverter {
     export interface Args<TParameter extends OpenAPIV3_1.ParameterObject> extends AbstractConverter.AbstractArgs {
@@ -80,6 +80,7 @@ export abstract class AbstractParameterConverter<
                         docs: this.parameter.description,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
+                        clientDefault: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
@@ -99,6 +100,7 @@ export abstract class AbstractParameterConverter<
                         docs: this.parameter.description,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         env: undefined,
+                        clientDefault: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
@@ -115,6 +117,7 @@ export abstract class AbstractParameterConverter<
                         valueType: typeReference ?? AbstractConverter.STRING,
                         location: "ENDPOINT",
                         variable: undefined,
+                        clientDefault: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
@@ -220,6 +223,7 @@ export abstract class AbstractParameterConverter<
      *
      * OpenAPI defaults:
      * - form style (default for query): explode = true
+     * - deepObject style: explode = true (only valid value per the OpenAPI spec)
      * - All other styles: explode = false
      */
     private getExplodeForQueryParameter(): boolean | undefined {
@@ -231,13 +235,15 @@ export abstract class AbstractParameterConverter<
             return undefined;
         }
 
-        // For form style, default explode is true
-        // Only preserve explode if it differs from the default
-        if (style === "form") {
+        // For form and deepObject styles, default explode is true.
+        // deepObject only supports explode=true per the OpenAPI spec serialization table,
+        // so we treat true as the default for deepObject as well.
+        // Only preserve explode if it differs from the default.
+        if (style === "form" || style === "deepObject") {
             return explode === true ? undefined : explode;
         }
 
-        // For all other styles (spaceDelimited, pipeDelimited, deepObject), default explode is false
+        // For all other styles (spaceDelimited, pipeDelimited), default explode is false
         return explode === false ? undefined : explode;
     }
 

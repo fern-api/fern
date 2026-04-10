@@ -5,6 +5,7 @@ package dollarstringexamples
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/dollar-string-examples/fern/internal"
 )
 

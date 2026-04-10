@@ -1,6 +1,9 @@
-import type { AiConfig } from "../ai/config/AiConfig";
-import type { ApiDefinition } from "../api/config/ApiDefinition";
-import type { SdkConfig } from "../sdk/config/SdkConfig";
+import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import type { AiConfig } from "../ai/config/AiConfig.js";
+import type { ApiDefinition } from "../api/config/ApiDefinition.js";
+import type { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
+import type { DocsConfig } from "../docs/config/DocsConfig.js";
+import type { SdkConfig } from "../sdk/config/SdkConfig.js";
 
 /**
  * Top-level workspace defined by fern.yml.
@@ -10,9 +13,14 @@ import type { SdkConfig } from "../sdk/config/SdkConfig";
  * and/or docs.
  */
 export interface Workspace {
+    /** Absolute path to fern.yml. Optional for flag-based workspace construction. */
+    absoluteFilePath?: AbsoluteFilePath;
+    /** The parsed fern.yml schema. Optional for flag-based workspace construction. */
+    fernYml?: FernYmlSchemaLoader.Success;
     ai?: AiConfig;
     apis: Record<string, ApiDefinition>;
     cliVersion: string;
+    docs?: DocsConfig;
     org: string;
     sdks?: SdkConfig;
 }

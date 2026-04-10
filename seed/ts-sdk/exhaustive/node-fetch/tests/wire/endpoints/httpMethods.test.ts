@@ -9,10 +9,11 @@ describe("HttpMethodsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/http-methods/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.httpMethods.testGet("id");
-        expect(response).toEqual("string");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("testPost", async () => {
@@ -34,6 +35,7 @@ describe("HttpMethodsClient", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
+
         server
             .mockEndpoint()
             .post("/http-methods")
@@ -46,23 +48,7 @@ describe("HttpMethodsClient", () => {
         const response = await client.endpoints.httpMethods.testPost({
             string: "string",
         });
-        expect(response).toEqual({
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
-            bool: true,
-            datetime: "2024-01-15T09:30:00Z",
-            date: "2023-01-15",
-            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            base64: "SGVsbG8gd29ybGQh",
-            list: ["list", "list"],
-            set: ["set"],
-            map: {
-                1: "map",
-            },
-            bigint: "1000000",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("testPut", async () => {
@@ -84,6 +70,7 @@ describe("HttpMethodsClient", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
+
         server
             .mockEndpoint()
             .put("/http-methods/id")
@@ -96,23 +83,7 @@ describe("HttpMethodsClient", () => {
         const response = await client.endpoints.httpMethods.testPut("id", {
             string: "string",
         });
-        expect(response).toEqual({
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
-            bool: true,
-            datetime: "2024-01-15T09:30:00Z",
-            date: "2023-01-15",
-            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            base64: "SGVsbG8gd29ybGQh",
-            list: ["list", "list"],
-            set: ["set"],
-            map: {
-                1: "map",
-            },
-            bigint: "1000000",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("testPatch", async () => {
@@ -148,6 +119,7 @@ describe("HttpMethodsClient", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
+
         server
             .mockEndpoint()
             .patch("/http-methods/id")
@@ -174,23 +146,7 @@ describe("HttpMethodsClient", () => {
             },
             bigint: "1000000",
         });
-        expect(response).toEqual({
-            string: "string",
-            integer: 1,
-            long: 1000000,
-            double: 1.1,
-            bool: true,
-            datetime: "2024-01-15T09:30:00Z",
-            date: "2023-01-15",
-            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            base64: "SGVsbG8gd29ybGQh",
-            list: ["list", "list"],
-            set: ["set"],
-            map: {
-                1: "map",
-            },
-            bigint: "1000000",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("testDelete", async () => {
@@ -198,6 +154,7 @@ describe("HttpMethodsClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .delete("/http-methods/id")
@@ -207,6 +164,6 @@ describe("HttpMethodsClient", () => {
             .build();
 
         const response = await client.endpoints.httpMethods.testDelete("id");
-        expect(response).toEqual(true);
+        expect(response).toEqual(rawResponseBody);
     });
 });

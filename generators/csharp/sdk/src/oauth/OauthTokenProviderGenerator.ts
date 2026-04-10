@@ -1,18 +1,17 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    EndpointReference,
-    HttpEndpoint,
-    HttpService,
-    Name,
-    OAuthScheme,
-    ObjectProperty,
-    ResponseProperty
-} from "@fern-fern/ir-sdk/api";
+type EndpointReference = FernIr.EndpointReference;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type HttpService = FernIr.HttpService;
+type OAuthScheme = FernIr.OAuthScheme;
+type ObjectProperty = FernIr.ObjectProperty;
+type ResponseProperty = FernIr.ResponseProperty;
+
 import { fail } from "assert";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace OauthTokenProviderGenerator {
     interface Args {
@@ -103,31 +102,39 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
             type: this.Primitive.string
         });
 
-        // check for required primitive properties in the request, and propogate them as fields on the class
+        // Propagate required, non-literal custom properties from the token endpoint request
+        // as fields on the class. Literal properties are hardcoded in the request class and
+        // don't need to be passed through. This aligns with Java's approach of skipping only
+        // literals, while also keeping the optional guard to avoid adding optional-typed
+        // properties as required constructor parameters.
         for (const customProperty of this.scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+            if (isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
             const typeRef = this.context.csharpTypeMapper.convert({
                 reference: customProperty.property.valueType
             });
-            if (!typeRef.isOptional && is.IR.TypeReference.Primitive(customProperty.property.valueType)) {
-                const name = this.model.getPropertyNameFor(customProperty.property.name);
-
-                this.additionalRequestFields.set(
-                    name,
-                    this.cls.addField({
-                        origin: this.cls.explicit(this.format.private(name)),
-                        access: ast.Access.Private,
-                        type: typeRef
-                    })
-                );
+            if (typeRef.isOptional) {
+                continue;
             }
+            const name = this.model.getPropertyNameFor(this.case.resolveNameAndWireValue(customProperty.property.name));
+
+            this.additionalRequestFields.set(
+                name,
+                this.cls.addField({
+                    origin: this.cls.explicit(this.format.private(name)),
+                    access: ast.Access.Private,
+                    type: typeRef
+                })
+            );
         }
         const scopes = this.scheme.configuration.tokenEndpoint.requestProperties.scopes;
-        if (scopes) {
+        if (scopes && !isLiteralTypeReference(scopes.property.valueType)) {
             const typeRef = this.context.csharpTypeMapper.convert({
                 reference: scopes.property.valueType
             });
-            if (!typeRef.isOptional && is.IR.TypeReference.Primitive(scopes.property.valueType)) {
-                const name = this.model.getPropertyNameFor(scopes.property.name);
+            if (!typeRef.isOptional) {
+                const name = this.model.getPropertyNameFor(this.case.resolveNameAndWireValue(scopes.property.name));
                 this.additionalRequestFields.set(
                     name,
                     this.cls.addField({
@@ -256,11 +263,15 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
     private request = lazy({
         clientId: () =>
             this.context.getNameForField(
-                this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name
+                this.case.resolveNameAndWireValue(
+                    this.scheme.configuration.tokenEndpoint.requestProperties.clientId.property.name
+                )
             ),
         secret: () =>
             this.context.getNameForField(
-                this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name
+                this.case.resolveNameAndWireValue(
+                    this.scheme.configuration.tokenEndpoint.requestProperties.clientSecret.property.name
+                )
             )
     });
 
@@ -274,7 +285,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         // otherwise we'd need a rather hacky-lookup scheme.
 
         // try to get the request type from the sdk request first
-        const requestWrapper = this.requestWrapperName();
+        const requestWrapper = this.getRequestBody();
         if (requestWrapper) {
             return this.context.getRequestWrapperReference(this.tokenEndpointReference.serviceId, requestWrapper);
         }
@@ -288,31 +299,19 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         throw new Error("Failed to get request class reference");
     }
 
-    private rwn() {
-        if (is.IR.SdkRequestShape.Wrapper(this.tokenEndpoint.sdkRequest?.shape)) {
-            return this.tokenEndpoint.sdkRequest?.shape.wrapperName;
-        }
-
-        if (is.IR.HttpRequestBody.InlinedRequestBody(this.tokenEndpoint.requestBody)) {
-            return this.tokenEndpoint.requestBody.name;
-        }
-
-        return undefined;
-    }
-
-    private requestWrapperName() {
+    private getRequestBody() {
         return (
             this.tokenEndpoint.sdkRequest?.shape._visit({
                 _other: (value) => undefined,
                 justRequestBody: (value) => undefined,
-                wrapper: (value) => value.wrapperName
+                wrapper: (value) => value
             }) ??
             this.tokenEndpoint.requestBody?._visit({
                 _other: (value) => undefined,
                 reference: (value) => undefined,
                 fileUpload: (value) => undefined,
                 bytes: (value) => undefined,
-                inlinedRequestBody: (value) => value.name
+                inlinedRequestBody: (value) => value
             })
         );
     }
@@ -354,10 +353,19 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         );
     }
 
-    private dotAccess(property: ObjectProperty, path?: Name[]): string {
+    private dotAccess(property: ObjectProperty, path?: FernIr.NameOrString[]): string {
         if (path != null && path.length > 0) {
-            return `${path.map((val) => val.pascalCase).join(".")}.${property.name.name.pascalCase.safeName}`;
+            return `${path.map((val) => this.case.pascalSafe(val)).join(".")}.${this.case.pascalSafe(property.name)}`;
         }
-        return property.name.name.pascalCase.safeName;
+        return this.case.pascalSafe(property.name);
     }
+}
+
+/**
+ * Checks if a type reference is a literal type (container with literal value).
+ * Literal properties are hardcoded in the request class and should not be
+ * propagated as constructor parameters.
+ */
+function isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
+    return typeReference.type === "container" && typeReference.container.type === "literal";
 }

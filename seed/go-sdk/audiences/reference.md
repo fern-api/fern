@@ -14,7 +14,7 @@
 
 ```go
 request := &foldera.GetDirectThreadRequest{
-        Ids: []string{
+        IDs: []string{
             "ids",
         },
         Tags: []string{
@@ -160,3 +160,4 @@ client.Foo.Find(
 </dd>
 </dl>
 </details>
+

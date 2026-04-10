@@ -22,26 +22,29 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
+    "depcheck": "knip --config ../../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
+    "test:coverage": "vitest --passWithNoTests --run --coverage",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-fern/ir-sdk": "^63.0.0",
+    "@fern-api/base-generator": "workspace:*",
+    "@fern-fern/ir-sdk": "66.0.0-alpha.1",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/union-generator": "workspace:*",
-    "ts-morph": "^27.0.2"
+    "ts-morph": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "depcheck": "^1.4.7",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@fern-typescript/test-utils": "workspace:*",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

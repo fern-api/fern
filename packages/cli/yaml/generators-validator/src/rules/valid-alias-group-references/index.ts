@@ -1,1 +1,1 @@
-export { ValidAliasGroupReferencesRule } from "./valid-alias-group-references";
+export { ValidAliasGroupReferencesRule } from "./valid-alias-group-references.js";

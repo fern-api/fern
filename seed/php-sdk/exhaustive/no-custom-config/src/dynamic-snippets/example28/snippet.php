@@ -3,7 +3,9 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
+use Seed\Types\Object\Types\ObjectWithRequiredNestedObject;
+use Seed\Types\Object\Types\NestedObjectWithRequiredField;
+use Seed\Types\Object\Types\ObjectWithOptionalField;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +13,12 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithPathAndQuery(
-    'param',
-    new GetWithPathAndQuery([
-        'query' => 'query',
+$client->endpoints->object->getAndReturnWithRequiredNestedObject(
+    new ObjectWithRequiredNestedObject([
+        'requiredString' => 'hello',
+        'requiredObject' => new NestedObjectWithRequiredField([
+            'string' => 'nested',
+            'nestedObject' => new ObjectWithOptionalField([]),
+        ]),
     ]),
 );

@@ -11,12 +11,12 @@ import (
 )
 
 var (
-	getDirectThreadRequestFieldIds  = big.NewInt(1 << 0)
+	getDirectThreadRequestFieldIDs  = big.NewInt(1 << 0)
 	getDirectThreadRequestFieldTags = big.NewInt(1 << 1)
 )
 
 type GetDirectThreadRequest struct {
-	Ids  []string `json:"-" url:"ids"`
+	IDs  []string `json:"-" url:"ids"`
 	Tags []string `json:"-" url:"tags"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -30,11 +30,11 @@ func (g *GetDirectThreadRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetIds sets the Ids field and marks it as non-optional;
+// SetIDs sets the IDs field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetDirectThreadRequest) SetIds(ids []string) {
-	g.Ids = ids
-	g.require(getDirectThreadRequestFieldIds)
+func (g *GetDirectThreadRequest) SetIDs(ids []string) {
+	g.IDs = ids
+	g.require(getDirectThreadRequestFieldIDs)
 }
 
 // SetTags sets the Tags field and marks it as non-optional;
@@ -66,6 +66,9 @@ func (r *Response) GetFoo() *folderb.Foo {
 }
 
 func (r *Response) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -111,6 +114,9 @@ func (r *Response) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Response) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value

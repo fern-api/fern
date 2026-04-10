@@ -32,6 +32,9 @@ func (f *Foo) GetFoo() *folderc.Foo {
 }
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -77,6 +80,9 @@ func (f *Foo) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Foo) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value

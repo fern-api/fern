@@ -20,7 +20,7 @@ class JsonDecoder
     {
         $decoded = self::decode($json);
         if (!is_string($decoded)) {
-            throw new JsonException("Unexpected non-string json value: " . $json);
+            throw new JsonException("Unexpected non-string json value: $json");
         }
         return $decoded;
     }
@@ -36,7 +36,7 @@ class JsonDecoder
     {
         $decoded = self::decode($json);
         if (!is_bool($decoded)) {
-            throw new JsonException("Unexpected non-boolean json value: " . $json);
+            throw new JsonException("Unexpected non-boolean json value: $json");
         }
         return $decoded;
     }
@@ -52,7 +52,7 @@ class JsonDecoder
     {
         $decoded = self::decode($json);
         if (!is_string($decoded)) {
-            throw new JsonException("Unexpected non-string json value for datetime: " . $json);
+            throw new JsonException("Unexpected non-string json value for datetime: $json");
         }
         return JsonDeserializer::deserializeDateTime($decoded);
     }
@@ -68,7 +68,7 @@ class JsonDecoder
     {
         $decoded = self::decode($json);
         if (!is_string($decoded)) {
-            throw new JsonException("Unexpected non-string json value for date: " . $json);
+            throw new JsonException("Unexpected non-string json value for date: $json");
         }
         return JsonDeserializer::deserializeDate($decoded);
     }
@@ -84,7 +84,7 @@ class JsonDecoder
     {
         $decoded = self::decode($json);
         if (!is_float($decoded)) {
-            throw new JsonException("Unexpected non-float json value: " . $json);
+            throw new JsonException("Unexpected non-float json value: $json");
         }
         return $decoded;
     }
@@ -100,7 +100,7 @@ class JsonDecoder
     {
         $decoded = self::decode($json);
         if (!is_int($decoded)) {
-            throw new JsonException("Unexpected non-integer json value: " . $json);
+            throw new JsonException("Unexpected non-integer json value: $json");
         }
         return $decoded;
     }
@@ -117,7 +117,7 @@ class JsonDecoder
     {
         $decoded = self::decode($json);
         if (!is_array($decoded)) {
-            throw new JsonException("Unexpected non-array json value: " . $json);
+            throw new JsonException("Unexpected non-array json value: $json");
         }
         return JsonDeserializer::deserializeArray($decoded, $type);
     }

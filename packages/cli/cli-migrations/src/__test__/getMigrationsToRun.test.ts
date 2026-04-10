@@ -1,4 +1,4 @@
-import { getMigrationsToRun } from "../migrations/getMigrationsToRun";
+import { getMigrationsToRun } from "../migrations/getMigrationsToRun.js";
 
 describe("getMigrationsToRun", () => {
     it("doesn't include to-version when no migration exists for it", () => {

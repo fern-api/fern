@@ -1,13 +1,16 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId, Reference } from "@fern-typescript/commons";
 
-import { GeneratedEndpointErrorUnion } from "./GeneratedEndpointErrorUnion";
+import { GeneratedEndpointErrorUnion } from "./GeneratedEndpointErrorUnion.js";
 
 export interface EndpointErrorUnionContext {
-    getGeneratedEndpointErrorUnion: (packageId: PackageId, endpointName: Name) => GeneratedEndpointErrorUnion;
+    getGeneratedEndpointErrorUnion: (
+        packageId: PackageId,
+        endpointName: FernIr.NameOrString
+    ) => GeneratedEndpointErrorUnion;
     getReferenceToEndpointTypeExport: (
         packageId: PackageId,
-        endpointName: Name,
+        endpointName: FernIr.NameOrString,
         export_: string | string[]
     ) => Reference;
 }

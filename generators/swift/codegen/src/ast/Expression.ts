@@ -1,8 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-import { escapeReservedKeyword } from "../syntax";
-import { AstNode, Writer } from "./core";
-import { FunctionArgument } from "./FunctionArgument";
-import { TypeReference } from "./TypeReference";
+import { escapeReservedKeyword } from "../syntax/index.js";
+import { AstNode, Writer } from "./core/index.js";
+import { FunctionArgument } from "./FunctionArgument.js";
+import { TypeReference } from "./TypeReference.js";
 
 /**
  * A reference to a variable or constant.

@@ -1,9 +1,9 @@
 import { FernIr, WebSocketChannel } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters } from "@fern-api/v3-importer-commons";
 
-import { AsyncAPIConverter } from "../AsyncAPIConverter";
-import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
-import { FernExamplesExtension } from "../extensions/x-fern-examples";
+import { AsyncAPIConverter } from "../AsyncAPIConverter.js";
+import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext.js";
+import { FernExamplesExtension } from "../extensions/x-fern-examples.js";
 
 export declare namespace AbstractChannelConverter {
     export interface Args<TChannel> extends AsyncAPIConverter.AbstractArgs {

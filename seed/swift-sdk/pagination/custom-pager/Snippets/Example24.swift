@@ -7,7 +7,11 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.users.listWithCursorPagination()
+    _ = try await client.users.listWithOffsetPaginationHasNextPage(
+        page: 1,
+        limit: 1,
+        order: .asc
+    )
 }
 
 try await main()

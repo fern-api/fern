@@ -1,1 +1,1 @@
-export { GeneratorsYmlMigrator } from "./GeneratorsYmlMigrator";
+export { GeneratorsYmlMigrator } from "./GeneratorsYmlMigrator.js";

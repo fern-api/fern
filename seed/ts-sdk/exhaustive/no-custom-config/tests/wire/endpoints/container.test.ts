@@ -9,6 +9,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = ["string", "string"];
         const rawResponseBody = ["string", "string"];
+
         server
             .mockEndpoint()
             .post("/container/list-of-primitives")
@@ -19,7 +20,7 @@ describe("ContainerClient", () => {
             .build();
 
         const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
-        expect(response).toEqual(["string", "string"]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnListOfObjects", async () => {
@@ -27,6 +28,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = [{ string: "string" }, { string: "string" }];
         const rawResponseBody = [{ string: "string" }, { string: "string" }];
+
         server
             .mockEndpoint()
             .post("/container/list-of-objects")
@@ -44,14 +46,7 @@ describe("ContainerClient", () => {
                 string: "string",
             },
         ]);
-        expect(response).toEqual([
-            {
-                string: "string",
-            },
-            {
-                string: "string",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnSetOfPrimitives", async () => {
@@ -59,6 +54,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = ["string"];
         const rawResponseBody = ["string"];
+
         server
             .mockEndpoint()
             .post("/container/set-of-primitives")
@@ -69,7 +65,7 @@ describe("ContainerClient", () => {
             .build();
 
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
-        expect(response).toEqual(["string"]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnSetOfObjects", async () => {
@@ -77,6 +73,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = [{ string: "string" }];
         const rawResponseBody = [{ string: "string" }];
+
         server
             .mockEndpoint()
             .post("/container/set-of-objects")
@@ -91,11 +88,7 @@ describe("ContainerClient", () => {
                 string: "string",
             },
         ]);
-        expect(response).toEqual([
-            {
-                string: "string",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnMapPrimToPrim", async () => {
@@ -103,6 +96,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
+
         server
             .mockEndpoint()
             .post("/container/map-prim-to-prim")
@@ -115,9 +109,7 @@ describe("ContainerClient", () => {
         const response = await client.endpoints.container.getAndReturnMapPrimToPrim({
             string: "string",
         });
-        expect(response).toEqual({
-            string: "string",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnMapOfPrimToObject", async () => {
@@ -125,6 +117,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: { string: "string" } };
         const rawResponseBody = { string: { string: "string" } };
+
         server
             .mockEndpoint()
             .post("/container/map-prim-to-object")
@@ -139,11 +132,28 @@ describe("ContainerClient", () => {
                 string: "string",
             },
         });
-        expect(response).toEqual({
-            string: {
-                string: "string",
-            },
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("getAndReturnMapOfPrimToUndiscriminatedUnion", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { string: 1.1 };
+        const rawResponseBody = { string: 1.1 };
+
+        server
+            .mockEndpoint()
+            .post("/container/map-prim-to-union")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
+            string: 1.1,
         });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getAndReturnOptional", async () => {
@@ -151,6 +161,7 @@ describe("ContainerClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
+
         server
             .mockEndpoint()
             .post("/container/opt-objects")
@@ -163,8 +174,6 @@ describe("ContainerClient", () => {
         const response = await client.endpoints.container.getAndReturnOptional({
             string: "string",
         });
-        expect(response).toEqual({
-            string: "string",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

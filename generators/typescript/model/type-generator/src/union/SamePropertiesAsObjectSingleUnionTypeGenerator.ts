@@ -1,11 +1,11 @@
-import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { BaseContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace SamePropertiesAsObjectSingleUnionTypeGenerator {
     export interface Init {
-        extended: DeclaredTypeName;
+        extended: FernIr.DeclaredTypeName;
         enableInlineTypes: boolean;
     }
 }
@@ -15,7 +15,7 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Base
 {
     private static BUILDER_PARAMETER_NAME = "value";
 
-    private extended: DeclaredTypeName;
+    private extended: FernIr.DeclaredTypeName;
     private enableInlineTypes: boolean;
 
     constructor({ extended, enableInlineTypes }: SamePropertiesAsObjectSingleUnionTypeGenerator.Init) {

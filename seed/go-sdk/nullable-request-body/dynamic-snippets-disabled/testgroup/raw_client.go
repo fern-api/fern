@@ -4,11 +4,12 @@ package testgroup
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/nullable-request-body/fern"
 	core "github.com/nullable-request-body/fern/core"
 	internal "github.com/nullable-request-body/fern/internal"
 	option "github.com/nullable-request-body/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {

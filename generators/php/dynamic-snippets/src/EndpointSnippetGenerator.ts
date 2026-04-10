@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
 
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
+import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 
 const CLIENT_VAR_NAME = "$client";
 const SNIPPET_NAMESPACE = "Example";
@@ -321,16 +321,24 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): NamedArgument[] {
-        return [
-            {
+        // usernameOmit/passwordOmit may exist in newer IR versions
+        const authRecord = auth as unknown as Record<string, unknown>;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
+        const args: NamedArgument[] = [];
+        if (!usernameOmitted) {
+            args.push({
                 name: this.context.getPropertyName(auth.username),
                 assignment: php.TypeLiteral.string(values.username)
-            },
-            {
+            });
+        }
+        if (!passwordOmitted) {
+            args.push({
                 name: this.context.getPropertyName(auth.password),
                 assignment: php.TypeLiteral.string(values.password)
-            }
-        ];
+            });
+        }
+        return args;
     }
 
     private getConstructorEnvironmentArg({
@@ -665,7 +673,8 @@ export class EndpointSnippetGenerator {
     }): php.ConstructorField[] {
         const args: php.ConstructorField[] = [];
         for (const header of headers) {
-            const arg = this.getConstructorHeaderArg({ header, value: values.value });
+            const value = values[header.name.wireValue];
+            const arg = this.getConstructorHeaderArg({ header, value });
             if (arg != null) {
                 args.push({
                     name: this.context.getPropertyName(header.name.name),

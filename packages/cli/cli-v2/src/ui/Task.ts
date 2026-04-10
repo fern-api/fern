@@ -1,6 +1,6 @@
-import type { TaskLog } from "./TaskLog";
-import type { TaskStage } from "./TaskStage";
-import type { TaskStatus } from "./TaskStatus";
+import type { TaskLog } from "./TaskLog.js";
+import type { TaskStage } from "./TaskStage.js";
+import type { TaskStatus } from "./TaskStatus.js";
 
 export interface Task {
     /** Unique identifier for the task */

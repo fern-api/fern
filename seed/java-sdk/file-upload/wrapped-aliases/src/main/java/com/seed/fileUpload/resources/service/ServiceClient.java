@@ -15,6 +15,7 @@ import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
+import com.seed.fileUpload.resources.service.requests.WithJsonPropertyRequest;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Optional;
@@ -239,6 +240,33 @@ public class ServiceClient {
             InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
         return this.rawClient
                 .withInlineType(stream, filename, mediaType, requestOptions)
+                .body();
+    }
+
+    public String withJsonProperty(File file, WithJsonPropertyRequest request) {
+        return this.rawClient.withJsonProperty(file, request).body();
+    }
+
+    public String withJsonProperty(File file, WithJsonPropertyRequest request, RequestOptions requestOptions) {
+        return this.rawClient.withJsonProperty(file, request, requestOptions).body();
+    }
+
+    public String withJsonProperty(InputStream stream, String filename) {
+        return this.rawClient.withJsonProperty(stream, filename).body();
+    }
+
+    public String withJsonProperty(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withJsonProperty(stream, filename, mediaType).body();
+    }
+
+    public String withJsonProperty(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withJsonProperty(stream, filename, requestOptions).body();
+    }
+
+    public String withJsonProperty(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withJsonProperty(stream, filename, mediaType, requestOptions)
                 .body();
     }
 

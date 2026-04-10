@@ -49,6 +49,33 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile> {
             summary: "The body of the response that triggered the exception."
         });
 
+        if (this.settings.redactResponseBodyOnError) {
+            class_.addMethod({
+                name: "ToString",
+                access: ast.Access.Public,
+                isAsync: false,
+                override: true,
+                parameters: [],
+                return_: this.Primitive.string,
+                body: this.csharp.codeblock((writer) => {
+                    writer.writeTextStatement("var sb = new System.Text.StringBuilder()");
+                    writer.writeTextStatement("sb.Append(GetType().FullName)");
+                    writer.writeTextStatement(`sb.Append($": {Message}")`);
+                    writer.writeTextStatement(`sb.Append($" (Status Code: {StatusCode})")`);
+                    writer.writeLine("if (InnerException != null)");
+                    writer.pushScope();
+                    writer.writeTextStatement(`sb.Append($"\\n ---> {InnerException}")`);
+                    writer.writeTextStatement(`sb.Append("\\n --- End of inner exception stack trace ---")`);
+                    writer.popScope();
+                    writer.writeLine("if (StackTrace != null)");
+                    writer.pushScope();
+                    writer.writeTextStatement(`sb.Append($"\\n{StackTrace}")`);
+                    writer.popScope();
+                    writer.writeTextStatement("return sb.ToString()");
+                })
+            });
+        }
+
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getPublicCoreDirectory(),

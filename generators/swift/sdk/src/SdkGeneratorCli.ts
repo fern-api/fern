@@ -13,7 +13,7 @@ import {
     UndiscriminatedUnionGenerator
 } from "@fern-api/swift-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { template as templateFn } from "lodash-es";
 
 import {
@@ -23,12 +23,12 @@ import {
     SubClientGenerator,
     TemplateDataGenerator,
     WireTestSuiteGenerator
-} from "./generators";
-import { ReferenceConfigAssembler } from "./reference";
-import { SdkCustomConfigSchema, SdkCustomConfigSchemaDefaults } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
-import { convertIr } from "./utils/convertIr";
+} from "./generators/index.js";
+import { ReferenceConfigAssembler } from "./reference/index.js";
+import { SdkCustomConfigSchema, SdkCustomConfigSchemaDefaults } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "./utils/convertIr.js";
 
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly defaultCustomConfig: SdkCustomConfigSchema = {
@@ -42,7 +42,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -74,7 +74,22 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private async generateRootFiles(context: SdkGeneratorContext): Promise<void> {
         this.generatePackageSwiftFile(context);
-        await Promise.all([this.generateReadme(context), this.generateReference(context)]);
+
+        // Create a shared DynamicSnippetsGenerator to avoid duplicate IR conversion
+        // and symbol registration between README and Reference generation.
+        const dynamicIr = context.ir.dynamic;
+        if (!dynamicIr) {
+            throw new Error("Cannot generate dynamic snippets without dynamic IR");
+        }
+        const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
+            ir: convertIr(dynamicIr),
+            config: context.config
+        });
+
+        await Promise.all([
+            this.generateReadme(context, dynamicIr, sharedSnippetsGenerator),
+            this.generateReference(context, sharedSnippetsGenerator)
+        ]);
     }
 
     private generatePackageSwiftFile(context: SdkGeneratorContext): void {
@@ -85,9 +100,13 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         context.project.addRootFiles(file);
     }
 
-    private async generateReadme(context: SdkGeneratorContext): Promise<void> {
+    private async generateReadme(
+        context: SdkGeneratorContext,
+        dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation,
+        snippetsGenerator: DynamicSnippetsGenerator
+    ): Promise<void> {
         try {
-            const endpointSnippets = this.generateSnippets(context);
+            const endpointSnippets = this.generateSnippets(dynamicIr, snippetsGenerator);
             if (endpointSnippets.length === 0) {
                 context.logger.debug("No snippets were produced; skipping README.md generation.");
                 return;
@@ -102,9 +121,12 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         }
     }
 
-    private async generateReference(context: SdkGeneratorContext): Promise<void> {
+    private async generateReference(
+        context: SdkGeneratorContext,
+        snippetsGenerator: DynamicSnippetsGenerator
+    ): Promise<void> {
         try {
-            const builder = new ReferenceConfigAssembler(context).buildReferenceConfigBuilder();
+            const builder = new ReferenceConfigAssembler(context, snippetsGenerator).buildReferenceConfigBuilder();
             const content = await context.generatorAgent.generateReference(builder);
             context.project.addRootFiles(new File("reference.md", RelativeFilePath.of(""), content));
         } catch (e) {
@@ -112,21 +134,16 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         }
     }
 
-    private generateSnippets(context: SdkGeneratorContext) {
+    private generateSnippets(
+        dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation,
+        snippetsGenerator: DynamicSnippetsGenerator
+    ): FernGeneratorExec.Endpoint[] {
         const endpointSnippets: FernGeneratorExec.Endpoint[] = [];
-        const dynamicIr = context.ir.dynamic;
-        if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
-        }
-        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr),
-            config: context.config
-        });
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const method = endpoint.location.method;
             const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
             for (const endpointExample of endpoint.examples ?? []) {
-                const generatedSnippet = dynamicSnippetsGenerator.generateSync(
+                const generatedSnippet = snippetsGenerator.generateSync(
                     convertDynamicEndpointSnippetRequest(endpointExample)
                 );
                 endpointSnippets.push({
@@ -155,6 +172,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         this.generateSourceSchemaFiles(context);
         this.generateSourceRootClientFile(context);
         this.generateSourceEnvironmentFile(context);
+        this.generateVersionFile(context);
     }
 
     private async generateSourceAsIsFiles(context: SdkGeneratorContext): Promise<void> {
@@ -557,6 +575,18 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             directory: RelativeFilePath.of(""),
             contents: [rootClientClass]
         });
+    }
+
+    private generateVersionFile(context: SdkGeneratorContext): void {
+        const spmDetails = context.getSPMDetails();
+        const version = spmDetails.minVersion;
+        if (version != null) {
+            context.project.addSourceAsIsFile({
+                nameCandidateWithoutExtension: "Version",
+                directory: RelativeFilePath.of(""),
+                contents: `public let sdkVersion = "${version}"\n`
+            });
+        }
     }
 
     private generateSourceEnvironmentFile(context: SdkGeneratorContext): void {

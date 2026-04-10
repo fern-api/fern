@@ -7,20 +7,13 @@ set -e
 
 # Run all validations in parallel and collect errors
 generators=(
-    ruby-model
-    ruby-sdk
     ruby-sdk-v2
     pydantic
     python-sdk
-    fastapi
     openapi
-    postman
     java-sdk
     java-model
-    java-spring
     ts-sdk
-    ts-express
-    go-fiber
     go-model
     go-sdk
     csharp-model

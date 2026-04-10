@@ -1,4 +1,4 @@
-import { validEndpoint } from "../rules/valid-docs-endpoints/valid-docs-endpoints";
+import { validEndpoint } from "../rules/valid-docs-endpoints/valid-docs-endpoints.js";
 
 describe("validEndpoints", () => {
     it("only origin is invalid", () => {

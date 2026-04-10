@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:bytes-upload'
+  implementation 'com.fern:bytes-upload:0.0.1'
 }
 ```
 
@@ -195,7 +195,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-UploadHttpResponse response = client.service().withRawResponse().upload(...);
+SeedBytesUploadHttpResponse response = client.service().withRawResponse().upload(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

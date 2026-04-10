@@ -29,5 +29,5 @@ export interface ProtobufService {
     /** The `.proto` source file that defines this service. */
     file: FernIr.ProtobufFile;
     /** The name of the service defined in the `.proto` file (e.g. UserService). */
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
 }

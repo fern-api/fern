@@ -1,6 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -14,10 +14,13 @@ public class Example28
             }
         );
 
-        await client.Endpoints.Params.GetWithPathAndQueryAsync(
-            "param",
-            new GetWithPathAndQuery {
-                Query = "query"
+        await client.Endpoints.Object.GetAndReturnWithRequiredNestedObjectAsync(
+            new ObjectWithRequiredNestedObject {
+                RequiredString = "hello",
+                RequiredObject = new NestedObjectWithRequiredField {
+                    String = "nested",
+                    NestedObject = new ObjectWithOptionalField()
+                }
             }
         );
     }

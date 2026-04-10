@@ -1,11 +1,12 @@
 require "seed"
 
 client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.users.list_with_cursor_pagination(
+client.users.list_with_offset_step_pagination(
   page: 1,
-  order: 'asc'
-);
+  limit: 1,
+  order: "asc"
+)

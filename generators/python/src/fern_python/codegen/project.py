@@ -41,7 +41,7 @@ class Project:
         filepath: str,
         relative_path_to_project: str,
         package_path: Optional[str] = None,
-        python_version: str = "^3.8",
+        python_version: str = "^3.10",
         project_config: Optional[ProjectConfig] = None,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,
@@ -129,11 +129,11 @@ class Project:
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
 
-    def add_dependency(self, dependency: AST.Dependency) -> None:
-        self._dependency_manager.add_dependency(dependency)
+    def add_dependency(self, dependency: AST.Dependency, *, is_user_override: bool = False) -> None:
+        self._dependency_manager.add_dependency(dependency, is_user_override=is_user_override)
 
-    def add_dev_dependency(self, dependency: AST.Dependency) -> None:
-        self._dependency_manager.add_dev_dependency(dependency)
+    def add_dev_dependency(self, dependency: AST.Dependency, *, is_user_override: bool = False) -> None:
+        self._dependency_manager.add_dev_dependency(dependency, is_user_override=is_user_override)
 
     def add_extra(self, extra: typing.Dict[str, List[str]]) -> None:
         self._extras = extra

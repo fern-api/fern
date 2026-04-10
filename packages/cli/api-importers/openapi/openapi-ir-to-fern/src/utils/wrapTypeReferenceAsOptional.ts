@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { getTypeFromTypeReference } from "./getTypeFromTypeReference";
+import { getTypeFromTypeReference } from "./getTypeFromTypeReference.js";
 
 // Converts type => optional<type> and nullable<type> => optional<nullable<type>>.
 // Doesn't allow for nested optional types.

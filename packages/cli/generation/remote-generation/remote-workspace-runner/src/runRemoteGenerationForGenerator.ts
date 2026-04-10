@@ -1,23 +1,28 @@
+import {
+    checkVersionDoesNotAlreadyExist,
+    computeSemanticVersion,
+    getOriginGitCommit
+} from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService, createVenusService } from "@fern-api/core";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { createAndStartJob } from "./createAndStartJob";
-import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
-import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
-import { RemoteTaskHandler } from "./RemoteTaskHandler";
-import { SourceUploader } from "./SourceUploader";
+import { createAndStartJob } from "./createAndStartJob.js";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
+import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
+import { RemoteTaskHandler } from "./RemoteTaskHandler.js";
+import { SourceUploader } from "./SourceUploader.js";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -34,7 +39,12 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview,
     readme,
     fernignorePath,
-    dynamicIrOnly
+    skipFernignore,
+    dynamicIrOnly,
+    retryRateLimited,
+    requireEnvVars,
+    automationMode,
+    autoMerge
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -50,7 +60,12 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
+    retryRateLimited: boolean;
+    requireEnvVars: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -65,7 +80,13 @@ export async function runRemoteGenerationForGenerator({
     const substituteEnvVars = <T>(stringOrObject: T) =>
         replaceEnvVariables(
             stringOrObject,
-            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+            {
+                onError: (e) => {
+                    if (!isPreview && requireEnvVars) {
+                        interactiveTaskContext.failAndThrow(e);
+                    }
+                }
+            },
             { substituteAsEmpty: isPreview }
         );
 
@@ -77,7 +98,25 @@ export async function runRemoteGenerationForGenerator({
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions
     });
 
-    const resolvedVersion = version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation }));
+    const resolvedVersion = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
+    // Fail fast if the target version already exists on the package registry.
+    // Only check when the user explicitly provided a version (not auto-computed).
+    if (version != null) {
+        if (isPreview) {
+            interactiveTaskContext.logger.warn(
+                "Skipping version availability check in preview mode. " +
+                    `Version ${version} may already exist on the package registry.`
+            );
+        } else {
+            await checkVersionDoesNotAlreadyExist({
+                version,
+                packageName,
+                generatorInvocation,
+                context: interactiveTaskContext
+            });
+        }
+    }
 
     const ir = generateIntermediateRepresentation({
         workspace,
@@ -100,13 +139,14 @@ export async function runRemoteGenerationForGenerator({
             cliVersion: workspace.cliVersion,
             generatorName: generatorInvocation.name,
             generatorVersion: generatorInvocation.version,
-            generatorConfig: generatorInvocation.config
+            generatorConfig: generatorInvocation.config,
+            originGitCommit: getOriginGitCommit()
         }
     });
 
     const venus = createVenusService({ token: token.value });
     if (!isAirGapped) {
-        const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
+        const orgResponse = await venus.organization.get(projectConfig.organization);
 
         if (orgResponse.ok) {
             if (orgResponse.body.isWhitelabled) {
@@ -140,7 +180,7 @@ export async function runRemoteGenerationForGenerator({
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: FdrAPI.OrgId(organization),
-        apiId: FdrAPI.ApiId(ir.apiName.originalName),
+        apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
         definition: apiDefinition,
         sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
     });
@@ -202,9 +242,7 @@ export async function runRemoteGenerationForGenerator({
                 context: interactiveTaskContext
             });
         } catch (error) {
-            interactiveTaskContext.failAndThrow(
-                `Failed to upload dynamic IR: ${error instanceof Error ? error.message : String(error)}`
-            );
+            interactiveTaskContext.failAndThrow(`Failed to upload dynamic IR: ${extractErrorMessage(error)}`);
         }
 
         // Return a minimal response since no SDK generation occurred
@@ -221,7 +259,7 @@ export async function runRemoteGenerationForGenerator({
         organization,
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
         context: interactiveTaskContext,
-        version,
+        version: resolvedVersion,
         intermediateRepresentation: {
             ...ir,
             fdrApiDefinitionId,
@@ -232,7 +270,11 @@ export async function runRemoteGenerationForGenerator({
         whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
         irVersionOverride,
         absolutePathToPreview,
-        fernignorePath
+        fernignorePath,
+        skipFernignore,
+        retryRateLimited,
+        automationMode,
+        autoMerge
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
@@ -282,7 +324,7 @@ export async function runRemoteGenerationForGenerator({
             });
         } catch (error) {
             interactiveTaskContext.logger.warn(
-                `Failed to upload dynamic IR for SDK generation: ${error instanceof Error ? error.message : String(error)}`
+                `Failed to upload dynamic IR for SDK generation: ${extractErrorMessage(error)}`
             );
         }
     }
@@ -327,64 +369,6 @@ function getPublishConfig({
     });
 }
 
-async function computeSemanticVersion({
-    fdr,
-    packageName,
-    generatorInvocation
-}: {
-    fdr: FdrClient;
-    packageName: string | undefined;
-    generatorInvocation: generatorsYml.GeneratorInvocation;
-}): Promise<string | undefined> {
-    if (generatorInvocation.language == null) {
-        return undefined;
-    }
-    let language: FdrAPI.sdks.Language;
-    switch (generatorInvocation.language) {
-        case "csharp":
-            language = "Csharp";
-            break;
-        case "go":
-            language = "Go";
-            break;
-        case "java":
-            language = "Java";
-            break;
-        case "python":
-            language = "Python";
-            break;
-        case "ruby":
-            language = "Ruby";
-            break;
-        case "typescript":
-            language = "TypeScript";
-            break;
-        case "php":
-            language = "Php";
-            break;
-        case "swift":
-            language = "Swift";
-            break;
-        default:
-            return undefined;
-    }
-    if (packageName == null) {
-        return undefined;
-    }
-    const response = await fdr.sdks.versions.computeSemanticVersion({
-        githubRepository:
-            generatorInvocation.outputMode.type === "githubV2"
-                ? `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`
-                : undefined,
-        language,
-        package: packageName
-    });
-    if (!response.ok) {
-        return undefined;
-    }
-    return response.body.version;
-}
-
 function convertToFdrApiDefinitionSources(
     sources: IdentifiableSource[]
 ): Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.Source> {
@@ -396,18 +380,6 @@ function convertToFdrApiDefinitionSources(
             }
         ])
     );
-}
-
-/**
- * Type guard to check if a GitHub configuration is a self-hosted configuration
- */
-function isGithubSelfhosted(
-    github: generatorsYml.GithubConfigurationSchema | undefined
-): github is generatorsYml.GithubSelfhostedSchema {
-    if (github == null) {
-        return false;
-    }
-    return "uri" in github && "token" in github;
 }
 
 const emptyReadmeConfig: FernIr.ReadmeConfig = {
@@ -423,11 +395,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     exampleStyle: undefined
 };
 
-/**
- * Uploads dynamic IR for SDK generation to enable dynamic snippets.
- * This calls the getSdkDynamicIrUploadUrls endpoint to get presigned S3 URLs,
- * generates the dynamic IR, and uploads it.
- */
 async function uploadDynamicIRForSdkGeneration({
     fdr,
     organization,

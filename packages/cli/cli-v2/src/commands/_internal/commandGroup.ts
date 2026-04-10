@@ -1,5 +1,5 @@
 import type { Argv } from "yargs";
-import type { GlobalArgs } from "../../context/GlobalArgs";
+import type { GlobalArgs } from "../../context/GlobalArgs.js";
 
 type CommandAdder = (cli: Argv<GlobalArgs>) => void;
 
@@ -25,7 +25,7 @@ export function commandGroup(
             add(yargs);
         }
         return yargs
-            .usage(`$0 ${name}\n\n${description}`)
+            .usage(description)
             .demandCommand(1)
             .fail((msg, err, y) => {
                 if (err != null) {

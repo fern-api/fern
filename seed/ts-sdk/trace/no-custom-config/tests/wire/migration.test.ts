@@ -17,6 +17,7 @@ describe("MigrationClient", () => {
             { name: "name", status: "RUNNING" },
             { name: "name", status: "RUNNING" },
         ];
+
         server
             .mockEndpoint()
             .get("/migration-info/all")
@@ -29,15 +30,6 @@ describe("MigrationClient", () => {
         const response = await client.migration.getAttemptedMigrations({
             "admin-key-header": "admin-key-header",
         });
-        expect(response).toEqual([
-            {
-                name: "name",
-                status: "RUNNING",
-            },
-            {
-                name: "name",
-                status: "RUNNING",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

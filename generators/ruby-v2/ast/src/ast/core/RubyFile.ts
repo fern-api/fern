@@ -1,4 +1,4 @@
-import { Writer } from "./Writer";
+import { Writer } from "./Writer.js";
 
 export declare namespace RubyFile {
     interface Args extends Writer.Args {}

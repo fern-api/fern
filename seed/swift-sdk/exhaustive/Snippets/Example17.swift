@@ -7,12 +7,8 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.object.getAndReturnWithMapOfMap(request: ObjectWithMapOfMap(
-        map: [
-            "map": [
-                "map": "map"
-            ]
-        ]
+    _ = try await client.endpoints.object.getAndReturnWithRequiredField(request: ObjectWithRequiredField(
+        string: "string"
     ))
 }
 

@@ -28,22 +28,22 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.nullable_optional.create_user(
-  username: 'username',
-  email: 'email',
-  phone: 'phone',
+  username: "username",
+  email: "email",
+  phone: "phone",
   address: {
-    street: 'street',
-    city: 'city',
-    state: 'state',
-    zip_code: 'zipCode',
-    country: 'country',
-    building_id: 'buildingId',
-    tenant_id: 'tenantId'
+    street: "street",
+    city: "city",
+    state: "state",
+    zip_code: "zipCode",
+    country: "country",
+    building_id: "buildingId",
+    tenant_id: "tenantId"
   }
-);
+)
 ```
 
 ## Environments

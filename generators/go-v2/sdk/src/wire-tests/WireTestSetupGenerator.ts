@@ -1,8 +1,8 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock } from "@fern-api/mock-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration
@@ -10,9 +10,9 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
  */
 export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
 
-    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
+    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
         this.ir = ir;
     }
@@ -25,7 +25,9 @@ export class WireTestSetupGenerator {
         this.generateDockerComposeFile();
     }
 
-    public static getWiremockConfigContent(ir: IntermediateRepresentation) {
+    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+        // @ts-expect-error mock-utils uses ir-sdk v61 while this package uses v66;
+        // the IR is structurally compatible (v66 is a superset) so this is safe.
         return new WireMock().convertToWireMock(ir);
     }
 
@@ -34,7 +36,7 @@ export class WireTestSetupGenerator {
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
-            JSON.stringify(wireMockConfigContent)
+            JSON.stringify(wireMockConfigContent, null, 2)
         );
         this.context.project.addRawFiles(wireMockConfigFile);
         this.context.logger.debug("Generated wiremock-mappings.json for WireMock");
@@ -70,6 +72,12 @@ export class WireTestSetupGenerator {
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
     command: ["--global-response-templating", "--verbose"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+      start_period: 5s
 `;
     }
 }

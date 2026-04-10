@@ -10,16 +10,16 @@ import {
 } from "@fern-api/openapi-ir";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../../../../getExtension";
-import { convertAvailability } from "../../../../schema/convertAvailability";
-import { convertSchema } from "../../../../schema/convertSchemas";
-import { getExamplesString } from "../../../../schema/examples/getExample";
-import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
-import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
-import { getParameterName } from "../../extensions/getParameterName";
-import { getVariableReference } from "../../extensions/getVariableReference";
+import { getExtension } from "../../../../getExtension.js";
+import { convertAvailability } from "../../../../schema/convertAvailability.js";
+import { convertSchema } from "../../../../schema/convertSchemas.js";
+import { getExamplesString } from "../../../../schema/examples/getExample.js";
+import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js";
+import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import { getParameterName } from "../../extensions/getParameterName.js";
+import { getVariableReference } from "../../extensions/getVariableReference.js";
 
 export interface ConvertedParameters {
     pathParameters: PathParameterWithExample[];
@@ -48,7 +48,13 @@ export function convertParameters({
         headers: []
     };
     for (const parameter of parameters) {
-        const shouldIgnore = getExtension<boolean>(parameter, FernOpenAPIExtension.IGNORE);
+        const resolvedParameter = isReferenceObject(parameter)
+            ? context.resolveParameterReference(parameter)
+            : parameter;
+
+        const shouldIgnore =
+            getExtension<boolean>(parameter, FernOpenAPIExtension.IGNORE) ??
+            getExtension<boolean>(resolvedParameter, FernOpenAPIExtension.IGNORE);
         if (shouldIgnore != null && shouldIgnore) {
             context.logger.debug(
                 `${httpMethod.toUpperCase()} ${path} has a parameter marked with x-fern-ignore. Skipping.`
@@ -56,19 +62,20 @@ export function convertParameters({
             continue;
         }
 
-        const resolvedParameter = isReferenceObject(parameter)
-            ? context.resolveParameterReference(parameter)
-            : parameter;
-
         const isRequired = resolvedParameter.required ?? false;
         const availability = convertAvailability(resolvedParameter);
 
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs, context.options.preserveSchemaIds);
 
-        const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
-            ? [false, !isRequired]
-            : [!isRequired, false];
+        // For header parameters, don't coerce optional to nullable. HTTP headers don't have
+        // a "null" concept at the wire level — they're either present with a value or absent.
+        // The coerceOptionalSchemasToNullable option should only affect request/response body
+        // properties, not header parameters. If a header's schema is explicitly nullable,
+        // that will still be respected via convertSchema/convertSchemaObject.
+        const isHeader = resolvedParameter.in === "header";
+        const [isOptional, isNullable] =
+            context.options.coerceOptionalSchemasToNullable && !isHeader ? [false, !isRequired] : [!isRequired, false];
 
         let schema =
             resolvedParameter.schema != null
@@ -161,13 +168,18 @@ export function convertParameters({
             }
         }
 
+        const clientDefault =
+            getExtension<unknown>(parameter, FernOpenAPIExtension.FERN_DEFAULT) ??
+            getExtension<unknown>(resolvedParameter, FernOpenAPIExtension.FERN_DEFAULT);
+
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
             description: resolvedParameter.description,
             parameterNameOverride: getParameterName(resolvedParameter),
             availability,
-            source
+            source,
+            clientDefault
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push({
@@ -220,6 +232,7 @@ const HEADERS_TO_SKIP = new Set([
  *
  * OpenAPI defaults:
  * - form style (default for query): explode = true
+ * - deepObject style: explode = true (only valid value per the OpenAPI spec)
  * - All other styles: explode = false
  */
 function getExplodeForQueryParameter(parameter: OpenAPIV3.ParameterObject): boolean | undefined {
@@ -231,13 +244,15 @@ function getExplodeForQueryParameter(parameter: OpenAPIV3.ParameterObject): bool
         return undefined;
     }
 
-    // For form style, default explode is true
-    // Only preserve explode if it differs from the default
-    if (style === "form") {
+    // For form and deepObject styles, default explode is true.
+    // deepObject only supports explode=true per the OpenAPI spec serialization table,
+    // so we treat true as the default for deepObject as well.
+    // Only preserve explode if it differs from the default.
+    if (style === "form" || style === "deepObject") {
         return explode === true ? undefined : explode;
     }
 
-    // For all other styles (spaceDelimited, pipeDelimited, deepObject), default explode is false
+    // For all other styles (spaceDelimited, pipeDelimited), default explode is false
     return explode === false ? undefined : explode;
 }
 

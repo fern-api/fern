@@ -1,4 +1,4 @@
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 /**
  * Extractor for processing code snippets and extracting method calls.

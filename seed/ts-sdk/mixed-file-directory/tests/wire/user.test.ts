@@ -12,22 +12,12 @@ describe("UserClient", () => {
             { id: "id", name: "name", age: 1 },
             { id: "id", name: "name", age: 1 },
         ];
+
         server.mockEndpoint().get("/users/").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.list({
             limit: 1,
         });
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-                age: 1,
-            },
-            {
-                id: "id",
-                name: "name",
-                age: 1,
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 });

@@ -3,7 +3,7 @@ import { readdir } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
-import { loggingExeca } from "../loggingExeca";
+import { loggingExeca } from "../loggingExeca.js";
 
 describe("loggingExeca", () => {
     it("runs command", async () => {

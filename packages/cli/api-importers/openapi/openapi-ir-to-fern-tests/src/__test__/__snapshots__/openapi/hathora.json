@@ -234,7 +234,11 @@
           "ConnectionInfo": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "status",
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "status",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -924,7 +928,9 @@ types:
     source:
       openapi: ../openapi.json
   ConnectionInfo:
-    discriminant: status
+    discriminant:
+      value: status
+      context: data
     base-properties: {}
     union:
       starting: StartingConnectionInfo
@@ -1388,7 +1394,7 @@ service:
           "base-path": "",
           "endpoints": {
             "LoginAnonymous": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1424,7 +1430,7 @@ service:
               },
             },
             "LoginGoogle": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.UnauthorizedError",
@@ -1472,7 +1478,7 @@ service:
               },
             },
             "LoginNickname": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1581,6 +1587,7 @@ service:
     LoginAnonymous:
       path: /auth/v1/{appId}/login/anonymous
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -1602,6 +1609,7 @@ service:
     LoginNickname:
       path: /auth/v1/{appId}/login/nickname
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -1629,6 +1637,7 @@ service:
     LoginGoogle:
       path: /auth/v1/{appId}/login/google
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2424,7 +2433,7 @@ service:
           "base-path": "",
           "endpoints": {
             "GetPingServiceEndpoints": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "examples": [
                 {
@@ -2466,6 +2475,7 @@ service:
     GetPingServiceEndpoints:
       path: /discovery/v1/ping
       method: GET
+      auth: false
       source:
         openapi: ../openapi.json
       response:
@@ -2493,7 +2503,7 @@ service:
           "base-path": "",
           "endpoints": {
             "CreatePrivateLobbyDeprecated": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2505,7 +2515,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2540,7 +2549,7 @@ service:
               },
             },
             "CreatePublicLobbyDeprecated": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2552,7 +2561,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2587,7 +2595,7 @@ service:
               },
             },
             "ListActivePublicLobbiesDeprecated": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2596,7 +2604,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2661,6 +2668,7 @@ service:
     CreatePrivateLobbyDeprecated:
       path: /lobby/v1/{appId}/create/private
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2686,12 +2694,12 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           response:
             body: string
     CreatePublicLobbyDeprecated:
       path: /lobby/v1/{appId}/create/public
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2717,12 +2725,12 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           response:
             body: string
     ListActivePublicLobbiesDeprecated:
       path: /lobby/v1/{appId}/list
       method: GET
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2745,7 +2753,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           response:
             body:
               - state:
@@ -2774,7 +2781,7 @@ service:
           "base-path": "",
           "endpoints": {
             "CreateLobby": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.UnauthorizedError",
@@ -2785,7 +2792,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2846,7 +2852,7 @@ service:
               },
             },
             "CreateLocalLobby": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2858,7 +2864,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2917,7 +2922,7 @@ service:
               },
             },
             "CreatePrivateLobby": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2929,7 +2934,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2988,7 +2992,7 @@ service:
               },
             },
             "CreatePublicLobby": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -3000,7 +3004,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -3059,7 +3062,7 @@ service:
               },
             },
             "GetLobbyInfo": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3109,7 +3112,7 @@ service:
               },
             },
             "ListActivePublicLobbies": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "examples": [
                 {
@@ -3254,6 +3257,7 @@ service:
     CreatePrivateLobby:
       path: /lobby/v2/{appId}/create/private
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3281,7 +3285,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           request:
             initialConfig:
               key: value
@@ -3302,6 +3305,7 @@ service:
     CreatePublicLobby:
       path: /lobby/v2/{appId}/create/public
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3329,7 +3333,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           request:
             initialConfig:
               key: value
@@ -3350,6 +3353,7 @@ service:
     CreateLocalLobby:
       path: /lobby/v2/{appId}/create/local
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3377,7 +3381,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           request:
             initialConfig:
               key: value
@@ -3398,6 +3401,7 @@ service:
     CreateLobby:
       path: /lobby/v2/{appId}/create
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3425,7 +3429,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           request:
             visibility: public
             initialConfig:
@@ -3447,6 +3450,7 @@ service:
     ListActivePublicLobbies:
       path: /lobby/v2/{appId}/list/public
       method: GET
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3478,6 +3482,7 @@ service:
     GetLobbyInfo:
       path: /lobby/v2/{appId}/info/{roomId}
       method: GET
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -4401,7 +4406,7 @@ service:
               },
             },
             "GetConnectionInfo": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.BadRequestError",
@@ -4767,6 +4772,7 @@ service:
     GetConnectionInfo:
       path: /rooms/v1/{appId}/connectioninfo/{roomId}
       method: GET
+      auth: false
       source:
         openapi: ../openapi.json
       request:

@@ -3,14 +3,13 @@ import { generateReadme, generateReference, githubPr, githubPush } from "@fern-a
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api";
-
-import { ReadmeConfigBuilder } from "./readme";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ReadmeConfigBuilder } from "./readme/index.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
 export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
-    private publishConfig: PublishingConfig | undefined;
+    private publishConfig: FernIr.PublishingConfig | undefined;
 
     public constructor({
         logger,
@@ -21,7 +20,7 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
         readmeConfigBuilder: ReadmeConfigBuilder;
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
     }) {
         super({ logger, config, selfHosted: ir.selfHosted, skipInstall: true });
         this.readmeConfigBuilder = readmeConfigBuilder;

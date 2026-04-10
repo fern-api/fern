@@ -260,6 +260,9 @@ func (m *Metadata) GetValues() map[string]*string {
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -352,6 +355,9 @@ func (m *Metadata) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Metadata) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -531,7 +537,7 @@ func (s *Status) validate() error {
 
 var (
 	userFieldName           = big.NewInt(1 << 0)
-	userFieldId             = big.NewInt(1 << 1)
+	userFieldID             = big.NewInt(1 << 1)
 	userFieldTags           = big.NewInt(1 << 2)
 	userFieldMetadata       = big.NewInt(1 << 3)
 	userFieldEmail          = big.NewInt(1 << 4)
@@ -541,14 +547,14 @@ var (
 )
 
 type User struct {
-	Name           string                 `json:"name" url:"name"`
-	Id             UserId                 `json:"id" url:"id"`
-	Tags           []string               `json:"tags,omitempty" url:"tags,omitempty"`
-	Metadata       *Metadata              `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Email          Email                  `json:"email,omitempty" url:"email,omitempty"`
-	FavoriteNumber *WeirdNumber           `json:"favorite-number" url:"favorite-number"`
-	Numbers        []int                  `json:"numbers,omitempty" url:"numbers,omitempty"`
-	Strings        map[string]interface{} `json:"strings,omitempty" url:"strings,omitempty"`
+	Name           string         `json:"name" url:"name"`
+	ID             UserID         `json:"id" url:"id"`
+	Tags           []string       `json:"tags,omitempty" url:"tags,omitempty"`
+	Metadata       *Metadata      `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Email          Email          `json:"email,omitempty" url:"email,omitempty"`
+	FavoriteNumber *WeirdNumber   `json:"favorite-number" url:"favorite-number"`
+	Numbers        []int          `json:"numbers,omitempty" url:"numbers,omitempty"`
+	Strings        map[string]any `json:"strings,omitempty" url:"strings,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -564,11 +570,11 @@ func (u *User) GetName() string {
 	return u.Name
 }
 
-func (u *User) GetId() UserId {
+func (u *User) GetID() UserID {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetTags() []string {
@@ -606,7 +612,7 @@ func (u *User) GetNumbers() []int {
 	return u.Numbers
 }
 
-func (u *User) GetStrings() map[string]interface{} {
+func (u *User) GetStrings() map[string]any {
 	if u == nil {
 		return nil
 	}
@@ -614,6 +620,9 @@ func (u *User) GetStrings() map[string]interface{} {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -631,11 +640,11 @@ func (u *User) SetName(name string) {
 	u.require(userFieldName)
 }
 
-// SetId sets the Id field and marks it as non-optional;
+// SetID sets the ID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetId(id UserId) {
-	u.Id = id
-	u.require(userFieldId)
+func (u *User) SetID(id UserID) {
+	u.ID = id
+	u.require(userFieldID)
 }
 
 // SetTags sets the Tags field and marks it as non-optional;
@@ -675,7 +684,7 @@ func (u *User) SetNumbers(numbers []int) {
 
 // SetStrings sets the Strings field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *User) SetStrings(strings map[string]interface{}) {
+func (u *User) SetStrings(strings map[string]any) {
 	u.Strings = strings
 	u.require(userFieldStrings)
 }
@@ -708,6 +717,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value
@@ -719,7 +731,7 @@ func (u *User) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-type UserId = string
+type UserID = string
 
 type WeirdNumber struct {
 	Integer        int

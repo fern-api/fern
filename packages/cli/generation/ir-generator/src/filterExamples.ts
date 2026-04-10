@@ -16,17 +16,18 @@ import {
     ExampleType,
     ExampleTypeReference,
     ExampleTypeReferenceShape,
-    ExampleTypeShape
+    ExampleTypeShape,
+    FernIr
 } from "@fern-api/ir-sdk";
-import { FilteredIr } from "@fern-api/ir-utils";
+import { FilteredIr, getWireValue } from "@fern-api/ir-utils";
 
 function filterExampleSingleUnionTypeProperties({
     filteredIr,
     singleUnionTypeProperties
 }: {
     filteredIr: FilteredIr;
-    singleUnionTypeProperties: ExampleSingleUnionTypeProperties;
-}): ExampleSingleUnionTypeProperties | undefined {
+    singleUnionTypeProperties: FernIr.ExampleSingleUnionTypeProperties;
+}): FernIr.ExampleSingleUnionTypeProperties | undefined {
     return singleUnionTypeProperties._visit<ExampleSingleUnionTypeProperties | undefined>({
         samePropertiesAsObject: (s) => {
             const filteredObject = filteredIr.hasTypeId(s.typeId)
@@ -35,7 +36,9 @@ function filterExampleSingleUnionTypeProperties({
                       object: {
                           ...s.object,
                           properties: s.object.properties
-                              .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue))
+                              .filter((p) =>
+                                  filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
+                              )
                               .map((p) => ({
                                   ...p,
                                   value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })
@@ -45,13 +48,13 @@ function filterExampleSingleUnionTypeProperties({
                   }
                 : undefined;
             return filteredObject !== undefined
-                ? ExampleSingleUnionTypeProperties.samePropertiesAsObject(filteredObject)
+                ? FernIr.ExampleSingleUnionTypeProperties.samePropertiesAsObject(filteredObject)
                 : undefined;
         },
         singleProperty: (s) => {
             const filteredProperty = filterExampleTypeReference({ filteredIr, exampleTypeReference: s });
             return filteredProperty !== undefined
-                ? ExampleSingleUnionTypeProperties.singleProperty(filteredProperty)
+                ? FernIr.ExampleSingleUnionTypeProperties.singleProperty(filteredProperty)
                 : undefined;
         },
         noProperties: () => singleUnionTypeProperties,
@@ -189,7 +192,7 @@ function filterExampleTypeReference({
                                   ...o,
                                   properties: o.properties
                                       .filter((p) =>
-                                          filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue)
+                                          filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
                                       )
                                       .map((p) => ({
                                           ...p,
@@ -325,7 +328,7 @@ function filterExampleRequestBody({
                 properties: inlined.properties
                     .filter((p) =>
                         p.originalTypeDeclaration
-                            ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue)
+                            ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
                             : true
                     )
                     .map((property) => {
@@ -459,7 +462,7 @@ export function filterExampleType({
             shape: ExampleTypeShape.object({
                 ...o,
                 properties: o.properties
-                    .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue))
+                    .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name)))
                     .map((p) => ({
                         ...p,
                         value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })

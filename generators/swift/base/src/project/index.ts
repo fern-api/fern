@@ -1,2 +1,2 @@
-export * from "./SwiftFile";
-export * from "./SwiftProject";
+export * from "./SwiftFile.js";
+export * from "./SwiftProject.js";

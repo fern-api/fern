@@ -1,7 +1,8 @@
 import { FernToken } from "@fern-api/auth";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { isNetworkError } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
+import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types.js";
 
 // Configuration constants for AI enhancement
 const DEFAULT_AI_ENHANCEMENT_MAX_RETRIES = 0; // 0 retries = 1 attempt total
@@ -73,7 +74,7 @@ export class LambdaExampleEnhancer {
             this.context.logger.debug("Venus connectivity check succeeded");
             return false;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorMessage = extractErrorMessage(error);
             if (isNetworkError(errorMessage)) {
                 this.venusAirGappedResult = true;
                 this.context.logger.debug(`Venus connectivity check failed - air-gapped mode: ${errorMessage}`);
@@ -218,7 +219,7 @@ export class LambdaExampleEnhancer {
                 };
             } catch (error) {
                 lastError = error as Error;
-                this.context.logger.warn(`Attempt ${attempt} failed to enhance example: ${error}`);
+                this.context.logger.debug(`Attempt ${attempt} failed to enhance example: ${error}`);
 
                 if (attempt < maxAttempts) {
                     // Exponential backoff before retry

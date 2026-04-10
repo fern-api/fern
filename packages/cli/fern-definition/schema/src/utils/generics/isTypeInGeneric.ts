@@ -1,4 +1,4 @@
-import { ParseGenericNested } from "./parseGenericNested";
+import { ParseGenericNested } from "./parseGenericNested.js";
 
 export function isTypeInGeneric({ input, typeName }: { input: ParseGenericNested; typeName: string }): boolean {
     for (const arg of input.arguments) {

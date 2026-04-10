@@ -82,6 +82,10 @@ public final class GetGeneratedTestCaseFileRequest {
     public interface _FinalStage {
         GetGeneratedTestCaseFileRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage template(Optional<TestCaseTemplate> template);
 
         _FinalStage template(TestCaseTemplate template);
@@ -128,6 +132,18 @@ public final class GetGeneratedTestCaseFileRequest {
         @java.lang.Override
         public GetGeneratedTestCaseFileRequest build() {
             return new GetGeneratedTestCaseFileRequest(template, testCase, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

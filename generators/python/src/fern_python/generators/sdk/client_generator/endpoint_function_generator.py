@@ -692,6 +692,8 @@ class EndpointFunctionGenerator:
                             named_parameters=named_parameters,
                         ),
                         is_raw_client=self._is_raw_client,
+                        http_method=method,
+                        client_wrapper_member_name=self._client_wrapper_member_name,
                     )
                     streaming_request = get_httpx_request(
                         is_streaming=True,
@@ -729,6 +731,8 @@ class EndpointFunctionGenerator:
                         named_parameters=named_parameters,
                     ),
                     is_raw_client=self._is_raw_client,
+                    http_method=method,
+                    client_wrapper_member_name=self._client_wrapper_member_name,
                 )
                 non_streaming_request = get_httpx_request(
                     is_streaming=False,
@@ -752,6 +756,8 @@ class EndpointFunctionGenerator:
                         named_parameters=named_parameters,
                     ),
                     is_raw_client=self._is_raw_client,
+                    http_method=method,
+                    client_wrapper_member_name=self._client_wrapper_member_name,
                 )
 
                 httpx_request = get_httpx_request(
@@ -1010,7 +1016,7 @@ class EndpointFunctionGenerator:
 
                     writer.write("{")
                     writer.write_node(
-                        self._context.core_utilities.jsonable_encoder(
+                        self._context.core_utilities.encode_path_param(
                             self.convert_and_respect_annotation_metadata_raw(
                                 context=self._context,
                                 object_=parameter,
@@ -1063,6 +1069,20 @@ class EndpointFunctionGenerator:
                     map_=lambda _: None,
                     literal=lambda _: None,
                 )
+            elif union.type == "named":
+                type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(union.type_id)
+                shape = type_declaration.shape.get_as_union()
+                if shape.type == "alias":
+                    resolved_type = shape.resolved_type.get_as_union()
+                    if resolved_type.type == "container":
+                        unwrapped_type = resolved_type.container.visit(
+                            list_=lambda item_type: item_type,
+                            set_=lambda item_type: item_type,
+                            optional=lambda item_type: self._unwrap_container_types(item_type),
+                            nullable=lambda item_type: self._unwrap_container_types(item_type),
+                            map_=lambda _: None,
+                            literal=lambda _: None,
+                        )
         return unwrapped_type
 
     def _get_pagination_results_type(self, fallback_typehint: AST.TypeHint) -> AST.TypeHint:
@@ -1409,13 +1429,90 @@ class EndpointFunctionGenerator:
             return AST.Expression(f"{possible_query_literal}")
         return self._get_reference_to_query_parameter(query_parameter)
 
+    def _should_comma_join_query_parameter(self, query_parameter: ir_types.QueryParameter) -> bool:
+        """Check if a query parameter should be comma-joined (explode=False for list/set types)."""
+        if query_parameter.explode is not False:
+            return False
+        # When explode=False and allow_multiple=True, the IR represents array query params
+        # with a scalar type (e.g. optional<string>) + allow_multiple flag.
+        # We need to comma-join these values.
+        if query_parameter.allow_multiple:
+            return True
+        # Also check if the value type is directly a list or set (possibly wrapped in optional)
+        value_type = query_parameter.value_type.get_as_union()
+        if value_type.type == "container":
+            container = value_type.container.get_as_union()
+            if container.type in ("list", "set"):
+                return True
+            if container.type == "optional":
+                inner_union = container.optional.get_as_union()
+                if inner_union.type == "container":
+                    inner_container = inner_union.container.get_as_union()
+                    if inner_container.type in ("list", "set"):
+                        return True
+            if container.type == "nullable":
+                inner_union = container.nullable.get_as_union()
+                if inner_union.type == "container":
+                    inner_container = inner_union.container.get_as_union()
+                    if inner_container.type in ("list", "set"):
+                        return True
+        return False
+
+    def _wrap_with_comma_join(
+        self, reference: AST.Expression, query_parameter: ir_types.QueryParameter
+    ) -> AST.Expression:
+        """Wrap a query parameter reference with comma-joining for explode=False.
+
+        When explode=False, array values should be serialized as comma-separated
+        strings (e.g. "a,b,c") instead of repeated keys (e.g. "k=a&k=b&k=c").
+
+        The parameter may be:
+        - A list/sequence value that needs joining
+        - Optional, in which case we need a None check
+        - A scalar with allow_multiple (Union[str, Sequence[str]]), which also
+          needs to handle both single values and sequences
+        """
+        param_name = get_parameter_name(query_parameter.name.name)
+        value_type = query_parameter.value_type.get_as_union()
+        is_optional = value_type.type == "container" and value_type.container.get_as_union().type in (
+            "optional",
+            "nullable",
+        )
+
+        if query_parameter.allow_multiple:
+
+            def write_comma_join(writer: AST.NodeWriter) -> None:
+                writer.write(
+                    f'",".join(map(str, {param_name})) if isinstance({param_name}, (list, tuple, set)) else {param_name}'
+                )
+
+            return AST.Expression(AST.CodeWriter(write_comma_join))
+        else:
+            # Direct list/set type
+            if is_optional:
+
+                def write_comma_join(writer: AST.NodeWriter) -> None:
+                    writer.write(f'",".join(map(str, {param_name})) if {param_name} is not None else None')
+
+                return AST.Expression(AST.CodeWriter(write_comma_join))
+            else:
+
+                def write_comma_join(writer: AST.NodeWriter) -> None:
+                    writer.write(f'",".join(map(str, {param_name}))')
+
+                return AST.Expression(AST.CodeWriter(write_comma_join))
+
     def _get_query_parameters_for_endpoint(
         self, *, endpoint: ir_types.HttpEndpoint, parent_writer: AST.NodeWriter
     ) -> Optional[AST.Expression]:
         query_parameters = [
             (
                 query_parameter.name.wire_value,
-                self._get_query_parameter_reference(query_parameter),
+                (
+                    self._wrap_with_comma_join(self._get_query_parameter_reference(query_parameter), query_parameter)
+                    if self._should_comma_join_query_parameter(query_parameter)
+                    else self._get_query_parameter_reference(query_parameter)
+                ),
             )
             for query_parameter in endpoint.query_parameters
         ]
@@ -1448,7 +1545,7 @@ class EndpointFunctionGenerator:
     ) -> bool:
         return self._does_type_reference_match_primitives(
             type_reference,
-            expected=set([ir_types.PrimitiveTypeV1.DATE_TIME]),
+            expected=set([ir_types.PrimitiveTypeV1.DATE_TIME, ir_types.PrimitiveTypeV1.DATE_TIME_RFC_2822]),
             allow_optional=allow_optional,
             allow_enum=False,
         )

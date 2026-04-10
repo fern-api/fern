@@ -3,10 +3,11 @@
 package client
 
 import (
+	os "os"
+
 	core "github.com/websocket-bearer-auth/fern/core"
 	internal "github.com/websocket-bearer-auth/fern/internal"
 	option "github.com/websocket-bearer-auth/fern/option"
-	os "os"
 )
 
 type Client struct {
@@ -17,8 +18,8 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
-	if options.ApiKey == "" {
-		options.ApiKey = os.Getenv("SEED_API_KEY")
+	if options.APIKey == "" {
+		options.APIKey = os.Getenv("SEED_API_KEY")
 	}
 	return &Client{
 		options: options,

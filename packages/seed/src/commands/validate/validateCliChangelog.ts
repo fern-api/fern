@@ -5,9 +5,9 @@ import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
-import { validateAngleBracketEscaping } from "./angleBracketValidator";
-import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
+import { loadCliWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { validateAngleBracketEscaping } from "./angleBracketValidator.js";
+import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils.js";
 
 export async function validateCliRelease({ context }: { context: TaskContext }): Promise<void> {
     const cliWorkspace = await loadCliWorkspace();

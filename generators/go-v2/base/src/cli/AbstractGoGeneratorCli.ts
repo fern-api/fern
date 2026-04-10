@@ -1,9 +1,12 @@
 import { AbstractGeneratorCli, File, parseIR } from "@fern-api/base-generator";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { BaseGoCustomConfigSchema } from "@fern-api/go-ast";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
-import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type IntermediateRepresentation = FernIr.IntermediateRepresentation;
+
+import { serialization as IrSerialization } from "@fern-fern/ir-sdk";
+import { AbstractGoGeneratorContext } from "../context/AbstractGoGeneratorContext.js";
 
 export abstract class AbstractGoGeneratorCli<
     CustomConfig extends BaseGoCustomConfigSchema,
@@ -32,8 +35,10 @@ export abstract class AbstractGoGeneratorCli<
             sdkVersion
         };
         const content = JSON.stringify(metadata, null, 2);
-        context.project.addRawFiles(
-            new File(this.GENERATION_METADATA_FILENAME, this.GENERATION_METADATA_FILEPATH, content)
-        );
+        if (context.project != null && File != null) {
+            context.project.addRawFiles(
+                new File(this.GENERATION_METADATA_FILENAME, this.GENERATION_METADATA_FILEPATH, content)
+            );
+        }
     }
 }

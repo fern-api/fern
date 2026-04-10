@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-&gt;echo_($id, $request) -> string</code></summary>
+<details><summary><code>$client-&gt;echo_($id, $request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -104,3 +104,4 @@ $client->service->nop(
 </dd>
 </dl>
 </details>
+

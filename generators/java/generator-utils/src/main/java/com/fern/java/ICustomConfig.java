@@ -18,6 +18,7 @@ package com.fern.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.List;
 import java.util.Optional;
 import org.immutables.value.Value;
 
@@ -131,6 +132,9 @@ public interface ICustomConfig {
         return false;
     }
 
+    @JsonProperty("custom-plugins")
+    Optional<List<String>> customPlugins();
+
     enum PackageLayout {
         NESTED("nested"),
         FLAT("flat");
@@ -194,4 +198,7 @@ public interface ICustomConfig {
     default OutputDirectory outputDirectory() {
         return OutputDirectory.PROJECT_ROOT;
     }
+
+    @JsonProperty("maxRetries")
+    Optional<Integer> maxRetries();
 }

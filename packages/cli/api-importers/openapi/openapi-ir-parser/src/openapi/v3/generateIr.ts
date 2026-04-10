@@ -23,34 +23,34 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../getExtension";
-import { ParseOpenAPIOptions } from "../../options";
-import { convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas";
-import { convertToFullExample } from "../../schema/examples/convertToFullExample";
-import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory";
-import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
-import { getGeneratedTypeName } from "../../schema/utils/getSchemaName";
-import { isReferenceObject } from "../../schema/utils/isReferenceObject";
-import { getSchemas } from "../../utils/getSchemas";
-import { createSchemaCollisionTracker } from "../../utils/schemaCollision";
-import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
-import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem";
-import { convertSecurityScheme } from "./converters/convertSecurityScheme";
-import { convertServer } from "./converters/convertServer";
-import { ERROR_NAMES } from "./converters/convertToHttpError";
-import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
-import { ConvertedOperation } from "./converters/operation/convertOperation";
-import { FernOpenAPIExtension } from "./extensions/fernExtensions";
-import { getFernBasePath } from "./extensions/getFernBasePath";
-import { getFernGroups } from "./extensions/getFernGroups";
-import { getFernVersion } from "./extensions/getFernVersion";
-import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
-import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders";
-import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
-import { getWebhooksPathsObject } from "./getWebhookPathsObject";
-import { hasIncompleteExample } from "./hasIncompleteExample";
-import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
-import { runResolutions } from "./runResolutions";
+import { getExtension } from "../../getExtension.js";
+import { ParseOpenAPIOptions } from "../../options.js";
+import { convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas.js";
+import { convertToFullExample } from "../../schema/examples/convertToFullExample.js";
+import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory.js";
+import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema.js";
+import { getGeneratedTypeName } from "../../schema/utils/getSchemaName.js";
+import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
+import { getSchemas } from "../../utils/getSchemas.js";
+import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
+import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext.js";
+import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem.js";
+import { convertSecurityScheme } from "./converters/convertSecurityScheme.js";
+import { convertServer } from "./converters/convertServer.js";
+import { ERROR_NAMES } from "./converters/convertToHttpError.js";
+import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory.js";
+import { ConvertedOperation } from "./converters/operation/convertOperation.js";
+import { FernOpenAPIExtension } from "./extensions/fernExtensions.js";
+import { getFernBasePath } from "./extensions/getFernBasePath.js";
+import { getFernGroups } from "./extensions/getFernGroups.js";
+import { getFernVersion } from "./extensions/getFernVersion.js";
+import { getGlobalHeaders } from "./extensions/getGlobalHeaders.js";
+import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders.js";
+import { getVariableDefinitions } from "./extensions/getVariableDefinitions.js";
+import { getWebhooksPathsObject } from "./getWebhookPathsObject.js";
+import { hasIncompleteExample } from "./hasIncompleteExample.js";
+import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext.js";
+import { runResolutions } from "./runResolutions.js";
 
 export function generateIr({
     openApi,
@@ -66,6 +66,9 @@ export function generateIr({
     namespace: string | undefined;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
+
+    // Validate tag names for non-ASCII characters and descriptions for frontmatter delimiters
+    validateOpenApiSpecForDocsCompat({ openApi, taskContext });
 
     // Reset title collision tracker for this document processing
     resetTitleCollisionTracker();
@@ -93,14 +96,20 @@ export function generateIr({
     );
     const security: GlobalSecurity | undefined = openApi.security?.filter((requirement) => requirement != null);
     const authHeaders = new Set(
-        ...Object.entries(securitySchemes).map(([_, securityScheme]) => {
-            if (securityScheme.type === "basic" || securityScheme.type === "bearer") {
-                return "Authorization";
-            } else if (securityScheme.type === "header") {
-                return securityScheme.headerName;
-            }
-            return null;
-        })
+        Object.entries(securitySchemes)
+            .map(([_, securityScheme]) => {
+                if (
+                    securityScheme.type === "basic" ||
+                    securityScheme.type === "bearer" ||
+                    securityScheme.type === "oauth"
+                ) {
+                    return "Authorization";
+                } else if (securityScheme.type === "header") {
+                    return securityScheme.headerName;
+                }
+                return null;
+            })
+            .filter((header): header is string => header != null)
     );
     const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
     const globalHeaders = getGlobalHeaders(openApi);
@@ -297,8 +306,10 @@ export function generateIr({
                     name: queryParameter.name,
                     schema: convertSchemaWithExampleToSchema(queryParameter.schema),
                     parameterNameOverride: queryParameter.parameterNameOverride,
+                    explode: queryParameter.explode,
                     availability: queryParameter.availability,
-                    source: queryParameter.source
+                    source: queryParameter.source,
+                    clientDefault: queryParameter.clientDefault
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
@@ -309,7 +320,8 @@ export function generateIr({
                     parameterNameOverride: pathParameter.parameterNameOverride,
                     variableReference: pathParameter.variableReference,
                     availability: pathParameter.availability,
-                    source: pathParameter.source
+                    source: pathParameter.source,
+                    clientDefault: pathParameter.clientDefault
                 };
             }),
             headers: endpointWithExample.headers.map((header) => {
@@ -320,7 +332,8 @@ export function generateIr({
                     parameterNameOverride: header.parameterNameOverride,
                     env: header.env,
                     availability: header.availability,
-                    source: header.source
+                    source: header.source,
+                    clientDefault: header.clientDefault
                 };
             }),
             examples,
@@ -428,6 +441,9 @@ function maybeRemoveDiscriminantsFromSchemas(
     if (context.options.removeDiscriminantsFromSchemas === generatorsYml.RemoveDiscriminantsFromSchemas.Never) {
         return schemas;
     }
+
+    const protectedParents = getParentSchemaIdsWithNonUnionChildren(schemas, context);
+
     const result: Record<string, SchemaWithExample> = {};
     for (const [schemaId, schema] of Object.entries(schemas)) {
         if (schema.type !== "object") {
@@ -466,6 +482,9 @@ function maybeRemoveDiscriminantsFromSchemas(
 
         const parentSchemaIds = getAllParentSchemaIds({ schema, schemas });
         for (const parentSchemaId of [...new Set(parentSchemaIds)]) {
+            if (protectedParents.has(parentSchemaId)) {
+                continue;
+            }
             const parentSchema = result[parentSchemaId] ?? schemas[parentSchemaId];
             if (parentSchema == null || parentSchema.type !== "object") {
                 continue;
@@ -483,6 +502,31 @@ function maybeRemoveDiscriminantsFromSchemas(
         }
     }
     return result;
+}
+
+/**
+ * Collects parent schema IDs that have at least one allOf child NOT participating
+ * in any discriminated union. These parents are "shared" across union and non-union
+ * schemas, so their discriminant properties must not be stripped.
+ */
+function getParentSchemaIdsWithNonUnionChildren(
+    schemas: Record<string, SchemaWithExample>,
+    context: AbstractOpenAPIV3ParserContext
+): Set<SchemaId> {
+    const protectedParents = new Set<SchemaId>();
+    for (const [schemaId, schema] of Object.entries(schemas)) {
+        if (schema.type !== "object") {
+            continue;
+        }
+        const ref: OpenAPIV3.ReferenceObject = { $ref: `#/components/schemas/${schemaId}` };
+        if (context.getReferencesFromDiscriminatedUnion(ref) != null) {
+            continue;
+        }
+        for (const parentId of getAllParentSchemaIds({ schema, schemas })) {
+            protectedParents.add(parentId);
+        }
+    }
+    return protectedParents;
 }
 
 function maybeAddBackDiscriminantsFromSchemas(
@@ -561,6 +605,63 @@ function getAllParentSchemaIds({
 
 function distinct<T>(array: T[]): T[] {
     return [...new Set(array)];
+}
+
+const NON_ASCII_REGEX = new RegExp("[^\\x00-\\x7F]");
+const FRONTMATTER_DELIMITER_REGEX = /(?:^|\n)\s*---\s*(?:\n|$)/;
+
+/**
+ * Validates the OpenAPI spec for docs compatibility issues:
+ * - Tag names with non-ASCII characters (emojis) that break HTTP headers
+ * - Endpoint descriptions with --- frontmatter delimiters that break YAML parsing
+ */
+function validateOpenApiSpecForDocsCompat({
+    openApi,
+    taskContext
+}: {
+    openApi: OpenAPIV3.Document;
+    taskContext: TaskContext;
+}): void {
+    // Validate top-level tags
+    for (const tag of openApi.tags ?? []) {
+        if (NON_ASCII_REGEX.test(tag.name)) {
+            const nonAsciiChars = [...tag.name].filter((c) => NON_ASCII_REGEX.test(c));
+            taskContext.logger.error(
+                `Tag name "${tag.name}" contains non-ASCII characters: ${nonAsciiChars.join(", ")}. ` +
+                    `Non-ASCII characters in tag names will be included in URL paths and HTTP headers, ` +
+                    `which only support ASCII characters. This will cause runtime errors (ERR_INVALID_CHAR). ` +
+                    `Remove non-ASCII characters from the tag name.`
+            );
+        }
+    }
+
+    // Validate operation descriptions
+    for (const [path, pathItem] of Object.entries(openApi.paths ?? {})) {
+        if (pathItem == null) {
+            continue;
+        }
+        for (const method of ["get", "post", "put", "delete", "patch", "options", "head", "trace"] as const) {
+            const operation = pathItem[method];
+            if (operation?.description != null && FRONTMATTER_DELIMITER_REGEX.test(operation.description)) {
+                taskContext.logger.error(
+                    `Description at paths.${path}.${method} contains "---" frontmatter delimiters which will cause ` +
+                        `YAML parsing failures in the generated docs site. Remove the "---" delimiters from the description.`
+                );
+            }
+            // Also validate tags used on operations if no top-level tags defined
+            if (operation?.tags != null && (openApi.tags == null || openApi.tags.length === 0)) {
+                for (const tag of operation.tags) {
+                    if (NON_ASCII_REGEX.test(tag)) {
+                        const nonAsciiChars = [...tag].filter((c) => NON_ASCII_REGEX.test(c));
+                        taskContext.logger.error(
+                            `Tag name "${tag}" at paths.${path}.${method} contains non-ASCII characters: ${nonAsciiChars.join(", ")}. ` +
+                                `Remove non-ASCII characters from the tag name.`
+                        );
+                    }
+                }
+            }
+        }
+    }
 }
 
 function getAudiences({ operation }: { operation: ConvertedOperation }): string[] {

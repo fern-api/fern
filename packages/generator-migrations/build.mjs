@@ -24,7 +24,8 @@ async function buildPackage(config = {}) {
         sourcemap: true,
         clean: true,
         // Bundle all dependencies (including workspace dependencies) into the output
-        noExternal: [/.*/]
+        noExternal: [/.*/],
+        inlineOnly: false
     });
 
     const outputPackageJson = {

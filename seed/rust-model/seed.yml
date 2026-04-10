@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v66
 displayName: Rust Model
 image: fernapi/fern-rust-model
 changelogLocation: ../../generators/rust/model/versions.yml
@@ -42,10 +42,12 @@ customFixtureConfig:
     deriveClone: true
 
 fixtures:
-  simple:
+  simple-api:
     - customConfig: null
       outputFolder: basic
   types:
     - customConfig:
         generateBuilders: true
       outputFolder: with-builders
+allowedFailures:
+  - server-sent-events-openapi

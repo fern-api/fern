@@ -10,7 +10,7 @@ use Seed\Playlist\PlaylistClient;
 use Seed\Problem\ProblemClient;
 use Seed\Submission\SubmissionClient;
 use Seed\Sysprop\SyspropClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

@@ -12,7 +12,10 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Usage](#usage)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
+- [File Uploads](#file-uploads)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
+  - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
   - [Retries](#retries)
@@ -20,6 +23,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
   - [Aborting Requests](#aborting-requests)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Logging](#logging)
+  - [Custom Fetch](#custom-fetch)
   - [Runtime Compatibility](#runtime-compatibility)
 - [Contributing](#contributing)
 
@@ -52,7 +56,7 @@ following namespace:
 ```typescript
 import { SeedExhaustive } from "@fern/exhaustive";
 
-const request: SeedExhaustive.GetWithInlinePath = {
+const request: SeedExhaustive.ListItemsRequest = {
     ...
 };
 ```
@@ -77,7 +81,91 @@ try {
 }
 ```
 
+## File Uploads
+
+You can upload files using the client:
+
+```typescript
+import { createReadStream } from "fs";
+
+await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), ...);
+await client.endpoints.params.uploadWithPath(new ReadableStream(), ...);
+await client.endpoints.params.uploadWithPath(Buffer.from('binary data'), ...);
+await client.endpoints.params.uploadWithPath(new Blob(['binary data'], { type: 'audio/mpeg' }), ...);
+await client.endpoints.params.uploadWithPath(new File(['binary data'], 'file.mp3'), ...);
+await client.endpoints.params.uploadWithPath(new ArrayBuffer(8), ...);
+await client.endpoints.params.uploadWithPath(new Uint8Array([0, 1, 2]), ...);
+```
+The client accepts a variety of types for file upload parameters:
+* Stream types: `fs.ReadStream`, `stream.Readable`, and `ReadableStream`
+* Buffered types: `Buffer`, `Blob`, `File`, `ArrayBuffer`, `ArrayBufferView`, and `Uint8Array`
+
+### Metadata
+
+You can configure metadata when uploading a file:
+```typescript
+const file: Uploadable.WithMetadata = {
+    data: createReadStream("path/to/file"),
+    filename: "my-file",       // optional
+    contentType: "audio/mpeg", // optional
+    contentLength: 1949,       // optional
+};
+```
+
+Alternatively, you can upload a file directly from a file path:
+```typescript
+const file : Uploadable.FromPath = {
+    path: "path/to/file",
+    filename: "my-file",        // optional
+    contentType: "audio/mpeg",  // optional
+    contentLength: 1949,        // optional
+};
+```
+
+The metadata is used to set the `Content-Length`, `Content-Type`, and `Content-Disposition` headers. If not provided, the client will attempt to determine them automatically.
+For example, `fs.ReadStream` has a `path` property which the SDK uses to retrieve the file size from the filesystem without loading it into memory.
+
+
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedExhaustiveClient } from "@fern/exhaustive";
+
+const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const pageableResponse = await client.endpoints.pagination.listItems({
+    cursor: "cursor",
+    limit: 1
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.endpoints.pagination.listItems({
+    cursor: "cursor",
+    limit: 1
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+```
+
 ## Advanced
+
+### Subpackage Exports
+
+This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+```typescript
+import { EndpointsClient } from '@fern/exhaustive/endpoints';
+
+const client = new EndpointsClient({...});
+```
 
 ### Additional Headers
 
@@ -229,6 +317,26 @@ const logger: logging.ILogger = {
 </details>
 
 
+### Custom Fetch
+
+The SDK provides a low-level `fetch` method for making custom HTTP requests while still
+benefiting from SDK-level configuration like authentication, retries, timeouts, and logging.
+This is useful for calling API endpoints not yet supported in the SDK.
+
+```typescript
+const response = await client.fetch("/v1/custom/endpoint", {
+    method: "GET",
+}, {
+    timeoutInSeconds: 30,
+    maxRetries: 3,
+    headers: {
+        "X-Custom-Header": "custom-value",
+    },
+});
+
+const data = await response.json();
+```
+
 ### Runtime Compatibility
 
 
@@ -244,19 +352,6 @@ runtimes:
 - Bun 1.0+
 - React Native
 
-### Customizing Fetch Client
-
-The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
-unsupported environment, this provides a way for you to break glass and ensure the SDK works.
-
-```typescript
-import { SeedExhaustiveClient } from "@fern/exhaustive";
-
-const client = new SeedExhaustiveClient({
-    ...
-    fetcher: // provide your implementation here
-});
-```
 
 ## Contributing
 

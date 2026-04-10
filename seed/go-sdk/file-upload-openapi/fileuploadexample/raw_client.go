@@ -4,11 +4,12 @@ package fileuploadexample
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/file-upload-openapi/fern"
 	core "github.com/file-upload-openapi/fern/core"
 	internal "github.com/file-upload-openapi/fern/internal"
 	option "github.com/file-upload-openapi/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -34,7 +35,7 @@ func (r *RawClient) UploadFile(
 	ctx context.Context,
 	request *fern.UploadFileRequest,
 	opts ...option.RequestOption,
-) (*core.Response[fern.FileId], error) {
+) (*core.Response[fern.FileID], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -50,15 +51,17 @@ func (r *RawClient) UploadFile(
 	if err := writer.WriteField("name", request.Name); err != nil {
 		return nil, err
 	}
-	if err := writer.WriteFile("file", request.File); err != nil {
-		return nil, err
+	if request.File != nil {
+		if err := writer.WriteFile("file", request.File); err != nil {
+			return nil, err
+		}
 	}
 	if err := writer.Close(); err != nil {
 		return nil, err
 	}
 	headers.Set("Content-Type", writer.ContentType())
 
-	var response fern.FileId
+	var response fern.FileID
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -76,7 +79,7 @@ func (r *RawClient) UploadFile(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[fern.FileId]{
+	return &core.Response[fern.FileID]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

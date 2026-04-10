@@ -104,6 +104,9 @@
     "removeDiscriminantsFromSchemas": "always",
     "defaultIntegerFormat": "int32",
     "pathParameterOrder": "url-order",
-    "resolveSchemaCollisions": false
+    "resolveSchemaCollisions": false,
+    "inferForwardCompatible": false,
+    "coerceConstsTo": "enums-coerceable-to-literals",
+    "respectByteFormat": false
   }
 }

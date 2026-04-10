@@ -1,9 +1,9 @@
 import { AbstractGoGeneratorContext, AsIsFiles } from "@fern-api/go-base";
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
 
 export class ModelGeneratorContext extends AbstractGoGeneratorContext<ModelCustomConfigSchema> {
-    public getTypePackageName({ fernFilepath }: { fernFilepath: FernFilepath }): string {
+    public getTypePackageName({ fernFilepath }: { fernFilepath: FernIr.FernFilepath }): string {
         const fileLocation = this.getPackageLocation(fernFilepath);
         if (fileLocation.importPath === this.getRootImportPath()) {
             return this.getRootPackageName();
@@ -11,9 +11,9 @@ export class ModelGeneratorContext extends AbstractGoGeneratorContext<ModelCusto
         return fileLocation.importPath.split("/").pop() ?? "";
     }
 
-    public getTypeFilename({ fernFilepath }: { fernFilepath: FernFilepath }): string {
+    public getTypeFilename({ fernFilepath }: { fernFilepath: FernIr.FernFilepath }): string {
         if (fernFilepath.file != null) {
-            return `${fernFilepath.file.snakeCase.unsafeName}.go`;
+            return `${this.caseConverter.snakeUnsafe(fernFilepath.file)}.go`;
         }
         return "types.go";
     }

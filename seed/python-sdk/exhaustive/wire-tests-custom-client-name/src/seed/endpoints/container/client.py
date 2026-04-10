@@ -5,6 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.union.types.mixed_type import MixedType
 from .raw_client import AsyncRawContainerClient, RawContainerClient
 
 # this is used as the default value for optional parameters
@@ -231,6 +232,38 @@ class ContainerClient:
         )
         """
         _response = self._raw_client.get_and_return_map_of_prim_to_object(
+            request=request, request_options=request_options
+        )
+        return _response.data
+
+    def get_and_return_map_of_prim_to_undiscriminated_union(
+        self, *, request: typing.Dict[str, MixedType], request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[str, MixedType]:
+        """
+        Parameters
+        ----------
+        request : typing.Dict[str, MixedType]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, MixedType]
+
+        Examples
+        --------
+        from seed import Exhaustive
+
+        client = Exhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
+            request={"string": 1.1},
+        )
+        """
+        _response = self._raw_client.get_and_return_map_of_prim_to_undiscriminated_union(
             request=request, request_options=request_options
         )
         return _response.data
@@ -550,6 +583,46 @@ class AsyncContainerClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_and_return_map_of_prim_to_object(
+            request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def get_and_return_map_of_prim_to_undiscriminated_union(
+        self, *, request: typing.Dict[str, MixedType], request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[str, MixedType]:
+        """
+        Parameters
+        ----------
+        request : typing.Dict[str, MixedType]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, MixedType]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncExhaustive
+
+        client = AsyncExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
+                request={"string": 1.1},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_map_of_prim_to_undiscriminated_union(
             request=request, request_options=request_options
         )
         return _response.data

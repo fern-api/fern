@@ -4,7 +4,7 @@ import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
-import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext";
+import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext.js";
 
 /**
  * In memory representation of a Java project.

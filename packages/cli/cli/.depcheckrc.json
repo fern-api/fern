@@ -1,4 +1,0 @@
-{
-  "ignores": ["ws", "@types/ws", "pixelmatch"],
-  "ignore-patterns": ["lib", "dist"]
-}

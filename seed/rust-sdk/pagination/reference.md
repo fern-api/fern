@@ -30,11 +30,13 @@ async fn main() {
                 pagination: Some(StartingAfterPaging {
                     per_page: 1,
                     starting_after: Some("starting_after".to_string()),
+                    ..Default::default()
                 }),
                 query: SearchRequestQuery::SingleFilterSearchRequest(SingleFilterSearchRequest {
                     field: Some("field".to_string()),
                     operator: Some(SingleFilterSearchRequestOperator::Equals),
                     value: Some("value".to_string()),
+                    ..Default::default()
                 }),
             },
             None,
@@ -94,11 +96,12 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -183,8 +186,9 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
                 cursor: Some("cursor".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -242,7 +246,9 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
+            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
+                ..Default::default()
+            },
             None,
         )
         .await;
@@ -302,11 +308,12 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -391,11 +398,12 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_double_offset_pagination(
-            &ListWithDoubleOffsetPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest {
                 page: Some(1.1),
                 per_page: Some(1.1),
                 order: Some(Order::Asc),
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -480,7 +488,9 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
+            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
+                ..Default::default()
+            },
             None,
         )
         .await;
@@ -540,10 +550,11 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
+                ..Default::default()
             },
             None,
         )
@@ -621,10 +632,11 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
+                ..Default::default()
             },
             None,
         )
@@ -702,8 +714,9 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_extended_results(
-            &ListWithExtendedResultsQueryRequest {
+            &InlineUsersInlineUsersListWithExtendedResultsQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -761,8 +774,9 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_extended_results(
-            &ListWithExtendedResultsQueryRequest {
+            &InlineUsersInlineUsersListWithExtendedResultsQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -820,11 +834,9 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
                 starting_after: Some("starting_after".to_string()),
-                page: None,
-                per_page: None,
-                order: None,
+                ..Default::default()
             },
             None,
         )
@@ -884,7 +896,13 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_global_config(&ListWithGlobalConfigQueryRequest { offset: Some(1) }, None)
+        .list_with_global_config(
+            &InlineUsersInlineUsersListWithGlobalConfigQueryRequest {
+                offset: Some(1),
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -939,11 +957,12 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest2 {
+            &UsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -1027,8 +1046,9 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest2 {
+            &UsersListWithMixedTypeCursorPaginationQueryRequest {
                 cursor: Some("cursor".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -1085,7 +1105,9 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest2 { cursor: None },
+            &UsersListWithMixedTypeCursorPaginationQueryRequest {
+                ..Default::default()
+            },
             None,
         )
         .await;
@@ -1163,6 +1185,7 @@ async fn main() {
             &ListUsersTopLevelBodyCursorPaginationRequest {
                 cursor: Some("initial_cursor".to_string()),
                 filter: Some("active".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -1230,11 +1253,12 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest2 {
+            &UsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -1318,11 +1342,12 @@ async fn main() {
     client
         .users
         .list_with_double_offset_pagination(
-            &ListWithDoubleOffsetPaginationQueryRequest2 {
+            &UsersListWithDoubleOffsetPaginationQueryRequest {
                 page: Some(1.1),
                 per_page: Some(1.1),
                 order: Some(Order::Asc),
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )
@@ -1406,7 +1431,9 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest2 { cursor: None },
+            &UsersListWithMixedTypeCursorPaginationQueryRequest {
+                ..Default::default()
+            },
             None,
         )
         .await;
@@ -1465,10 +1492,11 @@ async fn main() {
     client
         .users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest2 {
+            &UsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
+                ..Default::default()
             },
             None,
         )
@@ -1545,10 +1573,11 @@ async fn main() {
     client
         .users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest2 {
+            &UsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
-                limit: Some(1),
+                limit: Some(3),
                 order: Some(Order::Asc),
+                ..Default::default()
             },
             None,
         )
@@ -1625,8 +1654,9 @@ async fn main() {
     client
         .users
         .list_with_extended_results(
-            &ListWithExtendedResultsQueryRequest2 {
+            &UsersListWithExtendedResultsQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -1683,8 +1713,9 @@ async fn main() {
     client
         .users
         .list_with_extended_results(
-            &ListWithExtendedResultsQueryRequest2 {
+            &UsersListWithExtendedResultsQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -1741,11 +1772,9 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest2 {
+            &UsersListWithCursorPaginationQueryRequest {
                 starting_after: Some("starting_after".to_string()),
-                page: None,
-                per_page: None,
-                order: None,
+                ..Default::default()
             },
             None,
         )
@@ -1805,11 +1834,9 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest2 {
+            &UsersListWithCursorPaginationQueryRequest {
                 starting_after: Some("starting_after".to_string()),
-                page: None,
-                per_page: None,
-                order: None,
+                ..Default::default()
             },
             None,
         )
@@ -1868,7 +1895,13 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_global_config(&ListWithGlobalConfigQueryRequest2 { offset: Some(1) }, None)
+        .list_with_global_config(
+            &UsersListWithGlobalConfigQueryRequest {
+                offset: Some(1),
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -1921,7 +1954,13 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_optional_data(&ListWithOptionalDataQueryRequest { page: Some(1) }, None)
+        .list_with_optional_data(
+            &ListWithOptionalDataQueryRequest {
+                page: Some(1),
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```
@@ -1949,3 +1988,84 @@ async fn main() {
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_aliased_data</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersAliasedDataPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_aliased_data(
+            &ListWithAliasedDataQueryRequest {
+                page: Some(1),
+                per_page: Some(1),
+                starting_after: Some("starting_after".to_string()),
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_page:** `Option<i64>` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**starting_after:** `Option<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

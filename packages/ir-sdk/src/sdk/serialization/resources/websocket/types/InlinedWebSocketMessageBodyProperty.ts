@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { WithDocsAndAvailability } from "../../commons/types/WithDocsAndAvailability.js";
 
 export const InlinedWebSocketMessageBodyProperty: core.serialization.ObjectSchema<
@@ -11,14 +11,14 @@ export const InlinedWebSocketMessageBodyProperty: core.serialization.ObjectSchem
     FernIr.InlinedWebSocketMessageBodyProperty
 > = core.serialization
     .objectWithoutOptionalProperties({
-        name: NameAndWireValue,
+        name: NameAndWireValueOrString,
         valueType: core.serialization.lazy(() => serializers.TypeReference),
     })
     .extend(WithDocsAndAvailability);
 
 export declare namespace InlinedWebSocketMessageBodyProperty {
     export interface Raw extends WithDocsAndAvailability.Raw {
-        name: NameAndWireValue.Raw;
+        name: NameAndWireValueOrString.Raw;
         valueType: serializers.TypeReference.Raw;
     }
 }

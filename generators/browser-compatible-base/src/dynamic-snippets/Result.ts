@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 
-import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext";
-import { ErrorReporter } from "./ErrorReporter";
+import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippetsGeneratorContext.js";
+import { ErrorReporter } from "./ErrorReporter.js";
 
 export class Result {
     public reporter: ErrorReporter | undefined;

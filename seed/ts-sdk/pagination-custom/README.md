@@ -14,6 +14,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Exception Handling](#exception-handling)
 - [Pagination](#pagination)
 - [Advanced](#advanced)
+  - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
   - [Retries](#retries)
@@ -21,6 +22,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
   - [Aborting Requests](#aborting-requests)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Logging](#logging)
+  - [Custom Fetch](#custom-fetch)
   - [Runtime Compatibility](#runtime-compatibility)
 - [Contributing](#contributing)
 
@@ -42,7 +44,8 @@ Instantiate and use the client with the following:
 import { SeedPaginationClient } from "@fern/pagination-custom";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const pageableResponse = await client.users.listUsernamesCustom({
+const pageableResponse = await client.users.listWithCustomPager({
+    limit: 1,
     starting_after: "starting_after"
 });
 for await (const item of pageableResponse) {
@@ -50,7 +53,8 @@ for await (const item of pageableResponse) {
 }
 
 // Or you can manually iterate page-by-page
-let page = await client.users.listUsernamesCustom({
+let page = await client.users.listWithCustomPager({
+    limit: 1,
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
@@ -69,7 +73,7 @@ following namespace:
 ```typescript
 import { SeedPagination } from "@fern/pagination-custom";
 
-const request: SeedPagination.ListUsernamesRequestCustom = {
+const request: SeedPagination.ListWithCustomPagerRequest = {
     ...
 };
 ```
@@ -83,7 +87,7 @@ will be thrown.
 import { SeedPaginationError } from "@fern/pagination-custom";
 
 try {
-    await client.users.listUsernamesCustom(...);
+    await client.users.listWithCustomPager(...);
 } catch (err) {
     if (err instanceof SeedPaginationError) {
         console.log(err.statusCode);
@@ -102,7 +106,8 @@ List endpoints are paginated. The SDK provides an iterator so that you can simpl
 import { SeedPaginationClient } from "@fern/pagination-custom";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const pageableResponse = await client.users.listUsernamesCustom({
+const pageableResponse = await client.users.listWithCustomPager({
+    limit: 1,
     starting_after: "starting_after"
 });
 for await (const item of pageableResponse) {
@@ -110,7 +115,8 @@ for await (const item of pageableResponse) {
 }
 
 // Or you can manually iterate page-by-page
-let page = await client.users.listUsernamesCustom({
+let page = await client.users.listWithCustomPager({
+    limit: 1,
     starting_after: "starting_after"
 });
 while (page.hasNextPage()) {
@@ -122,6 +128,16 @@ const response = page.response;
 ```
 
 ## Advanced
+
+### Subpackage Exports
+
+This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+```typescript
+import { UsersClient } from '@fern/pagination-custom/users';
+
+const client = new UsersClient({...});
+```
 
 ### Additional Headers
 
@@ -137,7 +153,7 @@ const client = new SeedPaginationClient({
     }
 });
 
-const response = await client.users.listUsernamesCustom(..., {
+const response = await client.users.listWithCustomPager(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -149,7 +165,7 @@ const response = await client.users.listUsernamesCustom(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.users.listUsernamesCustom(..., {
+const response = await client.users.listWithCustomPager(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -171,7 +187,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.users.listUsernamesCustom(..., {
+const response = await client.users.listWithCustomPager(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -181,7 +197,7 @@ const response = await client.users.listUsernamesCustom(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.users.listUsernamesCustom(..., {
+const response = await client.users.listWithCustomPager(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -192,7 +208,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.users.listUsernamesCustom(..., {
+const response = await client.users.listWithCustomPager(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -204,7 +220,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.users.listUsernamesCustom(...).withRawResponse();
+const { data, rawResponse } = await client.users.listWithCustomPager(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -273,6 +289,26 @@ const logger: logging.ILogger = {
 </details>
 
 
+### Custom Fetch
+
+The SDK provides a low-level `fetch` method for making custom HTTP requests while still
+benefiting from SDK-level configuration like authentication, retries, timeouts, and logging.
+This is useful for calling API endpoints not yet supported in the SDK.
+
+```typescript
+const response = await client.fetch("/v1/custom/endpoint", {
+    method: "GET",
+}, {
+    timeoutInSeconds: 30,
+    maxRetries: 3,
+    headers: {
+        "X-Custom-Header": "custom-value",
+    },
+});
+
+const data = await response.json();
+```
+
 ### Runtime Compatibility
 
 
@@ -287,19 +323,6 @@ The SDK works in the following runtimes:
 - Bun 1.0+
 - React Native
 
-### Customizing Fetch Client
-
-The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
-unsupported environment, this provides a way for you to break glass and ensure the SDK works.
-
-```typescript
-import { SeedPaginationClient } from "@fern/pagination-custom";
-
-const client = new SeedPaginationClient({
-    ...
-    fetcher: // provide your implementation here
-});
-```
 
 ## Contributing
 

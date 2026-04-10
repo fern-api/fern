@@ -1,8 +1,9 @@
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
-import { Audiences } from "../commons";
+import { Audiences } from "../commons/index.js";
 import {
+    AgentsConfig,
     AiChatConfig,
     AnnouncementConfig,
     Availability,
@@ -14,7 +15,7 @@ import {
     Target,
     ThemeConfig,
     VersionAvailability
-} from "./schemas";
+} from "./schemas/index.js";
 
 export interface ParsedCustomPageAction {
     title: string;
@@ -69,6 +70,7 @@ export interface ParsedDocsConfiguration {
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
     settings: CjsFdrSdk.docs.v1.commons.DocsSettingsConfig | undefined;
+    context7File: AbsoluteFilePath | undefined;
     languages: Language[] | undefined;
     defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
     analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
@@ -83,6 +85,8 @@ export interface ParsedDocsConfiguration {
     js: JavascriptConfig | undefined;
 
     aiChatConfig: AiChatConfig | undefined;
+
+    agents: AgentsConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
 
@@ -109,10 +113,15 @@ export interface DocsColorsConfiguration {
 }
 
 export interface ParsedMetadataConfig
-    extends Omit<CjsFdrSdk.docs.v1.commons.MetadataConfig, "og:image" | "og:logo" | "twitter:image"> {
+    extends Omit<
+        CjsFdrSdk.docs.v1.commons.MetadataConfig,
+        "og:image" | "og:logo" | "twitter:image" | "og:background-image"
+    > {
     "og:image": FilepathOrUrl | undefined;
     "og:logo": FilepathOrUrl | undefined;
     "twitter:image": FilepathOrUrl | undefined;
+    "og:dynamic": boolean | undefined;
+    "og:background-image": FilepathOrUrl | undefined;
 }
 
 export type ColorConfiguration =
@@ -298,7 +307,6 @@ export type DocsNavigationItem =
     | DocsNavigationItem.Page
     | DocsNavigationItem.Section
     | DocsNavigationItem.ApiSection
-    | DocsNavigationItem.PythonDocsSection
     | DocsNavigationItem.LibrarySection
     | DocsNavigationItem.Link
     | DocsNavigationItem.Changelog;
@@ -324,7 +332,9 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         contents: DocsNavigationItem[];
-        collapsed: boolean | undefined;
+        collapsed: boolean | "open-by-default" | undefined;
+        collapsible: boolean | undefined;
+        collapsedByDefault: boolean | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
@@ -348,7 +358,7 @@ export declare namespace DocsNavigationItem {
         postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
-        collapsed: boolean | undefined;
+        collapsed: boolean | "open-by-default" | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
@@ -374,16 +384,6 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         hidden: boolean | undefined;
-        slug: string | undefined;
-    }
-
-    export interface PythonDocsSection {
-        type: "pythonDocsSection";
-        /** GitHub URL to the repository containing the Python library source code */
-        githubUrl: string;
-        /** Navigation title. Defaults to "Python Reference". */
-        title: string | undefined;
-        /** URL slug. Defaults to "python-docs". */
         slug: string | undefined;
     }
 
@@ -429,6 +429,9 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
+        collapsed: boolean | "open-by-default" | undefined;
+        collapsible: boolean | undefined;
+        collapsedByDefault: boolean | undefined;
         availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }
@@ -461,6 +464,17 @@ export declare namespace ParsedApiReferenceLayoutItem {
         playground: PlaygroundSettings | undefined;
     }
 
+    export interface Operation
+        extends CjsFdrSdk.navigation.v1.WithPermissions,
+            CjsFdrSdk.navigation.latest.WithFeatureFlags {
+        type: "operation";
+        operation: string; // GraphQL operation locator (e.g., "QUERY account" or "QUERY namespace.createUser")
+        title: string | undefined;
+        slug: string | undefined;
+        hidden: boolean | undefined;
+        availability: Availability | undefined;
+    }
+
     export interface Item {
         type: "item";
         value: string; // this could be either an endpoint or subpackage.
@@ -472,6 +486,7 @@ export type ParsedApiReferenceLayoutItem =
     | ParsedApiReferenceLayoutItem.Section
     | ParsedApiReferenceLayoutItem.Package
     | ParsedApiReferenceLayoutItem.Endpoint
+    | ParsedApiReferenceLayoutItem.Operation
     | DocsNavigationItem.Page
     | DocsNavigationItem.Link;
 

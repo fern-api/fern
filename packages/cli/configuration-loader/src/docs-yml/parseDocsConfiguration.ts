@@ -7,10 +7,10 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
-import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { convertColorsConfiguration } from "./convertColorsConfiguration";
-import { getAllPages, loadAllPages } from "./getAllPages";
-import { buildNavigationForDirectory, getFrontmatterTitle, nameToSlug, nameToTitle } from "./navigationUtils";
+import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
+import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
+import { getAllPages, loadAllPages } from "./getAllPages.js";
+import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -83,6 +83,8 @@ export async function parseDocsConfiguration({
         aiChat,
         aiSearch,
 
+        agents,
+
         pageActions,
 
         experimental
@@ -129,14 +131,33 @@ export async function parseDocsConfiguration({
 
     const metadataPromise = convertMetadata(rawMetadata, absoluteFilepathToDocsConfig);
 
-    const [navigation, pages, typography, css, js, metadata] = await Promise.all([
+    const context7FilePromise = parseContext7File({
+        rawPath: rawDocsConfiguration.integrations?.context7,
+        absoluteFilepathToDocsConfig,
+        context
+    });
+
+    const [navigation, pages, typography, css, js, metadata, context7File] = await Promise.all([
         convertedNavigationPromise,
         pagesPromise,
         typographyPromise,
         cssPromise,
         jsPromise,
-        metadataPromise
+        metadataPromise,
+        context7FilePromise
     ]);
+
+    // Validate incompatible tabs configuration: sidebar placement + center alignment
+    const resolvedTheme = convertThemeConfig(rawDocsConfiguration.theme);
+    const tabsObj =
+        resolvedTheme?.tabs != null && typeof resolvedTheme.tabs === "object" ? resolvedTheme.tabs : undefined;
+    const effectivePlacement = tabsObj?.placement ?? layout?.tabsPlacement ?? "sidebar";
+    const effectiveAlignment = tabsObj?.alignment ?? "left";
+    if (effectivePlacement === "sidebar" && effectiveAlignment === "center") {
+        context.logger.warn(
+            "Tabs alignment 'center' is not supported when tabs placement is 'sidebar'. The alignment will be ignored."
+        );
+    }
 
     return {
         title,
@@ -172,9 +193,10 @@ export async function parseDocsConfiguration({
         backgroundImage,
         colors: convertColorsConfiguration(colors, context),
         typography,
-        layout: convertLayoutConfig(layout),
+        layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
-        theme: convertThemeConfig(rawDocsConfiguration.theme),
+        context7File,
+        theme: resolvedTheme,
         analyticsConfig: {
             ...rawDocsConfiguration.analytics,
             intercom: rawDocsConfiguration.analytics?.intercom
@@ -218,6 +240,8 @@ export async function parseDocsConfiguration({
         js,
 
         aiChatConfig: aiSearch ?? aiChat,
+
+        agents,
 
         pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
 
@@ -395,9 +419,22 @@ function convertThemeConfig(
         return undefined;
     }
 
+    // theme.tabs can be a string ("default"|"bubble") or an object { style?, alignment?, placement? }
+    let resolvedTabs: docsYml.RawSchemas.TabsThemeConfig | undefined;
+    if (theme.tabs != null && typeof theme.tabs === "object") {
+        const tabsObj = theme.tabs as docsYml.RawSchemas.TabsThemeObjectConfig;
+        resolvedTabs = {
+            style: tabsObj.style ?? "default",
+            alignment: tabsObj.alignment,
+            placement: tabsObj.placement
+        };
+    } else {
+        resolvedTabs = (theme.tabs as docsYml.RawSchemas.TabsThemeStyle | undefined) ?? "default";
+    }
+
     return {
         sidebar: theme.sidebar ?? "default",
-        tabs: theme.tabs ?? "default",
+        tabs: resolvedTabs,
         body: theme.body ?? "default",
         pageActions: theme.pageActions ?? "default",
         footerNav: theme.footerNav ?? "default",
@@ -427,11 +464,61 @@ function convertSettingsConfig(
     };
 }
 
-function convertLayoutConfig(
-    layout: docsYml.RawSchemas.LayoutConfig | undefined
-): docsYml.ParsedDocsConfiguration["layout"] {
-    if (layout == null) {
+async function parseContext7File({
+    rawPath,
+    absoluteFilepathToDocsConfig,
+    context
+}: {
+    rawPath: string | undefined;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<AbsoluteFilePath | undefined> {
+    if (rawPath == null) {
         return undefined;
+    }
+
+    const absolutePath = resolveFilepath(rawPath, absoluteFilepathToDocsConfig);
+    const contents = await readFile(absolutePath, "utf8");
+
+    try {
+        JSON.parse(contents);
+    } catch (error) {
+        context.failAndThrow(
+            `Invalid JSON in Context7 config file: ${rawPath}`,
+            error instanceof Error ? error.message : String(error)
+        );
+    }
+
+    return absolutePath;
+}
+
+function convertLayoutConfig(
+    layout: docsYml.RawSchemas.LayoutConfig | undefined,
+    themeTabsAlignment: string | undefined,
+    themeTabsPlacement: string | undefined
+): docsYml.ParsedDocsConfiguration["layout"] {
+    if (layout == null && themeTabsAlignment == null && themeTabsPlacement == null) {
+        return undefined;
+    }
+
+    // tabsAlignment is resolved from theme.tabs.alignment, not layout.
+    // Cast needed until the fern-platform companion PR merges and the SDK is updated.
+    const resolvedTabsAlignment = themeTabsAlignment === "center" ? "CENTER" : "LEFT";
+
+    // tabsPlacement: theme.tabs.placement overrides layout.tabs-placement.
+    const resolvedTabsPlacement =
+        themeTabsPlacement === "header"
+            ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
+            : themeTabsPlacement === "sidebar"
+              ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar
+              : undefined;
+
+    if (layout == null) {
+        // No layout section, but theme.tabs properties are set — return minimal layout.
+        return {
+            ...(resolvedTabsPlacement != null ? { tabsPlacement: resolvedTabsPlacement } : {}),
+            tabsAlignment: resolvedTabsAlignment
+        } as unknown as docsYml.ParsedDocsConfiguration["layout"];
     }
 
     return {
@@ -452,9 +539,10 @@ function convertLayoutConfig(
                 ? CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Header
                 : CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Sidebar,
         tabsPlacement:
-            layout.tabsPlacement === "header"
+            resolvedTabsPlacement ??
+            (layout.tabsPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
-                : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar,
+                : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar),
         contentAlignment:
             layout.contentAlignment === "left"
                 ? CjsFdrSdk.docs.v1.commons.ContentAlignment.Left
@@ -465,8 +553,9 @@ function convertLayoutConfig(
                 : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
-        hideFeedback: layout.hideFeedback ?? false
-    };
+        hideFeedback: layout.hideFeedback ?? false,
+        tabsAlignment: resolvedTabsAlignment
+    } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
 
 function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.commons.SizeConfig | undefined {
@@ -1007,6 +1096,14 @@ async function expandFolderConfiguration({
         context.failAndThrow(`Folder not found: ${rawConfig.folder}`);
     }
 
+    validateCollapsibleConfig({
+        context,
+        sectionTitle: rawConfig.folder,
+        collapsed: rawConfig.collapsed ?? undefined,
+        collapsible: rawConfig.collapsible ?? undefined,
+        collapsedByDefault: rawConfig.collapsedByDefault ?? undefined
+    });
+
     const effectiveTitleSource = rawConfig.titleSource ?? folderTitleSource;
 
     const contents = await buildNavigationForDirectory({
@@ -1027,7 +1124,7 @@ async function expandFolderConfiguration({
     const folderName = path.basename(folderPath);
     const indexFrontmatterTitle =
         effectiveTitleSource === "frontmatter" && indexPage?.type === "page"
-            ? await getFrontmatterTitle({ absolutePath: indexPage.absolutePath })
+            ? (await getFrontmatterMetadata({ absolutePath: indexPage.absolutePath })).title
             : undefined;
     const title = rawConfig.title ?? indexFrontmatterTitle ?? nameToTitle({ name: folderName });
     const slug = rawConfig.slug ?? nameToSlug({ name: folderName });
@@ -1039,6 +1136,8 @@ async function expandFolderConfiguration({
         contents: filteredContents,
         slug,
         collapsed: rawConfig.collapsed ?? undefined,
+        collapsible: rawConfig.collapsible ?? undefined,
+        collapsedByDefault: rawConfig.collapsedByDefault ?? undefined,
         hidden: rawConfig.hidden ?? undefined,
         skipUrlSlug: rawConfig.skipSlug ?? false,
         overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
@@ -1066,6 +1165,13 @@ async function convertNavigationItem({
         return parsePageConfig(rawConfig, absolutePathToConfig);
     }
     if (isRawSectionConfig(rawConfig)) {
+        validateCollapsibleConfig({
+            context,
+            sectionTitle: rawConfig.section,
+            collapsed: rawConfig.collapsed ?? undefined,
+            collapsible: rawConfig.collapsible ?? undefined,
+            collapsedByDefault: rawConfig.collapsedByDefault ?? undefined
+        });
         return {
             type: "section",
             title: rawConfig.section,
@@ -1083,6 +1189,8 @@ async function convertNavigationItem({
             ),
             slug: rawConfig.slug ?? undefined,
             collapsed: rawConfig.collapsed ?? undefined,
+            collapsible: rawConfig.collapsible ?? undefined,
+            collapsedByDefault: rawConfig.collapsedByDefault ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
             skipUrlSlug: rawConfig.skipSlug ?? false,
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
@@ -1112,7 +1220,8 @@ async function convertNavigationItem({
                     : undefined,
             postman: rawConfig.postman,
             navigation:
-                rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
+                rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig, context)) ??
+                [],
             overviewAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
             collapsed: rawConfig.collapsed ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
@@ -1157,14 +1266,6 @@ async function convertNavigationItem({
             context,
             folderTitleSource
         });
-    }
-    if (isRawPythonDocsSectionConfig(rawConfig)) {
-        return {
-            type: "pythonDocsSection",
-            githubUrl: rawConfig.pythonDocs,
-            title: rawConfig.title ?? undefined,
-            slug: rawConfig.slug ?? undefined
-        };
     }
     if (isRawLibraryReferenceConfig(rawConfig)) {
         return {
@@ -1212,7 +1313,8 @@ function parsePageConfig(
 
 function parseApiReferenceLayoutItem(
     item: docsYml.RawSchemas.ApiReferenceLayoutItem,
-    absolutePathToConfig: AbsoluteFilePath
+    absolutePathToConfig: AbsoluteFilePath,
+    context?: TaskContext
 ): docsYml.ParsedApiReferenceLayoutItem[] {
     if (typeof item === "string") {
         return [{ type: "item", value: item }];
@@ -1231,6 +1333,15 @@ function parseApiReferenceLayoutItem(
             }
         ];
     } else if (isRawApiRefSectionConfiguration(item)) {
+        if (context != null) {
+            validateCollapsibleConfig({
+                context,
+                sectionTitle: item.section,
+                collapsed: item.collapsed ?? undefined,
+                collapsible: item.collapsible ?? undefined,
+                collapsedByDefault: item.collapsedByDefault ?? undefined
+            });
+        }
         return [
             {
                 type: "section",
@@ -1238,10 +1349,15 @@ function parseApiReferenceLayoutItem(
                 referencedSubpackages: item.referencedPackages ?? [],
                 overviewAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
                 contents:
-                    item.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
+                    item.contents?.flatMap((value) =>
+                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
+                    ) ?? [],
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
+                collapsed: item.collapsed ?? undefined,
+                collapsible: item.collapsible ?? undefined,
+                collapsedByDefault: item.collapsedByDefault ?? undefined,
                 availability: item.availability,
                 icon: resolveIconPath(item.icon, absolutePathToConfig),
                 playground: item.playground,
@@ -1266,6 +1382,20 @@ function parseApiReferenceLayoutItem(
                 featureFlags: convertFeatureFlag(item.featureFlag)
             }
         ];
+    } else if (isRawApiRefOperationConfiguration(item)) {
+        return [
+            {
+                type: "operation",
+                operation: item.operation,
+                title: item.title,
+                slug: item.slug,
+                hidden: item.hidden,
+                availability: item.availability,
+                viewers: parseRoles(item.viewers),
+                orphaned: item.orphaned,
+                featureFlags: convertFeatureFlag(item.featureFlag)
+            }
+        ];
     }
     return Object.entries(item).map(([key, value]): docsYml.ParsedApiReferenceLayoutItem.Package => {
         if (isRawApiRefPackageConfiguration(value)) {
@@ -1275,7 +1405,9 @@ function parseApiReferenceLayoutItem(
                 package: key,
                 overviewAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
                 contents:
-                    value.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
+                    value.contents?.flatMap((value) =>
+                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
+                    ) ?? [],
                 slug: value.slug,
                 hidden: value.hidden,
                 skipUrlSlug: value.skipSlug,
@@ -1292,7 +1424,7 @@ function parseApiReferenceLayoutItem(
             title: undefined,
             package: key,
             overviewAbsolutePath: undefined,
-            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)),
+            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig, context)),
             hidden: false,
             slug: undefined,
             skipUrlSlug: false,
@@ -1353,10 +1485,6 @@ function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConf
     return isPlainObject(item) && typeof item.folder === "string";
 }
 
-function isRawPythonDocsSectionConfig(item: unknown): item is docsYml.RawSchemas.PythonDocsConfiguration {
-    return isPlainObject(item) && typeof item.pythonDocs === "string";
-}
-
 function isRawLibraryReferenceConfig(item: unknown): item is docsYml.RawSchemas.LibraryReferenceConfiguration {
     return isPlainObject(item) && typeof item.library === "string";
 }
@@ -1398,6 +1526,12 @@ function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSche
 
 function isRawApiRefEndpointConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceEndpointConfiguration {
     return isPlainObject(item) && typeof item.endpoint === "string";
+}
+
+function isRawApiRefOperationConfiguration(
+    item: unknown
+): item is docsYml.RawSchemas.ApiReferenceOperationConfiguration {
+    return isPlainObject(item) && typeof item.operation === "string";
 }
 
 function isRawApiRefPackageConfiguration(
@@ -1569,6 +1703,8 @@ async function convertMetadata(
         "twitter:site": metadata.twitterSite,
         "twitter:url": metadata.twitterUrl,
         "twitter:card": metadata.twitterCard,
+        "og:dynamic": metadata.ogDynamic,
+        "og:background-image": await convertFilepathOrUrl(metadata.ogBackgroundImage, absoluteFilepathToDocsConfig),
         nofollow: undefined,
         noindex: undefined,
         canonicalHost: metadata.canonicalHost
@@ -1627,4 +1763,32 @@ export function parseAudiences(raw: string | string[] | undefined): string[] | u
     }
 
     return raw;
+}
+
+function validateCollapsibleConfig({
+    context,
+    sectionTitle,
+    collapsed,
+    collapsible,
+    collapsedByDefault
+}: {
+    context: TaskContext;
+    sectionTitle: string;
+    collapsed: boolean | "open-by-default" | undefined;
+    collapsible: boolean | undefined;
+    collapsedByDefault: boolean | undefined;
+}): void {
+    if (collapsible != null && collapsed != null) {
+        context.failAndThrow(
+            `Section "${sectionTitle}": cannot use both "collapsible" and the deprecated "collapsed" property. ` +
+                `Please use "collapsible" and "collapsed-by-default" instead.`
+        );
+    }
+
+    if (collapsedByDefault != null && collapsible !== true) {
+        context.failAndThrow(
+            `Section "${sectionTitle}": "collapsed-by-default" requires "collapsible: true". ` +
+                `"collapsed-by-default" has no effect on a non-collapsible section.`
+        );
+    }
 }

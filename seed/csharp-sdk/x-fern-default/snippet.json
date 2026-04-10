@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/test/{region}/resource",
+                "method": "GET",
+                "identifier_override": "endpoint_.test_get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"API_VERSION\");\nawait client.TestGetAsync(new TestGetRequest { Region = \"region\" });\n"
+            }
+        }
+    ]
+}

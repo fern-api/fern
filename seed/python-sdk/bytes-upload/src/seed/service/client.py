@@ -55,6 +55,48 @@ class ServiceClient:
         _response = self._raw_client.upload(request=request, request_options=request_options)
         return _response.data
 
+    def upload_with_query_params(
+        self,
+        *,
+        model: str,
+        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
+        language: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        model : str
+            The model to use for processing
+
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
+
+        language : typing.Optional[str]
+            The language of the content
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedBytesUpload
+
+        client = SeedBytesUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.upload_with_query_params(
+            model="nova-2",
+        )
+        """
+        _response = self._raw_client.upload_with_query_params(
+            model=model, request=request, language=language, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -107,4 +149,54 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.upload(request=request, request_options=request_options)
+        return _response.data
+
+    async def upload_with_query_params(
+        self,
+        *,
+        model: str,
+        request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]],
+        language: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Parameters
+        ----------
+        model : str
+            The model to use for processing
+
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
+
+        language : typing.Optional[str]
+            The language of the content
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedBytesUpload
+
+        client = AsyncSeedBytesUpload(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.service.upload_with_query_params(
+                model="nova-2",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.upload_with_query_params(
+            model=model, request=request, language=language, request_options=request_options
+        )
         return _response.data

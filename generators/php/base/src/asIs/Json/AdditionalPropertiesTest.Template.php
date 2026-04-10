@@ -3,6 +3,7 @@
 namespace <%= namespace%>;
 
 use PHPUnit\Framework\TestCase;
+use <%= coreNamespace%>\Json\JsonEncoder;
 use <%= coreNamespace%>\Json\JsonProperty;
 use <%= coreNamespace%>\Json\JsonSerializableType;
 
@@ -55,13 +56,12 @@ class AdditionalPropertiesTest extends TestCase
 {
     public function testExtraProperties(): void
     {
-        $expectedJson = json_encode(
+        $expectedJson = JsonEncoder::encode(
             [
                 'name' => 'john.doe',
                 'email' => 'john.doe@example.com',
                 'age' => 42
             ],
-            JSON_THROW_ON_ERROR
         );
 
         $person = Person::fromJson($expectedJson);

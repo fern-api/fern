@@ -4,14 +4,14 @@ namespace SeedPublicObject;
 
 public partial class ServiceClient : IServiceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ServiceClient(RawClient client)
     {
         _client = client;
     }
 
-    private async Task<WithRawResponse<System.IO.Stream>> GetAsyncCore(
+    private async Task<WithRawResponse<global::System.IO.Stream>> GetAsyncCore(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -26,7 +26,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/helloworld.txt",
                     Headers = _headers,
@@ -38,7 +37,7 @@ public partial class ServiceClient : IServiceClient
         if (response.StatusCode is >= 200 and < 400)
         {
             var stream = await response.Raw.Content.ReadAsStreamAsync();
-            return new WithRawResponse<System.IO.Stream>()
+            return new WithRawResponse<global::System.IO.Stream>()
             {
                 Data = stream,
                 RawResponse = new RawResponse()
@@ -50,7 +49,9 @@ public partial class ServiceClient : IServiceClient
             };
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPublicObjectApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -59,11 +60,13 @@ public partial class ServiceClient : IServiceClient
         }
     }
 
-    public WithRawResponseTask<System.IO.Stream> GetAsync(
+    public WithRawResponseTask<global::System.IO.Stream> GetAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<System.IO.Stream>(GetAsyncCore(options, cancellationToken));
+        return new WithRawResponseTask<global::System.IO.Stream>(
+            GetAsyncCore(options, cancellationToken)
+        );
     }
 }

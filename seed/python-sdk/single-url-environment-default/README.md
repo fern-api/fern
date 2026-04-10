@@ -10,6 +10,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -37,9 +38,23 @@ Instantiate and use the client with the following:
 from seed import SeedSingleUrlEnvironmentDefault
 
 client = SeedSingleUrlEnvironmentDefault(
-    token="YOUR_TOKEN",
+    token="<token>",
 )
+
 client.dummy.get_dummy()
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from seed import SeedSingleUrlEnvironmentDefault
+from seed.environment import SeedSingleUrlEnvironmentDefaultEnvironment
+
+client = SeedSingleUrlEnvironmentDefault(
+    environment=SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION,
+)
 ```
 
 ## Async Client
@@ -52,7 +67,7 @@ import asyncio
 from seed import AsyncSeedSingleUrlEnvironmentDefault
 
 client = AsyncSeedSingleUrlEnvironmentDefault(
-    token="YOUR_TOKEN",
+    token="<token>",
 )
 
 
@@ -88,9 +103,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedSingleUrlEnvironmentDefault
 
-client = SeedSingleUrlEnvironmentDefault(
-    ...,
-)
+client = SeedSingleUrlEnvironmentDefault(...)
 response = client.dummy.with_raw_response.get_dummy()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -122,14 +135,9 @@ client.dummy.get_dummy(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedSingleUrlEnvironmentDefault
 
-client = SeedSingleUrlEnvironmentDefault(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedSingleUrlEnvironmentDefault(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.dummy.get_dummy(request_options={

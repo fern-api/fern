@@ -17,9 +17,9 @@ import { pipeline } from "stream/promises";
 import { extract as extractTar } from "tar";
 import tmp from "tmp-promise";
 
-import { OSSWorkspace } from "../OSSWorkspace";
-import { LoadAPIWorkspace } from "./loadAPIWorkspace";
-import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result";
+import { OSSWorkspace } from "../OSSWorkspace.js";
+import { LoadAPIWorkspace } from "./loadAPIWorkspace.js";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
 
 const FIDDLE = createFiddleService();
 

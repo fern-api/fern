@@ -120,7 +120,11 @@
           "Animal": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "animalType",
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "animalType",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -226,7 +230,11 @@
           "Payment": {
             "availability": undefined,
             "base-properties": {},
-            "discriminant": "paymentMethod",
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "paymentMethod",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -353,7 +361,9 @@ types:
     source:
       openapi: ../openapi.yml
   Animal:
-    discriminant: animalType
+    discriminant:
+      value: animalType
+      context: data
     base-properties: {}
     union:
       dog: Dog
@@ -410,7 +420,9 @@ types:
     source:
       openapi: ../openapi.yml
   Payment:
-    discriminant: paymentMethod
+    discriminant:
+      value: paymentMethod
+      context: data
     base-properties: {}
     union:
       credit_card: CreditCardPayment

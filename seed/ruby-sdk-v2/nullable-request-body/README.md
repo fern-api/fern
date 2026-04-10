@@ -28,12 +28,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.test_group.test_method_name(
-  path_param: 'path_param',
+  path_param: "path_param",
   body: {}
-);
+)
 ```
 
 ## Environments

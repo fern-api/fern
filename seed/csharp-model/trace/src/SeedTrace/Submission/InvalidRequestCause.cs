@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -78,7 +78,9 @@ public record InvalidRequestCause
     public SeedTrace.SubmissionIdNotFound AsSubmissionIdNotFound() =>
         IsSubmissionIdNotFound
             ? (SeedTrace.SubmissionIdNotFound)Value!
-            : throw new System.Exception("InvalidRequestCause.Type is not 'submissionIdNotFound'");
+            : throw new global::System.Exception(
+                "InvalidRequestCause.Type is not 'submissionIdNotFound'"
+            );
 
     /// <summary>
     /// Returns the value as a <see cref="SeedTrace.CustomTestCasesUnsupported"/> if <see cref="Type"/> is 'customTestCasesUnsupported', otherwise throws an exception.
@@ -87,7 +89,7 @@ public record InvalidRequestCause
     public SeedTrace.CustomTestCasesUnsupported AsCustomTestCasesUnsupported() =>
         IsCustomTestCasesUnsupported
             ? (SeedTrace.CustomTestCasesUnsupported)Value!
-            : throw new System.Exception(
+            : throw new global::System.Exception(
                 "InvalidRequestCause.Type is not 'customTestCasesUnsupported'"
             );
 
@@ -98,7 +100,9 @@ public record InvalidRequestCause
     public SeedTrace.UnexpectedLanguageError AsUnexpectedLanguage() =>
         IsUnexpectedLanguage
             ? (SeedTrace.UnexpectedLanguageError)Value!
-            : throw new System.Exception("InvalidRequestCause.Type is not 'unexpectedLanguage'");
+            : throw new global::System.Exception(
+                "InvalidRequestCause.Type is not 'unexpectedLanguage'"
+            );
 
     public T Match<T>(
         Func<SeedTrace.SubmissionIdNotFound, T> onSubmissionIdNotFound,
@@ -201,12 +205,12 @@ public record InvalidRequestCause
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<InvalidRequestCause>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(InvalidRequestCause).IsAssignableFrom(typeToConvert);
 
         public override InvalidRequestCause Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -231,23 +235,33 @@ public record InvalidRequestCause
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "submissionIdNotFound" => json.Deserialize<SeedTrace.SubmissionIdNotFound?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.SubmissionIdNotFound"
-                    ),
+                "submissionIdNotFound" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.SubmissionIdNotFound?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.SubmissionIdNotFound"
+                        ),
                 "customTestCasesUnsupported" =>
-                    json.Deserialize<SeedTrace.CustomTestCasesUnsupported?>(options)
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.CustomTestCasesUnsupported?>(
+                        options
+                    )
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.CustomTestCasesUnsupported"
                         ),
-                "unexpectedLanguage" => json.Deserialize<SeedTrace.UnexpectedLanguageError?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.UnexpectedLanguageError"
-                    ),
+                "unexpectedLanguage" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.UnexpectedLanguageError?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.UnexpectedLanguageError"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new InvalidRequestCause(discriminator, value);
@@ -272,6 +286,27 @@ public record InvalidRequestCause
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override InvalidRequestCause ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new InvalidRequestCause(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            InvalidRequestCause value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

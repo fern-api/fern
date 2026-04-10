@@ -8,7 +8,7 @@ import {
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import { PlaygroundConfig } from "../DocsDefinitionResolver";
+import { PlaygroundConfig } from "../DocsDefinitionResolver.js";
 
 const EMPTY_SNIPPET_HOLDER = new SDKSnippetHolder({
     snippetsBySdkId: {},

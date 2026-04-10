@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>$client-&gt;dummy-&gt;getDummy() -> string</code></summary>
+<details><summary><code>$client-&gt;dummy-&gt;getDummy() -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -24,3 +24,4 @@ $client->dummy->getDummy();
 </dd>
 </dl>
 </details>
+

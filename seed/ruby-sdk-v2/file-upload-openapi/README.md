@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
-client.file_upload_example.upload_file();
+client.file_upload_example.upload_file
 ```
 
 ## Environments

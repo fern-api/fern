@@ -1,7 +1,7 @@
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import urlJoin from "url-join";
 
-export function getFullPathForEndpoint(endpoint: HttpEndpoint): string {
+export function getFullPathForEndpoint(endpoint: FernIr.HttpEndpoint): string {
     let url = "";
     if (endpoint.fullPath.head.length > 0) {
         url = urlJoin(url, endpoint.fullPath.head);

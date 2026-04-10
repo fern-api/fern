@@ -152,7 +152,13 @@ function getHeaders(args) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         const newHeaders = new Headers();
-        newHeaders.set("Accept", args.responseType === "json" ? "application/json" : args.responseType === "text" ? "text/plain" : "*/*");
+        newHeaders.set("Accept", args.responseType === "json"
+            ? "application/json"
+            : args.responseType === "text"
+                ? "text/plain"
+                : args.responseType === "sse"
+                    ? "text/event-stream"
+                    : "*/*");
         if (args.body !== undefined && args.contentType != null) {
             newHeaders.set("Content-Type", args.contentType);
         }
@@ -196,7 +202,7 @@ export function fetcherImpl(args) {
         }
         try {
             const response = yield requestWithRetries(() => __awaiter(this, void 0, void 0, function* () {
-                return makeRequest(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex);
+                return makeRequest(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex, args.responseType === "streaming" || args.responseType === "sse");
             }), args.maxRetries);
             if (response.status >= 200 && response.status < 400) {
                 if (logger.isDebug()) {
@@ -251,6 +257,7 @@ export function fetcherImpl(args) {
                     error: {
                         reason: "unknown",
                         errorMessage: "The user aborted a request",
+                        cause: error,
                     },
                     rawResponse: abortRawResponse,
                 };
@@ -268,6 +275,7 @@ export function fetcherImpl(args) {
                     ok: false,
                     error: {
                         reason: "timeout",
+                        cause: error,
                     },
                     rawResponse: abortRawResponse,
                 };
@@ -286,6 +294,7 @@ export function fetcherImpl(args) {
                     error: {
                         reason: "unknown",
                         errorMessage: error.message,
+                        cause: error,
                     },
                     rawResponse: unknownRawResponse,
                 };
@@ -303,6 +312,7 @@ export function fetcherImpl(args) {
                 error: {
                     reason: "unknown",
                     errorMessage: toJson(error),
+                    cause: error,
                 },
                 rawResponse: unknownRawResponse,
             };

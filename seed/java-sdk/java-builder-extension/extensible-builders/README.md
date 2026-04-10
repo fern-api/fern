@@ -29,7 +29,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:java-builder-extension'
+  implementation 'com.fern:java-builder-extension:0.0.1'
 }
 ```
 
@@ -102,11 +102,11 @@ BaseClient client = BaseClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.builderExtension.core.SeedBuilderExtensionApiException;
+import com.seed.builderExtension.core.BaseClientApiException;
 
 try{
     client.service().hello(...);
-} catch (SeedBuilderExtensionApiException e){
+} catch (BaseClientApiException e){
     // Do something with the API exception...
 }
 ```
@@ -211,7 +211,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-HelloHttpResponse response = client.service().withRawResponse().hello(...);
+BaseClientHttpResponse response = client.service().withRawResponse().hello(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

@@ -1,6 +1,6 @@
 import type { schemas } from "@fern-api/config";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
-import type { ApiSpec } from "./ApiSpec";
+import type { ApiSpec } from "./ApiSpec.js";
 
 /**
  * An OpenRPC specification for JSON-RPC APIs.
@@ -9,8 +9,8 @@ export interface OpenRpcSpec {
     /** Path to the OpenRPC specification file */
     openrpc: AbsoluteFilePath;
 
-    /** Path to the overrides file */
-    overrides?: AbsoluteFilePath;
+    /** Path to the overrides file(s) */
+    overrides?: AbsoluteFilePath | AbsoluteFilePath[];
 
     /** OpenRPC-specific settings */
     settings?: schemas.OpenRpcSettingsSchema;

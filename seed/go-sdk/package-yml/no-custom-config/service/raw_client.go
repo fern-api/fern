@@ -4,10 +4,11 @@ package service
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/package-yml/fern/core"
 	internal "github.com/package-yml/fern/internal"
 	option "github.com/package-yml/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -32,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 func (r *RawClient) Nop(
 	ctx context.Context,
 	id string,
-	nestedId string,
+	nestedID string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +45,7 @@ func (r *RawClient) Nop(
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v//%v",
 		id,
-		nestedId,
+		nestedID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

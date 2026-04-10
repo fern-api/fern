@@ -2,16 +2,19 @@ import { docsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, moveFolder, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-
-import { getAbsolutePathToDocsFolder, getAbsolutePathToDocsYaml, loadRawDocsConfiguration } from "./docs-config";
-import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig";
+import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig.js";
+import {
+    getAbsolutePathToDocsFolder,
+    getAbsolutePathToDocsYaml,
+    loadRawDocsConfiguration
+} from "./docs-config/index.js";
+import { PathModificationStrategy } from "./generators-configuration/convertLegacyGeneratorsConfiguration.js";
 import {
     convertLegacyGeneratorsConfiguration,
     getAbsolutePathToGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
-} from "./generators-configuration";
-import { PathModificationStrategy } from "./generators-configuration/convertLegacyGeneratorsConfiguration";
-import { migrateDocsInstances } from "./migrateDocsInstances";
+} from "./generators-configuration/index.js";
+import { migrateDocsInstances } from "./migrateDocsInstances.js";
 
 const APIS_DIRECTORY = "apis";
 

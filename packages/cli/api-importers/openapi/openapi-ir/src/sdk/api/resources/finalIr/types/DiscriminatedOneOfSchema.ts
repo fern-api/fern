@@ -19,6 +19,18 @@ export interface DiscriminatedOneOfSchema
      * discriminantProperty is used as the wire format.
      */
     discriminantPropertyNameOverride: string | undefined;
+    /**
+     * Context for where the discriminator exists. Defaults to "data" for backward compatibility.
+     * "data" means the discriminator is within the union data itself.
+     * "protocol" means the discriminator is at the SSE protocol level.
+     */
+    discriminatorContext: FernOpenapiIr.DiscriminatorContext | undefined;
+    /**
+     * The discriminant value of the variant to use as the default when the discriminant
+     * field is missing from input. Populated when a variant's discriminant property has a
+     * default value matching its const value in the OpenAPI spec.
+     */
+    defaultDiscriminantValue: string | undefined;
     commonProperties: FernOpenapiIr.CommonProperty[];
     schemas: Record<string, FernOpenapiIr.Schema>;
 }

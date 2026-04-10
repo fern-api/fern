@@ -1,10 +1,10 @@
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedGenericAPISdkError, SdkContext } from "@fern-typescript/contexts";
+import { FileContext, GeneratedGenericAPISdkError } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, Scope, ts } from "ts-morph";
 
 export class GeneratedGenericAPISdkErrorImpl
-    extends AbstractErrorClassGenerator<SdkContext>
+    extends AbstractErrorClassGenerator<FileContext>
     implements GeneratedGenericAPISdkError
 {
     private static readonly STATUS_CODE_PROPERTY_NAME = "statusCode";
@@ -18,32 +18,35 @@ export class GeneratedGenericAPISdkErrorImpl
         GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_PROPERTY_NAME;
     private static readonly RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME =
         GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME;
+    private static readonly CAUSE_CONSTRUCTOR_PARAMETER_NAME = "cause";
 
     private static readonly BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
 
-    public writeToFile(context: SdkContext): void {
+    public writeToFile(context: FileContext): void {
         super.writeToSourceFile(context);
         this.writeBuildMessageFunctionToFile(context);
     }
 
     public build(
-        context: SdkContext,
+        context: FileContext,
         {
             message,
             statusCode,
             responseBody,
-            rawResponse
+            rawResponse,
+            cause
         }: {
             message: ts.Expression | undefined;
             statusCode: ts.Expression | undefined;
             responseBody: ts.Expression | undefined;
             rawResponse: ts.Expression | undefined;
+            cause?: ts.Expression | undefined;
         }
     ): ts.NewExpression {
         return ts.factory.createNewExpression(
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression(),
             undefined,
-            this.buildConstructorArguments({ message, statusCode, responseBody, rawResponse })
+            this.buildConstructorArguments({ message, statusCode, responseBody, rawResponse, cause })
         );
     }
 
@@ -51,12 +54,14 @@ export class GeneratedGenericAPISdkErrorImpl
         message,
         statusCode,
         responseBody,
-        rawResponse
+        rawResponse,
+        cause
     }: {
         message: ts.Expression | undefined;
         statusCode: ts.Expression | undefined;
         responseBody: ts.Expression | undefined;
         rawResponse: ts.Expression | undefined;
+        cause?: ts.Expression | undefined;
     }): ts.Expression[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
         if (message != null) {
@@ -91,11 +96,19 @@ export class GeneratedGenericAPISdkErrorImpl
                 )
             );
         }
+        if (cause != null) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME,
+                    cause
+                )
+            );
+        }
 
         return [ts.factory.createObjectLiteralExpression(properties, true)];
     }
 
-    protected getClassProperties(context: SdkContext): OptionalKind<PropertyDeclarationStructure>[] {
+    protected getClassProperties(context: FileContext): OptionalKind<PropertyDeclarationStructure>[] {
         return [
             {
                 name: GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME,
@@ -117,11 +130,18 @@ export class GeneratedGenericAPISdkErrorImpl
                 hasQuestionToken: true,
                 type: getTextOfTsNode(context.coreUtilities.fetcher.RawResponse.RawResponse._getReferenceToType()),
                 scope: Scope.Public
+            },
+            {
+                name: GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME,
+                isReadonly: true,
+                hasQuestionToken: true,
+                type: getTextOfTsKeyword(ts.SyntaxKind.UnknownKeyword),
+                scope: Scope.Public
             }
         ];
     }
 
-    protected getConstructorParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
+    protected getConstructorParameters(context: FileContext): OptionalKind<ParameterDeclarationStructure>[] {
         return [
             {
                 name: getTextOfTsNode(
@@ -152,6 +172,13 @@ export class GeneratedGenericAPISdkErrorImpl
                             undefined,
                             ts.factory.createIdentifier(
                                 GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME
+                            )
+                        ),
+                        ts.factory.createBindingElement(
+                            undefined,
+                            undefined,
+                            ts.factory.createIdentifier(
+                                GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
                             )
                         )
                     ])
@@ -189,6 +216,14 @@ export class GeneratedGenericAPISdkErrorImpl
                             ),
                             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                             context.coreUtilities.fetcher.RawResponse.RawResponse._getReferenceToType()
+                        ),
+                        ts.factory.createPropertySignature(
+                            undefined,
+                            ts.factory.createIdentifier(
+                                GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
                         )
                     ])
                 )
@@ -257,6 +292,33 @@ export class GeneratedGenericAPISdkErrorImpl
                     ts.factory.createToken(ts.SyntaxKind.EqualsToken),
                     ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME)
                 )
+            ),
+            ts.factory.createIfStatement(
+                ts.factory.createBinaryExpression(
+                    ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                    ts.factory.createNull()
+                ),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createThis(),
+                                    ts.factory.createIdentifier(
+                                        GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
+                                    )
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                ts.factory.createIdentifier(
+                                    GeneratedGenericAPISdkErrorImpl.CAUSE_CONSTRUCTOR_PARAMETER_NAME
+                                )
+                            )
+                        )
+                    ],
+                    true
+                ),
+                undefined
             )
         ];
     }
@@ -269,7 +331,7 @@ export class GeneratedGenericAPISdkErrorImpl
         return false;
     }
 
-    private writeBuildMessageFunctionToFile(context: SdkContext): void {
+    private writeBuildMessageFunctionToFile(context: FileContext): void {
         const LINES_VARIABLE_NAME = "lines";
 
         context.sourceFile.addFunction({

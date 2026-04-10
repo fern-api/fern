@@ -3,7 +3,7 @@ import { FieldDescriptorProto, FieldDescriptorProto_Type } from "@bufbuild/proto
 import { PrimitiveTypeV1, PrimitiveTypeV2, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
+import { ProtofileConverterContext } from "../ProtofileConverterContext.js";
 
 export declare namespace PrimitiveFieldConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {

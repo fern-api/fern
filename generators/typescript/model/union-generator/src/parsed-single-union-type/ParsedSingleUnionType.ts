@@ -1,7 +1,7 @@
 import { ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
 
-import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
+import { GeneratedUnionImpl } from "../GeneratedUnionImpl.js";
 
 export interface ParsedSingleUnionType<Context extends ModelContext> {
     getDocs(): string | null | undefined;

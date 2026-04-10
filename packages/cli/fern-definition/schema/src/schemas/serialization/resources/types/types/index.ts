@@ -25,3 +25,4 @@ export * from "./TypeReferenceSchema.js";
 export * from "./UndiscriminatedUnionSchema.js";
 export * from "./UnionDiscriminant.js";
 export * from "./UnionDiscriminantSchema.js";
+export * from "./UnionDiscriminatorContext.js";

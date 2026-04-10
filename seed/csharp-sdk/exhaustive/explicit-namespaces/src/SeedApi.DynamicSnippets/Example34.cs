@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints.Params;
 
 namespace Usage;
 
@@ -12,8 +13,10 @@ public class Example34
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnDoubleAsync(
-            1.1
+        await client.Endpoints.Params.GetWithInlinePathAsync(
+            new GetWithInlinePath {
+                Param = "param"
+            }
         );
     }
 

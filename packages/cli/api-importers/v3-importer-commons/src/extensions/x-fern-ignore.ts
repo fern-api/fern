@@ -1,4 +1,4 @@
-import { AbstractExtension } from "../AbstractExtension";
+import { AbstractExtension } from "../AbstractExtension.js";
 
 export declare namespace FernIgnoreExtension {
     export interface Args extends AbstractExtension.Args {

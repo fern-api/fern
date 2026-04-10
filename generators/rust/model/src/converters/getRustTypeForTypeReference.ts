@@ -1,19 +1,16 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { assertNever } from "@fern-api/core-utils";
 import { rust } from "@fern-api/rust-codegen";
-import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
-import { isFloatingPointType } from "../utils/primitiveTypeUtils";
+import { isFloatingPointType } from "../utils/primitiveTypeUtils.js";
 
 export interface RustTypeGeneratorContext {
-    getUniqueTypeNameForReference(declaredTypeName: {
-        fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
-        name: { pascalCase: { safeName: string } };
-    }): string;
+    getUniqueTypeNameForReference(declaredTypeName: FernIr.DeclaredTypeName): string;
     /** DateTime type to use: "offset" for DateTime<FixedOffset> (default), "utc" for DateTime<Utc> */
     getDateTimeType(): "offset" | "utc";
 }
 
 export function generateRustTypeForTypeReference(
-    typeReference: TypeReference,
+    typeReference: FernIr.TypeReference,
     context: RustTypeGeneratorContext,
     wrapInBox: boolean = false
 ): rust.Type {
@@ -75,7 +72,7 @@ export function generateRustTypeForTypeReference(
                 }
             });
         case "primitive":
-            return PrimitiveTypeV1._visit(typeReference.primitive.v1, {
+            return FernIr.PrimitiveTypeV1._visit(typeReference.primitive.v1, {
                 string: () => rust.Type.primitive(rust.PrimitiveType.String),
                 boolean: () => rust.Type.primitive(rust.PrimitiveType.Bool),
                 integer: () => rust.Type.primitive(rust.PrimitiveType.I64),
@@ -101,36 +98,8 @@ export function generateRustTypeForTypeReference(
                         })
                     );
                 },
-                dateTime: () => {
-                    // Use DateTime<Utc> when "utc" config is set, otherwise DateTime<FixedOffset> (default)
-                    if (context.getDateTimeType() === "utc") {
-                        return rust.Type.reference(
-                            rust.reference({
-                                name: "DateTime",
-                                genericArgs: [
-                                    rust.Type.reference(
-                                        rust.reference({
-                                            name: "Utc"
-                                        })
-                                    )
-                                ]
-                            })
-                        );
-                    }
-                    // Default: DateTime<FixedOffset> - preserves original timezone
-                    return rust.Type.reference(
-                        rust.reference({
-                            name: "DateTime",
-                            genericArgs: [
-                                rust.Type.reference(
-                                    rust.reference({
-                                        name: "FixedOffset"
-                                    })
-                                )
-                            ]
-                        })
-                    );
-                },
+                dateTime: () => getDateTimeType(context),
+                dateTimeRfc2822: () => getDateTimeType(context),
                 base64: () => {
                     // Base64 represents binary data as Vec<u8>
                     return rust.Type.reference(
@@ -182,4 +151,14 @@ export function generateRustTypeForTypeReference(
         default:
             return assertNever(typeReference);
     }
+}
+
+function getDateTimeType(context: RustTypeGeneratorContext): rust.Type {
+    const tzName = context.getDateTimeType() === "utc" ? "Utc" : "FixedOffset";
+    return rust.Type.reference(
+        rust.reference({
+            name: "DateTime",
+            genericArgs: [rust.Type.reference(rust.reference({ name: tzName }))]
+        })
+    );
 }

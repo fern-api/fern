@@ -1,12 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { AbstractModelGenerator } from "./AbstractModelGenerator";
-import { AliasGenerator } from "./alias/AliasGenerator";
-import { EnumGenerator } from "./enum/EnumGenerator";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
-import { ObjectGenerator } from "./object/ObjectGenerator";
-import { DiscriminatedUnionGenerator } from "./union/DiscriminatedUnionGenerator";
-import { UndiscriminatedUnionGenerator } from "./union/UndiscriminatedUnionGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { AbstractModelGenerator } from "./AbstractModelGenerator.js";
+import { AliasGenerator } from "./alias/AliasGenerator.js";
+import { EnumGenerator } from "./enum/EnumGenerator.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
+import { ObjectGenerator } from "./object/ObjectGenerator.js";
+import { DiscriminatedUnionGenerator } from "./union/DiscriminatedUnionGenerator.js";
+import { UndiscriminatedUnionGenerator } from "./union/UndiscriminatedUnionGenerator.js";
 
 export function generateModels(context: ModelGeneratorContext): void {
     for (const typeDeclaration of Object.values(context.ir.types)) {
@@ -20,7 +20,7 @@ function buildModelGenerator({
     typeDeclaration
 }: {
     context: ModelGeneratorContext;
-    typeDeclaration: TypeDeclaration;
+    typeDeclaration: FernIr.TypeDeclaration;
 }): AbstractModelGenerator {
     switch (typeDeclaration.shape.type) {
         case "alias":

@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import {
     DOCKER_HUB_API_BASE_URL,
@@ -13,7 +14,7 @@ import {
     GeneratorNickname,
     LOCAL_BUILD_VERSION,
     SEMVER_REGEX
-} from "./constants";
+} from "./constants.js";
 
 /**
  * Fetches the latest versions for all specified generators from Docker Hub.
@@ -127,12 +128,8 @@ async function getLatestGeneratorVersion(generator: GeneratorName, logger: Logge
         logger.debug(`Found latest version: ${latestVersion} (from ${sortedVersions.length} total versions)`);
         return latestVersion;
     } catch (error) {
-        logger.error(
-            `Failed to fetch version from Docker Hub: ${error instanceof Error ? error.message : String(error)}`
-        );
-        throw new Error(
-            `${ERROR_FAILED_TO_FETCH_VERSION} ${generator} from Docker Hub: ${error instanceof Error ? error.message : String(error)}`
-        );
+        logger.error(`Failed to fetch version from Docker Hub: ${extractErrorMessage(error)}`);
+        throw new Error(`${ERROR_FAILED_TO_FETCH_VERSION} ${generator} from Docker Hub: ${extractErrorMessage(error)}`);
     }
 }
 
