@@ -7,9 +7,7 @@ import {
     CliError,
     Finishable,
     PosthogEvent,
-    resolveErrorCode,
     Startable,
-    shouldReportToSentry,
     TaskAbortSignal,
     TaskContext,
     TaskResult
@@ -19,6 +17,7 @@ import { Workspace } from "@fern-api/workspace-loader";
 import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
+import { reportError } from "../telemetry/reportError.js";
 import { SentryClient } from "../telemetry/SentryClient.js";
 import { CliEnvironment } from "./CliEnvironment.js";
 import { StdoutRedirector } from "./StdoutRedirector.js";
@@ -127,27 +126,10 @@ export class CliContext {
     public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
         this.didSucceed = false;
         if (error instanceof TaskAbortSignal) {
-            // We already tracked the true error, so we can just return.
             return;
         }
-
         logErrorMessage({ message, error, logger: this.logger });
-
-        const code = resolveErrorCode(error, options?.code);
-
-        this.instrumentPostHogEvent({
-            command: process.argv.join(" "),
-            properties: {
-                failed: true,
-                source: "cli",
-                error,
-                errorCode: code
-            }
-        });
-
-        if (shouldReportToSentry(code)) {
-            this.sentryClient.captureException(error ?? new CliError({ message: message ?? "", code }), code);
-        }
+        reportError(this, error, { ...options, message });
     }
 
     /**
@@ -289,8 +271,8 @@ export class CliContext {
         }
     }
 
-    public async captureException(error: unknown, code?: CliError.Code): Promise<void> {
-        await this.sentryClient.captureException(error, code);
+    public captureException(error: unknown, code?: CliError.Code): void {
+        this.sentryClient.captureException(error, code);
     }
 
     public readonly logger = createLogger((level, ...args) => this.log(level, ...args));

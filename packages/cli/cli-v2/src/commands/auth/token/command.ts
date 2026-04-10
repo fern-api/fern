@@ -51,7 +51,7 @@ export class TokenCommand {
                 process.stderr.write(
                     `${Icons.error} You do not have the required permissions in organization "${orgId}".\n`
                 );
-                throw CliError.exit();
+                throw new TaskAbortSignal();
             },
             _other: () => {
                 process.stderr.write(

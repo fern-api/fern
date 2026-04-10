@@ -1,6 +1,6 @@
 import { Audiences } from "@fern-api/configuration";
 import { streamObjectToFile } from "@fern-api/fs-utils";
-import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import { JsonStreamStringify } from "json-stream-stringify";
@@ -117,7 +117,7 @@ export class CompileCommand {
                     `${violation.displayRelativeFilepath}:${violation.line}:${violation.column}: ${violation.message}`
                 );
             }
-            throw new TaskAbortSignal();
+            throw CliError.validationError(`API '${apiName}' has ${result.violations.length} validation errors`);
         }
     }
 

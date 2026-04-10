@@ -7,15 +7,14 @@ import {
     Finishable,
     InteractiveTaskContext,
     PosthogEvent,
-    resolveErrorCode,
     Startable,
-    shouldReportToSentry,
     TaskAbortSignal,
     TaskContext,
     TaskResult
 } from "@fern-api/task-context";
-
 import chalk from "chalk";
+
+import { reportError } from "../telemetry/reportError.js";
 
 export declare namespace TaskContextImpl {
     export interface Init {
@@ -90,29 +89,11 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
         this.result = TaskResult.Failure;
-
         if (error instanceof TaskAbortSignal) {
-            // We already tracked the true error, so we can just return.
             return;
         }
-
         logErrorMessage({ message, error, logger: this.logger });
-
-        const code = resolveErrorCode(error, options?.code);
-
-        this.instrumentPostHogEventImpl({
-            command: process.argv.join(" "),
-            properties: {
-                failed: true,
-                source: "task",
-                error,
-                errorCode: code
-            }
-        });
-
-        if (shouldReportToSentry(code)) {
-            this.captureException(error ?? new CliError({ message: message ?? "", code }), code);
-        }
+        reportError(this, error, { ...options, message });
     }
 
     public captureException(error: unknown, code?: CliError.Code): void {
