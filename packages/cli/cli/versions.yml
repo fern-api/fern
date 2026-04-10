@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.65.2
+  changelogEntry:
+    - summary: |
+        Improve error messages for `fern docs preview list` command. The default
+        error now suggests checking authentication instead of network connectivity,
+        and the full error response is logged at debug level for easier diagnosis.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
 - version: 4.65.1
   changelogEntry:
     - summary: |
@@ -1433,6 +1443,7 @@
       type: feat
   createdAt: "2026-03-09"
   irVersion: 65
+
 - version: 4.15.5
   changelogEntry:
     - summary: |
