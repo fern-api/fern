@@ -23,7 +23,7 @@
   createdAt: "2026-04-10"
   irVersion: 66
 
-- version: 4.66.1
+- version: 4.66.2
   changelogEntry:
     - summary: |
         Fall back to git tags for auto-versioning when the magic version is not
