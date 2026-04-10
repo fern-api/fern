@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { Referencer, swift } from "@fern-api/swift-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -314,8 +315,8 @@ export class RootClientGenerator {
                 })
             );
             for (const header of globalHeaders) {
-                const paramName = header.name.name.camelCase.unsafeName;
-                const wireValue = header.name.wireValue;
+                const paramName = this.sdkGeneratorContext.caseConverter.camelUnsafe(header.name);
+                const wireValue = getWireValue(header.name);
                 const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
                 if (swiftType.variant.type === "optional") {
                     bodyStatements.push(
@@ -543,7 +544,7 @@ export class RootClientGenerator {
                 });
                 return swift.Expression.memberAccess({
                     target: swift.Expression.reference(environmentRef),
-                    memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
+                    memberName: `${this.sdkGeneratorContext.caseConverter.camelUnsafe(defaultEnvironment.name)}.rawValue`
                 });
             }
             return undefined;
@@ -579,23 +580,25 @@ export class RootClientGenerator {
 
         for (const scheme of authSchemes) {
             if (scheme.type === "header") {
+                const headerName = this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.name);
                 paramsByScheme.header = {
                     param: swift.functionParameter({
-                        argumentLabel: scheme.name.name.camelCase.unsafeName,
-                        unsafeName: scheme.name.name.camelCase.unsafeName,
+                        argumentLabel: headerName,
+                        unsafeName: headerName,
                         type: isAuthMandatory
                             ? this.referencer.referenceSwiftType("String")
                             : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
                         defaultValue: isAuthMandatory ? undefined : swift.Expression.nil(),
                         docsContent: scheme.docs ?? `The API key to use for authentication.`
                     }),
-                    wireValue: scheme.name.wireValue
+                    wireValue: getWireValue(scheme.name)
                 };
             } else if (scheme.type === "bearer") {
+                const tokenName = this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.token);
                 paramsByScheme.bearer = {
                     stringParam: swift.functionParameter({
-                        argumentLabel: scheme.token.camelCase.unsafeName,
-                        unsafeName: scheme.token.camelCase.unsafeName,
+                        argumentLabel: tokenName,
+                        unsafeName: tokenName,
                         type: isAuthMandatory
                             ? this.referencer.referenceSwiftType("String")
                             : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
@@ -605,8 +608,8 @@ export class RootClientGenerator {
                             `Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
                     }),
                     asyncProviderParam: swift.functionParameter({
-                        argumentLabel: scheme.token.camelCase.unsafeName,
-                        unsafeName: scheme.token.camelCase.unsafeName,
+                        argumentLabel: tokenName,
+                        unsafeName: tokenName,
                         escaping: isAuthMandatory ? true : undefined,
                         type: isAuthMandatory
                             ? swift.TypeReference.memberAccess(
@@ -624,10 +627,12 @@ export class RootClientGenerator {
                     })
                 };
             } else if (scheme.type === "basic") {
+                const usernameName = this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.username);
+                const passwordName = this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.password);
                 paramsByScheme.basic = {
                     usernameParam: swift.functionParameter({
-                        argumentLabel: scheme.username.camelCase.unsafeName,
-                        unsafeName: scheme.username.camelCase.unsafeName,
+                        argumentLabel: usernameName,
+                        unsafeName: usernameName,
                         type: isAuthMandatory
                             ? this.referencer.referenceSwiftType("String")
                             : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
@@ -635,8 +640,8 @@ export class RootClientGenerator {
                         docsContent: `The username to use for authentication.`
                     }),
                     passwordParam: swift.functionParameter({
-                        argumentLabel: scheme.password.camelCase.unsafeName,
-                        unsafeName: scheme.password.camelCase.unsafeName,
+                        argumentLabel: passwordName,
+                        unsafeName: passwordName,
                         type: isAuthMandatory
                             ? this.referencer.referenceSwiftType("String")
                             : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
@@ -666,9 +671,10 @@ export class RootClientGenerator {
             })
             .map((header) => {
                 const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
+                const headerName = this.sdkGeneratorContext.caseConverter.camelUnsafe(header.name);
                 return swift.functionParameter({
-                    argumentLabel: header.name.name.camelCase.unsafeName,
-                    unsafeName: header.name.name.camelCase.unsafeName,
+                    argumentLabel: headerName,
+                    unsafeName: headerName,
                     type: swiftType,
                     defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: header.docs

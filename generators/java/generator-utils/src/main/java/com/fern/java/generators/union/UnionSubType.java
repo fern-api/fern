@@ -7,6 +7,7 @@ import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeNameMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -126,7 +127,7 @@ public abstract class UnionSubType {
         }
         // TODO(ajgateno): We'll want to ignore base properties as well when we support them in the Java generator
         unionSubTypeBuilder.addAnnotation(AnnotationSpec.builder(JsonIgnoreProperties.class)
-                .addMember("value", "$S", unionTypeDeclaration.getDiscriminant().getWireValue())
+                .addMember("value", "$S", NameUtils.getWireValue(unionTypeDeclaration.getDiscriminant()))
                 .build());
         EqualsMethod equalsMethod = getEqualsMethod();
         unionSubTypeBuilder

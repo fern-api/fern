@@ -23,6 +23,7 @@ import com.fern.java.client.ClientPoetClassNameFactory;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.utils.ObjectMapperUtils;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.squareup.javapoet.ArrayTypeName;
@@ -334,7 +335,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                             public TypeName visitCursor(CursorPagination cursor) {
                                 SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                                         cursor.getResults().getPropertyPath().map(path -> path.stream()
-                                                .map(PropertyPathItem::getName)
+                                                .map(p -> NameUtils.toName(p.getName()))
                                                 .collect(Collectors.toList())),
                                         cursor.getResults().getProperty(),
                                         body.getResponseBodyType());
@@ -356,7 +357,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                             public TypeName visitOffset(OffsetPagination offset) {
                                 SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                                         offset.getResults().getPropertyPath().map(path -> path.stream()
-                                                .map(PropertyPathItem::getName)
+                                                .map(p -> NameUtils.toName(p.getName()))
                                                 .collect(Collectors.toList())),
                                         offset.getResults().getProperty(),
                                         body.getResponseBodyType());
@@ -387,7 +388,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                                                     .getResults()
                                                     .getPropertyPath()
                                                     .map(path -> path.stream()
-                                                            .map(PropertyPathItem::getName)
+                                                            .map(p -> NameUtils.toName(p.getName()))
                                                             .collect(Collectors.toList())),
                                             customPagination.getResults().getProperty(),
                                             body.getResponseBodyType());
@@ -414,7 +415,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                                                 .getResults()
                                                 .getPropertyPath()
                                                 .map(path -> path.stream()
-                                                        .map(PropertyPathItem::getName)
+                                                        .map(p -> NameUtils.toName(p.getName()))
                                                         .collect(Collectors.toList())),
                                         customPagination.getResults().getProperty(),
                                         body.getResponseBodyType());
@@ -436,7 +437,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                             public TypeName visitUri(UriPagination uri) {
                                 SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                                         uri.getResults().getPropertyPath().map(path -> path.stream()
-                                                .map(PropertyPathItem::getName)
+                                                .map(p -> NameUtils.toName(p.getName()))
                                                 .collect(Collectors.toList())),
                                         uri.getResults().getProperty(),
                                         body.getResponseBodyType());
@@ -458,7 +459,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                             public TypeName visitPath(PathPagination path) {
                                 SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                                         path.getResults().getPropertyPath().map(pathItems -> pathItems.stream()
-                                                .map(PropertyPathItem::getName)
+                                                .map(p -> NameUtils.toName(p.getName()))
                                                 .collect(Collectors.toList())),
                                         path.getResults().getProperty(),
                                         body.getResponseBodyType());
@@ -852,8 +853,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
                         CodeBlock.of("$L", variables.getResponseBodyStringName()),
                         Optional.of(body.getResponseBodyType())));
-                String endpointName =
-                        httpEndpoint.getName().get().getCamelCase().getSafeName();
+                String endpointName = NameUtils.toName(httpEndpoint.getName().get())
+                        .getCamelCase()
+                        .getSafeName();
                 Optional<ParameterSpec> maybeRequestParameterSpec = variables.requestParameterSpec();
                 String methodParameters;
                 if (maybeRequestParameterSpec.isPresent()) {
@@ -1065,7 +1067,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             ObjectProperty objectProperty,
             com.fern.ir.model.types.TypeReference typeReference) {
         ArrayList<Name> fullPropertyPath = propertyPath.map(ArrayList::new).orElse(new ArrayList<>());
-        fullPropertyPath.add(objectProperty.getName().getName());
+        fullPropertyPath.add(NameUtils.getName(objectProperty.getName()));
         GetSnippetOutput getSnippetOutput = typeReference.visit(new NestedPropertySnippetGenerator(
                 typeReference,
                 fullPropertyPath,
@@ -1237,8 +1239,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                         return new GetSnippetOutput(typeReference, codeBlocks);
                     }
                     Optional<ObjectProperty> maybeMatchingProperty = object.getProperties().stream()
-                            .filter(property -> property.getName()
-                                    .getName()
+                            .filter(property -> NameUtils.getName(property.getName())
                                     .getCamelCase()
                                     .getUnsafeName()
                                     .equals(getCurrentProperty().getCamelCase().getUnsafeName()))
@@ -1338,7 +1339,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                             return result;
                         } catch (Exception e) {
                             variantErrors.add("[Variant " + variantIndex + " ("
-                                    + variant.getDiscriminantValue().getWireValue() + ")]: " + e.getMessage());
+                                    + NameUtils.getWireValue(variant.getDiscriminantValue()) + ")]: " + e.getMessage());
                             variantIndex++;
                         }
                     }
@@ -1482,7 +1483,7 @@ public abstract class AbstractHttpResponseParserGenerator {
         public Void visitCursor(CursorPagination cursor) {
             SnippetAndResultType nextSnippet = getNestedPropertySnippet(
                     cursor.getNext().getPropertyPath().map(path -> path.stream()
-                            .map(PropertyPathItem::getName)
+                            .map(p -> NameUtils.toName(p.getName()))
                             .collect(Collectors.toList())),
                     cursor.getNext().getProperty(),
                     body.getResponseBodyType());
@@ -1500,18 +1501,14 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .visit(new RequestPropertyValue.Visitor<String>() {
                         @Override
                         public String visitQuery(QueryParameter queryParameter) {
-                            return queryParameter
-                                    .getName()
-                                    .getName()
+                            return NameUtils.getName(queryParameter.getName())
                                     .getCamelCase()
                                     .getUnsafeName();
                         }
 
                         @Override
                         public String visitBody(ObjectProperty objectProperty) {
-                            return objectProperty
-                                    .getName()
-                                    .getName()
+                            return NameUtils.getName(objectProperty.getName())
                                     .getCamelCase()
                                     .getUnsafeName();
                         }
@@ -1529,7 +1526,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     && !cursor.getPage().getPropertyPath().get().isEmpty()) {
                 List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
                         cursor.getPage().getPropertyPath().get().stream()
-                                .map(PropertyPathItem::getName)
+                                .map(p -> NameUtils.toName(p.getName()))
                                 .collect(Collectors.toList()),
                         httpEndpoint,
                         clientGeneratorContext,
@@ -1562,7 +1559,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     propertyOverrideValueOnRequest);
             SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                     cursor.getResults().getPropertyPath().map(path -> path.stream()
-                            .map(PropertyPathItem::getName)
+                            .map(p -> NameUtils.toName(p.getName()))
                             .collect(Collectors.toList())),
                     cursor.getResults().getProperty(),
                     body.getResponseBodyType());
@@ -1646,18 +1643,14 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                         @Override
                         public String visitQuery(QueryParameter queryParameter) {
-                            return queryParameter
-                                    .getName()
-                                    .getName()
+                            return NameUtils.getName(queryParameter.getName())
                                     .getPascalCase()
                                     .getUnsafeName();
                         }
 
                         @Override
                         public String visitBody(ObjectProperty objectProperty) {
-                            return objectProperty
-                                    .getName()
-                                    .getName()
+                            return NameUtils.getName(objectProperty.getName())
                                     .getPascalCase()
                                     .getUnsafeName();
                         }
@@ -1677,7 +1670,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 // use the setter--just the getter.
                 List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
                         offset.getPage().getPropertyPath().get().stream()
-                                .map(PropertyPathItem::getName)
+                                .map(p -> NameUtils.toName(p.getName()))
                                 .collect(Collectors.toList()),
                         httpEndpoint,
                         clientGeneratorContext,
@@ -1762,18 +1755,14 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                         @Override
                         public String visitQuery(QueryParameter queryParameter) {
-                            return queryParameter
-                                    .getName()
-                                    .getName()
+                            return NameUtils.getName(queryParameter.getName())
                                     .getCamelCase()
                                     .getUnsafeName();
                         }
 
                         @Override
                         public String visitBody(ObjectProperty objectProperty) {
-                            return objectProperty
-                                    .getName()
-                                    .getName()
+                            return NameUtils.getName(objectProperty.getName())
                                     .getCamelCase()
                                     .getUnsafeName();
                         }
@@ -1789,7 +1778,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                     && !offset.getPage().getPropertyPath().get().isEmpty()) {
                 List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
                         offset.getPage().getPropertyPath().get().stream()
-                                .map(PropertyPathItem::getName)
+                                .map(p -> NameUtils.toName(p.getName()))
                                 .collect(Collectors.toList()),
                         httpEndpoint,
                         clientGeneratorContext,
@@ -1823,7 +1812,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
             SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                     offset.getResults().getPropertyPath().map(path -> path.stream()
-                            .map(PropertyPathItem::getName)
+                            .map(p -> NameUtils.toName(p.getName()))
                             .collect(Collectors.toList())),
                     offset.getResults().getProperty(),
                     body.getResponseBodyType());
@@ -1912,15 +1901,13 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (nextProperty.getPropertyPath().isPresent()) {
                 for (PropertyPathItem pathItem : nextProperty.getPropertyPath().get()) {
                     nextGetterBuilder.add(
-                            ".get$L()", pathItem.getName().getPascalCase().getUnsafeName());
+                            ".get$L()",
+                            NameUtils.toName(pathItem.getName()).getPascalCase().getUnsafeName());
                 }
             }
             nextGetterBuilder.add(
                     ".get$L()",
-                    nextProperty
-                            .getProperty()
-                            .getName()
-                            .getName()
+                    NameUtils.getName(nextProperty.getProperty().getName())
                             .getPascalCase()
                             .getUnsafeName());
             CodeBlock nextGetterCode = nextGetterBuilder.build();
@@ -1940,7 +1927,7 @@ public abstract class AbstractHttpResponseParserGenerator {
             // Extract result items from response
             SnippetAndResultType resultSnippet = getNestedPropertySnippet(
                     resultsProperty.getPropertyPath().map(path -> path.stream()
-                            .map(PropertyPathItem::getName)
+                            .map(p -> NameUtils.toName(p.getName()))
                             .collect(Collectors.toList())),
                     resultsProperty.getProperty(),
                     body.getResponseBodyType());

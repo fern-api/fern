@@ -10,19 +10,19 @@ import java.lang.Object;
 import java.lang.String;
 
 public final class ErrorCode {
-  public static final ErrorCode GONE = new ErrorCode(Value.GONE, "GONE");
-
   public static final ErrorCode CONFLICT = new ErrorCode(Value.CONFLICT, "CONFLICT");
 
   public static final ErrorCode UNKNOWN = new ErrorCode(Value.UNKNOWN, "Unknown");
 
-  public static final ErrorCode NOT_IMPLEMENTED = new ErrorCode(Value.NOT_IMPLEMENTED, "NOT_IMPLEMENTED");
+  public static final ErrorCode GONE = new ErrorCode(Value.GONE, "GONE");
 
   public static final ErrorCode UNAUTHORIZED = new ErrorCode(Value.UNAUTHORIZED, "UNAUTHORIZED");
 
   public static final ErrorCode BAD_REQUEST = new ErrorCode(Value.BAD_REQUEST, "BAD_REQUEST");
 
   public static final ErrorCode UNPROCESSABLE_ENTITY = new ErrorCode(Value.UNPROCESSABLE_ENTITY, "UNPROCESSABLE_ENTITY");
+
+  public static final ErrorCode NOT_IMPLEMENTED = new ErrorCode(Value.NOT_IMPLEMENTED, "NOT_IMPLEMENTED");
 
   public static final ErrorCode INTERNAL_SERVER_ERROR = new ErrorCode(Value.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR");
 
@@ -64,20 +64,20 @@ public final class ErrorCode {
 
   public <T> T visit(Visitor<T> visitor) {
     switch (value) {
-      case GONE:
-        return visitor.visitGone();
       case CONFLICT:
         return visitor.visitConflict();
       case UNKNOWN:
         return visitor.visitUnknown();
-      case NOT_IMPLEMENTED:
-        return visitor.visitNotImplemented();
+      case GONE:
+        return visitor.visitGone();
       case UNAUTHORIZED:
         return visitor.visitUnauthorized();
       case BAD_REQUEST:
         return visitor.visitBadRequest();
       case UNPROCESSABLE_ENTITY:
         return visitor.visitUnprocessableEntity();
+      case NOT_IMPLEMENTED:
+        return visitor.visitNotImplemented();
       case INTERNAL_SERVER_ERROR:
         return visitor.visitInternalServerError();
       case BAD_GATEWAY:
@@ -97,20 +97,20 @@ public final class ErrorCode {
   )
   public static ErrorCode valueOf(String value) {
     switch (value) {
-      case "GONE":
-        return GONE;
       case "CONFLICT":
         return CONFLICT;
       case "Unknown":
         return UNKNOWN;
-      case "NOT_IMPLEMENTED":
-        return NOT_IMPLEMENTED;
+      case "GONE":
+        return GONE;
       case "UNAUTHORIZED":
         return UNAUTHORIZED;
       case "BAD_REQUEST":
         return BAD_REQUEST;
       case "UNPROCESSABLE_ENTITY":
         return UNPROCESSABLE_ENTITY;
+      case "NOT_IMPLEMENTED":
+        return NOT_IMPLEMENTED;
       case "INTERNAL_SERVER_ERROR":
         return INTERNAL_SERVER_ERROR;
       case "BAD_GATEWAY":

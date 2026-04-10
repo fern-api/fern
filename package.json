@@ -89,6 +89,7 @@
     "update:docs": "pnpm docs:generate && pnpm docs-yml:jsonschema",
     "prepare": "husky",
     "pre-commit": "tsx scripts/pre-commit.ts",
+    "release": "tsx scripts/release.ts",
     "test:update-package": "sh -c 'for arg in \"$@\"; do if [[ $arg == --package=* ]]; then PACKAGE=${arg#--package=}; break; fi; done; turbo run compile --filter \"$PACKAGE\" && turbo run test:update --filter \"$PACKAGE\"' --",
     "csharp:build": "turbo run dockerTagLatest --filter @fern-api/fern-csharp-sdk",
     "go:build": "turbo run dockerTagLatest --filter @fern-api/go-sdk",

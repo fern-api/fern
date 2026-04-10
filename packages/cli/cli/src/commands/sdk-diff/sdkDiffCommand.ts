@@ -21,7 +21,7 @@ import {
     maxVersionBump
 } from "@fern-api/local-workspace-runner";
 import { Project } from "@fern-api/project-loader";
-import { FernCliError, TaskContext } from "@fern-api/task-context";
+import { TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -82,12 +82,12 @@ export async function sdkDiffCommand({
     // Validate that both directories exist
     if (!(await doesPathExist(fromPath, "directory"))) {
         context.failWithoutThrowing(`Directory not found: ${fromPath}`);
-        throw new FernCliError();
+        throw new TaskAbortSignal();
     }
 
     if (!(await doesPathExist(toPath, "directory"))) {
         context.failWithoutThrowing(`Directory not found: ${toPath}`);
-        throw new FernCliError();
+        throw new TaskAbortSignal();
     }
 
     const clientRegistry = await getClientRegistry(context, project);
@@ -234,7 +234,7 @@ export async function sdkDiffCommand({
                     : "") +
                 `Error: ${errorMessage}`
         );
-        throw new FernCliError();
+        throw new TaskAbortSignal();
     }
 }
 

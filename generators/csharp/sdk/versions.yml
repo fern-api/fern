@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.59.6
+  changelogEntry:
+    - summary: |
+        Add domain-specific event properties (e.g. AssistantMessage, ChatMetadata,
+        AudioOutput) and UnknownMessage to the generated WebSocket client interface.
+        Previously, these events were only available on the concrete class, forcing
+        consumers to downcast from the interface type to access them.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
 - version: 2.59.5
   changelogEntry:
     - summary: |
