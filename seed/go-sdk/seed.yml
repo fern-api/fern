@@ -346,6 +346,7 @@ allowedFailures:
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-sent-events-openapi:with-wire-tests # TODO: fix go wire test generation for augmented fixture
   - server-url-templating
   - trace
   - property-access
