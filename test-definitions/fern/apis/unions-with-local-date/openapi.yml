@@ -732,30 +732,37 @@ components:
       description: This is a simple union.
     UnionWithDiscriminant:
       title: UnionWithDiscriminant
-      x-fern-discriminant:
-        name: type
-        value: _type
+      discriminator:
+        propertyName: _type
+        x-fern-property-name: type
+        mapping:
+          foo: '#/components/schemas/UnionWithDiscriminantFoo'
+          bar: '#/components/schemas/UnionWithDiscriminantBar'
       oneOf:
-        - type: object
-          properties:
-            _type:
-              type: string
-              enum:
-                - foo
-            foo:
-              $ref: '#/components/schemas/Foo'
-          required:
-            - _type
-        - type: object
-          properties:
-            _type:
-              type: string
-              enum:
-                - bar
-            bar:
-              $ref: '#/components/schemas/Bar'
-          required:
-            - _type
+        - $ref: '#/components/schemas/UnionWithDiscriminantFoo'
+        - $ref: '#/components/schemas/UnionWithDiscriminantBar'
+    UnionWithDiscriminantFoo:
+      type: object
+      properties:
+        _type:
+          type: string
+          enum:
+            - foo
+        foo:
+          $ref: '#/components/schemas/Foo'
+      required:
+        - _type
+    UnionWithDiscriminantBar:
+      type: object
+      properties:
+        _type:
+          type: string
+          enum:
+            - bar
+        bar:
+          $ref: '#/components/schemas/Bar'
+      required:
+        - _type
     UnionWithPrimitive:
       title: UnionWithPrimitive
       oneOf:

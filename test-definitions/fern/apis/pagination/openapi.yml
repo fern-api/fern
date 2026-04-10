@@ -932,6 +932,8 @@ components:
       x-fern-enum:
         '~':
           name: Tilde
+        '!~':
+          name: NotTilde
     SearchRequest:
       title: SearchRequest
       type: object
