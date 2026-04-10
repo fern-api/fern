@@ -377,9 +377,7 @@ export class WireTestGenerator {
                     }
                     statements.push(block);
                 } else {
-                    const block = python.codeBlock(
-                        `with pytest.raises(ApiError):\n        ${apiCallAst.toString()}`
-                    );
+                    const block = python.codeBlock(`with pytest.raises(ApiError):\n        ${apiCallAst.toString()}`);
                     for (const ref of apiCallAst.getReferences()) {
                         block.addReference(ref);
                     }
