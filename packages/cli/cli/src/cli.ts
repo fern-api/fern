@@ -2214,7 +2214,7 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                         "in addition to publishing to the preview registry. " +
                         "Requires the generator to have github output configuration " +
                         "and the Fern GitHub App installed on the target repo. " +
-                        "Cannot be combined with --output."
+                        "Cannot be combined with --local."
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
