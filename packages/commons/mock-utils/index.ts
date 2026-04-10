@@ -436,7 +436,7 @@ export class WireMock {
             }
         }
         // Fall back to checking jsonExample at the top level
-        if (example?.request?.type === "reference" && typeof example.request.jsonExample === "object") {
+        if (example?.request?.type === "reference" && typeof example.request.jsonExample === "object" && example.request.jsonExample !== null) {
             const json = example.request.jsonExample as Record<string, unknown>;
             for (const [key, value] of Object.entries(json)) {
                 if (value === true) {
