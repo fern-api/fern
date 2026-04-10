@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.59.4
+  changelogEntry:
+    - summary: |
+        Round float primitive examples to 32-bit precision in mock server test
+        JSON. When an OpenAPI spec provides double-precision example values for
+        fields declared as `format: float`, the mock response JSON now uses
+        `Math.fround()` to match what C# produces after deserializing into
+        `System.Single`. This prevents `JsonAssert.AreEqual` failures caused by
+        precision loss during float round-trips (e.g. 0.10722749680280685
+        becoming 0.1072275).
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
 - version: 2.59.3
   changelogEntry:
     - summary: |

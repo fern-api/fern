@@ -442,6 +442,13 @@ export class MockEndpointGenerator extends WithGeneration {
                 if (shape.primitive.type === "date" && typeof exampleTypeRef.jsonExample === "string") {
                     return new Date(exampleTypeRef.jsonExample).toISOString().slice(0, 10);
                 }
+                // Round float examples to 32-bit float precision so mock server JSON matches
+                // what C# produces after deserializing into System.Single (float).
+                // Without this, double-precision example values (e.g. 0.10722749680280685)
+                // lose precision when round-tripped through C# float (becomes 0.1072275).
+                if (shape.primitive.type === "float" && typeof exampleTypeRef.jsonExample === "number") {
+                    return Math.fround(exampleTypeRef.jsonExample);
+                }
                 return exampleTypeRef.jsonExample;
 
             case "unknown":
