@@ -317,27 +317,8 @@ export class WireTestFunctionGenerator {
                     double: (value) => swift.Expression.numberLiteral(value),
                     bigInteger: (value) => swift.Expression.stringLiteral(value),
                     date: (value) => swift.Expression.calendarDateLiteral(value),
-                    datetime: (value) => {
-                        if (value.raw == null) {
-                            return swift.Expression.nop();
-                        }
-                        const timestampMs = new Date(value.raw).getTime();
-                        const timestampSec = Math.round(timestampMs / 1000);
-                        const roundedDateTime = new Date(timestampSec * 1000).toISOString();
-                        // Remove fractional seconds (.000Z -> Z) for Swift compatibility
-                        const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
-                        return swift.Expression.dateLiteral(dateTimeWithoutFractional);
-                    },
-                    datetimeRfc2822: (value) => {
-                        if (value.raw == null) {
-                            return swift.Expression.nop();
-                        }
-                        const timestampMs = new Date(value.raw).getTime();
-                        const timestampSec = Math.round(timestampMs / 1000);
-                        const roundedDateTime = new Date(timestampSec * 1000).toISOString();
-                        const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
-                        return swift.Expression.dateLiteral(dateTimeWithoutFractional);
-                    },
+                    datetime: (value) => this.generateDateTimeLiteral(value.raw),
+                    datetimeRfc2822: (value) => this.generateDateTimeLiteral(value.raw),
                     base64: (value) => swift.Expression.stringLiteral(value),
                     uuid: (value) => swift.Expression.uuidLiteral(value),
                     _other: () => swift.Expression.nop()
@@ -568,6 +549,18 @@ export class WireTestFunctionGenerator {
             unknown: () => this.referencer.referenceAsIsType("JSONValue"),
             _other: () => this.referencer.referenceAsIsType("JSONValue")
         });
+    }
+
+    private generateDateTimeLiteral(raw: string | null | undefined): swift.Expression {
+        if (raw == null) {
+            return swift.Expression.nop();
+        }
+        const timestampMs = new Date(raw).getTime();
+        const timestampSec = Math.round(timestampMs / 1000);
+        const roundedDateTime = new Date(timestampSec * 1000).toISOString();
+        // Remove fractional seconds (.000Z -> Z) for Swift compatibility
+        const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
+        return swift.Expression.dateLiteral(dateTimeWithoutFractional);
     }
 
     private generateUnknownExampleResponse(val: unknown): swift.Expression {

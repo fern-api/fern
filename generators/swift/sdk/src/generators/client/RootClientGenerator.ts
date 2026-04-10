@@ -580,10 +580,11 @@ export class RootClientGenerator {
 
         for (const scheme of authSchemes) {
             if (scheme.type === "header") {
+                const headerName = this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.name);
                 paramsByScheme.header = {
                     param: swift.functionParameter({
-                        argumentLabel: this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.name),
-                        unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.name),
+                        argumentLabel: headerName,
+                        unsafeName: headerName,
                         type: isAuthMandatory
                             ? this.referencer.referenceSwiftType("String")
                             : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
@@ -593,10 +594,11 @@ export class RootClientGenerator {
                     wireValue: getWireValue(scheme.name)
                 };
             } else if (scheme.type === "bearer") {
+                const tokenName = this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.token);
                 paramsByScheme.bearer = {
                     stringParam: swift.functionParameter({
-                        argumentLabel: this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.token),
-                        unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.token),
+                        argumentLabel: tokenName,
+                        unsafeName: tokenName,
                         type: isAuthMandatory
                             ? this.referencer.referenceSwiftType("String")
                             : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
@@ -606,8 +608,8 @@ export class RootClientGenerator {
                             `Bearer token for authentication. If provided, will be sent as "Bearer {token}" in Authorization header.`
                     }),
                     asyncProviderParam: swift.functionParameter({
-                        argumentLabel: this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.token),
-                        unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.token),
+                        argumentLabel: tokenName,
+                        unsafeName: tokenName,
                         escaping: isAuthMandatory ? true : undefined,
                         type: isAuthMandatory
                             ? swift.TypeReference.memberAccess(
@@ -625,10 +627,12 @@ export class RootClientGenerator {
                     })
                 };
             } else if (scheme.type === "basic") {
+                const usernameName = this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.username);
+                const passwordName = this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.password);
                 paramsByScheme.basic = {
                     usernameParam: swift.functionParameter({
-                        argumentLabel: this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.username),
-                        unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.username),
+                        argumentLabel: usernameName,
+                        unsafeName: usernameName,
                         type: isAuthMandatory
                             ? this.referencer.referenceSwiftType("String")
                             : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
@@ -636,8 +640,8 @@ export class RootClientGenerator {
                         docsContent: `The username to use for authentication.`
                     }),
                     passwordParam: swift.functionParameter({
-                        argumentLabel: this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.password),
-                        unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(scheme.password),
+                        argumentLabel: passwordName,
+                        unsafeName: passwordName,
                         type: isAuthMandatory
                             ? this.referencer.referenceSwiftType("String")
                             : swift.TypeReference.optional(this.referencer.referenceSwiftType("String")),
@@ -667,9 +671,10 @@ export class RootClientGenerator {
             })
             .map((header) => {
                 const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
+                const headerName = this.sdkGeneratorContext.caseConverter.camelUnsafe(header.name);
                 return swift.functionParameter({
-                    argumentLabel: this.sdkGeneratorContext.caseConverter.camelUnsafe(header.name),
-                    unsafeName: this.sdkGeneratorContext.caseConverter.camelUnsafe(header.name),
+                    argumentLabel: headerName,
+                    unsafeName: headerName,
                     type: swiftType,
                     defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined,
                     docsContent: header.docs
