@@ -252,7 +252,12 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 // (e.g., oneOf with variants containing `not: {}` properties).
                 // Flatten variant properties into the merged schema as optional properties.
                 const variants = schemaToMerge.oneOf ?? schemaToMerge.anyOf;
-                if (variants != null && schemaToMerge.type == null && schemaToMerge.properties == null) {
+                if (
+                    !this.context.isReferenceObject(allOfSchema) &&
+                    variants != null &&
+                    schemaToMerge.type == null &&
+                    schemaToMerge.properties == null
+                ) {
                     const flattenedProperties: Record<string, unknown> = {};
                     for (const variantSchemaOrRef of variants) {
                         const variantSchema = this.context.isReferenceObject(variantSchemaOrRef)
@@ -309,7 +314,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             // The mergeWith array-concatenation can produce duplicate $ref entries when
             // two sibling allOf elements both reference the same base schema.
             if (Array.isArray(mergedSchema.allOf)) {
-                const seenRefs = new Set<string>();
+                const seenRefs = new Set<string>(resolvedRefs);
                 mergedSchema.allOf = (
                     mergedSchema.allOf as (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[]
                 ).filter((element) => {
@@ -328,7 +333,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 breadcrumbs: this.breadcrumbs,
                 schema: mergedSchema,
                 id: this.id,
-                inlined: true,
+                inlined: this.inlined,
                 visitedRefs: resolvedRefs
             });
             return mergedConverter.convert();

@@ -180,6 +180,11 @@ describe("allOf edge cases", () => {
             const prop = findProperty(type, "executionContext");
             expect(prop).toBeDefined();
 
+            // executionContext is required in the OpenAPI fixture, so it should NOT
+            // be wrapped in optional
+            // biome-ignore lint/style/noNonNullAssertion: verified by prior expect
+            expect(getContainerType(prop!)).not.toBe("optional");
+
             // The property should reference the RuleExecutionContext enum.
             // It should NOT be: unknown, an empty object, or a named reference
             // to a synthetic type with zero properties.
