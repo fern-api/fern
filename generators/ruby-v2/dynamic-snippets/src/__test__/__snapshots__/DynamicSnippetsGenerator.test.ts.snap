@@ -5,10 +5,10 @@ exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = 
 
 client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
-client.service.get_metadata(
+client.service.getmetadata(
   shallow: false,
   tag: %w[development public],
-  x_api_version: "0.0.1"
+  api_version: "0.0.1"
 )
 "
 `;
@@ -30,7 +30,7 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 
 client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
-client.service.create_big_entity(
+client.service.createbigentity(
   cast_member: {
     id: "john.doe",
     name: "John Doe"
@@ -45,6 +45,15 @@ client.service.create_big_entity(
     tag: "tag-12efs9dv",
     metadata: {},
     revenue: 1000000
+  },
+  event_info: {
+    type: "metadata",
+    id: "event-12345",
+    data: {
+      key1: "val1",
+      key2: "val2"
+    },
+    json_string: "abc"
   },
   migration: {
     name: "Migration 31 Aug",
@@ -71,7 +80,7 @@ exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 
 client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
-client.service.create_movie(
+client.service.createmovie(
   id: "movie-c06a4ad7",
   prequel: "movie-cv9b914f",
   title: "The Boy and the Heron",
@@ -86,28 +95,15 @@ client.service.create_movie(
 `;
 
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
-"require "acme"
-
-client = Acme::Client.new(token: "<YOUR_API_KEY>")
-
-client.endpoints.object.get_and_return_with_optional_field(
-  string: "string",
-  integer: 1,
-  long: 1000000,
-  double: 1.1,
-  bool: true,
-  datetime: "2024-01-15T09:30:00Z",
-  date: "2023-01-15",
-  uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  base64: "SGVsbG8gd29ybGQh",
-  list: %w[list list],
-  set: Set.new(["set"]),
-  map: {
-    1 => "map"
-  },
-  bigint: "1000000"
-)
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "bigint"
+    ],
+    "message": "Expected number, got string"
+  }
+]"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
@@ -134,7 +130,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (sim
 
 client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
-client.endpoints.container.get_and_return_list_of_objects(request: [{
+client.endpoints_container.endpoints_container_get_and_return_list_of_objects(request: [{
   string: "one"
 }, {
   string: "two"
@@ -149,7 +145,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (
 
 client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
-client.endpoints.container.get_and_return_list_of_primitives(request: %w[one two three])
+client.endpoints_container.endpoints_container_get_and_return_list_of_primitives(request: %w[one two three])
 "
 `;
 
@@ -158,7 +154,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (m
 
 client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
-client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(request: {
+client.endpoints_container.endpoints_container_get_and_return_map_of_prim_to_undiscriminated_union(request: {
   test: 0,
   test2: true,
   test3: "Test",
@@ -181,7 +177,7 @@ exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 
 client = Acme::Client.new
 
-client.service.just_file
+client.service.justfile
 "
 `;
 
@@ -190,7 +186,7 @@ exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 
 
 client = Acme::Client.new
 
-client.service.just_file_with_query_params(
+client.service.justfilewithqueryparams(
   integer: 42,
   maybe_string: "exists"
 )
@@ -202,7 +198,7 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 
 client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
-client.imdb.get_movie(movie_id: "movie_xyz")
+client.imdb.getmovie(movie_id: "movie_xyz")
 "
 `;
 
@@ -211,7 +207,7 @@ exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = 
 
 client = Acme::Client.new(token: "<YOUR_API_KEY>")
 
-client.imdb.create_movie(
+client.imdb.createmovie(
   title: "The Matrix",
   rating: 8.2
 )
@@ -239,27 +235,23 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
-"require "acme"
-
-client = Acme::Client.new(
-  token: "<YOUR_API_KEY>",
-  environment: Acme::Environment::PRODUCTION
-)
-
-client.s3.get_presigned_url(s3key: "xyz")
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Environment ID Production not found"
+  }
+]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
-"require "acme"
-
-client = Acme::Client.new(
-  token: "<YOUR_API_KEY>",
-  environment: Acme::Environment::STAGING
-)
-
-client.s3.get_presigned_url(s3key: "xyz")
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Environment ID Staging not found"
+  }
+]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
@@ -277,7 +269,7 @@ exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 
 client = Acme::Client.new(base_url: "https://api.example.com")
 
-client.nullable.create_user(
+client.nullable.createuser(
   username: "john.doe",
   tags: ["admin"],
   metadata: {
@@ -306,7 +298,7 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 
 client = Acme::Client.new(base_url: "https://api.example.com")
 
-client.nullable.get_users(
+client.nullable.getusers(
   usernames: %w[john.doe jane.doe],
   tags: [nil],
   extra: nil
@@ -319,7 +311,7 @@ exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
 
 client = Acme::Client.new(base_url: "https://api.example.com")
 
-client.create_user(
+client..create_user(
   password: "password",
   profile: {
     name: "name",
@@ -335,7 +327,7 @@ exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] 
 
 client = Acme::Client.new(base_url: "https://api.example.com")
 
-client.create_user(
+client..create_user(
   id: "id",
   password: "password",
   profile: {
@@ -382,20 +374,18 @@ client = Acme::Client.new(
   environment: Acme::Environment::PRODUCTION
 )
 
-client.dummy.get_dummy
+client.dummy.getdummy
 "
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
-"require "acme"
-
-client = Acme::Client.new(
-  token: "<YOUR_API_KEY>",
-  environment: Acme::Environment::STAGING
-)
-
-client.dummy.get_dummy
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Environment ID Staging not found"
+  }
+]"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
@@ -406,7 +396,7 @@ client = Acme::Client.new(
   base_url: "http://localhost:8080"
 )
 
-client.dummy.get_dummy
+client.dummy.getdummy
 "
 `;
 
