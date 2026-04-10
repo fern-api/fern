@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.2.0-rc.1
+  changelogEntry:
+    - summary: |
+        Bump IR dependency to v66.1.0 Maven artifact, replacing custom deserializer
+        workarounds with native irV66 types.
+      type: chore
+    - summary: |
+        Support default discriminant values on unions. When a discriminated union variant
+        has a default value on its discriminator field, the Java SDK now falls back to that
+        variant instead of treating missing discriminators as unknown. This fixes deserialization
+        of payloads where the discriminator is omitted and the API expects a default variant.
+      type: feat
+  createdAt: "2026-04-10"
+  irVersion: 66
+
 - version: 4.2.0-rc.0
   changelogEntry:
     - summary: |

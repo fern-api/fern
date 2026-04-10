@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public final class OpenEnumType {
     public static final OpenEnumType OPTION_A = new OpenEnumType(Value.OPTION_A, "OPTION_A");
 
-    public static final OpenEnumType OPTION_B = new OpenEnumType(Value.OPTION_B, "OPTION_B");
-
     public static final OpenEnumType OPTION_C = new OpenEnumType(Value.OPTION_C, "OPTION_C");
+
+    public static final OpenEnumType OPTION_B = new OpenEnumType(Value.OPTION_B, "OPTION_B");
 
     private final Value value;
 
@@ -46,10 +46,10 @@ public final class OpenEnumType {
         switch (value) {
             case OPTION_A:
                 return visitor.visitOptionA();
-            case OPTION_B:
-                return visitor.visitOptionB();
             case OPTION_C:
                 return visitor.visitOptionC();
+            case OPTION_B:
+                return visitor.visitOptionB();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -61,10 +61,10 @@ public final class OpenEnumType {
         switch (value) {
             case "OPTION_A":
                 return OPTION_A;
-            case "OPTION_B":
-                return OPTION_B;
             case "OPTION_C":
                 return OPTION_C;
+            case "OPTION_B":
+                return OPTION_B;
             default:
                 return new OpenEnumType(Value.UNKNOWN, value);
         }

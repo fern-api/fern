@@ -2447,7 +2447,27 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     string: true,
                     description:
                         "Output targets: filesystem paths and/or registry URLs. " +
-                        "Omit to publish to the default preview registry and write to a temp directory."
+                        "When omitted, publishes to the default preview registry via remote generation. " +
+                        "Examples: --output ./out (disk only), --output https://registry.example.com (registry only), " +
+                        "--output ./out --output https://registry.example.com (both)."
+                })
+                .option("local", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Run generation locally via Docker instead of remotely through Fiddle. " +
+                        "Requires Docker to be installed. " +
+                        "Can be combined with --output for local disk output."
+                })
+                .option("push-diff", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Push a preview diff branch (fern-preview-{version}) to the SDK repo " +
+                        "in addition to publishing to the preview registry. " +
+                        "Requires the generator to have github output configuration " +
+                        "and the Fern GitHub App installed on the target repo. " +
+                        "Cannot be combined with --local."
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
@@ -2461,7 +2481,9 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 generatorFilter,
                 apiName: argv.api,
                 json: argv.json,
-                output: argv.output
+                output: argv.output,
+                local: argv.local,
+                pushDiff: argv.pushDiff
             });
         }
     );
