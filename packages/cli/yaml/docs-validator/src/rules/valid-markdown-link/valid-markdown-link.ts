@@ -76,6 +76,13 @@ export const ValidMarkdownLinks: Rule = {
             absoluteFilePathsToSlugs.set(absoluteFilePath, slugs);
         });
 
+        // Collect version and product slugs for context-aware absolute link resolution
+        const versionSlugs = collector.getVersionNodes().map((v) => v.slug);
+        const productSlugs = collector
+            .getProductNodes()
+            .filter(FernNavigation.isInternalProductNode)
+            .map((p) => p.slug);
+
         const specialDocPages = ["/llms-full.txt", "/llms.txt"];
 
         for (const specialPage of specialDocPages) {
@@ -118,7 +125,9 @@ export const ValidMarkdownLinks: Rule = {
                             pageSlugs: visitableSlugs,
                             absoluteFilePathsToSlugs,
                             redirects: workspace.config.redirects,
-                            baseUrl
+                            baseUrl,
+                            versionSlugs,
+                            productSlugs
                         });
 
                         if (exists === true) {
@@ -198,7 +207,9 @@ export const ValidMarkdownLinks: Rule = {
                             pageSlugs: visitableSlugs,
                             absoluteFilePathsToSlugs,
                             redirects: workspace.config.redirects,
-                            baseUrl
+                            baseUrl,
+                            versionSlugs,
+                            productSlugs
                         });
 
                         if (exists === true) {
