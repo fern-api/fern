@@ -140,6 +140,11 @@ export class DynamicLiteralMapper extends WithGeneration {
         value: unknown;
         fallbackToDefault?: string;
     }): ast.Literal {
+        // When generateLiterals is enabled, inline literal properties use `= new()`
+        // default initializers in the C# model and must not be set in the snippet.
+        if (this.settings.generateLiterals) {
+            return this.csharp.Literal.nop();
+        }
         switch (literal.type) {
             case "boolean": {
                 const bool = this.context.getValueAsBoolean({ value });
@@ -240,6 +245,21 @@ export class DynamicLiteralMapper extends WithGeneration {
     }): ast.Literal {
         switch (named.type) {
             case "alias":
+                // When generateLiterals is enabled and the alias resolves to a literal,
+                // the C# model emits a readonly struct (e.g. `FormatMp3`) instead of a
+                // raw string/bool. Instantiate it with `new TypeName()` rather than
+                // emitting a plain literal value.
+                if (this.settings.generateLiterals && named.typeReference.type === "literal") {
+                    return this.csharp.Literal.reference(
+                        this.csharp.instantiateClass({
+                            classReference: this.csharp.classReference({
+                                origin: named.declaration,
+                                namespace: this.context.getNamespace(named.declaration.fernFilepath)
+                            }),
+                            arguments_: []
+                        })
+                    );
+                }
                 return this.convert({ typeReference: named.typeReference, value, as, fallbackToDefault });
             case "discriminatedUnion":
                 if (this.settings.shouldGeneratedDiscriminatedUnions) {

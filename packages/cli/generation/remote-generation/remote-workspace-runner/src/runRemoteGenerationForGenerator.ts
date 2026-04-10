@@ -16,7 +16,6 @@ import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob.js";
@@ -143,7 +142,7 @@ export async function runRemoteGenerationForGenerator({
 
     const venus = createVenusService({ token: token.value });
     if (!isAirGapped) {
-        const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
+        const orgResponse = await venus.organization.get(projectConfig.organization);
 
         if (orgResponse.ok) {
             if (orgResponse.body.isWhitelabled) {
