@@ -11,7 +11,7 @@ module Seed
       end
 
       # @param request_options [Hash]
-      # @param params [Seed::Payment::Types::CreatePaymentRequest]
+      # @param params [Seed::Payment::Types::PaymentCreateRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -24,8 +24,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/payment",
-          body: Seed::Payment::Types::CreatePaymentRequest.new(params).to_h,
+          path: "payment",
+          body: Seed::Payment::Types::PaymentCreateRequest.new(params).to_h,
           request_options: request_options
         )
         begin
@@ -55,7 +55,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/payment/#{URI.encode_uri_component(params[:payment_id].to_s)}",
+          path: "payment/#{URI.encode_uri_component(params[:payment_id].to_s)}",
           request_options: request_options
         )
         begin

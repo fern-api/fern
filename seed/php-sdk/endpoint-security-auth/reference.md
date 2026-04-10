@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-&gt;auth-&gt;getToken($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;gettoken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,12 @@
 <dd>
 
 ```php
-$client->auth->getToken(
-    new GetTokenRequest([
+$client->auth->gettoken(
+    new AuthGetTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
-        'audience' => 'https://api.example.com',
-        'grantType' => 'client_credentials',
+        'audience' => AuthGetTokenRequestAudience::HttpsApiExampleCom->value,
+        'grantType' => AuthGetTokenRequestGrantType::ClientCredentials->value,
     ]),
 );
 ```
@@ -72,7 +72,7 @@ $client->auth->getToken(
 </details>
 
 ## User
-<details><summary><code>$client-&gt;user-&gt;getWithBearer() -> ?array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getwithbearer() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -85,7 +85,7 @@ $client->auth->getToken(
 <dd>
 
 ```php
-$client->user->getWithBearer();
+$client->user->getwithbearer();
 ```
 </dd>
 </dl>
@@ -97,7 +97,7 @@ $client->user->getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getWithApiKey() -> ?array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getwithapikey() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -110,7 +110,7 @@ $client->user->getWithBearer();
 <dd>
 
 ```php
-$client->user->getWithApiKey();
+$client->user->getwithapikey();
 ```
 </dd>
 </dl>
@@ -122,7 +122,7 @@ $client->user->getWithApiKey();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getWithOAuth() -> ?array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getwithoauth() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -135,7 +135,7 @@ $client->user->getWithApiKey();
 <dd>
 
 ```php
-$client->user->getWithOAuth();
+$client->user->getwithoauth();
 ```
 </dd>
 </dl>
@@ -147,7 +147,7 @@ $client->user->getWithOAuth();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getWithBasic() -> ?array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getwithbasic() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -160,7 +160,7 @@ $client->user->getWithOAuth();
 <dd>
 
 ```php
-$client->user->getWithBasic();
+$client->user->getwithbasic();
 ```
 </dd>
 </dl>
@@ -172,7 +172,7 @@ $client->user->getWithBasic();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getWithInferredAuth() -> ?array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getwithinferredauth() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -185,7 +185,7 @@ $client->user->getWithBasic();
 <dd>
 
 ```php
-$client->user->getWithInferredAuth();
+$client->user->getwithinferredauth();
 ```
 </dd>
 </dl>
@@ -197,7 +197,7 @@ $client->user->getWithInferredAuth();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getWithAnyAuth() -> ?array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getwithanyauth() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -210,7 +210,7 @@ $client->user->getWithInferredAuth();
 <dd>
 
 ```php
-$client->user->getWithAnyAuth();
+$client->user->getwithanyauth();
 ```
 </dd>
 </dl>
@@ -222,7 +222,7 @@ $client->user->getWithAnyAuth();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;user-&gt;getWithAllAuth() -> ?array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getwithallauth() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -235,7 +235,7 @@ $client->user->getWithAnyAuth();
 <dd>
 
 ```php
-$client->user->getWithAllAuth();
+$client->user->getwithallauth();
 ```
 </dd>
 </dl>

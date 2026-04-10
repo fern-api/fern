@@ -1,4 +1,4 @@
-package oauthclientcredentialsreference
+package api
 
 import (
 	"time"

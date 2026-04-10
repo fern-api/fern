@@ -3,10 +3,6 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..commons.types.types.data import Data
-from ..commons.types.types.event_info import EventInfo
-from ..commons.types.types.metadata import Metadata as commons_types_types_metadata_Metadata
-from ..commons.types.types.tag import Tag
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
@@ -15,20 +11,24 @@ from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
-from ..types.types.cast_member import CastMember
-from ..types.types.directory import Directory
-from ..types.types.entity import Entity
-from ..types.types.exception import Exception
-from ..types.types.extended_movie import ExtendedMovie
-from ..types.types.metadata import Metadata as types_types_metadata_Metadata
-from ..types.types.migration import Migration
-from ..types.types.moment import Moment
-from ..types.types.movie import Movie
-from ..types.types.movie_id import MovieId
-from ..types.types.node import Node
-from ..types.types.refresh_token_request import RefreshTokenRequest
-from ..types.types.response import Response
-from ..types.types.test import Test
+from ..types.cast_member import CastMember
+from ..types.commons_data import CommonsData
+from ..types.commons_event_info import CommonsEventInfo
+from ..types.commons_metadata import CommonsMetadata
+from ..types.commons_tag import CommonsTag
+from ..types.directory import Directory
+from ..types.entity import Entity
+from ..types.exception import Exception
+from ..types.extended_movie import ExtendedMovie
+from ..types.metadata import Metadata
+from ..types.migration import Migration
+from ..types.moment import Moment
+from ..types.movie import Movie
+from ..types.movie_id import MovieId
+from ..types.movie_type import MovieType
+from ..types.node import Node
+from ..types.response import Response
+from ..types.test import Test
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -39,7 +39,7 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_movie(
+    def getmovie(
         self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Movie]:
         """
@@ -53,6 +53,7 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[Movie]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             f"movie/{encode_path_param(movie_id)}",
@@ -78,14 +79,15 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def create_movie(
+    def createmovie(
         self,
         *,
         id: MovieId,
         title: str,
         from_: str,
         rating: float,
-        tag: Tag,
+        type: MovieType,
+        tag: CommonsTag,
         metadata: typing.Dict[str, typing.Any],
         revenue: int,
         prequel: typing.Optional[MovieId] = OMIT,
@@ -104,7 +106,9 @@ class RawServiceClient:
         rating : float
             The rating scale is one to five stars
 
-        tag : Tag
+        type : MovieType
+
+        tag : CommonsTag
 
         metadata : typing.Dict[str, typing.Any]
 
@@ -120,6 +124,7 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[MovieId]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "movie",
@@ -130,11 +135,14 @@ class RawServiceClient:
                 "title": title,
                 "from": from_,
                 "rating": rating,
+                "type": type,
                 "tag": tag,
                 "book": book,
                 "metadata": metadata,
                 "revenue": revenue,
-                "type": "movie",
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -158,18 +166,18 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_metadata(
+    def getmetadata(
         self,
         *,
-        x_api_version: str,
+        api_version: str,
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[types_types_metadata_Metadata]:
+    ) -> HttpResponse[Metadata]:
         """
         Parameters
         ----------
-        x_api_version : str
+        api_version : str
 
         shallow : typing.Optional[bool]
 
@@ -180,7 +188,8 @@ class RawServiceClient:
 
         Returns
         -------
-        HttpResponse[types_types_metadata_Metadata]
+        HttpResponse[Metadata]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "metadata",
@@ -190,16 +199,16 @@ class RawServiceClient:
                 "tag": tag,
             },
             headers={
-                "X-API-Version": str(x_api_version) if x_api_version is not None else None,
+                "X-API-Version": str(api_version) if api_version is not None else None,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    types_types_metadata_Metadata,
+                    Metadata,
                     parse_obj_as(
-                        type_=types_types_metadata_Metadata,  # type: ignore
+                        type_=Metadata,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -213,16 +222,16 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def create_big_entity(
+    def createbigentity(
         self,
         *,
         cast_member: typing.Optional[CastMember] = OMIT,
         extended_movie: typing.Optional[ExtendedMovie] = OMIT,
         entity: typing.Optional[Entity] = OMIT,
-        metadata: typing.Optional[types_types_metadata_Metadata] = OMIT,
-        common_metadata: typing.Optional[commons_types_types_metadata_Metadata] = OMIT,
-        event_info: typing.Optional[EventInfo] = OMIT,
-        data: typing.Optional[Data] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
+        common_metadata: typing.Optional[CommonsMetadata] = OMIT,
+        event_info: typing.Optional[CommonsEventInfo] = OMIT,
+        data: typing.Optional[CommonsData] = OMIT,
         migration: typing.Optional[Migration] = OMIT,
         exception: typing.Optional[Exception] = OMIT,
         test: typing.Optional[Test] = OMIT,
@@ -240,13 +249,13 @@ class RawServiceClient:
 
         entity : typing.Optional[Entity]
 
-        metadata : typing.Optional[types_types_metadata_Metadata]
+        metadata : typing.Optional[Metadata]
 
-        common_metadata : typing.Optional[commons_types_types_metadata_Metadata]
+        common_metadata : typing.Optional[CommonsMetadata]
 
-        event_info : typing.Optional[EventInfo]
+        event_info : typing.Optional[CommonsEventInfo]
 
-        data : typing.Optional[Data]
+        data : typing.Optional[CommonsData]
 
         migration : typing.Optional[Migration]
 
@@ -266,6 +275,7 @@ class RawServiceClient:
         Returns
         -------
         HttpResponse[Response]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "big-entity",
@@ -279,15 +289,17 @@ class RawServiceClient:
                 ),
                 "entity": convert_and_respect_annotation_metadata(object_=entity, annotation=Entity, direction="write"),
                 "metadata": convert_and_respect_annotation_metadata(
-                    object_=metadata, annotation=types_types_metadata_Metadata, direction="write"
+                    object_=metadata, annotation=Metadata, direction="write"
                 ),
                 "commonMetadata": convert_and_respect_annotation_metadata(
-                    object_=common_metadata, annotation=commons_types_types_metadata_Metadata, direction="write"
+                    object_=common_metadata, annotation=CommonsMetadata, direction="write"
                 ),
                 "eventInfo": convert_and_respect_annotation_metadata(
-                    object_=event_info, annotation=EventInfo, direction="write"
+                    object_=event_info, annotation=CommonsEventInfo, direction="write"
                 ),
-                "data": convert_and_respect_annotation_metadata(object_=data, annotation=Data, direction="write"),
+                "data": convert_and_respect_annotation_metadata(
+                    object_=data, annotation=CommonsData, direction="write"
+                ),
                 "migration": convert_and_respect_annotation_metadata(
                     object_=migration, annotation=Migration, direction="write"
                 ),
@@ -300,6 +312,9 @@ class RawServiceClient:
                     object_=directory, annotation=Directory, direction="write"
                 ),
                 "moment": convert_and_respect_annotation_metadata(object_=moment, annotation=Moment, direction="write"),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -323,16 +338,11 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def refresh_token(
-        self,
-        *,
-        request: typing.Optional[RefreshTokenRequest] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[None]:
+    def refreshtoken(self, *, ttl: int, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
         Parameters
         ----------
-        request : typing.Optional[RefreshTokenRequest]
+        ttl : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -344,9 +354,12 @@ class RawServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             "refresh-token",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=RefreshTokenRequest, direction="write"
-            ),
+            json={
+                "ttl": ttl,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -367,7 +380,7 @@ class AsyncRawServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_movie(
+    async def getmovie(
         self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Movie]:
         """
@@ -381,6 +394,7 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[Movie]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"movie/{encode_path_param(movie_id)}",
@@ -406,14 +420,15 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def create_movie(
+    async def createmovie(
         self,
         *,
         id: MovieId,
         title: str,
         from_: str,
         rating: float,
-        tag: Tag,
+        type: MovieType,
+        tag: CommonsTag,
         metadata: typing.Dict[str, typing.Any],
         revenue: int,
         prequel: typing.Optional[MovieId] = OMIT,
@@ -432,7 +447,9 @@ class AsyncRawServiceClient:
         rating : float
             The rating scale is one to five stars
 
-        tag : Tag
+        type : MovieType
+
+        tag : CommonsTag
 
         metadata : typing.Dict[str, typing.Any]
 
@@ -448,6 +465,7 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[MovieId]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "movie",
@@ -458,11 +476,14 @@ class AsyncRawServiceClient:
                 "title": title,
                 "from": from_,
                 "rating": rating,
+                "type": type,
                 "tag": tag,
                 "book": book,
                 "metadata": metadata,
                 "revenue": revenue,
-                "type": "movie",
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -486,18 +507,18 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_metadata(
+    async def getmetadata(
         self,
         *,
-        x_api_version: str,
+        api_version: str,
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[types_types_metadata_Metadata]:
+    ) -> AsyncHttpResponse[Metadata]:
         """
         Parameters
         ----------
-        x_api_version : str
+        api_version : str
 
         shallow : typing.Optional[bool]
 
@@ -508,7 +529,8 @@ class AsyncRawServiceClient:
 
         Returns
         -------
-        AsyncHttpResponse[types_types_metadata_Metadata]
+        AsyncHttpResponse[Metadata]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "metadata",
@@ -518,16 +540,16 @@ class AsyncRawServiceClient:
                 "tag": tag,
             },
             headers={
-                "X-API-Version": str(x_api_version) if x_api_version is not None else None,
+                "X-API-Version": str(api_version) if api_version is not None else None,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    types_types_metadata_Metadata,
+                    Metadata,
                     parse_obj_as(
-                        type_=types_types_metadata_Metadata,  # type: ignore
+                        type_=Metadata,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -541,16 +563,16 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def create_big_entity(
+    async def createbigentity(
         self,
         *,
         cast_member: typing.Optional[CastMember] = OMIT,
         extended_movie: typing.Optional[ExtendedMovie] = OMIT,
         entity: typing.Optional[Entity] = OMIT,
-        metadata: typing.Optional[types_types_metadata_Metadata] = OMIT,
-        common_metadata: typing.Optional[commons_types_types_metadata_Metadata] = OMIT,
-        event_info: typing.Optional[EventInfo] = OMIT,
-        data: typing.Optional[Data] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
+        common_metadata: typing.Optional[CommonsMetadata] = OMIT,
+        event_info: typing.Optional[CommonsEventInfo] = OMIT,
+        data: typing.Optional[CommonsData] = OMIT,
         migration: typing.Optional[Migration] = OMIT,
         exception: typing.Optional[Exception] = OMIT,
         test: typing.Optional[Test] = OMIT,
@@ -568,13 +590,13 @@ class AsyncRawServiceClient:
 
         entity : typing.Optional[Entity]
 
-        metadata : typing.Optional[types_types_metadata_Metadata]
+        metadata : typing.Optional[Metadata]
 
-        common_metadata : typing.Optional[commons_types_types_metadata_Metadata]
+        common_metadata : typing.Optional[CommonsMetadata]
 
-        event_info : typing.Optional[EventInfo]
+        event_info : typing.Optional[CommonsEventInfo]
 
-        data : typing.Optional[Data]
+        data : typing.Optional[CommonsData]
 
         migration : typing.Optional[Migration]
 
@@ -594,6 +616,7 @@ class AsyncRawServiceClient:
         Returns
         -------
         AsyncHttpResponse[Response]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "big-entity",
@@ -607,15 +630,17 @@ class AsyncRawServiceClient:
                 ),
                 "entity": convert_and_respect_annotation_metadata(object_=entity, annotation=Entity, direction="write"),
                 "metadata": convert_and_respect_annotation_metadata(
-                    object_=metadata, annotation=types_types_metadata_Metadata, direction="write"
+                    object_=metadata, annotation=Metadata, direction="write"
                 ),
                 "commonMetadata": convert_and_respect_annotation_metadata(
-                    object_=common_metadata, annotation=commons_types_types_metadata_Metadata, direction="write"
+                    object_=common_metadata, annotation=CommonsMetadata, direction="write"
                 ),
                 "eventInfo": convert_and_respect_annotation_metadata(
-                    object_=event_info, annotation=EventInfo, direction="write"
+                    object_=event_info, annotation=CommonsEventInfo, direction="write"
                 ),
-                "data": convert_and_respect_annotation_metadata(object_=data, annotation=Data, direction="write"),
+                "data": convert_and_respect_annotation_metadata(
+                    object_=data, annotation=CommonsData, direction="write"
+                ),
                 "migration": convert_and_respect_annotation_metadata(
                     object_=migration, annotation=Migration, direction="write"
                 ),
@@ -628,6 +653,9 @@ class AsyncRawServiceClient:
                     object_=directory, annotation=Directory, direction="write"
                 ),
                 "moment": convert_and_respect_annotation_metadata(object_=moment, annotation=Moment, direction="write"),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -651,16 +679,13 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def refresh_token(
-        self,
-        *,
-        request: typing.Optional[RefreshTokenRequest] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+    async def refreshtoken(
+        self, *, ttl: int, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
-        request : typing.Optional[RefreshTokenRequest]
+        ttl : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -672,9 +697,12 @@ class AsyncRawServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "refresh-token",
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=RefreshTokenRequest, direction="write"
-            ),
+            json={
+                "ttl": ttl,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )

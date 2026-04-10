@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-import os
 import typing
 
 import httpx
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
@@ -14,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .service.client import AsyncServiceClient, ServiceClient
 
 
-class SeedBearerTokenEnvironmentVariable:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -23,7 +21,7 @@ class SeedBearerTokenEnvironmentVariable:
     base_url : str
         The base url to use for requests from the client.
 
-    api_key : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    token : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -39,13 +37,12 @@ class SeedBearerTokenEnvironmentVariable:
     logging : typing.Optional[typing.Union[LogConfig, Logger]]
         Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
 
-    version : typing.Optional[str]
     Examples
     --------
-    from seed import SeedBearerTokenEnvironmentVariable
+    from seed import SeedApi
 
-    client = SeedBearerTokenEnvironmentVariable(
-        api_key="YOUR_API_KEY",
+    client = SeedApi(
+        token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -54,24 +51,19 @@ class SeedBearerTokenEnvironmentVariable:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("COURIER_API_KEY"),
+        token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        version: typing.Optional[str] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        if api_key is None:
-            raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
-            )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
-            api_key=api_key,
+            token=token,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -80,7 +72,6 @@ class SeedBearerTokenEnvironmentVariable:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
             logging=logging,
-            version=version,
         )
         self._service: typing.Optional[ServiceClient] = None
 
@@ -111,7 +102,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedBearerTokenEnvironmentVariable:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -120,7 +111,7 @@ class AsyncSeedBearerTokenEnvironmentVariable:
     base_url : str
         The base url to use for requests from the client.
 
-    api_key : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    token : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -139,13 +130,12 @@ class AsyncSeedBearerTokenEnvironmentVariable:
     logging : typing.Optional[typing.Union[LogConfig, Logger]]
         Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
 
-    version : typing.Optional[str]
     Examples
     --------
-    from seed import AsyncSeedBearerTokenEnvironmentVariable
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedBearerTokenEnvironmentVariable(
-        api_key="YOUR_API_KEY",
+    client = AsyncSeedApi(
+        token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -154,25 +144,20 @@ class AsyncSeedBearerTokenEnvironmentVariable:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("COURIER_API_KEY"),
+        token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
-        version: typing.Optional[str] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        if api_key is None:
-            raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
-            )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
-            api_key=api_key,
+            token=token,
             headers=headers,
             async_token=async_token,
             httpx_client=httpx_client
@@ -180,7 +165,6 @@ class AsyncSeedBearerTokenEnvironmentVariable:
             else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
             logging=logging,
-            version=version,
         )
         self._service: typing.Optional[AsyncServiceClient] = None
 

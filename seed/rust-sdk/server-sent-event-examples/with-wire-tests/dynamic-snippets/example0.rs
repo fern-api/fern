@@ -1,4 +1,4 @@
-use seed_server_sent_events::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,12 +6,12 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .completions
         .stream(
-            &StreamCompletionRequest {
-                query: "foo".to_string(),
+            &CompletionsStreamRequest {
+                query: "query".to_string(),
             },
             None,
         )

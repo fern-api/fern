@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.getText() -> String</code></summary>
+<details><summary><code>client.service.gettext() -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.service().getText();
+client.service().gettext();
 ```
 </dd>
 </dl>

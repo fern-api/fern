@@ -29,15 +29,14 @@ Other backslash examples: FOO\_BAR, path\to\file, C:\Users\name
 <dd>
 
 ```python
-from seed import SeedPythonBackslashEscape
+from seed import SeedApi
 
-client = SeedPythonBackslashEscape(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.get(
     id="id",
-    domain="domain",
 )
 
 ```

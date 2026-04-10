@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>$client-&gt;union-&gt;get($request) -> string|array|int|null</code></summary>
+<details><summary><code>$client-&gt;union-&gt;get($request) -> string|int|array|null</code></summary>
 <dl>
 <dd>
 
@@ -30,7 +30,7 @@ $client->union->get(
 <dl>
 <dd>
 
-**$request:** `string|array|int` 
+**$request:** `string|int|array` 
     
 </dd>
 </dl>
@@ -42,7 +42,7 @@ $client->union->get(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;union-&gt;getMetadata() -> ?array</code></summary>
+<details><summary><code>$client-&gt;union-&gt;getmetadata() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +55,7 @@ $client->union->get(
 <dd>
 
 ```php
-$client->union->getMetadata();
+$client->union->getmetadata();
 ```
 </dd>
 </dl>
@@ -67,7 +67,7 @@ $client->union->getMetadata();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;union-&gt;updateMetadata($request) -> ?bool</code></summary>
+<details><summary><code>$client-&gt;union-&gt;updatemetadata($request) -> ?bool</code></summary>
 <dl>
 <dd>
 
@@ -80,11 +80,9 @@ $client->union->getMetadata();
 <dd>
 
 ```php
-$client->union->updateMetadata(
+$client->union->updatemetadata(
     [
-        'string' => [
-            'key' => "value",
-        ],
+        'key' => "value",
     ],
 );
 ```
@@ -127,13 +125,7 @@ $client->union->updateMetadata(
 
 ```php
 $client->union->call(
-    new Request([
-        'union' => [
-            'string' => [
-                'key' => "value",
-            ],
-        ],
-    ]),
+    new Request([]),
 );
 ```
 </dd>
@@ -149,7 +141,7 @@ $client->union->call(
 <dl>
 <dd>
 
-**$request:** `Request` 
+**$union:** `array|NamedMetadata|null` 
     
 </dd>
 </dl>
@@ -161,7 +153,7 @@ $client->union->call(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;union-&gt;duplicateTypesUnion($request) -> string|array|int|null</code></summary>
+<details><summary><code>$client-&gt;union-&gt;duplicatetypesunion($request) -> string|int|array|null</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +166,7 @@ $client->union->call(
 <dd>
 
 ```php
-$client->union->duplicateTypesUnion(
+$client->union->duplicatetypesunion(
     'string',
 );
 ```
@@ -191,7 +183,7 @@ $client->union->duplicateTypesUnion(
 <dl>
 <dd>
 
-**$request:** `string|array|int` 
+**$request:** `string|int|array` 
     
 </dd>
 </dl>
@@ -203,7 +195,7 @@ $client->union->duplicateTypesUnion(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;union-&gt;nestedUnions($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;union-&gt;nestedunions($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -216,7 +208,7 @@ $client->union->duplicateTypesUnion(
 <dd>
 
 ```php
-$client->union->nestedUnions(
+$client->union->nestedunions(
     'string',
 );
 ```
@@ -245,7 +237,7 @@ $client->union->nestedUnions(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;union-&gt;testCamelCaseProperties($request) -> ?string</code></summary>
+<details><summary><code>$client-&gt;union-&gt;testcamelcaseproperties($request) -> ?string</code></summary>
 <dl>
 <dd>
 
@@ -258,11 +250,11 @@ $client->union->nestedUnions(
 <dd>
 
 ```php
-$client->union->testCamelCaseProperties(
-    new PaymentRequest([
+$client->union->testcamelcaseproperties(
+    new UnionTestCamelCasePropertiesRequest([
         'paymentMethod' => new TokenizeCard([
-            'method' => 'card',
-            'cardNumber' => '1234567890123456',
+            'method' => 'method',
+            'cardNumber' => 'cardNumber',
         ]),
     ]),
 );

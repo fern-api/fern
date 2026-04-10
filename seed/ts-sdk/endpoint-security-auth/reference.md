@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> SeedEndpointSecurityAuth.TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">gettoken</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,9 +13,11 @@
 <dd>
 
 ```typescript
-await client.auth.getToken({
+await client.auth.gettoken({
     client_id: "client_id",
-    client_secret: "client_secret"
+    client_secret: "client_secret",
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
 });
 
 ```
@@ -32,7 +34,7 @@ await client.auth.getToken({
 <dl>
 <dd>
 
-**request:** `SeedEndpointSecurityAuth.GetTokenRequest` 
+**request:** `SeedApi.AuthGetTokenRequest` 
     
 </dd>
 </dl>
@@ -53,7 +55,7 @@ await client.auth.getToken({
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getWithBearer</a>() -> SeedEndpointSecurityAuth.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getwithbearer</a>() -> SeedApi.User[]</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +68,7 @@ await client.auth.getToken({
 <dd>
 
 ```typescript
-await client.user.getWithBearer();
+await client.user.getwithbearer();
 
 ```
 </dd>
@@ -94,7 +96,7 @@ await client.user.getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getWithApiKey</a>() -> SeedEndpointSecurityAuth.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getwithapikey</a>() -> SeedApi.User[]</code></summary>
 <dl>
 <dd>
 
@@ -107,7 +109,7 @@ await client.user.getWithBearer();
 <dd>
 
 ```typescript
-await client.user.getWithApiKey();
+await client.user.getwithapikey();
 
 ```
 </dd>
@@ -135,7 +137,7 @@ await client.user.getWithApiKey();
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getWithOAuth</a>() -> SeedEndpointSecurityAuth.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getwithoauth</a>() -> SeedApi.User[]</code></summary>
 <dl>
 <dd>
 
@@ -148,7 +150,7 @@ await client.user.getWithApiKey();
 <dd>
 
 ```typescript
-await client.user.getWithOAuth();
+await client.user.getwithoauth();
 
 ```
 </dd>
@@ -176,7 +178,7 @@ await client.user.getWithOAuth();
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getWithBasic</a>() -> SeedEndpointSecurityAuth.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getwithbasic</a>() -> SeedApi.User[]</code></summary>
 <dl>
 <dd>
 
@@ -189,7 +191,7 @@ await client.user.getWithOAuth();
 <dd>
 
 ```typescript
-await client.user.getWithBasic();
+await client.user.getwithbasic();
 
 ```
 </dd>
@@ -217,7 +219,7 @@ await client.user.getWithBasic();
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getWithInferredAuth</a>() -> SeedEndpointSecurityAuth.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getwithinferredauth</a>() -> SeedApi.User[]</code></summary>
 <dl>
 <dd>
 
@@ -230,7 +232,7 @@ await client.user.getWithBasic();
 <dd>
 
 ```typescript
-await client.user.getWithInferredAuth();
+await client.user.getwithinferredauth();
 
 ```
 </dd>
@@ -258,7 +260,7 @@ await client.user.getWithInferredAuth();
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getWithAnyAuth</a>() -> SeedEndpointSecurityAuth.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getwithanyauth</a>() -> SeedApi.User[]</code></summary>
 <dl>
 <dd>
 
@@ -271,7 +273,7 @@ await client.user.getWithInferredAuth();
 <dd>
 
 ```typescript
-await client.user.getWithAnyAuth();
+await client.user.getwithanyauth();
 
 ```
 </dd>
@@ -299,7 +301,7 @@ await client.user.getWithAnyAuth();
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getWithAllAuth</a>() -> SeedEndpointSecurityAuth.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getwithallauth</a>() -> SeedApi.User[]</code></summary>
 <dl>
 <dd>
 
@@ -312,7 +314,7 @@ await client.user.getWithAnyAuth();
 <dd>
 
 ```typescript
-await client.user.getWithAllAuth();
+await client.user.getwithallauth();
 
 ```
 </dd>

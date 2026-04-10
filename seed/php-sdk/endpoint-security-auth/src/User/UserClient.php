@@ -4,7 +4,7 @@ namespace Seed\User;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\User\Types\User;
+use Seed\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -62,7 +62,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithBearer(?array $options = null): ?array
+    public function getwithbearer(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -107,7 +107,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithApiKey(?array $options = null): ?array
+    public function getwithapikey(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -152,7 +152,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithOAuth(?array $options = null): ?array
+    public function getwithoauth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -197,7 +197,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithBasic(?array $options = null): ?array
+    public function getwithbasic(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -242,7 +242,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithInferredAuth(?array $options = null): ?array
+    public function getwithinferredauth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -287,7 +287,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithAnyAuth(?array $options = null): ?array
+    public function getwithanyauth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -332,7 +332,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithAllAuth(?array $options = null): ?array
+    public function getwithallauth(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {

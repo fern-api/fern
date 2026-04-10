@@ -1,12 +1,17 @@
 package com.snippets;
 
-import com.seed.literal.SeedLiteralClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.path.requests.PathSendRequest;
+import com.seed.api.resources.path.types.PathSendRequestId;
 
 public class Example5 {
     public static void main(String[] args) {
-        SeedLiteralClient client =
-                SeedLiteralClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.path().send("123");
+        client.path()
+                .send(
+                        PathSendRequestId.ONE_HUNDRED_TWENTY_THREE,
+                        PathSendRequest.builder().build());
     }
 }

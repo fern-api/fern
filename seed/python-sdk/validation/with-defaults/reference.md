@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">create</a>(...) -> Type</code></summary>
+## _
+<details><summary><code>client._.<a href="src/seed/_/client.py">create</a>(...) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -12,16 +13,16 @@
 <dd>
 
 ```python
-from seed import SeedValidation
+from seed import SeedApi
 
-client = SeedValidation(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.create(
-    decimal=2.2,
-    even=100,
-    name="fern",
+client._.create(
+    decimal=1.1,
+    even=1,
+    name="name",
     shape="SQUARE",
 )
 
@@ -83,7 +84,7 @@ client.create(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">get</a>(...) -> Type</code></summary>
+<details><summary><code>client._.<a href="src/seed/_/client.py">get</a>(...) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -96,16 +97,16 @@ client.create(
 <dd>
 
 ```python
-from seed import SeedValidation
+from seed import SeedApi
 
-client = SeedValidation(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.get(
-    decimal=2.2,
-    even=100,
-    name="fern",
+client._.get(
+    decimal=1.1,
+    even=1,
+    name="name",
 )
 
 ```

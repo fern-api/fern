@@ -1,26 +1,19 @@
 
-
 module Seed
-  class Client
-    # @param base_url [String, nil]
-    #
-    # @return [void]
-    def initialize(base_url: nil)
-      @raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url,
-        headers: {
-          "User-Agent" => "fern_alias/0.0.1",
-          "X-Fern-Language" => "Ruby"
-        }
-      )
-    end
-    # @return [Seed::::Client]
-    def 
-      @ ||= Seed::::Client.new(client: @raw_client)
-    end
-  end
-end
-tional_query_parameters
+  module 
+    class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
+      def initialize(client:)
+        @client = client
+      end
+
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Types::TypeID] :type_id

@@ -6,22 +6,48 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Account, BaseResource, Memo, Patient, Practitioner, ResourceList, Script
+    from .types import (
+        Account,
+        AccountResourceType,
+        BaseResource,
+        Memo,
+        Patient,
+        PatientResourceType,
+        Practitioner,
+        PractitionerResourceType,
+        ResourceList,
+        ResourceList_Account,
+        ResourceList_Patient,
+        ResourceList_Practitioner,
+        ResourceList_Script,
+        Script,
+        ScriptResourceType,
+    )
+    from . import _
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "Account": ".types",
+    "AccountResourceType": ".types",
     "AsyncSeedApi": ".client",
     "BaseResource": ".types",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "Memo": ".types",
     "Patient": ".types",
+    "PatientResourceType": ".types",
     "Practitioner": ".types",
+    "PractitionerResourceType": ".types",
     "ResourceList": ".types",
+    "ResourceList_Account": ".types",
+    "ResourceList_Patient": ".types",
+    "ResourceList_Practitioner": ".types",
+    "ResourceList_Script": ".types",
     "Script": ".types",
+    "ScriptResourceType": ".types",
     "SeedApi": ".client",
+    "_": "._",
     "__version__": ".version",
 }
 
@@ -49,15 +75,24 @@ def __dir__():
 
 __all__ = [
     "Account",
+    "AccountResourceType",
     "AsyncSeedApi",
     "BaseResource",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Memo",
     "Patient",
+    "PatientResourceType",
     "Practitioner",
+    "PractitionerResourceType",
     "ResourceList",
+    "ResourceList_Account",
+    "ResourceList_Patient",
+    "ResourceList_Practitioner",
+    "ResourceList_Script",
     "Script",
+    "ScriptResourceType",
     "SeedApi",
+    "_",
     "__version__",
 ]

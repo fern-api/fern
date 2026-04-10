@@ -4,8 +4,10 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.auth_token_response import AuthTokenResponse
 from .raw_client import AsyncRawAuthClient, RawAuthClient
-from .types.token_response import TokenResponse
+from .types.auth_get_token_request_audience import AuthGetTokenRequestAudience
+from .types.auth_get_token_request_grant_type import AuthGetTokenRequestGrantType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,20 +28,26 @@ class AuthClient:
         """
         return self._raw_client
 
-    def get_token(
+    def gettoken(
         self,
         *,
         client_id: str,
         client_secret: str,
+        audience: AuthGetTokenRequestAudience,
+        grant_type: AuthGetTokenRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> TokenResponse:
+    ) -> AuthTokenResponse:
         """
         Parameters
         ----------
         client_id : str
 
         client_secret : str
+
+        audience : AuthGetTokenRequestAudience
+
+        grant_type : AuthGetTokenRequestGrantType
 
         scope : typing.Optional[str]
 
@@ -48,25 +56,31 @@ class AuthClient:
 
         Returns
         -------
-        TokenResponse
+        AuthTokenResponse
+
 
         Examples
         --------
-        from seed import SeedOauthClientCredentials
+        from seed import SeedApi
 
-        client = SeedOauthClientCredentials(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = SeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.auth.get_token(
+        client.auth.gettoken(
             client_id="client_id",
             client_secret="client_secret",
-            scope="scope",
+            audience="https://api.example.com",
+            grant_type="client_credentials",
         )
         """
-        _response = self._raw_client.get_token(
-            client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
+        _response = self._raw_client.gettoken(
+            client_id=client_id,
+            client_secret=client_secret,
+            audience=audience,
+            grant_type=grant_type,
+            scope=scope,
+            request_options=request_options,
         )
         return _response.data
 
@@ -86,20 +100,26 @@ class AsyncAuthClient:
         """
         return self._raw_client
 
-    async def get_token(
+    async def gettoken(
         self,
         *,
         client_id: str,
         client_secret: str,
+        audience: AuthGetTokenRequestAudience,
+        grant_type: AuthGetTokenRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> TokenResponse:
+    ) -> AuthTokenResponse:
         """
         Parameters
         ----------
         client_id : str
 
         client_secret : str
+
+        audience : AuthGetTokenRequestAudience
+
+        grant_type : AuthGetTokenRequestGrantType
 
         scope : typing.Optional[str]
 
@@ -108,32 +128,38 @@ class AsyncAuthClient:
 
         Returns
         -------
-        TokenResponse
+        AuthTokenResponse
+
 
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedOauthClientCredentials
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedOauthClientCredentials(
-            base_url="YOUR_BASE_URL",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
+        client = AsyncSeedApi(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.auth.get_token(
+            await client.auth.gettoken(
                 client_id="client_id",
                 client_secret="client_secret",
-                scope="scope",
+                audience="https://api.example.com",
+                grant_type="client_credentials",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_token(
-            client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
+        _response = await self._raw_client.gettoken(
+            client_id=client_id,
+            client_secret=client_secret,
+            audience=audience,
+            grant_type=grant_type,
+            scope=scope,
+            request_options=request_options,
         )
         return _response.data

@@ -1,23 +1,23 @@
-//! # ServerSentEvents SDK
+//! # server-sent-event-examples SDK
 //!
-//! The official Rust SDK for the ServerSentEvents.
+//! The official Rust SDK for the server-sent-event-examples.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_server_sent_events::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .completions
 //!         .stream(
-//!             &StreamCompletionRequest {
-//!                 query: "foo".to_string(),
+//!             &CompletionsStreamRequest {
+//!                 query: "query".to_string(),
 //!             },
 //!             None,
 //!         )

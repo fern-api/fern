@@ -7,7 +7,7 @@ import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedTrace from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace MigrationClient {
     export type Options = BaseClientOptions;
@@ -23,40 +23,37 @@ export class MigrationClient {
     }
 
     /**
-     * @param {SeedTrace.GetAttemptedMigrationsRequest} request
+     * @param {SeedApi.MigrationGetAttemptedMigrationsRequest} request
      * @param {MigrationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.migration.getAttemptedMigrations({
+     *     await client.migration.getattemptedmigrations({
      *         "admin-key-header": "admin-key-header"
      *     })
      */
-    public getAttemptedMigrations(
-        request: SeedTrace.GetAttemptedMigrationsRequest,
+    public getattemptedmigrations(
+        request: SeedApi.MigrationGetAttemptedMigrationsRequest,
         requestOptions?: MigrationClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.Migration[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.Migration[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getattemptedmigrations(request, requestOptions));
     }
 
-    private async __getAttemptedMigrations(
-        request: SeedTrace.GetAttemptedMigrationsRequest,
+    private async __getattemptedmigrations(
+        request: SeedApi.MigrationGetAttemptedMigrationsRequest,
         requestOptions?: MigrationClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.Migration[]>> {
+    ): Promise<core.WithRawResponse<SeedApi.Migration[]>> {
         const { "admin-key-header": adminKeyHeader } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "admin-key-header": adminKeyHeader,
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
+            mergeOnlyDefinedHeaders({ "admin-key-header": adminKeyHeader }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/migration-info/all",
+                    environments.SeedApiEnvironment.Default,
+                "migration-info/all",
             ),
             method: "GET",
             headers: _headers,
@@ -68,11 +65,11 @@ export class MigrationClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedTrace.Migration[], rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.Migration[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

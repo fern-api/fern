@@ -6,10 +6,11 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
+from .account_resource_type import AccountResourceType
 
 
 class Account(UniversalBaseModel):
-    resource_type: typing.Literal["Account"] = "Account"
+    resource_type: AccountResourceType
     name: str
     patient: typing.Optional["Patient"] = None
     practitioner: typing.Optional["Practitioner"] = None

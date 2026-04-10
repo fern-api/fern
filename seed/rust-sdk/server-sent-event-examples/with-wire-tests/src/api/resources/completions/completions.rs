@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, RequestOptions, SseStream};
+use crate::{ApiError, ByteStream, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct CompletionsClient {
@@ -15,51 +15,48 @@ impl CompletionsClient {
 
     pub async fn stream(
         &self,
-        request: &StreamCompletionRequest,
+        request: &CompletionsStreamRequest,
         options: Option<RequestOptions>,
-    ) -> Result<SseStream<StreamedCompletion>, ApiError> {
+    ) -> Result<ByteStream, ApiError> {
         self.http_client
-            .execute_sse_request(
+            .execute_stream_request(
                 Method::POST,
                 "stream",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
-                Some("[[DONE]]".to_string()),
             )
             .await
     }
 
-    pub async fn stream_events(
+    pub async fn streamevents(
         &self,
-        request: &StreamEventsRequest,
+        request: &CompletionsStreamEventsRequest,
         options: Option<RequestOptions>,
-    ) -> Result<SseStream<StreamEvent>, ApiError> {
+    ) -> Result<ByteStream, ApiError> {
         self.http_client
-            .execute_sse_request(
+            .execute_stream_request(
                 Method::POST,
                 "stream-events",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
-                Some("[DONE]".to_string()),
             )
             .await
     }
 
-    pub async fn stream_events_context_protocol(
+    pub async fn streameventscontextprotocol(
         &self,
-        request: &StreamEventsContextProtocolRequest,
+        request: &CompletionsStreamEventsContextProtocolRequest,
         options: Option<RequestOptions>,
-    ) -> Result<SseStream<StreamEventContextProtocol>, ApiError> {
+    ) -> Result<ByteStream, ApiError> {
         self.http_client
-            .execute_sse_request(
+            .execute_stream_request(
                 Method::POST,
                 "stream-events-context-protocol",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
-                Some("[DONE]".to_string()),
             )
             .await
     }

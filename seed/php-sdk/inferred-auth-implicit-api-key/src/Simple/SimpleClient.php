@@ -58,14 +58,14 @@ class SimpleClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getSomething(?array $options = null): void
+    public function getsomething(?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/get-something",
+                    path: "get-something",
                     method: HttpMethod::GET,
                 ),
                 $options,

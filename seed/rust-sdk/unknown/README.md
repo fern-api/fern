@@ -1,7 +1,7 @@
 # Seed Rust Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
-[![crates.io shield](https://img.shields.io/crates/v/seed_unknown_as_any)](https://crates.io/crates/seed_unknown_as_any)
+[![crates.io shield](https://img.shields.io/crates/v/seed_api)](https://crates.io/crates/seed_api)
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
@@ -11,6 +11,7 @@ The Seed Rust library provides convenient access to the Seed APIs from Rust.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Errors](#errors)
+- [Request Types](#request-types)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -24,13 +25,13 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-seed_unknown_as_any = "0.0.1"
+seed_api = "0.0.1"
 ```
 
 Or install via cargo:
 
 ```sh
-cargo add seed_unknown_as_any
+cargo add seed_api
 ```
 
 ## Reference
@@ -42,14 +43,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```rust
-use seed_unknown_as_any::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UnknownAsAnyClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .unknown
         .post(&serde_json::json!({"key":"value"}), None)
@@ -73,6 +74,18 @@ match client.unknown.post(None)?.await {
         println!("Other error: {:?}", e);
     }
 }
+```
+
+## Request Types
+
+The SDK exports all request types as Rust structs. Simply import them from the crate to access them:
+
+```rust
+use seed_api::prelude::{*};
+
+let request = MyObject {
+    ...
+};
 ```
 
 ## Advanced

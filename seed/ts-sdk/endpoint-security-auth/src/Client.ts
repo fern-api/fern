@@ -3,22 +3,22 @@
 import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
-export declare namespace SeedEndpointSecurityAuthClient {
+export declare namespace SeedApiClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class SeedEndpointSecurityAuthClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<SeedEndpointSecurityAuthClient.Options>;
+export class SeedApiClient {
+    protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
     protected _auth: AuthClient | undefined;
     protected _user: UserClient | undefined;
 
-    constructor(options: SeedEndpointSecurityAuthClient.Options) {
-        this._options = normalizeClientOptionsWithAuth(options);
+    constructor(options: SeedApiClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     public get auth(): AuthClient {
@@ -54,7 +54,6 @@ export class SeedEndpointSecurityAuthClient {
                 maxRetries: this._options.maxRetries,
                 fetch: this._options.fetch,
                 logging: this._options.logging,
-                getAuthHeaders: async () => (await this._options.authProvider.getAuthRequest()).headers,
             },
             requestOptions,
         );

@@ -4,7 +4,7 @@ namespace Seed\Service;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Service\Types\Response;
+use Seed\Types\Response;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -12,7 +12,7 @@ use Seed\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Types\StringResponse;
-use Seed\Service\Types\WithDocs;
+use Seed\Types\WithDocs;
 
 class ServiceClient
 {
@@ -64,7 +64,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovie(string $request, ?array $options = null): ?Response
+    public function getmovie(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -111,7 +111,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovieDocs(string $request, ?array $options = null): ?Response
+    public function getmoviedocs(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -158,7 +158,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovieName(string $request, ?array $options = null): ?StringResponse
+    public function getmoviename(string $request, ?array $options = null): ?StringResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -205,7 +205,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovieMetadata(string $request, ?array $options = null): ?Response
+    public function getmoviemetadata(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -252,7 +252,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOptionalMovie(string $request, ?array $options = null): ?Response
+    public function getoptionalmovie(string $request, ?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -299,7 +299,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOptionalMovieDocs(string $request, ?array $options = null): ?WithDocs
+    public function getoptionalmoviedocs(string $request, ?array $options = null): ?WithDocs
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -346,7 +346,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOptionalMovieName(string $request, ?array $options = null): ?StringResponse
+    public function getoptionalmoviename(string $request, ?array $options = null): ?StringResponse
     {
         $options = array_merge($this->options, $options ?? []);
         try {

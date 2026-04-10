@@ -15,8 +15,11 @@ func do() {
         option.WithToken(
             "<token>",
         ),
+        option.WithAPIKey(
+            "<X-API-Key>",
+        ),
     )
-    client.User.GetWithAllAuth(
+    client.User.Getwithoauth(
         context.TODO(),
     )
 }

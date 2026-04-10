@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.ec2.<a href="src/seed/ec2/client.py">boot_instance</a>(...)</code></summary>
+<details><summary><code>client.ec2.<a href="src/seed/ec2/client.py">bootinstance</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,14 @@
 <dd>
 
 ```python
-from seed import SeedMultiUrlEnvironment
-from seed.environment import SeedMultiUrlEnvironmentEnvironment
+from seed import SeedApi
 
-client = SeedMultiUrlEnvironment(
+client = SeedApi(
     token="<token>",
-    environment=SeedMultiUrlEnvironmentEnvironment.PRODUCTION,
+    base_url="https://yourhost.com/path/to/api",
 )
 
-client.ec2.boot_instance(
+client.ec2.bootinstance(
     size="size",
 )
 
@@ -60,7 +59,7 @@ client.ec2.boot_instance(
 </details>
 
 ## S3
-<details><summary><code>client.s3.<a href="src/seed/s3/client.py">get_presigned_url</a>(...) -> str</code></summary>
+<details><summary><code>client.s3.<a href="src/seed/s3/client.py">getpresignedurl</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -73,15 +72,14 @@ client.ec2.boot_instance(
 <dd>
 
 ```python
-from seed import SeedMultiUrlEnvironment
-from seed.environment import SeedMultiUrlEnvironmentEnvironment
+from seed import SeedApi
 
-client = SeedMultiUrlEnvironment(
+client = SeedApi(
     token="<token>",
-    environment=SeedMultiUrlEnvironmentEnvironment.PRODUCTION,
+    base_url="https://yourhost.com/path/to/api",
 )
 
-client.s3.get_presigned_url(
+client.s3.getpresignedurl(
     s3key="s3Key",
 )
 

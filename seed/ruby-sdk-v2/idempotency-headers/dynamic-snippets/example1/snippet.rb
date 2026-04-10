@@ -5,4 +5,7 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.payment.delete(payment_id: "paymentId")
+client.payment.create(
+  amount: 1,
+  currency: "USD"
+)

@@ -13,9 +13,9 @@
 <dd>
 
 ```python
-from seed import SeedUnions
+from seed import SeedApi
 
-client = SeedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -70,20 +70,16 @@ client.bigunion.get(
 <dd>
 
 ```python
-from seed import SeedUnions
-from seed.bigunion import BigUnion_NormalSweet
-import datetime
+from seed import SeedApi, BigUnionZero
 
-client = SeedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.bigunion.update(
-    request=BigUnion_NormalSweet(
-        id="id",
-        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    request=BigUnionZero(
         value="value",
+        type="normalSweet",
     ),
 )
 
@@ -134,27 +130,17 @@ client.bigunion.update(
 <dd>
 
 ```python
-from seed import SeedUnions
-from seed.bigunion import BigUnion_NormalSweet
-import datetime
+from seed import SeedApi, BigUnionZero
 
-client = SeedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.bigunion.update_many(
     request=[
-        BigUnion_NormalSweet(
-            id="id",
-            created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        BigUnionZero(
             value="value",
-        ),
-        BigUnion_NormalSweet(
-            id="id",
-            created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            archived_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            value="value",
+            type="normalSweet",
         )
     ],
 )
@@ -207,9 +193,9 @@ client.bigunion.update_many(
 <dd>
 
 ```python
-from seed import SeedUnions
+from seed import SeedApi
 
-client = SeedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -264,17 +250,16 @@ client.union.get(
 <dd>
 
 ```python
-from seed import SeedUnions
-from seed.union import Shape_Circle
+from seed import SeedApi, ShapeZero
 
-client = SeedUnions(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.union.update(
-    request=Shape_Circle(
-        id="id",
+    request=ShapeZero(
         radius=1.1,
+        type="circle",
     ),
 )
 

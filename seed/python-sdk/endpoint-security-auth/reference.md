@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">gettoken</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,16 +13,19 @@
 <dd>
 
 ```python
-from seed import SeedEndpointSecurityAuth
+from seed import SeedApi
 
-client = SeedEndpointSecurityAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.get_token(
+client.auth.gettoken(
     client_id="client_id",
     client_secret="client_secret",
+    audience="https://api.example.com",
+    grant_type="client_credentials",
 )
 
 ```
@@ -55,7 +58,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**audience:** `typing.Literal` 
+**audience:** `AuthGetTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -63,7 +66,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**grant_type:** `typing.Literal` 
+**grant_type:** `AuthGetTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -84,7 +87,7 @@ client.auth.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_bearer</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getwithbearer</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -97,14 +100,15 @@ client.auth.get_token(
 <dd>
 
 ```python
-from seed import SeedEndpointSecurityAuth
+from seed import SeedApi
 
-client = SeedEndpointSecurityAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_bearer()
+client.user.getwithbearer()
 
 ```
 </dd>
@@ -132,7 +136,7 @@ client.user.get_with_bearer()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_api_key</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getwithapikey</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -145,14 +149,15 @@ client.user.get_with_bearer()
 <dd>
 
 ```python
-from seed import SeedEndpointSecurityAuth
+from seed import SeedApi
 
-client = SeedEndpointSecurityAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_api_key()
+client.user.getwithapikey()
 
 ```
 </dd>
@@ -180,7 +185,7 @@ client.user.get_with_api_key()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_o_auth</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getwithoauth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -193,14 +198,15 @@ client.user.get_with_api_key()
 <dd>
 
 ```python
-from seed import SeedEndpointSecurityAuth
+from seed import SeedApi
 
-client = SeedEndpointSecurityAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_o_auth()
+client.user.getwithoauth()
 
 ```
 </dd>
@@ -228,7 +234,7 @@ client.user.get_with_o_auth()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_basic</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getwithbasic</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -241,14 +247,15 @@ client.user.get_with_o_auth()
 <dd>
 
 ```python
-from seed import SeedEndpointSecurityAuth
+from seed import SeedApi
 
-client = SeedEndpointSecurityAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_basic()
+client.user.getwithbasic()
 
 ```
 </dd>
@@ -276,7 +283,7 @@ client.user.get_with_basic()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_inferred_auth</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getwithinferredauth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -289,14 +296,15 @@ client.user.get_with_basic()
 <dd>
 
 ```python
-from seed import SeedEndpointSecurityAuth
+from seed import SeedApi
 
-client = SeedEndpointSecurityAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_inferred_auth()
+client.user.getwithinferredauth()
 
 ```
 </dd>
@@ -324,7 +332,7 @@ client.user.get_with_inferred_auth()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_any_auth</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getwithanyauth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -337,14 +345,15 @@ client.user.get_with_inferred_auth()
 <dd>
 
 ```python
-from seed import SeedEndpointSecurityAuth
+from seed import SeedApi
 
-client = SeedEndpointSecurityAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_any_auth()
+client.user.getwithanyauth()
 
 ```
 </dd>
@@ -372,7 +381,7 @@ client.user.get_with_any_auth()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_all_auth</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getwithallauth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -385,14 +394,15 @@ client.user.get_with_any_auth()
 <dd>
 
 ```python
-from seed import SeedEndpointSecurityAuth
+from seed import SeedApi
 
-client = SeedEndpointSecurityAuth(
+client = SeedApi(
     token="<token>",
+    api_key="<X-API-Key>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_with_all_auth()
+client.user.getwithallauth()
 
 ```
 </dd>

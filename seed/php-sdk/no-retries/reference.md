@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>$client-&gt;retries-&gt;getUsers() -> ?array</code></summary>
+<details><summary><code>$client-&gt;retries-&gt;getusers() -> ?array</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->retries->getUsers();
+$client->retries->getusers();
 ```
 </dd>
 </dl>

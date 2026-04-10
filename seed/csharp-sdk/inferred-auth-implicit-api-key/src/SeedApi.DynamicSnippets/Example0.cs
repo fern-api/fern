@@ -1,20 +1,19 @@
-using SeedInferredAuthImplicitApiKey;
+using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedInferredAuthImplicitApiKeyClient(
-            apiKey: "X-Api-Key",
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Auth.GetTokenAsync(
-            new GetTokenRequest {
-                ApiKey = "api_key"
+        await client.Auth.GettokenAsync(
+            new AuthGetTokenRequest {
+                ApiKey = "X-Api-Key"
             }
         );
     }

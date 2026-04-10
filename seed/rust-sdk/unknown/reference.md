@@ -13,14 +13,14 @@
 <dd>
 
 ```rust
-use seed_unknown_as_any::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UnknownAsAnyClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .unknown
         .post(&serde_json::json!({"key":"value"}), None)
@@ -37,7 +37,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client.rs">post_object</a>(request: MyObject) -> Result&lt;Vec&lt;serde_json::Value&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client.rs">postobject</a>(request: MyObject) -> Result&lt;Vec&lt;serde_json::Value&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -50,26 +50,40 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_unknown_as_any::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = UnknownAsAnyClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .unknown
-        .post_object(
+        .postobject(
             &MyObject {
                 unknown: serde_json::json!({"key":"value"}),
-                ..Default::default()
             },
             None,
         )
         .await;
 }
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**unknown:** `serde_json::Value` 
+    
 </dd>
 </dl>
 </dd>

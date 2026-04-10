@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_.foo"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.foo()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.foo()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient._.foo()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client._.foo()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -19,11 +19,11 @@
             "id": {
                 "path": "/a/b",
                 "method": "POST",
-                "identifier_override": "endpoint_a/b.foo"
+                "identifier_override": "endpoint_ab.a_b_foo"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.a.b.foo()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.a.b.foo()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.ab.a_b_foo()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.ab.a_b_foo()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -32,11 +32,11 @@
             "id": {
                 "path": "/a/c",
                 "method": "POST",
-                "identifier_override": "endpoint_a/c.foo"
+                "identifier_override": "endpoint_ac.a_c_foo"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.a.c.foo()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.a.c.foo()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.ac.a_c_foo()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.ac.a_c_foo()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -58,11 +58,11 @@
             "id": {
                 "path": "/service",
                 "method": "GET",
-                "identifier_override": "endpoint_folder/service.endpoint"
+                "identifier_override": "endpoint_folderService.folder_service_endpoint"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.service.endpoint()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.folder.service.endpoint()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder_service.folder_service_endpoint()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.folder_service.folder_service_endpoint()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -71,11 +71,11 @@
             "id": {
                 "path": "/service",
                 "method": "POST",
-                "identifier_override": "endpoint_folder/service.unknownRequest"
+                "identifier_override": "endpoint_folderService.folder_service_unknownRequest"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder.service.unknown_request(\n    request={\"key\": \"value\"},\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.folder.service.unknown_request(\n        request={\"key\": \"value\"},\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.folder_service.folder_service_unknown_request(\n    request={\"key\": \"value\"},\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.folder_service.folder_service_unknown_request(\n        request={\"key\": \"value\"},\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

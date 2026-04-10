@@ -10,13 +10,13 @@ from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
     from .headers.client import AsyncHeadersClient, HeadersClient
-    from .inlined_request.client import AsyncInlinedRequestClient, InlinedRequestClient
-    from .multipart_form.client import AsyncMultipartFormClient, MultipartFormClient
-    from .path_param.client import AsyncPathParamClient, PathParamClient
-    from .query_param.client import AsyncQueryParamClient, QueryParamClient
+    from .inlinedrequest.client import AsyncInlinedrequestClient, InlinedrequestClient
+    from .multipartform.client import AsyncMultipartformClient, MultipartformClient
+    from .pathparam.client import AsyncPathparamClient, PathparamClient
+    from .queryparam.client import AsyncQueryparamClient, QueryparamClient
 
 
-class SeedEnum:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -42,9 +42,9 @@ class SeedEnum:
 
     Examples
     --------
-    from seed import SeedEnum
+    from seed import SeedApi
 
-    client = SeedEnum(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -74,10 +74,10 @@ class SeedEnum:
             logging=logging,
         )
         self._headers: typing.Optional[HeadersClient] = None
-        self._inlined_request: typing.Optional[InlinedRequestClient] = None
-        self._multipart_form: typing.Optional[MultipartFormClient] = None
-        self._path_param: typing.Optional[PathParamClient] = None
-        self._query_param: typing.Optional[QueryParamClient] = None
+        self._inlinedrequest: typing.Optional[InlinedrequestClient] = None
+        self._multipartform: typing.Optional[MultipartformClient] = None
+        self._pathparam: typing.Optional[PathparamClient] = None
+        self._queryparam: typing.Optional[QueryparamClient] = None
 
     @property
     def headers(self):
@@ -88,36 +88,36 @@ class SeedEnum:
         return self._headers
 
     @property
-    def inlined_request(self):
-        if self._inlined_request is None:
-            from .inlined_request.client import InlinedRequestClient  # noqa: E402
+    def inlinedrequest(self):
+        if self._inlinedrequest is None:
+            from .inlinedrequest.client import InlinedrequestClient  # noqa: E402
 
-            self._inlined_request = InlinedRequestClient(client_wrapper=self._client_wrapper)
-        return self._inlined_request
-
-    @property
-    def multipart_form(self):
-        if self._multipart_form is None:
-            from .multipart_form.client import MultipartFormClient  # noqa: E402
-
-            self._multipart_form = MultipartFormClient(client_wrapper=self._client_wrapper)
-        return self._multipart_form
+            self._inlinedrequest = InlinedrequestClient(client_wrapper=self._client_wrapper)
+        return self._inlinedrequest
 
     @property
-    def path_param(self):
-        if self._path_param is None:
-            from .path_param.client import PathParamClient  # noqa: E402
+    def multipartform(self):
+        if self._multipartform is None:
+            from .multipartform.client import MultipartformClient  # noqa: E402
 
-            self._path_param = PathParamClient(client_wrapper=self._client_wrapper)
-        return self._path_param
+            self._multipartform = MultipartformClient(client_wrapper=self._client_wrapper)
+        return self._multipartform
 
     @property
-    def query_param(self):
-        if self._query_param is None:
-            from .query_param.client import QueryParamClient  # noqa: E402
+    def pathparam(self):
+        if self._pathparam is None:
+            from .pathparam.client import PathparamClient  # noqa: E402
 
-            self._query_param = QueryParamClient(client_wrapper=self._client_wrapper)
-        return self._query_param
+            self._pathparam = PathparamClient(client_wrapper=self._client_wrapper)
+        return self._pathparam
+
+    @property
+    def queryparam(self):
+        if self._queryparam is None:
+            from .queryparam.client import QueryparamClient  # noqa: E402
+
+            self._queryparam = QueryparamClient(client_wrapper=self._client_wrapper)
+        return self._queryparam
 
 
 def _make_default_async_client(
@@ -138,7 +138,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedEnum:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -164,9 +164,9 @@ class AsyncSeedEnum:
 
     Examples
     --------
-    from seed import AsyncSeedEnum
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedEnum(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -194,10 +194,10 @@ class AsyncSeedEnum:
             logging=logging,
         )
         self._headers: typing.Optional[AsyncHeadersClient] = None
-        self._inlined_request: typing.Optional[AsyncInlinedRequestClient] = None
-        self._multipart_form: typing.Optional[AsyncMultipartFormClient] = None
-        self._path_param: typing.Optional[AsyncPathParamClient] = None
-        self._query_param: typing.Optional[AsyncQueryParamClient] = None
+        self._inlinedrequest: typing.Optional[AsyncInlinedrequestClient] = None
+        self._multipartform: typing.Optional[AsyncMultipartformClient] = None
+        self._pathparam: typing.Optional[AsyncPathparamClient] = None
+        self._queryparam: typing.Optional[AsyncQueryparamClient] = None
 
     @property
     def headers(self):
@@ -208,33 +208,33 @@ class AsyncSeedEnum:
         return self._headers
 
     @property
-    def inlined_request(self):
-        if self._inlined_request is None:
-            from .inlined_request.client import AsyncInlinedRequestClient  # noqa: E402
+    def inlinedrequest(self):
+        if self._inlinedrequest is None:
+            from .inlinedrequest.client import AsyncInlinedrequestClient  # noqa: E402
 
-            self._inlined_request = AsyncInlinedRequestClient(client_wrapper=self._client_wrapper)
-        return self._inlined_request
-
-    @property
-    def multipart_form(self):
-        if self._multipart_form is None:
-            from .multipart_form.client import AsyncMultipartFormClient  # noqa: E402
-
-            self._multipart_form = AsyncMultipartFormClient(client_wrapper=self._client_wrapper)
-        return self._multipart_form
+            self._inlinedrequest = AsyncInlinedrequestClient(client_wrapper=self._client_wrapper)
+        return self._inlinedrequest
 
     @property
-    def path_param(self):
-        if self._path_param is None:
-            from .path_param.client import AsyncPathParamClient  # noqa: E402
+    def multipartform(self):
+        if self._multipartform is None:
+            from .multipartform.client import AsyncMultipartformClient  # noqa: E402
 
-            self._path_param = AsyncPathParamClient(client_wrapper=self._client_wrapper)
-        return self._path_param
+            self._multipartform = AsyncMultipartformClient(client_wrapper=self._client_wrapper)
+        return self._multipartform
 
     @property
-    def query_param(self):
-        if self._query_param is None:
-            from .query_param.client import AsyncQueryParamClient  # noqa: E402
+    def pathparam(self):
+        if self._pathparam is None:
+            from .pathparam.client import AsyncPathparamClient  # noqa: E402
 
-            self._query_param = AsyncQueryParamClient(client_wrapper=self._client_wrapper)
-        return self._query_param
+            self._pathparam = AsyncPathparamClient(client_wrapper=self._client_wrapper)
+        return self._pathparam
+
+    @property
+    def queryparam(self):
+        if self._queryparam is None:
+            from .queryparam.client import AsyncQueryparamClient  # noqa: E402
+
+            self._queryparam = AsyncQueryparamClient(client_wrapper=self._client_wrapper)
+        return self._queryparam

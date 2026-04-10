@@ -4,8 +4,16 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.token_response import TokenResponse
 from .raw_client import AsyncRawAuthClient, RawAuthClient
-from .types.token_response import TokenResponse
+from .types.auth_get_token_with_client_credentials_request_audience import (
+    AuthGetTokenWithClientCredentialsRequestAudience,
+)
+from .types.auth_get_token_with_client_credentials_request_grant_type import (
+    AuthGetTokenWithClientCredentialsRequestGrantType,
+)
+from .types.auth_refresh_token_request_audience import AuthRefreshTokenRequestAudience
+from .types.auth_refresh_token_request_grant_type import AuthRefreshTokenRequestGrantType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,23 +34,29 @@ class AuthClient:
         """
         return self._raw_client
 
-    def get_token_with_client_credentials(
+    def gettokenwithclientcredentials(
         self,
         *,
-        x_api_key: str,
+        api_key: str,
         client_id: str,
         client_secret: str,
+        audience: AuthGetTokenWithClientCredentialsRequestAudience,
+        grant_type: AuthGetTokenWithClientCredentialsRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
         Parameters
         ----------
-        x_api_key : str
+        api_key : str
 
         client_id : str
 
         client_secret : str
+
+        audience : AuthGetTokenWithClientCredentialsRequestAudience
+
+        grant_type : AuthGetTokenWithClientCredentialsRequestGrantType
 
         scope : typing.Optional[str]
 
@@ -53,46 +67,49 @@ class AuthClient:
         -------
         TokenResponse
 
+
         Examples
         --------
-        from seed import SeedInferredAuthImplicitNoExpiry
+        from seed import SeedApi
 
-        client = SeedInferredAuthImplicitNoExpiry(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
-            x_api_key="YOUR_X_API_KEY",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
         )
-        client.auth.get_token_with_client_credentials(
-            x_api_key="X-Api-Key",
+        client.auth.gettokenwithclientcredentials(
+            api_key="X-Api-Key",
             client_id="client_id",
             client_secret="client_secret",
-            scope="scope",
+            audience="https://api.example.com",
+            grant_type="client_credentials",
         )
         """
-        _response = self._raw_client.get_token_with_client_credentials(
-            x_api_key=x_api_key,
+        _response = self._raw_client.gettokenwithclientcredentials(
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
+            audience=audience,
+            grant_type=grant_type,
             scope=scope,
             request_options=request_options,
         )
         return _response.data
 
-    def refresh_token(
+    def refreshtoken(
         self,
         *,
-        x_api_key: str,
+        api_key: str,
         client_id: str,
         client_secret: str,
         refresh_token: str,
+        audience: AuthRefreshTokenRequestAudience,
+        grant_type: AuthRefreshTokenRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
         Parameters
         ----------
-        x_api_key : str
+        api_key : str
 
         client_id : str
 
@@ -100,6 +117,10 @@ class AuthClient:
 
         refresh_token : str
 
+        audience : AuthRefreshTokenRequestAudience
+
+        grant_type : AuthRefreshTokenRequestGrantType
+
         scope : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
@@ -109,29 +130,30 @@ class AuthClient:
         -------
         TokenResponse
 
+
         Examples
         --------
-        from seed import SeedInferredAuthImplicitNoExpiry
+        from seed import SeedApi
 
-        client = SeedInferredAuthImplicitNoExpiry(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
-            x_api_key="YOUR_X_API_KEY",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
         )
-        client.auth.refresh_token(
-            x_api_key="X-Api-Key",
+        client.auth.refreshtoken(
+            api_key="X-Api-Key",
             client_id="client_id",
             client_secret="client_secret",
             refresh_token="refresh_token",
-            scope="scope",
+            audience="https://api.example.com",
+            grant_type="refresh_token",
         )
         """
-        _response = self._raw_client.refresh_token(
-            x_api_key=x_api_key,
+        _response = self._raw_client.refreshtoken(
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             refresh_token=refresh_token,
+            audience=audience,
+            grant_type=grant_type,
             scope=scope,
             request_options=request_options,
         )
@@ -153,23 +175,29 @@ class AsyncAuthClient:
         """
         return self._raw_client
 
-    async def get_token_with_client_credentials(
+    async def gettokenwithclientcredentials(
         self,
         *,
-        x_api_key: str,
+        api_key: str,
         client_id: str,
         client_secret: str,
+        audience: AuthGetTokenWithClientCredentialsRequestAudience,
+        grant_type: AuthGetTokenWithClientCredentialsRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
         Parameters
         ----------
-        x_api_key : str
+        api_key : str
 
         client_id : str
 
         client_secret : str
+
+        audience : AuthGetTokenWithClientCredentialsRequestAudience
+
+        grant_type : AuthGetTokenWithClientCredentialsRequestGrantType
 
         scope : typing.Optional[str]
 
@@ -180,54 +208,57 @@ class AsyncAuthClient:
         -------
         TokenResponse
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedInferredAuthImplicitNoExpiry
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedInferredAuthImplicitNoExpiry(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
-            x_api_key="YOUR_X_API_KEY",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
         async def main() -> None:
-            await client.auth.get_token_with_client_credentials(
-                x_api_key="X-Api-Key",
+            await client.auth.gettokenwithclientcredentials(
+                api_key="X-Api-Key",
                 client_id="client_id",
                 client_secret="client_secret",
-                scope="scope",
+                audience="https://api.example.com",
+                grant_type="client_credentials",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_token_with_client_credentials(
-            x_api_key=x_api_key,
+        _response = await self._raw_client.gettokenwithclientcredentials(
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
+            audience=audience,
+            grant_type=grant_type,
             scope=scope,
             request_options=request_options,
         )
         return _response.data
 
-    async def refresh_token(
+    async def refreshtoken(
         self,
         *,
-        x_api_key: str,
+        api_key: str,
         client_id: str,
         client_secret: str,
         refresh_token: str,
+        audience: AuthRefreshTokenRequestAudience,
+        grant_type: AuthRefreshTokenRequestGrantType,
         scope: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
         Parameters
         ----------
-        x_api_key : str
+        api_key : str
 
         client_id : str
 
@@ -235,6 +266,10 @@ class AsyncAuthClient:
 
         refresh_token : str
 
+        audience : AuthRefreshTokenRequestAudience
+
+        grant_type : AuthRefreshTokenRequestGrantType
+
         scope : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
@@ -244,37 +279,38 @@ class AsyncAuthClient:
         -------
         TokenResponse
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedInferredAuthImplicitNoExpiry
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedInferredAuthImplicitNoExpiry(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
-            x_api_key="YOUR_X_API_KEY",
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
         async def main() -> None:
-            await client.auth.refresh_token(
-                x_api_key="X-Api-Key",
+            await client.auth.refreshtoken(
+                api_key="X-Api-Key",
                 client_id="client_id",
                 client_secret="client_secret",
                 refresh_token="refresh_token",
-                scope="scope",
+                audience="https://api.example.com",
+                grant_type="refresh_token",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.refresh_token(
-            x_api_key=x_api_key,
+        _response = await self._raw_client.refreshtoken(
+            api_key=api_key,
             client_id=client_id,
             client_secret=client_secret,
             refresh_token=refresh_token,
+            audience=audience,
+            grant_type=grant_type,
             scope=scope,
             request_options=request_options,
         )

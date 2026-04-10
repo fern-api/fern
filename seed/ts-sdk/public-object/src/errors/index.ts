@@ -1,2 +1,2 @@
-export { SeedPublicObjectError } from "./SeedPublicObjectError.js";
-export { SeedPublicObjectTimeoutError } from "./SeedPublicObjectTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

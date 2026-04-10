@@ -1,8 +1,8 @@
 {
   "mappings": [
     {
-      "id": "b70f534f-500a-46a4-986e-60aad3374efd",
-      "name": "getDummy - default",
+      "id": "1935c12a-19ff-4115-9d76-3b6f068ff1a5",
+      "name": "getdummy - default",
       "request": {
         "urlPathTemplate": "/dummy",
         "method": "GET",
@@ -19,7 +19,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "b70f534f-500a-46a4-986e-60aad3374efd",
+      "uuid": "1935c12a-19ff-4115-9d76-3b6f068ff1a5",
       "persistent": true,
       "priority": 3,
       "metadata": {

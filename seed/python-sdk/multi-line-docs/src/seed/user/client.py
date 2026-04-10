@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.user import User
 from .raw_client import AsyncRawUserClient, RawUserClient
-from .types.user import User
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,7 +26,7 @@ class UserClient:
         """
         return self._raw_client
 
-    def get_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def getuser(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Retrieve a user.
         This endpoint is used to retrieve a user.
@@ -46,19 +46,19 @@ class UserClient:
 
         Examples
         --------
-        from seed import SeedMultiLineDocs
+        from seed import SeedApi
 
-        client = SeedMultiLineDocs(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.get_user(
+        client.user.getuser(
             user_id="userId",
         )
         """
-        _response = self._raw_client.get_user(user_id, request_options=request_options)
+        _response = self._raw_client.getuser(user_id, request_options=request_options)
         return _response.data
 
-    def create_user(
+    def createuser(
         self, *, name: str, age: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
@@ -82,19 +82,19 @@ class UserClient:
         -------
         User
 
+
         Examples
         --------
-        from seed import SeedMultiLineDocs
+        from seed import SeedApi
 
-        client = SeedMultiLineDocs(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.user.create_user(
+        client.user.createuser(
             name="name",
-            age=1,
         )
         """
-        _response = self._raw_client.create_user(name=name, age=age, request_options=request_options)
+        _response = self._raw_client.createuser(name=name, age=age, request_options=request_options)
         return _response.data
 
 
@@ -113,7 +113,7 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def get_user(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def getuser(self, user_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Retrieve a user.
         This endpoint is used to retrieve a user.
@@ -135,25 +135,25 @@ class AsyncUserClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedMultiLineDocs
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedMultiLineDocs(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.get_user(
+            await client.user.getuser(
                 user_id="userId",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_user(user_id, request_options=request_options)
+        _response = await self._raw_client.getuser(user_id, request_options=request_options)
         return _response.data
 
-    async def create_user(
+    async def createuser(
         self, *, name: str, age: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> User:
         """
@@ -177,25 +177,25 @@ class AsyncUserClient:
         -------
         User
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedMultiLineDocs
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedMultiLineDocs(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.user.create_user(
+            await client.user.createuser(
                 name="name",
-                age=1,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create_user(name=name, age=age, request_options=request_options)
+        _response = await self._raw_client.createuser(name=name, age=age, request_options=request_options)
         return _response.data

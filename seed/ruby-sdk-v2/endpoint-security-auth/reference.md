@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">gettoken</a>(request) -> Seed::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.auth.get_token(
+client.auth.gettoken(
   client_id: "client_id",
   client_secret: "client_secret",
   audience: "https://api.example.com",
@@ -49,7 +49,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**audience:** `String` 
+**audience:** `Seed::Auth::Types::AuthGetTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -57,7 +57,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**grant_type:** `String` 
+**grant_type:** `Seed::Auth::Types::AuthGetTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -78,7 +78,7 @@ client.auth.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_bearer</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getwithbearer</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -91,7 +91,7 @@ client.auth.get_token(
 <dd>
 
 ```ruby
-client.user.get_with_bearer
+client.user.getwithbearer
 ```
 </dd>
 </dl>
@@ -118,7 +118,7 @@ client.user.get_with_bearer
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_api_key</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getwithapikey</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -131,7 +131,7 @@ client.user.get_with_bearer
 <dd>
 
 ```ruby
-client.user.get_with_api_key
+client.user.getwithapikey
 ```
 </dd>
 </dl>
@@ -158,7 +158,7 @@ client.user.get_with_api_key
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_o_auth</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getwithoauth</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -171,7 +171,7 @@ client.user.get_with_api_key
 <dd>
 
 ```ruby
-client.user.get_with_o_auth
+client.user.getwithoauth
 ```
 </dd>
 </dl>
@@ -198,7 +198,7 @@ client.user.get_with_o_auth
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_basic</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getwithbasic</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -211,7 +211,7 @@ client.user.get_with_o_auth
 <dd>
 
 ```ruby
-client.user.get_with_basic
+client.user.getwithbasic
 ```
 </dd>
 </dl>
@@ -238,7 +238,7 @@ client.user.get_with_basic
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_inferred_auth</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getwithinferredauth</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -251,7 +251,7 @@ client.user.get_with_basic
 <dd>
 
 ```ruby
-client.user.get_with_inferred_auth
+client.user.getwithinferredauth
 ```
 </dd>
 </dl>
@@ -278,7 +278,7 @@ client.user.get_with_inferred_auth
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_any_auth</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getwithanyauth</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -291,7 +291,7 @@ client.user.get_with_inferred_auth
 <dd>
 
 ```ruby
-client.user.get_with_any_auth
+client.user.getwithanyauth
 ```
 </dd>
 </dl>
@@ -318,7 +318,7 @@ client.user.get_with_any_auth
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_all_auth</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getwithallauth</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -331,7 +331,7 @@ client.user.get_with_any_auth
 <dd>
 
 ```ruby
-client.user.get_with_all_auth
+client.user.getwithallauth
 ```
 </dd>
 </dl>

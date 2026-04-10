@@ -9,7 +9,7 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.user import User
+from ..types.user import User
 from pydantic import ValidationError
 
 
@@ -17,7 +17,7 @@ class RawUserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_with_bearer(
+    def getwithbearer(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[User]]:
         """
@@ -29,6 +29,7 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users/bearer",
@@ -54,7 +55,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_with_api_key(
+    def getwithapikey(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[User]]:
         """
@@ -66,6 +67,7 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users/api-key",
@@ -91,7 +93,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_with_o_auth(
+    def getwithoauth(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[User]]:
         """
@@ -103,6 +105,7 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users/oauth",
@@ -128,7 +131,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_with_basic(
+    def getwithbasic(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[User]]:
         """
@@ -140,6 +143,7 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users/basic",
@@ -165,7 +169,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_with_inferred_auth(
+    def getwithinferredauth(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[User]]:
         """
@@ -177,6 +181,7 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users/inferred",
@@ -202,7 +207,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_with_any_auth(
+    def getwithanyauth(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[User]]:
         """
@@ -214,6 +219,7 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users/any",
@@ -239,7 +245,7 @@ class RawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get_with_all_auth(
+    def getwithallauth(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[User]]:
         """
@@ -251,6 +257,7 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[typing.List[User]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "users/all",
@@ -281,7 +288,7 @@ class AsyncRawUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_with_bearer(
+    async def getwithbearer(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[User]]:
         """
@@ -293,6 +300,7 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users/bearer",
@@ -318,7 +326,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_with_api_key(
+    async def getwithapikey(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[User]]:
         """
@@ -330,6 +338,7 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users/api-key",
@@ -355,7 +364,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_with_o_auth(
+    async def getwithoauth(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[User]]:
         """
@@ -367,6 +376,7 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users/oauth",
@@ -392,7 +402,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_with_basic(
+    async def getwithbasic(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[User]]:
         """
@@ -404,6 +414,7 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users/basic",
@@ -429,7 +440,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_with_inferred_auth(
+    async def getwithinferredauth(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[User]]:
         """
@@ -441,6 +452,7 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users/inferred",
@@ -466,7 +478,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_with_any_auth(
+    async def getwithanyauth(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[User]]:
         """
@@ -478,6 +490,7 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users/any",
@@ -503,7 +516,7 @@ class AsyncRawUserClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def get_with_all_auth(
+    async def getwithallauth(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[User]]:
         """
@@ -515,6 +528,7 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[User]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "users/all",

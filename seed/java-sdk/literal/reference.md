@@ -14,9 +14,11 @@
 
 ```java
 client.headers().send(
-    SendLiteralsInHeadersRequest
+    HeadersSendRequest
         .builder()
-        .query("What is the weather today")
+        .endpointVersion(HeadersSendRequestXEndpointVersion.TWO122024)
+        .async(true)
+        .query("query")
         .build()
 );
 ```
@@ -33,7 +35,7 @@ client.headers().send(
 <dl>
 <dd>
 
-**endpointVersion:** `String` 
+**endpointVersion:** `HeadersSendRequestXEndpointVersion` 
     
 </dd>
 </dl>
@@ -76,23 +78,23 @@ client.headers().send(
 
 ```java
 client.inlined().send(
-    SendLiteralsInlinedRequest
+    InlinedSendRequest
         .builder()
-        .query("What is the weather today")
-        .aliasedContext("You're super wise")
+        .prompt(InlinedSendRequestPrompt.YOU_ARE_A_HELPFUL_ASSISTANT)
+        .query("query")
+        .stream(true)
+        .aliasedContext(SomeAliasedLiteral.YOURE_SUPER_WISE)
         .objectWithLiteral(
             ATopLevelLiteral
                 .builder()
                 .nestedLiteral(
                     ANestedLiteral
                         .builder()
+                        .myLiteral(ANestedLiteralMyLiteral.HOW_SUPER_COOL)
                         .build()
                 )
                 .build()
         )
-        .context("You're super wise")
-        .temperature(10.1)
-        .maybeContext("You're super wise")
         .build()
 );
 ```
@@ -109,7 +111,7 @@ client.inlined().send(
 <dl>
 <dd>
 
-**prompt:** `String` 
+**prompt:** `InlinedSendRequestPrompt` 
     
 </dd>
 </dl>
@@ -117,7 +119,7 @@ client.inlined().send(
 <dl>
 <dd>
 
-**context:** `Optional<String>` 
+**context:** `Optional<InlinedSendRequestContext>` 
     
 </dd>
 </dl>
@@ -149,7 +151,7 @@ client.inlined().send(
 <dl>
 <dd>
 
-**aliasedContext:** `String` 
+**aliasedContext:** `SomeAliasedLiteral` 
     
 </dd>
 </dl>
@@ -157,7 +159,7 @@ client.inlined().send(
 <dl>
 <dd>
 
-**maybeContext:** `Optional<String>` 
+**maybeContext:** `Optional<SomeAliasedLiteral>` 
     
 </dd>
 </dl>
@@ -191,7 +193,12 @@ client.inlined().send(
 <dd>
 
 ```java
-client.path().send("123");
+client.path().send(
+    PathSendRequestId.ONE_HUNDRED_TWENTY_THREE,
+    PathSendRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -206,7 +213,7 @@ client.path().send("123");
 <dl>
 <dd>
 
-**id:** `String` 
+**id:** `PathSendRequestId` 
     
 </dd>
 </dl>
@@ -233,15 +240,13 @@ client.path().send("123");
 
 ```java
 client.query().send(
-    SendLiteralsInQueryRequest
+    QuerySendRequest
         .builder()
-        .aliasPrompt("You are a helpful assistant")
-        .query("What is the weather today")
-        .aliasStream(false)
-        .optionalPrompt("You are a helpful assistant")
-        .aliasOptionalPrompt("You are a helpful assistant")
-        .optionalStream(false)
-        .aliasOptionalStream(false)
+        .prompt(QuerySendRequestPrompt.YOU_ARE_A_HELPFUL_ASSISTANT)
+        .aliasPrompt(AliasToPrompt.YOU_ARE_A_HELPFUL_ASSISTANT)
+        .query("query")
+        .stream(true)
+        .aliasStream(true)
         .build()
 );
 ```
@@ -258,7 +263,7 @@ client.query().send(
 <dl>
 <dd>
 
-**prompt:** `String` 
+**prompt:** `QuerySendRequestPrompt` 
     
 </dd>
 </dl>
@@ -266,7 +271,7 @@ client.query().send(
 <dl>
 <dd>
 
-**optionalPrompt:** `Optional<String>` 
+**optionalPrompt:** `Optional<QuerySendRequestOptionalPrompt>` 
     
 </dd>
 </dl>
@@ -274,7 +279,7 @@ client.query().send(
 <dl>
 <dd>
 
-**aliasPrompt:** `String` 
+**aliasPrompt:** `AliasToPrompt` 
     
 </dd>
 </dl>
@@ -282,7 +287,7 @@ client.query().send(
 <dl>
 <dd>
 
-**aliasOptionalPrompt:** `Optional<String>` 
+**aliasOptionalPrompt:** `Optional<AliasToPrompt>` 
     
 </dd>
 </dl>
@@ -351,8 +356,11 @@ client.query().send(
 client.reference().send(
     SendRequest
         .builder()
-        .query("What is the weather today")
-        .context("You're super wise")
+        .prompt(SendRequestPrompt.YOU_ARE_A_HELPFUL_ASSISTANT)
+        .query("query")
+        .stream(true)
+        .ending(SendRequestEnding.ENDING)
+        .context(SomeLiteral.YOURE_SUPER_WISE)
         .containerObject(
             ContainerObject
                 .builder()
@@ -360,6 +368,8 @@ client.reference().send(
                     Arrays.asList(
                         NestedObjectWithLiterals
                             .builder()
+                            .literal1(NestedObjectWithLiteralsLiteral1.LITERAL1)
+                            .literal2(NestedObjectWithLiteralsLiteral2.LITERAL2)
                             .strProp("strProp")
                             .build()
                     )
@@ -382,7 +392,55 @@ client.reference().send(
 <dl>
 <dd>
 
-**request:** `SendRequest` 
+**prompt:** `SendRequestPrompt` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream:** `Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ending:** `SendRequestEnding` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**context:** `SomeLiteral` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maybeContext:** `Optional<SomeLiteral>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**containerObject:** `ContainerObject` 
     
 </dd>
 </dl>

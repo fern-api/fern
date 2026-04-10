@@ -1,4 +1,4 @@
-package websocketmultiurl
+package api
 
 import (
 	"io"

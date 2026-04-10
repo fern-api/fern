@@ -1,19 +1,19 @@
-//! # HttpHead SDK
+//! # http-head SDK
 //!
-//! The official Rust SDK for the HttpHead.
+//! The official Rust SDK for the http-head.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_http_head::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = HttpHeadClient::new(config).expect("Failed to build client");
-//!     client.user.head(None).await;
+//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     client.user.list(&ListQueryRequest { limit: 1 }, None).await;
 //! }
 //! ```
 //!

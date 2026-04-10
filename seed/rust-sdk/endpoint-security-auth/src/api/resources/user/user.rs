@@ -13,7 +13,7 @@ impl UserClient {
         })
     }
 
-    pub async fn get_with_bearer(
+    pub async fn getwithbearer(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
@@ -22,7 +22,7 @@ impl UserClient {
             .await
     }
 
-    pub async fn get_with_api_key(
+    pub async fn getwithapikey(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
@@ -31,7 +31,7 @@ impl UserClient {
             .await
     }
 
-    pub async fn get_with_o_auth(
+    pub async fn getwithoauth(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
@@ -40,7 +40,7 @@ impl UserClient {
             .await
     }
 
-    pub async fn get_with_basic(
+    pub async fn getwithbasic(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
@@ -49,7 +49,7 @@ impl UserClient {
             .await
     }
 
-    pub async fn get_with_inferred_auth(
+    pub async fn getwithinferredauth(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
@@ -58,7 +58,7 @@ impl UserClient {
             .await
     }
 
-    pub async fn get_with_any_auth(
+    pub async fn getwithanyauth(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
@@ -67,7 +67,7 @@ impl UserClient {
             .await
     }
 
-    pub async fn get_with_all_auth(
+    pub async fn getwithallauth(
         &self,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {

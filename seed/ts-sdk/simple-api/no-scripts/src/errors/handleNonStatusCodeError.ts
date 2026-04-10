@@ -5,24 +5,24 @@ import * as errors from "./index.js";
 
 export function handleNonStatusCodeError(error: core.Fetcher.Error, rawResponse: core.RawResponse, method: string, path: string): never {
     switch (error.reason) {
-        case "non-json": throw new errors.SeedSimpleApiError({
+        case "non-json": throw new errors.SeedApiError({
             statusCode: error.statusCode,
             body: error.rawBody,
             rawResponse: rawResponse
         });
-        case "body-is-null": throw new errors.SeedSimpleApiError({
+        case "body-is-null": throw new errors.SeedApiError({
             statusCode: error.statusCode,
             rawResponse: rawResponse
         });
-        case "timeout": throw new errors.SeedSimpleApiTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
+        case "timeout": throw new errors.SeedApiTimeoutError(`Timeout exceeded when calling ${method} ${path}.`, {
             cause: error.cause
         });
-        case "unknown": throw new errors.SeedSimpleApiError({
+        case "unknown": throw new errors.SeedApiError({
             message: error.errorMessage,
             rawResponse: rawResponse,
             cause: error.cause
         });
-        default: throw new errors.SeedSimpleApiError({
+        default: throw new errors.SeedApiError({
             message: "Unknown error",
             rawResponse: rawResponse
         });

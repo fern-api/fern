@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MultiLineDocs",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "MultiLineDocs",
-            targets: ["MultiLineDocs"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "MultiLineDocs",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "MultiLineDocsTests",
-            dependencies: ["MultiLineDocs"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">gettoken</a>(request: AuthGetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_endpoint_security_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -21,15 +21,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .auth
-        .get_token(
-            &GetTokenRequest {
+        .gettoken(
+            &AuthGetTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
-                audience: "https://api.example.com".to_string(),
-                grant_type: "client_credentials".to_string(),
+                audience: AuthGetTokenRequestAudience::HttpsApiExampleCom,
+                grant_type: AuthGetTokenRequestGrantType::ClientCredentials,
             },
             None,
         )
@@ -65,7 +65,7 @@ async fn main() {
 <dl>
 <dd>
 
-**audience:** `String` 
+**audience:** `AuthGetTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -73,7 +73,7 @@ async fn main() {
 <dl>
 <dd>
 
-**grant_type:** `String` 
+**grant_type:** `AuthGetTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -86,7 +86,7 @@ async fn main() {
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_with_bearer</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getwithbearer</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -99,7 +99,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_endpoint_security_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -107,8 +107,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_bearer(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.user.getwithbearer(None).await;
 }
 ```
 </dd>
@@ -121,7 +121,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_with_api_key</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getwithapikey</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_endpoint_security_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -142,8 +142,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_api_key(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.user.getwithapikey(None).await;
 }
 ```
 </dd>
@@ -156,7 +156,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_with_o_auth</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getwithoauth</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -169,7 +169,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_endpoint_security_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -177,8 +177,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_o_auth(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.user.getwithoauth(None).await;
 }
 ```
 </dd>
@@ -191,7 +191,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_with_basic</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getwithbasic</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -204,7 +204,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_endpoint_security_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -212,8 +212,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_basic(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.user.getwithbasic(None).await;
 }
 ```
 </dd>
@@ -226,7 +226,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_with_inferred_auth</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getwithinferredauth</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -239,7 +239,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_endpoint_security_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -247,8 +247,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_inferred_auth(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.user.getwithinferredauth(None).await;
 }
 ```
 </dd>
@@ -261,7 +261,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_with_any_auth</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getwithanyauth</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -274,7 +274,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_endpoint_security_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -282,8 +282,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_any_auth(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.user.getwithanyauth(None).await;
 }
 ```
 </dd>
@@ -296,7 +296,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_with_all_auth</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getwithallauth</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -309,7 +309,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_endpoint_security_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -317,8 +317,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
-    client.user.get_with_all_auth(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.user.getwithallauth(None).await;
 }
 ```
 </dd>

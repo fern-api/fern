@@ -6,18 +6,25 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import a, folder
+    from .types import AdFoo
+    from .errors import NotFoundError
+    from . import _, ab, ac, folder, folder_service
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
+    "AdFoo": ".types",
     "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
+    "NotFoundError": ".errors",
     "SeedApi": ".client",
+    "_": "._",
     "__version__": ".version",
-    "a": ".a",
+    "ab": ".ab",
+    "ac": ".ac",
     "folder": ".folder",
+    "folder_service": ".folder_service",
 }
 
 
@@ -42,4 +49,17 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedApi", "DefaultAioHttpClient", "DefaultAsyncHttpxClient", "SeedApi", "__version__", "a", "folder"]
+__all__ = [
+    "AdFoo",
+    "AsyncSeedApi",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
+    "NotFoundError",
+    "SeedApi",
+    "_",
+    "__version__",
+    "ab",
+    "ac",
+    "folder",
+    "folder_service",
+]

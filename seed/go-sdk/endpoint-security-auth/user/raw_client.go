@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetWithBearer(
+func (r *RawClient) Getwithbearer(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -70,7 +70,7 @@ func (r *RawClient) GetWithBearer(
 	}, nil
 }
 
-func (r *RawClient) GetWithAPIKey(
+func (r *RawClient) Getwithapikey(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -109,7 +109,7 @@ func (r *RawClient) GetWithAPIKey(
 	}, nil
 }
 
-func (r *RawClient) GetWithOAuth(
+func (r *RawClient) Getwithoauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -148,7 +148,7 @@ func (r *RawClient) GetWithOAuth(
 	}, nil
 }
 
-func (r *RawClient) GetWithBasic(
+func (r *RawClient) Getwithbasic(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -187,7 +187,7 @@ func (r *RawClient) GetWithBasic(
 	}, nil
 }
 
-func (r *RawClient) GetWithInferredAuth(
+func (r *RawClient) Getwithinferredauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -226,7 +226,7 @@ func (r *RawClient) GetWithInferredAuth(
 	}, nil
 }
 
-func (r *RawClient) GetWithAnyAuth(
+func (r *RawClient) Getwithanyauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -265,7 +265,7 @@ func (r *RawClient) GetWithAnyAuth(
 	}, nil
 }
 
-func (r *RawClient) GetWithAllAuth(
+func (r *RawClient) Getwithallauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {

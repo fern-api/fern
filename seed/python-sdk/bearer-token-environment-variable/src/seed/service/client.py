@@ -22,7 +22,7 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def get_with_bearer_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+    def getwithbearertoken(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET request with custom api key
 
@@ -35,17 +35,18 @@ class ServiceClient:
         -------
         str
 
+
         Examples
         --------
-        from seed import SeedBearerTokenEnvironmentVariable
+        from seed import SeedApi
 
-        client = SeedBearerTokenEnvironmentVariable(
-            api_key="YOUR_API_KEY",
+        client = SeedApi(
+            token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.get_with_bearer_token()
+        client.service.getwithbearertoken()
         """
-        _response = self._raw_client.get_with_bearer_token(request_options=request_options)
+        _response = self._raw_client.getwithbearertoken(request_options=request_options)
         return _response.data
 
 
@@ -64,7 +65,7 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def get_with_bearer_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
+    async def getwithbearertoken(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         GET request with custom api key
 
@@ -77,23 +78,24 @@ class AsyncServiceClient:
         -------
         str
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedBearerTokenEnvironmentVariable
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedBearerTokenEnvironmentVariable(
-            api_key="YOUR_API_KEY",
+        client = AsyncSeedApi(
+            token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.get_with_bearer_token()
+            await client.service.getwithbearertoken()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_with_bearer_token(request_options=request_options)
+        _response = await self._raw_client.getwithbearertoken(request_options=request_options)
         return _response.data

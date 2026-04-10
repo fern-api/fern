@@ -5,7 +5,7 @@ info:
 paths:
   /users:
     post:
-      operationId: createUser
+      operationId: _createUser
       tags:
         - ''
       parameters: []
@@ -16,12 +16,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    email: email
+                    password: password
+                    profile:
+                      name: name
+                      verification:
+                        verified: verified
+                      ssn: ssn
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
+            examples:
+              Example1:
+                value:
+                  id: id
+                  email: email
+                  password: password
+                  profile:
+                    name: name
+                    verification:
+                      verified: verified
+                    ssn: ssn
 components:
   schemas:
     User:
@@ -32,12 +54,15 @@ components:
         id:
           type: string
           description: The unique identifier for the user.
+          example: id
         email:
           type: string
           description: The email address of the user.
+          example: email
         password:
           type: string
           description: The password for the user.
+          example: password
         profile:
           $ref: '#/components/schemas/UserProfile'
           description: User profile object
@@ -92,47 +117,57 @@ components:
         - adminLevel
       allOf:
         - $ref: '#/components/schemas/User'
+    UserOrAdminDiscriminatedZeroType:
+      title: UserOrAdminDiscriminatedZeroType
+      type: string
+      enum:
+        - user
+    UserOrAdminDiscriminatedZero:
+      title: UserOrAdminDiscriminatedZero
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/UserOrAdminDiscriminatedZeroType'
+      required:
+        - type
+      allOf:
+        - $ref: '#/components/schemas/User'
+    UserOrAdminDiscriminatedAdminType:
+      title: UserOrAdminDiscriminatedAdminType
+      type: string
+      enum:
+        - admin
+    UserOrAdminDiscriminatedAdmin:
+      title: UserOrAdminDiscriminatedAdmin
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/UserOrAdminDiscriminatedAdminType'
+        admin:
+          $ref: '#/components/schemas/Admin'
+          nullable: true
+      required:
+        - type
+    UserOrAdminDiscriminatedTwoType:
+      title: UserOrAdminDiscriminatedTwoType
+      type: string
+      enum:
+        - empty
+    UserOrAdminDiscriminatedTwo:
+      title: UserOrAdminDiscriminatedTwo
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/UserOrAdminDiscriminatedTwoType'
+      required:
+        - type
     UserOrAdminDiscriminated:
       title: UserOrAdminDiscriminated
       oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - user
-            - $ref: '#/components/schemas/User'
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - admin
-            admin:
-              $ref: '#/components/schemas/Admin'
-          required:
-            - type
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - empty
-          required:
-            - type
+        - $ref: '#/components/schemas/UserOrAdminDiscriminatedZero'
+        - $ref: '#/components/schemas/UserOrAdminDiscriminatedAdmin'
+        - $ref: '#/components/schemas/UserOrAdminDiscriminatedTwo'
       description: Example of an discriminated union
-      required:
-        - normal
-        - foo
-      properties:
-        normal:
-          type: string
-        foo:
-          $ref: '#/components/schemas/Foo'
     Foo:
       title: Foo
       type: object

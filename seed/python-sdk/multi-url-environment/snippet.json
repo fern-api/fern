@@ -6,11 +6,11 @@
             "id": {
                 "path": "/ec2/boot",
                 "method": "POST",
-                "identifier_override": "endpoint_ec2.bootInstance"
+                "identifier_override": "endpoint_ec2.bootinstance"
             },
             "snippet": {
-                "sync_client": "from seed import SeedMultiUrlEnvironment\n\nclient = SeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\nclient.ec2.boot_instance(\n    size=\"size\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedMultiUrlEnvironment\n\nclient = AsyncSeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.ec2.boot_instance(\n        size=\"size\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.ec2.bootinstance(\n    size=\"size\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.ec2.bootinstance(\n        size=\"size\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -19,11 +19,11 @@
             "id": {
                 "path": "/s3/presigned-url",
                 "method": "POST",
-                "identifier_override": "endpoint_s3.getPresignedUrl"
+                "identifier_override": "endpoint_s3.getpresignedurl"
             },
             "snippet": {
-                "sync_client": "from seed import SeedMultiUrlEnvironment\n\nclient = SeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\nclient.s3.get_presigned_url(\n    s3key=\"s3Key\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedMultiUrlEnvironment\n\nclient = AsyncSeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\n\n\nasync def main() -> None:\n    await client.s3.get_presigned_url(\n        s3key=\"s3Key\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.s3.getpresignedurl(\n    s3key=\"s3Key\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.s3.getpresignedurl(\n        s3key=\"s3Key\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

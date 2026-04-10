@@ -1,2 +1,2 @@
-export { SeedBasicAuthPwOmittedError } from "./SeedBasicAuthPwOmittedError.js";
-export { SeedBasicAuthPwOmittedTimeoutError } from "./SeedBasicAuthPwOmittedTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

@@ -4,88 +4,88 @@
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.getToken"
+                "identifier_override": "endpoint_auth.gettoken"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/endpoint-security-auth/fern\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Auth.GetToken(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tClientID:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/endpoint-security-auth/fern\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Auth.Gettoken(\n\tcontext.TODO(),\n\t\u0026fern.AuthGetTokenRequest{\n\t\tClientID:     \"client_id\",\n\t\tClientSecret: \"client_secret\",\n\t\tAudience:     fern.AuthGetTokenRequestAudienceHttpsApiExampleCom,\n\t\tGrantType:    fern.AuthGetTokenRequestGrantTypeClientCredentials,\n\t},\n)\n"
             }
         },
         {
             "id": {
                 "path": "/users/all",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getWithAllAuth"
+                "identifier_override": "endpoint_user.getwithallauth"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.GetWithAllAuth(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.Getwithallauth(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/users/any",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getWithAnyAuth"
+                "identifier_override": "endpoint_user.getwithanyauth"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.GetWithAnyAuth(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.Getwithanyauth(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/users/api-key",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getWithApiKey"
+                "identifier_override": "endpoint_user.getwithapikey"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.GetWithAPIKey(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.Getwithapikey(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/users/basic",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getWithBasic"
+                "identifier_override": "endpoint_user.getwithbasic"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.GetWithBasic(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.Getwithbasic(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/users/bearer",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getWithBearer"
+                "identifier_override": "endpoint_user.getwithbearer"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.GetWithBearer(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.Getwithbearer(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/users/inferred",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getWithInferredAuth"
+                "identifier_override": "endpoint_user.getwithinferredauth"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.GetWithInferredAuth(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.Getwithinferredauth(\n\tcontext.TODO(),\n)\n"
             }
         },
         {
             "id": {
                 "path": "/users/oauth",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getWithOAuth"
+                "identifier_override": "endpoint_user.getwithoauth"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.GetWithOauth(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/endpoint-security-auth/fern/client\"\n\toption \"github.com/endpoint-security-auth/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.User.Getwithoauth(\n\tcontext.TODO(),\n)\n"
             }
         }
     ]

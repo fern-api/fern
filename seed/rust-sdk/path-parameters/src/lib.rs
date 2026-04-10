@@ -1,21 +1,21 @@
-//! # PathParameters SDK
+//! # path-parameters SDK
 //!
-//! The official Rust SDK for the PathParameters.
+//! The official Rust SDK for the path-parameters.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_path_parameters::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = PathParametersClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .organizations
-//!         .get_organization(
+//!         .getorganization(
 //!             &"tenant_id".to_string(),
 //!             &"organization_id".to_string(),
 //!             None,

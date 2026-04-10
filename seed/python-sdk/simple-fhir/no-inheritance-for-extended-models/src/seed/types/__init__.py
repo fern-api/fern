@@ -7,20 +7,38 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .account import Account
+    from .account_resource_type import AccountResourceType
     from .base_resource import BaseResource
     from .memo import Memo
     from .patient import Patient
+    from .patient_resource_type import PatientResourceType
     from .practitioner import Practitioner
-    from .resource_list import ResourceList
+    from .practitioner_resource_type import PractitionerResourceType
+    from .resource_list import (
+        ResourceList,
+        ResourceList_Account,
+        ResourceList_Patient,
+        ResourceList_Practitioner,
+        ResourceList_Script,
+    )
     from .script import Script
+    from .script_resource_type import ScriptResourceType
 _dynamic_imports: typing.Dict[str, str] = {
     "Account": ".account",
+    "AccountResourceType": ".account_resource_type",
     "BaseResource": ".base_resource",
     "Memo": ".memo",
     "Patient": ".patient",
+    "PatientResourceType": ".patient_resource_type",
     "Practitioner": ".practitioner",
+    "PractitionerResourceType": ".practitioner_resource_type",
     "ResourceList": ".resource_list",
+    "ResourceList_Account": ".resource_list",
+    "ResourceList_Patient": ".resource_list",
+    "ResourceList_Practitioner": ".resource_list",
+    "ResourceList_Script": ".resource_list",
     "Script": ".script",
+    "ScriptResourceType": ".script_resource_type",
 }
 
 
@@ -45,4 +63,20 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["Account", "BaseResource", "Memo", "Patient", "Practitioner", "ResourceList", "Script"]
+__all__ = [
+    "Account",
+    "AccountResourceType",
+    "BaseResource",
+    "Memo",
+    "Patient",
+    "PatientResourceType",
+    "Practitioner",
+    "PractitionerResourceType",
+    "ResourceList",
+    "ResourceList_Account",
+    "ResourceList_Patient",
+    "ResourceList_Practitioner",
+    "ResourceList_Script",
+    "Script",
+    "ScriptResourceType",
+]

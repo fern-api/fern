@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Union\Types\Request;
+use Seed\Union\Requests\Request;
 
 $client = new SeedClient(
     options: [
@@ -11,11 +11,5 @@ $client = new SeedClient(
     ],
 );
 $client->union->call(
-    new Request([
-        'union' => [
-            'union' => [
-                'key' => "value",
-            ],
-        ],
-    ]),
+    new Request([]),
 );

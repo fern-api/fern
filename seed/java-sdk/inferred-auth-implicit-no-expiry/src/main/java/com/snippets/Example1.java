@@ -1,20 +1,22 @@
 package com.snippets;
 
-import com.seed.inferredAuthImplicitNoExpiry.SeedInferredAuthImplicitNoExpiryClient;
-import com.seed.inferredAuthImplicitNoExpiry.resources.auth.requests.RefreshTokenRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;
+import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;
+import com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedInferredAuthImplicitNoExpiryClient client = SeedInferredAuthImplicitNoExpiryClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.auth()
-                .refreshToken(RefreshTokenRequest.builder()
-                        .xApiKey("X-Api-Key")
+                .gettokenwithclientcredentials(AuthGetTokenWithClientCredentialsRequest.builder()
+                        .apiKey("apiKey")
                         .clientId("client_id")
                         .clientSecret("client_secret")
-                        .refreshToken("refresh_token")
+                        .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)
+                        .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)
                         .scope("scope")
                         .build());
     }

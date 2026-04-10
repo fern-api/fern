@@ -1,4 +1,4 @@
-use seed_path_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,14 +6,13 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = PathParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .user
-        .create_user(
+        .organizations
+        .searchorganizations(
             &"tenant_id".to_string(),
-            &User {
-                name: "name".to_string(),
-                tags: vec!["tags".to_string(), "tags".to_string()],
+            &"organization_id".to_string(),
+            &SearchorganizationsQueryRequest {
                 ..Default::default()
             },
             None,

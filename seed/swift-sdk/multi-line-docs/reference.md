@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getUser</a>(userId: String, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getuser</a>(userId: String, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
@@ -29,12 +29,12 @@ This endpoint is used to retrieve a user.
 
 ```swift
 import Foundation
-import MultiLineDocs
+import Api
 
 private func main() async throws {
-    let client = MultiLineDocsClient()
+    let client = ApiClient()
 
-    _ = try await client.user.getUser(userId: "userId")
+    _ = try await client.user.getuser(userId: "userId")
 }
 
 try await main()
@@ -75,7 +75,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createUser</a>(request: Requests.CreateUserRequest, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createuser</a>(request: Requests.UserCreateUserRequest, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -104,15 +104,12 @@ This endpoint is used to create a new user.
 
 ```swift
 import Foundation
-import MultiLineDocs
+import Api
 
 private func main() async throws {
-    let client = MultiLineDocsClient()
+    let client = ApiClient()
 
-    _ = try await client.user.createUser(request: .init(
-        name: "name",
-        age: 1
-    ))
+    _ = try await client.user.createuser(request: .init(name: "name"))
 }
 
 try await main()
@@ -130,7 +127,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.CreateUserRequest` 
+**request:** `Requests.UserCreateUserRequest` 
     
 </dd>
 </dl>

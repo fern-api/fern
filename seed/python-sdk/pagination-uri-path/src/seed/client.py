@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .users.client import AsyncUsersClient, UsersClient
 
 
-class SeedPaginationUriPath:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -39,9 +39,9 @@ class SeedPaginationUriPath:
 
     Examples
     --------
-    from seed import SeedPaginationUriPath
+    from seed import SeedApi
 
-    client = SeedPaginationUriPath(
+    client = SeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -102,7 +102,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedPaginationUriPath:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -132,9 +132,9 @@ class AsyncSeedPaginationUriPath:
 
     Examples
     --------
-    from seed import AsyncSeedPaginationUriPath
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedPaginationUriPath(
+    client = AsyncSeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )

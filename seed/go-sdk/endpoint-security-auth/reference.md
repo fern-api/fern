@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.GetToken(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.Gettoken(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,13 @@
 <dd>
 
 ```go
-request := &fern.GetTokenRequest{
+request := &fern.AuthGetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
+        Audience: fern.AuthGetTokenRequestAudienceHttpsApiExampleCom,
+        GrantType: fern.AuthGetTokenRequestGrantTypeClientCredentials,
     }
-client.Auth.GetToken(
+client.Auth.Gettoken(
         context.TODO(),
         request,
     )
@@ -52,7 +54,7 @@ client.Auth.GetToken(
 <dl>
 <dd>
 
-**audience:** `string` 
+**audience:** `*fern.AuthGetTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -60,7 +62,7 @@ client.Auth.GetToken(
 <dl>
 <dd>
 
-**grantType:** `string` 
+**grantType:** `*fern.AuthGetTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -73,7 +75,7 @@ client.Auth.GetToken(
 </details>
 
 ## User
-<details><summary><code>client.User.GetWithBearer() -> []*fern.User</code></summary>
+<details><summary><code>client.User.Getwithbearer() -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -86,7 +88,7 @@ client.Auth.GetToken(
 <dd>
 
 ```go
-client.User.GetWithBearer(
+client.User.Getwithbearer(
         context.TODO(),
     )
 }
@@ -101,7 +103,7 @@ client.User.GetWithBearer(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetWithAPIKey() -> []*fern.User</code></summary>
+<details><summary><code>client.User.Getwithapikey() -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -114,7 +116,7 @@ client.User.GetWithBearer(
 <dd>
 
 ```go
-client.User.GetWithAPIKey(
+client.User.Getwithapikey(
         context.TODO(),
     )
 }
@@ -129,7 +131,7 @@ client.User.GetWithAPIKey(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetWithOAuth() -> []*fern.User</code></summary>
+<details><summary><code>client.User.Getwithoauth() -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -142,7 +144,7 @@ client.User.GetWithAPIKey(
 <dd>
 
 ```go
-client.User.GetWithOAuth(
+client.User.Getwithoauth(
         context.TODO(),
     )
 }
@@ -157,7 +159,7 @@ client.User.GetWithOAuth(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetWithBasic() -> []*fern.User</code></summary>
+<details><summary><code>client.User.Getwithbasic() -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -170,7 +172,7 @@ client.User.GetWithOAuth(
 <dd>
 
 ```go
-client.User.GetWithBasic(
+client.User.Getwithbasic(
         context.TODO(),
     )
 }
@@ -185,7 +187,7 @@ client.User.GetWithBasic(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetWithInferredAuth() -> []*fern.User</code></summary>
+<details><summary><code>client.User.Getwithinferredauth() -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -198,7 +200,7 @@ client.User.GetWithBasic(
 <dd>
 
 ```go
-client.User.GetWithInferredAuth(
+client.User.Getwithinferredauth(
         context.TODO(),
     )
 }
@@ -213,7 +215,7 @@ client.User.GetWithInferredAuth(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetWithAnyAuth() -> []*fern.User</code></summary>
+<details><summary><code>client.User.Getwithanyauth() -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -226,7 +228,7 @@ client.User.GetWithInferredAuth(
 <dd>
 
 ```go
-client.User.GetWithAnyAuth(
+client.User.Getwithanyauth(
         context.TODO(),
     )
 }
@@ -241,7 +243,7 @@ client.User.GetWithAnyAuth(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetWithAllAuth() -> []*fern.User</code></summary>
+<details><summary><code>client.User.Getwithallauth() -> []*fern.User</code></summary>
 <dl>
 <dd>
 
@@ -254,7 +256,7 @@ client.User.GetWithAnyAuth(
 <dd>
 
 ```go
-client.User.GetWithAllAuth(
+client.User.Getwithallauth(
         context.TODO(),
     )
 }

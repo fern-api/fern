@@ -9,6 +9,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->getMovieName(
+$client->service->getmoviedocs(
     'string',
 );

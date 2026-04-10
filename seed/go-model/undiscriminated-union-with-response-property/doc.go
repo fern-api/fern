@@ -1,1 +1,1 @@
-package undiscriminatedunionwithresponseproperty
+package api
