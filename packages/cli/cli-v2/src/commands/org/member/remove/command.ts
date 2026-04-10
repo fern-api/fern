@@ -19,6 +19,13 @@ export class RemoveMemberCommand {
     public async handle(context: Context, args: RemoveMemberCommand.Args): Promise<void> {
         const token = await context.getTokenOrPrompt();
 
+        if (token.type === "organization") {
+            context.stderr.error(
+                `${Icons.error} Organization tokens cannot remove members. Unset the FERN_TOKEN environment variable and run 'fern auth login' to remove members.`
+            );
+            throw CliError.exit();
+        }
+
         const venus = createVenusService({ token: token.value });
 
         const userId = args["user-id"];

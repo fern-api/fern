@@ -18,6 +18,13 @@ export class ListMembersCommand {
     public async handle(context: Context, args: ListMembersCommand.Args): Promise<void> {
         const token = await context.getTokenOrPrompt();
 
+        if (token.type === "organization") {
+            context.stderr.error(
+                `${Icons.error} Organization tokens cannot list members. Unset the FERN_TOKEN environment variable and run 'fern auth login' to list members.`
+            );
+            throw CliError.exit();
+        }
+
         const venus = createVenusService({ token: token.value });
 
         const response = await withSpinner({
@@ -53,7 +60,7 @@ export class ListMembersCommand {
 
         for (const member of members) {
             const email = member.emailAddress != null ? `  ${Colors.dim(`<${member.emailAddress}>`)}` : "";
-            context.stdout.info(`${member.displayName}${email}`);
+            context.stdout.info(`${Colors.dim(member.userId)}  ${member.displayName}${email}`);
         }
     }
 }

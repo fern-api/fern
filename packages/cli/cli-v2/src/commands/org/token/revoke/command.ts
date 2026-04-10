@@ -18,6 +18,13 @@ export class RevokeTokenCommand {
     public async handle(context: Context, args: RevokeTokenCommand.Args): Promise<void> {
         const token = await context.getTokenOrPrompt();
 
+        if (token.type === "organization") {
+            context.stderr.error(
+                `${Icons.error} Organization tokens cannot revoke API tokens. Unset the FERN_TOKEN environment variable and run 'fern auth login' to revoke tokens.`
+            );
+            throw CliError.exit();
+        }
+
         const venus = createVenusService({ token: token.value });
 
         const tokenId = args["token-id"];
