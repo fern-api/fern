@@ -65,9 +65,9 @@ export class ListTokensCommand {
         for (const meta of tokens) {
             const status =
                 meta.status.type === "active"
-                    ? Colors.green("active")
+                    ? Colors.success("active")
                     : meta.status.type === "revoked"
-                      ? Colors.red("revoked")
+                      ? Colors.error("revoked")
                       : Colors.dim("expired");
             const description = meta.description != null ? `  ${Colors.dim(meta.description)}` : "";
             const created = meta.createdTime.toLocaleDateString();
