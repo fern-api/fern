@@ -32,6 +32,10 @@ export async function generateToken({
             taskContext.failAndThrow(
                 `Failed to create token because you are not in the ${orgId} organization. Please reach out to support@buildwithfern.com`
             ),
+        missingOrgPermissionsError: () =>
+            taskContext.failAndThrow(
+                `Failed to create token because you do not have the required permissions in the ${orgId} organization. Please reach out to support@buildwithfern.com`
+            ),
         _other: () => taskContext.failAndThrow("Failed to create token. Please reach out to support@buildwithfern.com")
     });
 }

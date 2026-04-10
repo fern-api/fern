@@ -48,6 +48,12 @@ export class TokenCommand {
                 process.stderr.write(`${Icons.error} You do not have access to organization "${orgId}".\n`);
                 throw CliError.exit();
             },
+            missingOrgPermissionsError: () => {
+                process.stderr.write(
+                    `${Icons.error} You do not have the required permissions in organization "${orgId}".\n`
+                );
+                throw CliError.exit();
+            },
             _other: () => {
                 process.stderr.write(
                     `${Icons.error} Failed to generate token.\n` +
