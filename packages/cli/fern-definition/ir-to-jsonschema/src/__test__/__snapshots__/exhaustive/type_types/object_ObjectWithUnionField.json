@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "animal": {
+      "$ref": "#/definitions/types.union.Animal"
+    }
+  },
+  "required": [
+    "name",
+    "animal"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "types.union.Animal": {
+      "type": "object",
+      "properties": {
+        "animal": {
+          "type": "string",
+          "enum": [
+            "dog",
+            "cat"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "animal": {
+              "const": "dog"
+            },
+            "name": {
+              "type": "string"
+            },
+            "likesToWoof": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "animal",
+            "name",
+            "likesToWoof"
+          ]
+        },
+        {
+          "properties": {
+            "animal": {
+              "const": "cat"
+            },
+            "name": {
+              "type": "string"
+            },
+            "likesToMeow": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "animal",
+            "name",
+            "likesToMeow"
+          ]
+        }
+      ]
+    }
+  }
+}
