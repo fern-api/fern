@@ -5,7 +5,7 @@ import tmp from "tmp-promise";
 import { runFernCli } from "../../utils/runFernCli.js";
 
 describe("fern generate with settings", () => {
-    it("single api", async ({ expect, signal }) => {
+    it.concurrent("single api", async ({ expect, signal }) => {
         const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/api-settings"));
 
         const tmpDir = await tmp.dir();
@@ -20,7 +20,7 @@ describe("fern generate with settings", () => {
         ).toMatchSnapshot();
     }, 180_000);
 
-    it("dependencies-based api", async ({ expect, signal }) => {
+    it.concurrent("dependencies-based api", async ({ expect, signal }) => {
         const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/api-settings-unioned"));
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);

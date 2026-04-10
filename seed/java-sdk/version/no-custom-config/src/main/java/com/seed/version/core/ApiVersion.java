@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public final class ApiVersion {
     public static final ApiVersion LATEST = new ApiVersion(Value.LATEST, "latest");
 
-    public static final ApiVersion V2 = new ApiVersion(Value.V2, "2.0.0");
-
     public static final ApiVersion V1 = new ApiVersion(Value.V1, "1.0.0");
+
+    public static final ApiVersion V2 = new ApiVersion(Value.V2, "2.0.0");
 
     private final Value value;
 
@@ -46,10 +46,10 @@ public final class ApiVersion {
         switch (value) {
             case LATEST:
                 return visitor.visitLatest();
-            case V2:
-                return visitor.visitV2();
             case V1:
                 return visitor.visitV1();
+            case V2:
+                return visitor.visitV2();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -61,10 +61,10 @@ public final class ApiVersion {
         switch (value) {
             case "latest":
                 return LATEST;
-            case "2.0.0":
-                return V2;
             case "1.0.0":
                 return V1;
+            case "2.0.0":
+                return V2;
             default:
                 return new ApiVersion(Value.UNKNOWN, value);
         }

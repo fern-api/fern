@@ -200,7 +200,26 @@ export async function visitDocsConfigFileYamlAst({
         },
         landingPage: noop,
         layout: noop,
-        agents: noop,
+        agents: async (agents) => {
+            if (agents?.llmsTxt != null) {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: agents.llmsTxt,
+                    visitor,
+                    nodePath: ["agents", "llms-txt"],
+                    willBeUploaded: true
+                });
+            }
+            if (agents?.llmsFullTxt != null) {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: agents.llmsFullTxt,
+                    visitor,
+                    nodePath: ["agents", "llms-full-txt"],
+                    willBeUploaded: true
+                });
+            }
+        },
         settings: noop,
         logo: async () => {
             if (contents.logo?.dark != null) {

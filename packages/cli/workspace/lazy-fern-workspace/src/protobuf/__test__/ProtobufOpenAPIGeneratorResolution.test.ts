@@ -66,7 +66,7 @@ function createMockTaskContext(): TaskContext {
             throw new Error("Not implemented in mock");
         },
         runInteractiveTask: async () => false,
-        instrumentPostHogEvent: async () => {
+        instrumentPostHogEvent: () => {
             return;
         }
     };

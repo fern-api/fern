@@ -11,10 +11,10 @@ public final class EntityEventPayloadEventType {
 
     public static final EntityEventPayloadEventType DELETED = new EntityEventPayloadEventType(Value.DELETED, "DELETED");
 
+    public static final EntityEventPayloadEventType UPDATED = new EntityEventPayloadEventType(Value.UPDATED, "UPDATED");
+
     public static final EntityEventPayloadEventType PREEXISTING =
             new EntityEventPayloadEventType(Value.PREEXISTING, "PREEXISTING");
-
-    public static final EntityEventPayloadEventType UPDATED = new EntityEventPayloadEventType(Value.UPDATED, "UPDATED");
 
     private final Value value;
 
@@ -53,10 +53,10 @@ public final class EntityEventPayloadEventType {
                 return visitor.visitCreated();
             case DELETED:
                 return visitor.visitDeleted();
-            case PREEXISTING:
-                return visitor.visitPreexisting();
             case UPDATED:
                 return visitor.visitUpdated();
+            case PREEXISTING:
+                return visitor.visitPreexisting();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -70,10 +70,10 @@ public final class EntityEventPayloadEventType {
                 return CREATED;
             case "DELETED":
                 return DELETED;
-            case "PREEXISTING":
-                return PREEXISTING;
             case "UPDATED":
                 return UPDATED;
+            case "PREEXISTING":
+                return PREEXISTING;
             default:
                 return new EntityEventPayloadEventType(Value.UNKNOWN, value);
         }

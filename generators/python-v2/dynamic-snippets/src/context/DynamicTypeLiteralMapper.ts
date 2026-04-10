@@ -271,7 +271,12 @@ export class DynamicTypeLiteralMapper {
                     object_: named,
                     value: discriminatedUnionTypeInstance.value
                 });
-                return [...baseFields, ...objectEntries];
+                // Skip object entries that overlap with base fields to avoid
+                // duplicate keyword arguments (e.g. stream condition properties
+                // inherited via extends that are already pinned as literals).
+                const baseFieldNames = new Set(baseFields.map((f) => f.name));
+                const filteredObjectEntries = objectEntries.filter((entry) => !baseFieldNames.has(entry.name));
+                return [...baseFields, ...filteredObjectEntries];
             }
             case "singleProperty": {
                 try {
