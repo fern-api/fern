@@ -1384,6 +1384,26 @@ export class WebSocketClientGenerator extends WithGeneration {
             type: this.Types.WebSocketEvent(this.Types.ReconnectionInfo)
         });
 
+        // Domain-specific events (server-to-client messages)
+        for (const each of this.events) {
+            interface_.addField({
+                name: each.name ?? "",
+                enclosingType: interface_,
+                access: ast.Access.Public,
+                get: true,
+                type: each.eventType
+            });
+        }
+
+        // UnknownMessage event
+        interface_.addField({
+            name: "UnknownMessage",
+            enclosingType: interface_,
+            access: ast.Access.Public,
+            get: true,
+            type: this.Types.WebSocketEvent(this.System.Text.Json.JsonElement)
+        });
+
         // Status property
         interface_.addField({
             name: "Status",
