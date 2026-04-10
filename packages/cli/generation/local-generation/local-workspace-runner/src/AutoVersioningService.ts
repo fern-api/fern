@@ -42,6 +42,11 @@ export interface AutoVersionResult {
      * E.g., "MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`."
      */
     versionBumpReason?: string;
+    /**
+     * The version bump level determined by analysis (MAJOR, MINOR, PATCH).
+     * Used by automation mode to detect breaking changes (MAJOR = breaking).
+     */
+    versionBump?: string;
 }
 
 /**

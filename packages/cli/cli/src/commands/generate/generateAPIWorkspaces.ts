@@ -22,6 +22,7 @@ export async function generateAPIWorkspaces({
     version,
     groupName,
     generatorName,
+    generatorIndex,
     shouldLogS3Url,
     keepDocker,
     useLocalDocker,
@@ -37,13 +38,17 @@ export async function generateAPIWorkspaces({
     outputDir,
     noReplay,
     retryRateLimited,
-    requireEnvVars
+    requireEnvVars,
+    automationMode,
+    autoMerge
 }: {
     project: Project;
     cliContext: CliContext;
     version: string | undefined;
     groupName: string | undefined;
     generatorName: string | undefined;
+    /** Index-based generator targeting (0-based). Used by `fern automations generate --generator 0`. */
+    generatorIndex: number | undefined;
     shouldLogS3Url: boolean;
     useLocalDocker: boolean;
     keepDocker: boolean;
@@ -60,6 +65,8 @@ export async function generateAPIWorkspaces({
     noReplay: boolean;
     retryRateLimited: boolean;
     requireEnvVars: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -145,6 +152,7 @@ export async function generateAPIWorkspaces({
                     version,
                     groupName,
                     generatorName,
+                    generatorIndex,
                     shouldLogS3Url,
                     token,
                     useLocalDocker,
@@ -159,7 +167,9 @@ export async function generateAPIWorkspaces({
                     dynamicIrOnly,
                     noReplay,
                     retryRateLimited,
-                    requireEnvVars
+                    requireEnvVars,
+                    automationMode,
+                    autoMerge
                 });
             });
         })
