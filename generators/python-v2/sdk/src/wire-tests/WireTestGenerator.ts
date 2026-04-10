@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
@@ -37,7 +37,7 @@ export class WireTestGenerator {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
-            throw new Error("Cannot generate wire tests without dynamic IR");
+            throw GeneratorError.internalError("Cannot generate wire tests without dynamic IR");
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();
