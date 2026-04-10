@@ -10,6 +10,7 @@ import type { PipelineLogger } from "../PipelineLogger";
 import { formatReplayPrBody } from "../replay-summary";
 import type { GithubStepConfig, GithubStepResult, PipelineContext, ReplayStepResult } from "../types";
 import { BaseStep } from "./BaseStep";
+
 export class GithubStep extends BaseStep {
     readonly name = "github";
 
@@ -98,11 +99,32 @@ export class GithubStep extends BaseStep {
         let generationBaseSha: string | undefined;
         let existingPR: Awaited<ReturnType<typeof findExistingUpdatablePR>> | undefined;
 
-        if (this.config.automationMode) {
-            // Automation mode: each generation run creates its own PR (1:1 spec commit → SDK release)
-            this.logger.debug(`Automation mode: creating new branch ${newPrBranch}`);
+        if (!this.config.automationMode) {
+            existingPR = await findExistingUpdatablePR(octokit, owner, repo, baseBranch, this.logger);
+        }
+
+        if (existingPR != null) {
+            this.logger.info(
+                `Found existing updatable PR #${existingPR.number}, will update branch ${existingPR.headBranch}`
+            );
+            prBranch = existingPR.headBranch;
+            isUpdatingExistingPR = true;
+        } else {
+            this.logger.debug(
+                this.config.automationMode
+                    ? `Automation mode: creating new branch ${newPrBranch}`
+                    : `No existing updatable PR found, creating new branch ${newPrBranch}`
+            );
             prBranch = newPrBranch;
-            if (skipCommit) {
+        }
+
+        const branchAction = resolveBranchAction({
+            automationMode: this.config.automationMode === true,
+            skipCommit,
+            existingPR
+        });
+        switch (branchAction) {
+            case "replay-branch":
                 generationBaseSha = await createReplayBranch(
                     repository,
                     prBranch,
@@ -110,43 +132,16 @@ export class GithubStep extends BaseStep {
                     replayConflictInfo,
                     this.logger
                 );
-            } else {
-                await repository.checkout(prBranch);
-            }
-        } else {
-            existingPR = await findExistingUpdatablePR(octokit, owner, repo, baseBranch, this.logger);
-
-            if (existingPR != null) {
-                this.logger.info(
-                    `Found existing updatable PR #${existingPR.number}, will update branch ${existingPR.headBranch}`
-                );
-                prBranch = existingPR.headBranch;
-                isUpdatingExistingPR = true;
-                if (skipCommit) {
-                    generationBaseSha = await createReplayBranch(
-                        repository,
-                        prBranch,
-                        this.config.commitMessage,
-                        replayConflictInfo,
-                        this.logger
-                    );
-                } else {
-                    await repository.checkoutRemoteBranch(prBranch);
-                }
-            } else {
-                this.logger.debug(`No existing updatable PR found, creating new branch ${newPrBranch}`);
-                prBranch = newPrBranch;
-                if (skipCommit) {
-                    generationBaseSha = await createReplayBranch(
-                        repository,
-                        prBranch,
-                        this.config.commitMessage,
-                        replayConflictInfo,
-                        this.logger
-                    );
-                } else {
-                    await repository.checkout(prBranch);
-                }
+                break;
+            case "create-from-head":
+                await repository.createBranchFromHead(prBranch);
+                break;
+            case "checkout-remote":
+                await repository.checkoutRemoteBranch(prBranch);
+                break;
+            default: {
+                const _exhaustive: never = branchAction;
+                throw new Error(`Unexpected branch action: ${String(_exhaustive)}`);
             }
         }
 
@@ -396,4 +391,31 @@ export function shouldEnableAutomerge(config: {
     hasBreakingChanges?: boolean;
 }): boolean {
     return config.automationMode === true && config.autoMerge === true && config.hasBreakingChanges !== true;
+}
+
+/**
+ * Determines which git branch operation to perform for pull-request mode.
+ * New branches must use "create" (git checkout -b), existing remote branches use "checkout-remote".
+ * When replay already committed (skipCommit), branch creation is handled by createReplayBranch instead.
+ * Exported for testing.
+ */
+export function resolveBranchAction({
+    automationMode,
+    skipCommit,
+    existingPR
+}: {
+    automationMode: boolean;
+    skipCommit: boolean;
+    existingPR: { headBranch: string } | null | undefined;
+}): "create-from-head" | "checkout-remote" | "replay-branch" {
+    if (skipCommit) {
+        return "replay-branch";
+    }
+    if (automationMode) {
+        return "create-from-head";
+    }
+    if (existingPR != null) {
+        return "checkout-remote";
+    }
+    return "create-from-head";
 }

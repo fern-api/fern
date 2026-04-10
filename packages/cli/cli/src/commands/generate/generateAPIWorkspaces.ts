@@ -8,6 +8,7 @@ import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
+import { filterGenerators } from "./filterGenerators.js";
 import { generateWorkspace } from "./generateAPIWorkspace.js";
 
 export const GenerationMode = {
@@ -88,17 +89,27 @@ export async function generateAPIWorkspaces({
 
     for (const workspace of project.apiWorkspaces) {
         const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
-        for (const generator of workspace.generatorsConfiguration?.groups
-            .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
-            .flatMap((group) => group.generators)
-            .filter((generator) => generatorName == null || generator.name === generatorName) ?? []) {
-            const { shouldProceed } = await checkOutputDirectory(
-                generator.absolutePathToLocalOutput,
-                cliContext,
-                force
-            );
-            if (!shouldProceed) {
-                cliContext.failAndThrow("Generation cancelled");
+        for (const group of workspace.generatorsConfiguration?.groups.filter(
+            (group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName)
+        ) ?? []) {
+            const filterResult = filterGenerators({
+                generators: group.generators,
+                generatorIndex,
+                generatorName,
+                groupName: group.groupName
+            });
+            if (!filterResult.ok) {
+                continue;
+            }
+            for (const generator of filterResult.generators) {
+                const { shouldProceed } = await checkOutputDirectory(
+                    generator.absolutePathToLocalOutput,
+                    cliContext,
+                    force
+                );
+                if (!shouldProceed) {
+                    cliContext.failAndThrow("Generation cancelled");
+                }
             }
         }
     }
