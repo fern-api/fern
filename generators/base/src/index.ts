@@ -1,5 +1,6 @@
 export * from "./AbstractGeneratorAgent.js";
 export * from "./AbstractGeneratorCli.js";
+export * from "./GeneratorError.js";
 export * from "./browserCompatibleExports.js";
 export * from "./project/index.js";
 export * from "./readme/index.js";
