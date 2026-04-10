@@ -2194,14 +2194,20 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     string: true,
                     description:
                         "Output targets: filesystem paths and/or registry URLs. " +
-                        "Omit to publish to the default preview registry via remote generation."
+                        "When omitted, publishes to the default preview registry via remote generation. " +
+                        "When provided, uses local Docker generation. " +
+                        "Examples: --output ./out (disk only), --output https://registry.example.com (registry only), " +
+                        "--output ./out --output https://registry.example.com (both)."
                 })
                 .option("push-diff", {
                     boolean: true,
                     default: false,
                     description:
-                        "Push a preview diff branch to the SDK repo. " +
-                        "Requires the generator to have github output configuration and the Fern GitHub App installed."
+                        "Push a preview diff branch (fern-preview-{version}) to the SDK repo " +
+                        "in addition to publishing to the preview registry. " +
+                        "Requires the generator to have github output configuration " +
+                        "and the Fern GitHub App installed on the target repo. " +
+                        "Cannot be combined with --output."
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
