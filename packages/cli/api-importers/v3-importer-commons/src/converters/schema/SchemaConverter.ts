@@ -54,7 +54,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     private readonly nameOverride?: string;
     private readonly visitedRefs: Set<string>;
 
-    constructor({ context, breadcrumbs, schema, id, inlined = false, nameOverride, visitedRefs }: SchemaConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        schema,
+        id,
+        inlined = false,
+        nameOverride,
+        visitedRefs
+    }: SchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
         this.id = id;
