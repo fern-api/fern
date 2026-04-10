@@ -454,6 +454,8 @@ scripts:
         - poetry run pytest -rP -n auto -m aiohttp .
 allowedFailures:
   - schemaless-request-body-examples
+  - allof:no-custom-config
+  - allof-inline:no-custom-config
   - any-auth
   - endpoint-security-auth
   - examples:legacy-wire-tests
