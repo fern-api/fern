@@ -36,6 +36,7 @@ import com.fern.ir.model.websocket.WebSocketMessage;
 import com.fern.ir.model.websocket.WebSocketMessageBody;
 import com.fern.ir.model.websocket.WebSocketMessageBodyReference;
 import com.fern.ir.model.websocket.WebSocketMessageOrigin;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -509,7 +510,7 @@ public abstract class AbstractWebSocketChannelWriter {
             @Override
             public String visitInlinedBody(InlinedWebSocketMessageBody inlinedBody) {
                 for (InlinedWebSocketMessageBodyProperty property : inlinedBody.getProperties()) {
-                    if (DISCRIMINANT_FIELD.equals(property.getName().getWireValue())) {
+                    if (DISCRIMINANT_FIELD.equals(NameUtils.getWireValue(property.getName()))) {
                         Optional<String> value =
                                 extractDiscriminantFromTypeProperty(property.getValueType(), messageId);
                         if (value.isPresent()) {
@@ -570,7 +571,7 @@ public abstract class AbstractWebSocketChannelWriter {
             Optional<String> suffixMatch = Optional.empty();
             for (EnumValue enumValue :
                     typeDeclaration.getShape().getEnum().get().getValues()) {
-                String wireValue = enumValue.getName().getWireValue();
+                String wireValue = NameUtils.getWireValue(enumValue.getName());
                 if (messageId.equals(wireValue)) {
                     return Optional.of(wireValue);
                 }
@@ -602,7 +603,7 @@ public abstract class AbstractWebSocketChannelWriter {
             }
             ObjectTypeDeclaration objectType = shape.getObject().get();
             for (ObjectProperty property : objectType.getProperties()) {
-                if (DISCRIMINANT_FIELD.equals(property.getName().getWireValue())) {
+                if (DISCRIMINANT_FIELD.equals(NameUtils.getWireValue(property.getName()))) {
                     return extractDiscriminantFromTypeProperty(property.getValueType(), messageId);
                 }
             }
@@ -616,7 +617,7 @@ public abstract class AbstractWebSocketChannelWriter {
         TypeName paramType =
                 clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
         return FieldSpec.builder(
-                        paramType, pathParam.getName().getCamelCase().getSafeName(), Modifier.PRIVATE, Modifier.FINAL)
+                        paramType, NameUtils.toName(pathParam.getName()).getCamelCase().getSafeName(), Modifier.PRIVATE, Modifier.FINAL)
                 .build();
     }
 
@@ -635,11 +636,11 @@ public abstract class AbstractWebSocketChannelWriter {
                 String pathParamId = part.getPathParameter();
                 if (pathParamId != null && !pathParamId.isEmpty()) {
                     PathParameter matchingParam = websocketChannel.getPathParameters().stream()
-                            .filter(p -> p.getName().getOriginalName().equals(pathParamId))
+                            .filter(p -> NameUtils.toName(p.getName()).getOriginalName().equals(pathParamId))
                             .findFirst()
                             .orElseThrow();
                     String paramFieldName =
-                            matchingParam.getName().getCamelCase().getSafeName();
+                            NameUtils.toName(matchingParam.getName()).getCamelCase().getSafeName();
                     builder.addStatement("pathBuilder.append($L)", paramFieldName);
                 }
                 builder.addStatement("pathBuilder.append($S)", part.getTail());
@@ -925,7 +926,7 @@ public abstract class AbstractWebSocketChannelWriter {
         return CodeBlock.builder()
                 .add(
                         "WebSocket client for the $L channel.\n",
-                        websocketChannel.getName().get().getCamelCase().getSafeName())
+                        NameUtils.toName(websocketChannel.getName().get()).getCamelCase().getSafeName())
                 .add("Provides real-time bidirectional communication with strongly-typed messages.\n")
                 .build();
     }

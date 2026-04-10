@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.types.ContainerType;
+import com.fern.java.utils.NameUtils;
 import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.TypeDeclaration;
@@ -390,7 +391,7 @@ public interface EnrichedObjectProperty {
             TypeName poetTypeName,
             boolean allowMultiple,
             boolean useNullableAnnotation) {
-        Name name = objectProperty.getName().getName();
+        Name name = NameUtils.getName(objectProperty.getName());
         Optional<Literal> maybeLiteral =
                 objectProperty.getValueType().getContainer().flatMap(ContainerType::getLiteral);
         return EnrichedObjectProperty.builder()
@@ -405,7 +406,7 @@ public interface EnrichedObjectProperty {
                 .generator(generator)
                 .allowMultiple(allowMultiple)
                 .useNullableAnnotation(useNullableAnnotation)
-                .wireKey(objectProperty.getName().getWireValue())
+                .wireKey(NameUtils.getWireValue(objectProperty.getName()))
                 .docs(objectProperty.getDocs())
                 .literal(maybeLiteral)
                 .typeDeclaration(typeDeclaration)

@@ -10,6 +10,7 @@ import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.squareup.javapoet.ClassName;
 import java.util.Collections;
@@ -106,10 +107,10 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Abstract
                 undiscriminatedUnion,
                 reservedTypeNamesInScope,
                 isTopLevelClass,
-                originalTypeDeclaration
+                NameUtils.toName(originalTypeDeclaration
                         .get()
                         .getName()
-                        .getName()
+                        .getName())
                         .getPascalCase()
                         .getSafeName());
         return Optional.of(unionGenerator);

@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
+import com.fern.java.utils.NameUtils;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DeclaredTypeName;
@@ -197,7 +198,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                                                 .values()
                                                 .stream()
                                                 .map(TypeDeclaration::getName)
-                                                .map(DeclaredTypeName::getName)
+                                                .map(d -> NameUtils.toName(d.getName()))
                                                 .map(Name::getPascalCase)
                                                 .map(SafeAndUnsafeString::getSafeName)
                                                 .collect(Collectors.toList())
@@ -335,7 +336,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 Set<String> allReservedTypeNames = new HashSet<>(reservedTypeNames);
 
                 String name =
-                        rawTypeDeclaration.getName().getName().getPascalCase().getSafeName();
+                        NameUtils.toName(rawTypeDeclaration.getName().getName()).getPascalCase().getSafeName();
 
                 // Omit the prefix from type names that start with it, for better style
                 if (name.startsWith(undiscriminatedUnionPrefix) && !name.equals(undiscriminatedUnionPrefix)) {

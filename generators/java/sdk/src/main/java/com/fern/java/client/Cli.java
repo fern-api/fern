@@ -26,6 +26,7 @@ import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
 import com.fern.java.JavaV2Adapter;
 import com.fern.java.JavaV2Arguments;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.client.generators.AbstractRootClientGenerator;
 import com.fern.java.client.generators.AbstractSubpackageClientGenerator;
 import com.fern.java.client.generators.ApiErrorGenerator;
@@ -487,7 +488,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
                 authScheme.getHeader().ifPresent(headerScheme -> {
                     String schemeName =
-                            headerScheme.getName().getName().getPascalCase().getSafeName();
+                            NameUtils.getName(headerScheme.getName()).getPascalCase().getSafeName();
                     HeaderAuthProviderGenerator headerGenerator =
                             new HeaderAuthProviderGenerator(context, headerScheme, schemeName);
                     this.addGeneratedFile(headerGenerator.generateFile());
@@ -733,7 +734,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     context.getPoetClassNameFactory().getWebSocketClientClassName(websocketChannel, subpackage);
             ClassName optionsClassName = ClassName.get(
                     wsClientClassName.packageName(),
-                    websocketChannel.getName().get().getPascalCase().getSafeName() + "ConnectOptions");
+                    NameUtils.toName(websocketChannel.getName().get()).getPascalCase().getSafeName() + "ConnectOptions");
             com.fern.java.client.generators.websocket.WebSocketConnectOptionsGenerator optionsGenerator =
                     new com.fern.java.client.generators.websocket.WebSocketConnectOptionsGenerator(
                             websocketChannel, context, optionsClassName);

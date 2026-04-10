@@ -23,6 +23,7 @@ import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.generators.object.ImplementsInterface;
@@ -301,9 +302,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             Preconditions.checkState(
                                     typeName instanceof ParameterizedTypeName,
                                     "Found optional/nullable with non-parameterized type name "
-                                            + prop.objectProperty()
-                                                    .getName()
-                                                    .getName()
+                                            + NameUtils.getName(prop.objectProperty().getName())
                                                     .getOriginalName());
                             TypeName parameterType =
                                     Objects.requireNonNull(((ParameterizedTypeName) typeName).typeArguments.get(0));
@@ -402,7 +401,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 Preconditions.checkState(
                                         poetTypeName instanceof ParameterizedTypeName,
                                         "Found optional/nullable with non-parameterized type name "
-                                                + prop.getName().getName().getOriginalName());
+                                                + NameUtils.getName(prop.getName()).getOriginalName());
                                 TypeName parameterType = Objects.requireNonNull(
                                         ((ParameterizedTypeName) poetTypeName).typeArguments.get(0));
                                 poetTypeName = ParameterizedTypeName.get(

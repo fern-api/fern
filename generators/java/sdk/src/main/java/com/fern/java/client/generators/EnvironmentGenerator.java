@@ -10,6 +10,7 @@ import com.fern.ir.model.environment.SingleBaseUrlEnvironment;
 import com.fern.ir.model.environment.SingleBaseUrlEnvironments;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.client.GeneratedEnvironmentsClass.EnvironmentClassInfo;
 import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
@@ -94,7 +95,7 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
             environmentsBuilder.addField(urlField()).addMethod(urlConstructorMethod());
             for (SingleBaseUrlEnvironment environment : singleBaseUrl.getEnvironments()) {
                 optionsPresent = true;
-                String constant = environment.getName().getScreamingSnakeCase().getSafeName();
+                String constant = NameUtils.toName(environment.getName()).getScreamingSnakeCase().getSafeName();
                 String envUrl =
                         environment.getDefaultUrl().orElse(environment.getUrl().get());
                 environmentsBuilder.addField(
@@ -124,9 +125,9 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
 
             multipleBaseUrls.getBaseUrls().forEach(environmentBaseUrlWithId -> {
                 String urlCamelCase =
-                        environmentBaseUrlWithId.getName().getCamelCase().getSafeName();
+                        NameUtils.toName(environmentBaseUrlWithId.getName()).getCamelCase().getSafeName();
                 String urlPascalCase =
-                        environmentBaseUrlWithId.getName().getPascalCase().getSafeName();
+                        NameUtils.toName(environmentBaseUrlWithId.getName()).getPascalCase().getSafeName();
                 environmentsBuilder.addField(FieldSpec.builder(String.class, urlCamelCase)
                         .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
                         .build());
@@ -160,7 +161,7 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
                         })
                         .map(url -> "\"" + url + "\"")
                         .collect(Collectors.joining(","));
-                String constant = environment.getName().getScreamingSnakeCase().getSafeName();
+                String constant = NameUtils.toName(environment.getName()).getScreamingSnakeCase().getSafeName();
                 environmentsBuilder.addField(
                         FieldSpec.builder(className, constant, Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                                 .initializer("new $T(" + args + ")", className)
@@ -182,7 +183,7 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
             StringBuilder buildArgs = new StringBuilder();
             multipleBaseUrls.getBaseUrls().forEach(environmentBaseUrlWithId -> {
                 String urlCamelCase =
-                        environmentBaseUrlWithId.getName().getCamelCase().getSafeName();
+                        NameUtils.toName(environmentBaseUrlWithId.getName()).getCamelCase().getSafeName();
 
                 // Add field to Builder
                 builderClassBuilder.addField(FieldSpec.builder(String.class, urlCamelCase)

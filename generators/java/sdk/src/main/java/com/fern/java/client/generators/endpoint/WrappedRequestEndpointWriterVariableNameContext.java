@@ -9,6 +9,7 @@ import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -35,7 +36,7 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
         this.requestParameterName =
-                sdkRequest.getRequestParameterName().getCamelCase().getSafeName();
+                NameUtils.toName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName();
         initializeCollections();
     }
 
@@ -84,15 +85,15 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
             ClientGeneratorContext clientGeneratorContext, FileProperty fileProperty) {
         if (clientGeneratorContext.getCustomConfig().inlineFileProperties()) {
             return "request.get"
-                    + fileProperty
+                    + NameUtils.toName(fileProperty
                             .visit(new GetFilePropertyKey())
-                            .getName()
+                            .getName())
                             .getPascalCase()
                             .getSafeName() + "()";
         } else {
-            return fileProperty
+            return NameUtils.toName(fileProperty
                     .visit(new GetFilePropertyKey())
-                    .getName()
+                    .getName())
                     .getCamelCase()
                     .getSafeName();
         }
