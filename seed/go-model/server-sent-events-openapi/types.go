@@ -52,6 +52,83 @@ type StreamDataContextWithEnvelopeSchemaResponse struct {
 	ObjectData ProtocolObjectEvent
 }
 
+// A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+type StreamXFernStreamingUnionStreamRequest struct {
+	// A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+	Type           string
+	StreamResponse bool
+	// A user input message. Inherits stream_response from base via allOf.
+	Message UnionStreamMessageVariant
+	// Cancels the current operation. Inherits stream_response from base.
+	Interrupt UnionStreamInterruptVariant
+	// Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.
+	Compact UnionStreamCompactVariant
+}
+
+// A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+type StreamXFernStreamingUnionRequest struct {
+	// A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+	Type           string
+	StreamResponse bool
+	// A user input message. Inherits stream_response from base via allOf.
+	Message UnionStreamMessageVariant
+	// Cancels the current operation. Inherits stream_response from base.
+	Interrupt UnionStreamInterruptVariant
+	// Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.
+	Compact UnionStreamCompactVariant
+}
+
+type ValidateUnionRequestResponse struct {
+	Valid *bool `json:"valid,omitempty" url:"valid,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (v *ValidateUnionRequestResponse) GetValid() *bool {
+	if v == nil {
+		return nil
+	}
+	return v.Valid
+}
+
+func (v *ValidateUnionRequestResponse) GetExtraProperties() map[string]any {
+	if v == nil {
+		return nil
+	}
+	return v.extraProperties
+}
+
+func (v *ValidateUnionRequestResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ValidateUnionRequestResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*v = ValidateUnionRequestResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *v)
+	if err != nil {
+		return err
+	}
+	v.extraProperties = extraProperties
+	v.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (v *ValidateUnionRequestResponse) String() string {
+	if len(v.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(v.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(v); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", v)
+}
+
 type StreamRequest struct {
 	Query *string `json:"query,omitempty" url:"query,omitempty"`
 
@@ -903,4 +980,554 @@ func (d *DataContextEntityEvent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
+}
+
+type CompletionRequest struct {
+	// The prompt or query to complete.
+	Query string `json:"query" url:"query"`
+	// Whether to stream the response.
+	Stream *bool `json:"stream,omitempty" url:"stream,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CompletionRequest) GetQuery() string {
+	if c == nil {
+		return ""
+	}
+	return c.Query
+}
+
+func (c *CompletionRequest) GetStream() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.Stream
+}
+
+func (c *CompletionRequest) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CompletionRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CompletionRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CompletionRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CompletionRequest) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type NullableStreamRequest struct {
+	// The prompt or query to complete.
+	Query string `json:"query" url:"query"`
+	// Whether to stream the response. This field is nullable (OAS 3.1 type array), which previously caused the const literal to be overwritten by the nullable type during spread in the importer.
+	Stream *bool `json:"stream,omitempty" url:"stream,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (n *NullableStreamRequest) GetQuery() string {
+	if n == nil {
+		return ""
+	}
+	return n.Query
+}
+
+func (n *NullableStreamRequest) GetStream() *bool {
+	if n == nil {
+		return nil
+	}
+	return n.Stream
+}
+
+func (n *NullableStreamRequest) GetExtraProperties() map[string]any {
+	if n == nil {
+		return nil
+	}
+	return n.extraProperties
+}
+
+func (n *NullableStreamRequest) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler NullableStreamRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NullableStreamRequest(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NullableStreamRequest) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
+}
+
+// Why generation stopped.
+type CompletionFullResponseFinishReason string
+
+const (
+	CompletionFullResponseFinishReasonComplete = "complete"
+	CompletionFullResponseFinishReasonLength   = "length"
+	CompletionFullResponseFinishReasonError    = "error"
+)
+
+func NewCompletionFullResponseFinishReasonFromString(s string) (CompletionFullResponseFinishReason, error) {
+	switch s {
+	case "complete":
+		return CompletionFullResponseFinishReasonComplete, nil
+	case "length":
+		return CompletionFullResponseFinishReasonLength, nil
+	case "error":
+		return CompletionFullResponseFinishReasonError, nil
+	}
+	var t CompletionFullResponseFinishReason
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CompletionFullResponseFinishReason) Ptr() *CompletionFullResponseFinishReason {
+	return &c
+}
+
+// Full response returned when streaming is disabled.
+type CompletionFullResponse struct {
+	// The complete generated answer.
+	Answer *string `json:"answer,omitempty" url:"answer,omitempty"`
+	// Why generation stopped.
+	FinishReason *CompletionFullResponseFinishReason `json:"finishReason,omitempty" url:"finishReason,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CompletionFullResponse) GetAnswer() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Answer
+}
+
+func (c *CompletionFullResponse) GetFinishReason() *CompletionFullResponseFinishReason {
+	if c == nil {
+		return nil
+	}
+	return c.FinishReason
+}
+
+func (c *CompletionFullResponse) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CompletionFullResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CompletionFullResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CompletionFullResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CompletionFullResponse) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// A single chunk in a streamed completion response.
+type CompletionStreamChunk struct {
+	// The incremental text chunk.
+	Delta *string `json:"delta,omitempty" url:"delta,omitempty"`
+	// Number of tokens in this chunk.
+	Tokens *int `json:"tokens,omitempty" url:"tokens,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (c *CompletionStreamChunk) GetDelta() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Delta
+}
+
+func (c *CompletionStreamChunk) GetTokens() *int {
+	if c == nil {
+		return nil
+	}
+	return c.Tokens
+}
+
+func (c *CompletionStreamChunk) GetExtraProperties() map[string]any {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CompletionStreamChunk) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler CompletionStreamChunk
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CompletionStreamChunk(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CompletionStreamChunk) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Base schema for union stream requests. Contains the stream_response field that is inherited by all oneOf variants via allOf. This schema is also referenced directly by a non-streaming endpoint to ensure it is not excluded from the context.
+type UnionStreamRequestBase struct {
+	// Whether to stream the response.
+	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
+	// The input prompt.
+	Prompt string `json:"prompt" url:"prompt"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UnionStreamRequestBase) GetStreamResponse() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.StreamResponse
+}
+
+func (u *UnionStreamRequestBase) GetPrompt() string {
+	if u == nil {
+		return ""
+	}
+	return u.Prompt
+}
+
+func (u *UnionStreamRequestBase) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UnionStreamRequestBase) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UnionStreamRequestBase
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnionStreamRequestBase(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UnionStreamRequestBase) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// A user input message. Inherits stream_response from base via allOf.
+type UnionStreamMessageVariant struct {
+	// Whether to stream the response.
+	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
+	// The input prompt.
+	Prompt string `json:"prompt" url:"prompt"`
+	// The message content.
+	Message string `json:"message" url:"message"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UnionStreamMessageVariant) GetStreamResponse() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.StreamResponse
+}
+
+func (u *UnionStreamMessageVariant) GetPrompt() string {
+	if u == nil {
+		return ""
+	}
+	return u.Prompt
+}
+
+func (u *UnionStreamMessageVariant) GetMessage() string {
+	if u == nil {
+		return ""
+	}
+	return u.Message
+}
+
+func (u *UnionStreamMessageVariant) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UnionStreamMessageVariant) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UnionStreamMessageVariant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnionStreamMessageVariant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UnionStreamMessageVariant) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// Cancels the current operation. Inherits stream_response from base.
+type UnionStreamInterruptVariant struct {
+	// Whether to stream the response.
+	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
+	// The input prompt.
+	Prompt string `json:"prompt" url:"prompt"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UnionStreamInterruptVariant) GetStreamResponse() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.StreamResponse
+}
+
+func (u *UnionStreamInterruptVariant) GetPrompt() string {
+	if u == nil {
+		return ""
+	}
+	return u.Prompt
+}
+
+func (u *UnionStreamInterruptVariant) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UnionStreamInterruptVariant) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UnionStreamInterruptVariant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnionStreamInterruptVariant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UnionStreamInterruptVariant) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.
+type UnionStreamCompactVariant struct {
+	// Whether to stream the response.
+	StreamResponse *bool `json:"stream_response,omitempty" url:"stream_response,omitempty"`
+	// The input prompt.
+	Prompt string `json:"prompt" url:"prompt"`
+	// Compact data payload.
+	Data string `json:"data" url:"data"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (u *UnionStreamCompactVariant) GetStreamResponse() *bool {
+	if u == nil {
+		return nil
+	}
+	return u.StreamResponse
+}
+
+func (u *UnionStreamCompactVariant) GetPrompt() string {
+	if u == nil {
+		return ""
+	}
+	return u.Prompt
+}
+
+func (u *UnionStreamCompactVariant) GetData() string {
+	if u == nil {
+		return ""
+	}
+	return u.Data
+}
+
+func (u *UnionStreamCompactVariant) GetExtraProperties() map[string]any {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UnionStreamCompactVariant) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler UnionStreamCompactVariant
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UnionStreamCompactVariant(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UnionStreamCompactVariant) String() string {
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+// A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+type UnionStreamRequest struct {
+	// A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from UnionStreamRequestBase via allOf. The importer pins stream_response to Literal[True/False] at this union level, but the allOf inheritance re-introduces it as boolean in each variant, causing the type conflict.
+	Type string
+	// A user input message. Inherits stream_response from base via allOf.
+	Message UnionStreamMessageVariant
+	// Cancels the current operation. Inherits stream_response from base.
+	Interrupt UnionStreamInterruptVariant
+	// Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.
+	Compact UnionStreamCompactVariant
 }
