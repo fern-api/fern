@@ -122,9 +122,7 @@ async function createJob({
     absolutePathToPreview,
     fiddlePreview,
     pushPreviewBranch,
-    fernignoreContents,
-    automationMode,
-    autoMerge
+    fernignoreContents
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
