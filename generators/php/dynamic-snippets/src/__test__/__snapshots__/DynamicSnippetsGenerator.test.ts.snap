@@ -521,18 +521,14 @@ $client = new AcmeClient(
         'baseUrl' => 'https://api.example.com',
     ],
 );
-$client->_->createUser(
+$client->createUser(
     new User([
         'password' => 'password',
         'profile' => new UserProfile([
             'name' => 'name',
-            'verification' => new UserProfileVerification([
-                'verified' => 'value',
-            ]),
+            'verification' => new UserProfileVerification([]),
             'ssn' => 'ssn',
         ]),
-        'id' => 'value',
-        'email' => 'value',
     ]),
 );
 "
@@ -553,18 +549,15 @@ $client = new AcmeClient(
         'baseUrl' => 'https://api.example.com',
     ],
 );
-$client->_->createUser(
+$client->createUser(
     new User([
         'id' => 'id',
         'password' => 'password',
         'profile' => new UserProfile([
             'name' => 'name',
-            'verification' => new UserProfileVerification([
-                'verified' => 'value',
-            ]),
+            'verification' => new UserProfileVerification([]),
             'ssn' => 'ssn',
         ]),
-        'email' => 'value',
     ]),
 );
 "

@@ -627,6 +627,75 @@ func do() {
 "
 `;
 
+exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			"https://api.example.com",
+		),
+	)
+	request := &acme.User{
+		Password: "password",
+		Profile: &acme.UserProfile{
+			Name:         "name",
+			Verification: &acme.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
+	client.CreateUser(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			"https://api.example.com",
+		),
+	)
+	request := &acme.User{
+		ID: acme.String(
+			"id",
+		),
+		Password: "password",
+		Profile: &acme.UserProfile{
+			Name:         "name",
+			Verification: &acme.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
+	client.CreateUser(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
 exports[`snippets (default) > required-headers > 'GET /plants (simple)' 1`] = `
 "package example
 
@@ -1395,6 +1464,75 @@ func do() {
 "
 `;
 
+exports[`snippets (exportAllRequestsAtRoot) > read-write-only > 'Body properties' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			"https://api.example.com",
+		),
+	)
+	request := &acme.User{
+		Password: "password",
+		Profile: &acme.UserProfile{
+			Name:         "name",
+			Verification: &acme.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
+	client.CreateUser(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
+exports[`snippets (exportAllRequestsAtRoot) > read-write-only > 'Readonly value in request' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithBaseURL(
+			"https://api.example.com",
+		),
+	)
+	request := &acme.User{
+		ID: acme.String(
+			"id",
+		),
+		Password: "password",
+		Profile: &acme.UserProfile{
+			Name:         "name",
+			Verification: &acme.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
+	client.CreateUser(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
 exports[`snippets (exportAllRequestsAtRoot) > required-headers > 'GET /plants (simple)' 1`] = `
 "package example
 
@@ -2156,6 +2294,75 @@ func do() {
 		Tags: []*string{},
 	}
 	client.Nullable.Getusers(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > read-write-only > 'Body properties' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			"https://api.example.com",
+		),
+	)
+	request := &acme.User{
+		Password: "password",
+		Profile: &acme.UserProfile{
+			Name:         "name",
+			Verification: &acme.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
+	client.CreateUser(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > read-write-only > 'Readonly value in request' 1`] = `
+"package example
+
+import (
+	context "context"
+
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithBaseURL(
+			"https://api.example.com",
+		),
+	)
+	request := &acme.User{
+		ID: acme.String(
+			"id",
+		),
+		Password: "password",
+		Profile: &acme.UserProfile{
+			Name:         "name",
+			Verification: &acme.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
+	client.CreateUser(
 		context.TODO(),
 		request,
 	)

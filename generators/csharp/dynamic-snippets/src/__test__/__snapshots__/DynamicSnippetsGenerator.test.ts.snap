@@ -483,18 +483,14 @@ var client = new AcmeClient(
     }
 );
 
-await client..CreateUserAsync(
+await client.CreateUserAsync(
     new User {
         Password = "password",
         Profile = new UserProfile {
             Name = "name",
-            Verification = new UserProfileVerification {
-                Verified = ""
-            },
+            Verification = new UserProfileVerification(),
             Ssn = "ssn"
-        },
-        ID = "",
-        Email = ""
+        }
     }
 );
 "
@@ -509,18 +505,15 @@ var client = new AcmeClient(
     }
 );
 
-await client..CreateUserAsync(
+await client.CreateUserAsync(
     new User {
         ID = "id",
         Password = "password",
         Profile = new UserProfile {
             Name = "name",
-            Verification = new UserProfileVerification {
-                Verified = ""
-            },
+            Verification = new UserProfileVerification(),
             Ssn = "ssn"
-        },
-        Email = ""
+        }
     }
 );
 "

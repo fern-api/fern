@@ -311,7 +311,7 @@ exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
 
 client = Acme::Client.new(base_url: "https://api.example.com")
 
-client..create_user(
+client.create_user(
   password: "password",
   profile: {
     name: "name",
@@ -327,7 +327,7 @@ exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] 
 
 client = Acme::Client.new(base_url: "https://api.example.com")
 
-client..create_user(
+client.create_user(
   id: "id",
   password: "password",
   profile: {

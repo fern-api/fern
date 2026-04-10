@@ -54,10 +54,13 @@
                         }
                     },
                     "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "READ_ONLY",
                     "variable": null
                 },
                 {
@@ -84,10 +87,13 @@
                         }
                     },
                     "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "READ_ONLY",
                     "variable": null
                 },
                 {
@@ -117,7 +123,7 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "WRITE_ONLY",
                     "variable": null
                 },
                 {
@@ -270,7 +276,7 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "WRITE_ONLY",
                     "variable": null
                 }
             ],
@@ -330,10 +336,13 @@
                         }
                     },
                     "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "READ_ONLY",
                     "variable": null
                 }
             ],
@@ -432,10 +441,13 @@
                         }
                     },
                     "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "READ_ONLY",
                     "variable": null
                 },
                 {
@@ -462,10 +474,13 @@
                         }
                     },
                     "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "READ_ONLY",
                     "variable": null
                 },
                 {
@@ -495,7 +510,7 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "WRITE_ONLY",
                     "variable": null
                 },
                 {
@@ -670,10 +685,13 @@
                         }
                     },
                     "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "READ_ONLY",
                     "variable": null
                 },
                 {
@@ -700,10 +718,13 @@
                         }
                     },
                     "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "READ_ONLY",
                     "variable": null
                 },
                 {
@@ -733,7 +754,7 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "WRITE_ONLY",
                     "variable": null
                 },
                 {
@@ -1193,10 +1214,13 @@
                         }
                     },
                     "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "READ_ONLY",
                     "variable": null
                 },
                 {
@@ -1226,7 +1250,7 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null,
+                    "propertyAccess": "WRITE_ONLY",
                     "variable": null
                 }
             ],
@@ -1259,47 +1283,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {

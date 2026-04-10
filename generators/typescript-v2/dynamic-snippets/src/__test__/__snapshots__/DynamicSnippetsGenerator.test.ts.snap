@@ -432,7 +432,7 @@ async function main() {
     const client = new AcmeClient({
         environment: "https://api.example.com",
     });
-    await client..createUser({
+    await client.createUser({
         password: "password",
         profile: {
             name: "name",
@@ -446,24 +446,16 @@ main();
 `;
 
 exports[`snippets > read-write-only > 'Readonly value in request' 1`] = `
-"import { AcmeClient } from "acme";
-
-async function main() {
-    const client = new AcmeClient({
-        environment: "https://api.example.com",
-    });
-    await client..createUser({
-        id: "id",
-        password: "password",
-        profile: {
-            name: "name",
-            verification: {},
-            ssn: "ssn",
-        },
-    });
-}
-main();
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "id"
+    ],
+    "message": "\\"id\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets > required-headers > 'GET /plants (simple)' 1`] = `

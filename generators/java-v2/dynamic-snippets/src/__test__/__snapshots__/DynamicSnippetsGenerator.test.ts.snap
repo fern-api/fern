@@ -548,11 +548,9 @@ AcmeAcmeClient client = AcmeAcmeClient
     .url("https://api.example.com")
     .build();
 
-client.().createUser(
+client.createUser(
     User
         .builder()
-        .id("string")
-        .email("string")
         .password("password")
         .profile(
             UserProfile
@@ -561,7 +559,6 @@ client.().createUser(
                 .verification(
                     UserProfileVerification
                         .builder()
-                        .verified("string")
                         .build()
                 )
                 .ssn("ssn")
@@ -585,11 +582,9 @@ AcmeAcmeClient client = AcmeAcmeClient
     .url("https://api.example.com")
     .build();
 
-client.().createUser(
+client.createUser(
     User
         .builder()
-        .id("id")
-        .email("string")
         .password("password")
         .profile(
             UserProfile
@@ -598,12 +593,12 @@ client.().createUser(
                 .verification(
                     UserProfileVerification
                         .builder()
-                        .verified("string")
                         .build()
                 )
                 .ssn("ssn")
                 .build()
         )
+        .id("id")
         .build()
 );
 "

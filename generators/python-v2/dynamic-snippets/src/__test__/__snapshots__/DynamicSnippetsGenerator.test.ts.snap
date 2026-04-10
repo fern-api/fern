@@ -439,13 +439,11 @@ client = Acme(
     base_url="https://api.example.com",
 )
 
-client..create_user(
+client.create_user(
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(
-            verified="string",
-        ),
+        verification=UserProfileVerification(),
         ssn="ssn",
     ),
 )
@@ -459,14 +457,12 @@ client = Acme(
     base_url="https://api.example.com",
 )
 
-client..create_user(
+client.create_user(
     id="id",
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(
-            verified="string",
-        ),
+        verification=UserProfileVerification(),
         ssn="ssn",
     ),
 )

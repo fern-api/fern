@@ -453,14 +453,6 @@
                     },
                     {
                         "name": {
-                            "wireValue": "Hello 世界",
-                            "name": "Hello世界"
-                        },
-                        "availability": null,
-                        "docs": null
-                    },
-                    {
-                        "name": {
                             "wireValue": "café",
                             "name": "Cafe"
                         },
@@ -468,7 +460,10 @@
                         "docs": null
                     },
                     {
-                        "name": "🚀",
+                        "name": {
+                            "wireValue": "🚀",
+                            "name": "Rocket"
+                        },
                         "availability": null,
                         "docs": null
                     },
@@ -483,7 +478,7 @@
                     {
                         "name": {
                             "wireValue": "\\\\",
-                            "name": ""
+                            "name": "Backslash"
                         },
                         "availability": null,
                         "docs": null
@@ -3542,28 +3537,6 @@
                         }
                     },
                     {
-                        "wireValue": "Hello 世界",
-                        "name": {
-                            "originalName": "Hello世界",
-                            "camelCase": {
-                                "unsafeName": "hello世界",
-                                "safeName": "hello世界"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "hello世界",
-                                "safeName": "hello世界"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "HELLO世界",
-                                "safeName": "HELLO世界"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Hello世界",
-                                "safeName": "Hello世界"
-                            }
-                        }
-                    },
-                    {
                         "wireValue": "café",
                         "name": {
                             "originalName": "Cafe",
@@ -3588,22 +3561,22 @@
                     {
                         "wireValue": "🚀",
                         "name": {
-                            "originalName": "🚀",
+                            "originalName": "Rocket",
                             "camelCase": {
-                                "unsafeName": "🚀",
-                                "safeName": "🚀"
+                                "unsafeName": "rocket",
+                                "safeName": "rocket"
                             },
                             "snakeCase": {
-                                "unsafeName": "🚀",
-                                "safeName": "🚀"
+                                "unsafeName": "rocket",
+                                "safeName": "rocket"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "🚀",
-                                "safeName": "🚀"
+                                "unsafeName": "ROCKET",
+                                "safeName": "ROCKET"
                             },
                             "pascalCase": {
-                                "unsafeName": "🚀",
-                                "safeName": "🚀"
+                                "unsafeName": "Rocket",
+                                "safeName": "Rocket"
                             }
                         }
                     },
@@ -3632,22 +3605,22 @@
                     {
                         "wireValue": "\\\\",
                         "name": {
-                            "originalName": "",
+                            "originalName": "Backslash",
                             "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "backslash",
+                                "safeName": "backslash"
                             },
                             "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "backslash",
+                                "safeName": "backslash"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "BACKSLASH",
+                                "safeName": "BACKSLASH"
                             },
                             "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "Backslash",
+                                "safeName": "Backslash"
                             }
                         }
                     },

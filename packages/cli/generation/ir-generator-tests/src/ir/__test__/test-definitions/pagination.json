@@ -643,7 +643,31 @@
                     {
                         "name": {
                             "wireValue": "~",
-                            "name": ""
+                            "name": "Tilde"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "!~",
+                            "name": "NotTilde"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "^",
+                            "name": "Caret"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "wireValue": "$",
+                            "name": "Dollar"
                         },
                         "availability": null,
                         "docs": null
@@ -37385,22 +37409,88 @@
                     {
                         "wireValue": "~",
                         "name": {
-                            "originalName": "",
+                            "originalName": "Tilde",
                             "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "tilde",
+                                "safeName": "tilde"
                             },
                             "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "tilde",
+                                "safeName": "tilde"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "TILDE",
+                                "safeName": "TILDE"
                             },
                             "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
+                                "unsafeName": "Tilde",
+                                "safeName": "Tilde"
+                            }
+                        }
+                    },
+                    {
+                        "wireValue": "!~",
+                        "name": {
+                            "originalName": "NotTilde",
+                            "camelCase": {
+                                "unsafeName": "notTilde",
+                                "safeName": "notTilde"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "not_tilde",
+                                "safeName": "not_tilde"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NOT_TILDE",
+                                "safeName": "NOT_TILDE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NotTilde",
+                                "safeName": "NotTilde"
+                            }
+                        }
+                    },
+                    {
+                        "wireValue": "^",
+                        "name": {
+                            "originalName": "Caret",
+                            "camelCase": {
+                                "unsafeName": "caret",
+                                "safeName": "caret"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "caret",
+                                "safeName": "caret"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CARET",
+                                "safeName": "CARET"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Caret",
+                                "safeName": "Caret"
+                            }
+                        }
+                    },
+                    {
+                        "wireValue": "$",
+                        "name": {
+                            "originalName": "Dollar",
+                            "camelCase": {
+                                "unsafeName": "dollar",
+                                "safeName": "dollar"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dollar",
+                                "safeName": "dollar"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DOLLAR",
+                                "safeName": "DOLLAR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dollar",
+                                "safeName": "Dollar"
                             }
                         }
                     }

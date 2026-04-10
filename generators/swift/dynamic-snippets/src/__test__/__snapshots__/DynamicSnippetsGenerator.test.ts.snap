@@ -459,7 +459,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(baseURL: "https://api.example.com")
 
-    _ = try await client..createUser(request: User(
+    _ = try await client.createUser(request: User(
         password: "password",
         profile: UserProfile(
             name: "name",
@@ -482,7 +482,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(baseURL: "https://api.example.com")
 
-    _ = try await client..createUser(request: User(
+    _ = try await client.createUser(request: User(
         id: "id",
         password: "password",
         profile: UserProfile(
