@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 
@@ -15,7 +15,7 @@ export const migration: Migration = {
             try {
                 await migrateYamlFile(filepath, context);
             } catch (error) {
-                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
+                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error, { code: CliError.Code.ParseError });
             }
         }
     }
@@ -26,7 +26,7 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
     const parsedDocument = YAML.parseDocument(contents.toString());
 
     if (!YAML.isMap(parsedDocument.contents)) {
-        return context.failAndThrow("File is not a map");
+        return context.failAndThrow("File is not a map", undefined, { code: CliError.Code.ParseError });
     }
 
     const service = parsedDocument.contents.get("service");
@@ -35,7 +35,7 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
     }
 
     if (!YAML.isMap(service)) {
-        return context.failAndThrow("service is not a map");
+        return context.failAndThrow("service is not a map", undefined, { code: CliError.Code.ParseError });
     }
 
     const indexOfServiceDocsPair = service.items.findIndex(

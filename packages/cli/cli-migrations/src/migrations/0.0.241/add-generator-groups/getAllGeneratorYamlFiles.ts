@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { findUp } from "find-up";
 import { glob } from "glob";
 
@@ -9,7 +9,9 @@ export async function getAllGeneratorYamlFiles(context: TaskContext): Promise<Ab
     const fernDirectory = await getFernDirectory();
     const alphasort = (a: string, b: string) => a.localeCompare(b, "en");
     if (fernDirectory == null) {
-        return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
+        return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`, undefined, {
+            code: CliError.Code.ConfigError
+        });
     }
     const filepaths = await glob("*/generators.yml", {
         cwd: fernDirectory,

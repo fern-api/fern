@@ -1,5 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 
@@ -15,7 +16,7 @@ export const migration: Migration = {
             try {
                 await migrateYamlFile(filepath, context);
             } catch (error) {
-                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
+                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error, { code: CliError.Code.ParseError });
             }
         }
     }
@@ -29,7 +30,7 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
         return;
     }
     if (!YAML.isMap(services)) {
-        throw new Error("'services' is not a map");
+        throw new CliError({ message: "'services' is not a map", code: CliError.Code.ParseError });
     }
 
     const httpServices = services.get("http");
@@ -37,12 +38,14 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
         return;
     }
     if (!YAML.isMap(httpServices)) {
-        throw new Error("'http' is not a map");
+        throw new CliError({ message: "'http' is not a map", code: CliError.Code.ParseError });
     }
 
     for (const service of httpServices.items) {
         if (!YAML.isMap(service.value)) {
-            context.failWithoutThrowing(`Service '${service.key}' is not a map`);
+            context.failWithoutThrowing(`Service '${service.key}' is not a map`, undefined, {
+                code: CliError.Code.ParseError
+            });
             continue;
         }
         const endpoints = service.value.get("endpoints");
@@ -50,18 +53,24 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
             continue;
         }
         if (!YAML.isMap(endpoints)) {
-            context.failWithoutThrowing(`Endpoints are not a map in service '${service.key}'`);
+            context.failWithoutThrowing(`Endpoints are not a map in service '${service.key}'`, undefined, {
+                code: CliError.Code.ParseError
+            });
             continue;
         }
         for (const endpoint of endpoints.items) {
             if (!YAML.isMap(endpoint.value)) {
-                context.failWithoutThrowing(`Endpoint ${endpoint.key} is not a map in service '${service.key}'`);
+                context.failWithoutThrowing(
+                    `Endpoint ${endpoint.key} is not a map in service '${service.key}'`,
+                    undefined,
+                    { code: CliError.Code.ParseError }
+                );
                 continue;
             }
             try {
                 convertEndpoint({ document: parsedDocument, endpoint: endpoint.value });
             } catch (e) {
-                context.failWithoutThrowing("Failed to convert endpoint", e);
+                context.failWithoutThrowing("Failed to convert endpoint", e, { code: CliError.Code.ParseError });
             }
         }
         await writeFile(filepath, parsedDocument.toString());
@@ -86,7 +95,7 @@ function convertEndpoint({ document, endpoint }: { document: YAML.Document.Parse
         const documentTypes = document.get("types");
         if (documentTypes != null) {
             if (!YAML.isMap(documentTypes)) {
-                throw new Error("types are not a map");
+                throw new CliError({ message: "types are not a map", code: CliError.Code.ParseError });
             }
             const maybeTypeDeclarationForRequest = documentTypes.get(requestBodyType);
 
@@ -143,10 +152,10 @@ function parseRequestBody(
     if (YAML.isMap(requestBody)) {
         const type = requestBody.get("type");
         if (type == null) {
-            throw new Error("request type does not exist");
+            throw new CliError({ message: "request type does not exist", code: CliError.Code.ParseError });
         }
         if (typeof type !== "string") {
-            throw new Error("request type is not a string");
+            throw new CliError({ message: "request type is not a string", code: CliError.Code.ParseError });
         }
         const docs = requestBody.get("docs", true);
         return {
@@ -155,5 +164,5 @@ function parseRequestBody(
         };
     }
 
-    throw new Error("request is not a string or a map");
+    throw new CliError({ message: "request is not a string or a map", code: CliError.Code.ParseError });
 }

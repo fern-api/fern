@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 
@@ -15,7 +15,9 @@ export const migration: Migration = {
             try {
                 await migrateFile(filepath, context);
             } catch (error) {
-                context.failWithoutThrowing(`Failed to add 'key' property to union in ${filepath}`, error);
+                context.failWithoutThrowing(`Failed to add 'key' property to union in ${filepath}`, error, {
+                    code: CliError.Code.ParseError
+                });
             }
         }
     }
@@ -29,7 +31,9 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
         return;
     }
     if (!YAML.isMap(types)) {
-        context.failWithoutThrowing(`"types" is not a map in ${filepath}`);
+        context.failWithoutThrowing(`"types" is not a map in ${filepath}`, undefined, {
+            code: CliError.Code.ParseError
+        });
         return;
     }
 
@@ -40,7 +44,9 @@ async function migrateFile(filepath: AbsoluteFilePath, context: TaskContext): Pr
                 continue;
             }
             if (!YAML.isMap(union)) {
-                context.failWithoutThrowing(`"union" is not a map in ${filepath}`);
+                context.failWithoutThrowing(`"union" is not a map in ${filepath}`, undefined, {
+                    code: CliError.Code.ParseError
+                });
                 continue;
             }
             for (const singleUnionType of union.items) {

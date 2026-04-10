@@ -8,7 +8,7 @@ import {
     join,
     RelativeFilePath
 } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -22,7 +22,9 @@ export const migration: Migration = {
     run: async ({ context }) => {
         const absolutePathToFernDirectory = await getFernDirectory();
         if (absolutePathToFernDirectory == null) {
-            context.failAndThrow("Fern directory not found. Failed to run migration");
+            context.failAndThrow("Fern directory not found. Failed to run migration", undefined, {
+                code: CliError.Code.ConfigError
+            });
             return;
         }
 
@@ -73,18 +75,20 @@ async function addApiConfigurationToSingleWorkspace({
     const generatorsYmlFile = files.find((file) => file.name === "generators.yml" || file.name === "generators.yaml");
 
     if (generatorsYmlFile == null) {
-        context.failAndThrow("generators.yml not found");
+        context.failAndThrow("generators.yml not found", undefined, { code: CliError.Code.ConfigError });
         return;
     }
 
     const generatorsYmlContents = yaml.load(generatorsYmlFile.contents);
     if (generatorsYmlContents == null) {
-        context.failAndThrow("generators.yml is null or undefined");
+        context.failAndThrow("generators.yml is null or undefined", undefined, { code: CliError.Code.ConfigError });
         return;
     }
 
     if (typeof generatorsYmlContents !== "object") {
-        context.failAndThrow("generators.yml is not a valid YAML object");
+        context.failAndThrow("generators.yml is not a valid YAML object", undefined, {
+            code: CliError.Code.ConfigError
+        });
         return;
     }
 
@@ -155,7 +159,9 @@ async function addApiConfigurationToSingleWorkspace({
                 }
             }
         } else {
-            context.failAndThrow("API spec is not a valid YAML object or array");
+            context.failAndThrow("API spec is not a valid YAML object or array", undefined, {
+                code: CliError.Code.ConfigError
+            });
             return;
         }
     }
@@ -180,7 +186,7 @@ async function addApiConfigurationToSingleWorkspace({
         } else if (typeof api === "object") {
             const openApiSpec = api as Partial<generatorsYml.GeneratorsOpenApiObjectSchema>;
             if (openApiSpec.path == null) {
-                context.failAndThrow("openapi path is not defined");
+                context.failAndThrow("openapi path is not defined", undefined, { code: CliError.Code.ConfigError });
                 return;
             }
             specs.push({
@@ -190,7 +196,7 @@ async function addApiConfigurationToSingleWorkspace({
                 settings: convertDeprecatedApiSettingsToOpenApiSettings(openApiSpec.settings ?? {})
             });
         } else {
-            context.failAndThrow("openapi is not a string or object");
+            context.failAndThrow("openapi is not a string or object", undefined, { code: CliError.Code.ConfigError });
             return;
         }
     }
@@ -203,7 +209,7 @@ async function addApiConfigurationToSingleWorkspace({
                 settings: convertDeprecatedApiSettingsToAsyncApiSettings(rootSettings)
             });
         } else {
-            context.failAndThrow("async-api is not a string");
+            context.failAndThrow("async-api is not a string", undefined, { code: CliError.Code.ConfigError });
             return;
         }
     }

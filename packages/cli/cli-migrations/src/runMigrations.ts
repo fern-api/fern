@@ -1,5 +1,5 @@
 import { addPrefixToString } from "@fern-api/core-utils";
-import { InteractiveTaskContext, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
+import { CliError, InteractiveTaskContext, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import chalk from "chalk";
 import inquirer from "inquirer";
 
@@ -49,7 +49,7 @@ export async function runMigrations({
         await context.takeOverTerminal(async () => {
             const wantsToContinue = await askForConfirmation(migrationsToRun);
             if (!wantsToContinue) {
-                context.failAndThrow("Canceled.");
+                context.failAndThrow("Canceled.", undefined, { code: CliError.Code.ConfigError });
             }
         });
         if (context.getResult() === TaskResult.Failure) {

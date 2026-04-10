@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 
@@ -15,7 +15,7 @@ export const migration: Migration = {
             try {
                 await migrateGeneratorsYml(filepath, context);
             } catch (error) {
-                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
+                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error, { code: CliError.Code.ParseError });
             }
         }
     }
@@ -29,17 +29,23 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskCon
         return;
     }
     if (!YAML.isSeq(releaseGenerators)) {
-        context.failWithoutThrowing(`release generators are not a list in ${filepath}`);
+        context.failWithoutThrowing(`release generators are not a list in ${filepath}`, undefined, {
+            code: CliError.Code.ParseError
+        });
         return;
     }
     releaseGenerators.items.forEach((releaseGenerator) => {
         if (!YAML.isMap(releaseGenerator)) {
-            context.failWithoutThrowing(`release generator is not an object in ${filepath}`);
+            context.failWithoutThrowing(`release generator is not an object in ${filepath}`, undefined, {
+                code: CliError.Code.ParseError
+            });
             return;
         }
         const outputs = releaseGenerator.get("outputs");
         if (!YAML.isMap(outputs)) {
-            context.failWithoutThrowing(`outputs is not an object in ${filepath}`);
+            context.failWithoutThrowing(`outputs is not an object in ${filepath}`, undefined, {
+                code: CliError.Code.ParseError
+            });
             return;
         }
 

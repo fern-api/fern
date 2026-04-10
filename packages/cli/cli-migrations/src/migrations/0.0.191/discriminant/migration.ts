@@ -1,4 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 
 import { Migration } from "../../../types/Migration.js";
@@ -15,7 +16,7 @@ export const migration: Migration = {
                 const newContents = addDiscriminantToFile(fileContents);
                 await writeFile(yamlFilepath, newContents);
             } catch (error) {
-                context.failAndThrow("Failed to migrate " + yamlFilepath, error);
+                context.failAndThrow("Failed to migrate " + yamlFilepath, error, { code: CliError.Code.ParseError });
             }
         }
     }

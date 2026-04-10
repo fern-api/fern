@@ -6,6 +6,7 @@ import {
     join,
     RelativeFilePath
 } from "@fern-api/fs-utils";
+import { CliError } from "@fern-api/task-context";
 import { findUp } from "find-up";
 
 import { Migration } from "../../../types/Migration.js";
@@ -21,7 +22,9 @@ export const migration: Migration = {
     run: async ({ context }) => {
         const absolutePathToFernDirectory = await getFernDirectory();
         if (absolutePathToFernDirectory == null) {
-            context.failAndThrow("Fern directory not found. Failed to run migration");
+            context.failAndThrow("Fern directory not found. Failed to run migration", undefined, {
+                code: CliError.Code.ConfigError
+            });
             return;
         }
         const fernDirectoryContents = await getDirectoryContents(absolutePathToFernDirectory);
@@ -71,7 +74,9 @@ export const migration: Migration = {
 
         if (workspacesContainingDocs.length > 1) {
             context.failAndThrow(
-                "Detected multiple docs websites being published. This is unsupported in the latest upgrade. File an issue (https://github.com/fern-api/fern) if this is important!"
+                "Detected multiple docs websites being published. This is unsupported in the latest upgrade. File an issue (https://github.com/fern-api/fern) if this is important!",
+                undefined,
+                { code: CliError.Code.ConfigError }
             );
             return;
         }

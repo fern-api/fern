@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 
@@ -15,7 +15,7 @@ export const migration: Migration = {
             try {
                 await migrateGeneratorsYml(filepath, context);
             } catch (error) {
-                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
+                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error, { code: CliError.Code.ParseError });
             }
         }
     }
@@ -29,17 +29,23 @@ async function migrateGeneratorsYml(filepath: AbsoluteFilePath, context: TaskCon
         return;
     }
     if (!YAML.isSeq(draftGenerators)) {
-        context.failWithoutThrowing(`draft generators are not a list in ${filepath}`);
+        context.failWithoutThrowing(`draft generators are not a list in ${filepath}`, undefined, {
+            code: CliError.Code.ParseError
+        });
         return;
     }
     draftGenerators.items.forEach((draftGenerator) => {
         if (!YAML.isMap(draftGenerator)) {
-            context.failWithoutThrowing(`draft generator is not an object in ${filepath}`);
+            context.failWithoutThrowing(`draft generator is not an object in ${filepath}`, undefined, {
+                code: CliError.Code.ParseError
+            });
             return;
         }
         const name = draftGenerator.get("name", true);
         if (typeof name?.value !== "string") {
-            context.failWithoutThrowing(`draft generator didn't have name in ${filepath}`);
+            context.failWithoutThrowing(`draft generator didn't have name in ${filepath}`, undefined, {
+                code: CliError.Code.ParseError
+            });
             return;
         }
         const localOutput = draftGenerator.get("local-output");

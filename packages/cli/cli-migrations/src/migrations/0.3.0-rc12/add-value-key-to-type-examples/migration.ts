@@ -1,5 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
+
 import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 
@@ -15,7 +16,7 @@ export const migration: Migration = {
             try {
                 await migrateYamlFile(filepath, context);
             } catch (error) {
-                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error);
+                context.failWithoutThrowing(`Failed to migrate ${filepath}`, error, { code: CliError.Code.ParseError });
             }
         }
     }
@@ -29,7 +30,7 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
         return;
     }
     if (!YAML.isMap(types)) {
-        throw new Error("'types' is not a map");
+        throw new CliError({ message: "'types' is not a map", code: CliError.Code.ParseError });
     }
     for (const type of types.items) {
         if (!YAML.isMap(type.value)) {
@@ -40,7 +41,7 @@ async function migrateYamlFile(filepath: AbsoluteFilePath, context: TaskContext)
             continue;
         }
         if (!YAML.isSeq(examples)) {
-            context.failWithoutThrowing("'examples' are not a list");
+            context.failWithoutThrowing("'examples' are not a list", undefined, { code: CliError.Code.ParseError });
             continue;
         }
         for (let i = 0; i < examples.items.length; i++) {

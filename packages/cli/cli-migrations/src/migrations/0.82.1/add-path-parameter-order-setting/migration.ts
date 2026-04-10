@@ -1,6 +1,6 @@
 import { getFernDirectory } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, Directory, File, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -13,7 +13,9 @@ This migration will set 'path-parameter-order: spec-order' in generators.yml fil
     run: async ({ context }) => {
         const absolutePathToFernDirectory = await getFernDirectory();
         if (absolutePathToFernDirectory == null) {
-            context.failAndThrow("Fern directory not found. Failed to run migration");
+            context.failAndThrow("Fern directory not found. Failed to run migration", undefined, {
+                code: CliError.Code.ConfigError
+            });
             return;
         }
 
@@ -56,12 +58,14 @@ async function updateGeneratorsYml({ context, files }: { context: TaskContext; f
 
     const generatorsYmlContents = yaml.load(generatorsYmlFile.contents);
     if (generatorsYmlContents == null) {
-        context.failAndThrow("generators.yml is null or undefined");
+        context.failAndThrow("generators.yml is null or undefined", undefined, { code: CliError.Code.ConfigError });
         return;
     }
 
     if (typeof generatorsYmlContents !== "object") {
-        context.failAndThrow("generators.yml is not a valid YAML object");
+        context.failAndThrow("generators.yml is not a valid YAML object", undefined, {
+            code: CliError.Code.ConfigError
+        });
         return;
     }
 
