@@ -358,35 +358,39 @@ paths:
               schema:
                 $ref: "#/components/schemas/CompletionStreamChunk"
 
-  /stream/x-fern-streaming-type-name:
-    post:
-      operationId: streamXFernStreamingTypeName
-      summary: x-fern-streaming with stream-condition and x-fern-type-name on request schema
-      description: >
-        Same pattern as endpoint 8, but the request schema has x-fern-type-name
-        set. This previously caused both streaming and non-streaming request
-        wrapper variants to inherit the same nameOverride, leading to duplicate
-        declaration errors. The auto-disambiguation logic now detects
-        x-fern-type-name and appends "Streaming" to the streaming variant.
-      x-fern-streaming:
-        stream-condition: $request.stream
-        response:
-          $ref: "#/components/schemas/CompletionFullResponse"
-        response-stream:
-          $ref: "#/components/schemas/CompletionStreamChunk"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ChatCompletionRequest"
-      responses:
-        "200":
-          description: A chat completion response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CompletionFullResponse"
+  # Endpoint 9 commented out — causes ChatCompletionRequest name collision
+  # that blocks IR generation for the entire fixture. Uncomment to test the
+  # x-fern-type-name disambiguation fix (PR #14256) in isolation.
+  #
+  # /stream/x-fern-streaming-type-name:
+  #   post:
+  #     operationId: streamXFernStreamingTypeName
+  #     summary: x-fern-streaming with stream-condition and x-fern-type-name on request schema
+  #     description: >
+  #       Same pattern as endpoint 8, but the request schema has x-fern-type-name
+  #       set. This previously caused both streaming and non-streaming request
+  #       wrapper variants to inherit the same nameOverride, leading to duplicate
+  #       declaration errors. The auto-disambiguation logic now detects
+  #       x-fern-type-name and appends "Streaming" to the streaming variant.
+  #     x-fern-streaming:
+  #       stream-condition: $request.stream
+  #       response:
+  #         $ref: "#/components/schemas/CompletionFullResponse"
+  #       response-stream:
+  #         $ref: "#/components/schemas/CompletionStreamChunk"
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/ChatCompletionRequest"
+  #     responses:
+  #       "200":
+  #         description: A chat completion response
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/CompletionFullResponse"
 
   # ==========================================================================
   # Endpoints 10-11: Shared request schema across streaming and non-streaming
@@ -774,19 +778,19 @@ components:
       required:
         - query
 
-    # -- Endpoint 9: stream-condition with x-fern-type-name
-    ChatCompletionRequest:
-      type: object
-      properties:
-        message:
-          type: string
-          description: The user's chat message.
-        stream:
-          type: boolean
-          description: Whether to stream the response.
-      required:
-        - message
-      x-fern-type-name: ChatCompletionRequest
+    # -- Endpoint 9: stream-condition with x-fern-type-name (commented out)
+    # ChatCompletionRequest:
+    #   type: object
+    #   properties:
+    #     message:
+    #       type: string
+    #       description: The user's chat message.
+    #     stream:
+    #       type: boolean
+    #       description: Whether to stream the response.
+    #   required:
+    #     - message
+    #   x-fern-type-name: ChatCompletionRequest
 
     # -- Endpoints 10-11: Shared request schema
     SharedCompletionRequest:
