@@ -1,4 +1,5 @@
 import { createVenusService } from "@fern-api/core";
+import { assertNever } from "@fern-api/core-utils";
 import type { Argv } from "yargs";
 
 import type { Context } from "../../../../context/Context.js";
@@ -27,9 +28,25 @@ export class ListTokensCommand {
 
         const venus = createVenusService({ token: token.value });
 
+        const orgLookup = await venus.organization.get(args.org);
+        if (!orgLookup.ok) {
+            orgLookup.error._visit({
+                unauthorizedError: () => {
+                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
+                    throw CliError.exit();
+                },
+                _other: () => {
+                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
+                    throw CliError.exit();
+                }
+            });
+            return;
+        }
+        const auth0OrgId = orgLookup.body.auth0Id;
+
         const response = await withSpinner({
             message: `Fetching tokens for organization "${args.org}"`,
-            operation: () => venus.apiKeys.getTokensForOrganization(args.org)
+            operation: () => venus.apiKeys.getTokensForOrganization(auth0OrgId)
         });
 
         if (!response.ok) {
@@ -63,12 +80,20 @@ export class ListTokensCommand {
         }
 
         for (const meta of tokens) {
-            const status =
-                meta.status.type === "active"
-                    ? Colors.success("active")
-                    : meta.status.type === "revoked"
-                      ? Colors.error("revoked")
-                      : Colors.dim("expired");
+            let status: string;
+            switch (meta.status.type) {
+                case "active":
+                    status = Colors.success("active");
+                    break;
+                case "revoked":
+                    status = Colors.error("revoked");
+                    break;
+                case "expired":
+                    status = Colors.dim("expired");
+                    break;
+                default:
+                    assertNever(meta.status);
+            }
             const description = meta.description != null ? `  ${Colors.dim(meta.description)}` : "";
             const created = meta.createdTime.toLocaleDateString();
             context.stdout.info(`${meta.tokenId}  ${status}  ${Colors.dim(created)}${description}`);
@@ -89,7 +114,7 @@ export function addListTokensCommand(cli: Argv<GlobalArgs>): void {
                 .positional("org", {
                     type: "string",
                     demandOption: true,
-                    description: "Organization ID"
+                    description: "Organization name (e.g. acme)"
                 })
                 .example("$0 org token list acme", "# List all tokens for the 'acme' organization")
     );

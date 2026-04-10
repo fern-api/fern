@@ -78,7 +78,7 @@ export function addListMembersCommand(cli: Argv<GlobalArgs>): void {
                 .positional("org", {
                     type: "string",
                     demandOption: true,
-                    description: "Organization ID"
+                    description: "Organization name (e.g. acme)"
                 })
                 .example("$0 org member list acme", "# List all members of the 'acme' organization")
     );

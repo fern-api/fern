@@ -28,12 +28,28 @@ export class AddMemberCommand {
 
         const venus = createVenusService({ token: token.value });
 
+        const orgLookup = await venus.organization.get(args.org);
+        if (!orgLookup.ok) {
+            orgLookup.error._visit({
+                unauthorizedError: () => {
+                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
+                    throw CliError.exit();
+                },
+                _other: () => {
+                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
+                    throw CliError.exit();
+                }
+            });
+            return;
+        }
+        const auth0OrgId = orgLookup.body.auth0Id;
+
         const response = await withSpinner({
             message: `Inviting "${args.email}" to organization "${args.org}"`,
             operation: () =>
                 venus.organization.inviteUser({
                     emailAddress: args.email,
-                    auth0OrgId: args.org
+                    auth0OrgId
                 })
         });
 
@@ -82,7 +98,7 @@ export function addAddMemberCommand(cli: Argv<GlobalArgs>): void {
                 .positional("org", {
                     type: "string",
                     demandOption: true,
-                    description: "Organization ID"
+                    description: "Organization name (e.g. acme)"
                 })
                 .example(
                     "$0 org member add user@example.com acme",

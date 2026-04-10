@@ -10,7 +10,7 @@ import { command } from "../../../_internal/command.js";
 
 export declare namespace RevokeTokenCommand {
     export interface Args extends GlobalArgs {
-        "token-id": string;
+        tokenId: string;
     }
 }
 
@@ -27,7 +27,7 @@ export class RevokeTokenCommand {
 
         const venus = createVenusService({ token: token.value });
 
-        const tokenId = args["token-id"];
+        const tokenId = args.tokenId;
 
         const response = await withSpinner({
             message: `Revoking token "${tokenId}"`,

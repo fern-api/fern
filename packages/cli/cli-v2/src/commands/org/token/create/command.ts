@@ -28,11 +28,27 @@ export class CreateTokenCommand {
 
         const venus = createVenusService({ token: token.value });
 
+        const orgLookup = await venus.organization.get(args.org);
+        if (!orgLookup.ok) {
+            orgLookup.error._visit({
+                unauthorizedError: () => {
+                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
+                    throw CliError.exit();
+                },
+                _other: () => {
+                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
+                    throw CliError.exit();
+                }
+            });
+            return;
+        }
+        const auth0OrgId = orgLookup.body.auth0Id;
+
         const response = await withSpinner({
             message: `Creating token for organization "${args.org}"`,
             operation: () =>
                 venus.apiKeys.create({
-                    organizationId: args.org,
+                    organizationId: auth0OrgId,
                     description: args.description
                 })
         });
@@ -41,9 +57,9 @@ export class CreateTokenCommand {
             context.stderr.info(`${Icons.success} Token created successfully`);
             context.stderr.info("");
             context.stderr.info(`  Token ID: ${response.body.tokenId}`);
-            context.stderr.info(`  Token:    ${response.body.token}`);
-            context.stderr.info("");
             context.stderr.info("  Save this token now. You won't be able to see it again.");
+            context.stderr.info("");
+            context.stdout.info(response.body.token);
             return;
         }
 
@@ -80,7 +96,7 @@ export function addCreateTokenCommand(cli: Argv<GlobalArgs>): void {
                 .positional("org", {
                     type: "string",
                     demandOption: true,
-                    description: "Organization ID"
+                    description: "Organization name (e.g. acme)"
                 })
                 .option("description", {
                     type: "string",

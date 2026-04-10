@@ -10,7 +10,7 @@ import { command } from "../../../_internal/command.js";
 
 export declare namespace RemoveMemberCommand {
     export interface Args extends GlobalArgs {
-        "user-id": string;
+        userId: string;
         org: string;
     }
 }
@@ -28,14 +28,29 @@ export class RemoveMemberCommand {
 
         const venus = createVenusService({ token: token.value });
 
-        const userId = args["user-id"];
+        const orgLookup = await venus.organization.get(args.org);
+        if (!orgLookup.ok) {
+            orgLookup.error._visit({
+                unauthorizedError: () => {
+                    context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
+                    throw CliError.exit();
+                },
+                _other: () => {
+                    context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
+                    throw CliError.exit();
+                }
+            });
+            return;
+        }
+        const auth0OrgId = orgLookup.body.auth0Id;
+        const userId = args.userId;
 
         const response = await withSpinner({
             message: `Removing user "${userId}" from organization "${args.org}"`,
             operation: () =>
                 venus.organization.removeUser({
                     userId,
-                    auth0OrgId: args.org
+                    auth0OrgId
                 })
         });
 
@@ -84,7 +99,7 @@ export function addRemoveMemberCommand(cli: Argv<GlobalArgs>): void {
                 .positional("org", {
                     type: "string",
                     demandOption: true,
-                    description: "Organization ID"
+                    description: "Organization name (e.g. acme)"
                 })
                 .example("$0 org member remove user123 acme", "# Remove user 'user123' from the 'acme' organization")
     );
