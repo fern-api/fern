@@ -29,14 +29,18 @@ export async function resolveGithubPrBranch(pr: GithubPrUrlInfo, token: string):
         );
     }
 
-    const data = (await response.json()) as { head?: { ref?: string } };
+    const data = (await response.json()) as { head?: { ref?: string; repo?: { full_name?: string } } };
     const branch = data.head?.ref;
     if (branch == null) {
         throw new Error(`Could not determine head branch for PR #${pr.prNumber}`);
     }
+    const headRepoFullName = data.head?.repo?.full_name;
+    if (headRepoFullName == null) {
+        throw new Error(`Could not determine head repository for PR #${pr.prNumber}`);
+    }
 
     return {
         branch,
-        uri: `${pr.owner}/${pr.repo}`
+        uri: headRepoFullName
     };
 }
