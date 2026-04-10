@@ -23,6 +23,7 @@ function makeGenerator(
         version: "0.57.10",
         config: {},
         outputMode,
+        automation: { generate: false, upgrade: false, preview: false, verify: false },
         containerImage: undefined,
         irVersionOverride: undefined,
         absolutePathToLocalOutput: AbsoluteFilePath.of("/tmp/test-output"),

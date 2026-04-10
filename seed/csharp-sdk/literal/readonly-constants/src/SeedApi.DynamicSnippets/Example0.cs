@@ -13,8 +13,6 @@ public class Example0
 
         await client.Headers.SendAsync(
             new SendLiteralsInHeadersRequest {
-                EndpointVersion = "02-12-2024",
-                Async = true,
                 Query = "What is the weather today"
             }
         );

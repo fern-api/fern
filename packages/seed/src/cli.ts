@@ -18,6 +18,7 @@ import { cleanEmptySeedDirectories, cleanOrphanedSeedFolders } from "./commands/
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog.js";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog.js";
 import { buildGeneratorImage } from "./commands/img/buildGeneratorImage.js";
+import { inspectFixture } from "./commands/inspect/inspectFixture.js";
 import { getLatestCli } from "./commands/latest/getLatestCli.js";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator.js";
 import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml.js";
@@ -81,6 +82,7 @@ export async function tryRunCli(): Promise<void> {
     addValidateCommands(cli);
     addLatestCommands(cli);
     addGenerateCommands(cli);
+    addInspectCommand(cli);
 
     await cli.parse();
 }
@@ -1567,6 +1569,51 @@ function throwIfGeneratorDoesNotExist({
             )} not found. Please make sure that there is a folder with those names in the seed directory.`
         );
     }
+}
+
+function addInspectCommand(cli: Argv) {
+    cli.command(
+        "inspect",
+        "Inspect a fixture by generating intermediary representations (OpenAPI IR, Fern definition, Fern IR) without running a generator",
+        (yargs) =>
+            yargs
+                .option("fixture", {
+                    type: "string",
+                    demandOption: true,
+                    alias: "f",
+                    description: "The fixture to inspect (e.g. server-sent-events-openapi)"
+                })
+                .option("output", {
+                    type: "string",
+                    demandOption: false,
+                    alias: "o",
+                    description: "Output directory for results (defaults to a temp directory)"
+                })
+                .option("direct", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    alias: "d",
+                    description:
+                        "Use the direct OpenAPI → IR path (via @fern-api/openapi-to-ir), skipping OpenAPI IR and Fern definition stages"
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            await inspectFixture({
+                fixture: argv.fixture,
+                outputPath: argv.output
+                    ? argv.output.startsWith("/")
+                        ? AbsoluteFilePath.of(argv.output)
+                        : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.output))
+                    : undefined,
+                direct: argv.direct,
+                logLevel: argv["log-level"]
+            });
+        }
+    );
 }
 
 // Dummy clone of the function from @fern-api/core

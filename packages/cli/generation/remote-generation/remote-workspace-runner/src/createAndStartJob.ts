@@ -38,7 +38,9 @@ export async function createAndStartJob({
     pushPreviewBranch,
     fernignorePath,
     skipFernignore,
-    retryRateLimited
+    retryRateLimited,
+    automationMode,
+    autoMerge
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -59,6 +61,8 @@ export async function createAndStartJob({
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
     retryRateLimited: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -90,7 +94,9 @@ export async function createAndStartJob({
                 absolutePathToPreview,
                 fiddlePreview,
                 pushPreviewBranch,
-                fernignoreContents
+                fernignoreContents,
+                automationMode,
+                autoMerge
             }),
         retryRateLimited,
         logger: context.logger,
@@ -116,7 +122,9 @@ async function createJob({
     absolutePathToPreview,
     fiddlePreview,
     pushPreviewBranch,
-    fernignoreContents
+    fernignoreContents,
+    automationMode,
+    autoMerge
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -133,6 +141,8 @@ async function createJob({
     /** When true, tells Fiddle to push a preview branch to the SDK repo. Requires fiddle-sdk with pushPreviewBranch support. */
     pushPreviewBranch?: boolean;
     fernignoreContents: string | undefined;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -168,6 +178,12 @@ async function createJob({
         // to include the pushPreviewBranch field on CreateJobRequestV2.
         // pushPreviewBranch,
         fernignoreContents
+        // TODO(FER-9671): Pass automation flags to Fiddle once its API is updated:
+        //   automationMode,
+        //   autoMerge,
+        //   runId: process.env.FERN_RUN_ID
+        // Fiddle will use these for server-side no-diff detection, separate PRs,
+        // automerge, run_id correlation, and breaking change handling.
     });
 
     if (!createResponse.ok) {

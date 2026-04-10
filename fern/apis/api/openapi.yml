@@ -1,0 +1,21 @@
+openapi: 3.1.0
+info:
+  title: SDK Preview Test API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string

@@ -133,6 +133,16 @@
         }
       ]
     },
+    "automation": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/automation.AutomationSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "openapi": {
       "oneOf": [
         {
@@ -4079,6 +4089,52 @@
       },
       "additionalProperties": false
     },
+    "automation.AutomationSchema": {
+      "type": "object",
+      "properties": {
+        "generate": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "upgrade": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preview": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verify": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "group.DefaultGeneratorInvocationSchema": {
       "type": "object",
       "properties": {
@@ -4209,6 +4265,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "automation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/automation.AutomationSchema"
             },
             {
               "type": "null"
@@ -4377,6 +4443,16 @@
             }
           ]
         },
+        "automation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/automation.AutomationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "image": {
           "$ref": "#/definitions/generators.GeneratorImageObjectSchema"
         }
@@ -4433,6 +4509,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/reviewers.ReviewersSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "automation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/automation.AutomationSchema"
             },
             {
               "type": "null"

@@ -18,7 +18,7 @@ import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
+import type { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -51,7 +51,9 @@ export async function runLocalGenerationForWorkspace({
     requireEnvVars,
     skipFernignore,
     publishToRegistry,
-    isPreview: isPreviewOverride
+    isPreview: isPreviewOverride,
+    automationMode,
+    autoMerge
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -71,6 +73,8 @@ export async function runLocalGenerationForWorkspace({
     skipFernignore?: boolean;
     publishToRegistry?: boolean;
     isPreview?: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -173,9 +177,7 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                const organization = await venus.organization.get(
-                    FernVenusApi.OrganizationId(projectConfig.organization)
-                );
+                const organization = await venus.organization.get(projectConfig.organization);
 
                 if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
                     interactiveTaskContext.failWithoutThrowing(
@@ -322,7 +324,8 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningCommitMessage,
                     autoVersioningChangelogEntry,
                     autoVersioningPrDescription,
-                    autoVersioningVersionBumpReason
+                    autoVersioningVersionBumpReason,
+                    autoVersioningVersionBump
                 } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
                     absolutePathToFernConfig:
@@ -366,6 +369,8 @@ export async function runLocalGenerationForWorkspace({
                         error: (msg) => interactiveTaskContext.logger.error(msg)
                     };
 
+                    const hasBreakingChanges = autoVersioningVersionBump === "MAJOR";
+
                     const pipeline = new PostGenerationPipeline(
                         {
                             outputDir: absolutePathToLocalOutput,
@@ -381,7 +386,12 @@ export async function runLocalGenerationForWorkspace({
                                 prDescription: autoVersioningPrDescription,
                                 versionBumpReason: autoVersioningVersionBumpReason,
                                 previewMode: selfhostedGithubConfig.previewMode,
-                                generatorName: generatorInvocation.name
+                                generatorName: generatorInvocation.name,
+                                automationMode,
+                                autoMerge,
+                                hasBreakingChanges,
+                                breakingChangesSummary: hasBreakingChanges ? autoVersioningPrDescription : undefined,
+                                runId: process.env.FERN_RUN_ID
                             },
                             cliVersion: workspace.cliVersion ?? "unknown",
                             generatorVersions: {
@@ -402,6 +412,14 @@ export async function runLocalGenerationForWorkspace({
                             warn: (msg) => interactiveTaskContext.logger.warn(chalk.yellow(msg)),
                             error: (msg) => interactiveTaskContext.logger.error(chalk.red(msg))
                         });
+                    }
+
+                    if (pipelineResult.steps.github?.skippedNoDiff) {
+                        interactiveTaskContext.logger.info(chalk.green("No changes detected — skipping PR creation"));
+                    }
+
+                    if (pipelineResult.steps.github?.autoMergeEnabled) {
+                        interactiveTaskContext.logger.info(chalk.green("Automerge enabled on PR"));
                     }
 
                     if (!pipelineResult.success) {
