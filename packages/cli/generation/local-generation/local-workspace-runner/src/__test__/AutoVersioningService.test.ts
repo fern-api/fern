@@ -2967,3 +2967,147 @@ describe("Python PEP 440 magic version", () => {
         expect(cleaned).not.toContain("pyproject.toml");
     });
 });
+
+describe("getLatestVersionFromGitTags", () => {
+    // Helper to create a temporary bare git repo that can serve as a remote,
+    // and a clone of it, so `git ls-remote --tags origin` works.
+    async function createRepoWithTags(tags: string[]): Promise<{ cloneDir: string; bareDir: string }> {
+        const bareDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-bare-"));
+        const cloneDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-clone-"));
+
+        // Create bare repo with explicit main branch
+        await runCommand(["git", "init", "--bare", "--initial-branch=main", bareDir], bareDir);
+
+        // Clone it
+        await runCommand(["git", "clone", bareDir, cloneDir], cloneDir);
+
+        // Configure git user for commits
+        await runCommand(["git", "config", "user.email", "test@test.com"], cloneDir);
+        await runCommand(["git", "config", "user.name", "Test"], cloneDir);
+
+        // Create an initial commit so we have something to tag
+        const filePath = path.join(cloneDir, "README.md");
+        await fs.writeFile(filePath, "# Test\n");
+        await runCommand(["git", "add", "."], cloneDir);
+        await runCommand(["git", "commit", "-m", "Initial commit"], cloneDir);
+        await runCommand(["git", "push", "-u", "origin", "main"], cloneDir);
+
+        // Create tags
+        for (const tag of tags) {
+            await runCommand(["git", "tag", tag], cloneDir);
+        }
+        // Push all tags
+        if (tags.length > 0) {
+            await runCommand(["git", "push", "origin", "--tags"], cloneDir);
+        }
+
+        return { cloneDir, bareDir };
+    }
+
+    async function cleanupDirs(...dirs: string[]): Promise<void> {
+        for (const dir of dirs) {
+            await fs.rm(dir, { recursive: true, force: true });
+        }
+    }
+
+    it("returns latest semver tag from repo with multiple versions", async () => {
+        const { cloneDir, bareDir } = await createRepoWithTags(["v1.0.0", "v1.1.0", "v2.0.0", "v1.5.3"]);
+        try {
+            const service = new AutoVersioningService({ logger: mockLogger });
+            const result = await service.getLatestVersionFromGitTags(cloneDir);
+            expect(result).toBe("v2.0.0");
+        } finally {
+            await cleanupDirs(cloneDir, bareDir);
+        }
+    });
+
+    it("returns undefined when repo has no tags", async () => {
+        const { cloneDir, bareDir } = await createRepoWithTags([]);
+        try {
+            const service = new AutoVersioningService({ logger: mockLogger });
+            const result = await service.getLatestVersionFromGitTags(cloneDir);
+            expect(result).toBeUndefined();
+        } finally {
+            await cleanupDirs(cloneDir, bareDir);
+        }
+    });
+
+    it("filters out non-semver tags", async () => {
+        const { cloneDir, bareDir } = await createRepoWithTags(["latest", "release-candidate", "build-123", "v1.2.3"]);
+        try {
+            const service = new AutoVersioningService({ logger: mockLogger });
+            const result = await service.getLatestVersionFromGitTags(cloneDir);
+            expect(result).toBe("v1.2.3");
+        } finally {
+            await cleanupDirs(cloneDir, bareDir);
+        }
+    });
+
+    it("returns undefined when all tags are non-semver", async () => {
+        const { cloneDir, bareDir } = await createRepoWithTags(["latest", "nightly", "release-candidate"]);
+        try {
+            const service = new AutoVersioningService({ logger: mockLogger });
+            const result = await service.getLatestVersionFromGitTags(cloneDir);
+            expect(result).toBeUndefined();
+        } finally {
+            await cleanupDirs(cloneDir, bareDir);
+        }
+    });
+
+    it("handles tags without v prefix", async () => {
+        const { cloneDir, bareDir } = await createRepoWithTags(["1.0.0", "1.1.0", "2.0.0"]);
+        try {
+            const service = new AutoVersioningService({ logger: mockLogger });
+            const result = await service.getLatestVersionFromGitTags(cloneDir);
+            expect(result).toBe("2.0.0");
+        } finally {
+            await cleanupDirs(cloneDir, bareDir);
+        }
+    });
+
+    it("handles mixed v-prefixed and bare semver tags", async () => {
+        const { cloneDir, bareDir } = await createRepoWithTags(["v1.0.0", "2.0.0", "v1.5.0"]);
+        try {
+            const service = new AutoVersioningService({ logger: mockLogger });
+            const result = await service.getLatestVersionFromGitTags(cloneDir);
+            expect(result).toBe("2.0.0");
+        } finally {
+            await cleanupDirs(cloneDir, bareDir);
+        }
+    });
+
+    it("handles pre-release versions correctly (semver ordering)", async () => {
+        const { cloneDir, bareDir } = await createRepoWithTags(["v1.0.0-beta.1", "v1.0.0", "v1.0.0-alpha.1"]);
+        try {
+            const service = new AutoVersioningService({ logger: mockLogger });
+            const result = await service.getLatestVersionFromGitTags(cloneDir);
+            // semver: v1.0.0 > v1.0.0-beta.1 > v1.0.0-alpha.1
+            expect(result).toBe("v1.0.0");
+        } finally {
+            await cleanupDirs(cloneDir, bareDir);
+        }
+    });
+
+    it("returns undefined for non-git directory", async () => {
+        const tmpDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-nogit-"));
+        try {
+            const service = new AutoVersioningService({ logger: mockLogger });
+            const result = await service.getLatestVersionFromGitTags(tmpDir);
+            // Should not throw — returns undefined gracefully
+            expect(result).toBeUndefined();
+        } finally {
+            await cleanupDirs(tmpDir);
+        }
+    });
+
+    it("handles single tag correctly", async () => {
+        const { cloneDir, bareDir } = await createRepoWithTags(["v0.1.0"]);
+        try {
+            const service = new AutoVersioningService({ logger: mockLogger });
+            const result = await service.getLatestVersionFromGitTags(cloneDir);
+            expect(result).toBe("v0.1.0");
+        } finally {
+            await cleanupDirs(cloneDir, bareDir);
+        }
+    });
+});
