@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 4.67.0
+  changelogEntry:
+    - summary: |
+        Add `agents.llms-txt` and `agents.llms-full-txt` to `docs.yml` so customers can upload
+        custom `llms.txt` and `llms-full.txt` files that override the auto-generated versions
+        on their docs sites.
+      type: feat
+  createdAt: "2026-04-10"
+  irVersion: 66
+
 - version: 4.66.1
   changelogEntry:
     - summary: |
