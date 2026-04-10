@@ -1,5 +1,5 @@
 /**
- * Assertion-based tests for allOf composition edge cases reported by SPS Commerce.
+ * Assertion-based tests for allOf composition edge cases.
  * These tests validate the IR output against expected behavior per the OpenAPI spec,
  * rather than snapshot-matching. They should FAIL until the allOf bugs are fixed.
  *
@@ -13,7 +13,7 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
-const FIXTURE_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/allof-spscommerce/fern"));
+const FIXTURE_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/allof/fern"));
 
 interface IRProperty {
     name: string;
@@ -66,7 +66,7 @@ function getContainerType(prop: IRProperty): string | undefined {
     return undefined;
 }
 
-describe("allOf SPS Commerce edge cases", () => {
+describe("allOf edge cases", () => {
     let ir: IR;
 
     beforeAll(async () => {
@@ -75,7 +75,7 @@ describe("allOf SPS Commerce edge cases", () => {
             absolutePathToWorkspace: FIXTURE_DIR,
             context,
             cliVersion: "0.0.0",
-            workspaceName: "allof-spscommerce"
+            workspaceName: "allof"
         });
         if (!workspace.didSucceed) {
             throw new Error(`Failed to load fixture: ${JSON.stringify(workspace.failures)}`);

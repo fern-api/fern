@@ -1,14 +1,12 @@
 openapi: 3.0.3
 info:
-  title: allOf SPS Commerce Reproduction
+  title: allOf Reproduction
   version: 1.0.0
   description: >
-    Reproduces the allOf edge cases reported by SPS Commerce (Pylon #18189).
-    These patterns are taken directly from the customer's Slack messages and
-    their simplified allof-troubleshooting.oas.yml test file.
+    Reproduces allOf edge cases
 
 servers:
-  - url: https://api.spscommerce.com
+  - url: https://api.allof.com
 
 paths:
   /v1/preview/1/rule-types:
@@ -49,7 +47,7 @@ paths:
 components:
   schemas:
     # -----------------------------------------------------------------------
-    # Shared base schemas (from SPS Commerce's actual spec)
+    # Shared base schemas
     # -----------------------------------------------------------------------
     PagingCursors:
       type: object
