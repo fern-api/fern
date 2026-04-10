@@ -604,7 +604,8 @@ class SdkGenerator(AbstractGenerator):
         base_class_ref: AST.ClassReference,
         root_client: "RootClient",
     ) -> AST.ClassDeclaration:
-        params = root_client.init_parameters if root_client.init_parameters is not None else root_client.parameters
+        has_overloaded_init = root_client.init_parameters is not None
+        params = root_client.init_parameters if has_overloaded_init else root_client.parameters
 
         named_params = [
             AST.NamedFunctionParameter(
@@ -616,7 +617,8 @@ class SdkGenerator(AbstractGenerator):
         ]
 
         def write_super_init(writer: AST.NodeWriter) -> None:
-            writer.write_line("super().__init__(")
+            type_ignore = "  # type: ignore[call-overload, misc]" if has_overloaded_init else ""
+            writer.write_line(f"super().__init__({type_ignore}")
             with writer.indent():
                 for param in params:
                     writer.write_line(f"{param.constructor_parameter_name}={param.constructor_parameter_name},")
