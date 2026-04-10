@@ -72,7 +72,7 @@ export function detectCISource(): CISource | undefined {
  */
 function detectDeploySource(): string | undefined {
     try {
-        const subject = execSync("git log -1 --format=%s", { encoding: "utf-8", timeout: 5000 }).trim();
+        const subject = execSync("git log -1 --format=%s", { encoding: "utf-8", timeout: 5000, stdio: "pipe" }).trim();
         if (subject.includes("[source:postman]")) {
             return "postman";
         }
