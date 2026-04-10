@@ -1386,8 +1386,11 @@ export class WebSocketClientGenerator extends WithGeneration {
 
         // Domain-specific events (server-to-client messages)
         for (const each of this.events) {
+            if (each.name == null) {
+                continue;
+            }
             interface_.addField({
-                name: each.name ?? "",
+                name: each.name,
                 enclosingType: interface_,
                 access: ast.Access.Public,
                 get: true,
