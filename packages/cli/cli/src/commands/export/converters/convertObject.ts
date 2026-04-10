@@ -45,14 +45,14 @@ export function convertObject({
         if ("$ref" in convertedObjectProperty && (objectProperty.docs != null || example !== undefined)) {
             // In OAS 3.0.x, $ref must be the only property — siblings are ignored.
             // Wrap in allOf to preserve description and example alongside the $ref.
-            const schema: OpenApiComponentSchema = {
+            const schema: OpenAPIV3.SchemaObject = {
                 allOf: [convertedObjectProperty]
             };
             if (objectProperty.docs != null) {
-                (schema as OpenAPIV3.SchemaObject).description = objectProperty.docs;
+                schema.description = objectProperty.docs;
             }
             if (example !== undefined) {
-                (schema as OpenAPIV3.SchemaObject).example = example;
+                schema.example = example;
             }
             convertedProperties[getWireValue(objectProperty.name)] = schema;
         } else {
