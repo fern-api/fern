@@ -2195,9 +2195,16 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     description:
                         "Output targets: filesystem paths and/or registry URLs. " +
                         "When omitted, publishes to the default preview registry via remote generation. " +
-                        "When provided, uses local Docker generation. " +
                         "Examples: --output ./out (disk only), --output https://registry.example.com (registry only), " +
                         "--output ./out --output https://registry.example.com (both)."
+                })
+                .option("local", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Run generation locally via Docker instead of remotely through Fiddle. " +
+                        "Requires Docker to be installed. " +
+                        "Can be combined with --output for local disk output."
                 })
                 .option("push-diff", {
                     boolean: true,
@@ -2222,6 +2229,7 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 apiName: argv.api,
                 json: argv.json,
                 output: argv.output,
+                local: argv.local,
                 pushDiff: argv.pushDiff
             });
         }

@@ -57,6 +57,7 @@ export async function sdkPreview({
     apiName,
     json,
     output,
+    local,
     pushDiff
 }: {
     cliContext: CliContext;
@@ -65,6 +66,7 @@ export async function sdkPreview({
     apiName: string | undefined;
     json: boolean;
     output: string[] | undefined;
+    local: boolean;
     pushDiff: boolean;
 }): Promise<void> {
     const previews: SdkPreviewSuccess["previews"] = [];
@@ -74,12 +76,10 @@ export async function sdkPreview({
 
     try {
         // Validate flag combinations early.
-        // --push-diff requires remote generation (no --output) because it needs Fiddle
-        // to push the preview branch to the SDK repo.
-        if (pushDiff && output != null) {
+        // --push-diff requires remote generation and cannot be combined with --local.
+        if (pushDiff && local) {
             return cliContext.failAndThrow(
-                "--push-diff requires remote generation and cannot be combined with --output. " +
-                    "Remove --output to use --push-diff."
+                "--push-diff requires remote generation and cannot be combined with --local."
             );
         }
 
@@ -140,9 +140,9 @@ export async function sdkPreview({
         }
 
         // Determine whether to use remote (Fiddle) or local (Docker) generation.
-        // No --output flag → remote generation through Fiddle (matches `fern generate` pattern).
-        // Any --output flag → local Docker generation for direct disk/registry control.
-        const useRemoteGeneration = output == null;
+        // By default, use remote generation through Fiddle (matches `fern generate` pattern).
+        // --local flag forces local Docker generation.
+        const useRemoteGeneration = !local;
 
         if (output == null) {
             // Default: publish to preview registry via Fiddle
@@ -157,9 +157,10 @@ export async function sdkPreview({
             publishToRegistry = false;
         }
 
-        // When --output is given, resolve the first path for local generation.
-        // When no --output is given, remote generation handles everything server-side
-        // so no temp dir is needed.
+        // When --output is given, resolve the first path for output.
+        // For remote generation, absolutePathToPreview tells Fiddle to upload to S3
+        // so the CLI can download the result to disk.
+        // For local generation, it tells Docker where to write generated files.
         const firstPath = pathOutputs[0];
         const absolutePathToOutput = firstPath != null ? AbsoluteFilePath.of(resolve(cwd(), firstPath)) : undefined;
         if (absolutePathToOutput != null) {
@@ -255,6 +256,8 @@ export async function sdkPreview({
                 if (useRemoteGeneration) {
                     // Remote generation through Fiddle — matches the `fern generate` pattern.
                     // Fiddle handles publishing to the preview registry server-side.
+                    // When absolutePathToOutput is set (--output), Fiddle uploads to S3 and
+                    // the CLI downloads the result to the specified path.
                     await cliContext.runTaskForWorkspace(workspace, async (context) => {
                         await runRemoteGenerationForAPIWorkspace({
                             projectConfig: project.config,
@@ -266,7 +269,7 @@ export async function sdkPreview({
                             shouldLogS3Url: false,
                             token,
                             whitelabel: workspace.generatorsConfiguration?.whitelabel,
-                            absolutePathToPreview: undefined,
+                            absolutePathToPreview: absolutePathToOutput,
                             // isPreview controls CLI-side behavior: lenient env var substitution,
                             // skip version availability check, skip dynamic IR upload.
                             isPreview: true,
@@ -285,7 +288,7 @@ export async function sdkPreview({
                         });
                     });
                 } else {
-                    // Local generation via Docker — used when --output flag is provided.
+                    // Local generation via Docker — used when --local flag is provided.
                     // Docker must be installed. When absolutePathToOutput is set, generated
                     // files are also written to disk.
                     await cliContext.runTaskForWorkspace(workspace, async (context) => {
