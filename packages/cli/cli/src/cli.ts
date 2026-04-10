@@ -53,6 +53,7 @@ import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
+import { parseGeneratorArg } from "./commands/generate/filterGenerators.js";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js";
@@ -251,6 +252,7 @@ async function tryRunCli(cliContext: CliContext) {
     addBetaCommand(cli, cliContext);
 
     addSdkCommand(cli, cliContext);
+    addAutomationsCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -817,6 +819,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             }
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
+            const { generatorName, generatorIndex } = parseGeneratorArg(correctedGeneratorFilter);
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -826,7 +829,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     version: argv.version,
                     groupName: argv.group,
-                    generatorName: correctedGeneratorFilter,
+                    generatorName,
+                    generatorIndex,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local || argv.runner != null,
@@ -885,7 +889,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
-                generatorName: correctedGeneratorFilter,
+                generatorName,
+                generatorIndex,
                 shouldLogS3Url: argv.printZipUrl,
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,
@@ -2164,6 +2169,254 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addSdkPreviewCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
+}
+
+function addAutomationsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("automations", false, (yargs) => {
+        addAutomationsListCommand(yargs, cliContext);
+        addAutomationsGenerateCommand(yargs, cliContext);
+        return yargs.demandCommand();
+    });
+}
+
+/**
+ * `fern automations list generate`
+ *
+ * Discovers all generators in the project and outputs a JSON array of
+ * `fern automations generate` commands — one per generator. Designed to be
+ * consumed by a GitHub Actions matrix strategy to fan out generation jobs.
+ *
+ * Generators with `automation.generate: false` in generators.yml are excluded.
+ *
+ * Arguments passed to `list` (--version, --auto-merge) are forwarded into
+ * each generated command, so the caller doesn't need to re-specify them.
+ *
+ * Output format (stdout): JSON string array
+ *   [
+ *     "fern automations generate --api foo --group sdk --generator 0 --version AUTO --auto-merge",
+ *     "fern automations generate --api foo --group sdk --generator 1 --version AUTO --auto-merge",
+ *     "fern automations generate --api bar --group sdk --generator 0 --version AUTO --auto-merge"
+ *   ]
+ *
+ * Example GitHub Actions usage:
+ *   jobs:
+ *     discover:
+ *       runs-on: ubuntu-latest
+ *       outputs:
+ *         commands: ${{ steps.list.outputs.commands }}
+ *       steps:
+ *         - uses: actions/checkout@v4
+ *         - uses: fern-api/setup-fern-cli@v1
+ *         - id: list
+ *           run: echo "commands=$(fern automations list generate --group sdk --version AUTO --auto-merge)" >> $GITHUB_OUTPUT
+ *           env:
+ *             FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+ *
+ *     generate:
+ *       needs: discover
+ *       if: ${{ needs.discover.outputs.commands != '[]' }}
+ *       strategy:
+ *         fail-fast: false
+ *         matrix:
+ *           command: ${{ fromJson(needs.discover.outputs.commands) }}
+ *       runs-on: ubuntu-latest
+ *       steps:
+ *         - uses: actions/checkout@v4
+ *         - uses: fern-api/setup-fern-cli@v1
+ *         - run: ${{ matrix.command }}
+ *           env:
+ *             FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+ *             FERN_RUN_ID: ${{ github.run_id }}-${{ strategy.job-index }}
+ */
+function addAutomationsListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("list", false, (yargs) => {
+        addAutomationsListGenerateCommand(yargs, cliContext);
+        return yargs.demandCommand();
+    });
+}
+
+function addAutomationsListGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "generate",
+        false, // hidden
+        (yargs) =>
+            yargs
+                .option("group", {
+                    type: "string",
+                    description: "Filter to a specific generator group (e.g. 'sdk'). Omit to list all groups."
+                })
+                .option("api", {
+                    type: "string",
+                    description:
+                        "Filter to a specific API in a multi-API repo (e.g. 'foo' for fern/apis/foo/). " +
+                        "Omit to list all APIs."
+                })
+                .option("version", {
+                    type: "string",
+                    description: "Version string to include in generated commands (e.g. 'AUTO' for AI-based versioning)"
+                })
+                .option("auto-merge", {
+                    boolean: true,
+                    default: false,
+                    description: "Include --auto-merge flag in generated commands"
+                }),
+        async (argv) => {
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: argv.api,
+                defaultToAllApiWorkspaces: true
+            });
+
+            const commands: string[] = [];
+
+            for (const workspace of project.apiWorkspaces) {
+                const groups = workspace.generatorsConfiguration?.groups ?? [];
+                for (const group of groups) {
+                    if (argv.group != null && group.groupName !== argv.group) {
+                        continue;
+                    }
+                    for (let i = 0; i < group.generators.length; i++) {
+                        const generator = group.generators[i];
+                        if (generator == null || !generator.automation.generate) {
+                            continue;
+                        }
+
+                        const parts = ["fern", "automations", "generate"];
+                        if (workspace.workspaceName != null) {
+                            parts.push("--api", workspace.workspaceName);
+                        }
+                        parts.push("--group", group.groupName);
+                        parts.push("--generator", String(i));
+                        if (argv.version != null) {
+                            parts.push("--version", argv.version);
+                        }
+                        if (argv["auto-merge"]) {
+                            parts.push("--auto-merge");
+                        }
+                        commands.push(parts.join(" "));
+                    }
+                }
+            }
+
+            // Output JSON array of commands to stdout for GitHub Actions consumption
+            process.stdout.write(JSON.stringify(commands));
+        }
+    );
+}
+
+/**
+ * `fern automations generate`
+ *
+ * Runs SDK generation for a single generator in automation mode. This command
+ * is designed to be called by the `fern-api/fern-generate` GitHub Action,
+ * typically as one job in a matrix fanned out by `fern automations list generate`.
+ *
+ * Automation mode enables the following behaviors:
+ *   - **Separate PRs**: Each invocation creates its own PR (no reuse of existing fern-bot PRs).
+ *     This preserves 1:1 mapping between spec commits and SDK releases.
+ *   - **No-diff detection**: If generation produces output identical to the SDK repo's default
+ *     branch, the PR/push is skipped entirely.
+ *   - **Breaking change detection**: When `--version AUTO` determines a MAJOR bump, the PR body
+ *     includes a breaking changes section and automerge is not enabled.
+ *   - **Automerge** (with `--auto-merge`): Enables GitHub's automerge on the PR. The SDK repo's
+ *     own branch protection rules and required checks govern whether it actually merges.
+ *     Skipped when breaking changes are detected.
+ *   - **Run ID correlation**: If `FERN_RUN_ID` is set in the environment, it's included in the
+ *     PR body for cross-repo debugging and tracing.
+ *
+ * Generator targeting:
+ *   `--generator` accepts either a 0-based index or a generator name.
+ *   Index-based targeting is preferred because a group can contain multiple generators with the
+ *   same name (e.g. two TypeScript SDK entries publishing to different repos).
+ *   Use `fern automations list generate` to discover the correct indices.
+ *
+ * Environment variables:
+ *   - FERN_TOKEN: Required. Authenticates with Fern services.
+ *   - FERN_RUN_ID: Optional. Correlation ID included in PR body for cross-repo tracing.
+ *     Typically set to `${{ github.run_id }}-${{ strategy.job-index }}` in GitHub Actions.
+ *
+ * Examples:
+ *   # Generate the first generator in the 'sdk' group with auto-versioning and automerge
+ *   fern automations generate --group sdk --generator 0 --version AUTO --auto-merge
+ *
+ *   # Generate a specific generator by name (selects ALL matching generators in the group)
+ *   fern automations generate --group sdk --generator fernapi/fern-python-sdk --version AUTO
+ *
+ *   # Multi-API repo: target a specific API
+ *   fern automations generate --api payments --group sdk --generator 0 --version AUTO
+ */
+function addAutomationsGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "generate",
+        false, // hidden
+        (yargs) =>
+            yargs
+                .option("api", {
+                    type: "string",
+                    description:
+                        "Target a specific API in a multi-API repo (e.g. 'foo' for fern/apis/foo/). " +
+                        "Required when the project has multiple APIs."
+                })
+                .option("group", {
+                    type: "string",
+                    description:
+                        "The generator group to run (e.g. 'sdk'). " +
+                        "Falls back to default-group in generators.yml if omitted."
+                })
+                .option("generator", {
+                    type: "string",
+                    description:
+                        "Target a specific generator by 0-based index (e.g. '0', '1') or by name. " +
+                        "Index is preferred for deterministic targeting when duplicate names exist."
+                })
+                .option("version", {
+                    type: "string",
+                    description:
+                        "Version for generated packages. Use 'AUTO' for AI-based semantic versioning " +
+                        "that analyzes the diff and determines MAJOR/MINOR/PATCH automatically."
+                })
+                .option("auto-merge", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Enable GitHub automerge on generated PRs. Automerge is skipped when " +
+                        "breaking changes (MAJOR bump) are detected, regardless of this flag."
+                }),
+        async (argv) => {
+            const { generatorName: genName, generatorIndex: genIndex } = parseGeneratorArg(argv.generator);
+
+            await cliContext.runTask(async () => {
+                await generateAPIWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false
+                    }),
+                    cliContext,
+                    version: argv.version,
+                    groupName: argv.group,
+                    generatorName: genName,
+                    generatorIndex: genIndex,
+                    shouldLogS3Url: false,
+                    keepDocker: false,
+                    useLocalDocker: false,
+                    preview: false,
+                    mode: undefined,
+                    force: true,
+                    runner: undefined,
+                    inspect: false,
+                    lfsOverride: undefined,
+                    fernignorePath: undefined,
+                    skipFernignore: false,
+                    dynamicIrOnly: false,
+                    outputDir: undefined,
+                    noReplay: false,
+                    retryRateLimited: false,
+                    requireEnvVars: false,
+                    automationMode: true,
+                    autoMerge: argv["auto-merge"]
+                });
+            });
+        }
+    );
 }
 
 function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {

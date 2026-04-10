@@ -7989,6 +7989,12 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../cli/generation/ir-generator
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../cli/workspace/lazy-fern-workspace
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../cli/generation/local-generation/local-workspace-runner
@@ -8001,6 +8007,9 @@ importers:
       '@fern-api/login':
         specifier: workspace:*
         version: link:../cli/login
+      '@fern-api/source-resolver':
+        specifier: workspace:*
+        version: link:../cli/generation/source-resolver
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../cli/task-context
