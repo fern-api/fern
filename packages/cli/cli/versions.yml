@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.62.5
+- version: 4.66.1
   changelogEntry:
     - summary: |
         Fix GraphQL converter to properly handle interface types. Interfaces
@@ -9,7 +9,7 @@
         discoverable in generated docs. Interfaces with no implementations
         fall back to plain object types.
       type: fix
-  createdAt: "2026-04-08"
+  createdAt: "2026-04-10"
   irVersion: 66
 
 - version: 4.66.0
