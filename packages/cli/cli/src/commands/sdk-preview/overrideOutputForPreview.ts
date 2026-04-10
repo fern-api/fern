@@ -35,6 +35,9 @@ export function getGithubOwnerRepo(
                 _other: () => undefined
             }),
         publish: () => undefined,
+        // publishV2 is registry-only (npmOverride, mavenOverride, pypiOverride, etc.)
+        // and does not carry github owner/repo info. GitHub publish info is only
+        // available on githubV2 variants via the publishInfo field.
         publishV2: () => undefined,
         _other: () => undefined
     });
