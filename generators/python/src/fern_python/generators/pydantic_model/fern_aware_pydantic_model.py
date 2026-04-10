@@ -188,8 +188,10 @@ class FernAwarePydanticModel:
         )
         for dependency in self_referencing_dependencies_from_non_union_types:
             if (
-                not self._type_name or self._type_name.type_id != dependency
-            ) and dependency not in self._forward_referenced_models and dependency not in extended_type_ids:
+                (not self._type_name or self._type_name.type_id != dependency)
+                and dependency not in self._forward_referenced_models
+                and dependency not in extended_type_ids
+            ):
                 self.add_ghost_reference(dependency)
 
     def add_private_instance_field_unsafe(
