@@ -1,13 +1,13 @@
-from datetime import datetime, date
-from typing import Any, cast, List, Union
 import uuid
+from datetime import date, datetime
+from typing import Any, List, Union, cast
 
-from tests.utils.example_models.types.resources.types.shape import Shape_Circle, Shape_Square
 from .example_models.types.core.unchecked_base_model import construct_type
-from tests.utils.example_models.types.resources.types.square import Square
-from tests.utils.example_models.types.resources.types.circle import Circle
-from .example_models.manual_types.defaulted_object import ObjectWithDefaultedOptionalFields
 from .example_models.types.resources.types import ObjectWithOptionalField
+
+from tests.utils.example_models.types.resources.types.circle import Circle
+from tests.utils.example_models.types.resources.types.shape import Shape_Circle, Shape_Square
+from tests.utils.example_models.types.resources.types.square import Square
 
 
 def test_construct_valid() -> None:
@@ -1006,7 +1006,7 @@ def test_forward_ref_list_field_resolved_in_construct() -> None:
     annotations` the annotation stays as a ForwardRef under Pydantic v2.
     construct_type must resolve the ForwardRef so nested dicts become Block
     instances."""
-    from .example_models.manual_types.block import Chunk, Block
+    from .example_models.manual_types.block import Block, Chunk
 
     raw = {
         "title": "Page 1",
@@ -1030,10 +1030,10 @@ def test_literal_discriminant_strict_matching_figure_details() -> None:
     the correct variant must be selected based on the 'type' value.
     FigureDetails (type='figure') should not greedily match text blocks."""
     from .example_models.manual_types.block import (
-        Chunk,
         Block,
-        TextDetails,
+        Chunk,
         FigureDetails,
+        TextDetails,
     )
 
     raw = {

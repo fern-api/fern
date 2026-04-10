@@ -8,9 +8,10 @@ from collections import defaultdict
 from dataclasses import asdict
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Mapping, Optional, Tuple, Type, TypeVar, Union, cast
 
-import pydantic
 import typing_extensions
 from .datetime_utils import serialize_datetime
+
+import pydantic
 
 if TYPE_CHECKING:
     from .http_sse._models import ServerSentEvent

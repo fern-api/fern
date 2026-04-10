@@ -5,7 +5,6 @@ import sys
 import typing
 import uuid
 
-import pydantic
 import typing_extensions
 from .pydantic_utilities import (  # type: ignore[attr-defined]
     IS_PYDANTIC_V2,
@@ -21,6 +20,8 @@ from .pydantic_utilities import (  # type: ignore[attr-defined]
 )
 from .serialization import get_field_to_alias_mapping
 from pydantic_core import PydanticUndefined
+
+import pydantic
 
 
 class UnionMetadata:
