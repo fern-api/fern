@@ -78,7 +78,10 @@ export const ValidMarkdownLinks: Rule = {
 
         // Collect version and product slugs for context-aware absolute link resolution
         const versionSlugs = collector.getVersionNodes().map((v) => v.slug);
-        const productSlugs = collector.getProductNodes().filter(FernNavigation.isInternalProductNode).map((p) => p.slug);
+        const productSlugs = collector
+            .getProductNodes()
+            .filter(FernNavigation.isInternalProductNode)
+            .map((p) => p.slug);
 
         const specialDocPages = ["/llms-full.txt", "/llms.txt"];
 
