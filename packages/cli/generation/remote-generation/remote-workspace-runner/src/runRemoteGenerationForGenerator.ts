@@ -276,7 +276,6 @@ export async function runRemoteGenerationForGenerator({
         whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
         irVersionOverride,
         absolutePathToPreview,
-        isPreview: isPreviewOverride,
         fiddlePreview,
         pushPreviewBranch,
         fernignorePath,
