@@ -70,7 +70,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.UploadAsync(\n    new UploadRequest\n    {\n        Columns = new List<SeedApi.Column>()\n        {\n            new SeedApi.Column\n            {\n                Id = \"id\",\n                Values = new List<float>() { 1.1f },\n            },\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.UploadAsync(\n    new UploadRequest\n    {\n        Columns = new List<SeedApi.Column>()\n        {\n            new SeedApi.Column\n            {\n                Id = \"id\",\n                Values = new List<double>() { 1.1 },\n            },\n        },\n    }\n);\n"
             }
         },
         {

@@ -231,7 +231,7 @@ await client.DataService.UploadAsync(
             new SeedApi.Column
             {
                 Id = "id",
-                Values = new List<float>() { 1.1f },
+                Values = new List<double>() { 1.1 },
             },
         },
     }

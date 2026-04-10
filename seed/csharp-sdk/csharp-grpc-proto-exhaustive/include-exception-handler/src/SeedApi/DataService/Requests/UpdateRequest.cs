@@ -14,7 +14,7 @@ public record UpdateRequest
     public required string Id { get; set; }
 
     [JsonPropertyName("values")]
-    public IEnumerable<float>? Values { get; set; }
+    public IEnumerable<double>? Values { get; set; }
 
     [JsonPropertyName("set_metadata")]
     public Metadata? SetMetadata { get; set; }

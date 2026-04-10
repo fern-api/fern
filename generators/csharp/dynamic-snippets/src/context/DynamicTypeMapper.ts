@@ -126,7 +126,7 @@ export class DynamicTypeMapper extends WithGeneration {
             case "UINT_64":
                 return this.Primitive.ulong;
             case "FLOAT":
-                return this.Primitive.float;
+                return this.Primitive.double;
             case "DOUBLE":
                 return this.Primitive.double;
             case "BOOLEAN":

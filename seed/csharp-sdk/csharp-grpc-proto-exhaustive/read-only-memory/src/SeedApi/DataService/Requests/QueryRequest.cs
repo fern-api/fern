@@ -26,7 +26,7 @@ public record QueryRequest
     public IEnumerable<QueryColumn>? Queries { get; set; }
 
     [JsonPropertyName("column")]
-    public ReadOnlyMemory<float>? Column { get; set; }
+    public IEnumerable<double>? Column { get; set; }
 
     [JsonPropertyName("id")]
     public string? Id { get; set; }

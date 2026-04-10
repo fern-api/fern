@@ -317,7 +317,7 @@ public partial class DataServiceClient : IDataServiceClient
     ///     {
     ///         Columns = new List&lt;SeedApi.Column&gt;()
     ///         {
-    ///             new SeedApi.Column { Id = "id", Values = new[] { 1.1f } },
+    ///             new SeedApi.Column { Id = "id", Values = new[] { 1.1 } },
     ///         },
     ///     }
     /// );

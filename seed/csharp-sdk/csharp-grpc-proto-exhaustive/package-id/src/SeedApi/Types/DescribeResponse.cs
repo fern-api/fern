@@ -19,7 +19,7 @@ public record DescribeResponse : IJsonOnDeserialized
     public uint? Dimension { get; set; }
 
     [JsonPropertyName("fullness")]
-    public float? Fullness { get; set; }
+    public double? Fullness { get; set; }
 
     [JsonPropertyName("total_count")]
     public uint? TotalCount { get; set; }

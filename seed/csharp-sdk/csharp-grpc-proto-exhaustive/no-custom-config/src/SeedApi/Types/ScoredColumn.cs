@@ -16,10 +16,10 @@ public record ScoredColumn : IJsonOnDeserialized
     public required string Id { get; set; }
 
     [JsonPropertyName("score")]
-    public float? Score { get; set; }
+    public double? Score { get; set; }
 
     [JsonPropertyName("values")]
-    public IEnumerable<float>? Values { get; set; }
+    public IEnumerable<double>? Values { get; set; }
 
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }

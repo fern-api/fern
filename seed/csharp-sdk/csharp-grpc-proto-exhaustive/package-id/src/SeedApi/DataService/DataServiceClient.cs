@@ -320,7 +320,7 @@ public partial class DataServiceClient : IDataServiceClient
     ///             new SeedApi.Column
     ///             {
     ///                 Id = "id",
-    ///                 Values = new List&lt;float&gt;() { 1.1f },
+    ///                 Values = new List&lt;double&gt;() { 1.1 },
     ///             },
     ///         },
     ///     }

@@ -108,7 +108,7 @@ public class TypeTest
             Nineteen = new Name { Id = "name-129fsdj9", Value = "nineteen" },
             Twenty = 20,
             Twentyone = 21,
-            Twentytwo = 22.22f,
+            Twentytwo = 22.22,
             Twentythree = "23",
             Twentyfour = DateTime.Parse(
                 "1994-01-01T01:01:01.000Z",
