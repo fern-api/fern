@@ -85,6 +85,7 @@ export async function convertGeneratorsConfiguration({
                               group,
                               maybeTopLevelMetadata,
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
+                              maybeRootAutomation: rawGeneratorsConfiguration.automation,
                               readme,
                               context
                           })
@@ -554,6 +555,7 @@ async function convertGroup({
     group,
     maybeTopLevelMetadata,
     maybeTopLevelReviewers,
+    maybeRootAutomation,
     readme,
     context
 }: {
@@ -562,6 +564,7 @@ async function convertGroup({
     group: generatorsYml.GeneratorGroupSchema;
     maybeTopLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
@@ -579,6 +582,8 @@ async function convertGroup({
                     maybeGroupLevelMetadata,
                     maybeTopLevelReviewers,
                     maybeGroupLevelReviewers: group.reviewers,
+                    maybeRootAutomation,
+                    maybeGroupAutomation: group.automation,
                     readme,
                     context
                 })
@@ -622,6 +627,8 @@ async function convertGenerator({
     maybeTopLevelMetadata,
     maybeGroupLevelReviewers,
     maybeTopLevelReviewers,
+    maybeRootAutomation,
+    maybeGroupAutomation,
     readme,
     context
 }: {
@@ -631,12 +638,19 @@ async function convertGenerator({
     maybeTopLevelMetadata: OutputMetadata | undefined;
     maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
+    maybeGroupAutomation: generatorsYml.AutomationSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
     const { normalizedName, containerImage } = getGeneratorNameAndImage(generator, context);
     return {
         raw: generator,
+        automation: generatorsYml.resolveAutomationConfig({
+            rootAutomation: maybeRootAutomation,
+            groupAutomation: maybeGroupAutomation,
+            generatorAutomation: generator.automation
+        }),
         name: normalizedName,
         containerImage,
         version: generator.version,

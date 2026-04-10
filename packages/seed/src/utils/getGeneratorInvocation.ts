@@ -67,7 +67,13 @@ export async function getGeneratorInvocation({
                 : undefined,
         readme,
         settings: undefined,
-        raw
+        raw,
+        automation: {
+            generate: true,
+            upgrade: true,
+            preview: true,
+            verify: true
+        }
     };
 }
 
