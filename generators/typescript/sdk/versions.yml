@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.63.4
+  changelogEntry:
+    - summary: |
+        Fix `license` field missing from generated `package.json` when using
+        the `publish` output mode. The license configuration was only applied
+        for `github` output mode; it is now applied consistently across all
+        output modes via the shared `licenseFromLicenseConfig` helper.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
 - version: 3.63.3
   changelogEntry:
     - summary: |
