@@ -36,7 +36,9 @@ export async function createAndStartJob({
     absolutePathToPreview,
     fernignorePath,
     skipFernignore,
-    retryRateLimited
+    retryRateLimited,
+    automationMode,
+    autoMerge
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -53,6 +55,8 @@ export async function createAndStartJob({
     fernignorePath: string | undefined;
     skipFernignore?: boolean;
     retryRateLimited: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Determine fernignore contents:
     // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
@@ -82,7 +86,9 @@ export async function createAndStartJob({
                 token,
                 whitelabel,
                 absolutePathToPreview,
-                fernignoreContents
+                fernignoreContents,
+                automationMode,
+                autoMerge
             }),
         retryRateLimited,
         logger: context.logger,
@@ -119,6 +125,8 @@ async function createJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     fernignoreContents: string | undefined;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -144,6 +152,12 @@ async function createJob({
         whitelabel,
         preview: absolutePathToPreview != null,
         fernignoreContents
+        // TODO(FER-9671): Pass automation flags to Fiddle once its API is updated:
+        //   automationMode,
+        //   autoMerge,
+        //   runId: process.env.FERN_RUN_ID
+        // Fiddle will use these for server-side no-diff detection, separate PRs,
+        // automerge, run_id correlation, and breaking change handling.
     });
 
     if (!createResponse.ok) {

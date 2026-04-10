@@ -4,16 +4,14 @@ export default defineConfig(
     mergeConfig(defaultConfig, {
         test: {
             // ETE tests spawn heavy child processes (Node CLI, Docker containers).
-            // Running too many test files in parallel causes resource contention
-            // and widespread timeouts on CI runners.
-            fileParallelism: false,
-            maxConcurrency: 3,
+            // Limit parallelism to avoid resource contention on CI runners.
+            maxConcurrency: 5,
             poolOptions: {
                 threads: {
-                    maxThreads: 2
+                    maxThreads: 3
                 },
                 forks: {
-                    maxForks: 2
+                    maxForks: 3
                 }
             }
         }

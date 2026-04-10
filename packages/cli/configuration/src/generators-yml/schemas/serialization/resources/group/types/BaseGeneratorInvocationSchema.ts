@@ -3,6 +3,7 @@
 import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AutomationSchema } from "../../automation/types/AutomationSchema.js";
 import { GeneratorApiSettingsSchema } from "./GeneratorApiSettingsSchema.js";
 import { GeneratorOutputSchema } from "./GeneratorOutputSchema.js";
 import { GeneratorPublishMetadataSchema } from "./GeneratorPublishMetadataSchema.js";
@@ -26,6 +27,7 @@ export const BaseGeneratorInvocationSchema: core.serialization.ObjectSchema<
     "disable-examples": core.serialization.boolean().optional(),
     "publish-metadata": GeneratorPublishMetadataSchema.optional(),
     autorelease: core.serialization.boolean().optional(),
+    automation: AutomationSchema.optional(),
 });
 
 export declare namespace BaseGeneratorInvocationSchema {
@@ -43,5 +45,6 @@ export declare namespace BaseGeneratorInvocationSchema {
         "disable-examples"?: boolean | null;
         "publish-metadata"?: GeneratorPublishMetadataSchema.Raw | null;
         autorelease?: boolean | null;
+        automation?: AutomationSchema.Raw | null;
     }
 }

@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.62.5
+
+- version: 4.67.0
+  changelogEntry:
+    - summary: |
+        Add `agents.llms-txt` and `agents.llms-full-txt` to `docs.yml` so customers can upload
+        custom `llms.txt` and `llms-full.txt` files that override the auto-generated versions
+        on their docs sites.
+      type: feat
+  createdAt: "2026-04-10"
+  irVersion: 66
+
+- version: 4.66.1
   changelogEntry:
     - summary: |
         Fix GraphQL converter to properly handle interface types. Interfaces
@@ -9,9 +20,16 @@
         discoverable in generated docs. Interfaces with no implementations
         fall back to plain object types.
       type: fix
-  createdAt: "2026-04-08"
+  createdAt: "2026-04-10"
   irVersion: 66
 
+- version: 4.66.0
+  changelogEntry:
+    - summary: |
+        Internal infrastructure for GitHub Actions-based SDK generation automation.
+      type: chore
+  createdAt: "2026-04-10"
+  irVersion: 66
 
 - version: 4.65.3
   changelogEntry:
@@ -20,7 +38,6 @@
         docs pages as broken.
       type: fix
   createdAt: "2026-04-10"
-
   irVersion: 66
 
 - version: 4.65.2

@@ -4,6 +4,7 @@ import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { AiServicesSchema } from "../../ai/types/AiServicesSchema.js";
+import { AutomationSchema } from "../../automation/types/AutomationSchema.js";
 import { AuthSchemeDeclarationSchema } from "../../fernDefinition/resources/auth/types/AuthSchemeDeclarationSchema.js";
 import { GeneratorGroupSchema } from "../../group/types/GeneratorGroupSchema.js";
 import { ReplayConfigSchema } from "../../replay/types/ReplayConfigSchema.js";
@@ -33,6 +34,7 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     replay: ReplayConfigSchema.optional(),
     ai: AiServicesSchema.optional(),
     autorelease: core.serialization.boolean().optional(),
+    automation: AutomationSchema.optional(),
     openapi: GeneratorsOpenApiSchema.optional(),
     "openapi-overrides": core.serialization.string().optional(),
     "spec-origin": core.serialization.string().optional(),
@@ -54,6 +56,7 @@ export declare namespace GeneratorsConfigurationSchema {
         replay?: ReplayConfigSchema.Raw | null;
         ai?: AiServicesSchema.Raw | null;
         autorelease?: boolean | null;
+        automation?: AutomationSchema.Raw | null;
         openapi?: GeneratorsOpenApiSchema.Raw | null;
         "openapi-overrides"?: string | null;
         "spec-origin"?: string | null;

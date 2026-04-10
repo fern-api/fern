@@ -1,4 +1,9 @@
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import {
+    AbstractGeneratorContext,
+    CaseConverter,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/base-generator";
 import { assertDefined, assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
@@ -12,6 +17,7 @@ import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated
 export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
 > extends AbstractGeneratorContext {
+    public readonly caseConverter: CaseConverter;
     public readonly project: SwiftProject;
     private readonly indirectPropertiesMapping: Map<FernIr.TypeId, Set<string>>;
     private readonly schemaTypeIdBySymbolId: Map<string, FernIr.TypeId>;
@@ -24,6 +30,11 @@ export abstract class AbstractSwiftGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.caseConverter = new CaseConverter({
+            generationLanguage: "swift",
+            keywords: ir.casingsConfig?.keywords,
+            smartCasing: ir.casingsConfig?.smartCasing ?? true
+        });
         this.project = new SwiftProject({ context: this });
         this.schemaTypeIdBySymbolId = new Map();
         const cycleDetector = new CycleDetector(ir);
@@ -55,7 +66,7 @@ export abstract class AbstractSwiftGeneratorContext<
         const { nameRegistry } = project;
         const registeredSourceModuleSymbol = nameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig.moduleName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
+            apiNamePascalCase: this.caseConverter.pascalUnsafe(ir.apiName),
             asIsSymbols: Object.values(SourceAsIsFiles).flatMap((file) => file.symbols)
         });
         nameRegistry.registerRootClientSymbol({
@@ -94,7 +105,7 @@ export abstract class AbstractSwiftGeneratorContext<
             });
             const schemaTypeSymbol = nameRegistry.registerSchemaTypeSymbol(
                 typeId,
-                typeDeclaration.name.name.pascalCase.unsafeName,
+                this.caseConverter.pascalUnsafe(typeDeclaration.name.name),
                 symbolShape
             );
             return { typeId, typeDeclaration, registeredSymbol: schemaTypeSymbol };
@@ -126,7 +137,7 @@ export abstract class AbstractSwiftGeneratorContext<
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     const requestTypeSymbol = nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
-                        requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
+                        requestNamePascalCase: this.caseConverter.pascalUnsafe(endpoint.requestBody.name)
                     });
                     registerLiteralEnumsForObjectProperties({
                         parentSymbol: requestTypeSymbol,
@@ -139,7 +150,7 @@ export abstract class AbstractSwiftGeneratorContext<
                 } else if (endpoint.requestBody?.type === "fileUpload") {
                     nameRegistry.registerRequestTypeSymbol({
                         endpointId: endpoint.id,
-                        requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
+                        requestNamePascalCase: this.caseConverter.pascalUnsafe(endpoint.requestBody.name)
                     });
                 }
             });
@@ -147,10 +158,10 @@ export abstract class AbstractSwiftGeneratorContext<
         Object.entries(ir.subpackages).forEach(([subpackageId, subpackage]) => {
             nameRegistry.registerSubClientSymbol({
                 subpackageId,
-                fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map(
-                    (name) => name.pascalCase.unsafeName
+                fernFilepathPartNamesPascalCase: subpackage.fernFilepath.allParts.map((name) =>
+                    this.caseConverter.pascalUnsafe(name)
                 ),
-                subpackageNamePascalCase: subpackage.name.pascalCase.unsafeName
+                subpackageNamePascalCase: this.caseConverter.pascalUnsafe(subpackage.name)
             });
         });
     }
@@ -238,7 +249,9 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
-        return RelativeFilePath.of([...fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
+        return RelativeFilePath.of(
+            [...fernFilepath.allParts.map((path) => this.caseConverter.pascalSafe(path))].join("/")
+        );
     }
 
     public getSourceAsIsFiles(): AsIsFileDefinition[] {
@@ -307,6 +320,7 @@ export abstract class AbstractSwiftGeneratorContext<
                     bigInteger: () => referencer.referenceSwiftType("String"),
                     date: () => referencer.referenceAsIsType("CalendarDate"),
                     dateTime: () => referencer.referenceFoundationType("Date"),
+                    dateTimeRfc2822: () => referencer.referenceFoundationType("Date"),
                     base64: () => referencer.referenceSwiftType("String"),
                     uuid: () => referencer.referenceFoundationType("UUID"),
                     _other: () => referencer.referenceAsIsType("JSONValue")
@@ -338,9 +352,9 @@ export abstract class AbstractSwiftGeneratorContext<
         }
         const packageOrSubpackage =
             endpointContainer.type === "root-package" ? this.ir.rootPackage : endpointContainer.subpackage;
-        const leadingParts = packageOrSubpackage.fernFilepath.allParts.map((p) => p.camelCase.unsafeName);
+        const leadingParts = packageOrSubpackage.fernFilepath.allParts.map((p) => this.caseConverter.camelUnsafe(p));
         const leadingPath = leadingParts.join(".");
-        const methodName = endpoint.name.camelCase.unsafeName;
+        const methodName = this.caseConverter.camelUnsafe(endpoint.name);
         const fullyQualifiedMethodName = [...leadingParts, methodName].join(".");
         return {
             leadingParts,

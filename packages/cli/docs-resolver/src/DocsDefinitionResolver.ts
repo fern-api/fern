@@ -813,7 +813,16 @@ export class DocsDefinitionResolver {
             css: this.parsedDocsConfig.css,
             js: this.convertJavascriptConfiguration(),
             // @ts-expect-error - Remove this when the fdr-sdk upgraded to the latest version
-            agents: this.parsedDocsConfig.agents,
+            agents:
+                this.parsedDocsConfig.agents != null ||
+                this.parsedDocsConfig.llmsTxtFile != null ||
+                this.parsedDocsConfig.llmsFullTxtFile != null
+                    ? {
+                          ...this.parsedDocsConfig.agents,
+                          llmsTxt: this.getFileId(this.parsedDocsConfig.llmsTxtFile),
+                          llmsFullTxt: this.getFileId(this.parsedDocsConfig.llmsFullTxtFile)
+                      }
+                    : undefined,
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
             integrations,
