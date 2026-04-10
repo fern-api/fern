@@ -93,6 +93,7 @@ import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.ParsedGradleDependency;
+import com.fern.java.utils.NameUtils;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -486,8 +487,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 });
 
                 authScheme.getHeader().ifPresent(headerScheme -> {
-                    String schemeName =
-                            headerScheme.getName().getName().getPascalCase().getSafeName();
+                    String schemeName = NameUtils.getName(headerScheme.getName())
+                            .getPascalCase()
+                            .getSafeName();
                     HeaderAuthProviderGenerator headerGenerator =
                             new HeaderAuthProviderGenerator(context, headerScheme, schemeName);
                     this.addGeneratedFile(headerGenerator.generateFile());
@@ -733,7 +735,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                     context.getPoetClassNameFactory().getWebSocketClientClassName(websocketChannel, subpackage);
             ClassName optionsClassName = ClassName.get(
                     wsClientClassName.packageName(),
-                    websocketChannel.getName().get().getPascalCase().getSafeName() + "ConnectOptions");
+                    NameUtils.toName(websocketChannel.getName().get())
+                                    .getPascalCase()
+                                    .getSafeName() + "ConnectOptions");
             com.fern.java.client.generators.websocket.WebSocketConnectOptionsGenerator optionsGenerator =
                     new com.fern.java.client.generators.websocket.WebSocketConnectOptionsGenerator(
                             websocketChannel, context, optionsClassName);

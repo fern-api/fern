@@ -1,0 +1,71 @@
+{
+  "$schema": "./release-config.schema.json",
+  "software": {
+    "cli": {
+      "name": "Fern CLI",
+      "versionsFile": "packages/cli/cli/versions.yml",
+      "changelogFolder": "packages/cli/cli/changes",
+      "softwareDirectory": "packages/cli"
+    },
+    "csharp": {
+      "name": "C# SDK Generator",
+      "versionsFile": "generators/csharp/sdk/versions.yml",
+      "changelogFolder": "generators/csharp/sdk/changes",
+      "softwareDirectory": "generators/csharp"
+    },
+    "go": {
+      "name": "Go SDK Generator",
+      "versionsFile": "generators/go/sdk/versions.yml",
+      "changelogFolder": "generators/go/sdk/changes",
+      "softwareDirectory": "generators/go"
+    },
+    "java": {
+      "name": "Java SDK Generator",
+      "versionsFile": "generators/java/sdk/versions.yml",
+      "changelogFolder": "generators/java/sdk/changes",
+      "softwareDirectory": "generators/java"
+    },
+    "php": {
+      "name": "PHP SDK Generator",
+      "versionsFile": "generators/php/sdk/versions.yml",
+      "changelogFolder": "generators/php/sdk/changes",
+      "softwareDirectory": "generators/php"
+    },
+    "python": {
+      "name": "Python SDK Generator",
+      "versionsFile": "generators/python/sdk/versions.yml",
+      "changelogFolder": "generators/python/sdk/changes",
+      "softwareDirectory": "generators/python"
+    },
+    "ruby": {
+      "name": "Ruby SDK Generator",
+      "versionsFile": "generators/ruby/sdk/versions.yml",
+      "changelogFolder": "generators/ruby/sdk/changes",
+      "softwareDirectory": "generators/ruby"
+    },
+    "ruby-v2": {
+      "name": "Ruby v2 SDK Generator",
+      "versionsFile": "generators/ruby-v2/sdk/versions.yml",
+      "changelogFolder": "generators/ruby-v2/sdk/changes",
+      "softwareDirectory": "generators/ruby-v2"
+    },
+    "rust": {
+      "name": "Rust SDK Generator",
+      "versionsFile": "generators/rust/sdk/versions.yml",
+      "changelogFolder": "generators/rust/sdk/changes",
+      "softwareDirectory": "generators/rust"
+    },
+    "swift": {
+      "name": "Swift SDK Generator",
+      "versionsFile": "generators/swift/sdk/versions.yml",
+      "changelogFolder": "generators/swift/sdk/changes",
+      "softwareDirectory": "generators/swift"
+    },
+    "typescript": {
+      "name": "TypeScript SDK Generator",
+      "versionsFile": "generators/typescript/sdk/versions.yml",
+      "changelogFolder": "generators/typescript/sdk/changes",
+      "softwareDirectory": "generators/typescript"
+    }
+  }
+}

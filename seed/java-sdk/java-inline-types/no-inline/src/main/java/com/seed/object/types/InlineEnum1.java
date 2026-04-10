@@ -9,11 +9,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public final class InlineEnum1 {
     public static final InlineEnum1 SUNNY = new InlineEnum1(Value.SUNNY, "SUNNY");
 
+    public static final InlineEnum1 CLOUDY = new InlineEnum1(Value.CLOUDY, "CLOUDY");
+
     public static final InlineEnum1 RAINING = new InlineEnum1(Value.RAINING, "RAINING");
 
     public static final InlineEnum1 SNOWING = new InlineEnum1(Value.SNOWING, "SNOWING");
-
-    public static final InlineEnum1 CLOUDY = new InlineEnum1(Value.CLOUDY, "CLOUDY");
 
     private final Value value;
 
@@ -48,12 +48,12 @@ public final class InlineEnum1 {
         switch (value) {
             case SUNNY:
                 return visitor.visitSunny();
+            case CLOUDY:
+                return visitor.visitCloudy();
             case RAINING:
                 return visitor.visitRaining();
             case SNOWING:
                 return visitor.visitSnowing();
-            case CLOUDY:
-                return visitor.visitCloudy();
             case UNKNOWN:
             default:
                 return visitor.visitUnknown(string);
@@ -65,12 +65,12 @@ public final class InlineEnum1 {
         switch (value) {
             case "SUNNY":
                 return SUNNY;
+            case "CLOUDY":
+                return CLOUDY;
             case "RAINING":
                 return RAINING;
             case "SNOWING":
                 return SNOWING;
-            case "CLOUDY":
-                return CLOUDY;
             default:
                 return new InlineEnum1(Value.UNKNOWN, value);
         }

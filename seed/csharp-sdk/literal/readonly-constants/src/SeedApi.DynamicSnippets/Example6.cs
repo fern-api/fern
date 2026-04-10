@@ -13,14 +13,10 @@ public class Example6
 
         await client.Query.SendAsync(
             new SendLiteralsInQueryRequest {
-                Prompt = "You are a helpful assistant",
-                OptionalPrompt = "You are a helpful assistant",
-                AliasPrompt = "You are a helpful assistant",
-                AliasOptionalPrompt = "You are a helpful assistant",
-                Stream = false,
-                OptionalStream = false,
-                AliasStream = false,
-                AliasOptionalStream = false,
+                AliasPrompt = new AliasToPrompt(),
+                AliasOptionalPrompt = new AliasToPrompt(),
+                AliasStream = new AliasToStream(),
+                AliasOptionalStream = new AliasToStream(),
                 Query = "What is the weather today"
             }
         );

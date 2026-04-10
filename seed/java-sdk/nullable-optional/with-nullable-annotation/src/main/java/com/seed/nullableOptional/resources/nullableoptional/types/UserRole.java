@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class UserRole {
-    public static final UserRole MODERATOR = new UserRole(Value.MODERATOR, "MODERATOR");
-
     public static final UserRole USER = new UserRole(Value.USER, "USER");
 
     public static final UserRole GUEST = new UserRole(Value.GUEST, "GUEST");
+
+    public static final UserRole MODERATOR = new UserRole(Value.MODERATOR, "MODERATOR");
 
     public static final UserRole ADMIN = new UserRole(Value.ADMIN, "ADMIN");
 
@@ -46,12 +46,12 @@ public final class UserRole {
 
     public <T> T visit(Visitor<T> visitor) {
         switch (value) {
-            case MODERATOR:
-                return visitor.visitModerator();
             case USER:
                 return visitor.visitUser();
             case GUEST:
                 return visitor.visitGuest();
+            case MODERATOR:
+                return visitor.visitModerator();
             case ADMIN:
                 return visitor.visitAdmin();
             case UNKNOWN:
@@ -63,12 +63,12 @@ public final class UserRole {
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static UserRole valueOf(String value) {
         switch (value) {
-            case "MODERATOR":
-                return MODERATOR;
             case "USER":
                 return USER;
             case "GUEST":
                 return GUEST;
+            case "MODERATOR":
+                return MODERATOR;
             case "ADMIN":
                 return ADMIN;
             default:

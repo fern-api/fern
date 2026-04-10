@@ -1,4 +1,5 @@
 imports:
+  automation: ./automation.yml
   reviewers: ./reviewers.yml
   generators: ./generators.yml
   license: ./license.yml
@@ -16,6 +17,12 @@ types:
         type: optional<generators.OutputMetadataSchema>
       reviewers:
         type: optional<reviewers.ReviewersSchema>
+      automation:
+        type: optional<automation.AutomationSchema>
+        docs: |
+          Controls which automation features are enabled for this group.
+          Overrides root-level automation settings.
+          Can be further overridden at the generator level.
 
   GeneratorInvocationSchema:
     discriminated: false
@@ -59,6 +66,11 @@ types:
         docs: |
           If true, automatically release this SDK when changes are detected.
           Overrides the top-level autorelease setting if specified.
+      automation:
+        type: optional<automation.AutomationSchema>
+        docs: |
+          Controls which automation features are enabled for this generator.
+          Overrides group-level and root-level automation settings.
 
   DefaultGeneratorInvocationSchema:
     extends: BaseGeneratorInvocationSchema
