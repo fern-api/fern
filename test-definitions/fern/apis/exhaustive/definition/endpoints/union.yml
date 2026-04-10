@@ -1,5 +1,6 @@
 imports:
   unions: ../types/union.yml
+  objects: ../types/object.yml
 
 service:
   auth: true
@@ -10,3 +11,8 @@ service:
       path: ""
       request: unions.Animal
       response: unions.Animal
+    getAndReturnObjectWithUnionField:
+      method: POST
+      path: /object
+      request: objects.ObjectWithUnionField
+      response: objects.ObjectWithUnionField

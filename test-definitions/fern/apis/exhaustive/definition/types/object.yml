@@ -1,3 +1,6 @@
+imports:
+  unions: union.yml
+
 types:
   ObjectWithOptionalField: #generic object that supports any type, makes it easier to use when testing
     properties:
@@ -95,6 +98,14 @@ types:
     properties:
       requiredString: string
       requiredObject: NestedObjectWithRequiredField
+
+  ObjectWithUnionField:
+    docs: |
+      Tests that wire tests correctly compare objects containing union-typed
+      properties, where union members may include visitor functions.
+    properties:
+      name: string
+      animal: unions.Animal
 
 errors:
   ObjectWithOptionalFieldError:

@@ -116,6 +116,13 @@ fixtures:
     - outputFolder: never-throw-errors
       customConfig:
         neverThrowErrors: true
+    - outputFolder: never-throw-errors-union-utils
+      customConfig:
+        neverThrowErrors: true
+        noSerdeLayer: false
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+        testFramework: jest
     - outputFolder: export-all-requests-at-root
       customConfig:
         exportAllRequestsAtRoot: true

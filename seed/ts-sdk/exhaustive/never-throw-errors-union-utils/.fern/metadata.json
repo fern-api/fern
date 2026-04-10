@@ -1,0 +1,14 @@
+{
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "local",
+    "generatorConfig": {
+        "neverThrowErrors": true,
+        "noSerdeLayer": false,
+        "includeUtilsOnUnionMembers": true,
+        "includeOtherInUnionTypes": true,
+        "testFramework": "jest"
+    },
+    "originGitCommit": "DUMMY",
+    "sdkVersion": "0.0.1"
+}
