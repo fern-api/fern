@@ -26,7 +26,8 @@ import type { TaskStageLabels } from "../../../ui/TaskStageLabels.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 import { WorkspaceBuilder } from "../../../workspace/WorkspaceBuilder.js";
 import { command } from "../../_internal/command.js";
-import { isGitUrl } from "../utils/gitUrl.js";
+import { isGithubPrUrl, isGitUrl, parseGithubPrUrl } from "../utils/gitUrl.js";
+import { resolveGithubPrBranch } from "../utils/resolveGithubPrBranch.js";
 
 export declare namespace GenerateCommand {
     export interface Args extends GlobalArgs {
@@ -118,15 +119,22 @@ export class GenerateCommand {
             };
         }
 
-        const targets = this.getTargets({
+        const targets = await this.getTargets({
             workspace: workspaceWithOverrides,
             args,
             groupName: args.target != null ? undefined : (args.group ?? workspaceWithOverrides.sdks?.defaultGroup)
         });
 
-        this.validateArgs({ workspace: workspaceWithOverrides, args, targets });
+        // When --output is a PR URL, force local generation since it produces a self-hosted git output.
+        const forceLocal = args.output != null && isGithubPrUrl(args.output);
 
-        await this.runGeneration({ context, workspace: workspaceWithOverrides, targets, args, forceLocal: false });
+        this.validateArgs({
+            workspace: workspaceWithOverrides,
+            args: { ...args, local: args.local || forceLocal },
+            targets
+        });
+
+        await this.runGeneration({ context, workspace: workspaceWithOverrides, targets, args, forceLocal });
     }
 
     private async handleWithFlags(context: Context, args: GenerateCommand.Args): Promise<void> {
@@ -170,7 +178,7 @@ export class GenerateCommand {
             org,
             lang: this.resolveLanguage(target),
             resolvedSpec,
-            output: this.parseTargetOutput({ ...args, output }),
+            output: await this.parseTargetOutput({ ...args, output }),
             targetVersion: args["target-version"]
         });
 
@@ -430,11 +438,37 @@ export class GenerateCommand {
     /**
      * Parses the --output argument into an OutputSchema.
      *
+     * - GitHub PR URLs (e.g. https://github.com/owner/repo/pull/123)
+     *   resolve the PR's head branch and produce a push-mode git output.
      * - Git URLs (ending in .git, or starting with https://github.com/, https://gitlab.com/, git@)
      *   produce a self-hosted git output with token from GITHUB_TOKEN or GIT_TOKEN env vars.
      * - Anything else is treated as a local path.
      */
-    private parseTargetOutput(args: GenerateCommand.Args): schemas.OutputObjectSchema {
+    private async parseTargetOutput(args: GenerateCommand.Args): Promise<schemas.OutputObjectSchema> {
+        if (args.output != null && isGithubPrUrl(args.output)) {
+            const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
+            if (token == null) {
+                throw new CliError({
+                    message:
+                        `A git token is required when --output is a GitHub PR URL.\n\n` +
+                        `  Set GITHUB_TOKEN or GIT_TOKEN:\n` +
+                        `    export GITHUB_TOKEN=ghp_xxx\n\n` +
+                        `  Or use a local path:\n` +
+                        `    --output ./my-sdk`
+                });
+            }
+            const prInfo = parseGithubPrUrl(args.output);
+            const { branch, uri } = await resolveGithubPrBranch(prInfo, token);
+            return {
+                git: {
+                    uri,
+                    token,
+                    mode: "push",
+                    branch
+                }
+            };
+        }
+
         if (args.output != null && isGitUrl(args.output)) {
             if (!args.local) {
                 throw new CliError({
@@ -466,7 +500,7 @@ export class GenerateCommand {
         return { path: args.output };
     }
 
-    private getTargets({
+    private async getTargets({
         workspace,
         args,
         groupName
@@ -474,7 +508,7 @@ export class GenerateCommand {
         workspace: Workspace;
         args: GenerateCommand.Args;
         groupName: string | undefined;
-    }): Target[] {
+    }): Promise<Target[]> {
         let matched = workspace.sdks != null ? this.filterTargetsByGroup(workspace.sdks.targets, groupName) : [];
         if (args.target != null) {
             matched = matched.filter((t) => t.name === args.target);
@@ -488,10 +522,11 @@ export class GenerateCommand {
             }
             throw new Error("No targets configured in fern.yml");
         }
+        const resolvedOutput = args.output != null ? await this.parseTargetOutput(args) : undefined;
         return matched.map((target) => ({
             ...target,
             version: args["target-version"] ?? target.version,
-            output: args.output != null ? this.parseTargetOutput(args) : target.output
+            output: resolvedOutput ?? target.output
         }));
     }
 
@@ -655,7 +690,8 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                 })
                 .option("output", {
                     type: "string",
-                    description: "Output path or git URL (required with --api; requires --preview in workspace mode)"
+                    description:
+                        "Output path, git URL, or GitHub PR URL (e.g. https://github.com/owner/repo/pull/123 to push to the PR's branch)"
                 })
                 .option("output-version", {
                     type: "string",

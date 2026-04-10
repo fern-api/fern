@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Support GitHub PR URLs in `--output` flag for `fern generate`. When a PR URL
+    like `https://github.com/owner/repo/pull/123` is provided, the CLI resolves
+    the PR's head branch and pushes generated code directly to it.
+  type: feat

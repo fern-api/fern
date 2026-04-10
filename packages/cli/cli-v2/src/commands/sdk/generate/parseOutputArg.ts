@@ -1,15 +1,41 @@
 import type { schemas } from "@fern-api/config";
 
-import { isGitUrl } from "../utils/gitUrl.js";
+import { isGithubPrUrl, isGitUrl, parseGithubPrUrl } from "../utils/gitUrl.js";
+import { resolveGithubPrBranch } from "../utils/resolveGithubPrBranch.js";
 
 /**
  * Parses the --output argument into an OutputSchema.
  *
+ * - GitHub PR URLs (e.g. https://github.com/owner/repo/pull/123)
+ *   resolve the PR's head branch and produce a push-mode git output.
  * - Git URLs (ending in .git, or starting with https://github.com/, https://gitlab.com/, git@)
  *   produce a self-hosted git output with token from GITHUB_TOKEN or GIT_TOKEN env vars.
  * - Anything else is treated as a local path.
  */
-export function parseOutputArg(outputArg: string): schemas.OutputObjectSchema {
+export async function parseOutputArg(outputArg: string): Promise<schemas.OutputObjectSchema> {
+    if (isGithubPrUrl(outputArg)) {
+        const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
+        if (token == null) {
+            throw new Error(
+                `A git token is required when --output is a GitHub PR URL.\n\n` +
+                    `  Set GITHUB_TOKEN or GIT_TOKEN:\n` +
+                    `    export GITHUB_TOKEN=ghp_xxx\n\n` +
+                    `  Or use a local path:\n` +
+                    `    --output ./my-sdk`
+            );
+        }
+        const prInfo = parseGithubPrUrl(outputArg);
+        const { branch, uri } = await resolveGithubPrBranch(prInfo, token);
+        return {
+            git: {
+                uri,
+                token,
+                mode: "push",
+                branch
+            }
+        };
+    }
+
     if (isGitUrl(outputArg)) {
         const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
         if (token == null) {
