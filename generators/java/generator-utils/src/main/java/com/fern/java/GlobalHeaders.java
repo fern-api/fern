@@ -26,7 +26,9 @@ public final class GlobalHeaders {
                     .orElse(false);
             ParameterSpec parameterSpec = ParameterSpec.builder(
                             poetTypeNameMapper.convertToTypeName(true, httpHeader.getValueType()),
-                            NameUtils.getName(httpHeader.getName()).getCamelCase().getSafeName())
+                            NameUtils.getName(httpHeader.getName())
+                                    .getCamelCase()
+                                    .getSafeName())
                     .build();
             if (isOptional) {
                 optionalGlobalHeaders.add(httpHeader);

@@ -180,7 +180,9 @@ public abstract class AbstractEndpointWriterVariableNameContext {
         }
         return ParameterSpec.builder(
                         typeName,
-                        NameUtils.toName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName())
+                        NameUtils.toName(sdkRequest.getRequestParameterName())
+                                .getCamelCase()
+                                .getSafeName())
                 .build();
     }
 
@@ -196,7 +198,8 @@ public abstract class AbstractEndpointWriterVariableNameContext {
         TypeName typeName =
                 clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParameter.getValueType());
         ParameterSpec.Builder paramBuilder = ParameterSpec.builder(
-                typeName, NameUtils.toName(pathParameter.getName()).getCamelCase().getSafeName());
+                typeName,
+                NameUtils.toName(pathParameter.getName()).getCamelCase().getSafeName());
 
         return HttpUrlBuilder.PathParamInfo.builder()
                 .irParam(pathParameter)

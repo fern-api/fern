@@ -18,9 +18,9 @@ package com.fern.java.client.generators.auth;
 
 import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -75,10 +75,14 @@ public final class HeaderAuthProviderGenerator extends AbstractFileGenerator {
 
         String errorMessage = envVar != null
                 ? "Please provide '"
-                        + NameUtils.getName(headerAuthScheme.getName()).getCamelCase().getSafeName()
+                        + NameUtils.getName(headerAuthScheme.getName())
+                                .getCamelCase()
+                                .getSafeName()
                         + "' when initializing the client, or set the '" + envVar + "' environment variable"
                 : "Please provide '"
-                        + NameUtils.getName(headerAuthScheme.getName()).getCamelCase().getSafeName()
+                        + NameUtils.getName(headerAuthScheme.getName())
+                                .getCamelCase()
+                                .getSafeName()
                         + "' when initializing the client";
 
         TypeSpec.Builder classBuilder = TypeSpec.classBuilder(className)

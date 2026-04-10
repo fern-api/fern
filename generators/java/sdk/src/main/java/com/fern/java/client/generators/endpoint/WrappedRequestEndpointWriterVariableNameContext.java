@@ -35,8 +35,9 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
         super(clientGeneratorContext, httpService, httpEndpoint);
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
-        this.requestParameterName =
-                NameUtils.toName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName();
+        this.requestParameterName = NameUtils.toName(sdkRequest.getRequestParameterName())
+                .getCamelCase()
+                .getSafeName();
         initializeCollections();
     }
 
@@ -85,15 +86,13 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
             ClientGeneratorContext clientGeneratorContext, FileProperty fileProperty) {
         if (clientGeneratorContext.getCustomConfig().inlineFileProperties()) {
             return "request.get"
-                    + NameUtils.toName(fileProperty
-                            .visit(new GetFilePropertyKey())
-                            .getName())
+                    + NameUtils.toName(
+                                    fileProperty.visit(new GetFilePropertyKey()).getName())
                             .getPascalCase()
-                            .getSafeName() + "()";
+                            .getSafeName()
+                    + "()";
         } else {
-            return NameUtils.toName(fileProperty
-                    .visit(new GetFilePropertyKey())
-                    .getName())
+            return NameUtils.toName(fileProperty.visit(new GetFilePropertyKey()).getName())
                     .getCamelCase()
                     .getSafeName();
         }

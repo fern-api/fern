@@ -89,7 +89,8 @@ public final class SseDiscriminationAnalyzer {
         }
 
         // Get the discriminant property name
-        String discriminatorProperty = NameUtils.getWireValue(unionDeclaration.get().getDiscriminant());
+        String discriminatorProperty =
+                NameUtils.getWireValue(unionDeclaration.get().getDiscriminant());
 
         // Check if the discriminator is an SSE envelope field
         if (isEventLevelDiscriminator(discriminatorProperty)) {

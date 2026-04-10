@@ -25,9 +25,9 @@ import com.fern.ir.model.http.PathParameterLocation;
 import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -272,7 +272,8 @@ public final class HttpUrlBuilder {
                     codeBlock.add("\n.addPathSegment($L)", paramValue);
                 }
             } else if (poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ROOT)) {
-                String originalName = NameUtils.toName(poetPathParameter.irParam().getName()).getOriginalName();
+                String originalName =
+                        NameUtils.toName(poetPathParameter.irParam().getName()).getOriginalName();
                 MethodSpec apiPathParamGetter =
                         generatedClientOptions.apiPathParamGetters().get(originalName);
                 CodeBlock paramValue = PoetTypeNameStringifier.stringify(

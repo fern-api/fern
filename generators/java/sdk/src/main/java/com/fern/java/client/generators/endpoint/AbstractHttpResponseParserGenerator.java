@@ -853,8 +853,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                 httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
                         CodeBlock.of("$L", variables.getResponseBodyStringName()),
                         Optional.of(body.getResponseBodyType())));
-                String endpointName =
-                        NameUtils.toName(httpEndpoint.getName().get()).getCamelCase().getSafeName();
+                String endpointName = NameUtils.toName(httpEndpoint.getName().get())
+                        .getCamelCase()
+                        .getSafeName();
                 Optional<ParameterSpec> maybeRequestParameterSpec = variables.requestParameterSpec();
                 String methodParameters;
                 if (maybeRequestParameterSpec.isPresent()) {
@@ -1900,7 +1901,8 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (nextProperty.getPropertyPath().isPresent()) {
                 for (PropertyPathItem pathItem : nextProperty.getPropertyPath().get()) {
                     nextGetterBuilder.add(
-                            ".get$L()", NameUtils.toName(pathItem.getName()).getPascalCase().getUnsafeName());
+                            ".get$L()",
+                            NameUtils.toName(pathItem.getName()).getPascalCase().getUnsafeName());
                 }
             }
             nextGetterBuilder.add(

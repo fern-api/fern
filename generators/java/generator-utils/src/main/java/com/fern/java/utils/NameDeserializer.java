@@ -16,8 +16,8 @@ import java.io.IOException;
  *   <li>v66 compressed string form: {@code "myFieldName"}
  * </ul>
  *
- * Always produces the {@link Name} variant of {@link NameOrString},
- * using {@link CasingConfiguration} to compute all casing variants from compressed strings.
+ * Always produces the {@link Name} variant of {@link NameOrString}, using {@link CasingConfiguration} to compute all
+ * casing variants from compressed strings.
  */
 public final class NameDeserializer extends JsonDeserializer<NameOrString> {
 

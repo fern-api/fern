@@ -43,8 +43,8 @@ import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
 import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -94,8 +94,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
-        this.requestParameterName =
-                NameUtils.toName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName();
+        this.requestParameterName = NameUtils.toName(sdkRequest.getRequestParameterName())
+                .getCamelCase()
+                .getSafeName();
     }
 
     @SuppressWarnings("checkstyle:CyclomaticComplexity")
@@ -216,7 +217,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             String sdkName = header.camelCaseKey();
             String headerName = generatedWrappedRequest.headerWireValues().get(sdkName);
             if (headerName == null) {
-                String wireValue = NameUtils.getWireValue(header.objectProperty().getName());
+                String wireValue =
+                        NameUtils.getWireValue(header.objectProperty().getName());
                 headerName = (wireValue != null && !wireValue.isEmpty())
                         ? wireValue
                         : NameUtils.getName(header.objectProperty().getName()).getOriginalName();
@@ -435,8 +437,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
                 NameAndWireValue filePropertyKey = fileProperty.visit(new GetFilePropertyKey());
-                String filePropertyName =
-                        NameUtils.toName(filePropertyKey.getName()).getCamelCase().getUnsafeName();
+                String filePropertyName = NameUtils.toName(filePropertyKey.getName())
+                        .getCamelCase()
+                        .getUnsafeName();
                 String mimeTypeVariableName = filePropertyName + "MimeType";
                 String mediaTypeVariableName = mimeTypeVariableName + "MediaType";
                 String filePropertyParameterName =

@@ -16,8 +16,8 @@ import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.union.UnionSubType;
 import com.fern.java.generators.union.UnionTypeSpecGenerator;
 import com.fern.java.utils.InlineTypeIdResolver;
-import com.fern.java.utils.NamedTypeId;
 import com.fern.java.utils.NameUtils;
+import com.fern.java.utils.NamedTypeId;
 import com.google.common.collect.ImmutableSet;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -96,15 +96,17 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                 .collect(Collectors.toList());
         ModelUnionUnknownSubType unknownSubType =
                 new ModelUnionUnknownSubType(className, poetTypeNameMapper, unionTypeDeclaration);
-        Optional<ClassName> defaultImplClassName = unionTypeDeclaration.getDefault().flatMap(defaultVariant -> {
-            String defaultWireValue = NameUtils.getWireValue(defaultVariant.getDiscriminantValue());
-            return unionSubTypes.stream()
-                    .filter(subType -> subType.getDiscriminant()
-                            .map(d -> d.getWireValue().equals(defaultWireValue))
-                            .orElse(false))
-                    .findFirst()
-                    .map(UnionSubType::getUnionSubTypeWrapperClass);
-        });
+        Optional<ClassName> defaultImplClassName = unionTypeDeclaration
+                .getDefault()
+                .flatMap(defaultVariant -> {
+                    String defaultWireValue = NameUtils.getWireValue(defaultVariant.getDiscriminantValue());
+                    return unionSubTypes.stream()
+                            .filter(subType -> subType.getDiscriminant()
+                                    .map(d -> d.getWireValue().equals(defaultWireValue))
+                                    .orElse(false))
+                            .findFirst()
+                            .map(UnionSubType::getUnionSubTypeWrapperClass);
+                });
         ModelUnionTypeSpecGenerator unionTypeSpecGenerator = new ModelUnionTypeSpecGenerator(
                 className,
                 unionSubTypes,
@@ -158,8 +160,9 @@ public final class UnionGenerator extends AbstractTypeGenerator {
         List<SingleUnionType> variants = unionTypeDeclaration.getTypes();
 
         for (SingleUnionType variant : variants) {
-            propertyNames.add(
-                    NameUtils.getName(variant.getDiscriminantValue()).getPascalCase().getSafeName());
+            propertyNames.add(NameUtils.getName(variant.getDiscriminantValue())
+                    .getPascalCase()
+                    .getSafeName());
         }
 
         List<NamedTypeId> allResolvedIds = new ArrayList<>();
@@ -391,8 +394,9 @@ public final class UnionGenerator extends AbstractTypeGenerator {
 
                 @Override
                 public Void visitSingleProperty(SingleUnionTypeProperty singleProperty) {
-                    String parameterName =
-                            NameUtils.getName(singleProperty.getName()).getCamelCase().getSafeName();
+                    String parameterName = NameUtils.getName(singleProperty.getName())
+                            .getCamelCase()
+                            .getSafeName();
                     constructors.add(MethodSpec.constructorBuilder()
                             .addModifiers(Modifier.PRIVATE)
                             .addAnnotation(FernJavaAnnotations.jacksonPropertiesCreator())
@@ -400,10 +404,7 @@ public final class UnionGenerator extends AbstractTypeGenerator {
                                             poetTypeNameMapper.convertToTypeName(true, singleProperty.getType()),
                                             parameterName)
                                     .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                                            .addMember(
-                                                    "value",
-                                                    "$S",
-                                                    NameUtils.getWireValue(singleProperty.getName()))
+                                            .addMember("value", "$S", NameUtils.getWireValue(singleProperty.getName()))
                                             .build())
                                     .build())
                             .addStatement("this.$L = $L", parameterName, parameterName)
@@ -515,17 +516,15 @@ public final class UnionGenerator extends AbstractTypeGenerator {
 
                 @Override
                 public Optional<FieldSpec> visitSingleProperty(SingleUnionTypeProperty singleProperty) {
-                    String fieldName =
-                            NameUtils.getName(singleProperty.getName()).getCamelCase().getSafeName();
+                    String fieldName = NameUtils.getName(singleProperty.getName())
+                            .getCamelCase()
+                            .getSafeName();
                     return Optional.of(FieldSpec.builder(
                                     poetTypeNameMapper.convertToTypeName(true, singleProperty.getType()),
                                     fieldName,
                                     Modifier.PRIVATE)
                             .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                                    .addMember(
-                                            "value",
-                                            "$S",
-                                            NameUtils.getWireValue(singleProperty.getName()))
+                                    .addMember("value", "$S", NameUtils.getWireValue(singleProperty.getName()))
                                     .build())
                             .build());
                 }

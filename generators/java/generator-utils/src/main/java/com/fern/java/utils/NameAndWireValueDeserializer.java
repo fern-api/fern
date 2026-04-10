@@ -19,8 +19,8 @@ import java.io.IOException;
  *   <li>v66 partial object form: {@code {"wireValue": "...", "name": "..."}} (name is a string)
  * </ul>
  *
- * Always produces the {@link NameAndWireValue} variant of {@link NameAndWireValueOrString},
- * using {@link CasingConfiguration} to compute full Name from compressed strings.
+ * Always produces the {@link NameAndWireValue} variant of {@link NameAndWireValueOrString}, using
+ * {@link CasingConfiguration} to compute full Name from compressed strings.
  */
 public final class NameAndWireValueDeserializer extends JsonDeserializer<NameAndWireValueOrString> {
 

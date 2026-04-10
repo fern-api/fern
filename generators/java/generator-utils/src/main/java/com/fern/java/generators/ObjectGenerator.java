@@ -23,7 +23,6 @@ import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.generators.object.ImplementsInterface;
@@ -32,6 +31,7 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
 import com.fern.java.utils.InlineTypeIdResolver;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.utils.NamedTypeId;
 import com.fern.java.utils.TypeReferenceInlineChecker;
 import com.fern.java.utils.TypeReferenceUtils;
@@ -302,7 +302,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             Preconditions.checkState(
                                     typeName instanceof ParameterizedTypeName,
                                     "Found optional/nullable with non-parameterized type name "
-                                            + NameUtils.getName(prop.objectProperty().getName())
+                                            + NameUtils.getName(prop.objectProperty()
+                                                            .getName())
                                                     .getOriginalName());
                             TypeName parameterType =
                                     Objects.requireNonNull(((ParameterizedTypeName) typeName).typeArguments.get(0));
@@ -401,7 +402,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 Preconditions.checkState(
                                         poetTypeName instanceof ParameterizedTypeName,
                                         "Found optional/nullable with non-parameterized type name "
-                                                + NameUtils.getName(prop.getName()).getOriginalName());
+                                                + NameUtils.getName(prop.getName())
+                                                        .getOriginalName());
                                 TypeName parameterType = Objects.requireNonNull(
                                         ((ParameterizedTypeName) poetTypeName).typeArguments.get(0));
                                 poetTypeName = ParameterizedTypeName.get(

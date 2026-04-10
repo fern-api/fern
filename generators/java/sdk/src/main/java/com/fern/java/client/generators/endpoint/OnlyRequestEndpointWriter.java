@@ -495,10 +495,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             Optional<String> requestBodyGetterName = getRequestBodyGetterName();
             String bodySource;
             if (requestBodyGetterName.isPresent()) {
-                bodySource = NameUtils.toName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName() + "."
-                        + requestBodyGetterName.get() + "()";
+                bodySource = NameUtils.toName(sdkRequest.getRequestParameterName())
+                                .getCamelCase()
+                                .getSafeName() + "." + requestBodyGetterName.get() + "()";
             } else {
-                bodySource = NameUtils.toName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName();
+                bodySource = NameUtils.toName(sdkRequest.getRequestParameterName())
+                        .getCamelCase()
+                        .getSafeName();
             }
             codeBlock.addStatement(
                     "$T $L = new $T($T.parse($S), $L)",

@@ -71,7 +71,9 @@ public class OnlyRequestEndpointWriterVariableNameContext extends AbstractEndpoi
         if (generatedWrappedRequest != null) {
             return Optional.of(ParameterSpec.builder(
                             generatedWrappedRequest.getClassName(),
-                            NameUtils.toName(sdkRequest.getRequestParameterName()).getCamelCase().getSafeName())
+                            NameUtils.toName(sdkRequest.getRequestParameterName())
+                                    .getCamelCase()
+                                    .getSafeName())
                     .build());
         } else if (sdkRequestBodyType != null) {
             ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<>() {
@@ -81,8 +83,7 @@ public class OnlyRequestEndpointWriterVariableNameContext extends AbstractEndpoi
                                     clientGeneratorContext
                                             .getPoetTypeNameMapper()
                                             .convertToTypeName(true, typeReference.getRequestBodyType()),
-                                    NameUtils.toName(sdkRequest
-                                            .getRequestParameterName())
+                                    NameUtils.toName(sdkRequest.getRequestParameterName())
                                             .getCamelCase()
                                             .getSafeName())
                             .build();

@@ -30,10 +30,10 @@ import com.fern.ir.model.variables.VariableDeclaration;
 import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import com.google.common.collect.ImmutableList;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -519,13 +519,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                             .addJavadoc(
                                     "$L.toString() is sent as the $S header.",
                                     apiVersionField.name,
-                                    NameUtils.getWireValue(headerApiVersionScheme.getHeader().getName()))
+                                    NameUtils.getWireValue(
+                                            headerApiVersionScheme.getHeader().getName()))
                             .build());
                     clientOptionsBuilder.addMethod(createGetter(apiVersionField).toBuilder()
                             .addJavadoc(
                                     "$L.toString() is sent as the $S header.",
                                     apiVersionField.name,
-                                    NameUtils.getWireValue(headerApiVersionScheme.getHeader().getName()))
+                                    NameUtils.getWireValue(
+                                            headerApiVersionScheme.getHeader().getName()))
                             .build());
 
                     return null;
@@ -590,7 +592,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     constructorBuilder.addStatement(
                             "this.$L.put($S,$L)",
                             HEADERS_FIELD.name,
-                            NameUtils.getWireValue(headerApiVersionScheme.getHeader().getName()),
+                            NameUtils.getWireValue(
+                                    headerApiVersionScheme.getHeader().getName()),
                             CodeBlock.of("this.$L.toString()", apiVersionField.name));
 
                     return null;
@@ -823,8 +826,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         Modifier.PRIVATE)
                                 .initializer(CodeBlock.of("$T.empty()", Optional.class))
                                 .build());
-                        builder.addMethod(getOptionalVersionBuilder(
-                                NameUtils.getWireValue(headerApiVersionScheme.getHeader().getName())));
+                        builder.addMethod(getOptionalVersionBuilder(NameUtils.getWireValue(
+                                headerApiVersionScheme.getHeader().getName())));
                     } else {
                         builder.addField(FieldSpec.builder(
                                         clientGeneratorContext
@@ -833,8 +836,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         apiVersionField.name,
                                         Modifier.PRIVATE)
                                 .build());
-                        builder.addMethod(getRequiredVersionBuilder(
-                                NameUtils.getWireValue(headerApiVersionScheme.getHeader().getName())));
+                        builder.addMethod(getRequiredVersionBuilder(NameUtils.getWireValue(
+                                headerApiVersionScheme.getHeader().getName())));
                     }
 
                     return null;
@@ -910,7 +913,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 generatorContext
                                         .getPoetTypeNameMapper()
                                         .convertToTypeName(true, variableDeclaration.getType()),
-                                NameUtils.toName(variableDeclaration.getName()).getCamelCase().getSafeName(),
+                                NameUtils.toName(variableDeclaration.getName())
+                                        .getCamelCase()
+                                        .getSafeName(),
                                 Modifier.PRIVATE)
                         .build()));
     }
@@ -919,10 +924,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         return generatorContext.getIr().getVariables().stream()
                 .map(variableDeclaration -> {
                     FieldSpec variableField = variableFields.get(variableDeclaration.getId());
-                    String variableParameterName =
-                            NameUtils.toName(variableDeclaration.getName()).getCamelCase().getSafeName();
-                    return MethodSpec.methodBuilder(
-                                    NameUtils.toName(variableDeclaration.getName()).getCamelCase().getSafeName())
+                    String variableParameterName = NameUtils.toName(variableDeclaration.getName())
+                            .getCamelCase()
+                            .getSafeName();
+                    return MethodSpec.methodBuilder(NameUtils.toName(variableDeclaration.getName())
+                                    .getCamelCase()
+                                    .getSafeName())
                             .addModifiers(Modifier.PUBLIC)
                             .returns(builderClassName)
                             .addParameter(
@@ -944,8 +951,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     TypeName variableTypeName = generatorContext
                             .getPoetTypeNameMapper()
                             .convertToTypeName(true, variableDeclaration.getType());
-                    return MethodSpec.methodBuilder(
-                                    NameUtils.toName(variableDeclaration.getName()).getCamelCase().getSafeName())
+                    return MethodSpec.methodBuilder(NameUtils.toName(variableDeclaration.getName())
+                                    .getCamelCase()
+                                    .getSafeName())
                             .addModifiers(Modifier.PUBLIC)
                             .returns(variableTypeName)
                             .addStatement("return this.$N", variableField)
@@ -960,11 +968,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private Map<String, FieldSpec> getApiPathParamFieldsForMainClass() {
         return generatorContext.getIr().getPathParameters().stream()
                 .collect(Collectors.toMap(
-                        pathParameter -> NameUtils.toName(pathParameter.getName()).getOriginalName(), pathParameter -> FieldSpec.builder(
+                        pathParameter ->
+                                NameUtils.toName(pathParameter.getName()).getOriginalName(),
+                        pathParameter -> FieldSpec.builder(
                                         generatorContext
                                                 .getPoetTypeNameMapper()
                                                 .convertToTypeName(true, pathParameter.getValueType()),
-                                        NameUtils.toName(pathParameter.getName()).getCamelCase().getSafeName(),
+                                        NameUtils.toName(pathParameter.getName())
+                                                .getCamelCase()
+                                                .getSafeName(),
                                         Modifier.PRIVATE,
                                         Modifier.FINAL)
                                 .build()));
@@ -977,11 +989,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private Map<String, FieldSpec> getApiPathParamFieldsForBuilder() {
         return generatorContext.getIr().getPathParameters().stream()
                 .collect(Collectors.toMap(
-                        pathParameter -> NameUtils.toName(pathParameter.getName()).getOriginalName(), pathParameter -> FieldSpec.builder(
+                        pathParameter ->
+                                NameUtils.toName(pathParameter.getName()).getOriginalName(),
+                        pathParameter -> FieldSpec.builder(
                                         generatorContext
                                                 .getPoetTypeNameMapper()
                                                 .convertToTypeName(true, pathParameter.getValueType()),
-                                        NameUtils.toName(pathParameter.getName()).getCamelCase().getSafeName(),
+                                        NameUtils.toName(pathParameter.getName())
+                                                .getCamelCase()
+                                                .getSafeName(),
                                         Modifier.PRIVATE)
                                 .build()));
     }
@@ -989,7 +1005,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private Map<String, MethodSpec> getApiPathParamGetters(Map<String, FieldSpec> apiPathParamFields) {
         return generatorContext.getIr().getPathParameters().stream()
                 .collect(Collectors.toMap(
-                        pathParameter -> NameUtils.toName(pathParameter.getName()).getOriginalName(), pathParameter -> {
+                        pathParameter ->
+                                NameUtils.toName(pathParameter.getName()).getOriginalName(),
+                        pathParameter -> {
                             FieldSpec pathParamField = apiPathParamFields.get(
                                     NameUtils.toName(pathParameter.getName()).getOriginalName());
                             TypeName pathParamTypeName = generatorContext
@@ -1008,10 +1026,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private List<MethodSpec> getApiPathParamBuilders(Map<String, FieldSpec> apiPathParamFields) {
         return generatorContext.getIr().getPathParameters().stream()
                 .map(pathParameter -> {
-                    FieldSpec pathParamField =
-                            apiPathParamFields.get(NameUtils.toName(pathParameter.getName()).getOriginalName());
-                    String pathParamName =
-                            NameUtils.toName(pathParameter.getName()).getCamelCase().getSafeName();
+                    FieldSpec pathParamField = apiPathParamFields.get(
+                            NameUtils.toName(pathParameter.getName()).getOriginalName());
+                    String pathParamName = NameUtils.toName(pathParameter.getName())
+                            .getCamelCase()
+                            .getSafeName();
                     return MethodSpec.methodBuilder(pathParamName)
                             .addModifiers(Modifier.PUBLIC)
                             .returns(builderClassName)
@@ -1075,10 +1094,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                             apiVersionField.name,
                             Optional.class,
                             clientGeneratorContext.getPoetClassNameFactory().getApiVersionClassName(),
-                            NameUtils.getName(header.getValue()
-                                            .getDefault()
-                                            .get()
-                                            .getName())
+                            NameUtils.getName(
+                                            header.getValue().getDefault().get().getName())
                                     .getScreamingSnakeCase()
                                     .getSafeName());
                     fromMethod.endControlFlow();

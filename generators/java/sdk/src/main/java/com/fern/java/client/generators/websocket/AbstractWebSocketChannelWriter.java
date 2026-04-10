@@ -36,12 +36,12 @@ import com.fern.ir.model.websocket.WebSocketMessage;
 import com.fern.ir.model.websocket.WebSocketMessageBody;
 import com.fern.ir.model.websocket.WebSocketMessageBodyReference;
 import com.fern.ir.model.websocket.WebSocketMessageOrigin;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -617,7 +617,10 @@ public abstract class AbstractWebSocketChannelWriter {
         TypeName paramType =
                 clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
         return FieldSpec.builder(
-                        paramType, NameUtils.toName(pathParam.getName()).getCamelCase().getSafeName(), Modifier.PRIVATE, Modifier.FINAL)
+                        paramType,
+                        NameUtils.toName(pathParam.getName()).getCamelCase().getSafeName(),
+                        Modifier.PRIVATE,
+                        Modifier.FINAL)
                 .build();
     }
 
@@ -636,11 +639,14 @@ public abstract class AbstractWebSocketChannelWriter {
                 String pathParamId = part.getPathParameter();
                 if (pathParamId != null && !pathParamId.isEmpty()) {
                     PathParameter matchingParam = websocketChannel.getPathParameters().stream()
-                            .filter(p -> NameUtils.toName(p.getName()).getOriginalName().equals(pathParamId))
+                            .filter(p -> NameUtils.toName(p.getName())
+                                    .getOriginalName()
+                                    .equals(pathParamId))
                             .findFirst()
                             .orElseThrow();
-                    String paramFieldName =
-                            NameUtils.toName(matchingParam.getName()).getCamelCase().getSafeName();
+                    String paramFieldName = NameUtils.toName(matchingParam.getName())
+                            .getCamelCase()
+                            .getSafeName();
                     builder.addStatement("pathBuilder.append($L)", paramFieldName);
                 }
                 builder.addStatement("pathBuilder.append($S)", part.getTail());
@@ -926,7 +932,9 @@ public abstract class AbstractWebSocketChannelWriter {
         return CodeBlock.builder()
                 .add(
                         "WebSocket client for the $L channel.\n",
-                        NameUtils.toName(websocketChannel.getName().get()).getCamelCase().getSafeName())
+                        NameUtils.toName(websocketChannel.getName().get())
+                                .getCamelCase()
+                                .getSafeName())
                 .add("Provides real-time bidirectional communication with strongly-typed messages.\n")
                 .build();
     }

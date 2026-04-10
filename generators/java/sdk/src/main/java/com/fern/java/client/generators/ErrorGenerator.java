@@ -6,8 +6,8 @@ import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -46,7 +46,9 @@ public class ErrorGenerator extends AbstractFileGenerator {
             bodyTypeName = Optional.of(generatorContext.getPoetTypeNameMapper().convertToTypeName(true, typeReference));
         }
 
-        String errorName = NameUtils.toName(errorDeclaration.getName().getName()).getPascalCase().getUnsafeName();
+        String errorName = NameUtils.toName(errorDeclaration.getName().getName())
+                .getPascalCase()
+                .getUnsafeName();
         bodyTypeName.ifPresent(typeName -> {
             FieldSpec bodyFieldSpec = FieldSpec.builder(typeName, BODY_FIELD_NAME)
                     .addModifiers(Modifier.PRIVATE, Modifier.FINAL)

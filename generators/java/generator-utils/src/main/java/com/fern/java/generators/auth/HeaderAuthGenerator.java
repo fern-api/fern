@@ -6,10 +6,10 @@ import com.fern.ir.model.types.PrimitiveType;
 import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.ResolvedTypeReference;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.AliasGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import java.util.Set;
 
 public final class HeaderAuthGenerator extends AbstractFileGenerator {
@@ -19,8 +19,7 @@ public final class HeaderAuthGenerator extends AbstractFileGenerator {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
-                        .getCoreClassName(NameUtils
-                                .getName(headerAuthScheme.getName())
+                        .getCoreClassName(NameUtils.getName(headerAuthScheme.getName())
                                 .getPascalCase()
                                 .getSafeName()),
                 generatorContext);

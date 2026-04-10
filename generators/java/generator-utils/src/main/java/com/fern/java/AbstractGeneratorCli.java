@@ -130,8 +130,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             SimpleModule nameModule = new SimpleModule("NameOrStringModule");
             nameModule.addDeserializer(Name.class, new NameDeserializer.RawNameDeserializer(casingConfig));
             nameModule.addDeserializer(NameOrString.class, new NameDeserializer(casingConfig));
-            nameModule.addDeserializer(
-                    NameAndWireValueOrString.class, new NameAndWireValueDeserializer(casingConfig));
+            nameModule.addDeserializer(NameAndWireValueOrString.class, new NameAndWireValueDeserializer(casingConfig));
 
             ObjectMapper irMapper = ObjectMappers.JSON_MAPPER.copy();
             // Mix-in annotations override class-level @JsonDeserialize(builder=...) annotations,

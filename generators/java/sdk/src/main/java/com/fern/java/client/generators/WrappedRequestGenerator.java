@@ -20,7 +20,6 @@ import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.commons.NameAndWireValueOrString;
 import com.fern.ir.model.commons.TypeId;
-import com.fern.java.utils.NameUtils;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.DeclaredTypeName;
@@ -45,6 +44,7 @@ import com.fern.java.generators.ObjectGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -149,7 +149,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                         }
                         pathParameterObjectProperties.add(ObjectProperty.builder()
                                 .name(NameAndWireValueOrString.of(NameAndWireValue.builder()
-                                        .wireValue(NameUtils.toName(pathParameter.getName()).getOriginalName())
+                                        .wireValue(NameUtils.toName(pathParameter.getName())
+                                                .getOriginalName())
                                         .name(pathParameter.getName())
                                         .build()))
                                 .valueType(valueType)
@@ -164,22 +165,24 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
             fileUploadRequest.getProperties().stream()
                     .flatMap(property -> property.getFile().stream())
                     .forEach(fileProperty -> {
-                        NameAndWireValueOrString name = fileProperty.visit(new FileProperty.Visitor<NameAndWireValueOrString>() {
-                            @Override
-                            public NameAndWireValueOrString visitFile(FilePropertySingle filePropertySingle) {
-                                return filePropertySingle.getKey();
-                            }
+                        NameAndWireValueOrString name =
+                                fileProperty.visit(new FileProperty.Visitor<NameAndWireValueOrString>() {
+                                    @Override
+                                    public NameAndWireValueOrString visitFile(FilePropertySingle filePropertySingle) {
+                                        return filePropertySingle.getKey();
+                                    }
 
-                            @Override
-                            public NameAndWireValueOrString visitFileArray(FilePropertyArray filePropertyArray) {
-                                return filePropertyArray.getKey();
-                            }
+                                    @Override
+                                    public NameAndWireValueOrString visitFileArray(
+                                            FilePropertyArray filePropertyArray) {
+                                        return filePropertyArray.getKey();
+                                    }
 
-                            @Override
-                            public NameAndWireValueOrString _visitUnknown(Object o) {
-                                throw new RuntimeException("Received unknown file property type: " + o);
-                            }
-                        });
+                                    @Override
+                                    public NameAndWireValueOrString _visitUnknown(Object o) {
+                                        throw new RuntimeException("Received unknown file property type: " + o);
+                                    }
+                                });
                         // NOTE: See ObjectGenerator#enrichedObjectProperties for why we do this.
                         TypeReference valueType = fileProperty.visit(new FileProperty.Visitor<TypeReference>() {
                             @Override

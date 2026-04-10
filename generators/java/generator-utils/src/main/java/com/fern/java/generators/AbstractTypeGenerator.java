@@ -6,8 +6,8 @@ import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import com.google.common.collect.ImmutableSet;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -56,7 +56,9 @@ public abstract class AbstractTypeGenerator extends AbstractFileGenerator {
         List<TypeDeclaration> declarations = getInlineTypeDeclarations();
         List<TypeSpec> result = new ArrayList<>();
         for (TypeDeclaration declaration : declarations) {
-            String name = NameUtils.toName(declaration.getName().getName()).getPascalCase().getSafeName();
+            String name = NameUtils.toName(declaration.getName().getName())
+                    .getPascalCase()
+                    .getSafeName();
             Optional<AbstractTypeGenerator> generator = declaration
                     .getShape()
                     .visit(new SingleTypeGenerator(

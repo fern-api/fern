@@ -23,15 +23,14 @@ import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
-import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.commons.NameAndWireValueOrString;
 import com.fern.ir.model.http.HttpHeader;
-import com.fern.java.utils.NameUtils;
 import com.fern.ir.model.ir.ApiVersionScheme;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -321,7 +320,8 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                             .beginControlFlow("if (this.$N.isPresent())", apiVersionField)
                             .addStatement(
                                     "headers.put($S,$L)",
-                                    NameUtils.getWireValue(headerApiVersionScheme.getHeader().getName()),
+                                    NameUtils.getWireValue(
+                                            headerApiVersionScheme.getHeader().getName()),
                                     CodeBlock.of("this.$L.get().toString()", apiVersionField.name))
                             .endControlFlow();
 
@@ -355,7 +355,8 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                                     "$L.get().toString() is sent as the $S header, overriding client options "
                                             + "if present.",
                                     field.name,
-                                    NameUtils.getWireValue(headerApiVersionScheme.getHeader().getName()))
+                                    NameUtils.getWireValue(
+                                            headerApiVersionScheme.getHeader().getName()))
                             .build());
                     fields.add(new RequestOption(
                             apiVersionField
@@ -372,7 +373,8 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                                     "$L.get().toString() is sent as the $S header, overriding client options "
                                             + "if present.",
                                     field.name,
-                                    NameUtils.getWireValue(headerApiVersionScheme.getHeader().getName()))
+                                    NameUtils.getWireValue(
+                                            headerApiVersionScheme.getHeader().getName()))
                             .addModifiers(Modifier.PUBLIC)
                             .addStatement("return $N", field.name)
                             .returns(field.type)
@@ -383,7 +385,8 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                                     "$L.get().toString() is sent as the $S header, overriding client options "
                                             + "if present.",
                                     field.name,
-                                    NameUtils.getWireValue(headerApiVersionScheme.getHeader().getName()))
+                                    NameUtils.getWireValue(
+                                            headerApiVersionScheme.getHeader().getName()))
                             .addModifiers(Modifier.PUBLIC)
                             .addParameter(
                                     clientGeneratorContext
@@ -481,7 +484,9 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         @Override
         public RequestOption visitBearer(BearerAuthScheme bearer) {
             FieldSpec builderField = FieldSpec.builder(
-                            String.class, NameUtils.toName(bearer.getToken()).getCamelCase().getSafeName(), Modifier.PRIVATE)
+                            String.class,
+                            NameUtils.toName(bearer.getToken()).getCamelCase().getSafeName(),
+                            Modifier.PRIVATE)
                     .initializer("null")
                     .build();
             builderTypeSpec.addField(builderField);
@@ -594,7 +599,8 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                     .build();
             requestOptionsTypeSpec.addField(requestOptionsField);
 
-            String headerValue = "this." + NameUtils.getName(headerName).getCamelCase().getSafeName();
+            String headerValue =
+                    "this." + NameUtils.getName(headerName).getCamelCase().getSafeName();
             if (headerPrefix.isPresent()) {
                 headerValue = String.format("\"%s \" + %s", headerPrefix.get(), headerValue);
             }

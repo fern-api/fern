@@ -6,12 +6,12 @@ import com.fern.ir.model.commons.NameAndWireValueOrString;
 import com.fern.ir.model.commons.NameOrString;
 
 /**
- * Utility methods for extracting {@link Name} and {@link NameAndWireValue} from
- * their v66 union wrappers ({@link NameOrString} and {@link NameAndWireValueOrString}).
+ * Utility methods for extracting {@link Name} and {@link NameAndWireValue} from their v66 union wrappers
+ * ({@link NameOrString} and {@link NameAndWireValueOrString}).
  *
- * <p>The custom deserializers ({@link NameDeserializer}, {@link NameAndWireValueDeserializer})
- * guarantee that the string variant is always expanded into the full object form during
- * IR deserialization, so these methods can safely extract the object variant.
+ * <p>The custom deserializers ({@link NameDeserializer}, {@link NameAndWireValueDeserializer}) guarantee that the
+ * string variant is always expanded into the full object form during IR deserialization, so these methods can safely
+ * extract the object variant.
  */
 public final class NameUtils {
 

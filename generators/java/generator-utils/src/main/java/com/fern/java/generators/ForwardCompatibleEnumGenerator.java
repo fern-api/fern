@@ -7,8 +7,8 @@ import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.VisitorFactory;
-import com.fern.java.utils.NameUtils;
 import com.fern.java.VisitorFactory.GeneratedVisitor;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -229,8 +229,9 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                 TypeSpec.enumBuilder(VALUE_TYPE_NAME).addModifiers(Modifier.PUBLIC);
         enumTypeDeclaration
                 .getValues()
-                .forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(
-                        NameUtils.getName(enumValue.getName()).getScreamingSnakeCase().getSafeName()));
+                .forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(NameUtils.getName(enumValue.getName())
+                        .getScreamingSnakeCase()
+                        .getSafeName()));
         nestedValueEnumBuilder.addEnumConstant(resolveName(UNKNOWN_ENUM_CONSTANT));
         return nestedValueEnumBuilder.build();
     }
@@ -251,7 +252,9 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
 
     private String resolveName(String newName) {
         Set<String> existingNames = enumTypeDeclaration.getValues().stream()
-                .map(enumValue -> NameUtils.getName(enumValue.getName()).getScreamingSnakeCase().getSafeName())
+                .map(enumValue -> NameUtils.getName(enumValue.getName())
+                        .getScreamingSnakeCase()
+                        .getSafeName())
                 .collect(Collectors.toSet());
         while (existingNames.contains(newName)) {
             newName = "_" + newName;
