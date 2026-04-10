@@ -39,7 +39,8 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
-from fern_python.utils import build_snippet_writer, resolve_name
+from fern_python.utils import resolve_name
+from fern_python.utils.build_snippet_writer import build_snippet_writer
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets

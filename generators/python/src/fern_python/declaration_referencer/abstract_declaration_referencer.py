@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Callable, Generic, Optional, Tuple, TypeVar
+from typing import Callable, Generic, Optional, Tuple, TypeVar, Union
 
 from fern_python.codegen import AST, ExportStrategy, Filepath
 from fern_python.utils import resolve_name
@@ -60,7 +60,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
     def _get_directories_for_fern_filepath_part(
         self,
         *,
-        fern_filepath_part: ir_types.Name,
+        fern_filepath_part: Union[str, ir_types.Name],
         export_strategy: ExportStrategy,
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         return (

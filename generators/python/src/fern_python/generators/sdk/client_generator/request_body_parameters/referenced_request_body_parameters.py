@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -30,7 +30,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             context.custom_config.inline_request_params and self._type_id is not None
         )
         self._are_any_properties_optional = self.should_inline_request_parameters
-        self.parameter_name_rewrites: Dict = {}
+        self.parameter_name_rewrites: Dict[Union[str, ir_types.Name], str] = {}
 
     def _get_type_id_from_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
         return type_reference.visit(
@@ -203,7 +203,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
     # HACK: This is a bit of a hack to deconflict parameter names when inlining the request body
     # since these parameters can conflict with the query and header properties, we need the name
     # of the body to deconflict them.
-    def get_body_name(self):
+    def get_body_name(self) -> Optional[Union[str, ir_types.Name]]:
         return self._request_body.request_body_type.visit(
             container=lambda _: None,
             named=lambda t: t.name,
@@ -211,5 +211,5 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             unknown=lambda: None,
         )
 
-    def get_parameter_name_rewrites(self) -> Dict:
+    def get_parameter_name_rewrites(self) -> Dict[Union[str, ir_types.Name], str]:
         return self.parameter_name_rewrites

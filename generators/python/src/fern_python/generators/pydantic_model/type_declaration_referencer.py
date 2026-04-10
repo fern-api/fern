@@ -1,4 +1,4 @@
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Union
 
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
@@ -38,7 +38,7 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
         )
 
     def _get_directories_for_fern_filepath_part(
-        self, *, fern_filepath_part: ir_types.Name, export_strategy: ExportStrategy
+        self, *, fern_filepath_part: Union[str, ir_types.Name], export_strategy: ExportStrategy
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         return (
             Filepath.DirectoryFilepathPart(

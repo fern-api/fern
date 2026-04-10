@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -256,5 +256,5 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
     def get_content(self) -> Optional[AST.Expression]:
         return None
 
-    def get_parameter_name_rewrites(self) -> Dict:
+    def get_parameter_name_rewrites(self) -> Dict[Union[str, ir_types.Name], str]:
         return {}

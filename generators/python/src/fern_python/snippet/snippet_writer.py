@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 from .type_declaration_snippet_generator import TypeDeclarationSnippetGenerator
 from fern_python.codegen import AST
@@ -93,7 +93,7 @@ class SnippetWriter:
     def get_snippet_for_object_properties(
         self,
         example: ir_types.ExampleObjectType,
-        request_parameter_names: Dict[ir_types.Name, str],
+        request_parameter_names: Dict[Union[str, ir_types.Name], str],
         in_typeddict: bool,
         use_typeddict_request: bool,
         as_request: bool,

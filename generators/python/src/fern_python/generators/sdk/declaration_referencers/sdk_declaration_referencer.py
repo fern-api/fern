@@ -1,4 +1,4 @@
-from typing import Generic, Tuple, TypeVar
+from typing import Generic, Tuple, TypeVar, Union
 
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
@@ -16,7 +16,7 @@ class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
     def _get_directories_for_fern_filepath_part(
         self,
         *,
-        fern_filepath_part: ir_types.Name,
+        fern_filepath_part: Union[str, ir_types.Name],
         export_strategy: ExportStrategy,
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         if self.skip_resources_module:

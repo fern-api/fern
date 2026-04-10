@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
@@ -52,5 +52,5 @@ class BytesRequestBodyParameters(AbstractRequestBodyParameters):
     def get_content(self) -> Optional[AST.Expression]:
         return AST.Expression(self._get_request_parameter_name())
 
-    def get_parameter_name_rewrites(self) -> Dict:
+    def get_parameter_name_rewrites(self) -> Dict[Union[str, ir_types.Name], str]:
         return {}

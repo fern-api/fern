@@ -1904,8 +1904,8 @@ class EndpointFunctionSnippetGenerator:
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         example: ir_types.ExampleEndpointCall,
-        path_parameter_names: Dict,
-        request_parameter_names: Dict,
+        path_parameter_names: Dict[Union[str, ir_types.Name], str],
+        request_parameter_names: Dict[Union[str, ir_types.Name], str],
         generate_pagination: bool,
         streaming_parameter: Optional[StreamingParameterType] = None,
         is_raw_client: bool = False,
@@ -2128,7 +2128,7 @@ class EndpointFunctionSnippetGenerator:
     def _get_snippet_for_request_reference_flattened(
         self,
         example_object: ir_types.ExampleObjectType,
-        request_parameter_names: Dict[ir_types.Name, str],
+        request_parameter_names: Dict[Union[str, ir_types.Name], str],
     ) -> List[AST.Expression]:
         return self.snippet_writer.get_snippet_for_object_properties(
             example_object,
@@ -2142,7 +2142,7 @@ class EndpointFunctionSnippetGenerator:
         self,
         example_type_reference: ir_types.ExampleTypeReference,
         is_optional: bool,
-        request_parameter_names: Dict[ir_types.Name, str],
+        request_parameter_names: Dict[Union[str, ir_types.Name], str],
     ) -> List[AST.Expression]:
         if self.context.custom_config.inline_request_params and not is_optional:
             union = example_type_reference.shape.get_as_union()

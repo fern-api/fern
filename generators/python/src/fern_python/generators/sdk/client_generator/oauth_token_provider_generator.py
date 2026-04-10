@@ -1,4 +1,4 @@
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Union
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .base_client_generator import ConstructorParameter
@@ -524,7 +524,7 @@ class OAuthTokenProviderGenerator:
 
         return _write_expires_at_setter
 
-    def _get_response_property_path(self, property_path: Optional[List]) -> str:
+    def _get_response_property_path(self, property_path: Optional[List[Union[str, ir_types.Name]]]) -> str:
         if property_path is None or len(property_path) == 0:
             return ""
         return ".".join([resolve_name(name).snake_case.safe_name for name in property_path]) + "."

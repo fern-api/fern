@@ -1,7 +1,9 @@
 from abc import abstractmethod
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 from fern_python.codegen import AST
+
+import fern.ir.resources as ir_types
 
 
 class AbstractRequestBodyParameters:
@@ -21,4 +23,4 @@ class AbstractRequestBodyParameters:
     def get_content(self) -> Optional[AST.Expression]: ...
 
     @abstractmethod
-    def get_parameter_name_rewrites(self) -> Dict: ...
+    def get_parameter_name_rewrites(self) -> Dict[Union[str, ir_types.Name], str]: ...

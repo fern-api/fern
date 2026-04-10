@@ -454,7 +454,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
 # TODO: For V1 naming, we should take into account if the new name introduces a conflict with an existing class name
 def get_single_union_type_class_name(
     name: ir_types.DeclaredTypeName,
-    wire_discriminant_value: ir_types.NameAndWireValue,
+    wire_discriminant_value: Union[str, ir_types.NameAndWireValue],
     union_naming_version: UnionNamingVersions,
 ) -> str:
     wire_value = resolve_name(get_name_from_wire_value(wire_discriminant_value)).pascal_case.unsafe_name
@@ -466,7 +466,7 @@ def get_union_class_name(name: ir_types.DeclaredTypeName) -> str:
     return resolve_name(name.name).pascal_case.safe_name
 
 
-def get_discriminant_parameter_name(discriminant: ir_types.NameAndWireValue) -> str:
+def get_discriminant_parameter_name(discriminant: Union[str, ir_types.NameAndWireValue]) -> str:
     return resolve_name(get_name_from_wire_value(discriminant)).snake_case.safe_name
 
 

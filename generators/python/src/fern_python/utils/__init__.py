@@ -3,7 +3,7 @@ from .pascal_case import pascal_case
 from .snake_case import snake_case
 
 
-def __getattr__(name: str):  # type: ignore[return]
+def __getattr__(name: str) -> object:  # type: ignore[return]
     if name == "build_snippet_writer":
         from .build_snippet_writer import build_snippet_writer
 
