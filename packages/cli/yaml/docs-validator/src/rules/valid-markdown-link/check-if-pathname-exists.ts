@@ -23,7 +23,8 @@ export async function checkIfPathnameExists({
     absoluteFilePathsToSlugs,
     redirects = [],
     baseUrl,
-    versionSlugs = []
+    versionSlugs = [],
+    productSlugs = []
 }: {
     pathname: string;
     markdown: boolean;
@@ -41,6 +42,7 @@ export async function checkIfPathnameExists({
         basePath?: string;
     };
     versionSlugs?: string[];
+    productSlugs?: string[];
 }): Promise<true | string[]> {
     pathname = removeTrailingSlash(pathname);
     const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
@@ -75,14 +77,15 @@ export async function checkIfPathnameExists({
             return true;
         }
 
-        // For versioned pages, absolute links like `/about` resolve within the current version context.
-        // Check if the pathname exists under any version prefix that the current file belongs to.
-        if (markdown && versionSlugs.length > 0) {
+        // For versioned/product pages, absolute links like `/about` resolve within the current context.
+        // Check if the pathname exists under any version or product prefix that the current file belongs to.
+        const contextSlugs = [...versionSlugs, ...productSlugs];
+        if (markdown && contextSlugs.length > 0) {
             for (const slug of slugs) {
-                for (const versionSlug of versionSlugs) {
-                    if (slug.startsWith(versionSlug + "/") || slug === versionSlug) {
-                        const versionedPath = `${versionSlug}/${removeLeadingSlash(redirectedPath)}`;
-                        if (pageSlugs.has(versionedPath)) {
+                for (const contextSlug of contextSlugs) {
+                    if (slug.startsWith(contextSlug + "/") || slug === contextSlug) {
+                        const prefixedPath = `${contextSlug}/${removeLeadingSlash(redirectedPath)}`;
+                        if (pageSlugs.has(prefixedPath)) {
                             return true;
                         }
                         break;
