@@ -28,7 +28,6 @@ minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - "@fern-api/*"
   - "@fern-fern/*"
-  - "vite"
 
 # Prevent trust level downgrades (e.g. a previously trusted-publisher package
 # losing its attestation). Catches compromised maintainer accounts.
