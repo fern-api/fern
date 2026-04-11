@@ -9,6 +9,10 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Generate fixture pages
+      shell: bash
+      run: bash benchmarks/fern/generate-fixture-pages.sh 37
+
     - name: Build Fern CLI
       shell: bash
       run: pnpm run fern:build

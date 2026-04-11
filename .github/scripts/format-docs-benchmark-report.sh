@@ -5,34 +5,78 @@
 # Each directory contains .jsonl files with one JSON object per line:
 #   {"type":"docs","spec":"combined","duration_seconds":21.3,"exit_code":0}
 # duration_seconds may be a float (sub-second precision) or integer.
+#
+# The baseline-results-dir may contain either:
+#   - Flat .jsonl files (single baseline)
+#   - A history/ subdirectory with dated run folders, each containing .jsonl files.
+#     When history exists, the median of all historical runs is used as the baseline.
 
 set -euo pipefail
 
 PR_DIR="${1:?Usage: format-docs-benchmark-report.sh <pr-results-dir> <baseline-results-dir>}"
 BASELINE_DIR="${2:?Usage: format-docs-benchmark-report.sh <pr-results-dir> <baseline-results-dir>}"
 
+# Compute median of a list of numbers (one per line on stdin).
+# Supports both integer and float inputs.
+compute_median() {
+  sort -n | awk '{a[NR]=$1} END {
+    if (NR==0) { print "N/A"; exit }
+    if (NR%2==1) { printf "%.1f\n", a[(NR+1)/2] }
+    else { printf "%.1f\n", (a[NR/2] + a[NR/2+1]) / 2 }
+  }'
+}
+
 # Look up baseline duration for a given spec.
-# Sets: BASELINE_VAL
+# If history/ exists, computes median across all historical runs.
+# Otherwise falls back to flat .jsonl lookup (single-run format).
+# Sets: BASELINE_VAL, BASELINE_RUNS
 lookup_docs_baseline() {
   local spec="$1"
   BASELINE_VAL="N/A"
+  BASELINE_RUNS=0
 
-  for f in "${BASELINE_DIR}"/*.jsonl; do
-    [ -f "$f" ] || continue
-    local dur
-    dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec) | .duration_seconds' "$f" 2>/dev/null || true)
-    if [ -n "$dur" ] && [ "$dur" != "null" ] && [ "$dur" != "0" ]; then
-      BASELINE_VAL="$dur"
-      return
+  if [ -d "${BASELINE_DIR}/history" ]; then
+    local durations=()
+    for run_dir in "${BASELINE_DIR}/history"/*/; do
+      [ -d "$run_dir" ] || continue
+      for f in "${run_dir}"*.jsonl; do
+        [ -f "$f" ] || continue
+        local dur
+        dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec) | .duration_seconds' "$f" 2>/dev/null || true)
+        if [ -n "$dur" ] && [ "$dur" != "null" ] && [ "$dur" != "0" ]; then
+          durations+=("$dur")
+        fi
+      done
+    done
+
+    BASELINE_RUNS=${#durations[@]}
+    if [ "$BASELINE_RUNS" -gt 0 ]; then
+      BASELINE_VAL=$(printf '%s\n' "${durations[@]}" | compute_median)
     fi
-  done
+  else
+    for f in "${BASELINE_DIR}"/*.jsonl; do
+      [ -f "$f" ] || continue
+      local dur
+      dur=$(jq -r --arg spec "$spec" 'select(.spec == $spec) | .duration_seconds' "$f" 2>/dev/null || true)
+      if [ -n "$dur" ] && [ "$dur" != "null" ] && [ "$dur" != "0" ]; then
+        BASELINE_VAL="$dur"
+        BASELINE_RUNS=1
+        return
+      fi
+    done
+  fi
 }
 
 echo "<!-- fern-docs-benchmark-results -->"
 echo "## Docs Generation Benchmark Results"
 echo ""
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
-  echo "Comparing PR branch against latest nightly baseline on \`main\` (${BASELINE_TIMESTAMP})."
+  if [ -d "${BASELINE_DIR}/history" ]; then
+    HISTORY_COUNT=$(ls -d "${BASELINE_DIR}/history"/*/ 2>/dev/null | wc -l)
+    echo "Comparing PR branch against **median of ${HISTORY_COUNT} nightly run(s)** on \`main\` (latest: ${BASELINE_TIMESTAMP})."
+  else
+    echo "Comparing PR branch against latest nightly baseline on \`main\` (${BASELINE_TIMESTAMP})."
+  fi
 else
   echo "Comparing PR branch against \`main\` baseline."
 fi
@@ -67,7 +111,11 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
       else
         DELTA="${DIFF}s (${PCT}%)"
       fi
-      MAIN_DISPLAY="${BASELINE_VAL}s"
+      if [ "$BASELINE_RUNS" -gt 1 ]; then
+        MAIN_DISPLAY="${BASELINE_VAL}s (n=${BASELINE_RUNS})"
+      else
+        MAIN_DISPLAY="${BASELINE_VAL}s"
+      fi
     else
       MAIN_DISPLAY="N/A"
     fi
@@ -85,6 +133,6 @@ echo ""
 echo "_Docs generation runs \`fern generate --docs --preview\` end-to-end against the benchmark fixture (includes markdown processing, OpenAPI-to-IR conversion, and FDR upload)._"
 echo "_Delta is computed against the nightly baseline on \`main\`._"
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
-  echo "_Baseline from nightly run on \`main\` (${BASELINE_TIMESTAMP}). Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"
+  echo "_Baseline from nightly run(s) on \`main\` (latest: ${BASELINE_TIMESTAMP}). Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"
 fi
 echo "_Last updated: $(date -u '+%Y-%m-%d %H:%M') UTC_"

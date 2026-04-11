@@ -1,94 +1,97 @@
 # Benchmark fixture for docs generation performance testing.
 # Uses --preview flag at CI runtime to create ephemeral preview deployments
 # without affecting any production docs site.
+#
+# Pages are generated at CI time by generate-fixture-pages.sh from a template.
+# The page-NN.md references below correspond to generated files.
 instances:
   - url: fern.docs.buildwithfern.com
 
 navigation:
   - section: Getting Started
     contents:
-      - page: Introduction
-        path: pages/introduction.md
-      - page: Quickstart
-        path: pages/quickstart.md
-      - page: Getting Started
-        path: pages/getting-started.md
-      - page: Authentication
-        path: pages/authentication.md
-      - page: OAuth 2.0
-        path: pages/oauth.md
+      - page: Page 01
+        path: pages/page-01.md
+      - page: Page 02
+        path: pages/page-02.md
+      - page: Page 03
+        path: pages/page-03.md
+      - page: Page 04
+        path: pages/page-04.md
+      - page: Page 05
+        path: pages/page-05.md
   - section: Core Concepts
     contents:
-      - page: API Overview
-        path: pages/api-overview.md
-      - page: API Versioning
-        path: pages/versioning.md
-      - page: Error Handling
-        path: pages/error-handling.md
-      - page: Error Codes Reference
-        path: pages/error-codes.md
-      - page: Pagination
-        path: pages/pagination.md
-      - page: Filtering & Sorting
-        path: pages/filtering.md
-      - page: Rate Limiting
-        path: pages/rate-limiting.md
-      - page: Idempotency
-        path: pages/idempotency.md
-      - page: Caching
-        path: pages/caching.md
+      - page: Page 06
+        path: pages/page-06.md
+      - page: Page 07
+        path: pages/page-07.md
+      - page: Page 08
+        path: pages/page-08.md
+      - page: Page 09
+        path: pages/page-09.md
+      - page: Page 10
+        path: pages/page-10.md
+      - page: Page 11
+        path: pages/page-11.md
+      - page: Page 12
+        path: pages/page-12.md
+      - page: Page 13
+        path: pages/page-13.md
+      - page: Page 14
+        path: pages/page-14.md
   - section: Guides
     contents:
-      - page: Webhooks
-        path: pages/webhooks.md
-      - page: SDKs
-        path: pages/sdks.md
-      - page: Environments
-        path: pages/environments.md
-      - page: Configuration
-        path: pages/configuration.md
-      - page: File Uploads
-        path: pages/file-uploads.md
-      - page: Batch Operations
-        path: pages/batch-operations.md
-      - page: Realtime Events
-        path: pages/realtime.md
-      - page: Search
-        path: pages/search.md
-      - page: Subscriptions
-        path: pages/subscriptions.md
-      - page: Notifications
-        path: pages/notifications.md
+      - page: Page 15
+        path: pages/page-15.md
+      - page: Page 16
+        path: pages/page-16.md
+      - page: Page 17
+        path: pages/page-17.md
+      - page: Page 18
+        path: pages/page-18.md
+      - page: Page 19
+        path: pages/page-19.md
+      - page: Page 20
+        path: pages/page-20.md
+      - page: Page 21
+        path: pages/page-21.md
+      - page: Page 22
+        path: pages/page-22.md
+      - page: Page 23
+        path: pages/page-23.md
+      - page: Page 24
+        path: pages/page-24.md
   - section: Platform
     contents:
-      - page: Multi-Tenancy
-        path: pages/multi-tenancy.md
-      - page: Access Control
-        path: pages/access-control.md
-      - page: Security
-        path: pages/security.md
-      - page: Metadata
-        path: pages/metadata.md
-      - page: Analytics
-        path: pages/analytics.md
-      - page: Audit Logs
-        path: pages/audit-logs.md
-      - page: Data Export
-        path: pages/data-export.md
-      - page: Localization
-        path: pages/localization.md
+      - page: Page 25
+        path: pages/page-25.md
+      - page: Page 26
+        path: pages/page-26.md
+      - page: Page 27
+        path: pages/page-27.md
+      - page: Page 28
+        path: pages/page-28.md
+      - page: Page 29
+        path: pages/page-29.md
+      - page: Page 30
+        path: pages/page-30.md
+      - page: Page 31
+        path: pages/page-31.md
+      - page: Page 32
+        path: pages/page-32.md
   - section: Resources
     contents:
-      - page: Migration Guide
-        path: pages/migration-guide.md
-      - page: Best Practices
-        path: pages/best-practices.md
-      - page: Testing
-        path: pages/testing.md
-      - page: Troubleshooting
-        path: pages/troubleshooting.md
-      - page: Changelog
-        path: pages/changelog.md
+      - page: Page 33
+        path: pages/page-33.md
+      - page: Page 34
+        path: pages/page-34.md
+      - page: Page 35
+        path: pages/page-35.md
+      - page: Page 36
+        path: pages/page-36.md
+      - page: Page 37
+        path: pages/page-37.md
   - api: Square API Reference
     api-name: square
   - api: Stripe API Reference
