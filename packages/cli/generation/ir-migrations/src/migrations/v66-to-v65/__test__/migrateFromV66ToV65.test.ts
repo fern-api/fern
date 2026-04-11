@@ -830,7 +830,8 @@ describe("migrateFromV66ToV65", () => {
                 headers: undefined,
                 pathParameters: undefined,
                 variables: undefined,
-                generatorConfig: undefined
+                generatorConfig: undefined,
+                inlineTypes: undefined
             };
 
             const v66IR = createMinimalV66IR({ dynamic: dynamicIr });
@@ -885,7 +886,8 @@ describe("migrateFromV66ToV65", () => {
                 headers: undefined,
                 pathParameters: undefined,
                 variables: undefined,
-                generatorConfig: undefined
+                generatorConfig: undefined,
+                inlineTypes: undefined
             };
 
             const v66IR = createMinimalV66IR({ dynamic: dynamicIr });
