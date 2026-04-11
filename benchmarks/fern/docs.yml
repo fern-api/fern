@@ -9,20 +9,34 @@ navigation:
     contents:
       - page: Introduction
         path: pages/introduction.md
+      - page: Quickstart
+        path: pages/quickstart.md
       - page: Getting Started
         path: pages/getting-started.md
       - page: Authentication
         path: pages/authentication.md
+      - page: OAuth 2.0
+        path: pages/oauth.md
   - section: Core Concepts
     contents:
       - page: API Overview
         path: pages/api-overview.md
+      - page: API Versioning
+        path: pages/versioning.md
       - page: Error Handling
         path: pages/error-handling.md
+      - page: Error Codes Reference
+        path: pages/error-codes.md
       - page: Pagination
         path: pages/pagination.md
+      - page: Filtering & Sorting
+        path: pages/filtering.md
       - page: Rate Limiting
         path: pages/rate-limiting.md
+      - page: Idempotency
+        path: pages/idempotency.md
+      - page: Caching
+        path: pages/caching.md
   - section: Guides
     contents:
       - page: Webhooks
@@ -33,18 +47,52 @@ navigation:
         path: pages/environments.md
       - page: Configuration
         path: pages/configuration.md
+      - page: File Uploads
+        path: pages/file-uploads.md
+      - page: Batch Operations
+        path: pages/batch-operations.md
+      - page: Realtime Events
+        path: pages/realtime.md
+      - page: Search
+        path: pages/search.md
+      - page: Subscriptions
+        path: pages/subscriptions.md
+      - page: Notifications
+        path: pages/notifications.md
+  - section: Platform
+    contents:
+      - page: Multi-Tenancy
+        path: pages/multi-tenancy.md
+      - page: Access Control
+        path: pages/access-control.md
+      - page: Security
+        path: pages/security.md
+      - page: Metadata
+        path: pages/metadata.md
+      - page: Analytics
+        path: pages/analytics.md
+      - page: Audit Logs
+        path: pages/audit-logs.md
+      - page: Data Export
+        path: pages/data-export.md
+      - page: Localization
+        path: pages/localization.md
   - section: Resources
     contents:
       - page: Migration Guide
         path: pages/migration-guide.md
       - page: Best Practices
         path: pages/best-practices.md
+      - page: Testing
+        path: pages/testing.md
       - page: Troubleshooting
         path: pages/troubleshooting.md
       - page: Changelog
         path: pages/changelog.md
-  - api: API Reference
+  - api: Square API Reference
     api-name: square
+  - api: Stripe API Reference
+    api-name: stripe
 
 colors:
   accentPrimary: "#818CF8"

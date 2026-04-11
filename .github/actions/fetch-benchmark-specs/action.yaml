@@ -41,6 +41,36 @@ runs:
           echo "square-ok=false" >> $GITHUB_OUTPUT
         fi
 
+    - name: Fetch Stripe OpenAPI spec
+      id: fetch-stripe
+      shell: bash
+      run: |
+        FETCH_OK=false
+        for ATTEMPT in 1 2 3; do
+          echo "Attempt ${ATTEMPT}/3: Fetching Stripe OpenAPI spec..."
+          if curl -sSfL --retry 2 --retry-delay 5 \
+            "https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.json" \
+            -o benchmarks/fern/apis/stripe/openapi.json; then
+            BYTES=$(wc -c < benchmarks/fern/apis/stripe/openapi.json)
+            echo "Downloaded Stripe OpenAPI spec (${BYTES} bytes)"
+            if [ "$BYTES" -ge 100000 ]; then
+              FETCH_OK=true
+              break
+            fi
+            echo "::warning::Stripe spec unexpectedly small (${BYTES} bytes) on attempt ${ATTEMPT}"
+          else
+            echo "::warning::curl failed on attempt ${ATTEMPT}"
+          fi
+          [ "$ATTEMPT" -lt 3 ] && sleep 5
+        done
+        if [ "$FETCH_OK" = "true" ]; then
+          echo "stripe-ok=true" >> $GITHUB_OUTPUT
+        else
+          echo "::warning::Failed to fetch Stripe spec after 3 attempts. Skipping Stripe benchmarks."
+          rm -f benchmarks/fern/apis/stripe/openapi.json
+          echo "stripe-ok=false" >> $GITHUB_OUTPUT
+        fi
+
     - name: Summarize fetched specs
       id: summary
       shell: bash
@@ -48,6 +78,9 @@ runs:
         SPECS=""
         if [ "${{ steps.fetch-square.outputs.square-ok }}" = "true" ]; then
           SPECS="square"
+        fi
+        if [ "${{ steps.fetch-stripe.outputs.stripe-ok }}" = "true" ]; then
+          SPECS="${SPECS:+$SPECS }stripe"
         fi
         if [ -z "$SPECS" ]; then
           echo "::error::No benchmark specs could be fetched. Benchmark will be skipped."

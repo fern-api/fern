@@ -21,17 +21,23 @@ runs:
         RESULTS_DIR="${GITHUB_WORKSPACE}/benchmark-results"
         mkdir -p "$RESULTS_DIR"
 
-        SPEC="square"
+        # Check that at least one OpenAPI spec was fetched
+        SPECS_FOUND=0
+        for spec_dir in benchmarks/fern/apis/*/; do
+          if [ -f "${spec_dir}openapi.json" ]; then
+            SPECS_FOUND=$((SPECS_FOUND + 1))
+            echo "Found spec: ${spec_dir}openapi.json"
+          fi
+        done
 
-        # Check that the OpenAPI spec was fetched (needed for the API Reference section)
-        if [ ! -f "benchmarks/fern/apis/${SPEC}/openapi.json" ]; then
-          echo "::warning::Skipping docs benchmark — OpenAPI spec not available"
-          echo "{\"type\":\"docs\",\"spec\":\"${SPEC}\",\"duration_seconds\":0,\"exit_code\":-1,\"skipped\":true}" \
+        if [ "$SPECS_FOUND" -eq 0 ]; then
+          echo "::warning::Skipping docs benchmark — no OpenAPI specs available"
+          echo "{\"type\":\"docs\",\"spec\":\"none\",\"duration_seconds\":0,\"exit_code\":-1,\"skipped\":true}" \
             >> "${RESULTS_DIR}/docs.jsonl"
           exit 0
         fi
 
-        echo "::group::Benchmarking docs generation (with ${SPEC} API reference)"
+        echo "::group::Benchmarking docs generation (${SPECS_FOUND} API spec(s))"
 
         # The fern CLI uses the current working directory to find the project
         # (fern.config.json). We need to cd into the benchmark fixture directory.
@@ -56,10 +62,10 @@ runs:
           echo "::warning::Docs benchmark exited with code ${EXIT_CODE} after ${DURATION}s"
         fi
 
-        echo "Benchmark: docs x ${SPEC} = ${DURATION}s (exit ${EXIT_CODE})"
+        echo "Benchmark: docs (${SPECS_FOUND} specs) = ${DURATION}s (exit ${EXIT_CODE})"
 
         # Write result as JSON (same format as SDK benchmarks for consistency)
-        echo "{\"type\":\"docs\",\"spec\":\"${SPEC}\",\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE}}" \
+        echo "{\"type\":\"docs\",\"spec\":\"combined\",\"specs_count\":${SPECS_FOUND},\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE}}" \
           >> "${RESULTS_DIR}/docs.jsonl"
 
         echo "::endgroup::"
