@@ -110,7 +110,7 @@ jobs:
       rust-model: ${{ steps.create-dynamic-matrix.outputs.rust-model-test-matrix }}
       rust-sdk: ${{ steps.create-dynamic-matrix.outputs.rust-sdk-test-matrix }}
       benchmark-generators: ${{ steps.create-dynamic-matrix.outputs.benchmark-generators }}
-      docs-benchmark-affected: ${{ steps.create-dynamic-matrix.outputs.docs-benchmark-affected }}
+      benchmark-docs: ${{ steps.create-dynamic-matrix.outputs.benchmark-docs }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -316,10 +316,10 @@ jobs:
           fi
 
           if [[ "$DOCS_AFFECTED" == "true" ]]; then
-            echo "docs-benchmark-affected=true" >> $GITHUB_OUTPUT
+            echo "benchmark-docs=true" >> $GITHUB_OUTPUT
             echo "Docs benchmark: affected"
           else
-            echo "docs-benchmark-affected=" >> $GITHUB_OUTPUT
+            echo "benchmark-docs=" >> $GITHUB_OUTPUT
             echo "Docs benchmark: not affected"
           fi
 
@@ -850,7 +850,7 @@ jobs:
     if: >-
       ${{
         github.event_name == 'pull_request'
-        && (needs.get-all-test-matrices.outputs.benchmark-generators != '' || needs.get-all-test-matrices.outputs.docs-benchmark-affected != '')
+        && (needs.get-all-test-matrices.outputs.benchmark-generators != '' || needs.get-all-test-matrices.outputs.benchmark-docs != '')
         && github.event.pull_request.draft == false
       }}
     steps:
@@ -1144,7 +1144,7 @@ jobs:
     if: >-
       ${{
         github.event_name == 'pull_request'
-        && needs.get-all-test-matrices.outputs.docs-benchmark-affected != ''
+        && needs.get-all-test-matrices.outputs.benchmark-docs != ''
         && github.event.pull_request.draft == false
       }}
     steps:

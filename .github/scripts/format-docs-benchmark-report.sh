@@ -49,7 +49,7 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
     PR_SKIPPED=$(echo "$LINE" | jq -r '.skipped // false')
 
     if [ "$PR_SKIPPED" = "true" ]; then
-      echo "| docs (${SPEC}) | — | skipped | — |"
+      echo "| docs | — | skipped | — |"
       continue
     fi
 
@@ -76,7 +76,7 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
       PR_DISPLAY="${PR_DURATION}s (exit ${PR_EXIT})"
     fi
 
-    echo "| docs (${SPEC}) | ${MAIN_DISPLAY} | ${PR_DISPLAY} | ${DELTA} |"
+    echo "| docs | ${MAIN_DISPLAY} | ${PR_DISPLAY} | ${DELTA} |"
   done < "$PR_FILE"
 done
 
