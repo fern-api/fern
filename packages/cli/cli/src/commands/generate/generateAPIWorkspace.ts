@@ -15,6 +15,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import chalk from "chalk";
 
 import { GROUP_CLI_OPTION } from "../../constants.js";
+import { filterGenerators } from "./filterGenerators.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
 
 export async function generateWorkspace({
@@ -24,6 +25,7 @@ export async function generateWorkspace({
     context,
     groupName,
     generatorName,
+    generatorIndex,
     version,
     shouldLogS3Url,
     token,
@@ -35,9 +37,13 @@ export async function generateWorkspace({
     inspect,
     lfsOverride,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
     noReplay,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars,
+    automationMode,
+    autoMerge
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -46,6 +52,7 @@ export async function generateWorkspace({
     version: string | undefined;
     groupName: string | undefined;
     generatorName: string | undefined;
+    generatorIndex: number | undefined;
     shouldLogS3Url: boolean;
     token: FernToken | undefined;
     useLocalDocker: boolean;
@@ -56,9 +63,13 @@ export async function generateWorkspace({
     inspect: boolean;
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
+    skipFernignore: boolean;
     dynamicIrOnly: boolean;
     noReplay: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -71,6 +82,11 @@ export async function generateWorkspace({
     }
 
     const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
+    if (groupName == null && groupNameOrDefault != null) {
+        context.logger.info(
+            chalk.dim(`Using default group '${groupNameOrDefault}' from ${GENERATORS_CONFIGURATION_FILENAME}`)
+        );
+    }
     if (groupNameOrDefault == null) {
         const groupNames = workspace.generatorsConfiguration.groups.map((g) => g.groupName);
         const longestGroupName = Math.max(...groupNames.map((name) => name.length));
@@ -111,18 +127,17 @@ export async function generateWorkspace({
                 return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`);
             }
 
-            // Filter to specific generator if --generator is specified
-            if (generatorName != null) {
-                const filteredGenerators = group.generators.filter((gen) => gen.name === generatorName);
-                if (filteredGenerators.length === 0) {
-                    const availableGenerators = group.generators.map((gen) => gen.name);
-                    return context.failAndThrow(
-                        `Generator '${generatorName}' not found in group '${resolvedGroupName}'. ` +
-                            `Available generators: ${availableGenerators.join(", ")}`
-                    );
-                }
-                group = { ...group, generators: filteredGenerators };
+            // Filter to specific generator by index or name
+            const filterResult = filterGenerators({
+                generators: group.generators,
+                generatorIndex,
+                generatorName,
+                groupName: resolvedGroupName
+            });
+            if (!filterResult.ok) {
+                return context.failAndThrow(filterResult.error);
             }
+            group = { ...group, generators: filterResult.generators };
 
             // Apply lfs-override if specified
             if (lfsOverride != null) {
@@ -148,9 +163,22 @@ export async function generateWorkspace({
                     ai,
                     replay,
                     noReplay,
-                    validateWorkspace: true
+                    validateWorkspace: true,
+                    requireEnvVars,
+                    skipFernignore,
+                    automationMode,
+                    autoMerge
                 });
             } else if (token != null) {
+                // Block custom images for remote generation — only trusted images can run on Fiddle
+                const customImageGenerators = group.generators.filter((g) => g.containerImage != null);
+                if (customImageGenerators.length > 0) {
+                    const names = customImageGenerators.map((g) => g.name).join(", ");
+                    return context.failAndThrow(
+                        `Custom image configurations are only supported with local generation (--local). ` +
+                            `The following generators use custom images: ${names}`
+                    );
+                }
                 await runRemoteGenerationForAPIWorkspace({
                     projectConfig,
                     organization,
@@ -164,9 +192,13 @@ export async function generateWorkspace({
                     absolutePathToPreview,
                     mode,
                     fernignorePath,
+                    skipFernignore,
                     dynamicIrOnly,
                     validateWorkspace: true,
-                    retryRateLimited
+                    retryRateLimited,
+                    requireEnvVars,
+                    automationMode,
+                    autoMerge
                 });
             }
         })

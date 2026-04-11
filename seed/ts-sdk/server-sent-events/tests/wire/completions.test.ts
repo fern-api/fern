@@ -28,8 +28,14 @@ describe("CompletionsClient", () => {
             events.push(event);
         }
         expect(events).toEqual([
-            { delta: "hello", tokens: 1 },
-            { delta: " world", tokens: 2 },
+            {
+                delta: "hello",
+                tokens: 1,
+            },
+            {
+                delta: " world",
+                tokens: 2,
+            },
         ]);
     });
 
@@ -55,6 +61,11 @@ describe("CompletionsClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events).toEqual([{ delta: "delta", tokens: 1 }]);
+        expect(events).toEqual([
+            {
+                delta: "delta",
+                tokens: 1,
+            },
+        ]);
     });
 });

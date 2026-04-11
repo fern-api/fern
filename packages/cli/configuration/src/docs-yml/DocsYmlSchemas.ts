@@ -158,6 +158,10 @@ export const BackgroundImageConfiguration = z.union([z.string(), BackgroundImage
 
 export const CssConfig = z.union([z.string(), z.array(z.string())]);
 
+export const CollapsedStringValue = z.enum(["open-by-default"]);
+
+export const CollapsedValue = z.union([z.boolean(), CollapsedStringValue]);
+
 // ===== Base/mixin schemas =====
 
 export const WithPermissions = z.object({
@@ -231,6 +235,15 @@ export const AIChatWebsiteDatasource = z.object({
 });
 
 export const AIChatDatasource = AIChatWebsiteDatasource;
+
+export const PageDescriptionSource = z.enum(["description", "subtitle"]);
+
+export const AgentsConfig = z.object({
+    "page-directive": z.string().optional(),
+    "page-description-source": PageDescriptionSource.optional(),
+    "llms-txt": z.string().optional(),
+    "llms-full-txt": z.string().optional()
+});
 
 export const AIChatConfig = z.object({
     model: AIChatModel.optional(),
@@ -383,7 +396,6 @@ export const EditThisPageConfig = z.object({
 export const DocsInstance = z.object({
     url: z.string(),
     "custom-domain": CustomDomain.optional(),
-    private: z.boolean().optional(),
     "edit-this-page": EditThisPageConfig.optional(),
     audiences: Audience.optional()
 });
@@ -556,10 +568,29 @@ export const RedirectConfig = z.object({
     permanent: z.boolean().optional()
 });
 
+// ===== Check =====
+
+export const CheckRuleSeverity = z.enum(["warn", "error"]);
+
+export const CheckRulesConfig = z.object({
+    "example-validation": CheckRuleSeverity.optional(),
+    "broken-links": CheckRuleSeverity.optional(),
+    "no-non-component-refs": CheckRuleSeverity.optional(),
+    "valid-local-references": CheckRuleSeverity.optional(),
+    "no-circular-redirects": CheckRuleSeverity.optional(),
+    "valid-docs-endpoints": CheckRuleSeverity.optional(),
+    "missing-redirects": CheckRuleSeverity.optional()
+});
+
+export const CheckConfig = z.object({
+    rules: CheckRulesConfig.optional()
+});
+
 // ===== Integrations =====
 
 export const IntegrationsConfig = z.object({
-    intercom: z.string().optional()
+    intercom: z.string().optional(),
+    context7: z.string().optional()
 });
 
 // ===== Experimental =====
@@ -646,7 +677,7 @@ export const FolderConfiguration = WithPermissions.merge(WithFeatureFlags).merge
         icon: z.string().optional(),
         hidden: z.boolean().optional(),
         "skip-slug": z.boolean().optional(),
-        collapsed: z.union([z.boolean(), z.literal("open-by-default")]).optional(),
+        collapsed: CollapsedValue.optional(),
         collapsible: z.boolean().optional(),
         "collapsed-by-default": z.boolean().optional(),
         availability: Availability.optional()
@@ -700,7 +731,7 @@ export const ApiReferenceSectionConfiguration = WithPermissions.merge(WithFeatur
         icon: z.string().optional(),
         hidden: z.boolean().optional(),
         "skip-slug": z.boolean().optional(),
-        collapsed: z.union([z.boolean(), z.literal("open-by-default")]).optional(),
+        collapsed: CollapsedValue.optional(),
         collapsible: z.boolean().optional(),
         "collapsed-by-default": z.boolean().optional(),
         availability: Availability.optional(),
@@ -740,7 +771,7 @@ export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags)
         postman: z.string().optional(),
         summary: z.string().optional(),
         layout: z.array(ApiReferenceLayoutItem).optional(),
-        collapsed: z.union([z.boolean(), z.literal("open-by-default")]).optional(),
+        collapsed: CollapsedValue.optional(),
         icon: z.string().optional(),
         slug: z.string().optional(),
         hidden: z.boolean().optional(),
@@ -773,7 +804,7 @@ export const SectionConfiguration = WithPermissions.merge(WithFeatureFlags).merg
         section: z.string(),
         path: z.string().optional(),
         contents: z.array(NavigationItem),
-        collapsed: z.union([z.boolean(), z.literal("open-by-default")]).optional(),
+        collapsed: CollapsedValue.optional(),
         collapsible: z.boolean().optional(),
         "collapsed-by-default": z.boolean().optional(),
         slug: z.string().optional(),
@@ -925,8 +956,10 @@ export const DocsConfiguration = z.object({
     "ai-chat": AIChatConfig.optional(),
     "ai-search": AIChatConfig.optional(),
     "ai-examples": AiExamplesConfig.optional(),
+    agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: z.array(RedirectConfig).optional(),
+    check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: z.string().optional(),
     "background-image": BackgroundImageConfiguration.optional(),

@@ -27,7 +27,7 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
-import { extractLanguageFromGeneratorName } from "./VersionUtils.js";
+import { extractLanguageFromGeneratorName, mapMagicVersionForLanguage } from "./VersionUtils.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -75,10 +75,12 @@ export async function writeFilesToDiskAndRunGenerator({
     executionEnvironment,
     runner,
     whiteLabel,
+    publishToRegistry,
     ir,
     ai,
     autoVersioningCache,
-    absolutePathToSpecRepo
+    absolutePathToSpecRepo,
+    skipFernignore
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -102,10 +104,12 @@ export async function writeFilesToDiskAndRunGenerator({
     executionEnvironment?: ExecutionEnvironment;
     runner: ContainerRunner | undefined;
     whiteLabel?: boolean;
+    publishToRegistry?: boolean;
     ir: IntermediateRepresentation;
     ai: generatorsYml.AiServicesSchema | undefined;
     autoVersioningCache?: AutoVersioningCache;
     absolutePathToSpecRepo: AbsoluteFilePath | undefined;
+    skipFernignore?: boolean;
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -114,6 +118,7 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningChangelogEntry?: string;
     autoVersioningPrDescription?: string;
     autoVersioningVersionBumpReason?: string;
+    autoVersioningVersionBump?: string;
 }> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
@@ -123,7 +128,7 @@ export async function writeFilesToDiskAndRunGenerator({
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
         version: version ?? outputVersionOverride,
-        sourceConfig: getSourceConfig(workspace),
+        sourceConfig: getSourceConfig(workspace, executionEnvironment?.usesContainerPaths ?? true),
         includeOptionalRequestPropertyExamples,
         ir
     });
@@ -165,7 +170,9 @@ export async function writeFilesToDiskAndRunGenerator({
     const environment =
         executionEnvironment ??
         new ContainerExecutionEnvironment({
-            containerImage: `${generatorInvocation.name}:${generatorInvocation.version}`,
+            containerImage: generatorInvocation.containerImage
+                ? `${generatorInvocation.containerImage}:${generatorInvocation.version}`
+                : `${generatorInvocation.name}:${generatorInvocation.version}`,
             keepContainer: keepDocker
         });
 
@@ -185,11 +192,21 @@ export async function writeFilesToDiskAndRunGenerator({
               snippetTemplatePath: absolutePathToTmpSnippetTemplatesJSON
           } as const);
 
+    // Map the magic version to language-specific format before passing to generator.
+    // E.g., Go gets "v0.0.0-fern-placeholder", Python gets "0.0.0.dev0" (PEP 440 compatible).
+    const generatorLanguage =
+        generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
+    const mappedVersion = version != null ? mapMagicVersionForLanguage(version, generatorLanguage) : version;
+    const mappedOutputVersionOverride =
+        outputVersionOverride != null
+            ? mapMagicVersionForLanguage(outputVersionOverride, generatorLanguage)
+            : outputVersionOverride;
+
     const config = getGeneratorConfig({
         generatorInvocation,
         customConfig: generatorInvocation.config,
         workspaceName: workspace.definition.rootApiFile.contents.name,
-        outputVersion: outputVersionOverride,
+        outputVersion: mappedOutputVersionOverride,
         organization,
         absolutePathToSnippet: absolutePathToTmpSnippetJSON,
         absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
@@ -198,6 +215,7 @@ export async function writeFilesToDiskAndRunGenerator({
         generateOauthClients,
         generatePaginatedClients,
         whiteLabel,
+        publishToRegistry,
         paths
     });
 
@@ -239,12 +257,13 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToLocalSnippetTemplateJSON,
         absolutePathToTmpSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON,
-        version,
+        version: mappedVersion,
         ai,
         isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
         autoVersioningCache,
-        generatorLanguage: generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name),
-        absolutePathToSpecRepo
+        generatorLanguage,
+        absolutePathToSpecRepo,
+        skipFernignore
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 
@@ -281,13 +300,16 @@ async function writeIrToFile({
     return absolutePathToIr;
 }
 
-function getSourceConfig(workspace: FernWorkspace): SourceConfig {
+function getSourceConfig(workspace: FernWorkspace, usesContainerPaths: boolean): SourceConfig {
     return {
         sources: workspace.getSources().map((source) => {
             if (source.type === "protobuf") {
+                const protoRootUrl = usesContainerPaths
+                    ? `file:///${getDockerDestinationForSource(source)}`
+                    : `file:///${source.absoluteFilePath}`;
                 return ApiDefinitionSource.proto({
                     id: source.id,
-                    protoRootUrl: `file:///${getDockerDestinationForSource(source)}`
+                    protoRootUrl
                 });
             }
             return ApiDefinitionSource.openapi();

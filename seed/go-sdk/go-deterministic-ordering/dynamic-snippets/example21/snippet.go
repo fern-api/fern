@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
     types "github.com/go-deterministic-ordering/fern/types"
-    context "context"
 )
 
 func do() {
@@ -19,7 +20,7 @@ func do() {
     request := &types.ObjectWithRequiredField{
         FieldString: "string",
     }
-    client.Endpoints.HttpMethods.TestPost(
+    client.Endpoints.HTTPMethods.TestPost(
         context.TODO(),
         request,
     )

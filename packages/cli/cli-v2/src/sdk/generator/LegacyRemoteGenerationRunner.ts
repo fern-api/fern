@@ -62,6 +62,12 @@ export namespace LegacyRemoteGenerationRunner {
         /** Path to .fernignore file */
         fernignorePath?: string;
 
+        /** Ignore the .fernignore file and upload an empty one */
+        skipFernignore?: boolean;
+
+        /** Require all referenced environment variables to be defined */
+        requireEnvVars?: boolean;
+
         /** Version override for the generated SDK */
         version?: string;
     }
@@ -123,10 +129,12 @@ export class LegacyRemoteGenerationRunner {
                 token: args.token,
                 mode: this.mapMode(args.target),
                 fernignorePath: args.fernignorePath,
+                skipFernignore: args.skipFernignore,
                 absolutePathToPreview,
                 whitelabel: undefined,
                 dynamicIrOnly: false,
-                retryRateLimited: false
+                retryRateLimited: false,
+                requireEnvVars: args.requireEnvVars ?? true
             });
 
             if (this.isLocalGitCombo(args) && absolutePathToPreview != null) {

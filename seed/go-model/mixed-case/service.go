@@ -5,6 +5,7 @@ package mixedcase
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/mixed-case/fern/internal"
 )
 

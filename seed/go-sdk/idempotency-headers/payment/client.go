@@ -4,6 +4,7 @@ package payment
 
 import (
 	context "context"
+
 	uuid "github.com/google/uuid"
 	fern "github.com/idempotency-headers/fern"
 	core "github.com/idempotency-headers/fern/core"
@@ -51,12 +52,12 @@ func (c *Client) Create(
 
 func (c *Client) Delete(
 	ctx context.Context,
-	paymentId string,
+	paymentID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Delete(
 		ctx,
-		paymentId,
+		paymentID,
 		opts...,
 	)
 	if err != nil {

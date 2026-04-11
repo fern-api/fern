@@ -168,6 +168,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "size",
                                 "name": {
                                     "originalName": "size",
                                     "camelCase": {
@@ -186,8 +187,7 @@
                                         "unsafeName": "Size",
                                         "safeName": "Size"
                                     }
-                                },
-                                "wireValue": "size"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -373,6 +373,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "s3Key",
                                 "name": {
                                     "originalName": "s3Key",
                                     "camelCase": {
@@ -391,8 +392,7 @@
                                         "unsafeName": "S3Key",
                                         "safeName": "S3Key"
                                     }
-                                },
-                                "wireValue": "s3Key"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",

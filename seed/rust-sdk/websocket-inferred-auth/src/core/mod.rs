@@ -1,8 +1,5 @@
 //! Core client infrastructure
 
-pub mod base64_bytes;
-pub mod bigint_string;
-pub mod flexible_datetime;
 mod http_client;
 mod oauth_token_provider;
 mod query_parameter_builder;
@@ -18,5 +15,5 @@ pub use request_options::RequestOptions;
 pub use utils::join_url;
 #[cfg(feature = "websocket")]
 pub use websocket::{
-    parse_websocket_message, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState,
+    DisconnectInfo, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState,
 };

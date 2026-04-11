@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
     types "github.com/exhaustive/fern/types"
-    context "context"
 )
 
 func do() {
@@ -19,7 +20,7 @@ func do() {
     request := &types.ObjectWithRequiredField{
         FieldString: "string",
     }
-    client.Endpoints.HttpMethods.TestPut(
+    client.Endpoints.HTTPMethods.TestPut(
         context.TODO(),
         "id",
         request,

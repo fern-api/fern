@@ -5,6 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/go-undiscriminated-union-wire-tests/fern/internal"
 )
 

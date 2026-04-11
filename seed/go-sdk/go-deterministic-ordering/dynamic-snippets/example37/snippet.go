@@ -1,9 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/go-deterministic-ordering/fern"
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
-    context "context"
 )
 
 func do() {
@@ -15,8 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Params.GetWithPath(
+    request := &fern.GetWithInlinePath{
+        Param: "param",
+    }
+    client.Endpoints.Params.GetWithInlinePath(
         context.TODO(),
-        "param",
+        request,
     )
 }

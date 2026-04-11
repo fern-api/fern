@@ -59,7 +59,8 @@ export class CsharpTypeMapper extends WithGeneration {
                 return property.isOptional ? this.Types.FileParameter.asOptional() : this.Types.FileParameter;
             }
             case "fileArray": {
-                return property.isOptional ? this.Types.FileParameter.asOptional() : this.Types.FileParameter;
+                const listType = this.Collection.list(this.Types.FileParameter);
+                return property.isOptional ? listType.asOptional() : listType;
             }
             default:
                 assertNever(property);

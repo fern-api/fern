@@ -5,7 +5,7 @@ description: Run seed and then automatically create and merge PR with changes
 # However, we don't need to validate git diff since we are always updating the seed
 inputs:
   generator-name:
-    description: Generator to use (e.g., go-sdk, ruby-sdk)
+    description: Generator to use (e.g., go-sdk)
     required: true
   generator-path:
     description: The path to the source code of the generator (e.g., generators/go, generators/ruby)
@@ -25,6 +25,14 @@ inputs:
     description: The matrix strategy index of the job (to differentiate when parallelizing jobs)
     required: false
     default: "0"
+  dockerhub-username:
+    description: Docker Hub username for authenticated pulls (avoids rate limits)
+    required: false
+    default: ""
+  dockerhub-token:
+    description: Docker Hub token for authenticated pulls (avoids rate limits)
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -40,6 +48,8 @@ runs:
         allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
         skip-scripts: ${{ inputs.skip-scripts }}
         skip-git-diff-check: true
+        dockerhub-username: ${{ inputs.dockerhub-username }}
+        dockerhub-token: ${{ inputs.dockerhub-token }}
 
     # Add changes first to simplify git diff checks, no changes will NOT error here
     - name: Check for changes
@@ -71,7 +81,7 @@ runs:
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts
       if: steps.check-changes.outputs.seed-changes-generated == 'true'
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
         path: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch

@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 using SeedApi.Core;
 
 namespace SeedApi;
@@ -80,6 +80,29 @@ public readonly record struct UpdateResponseStatus : IStringEnum
         )
         {
             writer.WriteStringValue(value.Value);
+        }
+
+        public override UpdateResponseStatus ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON property name could not be read as a string."
+                );
+            return new UpdateResponseStatus(stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UpdateResponseStatus value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Value);
         }
     }
 

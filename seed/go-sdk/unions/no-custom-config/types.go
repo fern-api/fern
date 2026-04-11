@@ -464,6 +464,106 @@ func (s *SecondItemType) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+var (
+	typeWithOptionalMapFieldKey          = big.NewInt(1 << 0)
+	typeWithOptionalMapFieldColumnValues = big.NewInt(1 << 1)
+)
+
+type TypeWithOptionalMap struct {
+	Key          string             `json:"key" url:"key"`
+	ColumnValues map[string]*string `json:"columnValues" url:"columnValues"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TypeWithOptionalMap) GetKey() string {
+	if t == nil {
+		return ""
+	}
+	return t.Key
+}
+
+func (t *TypeWithOptionalMap) GetColumnValues() map[string]*string {
+	if t == nil {
+		return nil
+	}
+	return t.ColumnValues
+}
+
+func (t *TypeWithOptionalMap) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
+	return t.extraProperties
+}
+
+func (t *TypeWithOptionalMap) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetKey sets the Key field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TypeWithOptionalMap) SetKey(key string) {
+	t.Key = key
+	t.require(typeWithOptionalMapFieldKey)
+}
+
+// SetColumnValues sets the ColumnValues field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TypeWithOptionalMap) SetColumnValues(columnValues map[string]*string) {
+	t.ColumnValues = columnValues
+	t.require(typeWithOptionalMapFieldColumnValues)
+}
+
+func (t *TypeWithOptionalMap) UnmarshalJSON(data []byte) error {
+	type unmarshaler TypeWithOptionalMap
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithOptionalMap(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TypeWithOptionalMap) MarshalJSON() ([]byte, error) {
+	type embed TypeWithOptionalMap
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TypeWithOptionalMap) String() string {
+	if t == nil {
+		return "<nil>"
+	}
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
 // This is a simple union.
 type Union struct {
 	Type string
@@ -602,7 +702,7 @@ func (u *Union) validate() error {
 
 type UnionWithBaseProperties struct {
 	Type        string
-	Id          string
+	ID          string
 	Integer     int
 	FieldString string
 	Foo         *Foo
@@ -615,11 +715,11 @@ func (u *UnionWithBaseProperties) GetType() string {
 	return u.Type
 }
 
-func (u *UnionWithBaseProperties) GetId() string {
+func (u *UnionWithBaseProperties) GetID() string {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *UnionWithBaseProperties) GetInteger() int {
@@ -646,13 +746,13 @@ func (u *UnionWithBaseProperties) GetFoo() *Foo {
 func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
-		Id   string `json:"id"`
+		ID   string `json:"id"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
 	u.Type = unmarshaler.Type
-	u.Id = unmarshaler.Id
+	u.ID = unmarshaler.ID
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", u)
 	}
@@ -690,11 +790,11 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 	if u.Integer != 0 {
 		var marshaler = struct {
 			Type    string `json:"type"`
-			Id      string `json:"id"`
+			ID      string `json:"id"`
 			Integer int    `json:"value"`
 		}{
 			Type:    "integer",
-			Id:      u.Id,
+			ID:      u.ID,
 			Integer: u.Integer,
 		}
 		return json.Marshal(marshaler)
@@ -702,11 +802,11 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 	if u.FieldString != "" {
 		var marshaler = struct {
 			Type        string `json:"type"`
-			Id          string `json:"id"`
+			ID          string `json:"id"`
 			FieldString string `json:"value"`
 		}{
 			Type:        "string",
-			Id:          u.Id,
+			ID:          u.ID,
 			FieldString: u.FieldString,
 		}
 		return json.Marshal(marshaler)

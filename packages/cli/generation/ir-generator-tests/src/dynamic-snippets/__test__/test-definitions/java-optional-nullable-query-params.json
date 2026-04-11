@@ -31,6 +31,7 @@
             },
             "values": [
                 {
+                    "wireValue": "ASC",
                     "name": {
                         "originalName": "ASC",
                         "camelCase": {
@@ -49,10 +50,10 @@
                             "unsafeName": "Asc",
                             "safeName": "Asc"
                         }
-                    },
-                    "wireValue": "ASC"
+                    }
                 },
                 {
+                    "wireValue": "DESC",
                     "name": {
                         "originalName": "DESC",
                         "camelCase": {
@@ -71,8 +72,7 @@
                             "unsafeName": "Desc",
                             "safeName": "Desc"
                         }
-                    },
-                    "wireValue": "DESC"
+                    }
                 }
             ]
         },
@@ -107,6 +107,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "results",
                         "name": {
                             "originalName": "results",
                             "camelCase": {
@@ -125,8 +126,7 @@
                                 "unsafeName": "Results",
                                 "safeName": "Results"
                             }
-                        },
-                        "wireValue": "results"
+                        }
                     },
                     "typeReference": {
                         "type": "list",
@@ -140,6 +140,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "totalCount",
                         "name": {
                             "originalName": "totalCount",
                             "camelCase": {
@@ -158,8 +159,7 @@
                                 "unsafeName": "TotalCount",
                                 "safeName": "TotalCount"
                             }
-                        },
-                        "wireValue": "totalCount"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -170,6 +170,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "query",
                         "name": {
                             "originalName": "query",
                             "camelCase": {
@@ -188,8 +189,7 @@
                                 "unsafeName": "Query",
                                 "safeName": "Query"
                             }
-                        },
-                        "wireValue": "query"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -206,6 +206,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "limit",
                         "name": {
                             "originalName": "limit",
                             "camelCase": {
@@ -224,8 +225,7 @@
                                 "unsafeName": "Limit",
                                 "safeName": "Limit"
                             }
-                        },
-                        "wireValue": "limit"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -242,6 +242,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "includeArchived",
                         "name": {
                             "originalName": "includeArchived",
                             "camelCase": {
@@ -260,8 +261,7 @@
                                 "unsafeName": "IncludeArchived",
                                 "safeName": "IncludeArchived"
                             }
-                        },
-                        "wireValue": "includeArchived"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -278,6 +278,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "sortOrder",
                         "name": {
                             "originalName": "sortOrder",
                             "camelCase": {
@@ -296,8 +297,7 @@
                                 "unsafeName": "SortOrder",
                                 "safeName": "SortOrder"
                             }
-                        },
-                        "wireValue": "sortOrder"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -383,6 +383,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "query",
                             "name": {
                                 "originalName": "query",
                                 "camelCase": {
@@ -401,8 +402,7 @@
                                     "unsafeName": "Query",
                                     "safeName": "Query"
                                 }
-                            },
-                            "wireValue": "query"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -419,6 +419,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "limit",
                             "name": {
                                 "originalName": "limit",
                                 "camelCase": {
@@ -437,8 +438,7 @@
                                     "unsafeName": "Limit",
                                     "safeName": "Limit"
                                 }
-                            },
-                            "wireValue": "limit"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -455,6 +455,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "includeArchived",
                             "name": {
                                 "originalName": "includeArchived",
                                 "camelCase": {
@@ -473,8 +474,7 @@
                                     "unsafeName": "IncludeArchived",
                                     "safeName": "IncludeArchived"
                                 }
-                            },
-                            "wireValue": "includeArchived"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -491,6 +491,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "sortOrder",
                             "name": {
                                 "originalName": "sortOrder",
                                 "camelCase": {
@@ -509,8 +510,7 @@
                                     "unsafeName": "SortOrder",
                                     "safeName": "SortOrder"
                                 }
-                            },
-                            "wireValue": "sortOrder"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -527,6 +527,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "optionalWithoutDefault",
                             "name": {
                                 "originalName": "optionalWithoutDefault",
                                 "camelCase": {
@@ -545,8 +546,7 @@
                                     "unsafeName": "OptionalWithoutDefault",
                                     "safeName": "OptionalWithoutDefault"
                                 }
-                            },
-                            "wireValue": "optionalWithoutDefault"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -563,6 +563,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "regularOptional",
                             "name": {
                                 "originalName": "regularOptional",
                                 "camelCase": {
@@ -581,8 +582,7 @@
                                     "unsafeName": "RegularOptional",
                                     "safeName": "RegularOptional"
                                 }
-                            },
-                            "wireValue": "regularOptional"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -599,6 +599,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "regularOptionalNoDefault",
                             "name": {
                                 "originalName": "regularOptionalNoDefault",
                                 "camelCase": {
@@ -617,8 +618,7 @@
                                     "unsafeName": "RegularOptionalNoDefault",
                                     "safeName": "RegularOptionalNoDefault"
                                 }
-                            },
-                            "wireValue": "regularOptionalNoDefault"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",

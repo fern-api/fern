@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	fern "github.com/exhaustive/fern"
 	client "github.com/exhaustive/fern/client"
 	option "github.com/exhaustive/fern/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestReqWithHeadersGetWithCustomHeaderWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &fern.ReqWithHeaders{
 		XTestServiceHeader:  "X-TEST-SERVICE-HEADER",

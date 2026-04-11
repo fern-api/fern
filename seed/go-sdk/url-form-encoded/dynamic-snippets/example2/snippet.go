@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/url-form-encoded/fern"
     client "github.com/url-form-encoded/fern/client"
     option "github.com/url-form-encoded/fern/option"
-    fern "github.com/url-form-encoded/fern"
-    context "context"
 )
 
 func do() {
@@ -14,7 +15,7 @@ func do() {
         ),
     )
     request := &fern.TokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
     }
     client.GetToken(

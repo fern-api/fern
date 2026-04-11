@@ -3,8 +3,8 @@
 module Seed
   module Submission
     module Types
-      module SubmissionId
-        # SubmissionId is an alias for String
+      module SubmissionID
+        # SubmissionID is an alias for String
 
         # @option str [String]
         #

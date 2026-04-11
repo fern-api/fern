@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	client "github.com/go-deterministic-ordering/fern/client"
 	option "github.com/go-deterministic-ordering/fern/option"
 	types "github.com/go-deterministic-ordering/fern/types"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestEndpointsContainerGetAndReturnListOfPrimitivesWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := []string{
 		"string",
@@ -97,6 +99,7 @@ func TestEndpointsContainerGetAndReturnListOfObjectsWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
@@ -127,6 +130,7 @@ func TestEndpointsContainerGetAndReturnSetOfPrimitivesWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := []string{
 		"string",
@@ -152,6 +156,7 @@ func TestEndpointsContainerGetAndReturnSetOfObjectsWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
@@ -179,6 +184,7 @@ func TestEndpointsContainerGetAndReturnMapPrimToPrimWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := map[string]string{
 		"string": "string",
@@ -204,6 +210,7 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToObjectWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := map[string]*types.ObjectWithRequiredField{
 		"string": &types.ObjectWithRequiredField{
@@ -231,6 +238,7 @@ func TestEndpointsContainerGetAndReturnMapOfPrimToUndiscriminatedUnionWithWireMo
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := map[string]*types.MixedType{
 		"string": &types.MixedType{
@@ -258,6 +266,7 @@ func TestEndpointsContainerGetAndReturnOptionalWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &types.ObjectWithRequiredField{
 		FieldString: "string",

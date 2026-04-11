@@ -31,6 +31,7 @@
             },
             "values": [
                 {
+                    "wireValue": "HEALTH",
                     "name": {
                         "originalName": "HEALTH",
                         "camelCase": {
@@ -49,10 +50,10 @@
                             "unsafeName": "Health",
                             "safeName": "Health"
                         }
-                    },
-                    "wireValue": "HEALTH"
+                    }
                 },
                 {
+                    "wireValue": "AUTO",
                     "name": {
                         "originalName": "AUTO",
                         "camelCase": {
@@ -71,10 +72,10 @@
                             "unsafeName": "Auto",
                             "safeName": "Auto"
                         }
-                    },
-                    "wireValue": "AUTO"
+                    }
                 },
                 {
+                    "wireValue": "HOME",
                     "name": {
                         "originalName": "HOME",
                         "camelCase": {
@@ -93,10 +94,10 @@
                             "unsafeName": "Home",
                             "safeName": "Home"
                         }
-                    },
-                    "wireValue": "HOME"
+                    }
                 },
                 {
+                    "wireValue": "LIFE",
                     "name": {
                         "originalName": "LIFE",
                         "camelCase": {
@@ -115,8 +116,7 @@
                             "unsafeName": "Life",
                             "safeName": "Life"
                         }
-                    },
-                    "wireValue": "LIFE"
+                    }
                 }
             ]
         },
@@ -151,6 +151,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -169,8 +170,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -181,6 +181,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "userId",
                         "name": {
                             "originalName": "userId",
                             "camelCase": {
@@ -199,8 +200,7 @@
                                 "unsafeName": "UserID",
                                 "safeName": "UserID"
                             }
-                        },
-                        "wireValue": "userId"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -211,6 +211,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "policyType",
                         "name": {
                             "originalName": "policyType",
                             "camelCase": {
@@ -229,8 +230,7 @@
                                 "unsafeName": "PolicyType",
                                 "safeName": "PolicyType"
                             }
-                        },
-                        "wireValue": "policyType"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
@@ -241,6 +241,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "isExpired",
                         "name": {
                             "originalName": "isExpired",
                             "camelCase": {
@@ -259,8 +260,7 @@
                                 "unsafeName": "IsExpired",
                                 "safeName": "IsExpired"
                             }
-                        },
-                        "wireValue": "isExpired"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -271,6 +271,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "coverageAmount",
                         "name": {
                             "originalName": "coverageAmount",
                             "camelCase": {
@@ -289,8 +290,7 @@
                                 "unsafeName": "CoverageAmount",
                                 "safeName": "CoverageAmount"
                             }
-                        },
-                        "wireValue": "coverageAmount"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -401,6 +401,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "includeExpired",
                             "name": {
                                 "originalName": "includeExpired",
                                 "camelCase": {
@@ -419,8 +420,7 @@
                                     "unsafeName": "IncludeExpired",
                                     "safeName": "IncludeExpired"
                                 }
-                            },
-                            "wireValue": "includeExpired"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -434,6 +434,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "policyType",
                             "name": {
                                 "originalName": "policyType",
                                 "camelCase": {
@@ -452,8 +453,7 @@
                                     "unsafeName": "PolicyType",
                                     "safeName": "PolicyType"
                                 }
-                            },
-                            "wireValue": "policyType"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -542,6 +542,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "query",
                             "name": {
                                 "originalName": "query",
                                 "camelCase": {
@@ -560,8 +561,7 @@
                                     "unsafeName": "Query",
                                     "safeName": "Query"
                                 }
-                            },
-                            "wireValue": "query"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -572,6 +572,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "limit",
                             "name": {
                                 "originalName": "limit",
                                 "camelCase": {
@@ -590,8 +591,7 @@
                                     "unsafeName": "Limit",
                                     "safeName": "Limit"
                                 }
-                            },
-                            "wireValue": "limit"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",

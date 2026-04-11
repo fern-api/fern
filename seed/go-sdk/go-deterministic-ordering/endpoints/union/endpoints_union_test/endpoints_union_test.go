@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	client "github.com/go-deterministic-ordering/fern/client"
 	option "github.com/go-deterministic-ordering/fern/option"
 	types "github.com/go-deterministic-ordering/fern/types"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestEndpointsUnionGetAndReturnUnionWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &types.Animal{
 		Dog: &types.Dog{

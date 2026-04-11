@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    context "context"
 )
 
 func do() {
@@ -15,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.NoReqBody.GetWithNoRequestBody(
+    client.Endpoints.URLs.NoEndingSlash(
         context.TODO(),
     )
 }

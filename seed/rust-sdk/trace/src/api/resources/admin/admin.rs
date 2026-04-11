@@ -23,7 +23,7 @@ impl AdminClient {
             .execute_request(
                 Method::POST,
                 &format!("/admin/store-test-submission-status/{}", submission_id.0),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -40,7 +40,7 @@ impl AdminClient {
             .execute_request(
                 Method::POST,
                 &format!("/admin/store-test-submission-status-v2/{}", submission_id.0),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -60,7 +60,7 @@ impl AdminClient {
                     "/admin/store-workspace-submission-status/{}",
                     submission_id.0
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -80,7 +80,7 @@ impl AdminClient {
                     "/admin/store-workspace-submission-status-v2/{}",
                     submission_id.0
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -90,7 +90,7 @@ impl AdminClient {
     pub async fn store_traced_test_case(
         &self,
         submission_id: &SubmissionId,
-        test_case_id: &String,
+        test_case_id: &str,
         request: &StoreTracedTestCaseRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -101,14 +101,14 @@ impl AdminClient {
                     "/admin/store-test-trace/submission/{}/testCase/{}",
                     submission_id.0, test_case_id
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
             .await
     }
 
-    pub async fn store_traced_test_case_v_2(
+    pub async fn store_traced_test_case_v2(
         &self,
         submission_id: &SubmissionId,
         test_case_id: &TestCaseId,
@@ -122,7 +122,7 @@ impl AdminClient {
                     "/admin/store-test-trace-v2/submission/{}/testCase/{}",
                     submission_id.0, test_case_id.0
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -142,14 +142,14 @@ impl AdminClient {
                     "/admin/store-workspace-trace/submission/{}",
                     submission_id.0
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
             .await
     }
 
-    pub async fn store_traced_workspace_v_2(
+    pub async fn store_traced_workspace_v2(
         &self,
         submission_id: &SubmissionId,
         request: &Vec<TraceResponseV2>,
@@ -162,7 +162,7 @@ impl AdminClient {
                     "/admin/store-workspace-trace-v2/submission/{}",
                     submission_id.0
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

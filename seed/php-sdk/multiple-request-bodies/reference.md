@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client-&gt;uploadJsonDocument($request) -> DocumentMetadata|DocumentUploadResult</code></summary>
+<details><summary><code>$client-&gt;uploadJsonDocument($request) -> DocumentMetadata|DocumentUploadResult|null</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ $client->uploadJsonDocument(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;uploadPdfDocument() -> DocumentMetadata|DocumentUploadResult</code></summary>
+<details><summary><code>$client-&gt;uploadPdfDocument() -> DocumentMetadata|DocumentUploadResult|null</code></summary>
 <dl>
 <dd>
 
@@ -70,7 +70,7 @@ $client->uploadJsonDocument(
 <dd>
 
 ```php
-$client->uploadPdfDocument(): DocumentMetadata|DocumentUploadResult;
+$client->uploadPdfDocument(): DocumentMetadata|DocumentUploadResult|null;
 ```
 </dd>
 </dl>

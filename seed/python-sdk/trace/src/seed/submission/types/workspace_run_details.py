@@ -7,11 +7,11 @@ import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...core.serialization import FieldMetadata
 from .exception_info import ExceptionInfo
-from .exception_v_2 import ExceptionV2
+from .exception_v2 import ExceptionV2
 
 
 class WorkspaceRunDetails(UniversalBaseModel):
-    exception_v_2: typing_extensions.Annotated[
+    exception_v2: typing_extensions.Annotated[
         typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2"), pydantic.Field(alias="exceptionV2")
     ] = None
     exception: typing.Optional[ExceptionInfo] = None

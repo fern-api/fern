@@ -5,6 +5,7 @@ package client
 import (
 	context "context"
 	errors "errors"
+
 	auth "github.com/oauth-client-credentials-nested-root/fern/auth"
 	client "github.com/oauth-client-credentials-nested-root/fern/auth/client"
 	core "github.com/oauth-client-credentials-nested-root/fern/core"
@@ -28,9 +29,8 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
-	oauthTokenProvider := core.NewOAuthTokenProvider(
-		options.ClientID,
-		options.ClientSecret,
+	oauthTokenProvider := core.NewTokenProvider(
+		0,
 	)
 	authOptions := *options
 	authClient := client.NewClient(
@@ -39,7 +39,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options.SetTokenGetter(func() (string, error) {
 		return oauthTokenProvider.GetOrFetch(func() (string, int, error) {
 			response, err := authClient.GetToken(context.Background(), &auth.GetTokenRequest{
-				ClientId:     options.ClientID,
+				ClientID:     options.ClientID,
 				ClientSecret: options.ClientSecret,
 			})
 			if err != nil {

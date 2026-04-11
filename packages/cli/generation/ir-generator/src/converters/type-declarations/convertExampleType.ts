@@ -22,7 +22,7 @@ import {
     FernIr,
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
-import { IdGenerator } from "@fern-api/ir-utils";
+import { getWireValue, IdGenerator } from "@fern-api/ir-utils";
 import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample.js";
 import { FernFileContext } from "../../FernFileContext.js";
 import { ExampleResolver } from "../../resolvers/ExampleResolver.js";
@@ -873,7 +873,7 @@ function convertSingleUnionType({
                 wireDiscriminantValue,
                 shape: FernIr.ExampleSingleUnionTypeProperties.singleProperty(
                     convertTypeReferenceExample({
-                        example: example[parsedSingleUnionTypeProperties.name.wireValue],
+                        example: example[getWireValue(parsedSingleUnionTypeProperties.name)],
                         rawTypeBeingExemplified: rawValueType,
                         typeResolver,
                         exampleResolver,

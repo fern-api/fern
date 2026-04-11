@@ -76,6 +76,8 @@ export declare namespace Field {
         interfaceReference?: ClassReference;
         /* If true, the field is overridden */
         override?: boolean;
+        /* If true, use expression-bodied property syntax (=> initializer). If false, use auto-property with initializer (= initializer). Defaults to true for backward compatibility when get is set and no init/set. */
+        useExpressionBody?: boolean;
 
         /* If specified, use the accessor methods for the field implementation */
         accessors?: Accessors;
@@ -121,6 +123,7 @@ export class Field extends MemberNode {
         remove?: (writer: Writer) => void;
     };
     private readonly override?: boolean;
+    private readonly useExpressionBody?: boolean;
     private readonly isEvent_: boolean;
     constructor(
         {
@@ -144,6 +147,7 @@ export class Field extends MemberNode {
             interfaceReference,
             accessors,
             override,
+            useExpressionBody,
             isEvent,
             origin,
             enclosingType
@@ -185,6 +189,7 @@ export class Field extends MemberNode {
         this.interfaceReference = interfaceReference;
         this.accessors = accessors;
         this.override = override ?? false;
+        this.useExpressionBody = useExpressionBody;
         this.isEvent_ = isEvent ?? false;
         if (this.jsonPropertyName != null) {
             this.annotations = [
@@ -294,9 +299,10 @@ export class Field extends MemberNode {
             return;
         }
 
-        // TODO: refactor useExpressionBodiedPropertySyntax to be an argument that defaults to false
-        // expression body will run the code every time, which is not the intended/expected behavior of initializer
-        const useExpressionBodiedPropertySyntax = this.get && !this.init && !this.set && this.initializer != null;
+        const useExpressionBodiedPropertySyntax =
+            this.useExpressionBody !== undefined
+                ? this.useExpressionBody
+                : this.get && !this.init && !this.set && this.initializer != null;
         if ((this.get || this.init || this.set) && !useExpressionBodiedPropertySyntax) {
             writer.write(" { ");
             if (this.get) {

@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedStreaming.Core;
 
 namespace SeedStreaming;
@@ -117,7 +117,7 @@ public partial class DummyClient : IDummyClient
                 {
                     result = JsonUtils.Deserialize<StreamResponse>(line);
                 }
-                catch (System.Text.Json.JsonException)
+                catch (JsonException)
                 {
                     throw new SeedStreamingException($"Unable to deserialize JSON response 'line'");
                 }

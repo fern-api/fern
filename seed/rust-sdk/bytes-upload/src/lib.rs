@@ -13,10 +13,7 @@
 //!         ..Default::default()
 //!     };
 //!     let client = BytesUploadClient::new(config).expect("Failed to build client");
-//!     client
-//!         .service
-//!         .upload(&todo!("Invalid bytes value"), None)
-//!         .await;
+//!     client.service.upload(&vec![], None).await;
 //! }
 //! ```
 //!
@@ -36,7 +33,8 @@ pub mod core;
 pub mod error;
 pub mod prelude;
 
+pub use api::*;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

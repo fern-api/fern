@@ -423,7 +423,7 @@ client.endpoints.content_type.post_json_patch_content_type(
   datetime: "2024-01-15T09:30:00Z",
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  base_64: "SGVsbG8gd29ybGQh",
+  base64: "SGVsbG8gd29ybGQh",
   list: %w[list list],
   set: Set.new(["set"]),
   map: {
@@ -487,7 +487,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
   datetime: "2024-01-15T09:30:00Z",
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  base_64: "SGVsbG8gd29ybGQh",
+  base64: "SGVsbG8gd29ybGQh",
   list: %w[list list],
   set: Set.new(["set"]),
   map: {
@@ -578,7 +578,7 @@ client.endpoints.enum.get_and_return_enum(request: "SUNNY")
 </dl>
 </details>
 
-## Endpoints HttpMethods
+## Endpoints HTTPMethods
 <details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_get</a>(id) -> String</code></summary>
 <dl>
 <dd>
@@ -615,7 +615,7 @@ client.endpoints.http_methods.test_get(id: "id")
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HTTPMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -663,7 +663,7 @@ client.endpoints.http_methods.test_post(string: "string")
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HTTPMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -722,7 +722,7 @@ client.endpoints.http_methods.test_put(
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HTTPMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -757,7 +757,7 @@ client.endpoints.http_methods.test_patch(
   datetime: "2024-01-15T09:30:00Z",
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  base_64: "SGVsbG8gd29ybGQh",
+  base64: "SGVsbG8gd29ybGQh",
   list: %w[list list],
   set: Set.new(["set"]),
   map: {
@@ -795,7 +795,7 @@ client.endpoints.http_methods.test_patch(
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HTTPMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -843,7 +843,7 @@ client.endpoints.http_methods.test_delete(id: "id")
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+**request_options:** `Seed::Endpoints::HTTPMethods::RequestOptions` 
     
 </dd>
 </dl>
@@ -878,7 +878,7 @@ client.endpoints.object.get_and_return_with_optional_field(
   datetime: "2024-01-15T09:30:00Z",
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-  base_64: "SGVsbG8gd29ybGQh",
+  base64: "SGVsbG8gd29ybGQh",
   list: %w[list list],
   set: Set.new(["set"]),
   map: {
@@ -1044,7 +1044,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
     datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base_64: "SGVsbG8gd29ybGQh",
+    base64: "SGVsbG8gd29ybGQh",
     list: %w[list list],
     set: Set.new(["set"]),
     map: {
@@ -1112,7 +1112,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
     datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base_64: "SGVsbG8gd29ybGQh",
+    base64: "SGVsbG8gd29ybGQh",
     list: %w[list list],
     set: Set.new(["set"]),
     map: {
@@ -1187,7 +1187,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
     datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base_64: "SGVsbG8gd29ybGQh",
+    base64: "SGVsbG8gd29ybGQh",
     list: %w[list list],
     set: Set.new(["set"]),
     map: {
@@ -1206,7 +1206,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
     datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base_64: "SGVsbG8gd29ybGQh",
+    base64: "SGVsbG8gd29ybGQh",
     list: %w[list list],
     set: Set.new(["set"]),
     map: {
@@ -1374,6 +1374,145 @@ client.endpoints.object.get_and_return_map_of_documented_unknown_type(request: {
 <dd>
 
 **request:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_mixed_required_and_optional_fields</a>(request) -> Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets include all required properties in the
+object initializer, even when the example omits some required fields.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
+  required_string: "hello",
+  required_integer: 0,
+  optional_string: "world",
+  required_long: 0
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Seed::Types::Object_::Types::ObjectWithMixedRequiredAndOptionalFields` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_required_nested_object</a>(request) -> Seed::Types::Object_::Types::ObjectWithRequiredNestedObject</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets recursively construct default objects for
+required properties whose type is a named object. When the example
+omits the nested object, the generator should construct a default
+initializer with the nested object's required properties filled in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.object.get_and_return_with_required_nested_object(
+  required_string: "hello",
+  required_object: {
+    string: "nested",
+    nested_object: {}
+  }
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Seed::Types::Object_::Types::ObjectWithRequiredNestedObject` 
     
 </dd>
 </dl>
@@ -2159,6 +2298,130 @@ client.endpoints.params.upload_with_path(param: "upload-path")
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_boolean_path</a>(param) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.params.get_with_boolean_path(param: true)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `Internal::Types::Boolean` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path_and_errors</a>(param) -> String</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param that can throw errors
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.params.get_with_path(param: "param")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Primitive
 <details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_string</a>(request) -> String</code></summary>
 <dl>
@@ -2544,7 +2807,7 @@ client.endpoints.primitive.get_and_return_uuid(request: "d5e9c84f-c2b2-4bf4-b4b0
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_base_64</a>(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_base64</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -2557,7 +2820,7 @@ client.endpoints.primitive.get_and_return_uuid(request: "d5e9c84f-c2b2-4bf4-b4b0
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_base_64(request: "SGVsbG8gd29ybGQh")
+client.endpoints.primitive.get_and_return_base64(request: "SGVsbG8gd29ybGQh")
 ```
 </dd>
 </dl>
@@ -2690,7 +2953,7 @@ client.endpoints.union.get_and_return_union
 </dl>
 </details>
 
-## Endpoints Urls
+## Endpoints URLs
 <details><summary><code>client.endpoints.urls.<a href="/lib/seed/endpoints/urls/client.rb">with_mixed_case</a>() -> String</code></summary>
 <dl>
 <dd>
@@ -2719,7 +2982,7 @@ client.endpoints.urls.with_mixed_case
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::URLs::RequestOptions` 
     
 </dd>
 </dl>
@@ -2759,7 +3022,7 @@ client.endpoints.urls.no_ending_slash
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::URLs::RequestOptions` 
     
 </dd>
 </dl>
@@ -2799,7 +3062,7 @@ client.endpoints.urls.with_ending_slash
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::URLs::RequestOptions` 
     
 </dd>
 </dl>
@@ -2839,7 +3102,7 @@ client.endpoints.urls.with_underscores
 <dl>
 <dd>
 
-**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+**request_options:** `Seed::Endpoints::URLs::RequestOptions` 
     
 </dd>
 </dl>
@@ -2891,7 +3154,7 @@ client.inlined_requests.post_with_object_bodyand_response(
     datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    base_64: "SGVsbG8gd29ybGQh",
+    base64: "SGVsbG8gd29ybGQh",
     list: %w[list list],
     set: Set.new(["set"]),
     map: {

@@ -5,6 +5,7 @@ package endpoints
 import (
 	json "encoding/json"
 	fmt "fmt"
+
 	internal "github.com/go-deterministic-ordering/fern/internal"
 )
 
@@ -86,7 +87,7 @@ func (e *Error) String() string {
 type ErrorCategory string
 
 const (
-	ErrorCategoryApiError            = "API_ERROR"
+	ErrorCategoryAPIError            = "API_ERROR"
 	ErrorCategoryAuthenticationError = "AUTHENTICATION_ERROR"
 	ErrorCategoryInvalidRequestError = "INVALID_REQUEST_ERROR"
 )
@@ -94,7 +95,7 @@ const (
 func NewErrorCategoryFromString(s string) (ErrorCategory, error) {
 	switch s {
 	case "API_ERROR":
-		return ErrorCategoryApiError, nil
+		return ErrorCategoryAPIError, nil
 	case "AUTHENTICATION_ERROR":
 		return ErrorCategoryAuthenticationError, nil
 	case "INVALID_REQUEST_ERROR":

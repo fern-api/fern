@@ -10,3 +10,20 @@ service:
         body: bytes
       examples:
         - {}
+    uploadWithQueryParams:
+      path: /upload-content-with-query-params
+      method: POST
+      request:
+        name: UploadWithQueryParamsRequest
+        content-type: "application/octet-stream"
+        body: bytes
+        query-parameters:
+          model:
+            type: string
+            docs: The model to use for processing
+          language:
+            type: optional<string>
+            docs: The language of the content
+      examples:
+        - query-parameters:
+            model: "nova-2"

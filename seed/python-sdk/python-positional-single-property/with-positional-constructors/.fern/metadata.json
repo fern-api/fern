@@ -1,7 +1,7 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "pydantic_config": {
       "positional_single_property_constructors": true

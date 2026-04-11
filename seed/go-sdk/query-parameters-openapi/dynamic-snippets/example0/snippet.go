@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/query-parameters-openapi/fern"
     client "github.com/query-parameters-openapi/fern/client"
     option "github.com/query-parameters-openapi/fern/option"
-    fern "github.com/query-parameters-openapi/fern"
-    context "context"
 )
 
 func do() {
@@ -15,7 +16,7 @@ func do() {
     )
     request := &fern.SearchRequest{
         Limit: 1,
-        Id: "id",
+        ID: "id",
         Date: fern.MustParseDate(
             "2023-01-15",
         ),

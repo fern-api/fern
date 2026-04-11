@@ -45,7 +45,6 @@ impl Fruit {
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for Fruit {

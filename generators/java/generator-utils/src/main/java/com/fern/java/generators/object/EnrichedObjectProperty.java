@@ -13,6 +13,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.utils.NullableAnnotationUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -56,6 +57,15 @@ public interface EnrichedObjectProperty {
     boolean allowMultiple();
 
     boolean useNullableAnnotation();
+
+    /**
+     * Whether this property represents a query parameter. Query parameters should be excluded from JSON serialization
+     * (they are sent as URL query params, not in the request body).
+     */
+    @Value.Default
+    default boolean queryParameter() {
+        return false;
+    }
 
     @Value.Lazy
     default Optional<FieldSpec> fieldSpec() {
@@ -145,15 +155,19 @@ public interface EnrichedObjectProperty {
                                     nullableNonemptyFilterClassName().packageName(), "Rfc2822DateTimeDeserializer"))
                     .build());
         }
-        // Headers have empty wireKey to avoid JSON serialization
+        // Headers have empty wireKey to avoid JSON serialization.
+        // Query parameters have the queryParameter flag set to exclude them from JSON body.
         boolean hasWireKey = wireKey().isPresent() && !wireKey().get().isEmpty();
-        if (hasWireKey && !nullable() && !aliasOfNullable() && !isOptionalNullableField()) {
+        if (queryParameter() || !hasWireKey) {
+            // Query parameters and headers should not be serialized into the JSON body
+            getterBuilder.addAnnotation(AnnotationSpec.builder(JsonIgnore.class).build());
+        } else if (!nullable() && !aliasOfNullable() && !isOptionalNullableField()) {
             getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                     .addMember("value", "$S", wireKey().get())
                     .build());
         } else {
             // Check if this is an OptionalNullable field - if so, add @JsonInclude + @JsonProperty
-            if (hasWireKey && isOptionalNullableField()) {
+            if (isOptionalNullableField()) {
                 getterBuilder.addAnnotation(AnnotationSpec.builder(JsonInclude.class)
                         .addMember("value", "$T.Include.CUSTOM", JsonInclude.class)
                         .addMember("valueFilter", "$T.class", nullableNonemptyFilterClassName())
@@ -177,9 +191,10 @@ public interface EnrichedObjectProperty {
 
     @Value.Lazy
     default Optional<MethodSpec> getterForSerialization() {
-        // Headers have empty wireKey and should not have serialization getter
+        // Headers have empty wireKey and should not have serialization getter.
+        // Query parameters should also be excluded from serialization.
         boolean hasWireKey = wireKey().isPresent() && !wireKey().get().isEmpty();
-        if (!hasWireKey || (!nullable() && !aliasOfNullable())) {
+        if (queryParameter() || !hasWireKey || (!nullable() && !aliasOfNullable())) {
             return Optional.empty();
         }
 
@@ -376,7 +391,7 @@ public interface EnrichedObjectProperty {
             TypeName poetTypeName,
             boolean allowMultiple,
             boolean useNullableAnnotation) {
-        Name name = objectProperty.getName().getName();
+        Name name = NameUtils.getName(objectProperty.getName());
         Optional<Literal> maybeLiteral =
                 objectProperty.getValueType().getContainer().flatMap(ContainerType::getLiteral);
         return EnrichedObjectProperty.builder()
@@ -391,7 +406,7 @@ public interface EnrichedObjectProperty {
                 .generator(generator)
                 .allowMultiple(allowMultiple)
                 .useNullableAnnotation(useNullableAnnotation)
-                .wireKey(objectProperty.getName().getWireValue())
+                .wireKey(NameUtils.getWireValue(objectProperty.getName()))
                 .docs(objectProperty.getDocs())
                 .literal(maybeLiteral)
                 .typeDeclaration(typeDeclaration)

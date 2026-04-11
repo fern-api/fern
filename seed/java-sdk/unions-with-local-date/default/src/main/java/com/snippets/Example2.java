@@ -12,9 +12,17 @@ public class Example2 {
 
         client.bigunion()
                 .updateMany(Arrays.asList(
-                        BigUnion.normalSweet(
-                                NormalSweet.builder().value("value").build()),
-                        BigUnion.normalSweet(
-                                NormalSweet.builder().value("value").build())));
+                        BigUnion.normalSweet(NormalSweet.builder()
+                                .value("value")
+                                .additionalProperty("id", "id")
+                                .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+                                .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
+                                .build()),
+                        BigUnion.normalSweet(NormalSweet.builder()
+                                .value("value")
+                                .additionalProperty("id", "id")
+                                .additionalProperty("created-at", "2024-01-15T09:30:00Z")
+                                .additionalProperty("archived-at", "2024-01-15T09:30:00Z")
+                                .build())));
     }
 }

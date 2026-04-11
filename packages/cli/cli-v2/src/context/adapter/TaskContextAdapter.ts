@@ -7,7 +7,7 @@ import type {
     Startable,
     TaskContext
 } from "@fern-api/task-context";
-import { FernCliError, TaskResult } from "@fern-api/task-context";
+import { TaskAbortSignal, TaskResult } from "@fern-api/task-context";
 import type { Task } from "../../ui/Task.js";
 import type { Context } from "../Context.js";
 import { TaskContextLogger } from "./TaskContextLogger.js";
@@ -50,7 +50,7 @@ export class TaskContextAdapter implements TaskContext {
 
     public failAndThrow(message?: string, error?: unknown): never {
         this.failWithoutThrowing(message, error);
-        throw new FernCliError();
+        throw new TaskAbortSignal();
     }
 
     public failWithoutThrowing(message?: string, error?: unknown): void {
@@ -115,8 +115,8 @@ export class TaskContextAdapter implements TaskContext {
         }
     }
 
-    public async instrumentPostHogEvent(_event: PosthogEvent): Promise<void> {
-        // no-op for now
+    public instrumentPostHogEvent(_event: PosthogEvent): void {
+        // no-op — v2 uses TelemetryClient.sendEvent directly
     }
 
     private formatError(error: unknown): string | undefined {

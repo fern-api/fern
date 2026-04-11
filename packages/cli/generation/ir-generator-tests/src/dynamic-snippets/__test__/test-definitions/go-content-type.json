@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "title",
                         "name": {
                             "originalName": "title",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "Title",
                                 "safeName": "Title"
                             }
-                        },
-                        "wireValue": "title"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -100,6 +100,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "rating",
                         "name": {
                             "originalName": "rating",
                             "camelCase": {
@@ -118,8 +119,7 @@
                                 "unsafeName": "Rating",
                                 "safeName": "Rating"
                             }
-                        },
-                        "wireValue": "rating"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",

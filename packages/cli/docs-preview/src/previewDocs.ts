@@ -5,6 +5,7 @@ import {
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown,
+    stripMdxComments,
     transformAtPrefixImports
 } from "@fern-api/docs-markdown-utils";
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
@@ -238,10 +239,10 @@ export async function getPreviewDocsDefinition({
             );
 
             previousDocsDefinition.pages[pageId] = {
-                markdown: finalMarkdown,
+                markdown: stripMdxComments(finalMarkdown),
                 editThisPageUrl: previousValue.editThisPageUrl,
                 editThisPageLaunch: previousValue.editThisPageLaunch,
-                rawMarkdown: markdown
+                rawMarkdown: stripMdxComments(markdown)
             };
         }
 

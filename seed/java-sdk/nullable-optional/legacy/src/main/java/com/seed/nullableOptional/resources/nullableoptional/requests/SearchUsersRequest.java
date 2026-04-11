@@ -8,12 +8,10 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.nullableOptional.core.Nullable;
-import com.seed.nullableOptional.core.NullableNonemptyFilter;
 import com.seed.nullableOptional.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +45,7 @@ public final class SearchUsersRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("query")
+    @JsonIgnore
     public String getQuery() {
         return query;
     }
@@ -60,7 +58,7 @@ public final class SearchUsersRequest {
         return department;
     }
 
-    @JsonProperty("role")
+    @JsonIgnore
     public Optional<String> getRole() {
         return role;
     }
@@ -70,18 +68,6 @@ public final class SearchUsersRequest {
         if (isActive == null) {
             return Optional.empty();
         }
-        return isActive;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("department")
-    private Optional<String> _getDepartment() {
-        return department;
-    }
-
-    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
-    @JsonProperty("isActive")
-    private Optional<Boolean> _getIsActive() {
         return isActive;
     }
 

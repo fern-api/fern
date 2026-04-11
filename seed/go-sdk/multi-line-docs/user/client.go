@@ -4,6 +4,7 @@ package user
 
 import (
 	context "context"
+
 	fern "github.com/multi-line-docs/fern"
 	core "github.com/multi-line-docs/fern/core"
 	internal "github.com/multi-line-docs/fern/internal"
@@ -38,12 +39,12 @@ func (c *Client) GetUser(
 	ctx context.Context,
 	// The ID of the user to retrieve.
 	// This ID is unique to each user.
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.GetUser(
 		ctx,
-		userId,
+		userID,
 		opts...,
 	)
 	if err != nil {

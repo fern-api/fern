@@ -69,6 +69,7 @@
             },
             "values": [
                 {
+                    "wireValue": "USD",
                     "name": {
                         "originalName": "USD",
                         "camelCase": {
@@ -87,10 +88,10 @@
                             "unsafeName": "Usd",
                             "safeName": "Usd"
                         }
-                    },
-                    "wireValue": "USD"
+                    }
                 },
                 {
+                    "wireValue": "YEN",
                     "name": {
                         "originalName": "YEN",
                         "camelCase": {
@@ -109,8 +110,7 @@
                             "unsafeName": "Yen",
                             "safeName": "Yen"
                         }
-                    },
-                    "wireValue": "YEN"
+                    }
                 }
             ]
         }
@@ -282,6 +282,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "amount",
                                 "name": {
                                     "originalName": "amount",
                                     "camelCase": {
@@ -300,8 +301,7 @@
                                         "unsafeName": "Amount",
                                         "safeName": "Amount"
                                     }
-                                },
-                                "wireValue": "amount"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -312,6 +312,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "currency",
                                 "name": {
                                     "originalName": "currency",
                                     "camelCase": {
@@ -330,8 +331,7 @@
                                         "unsafeName": "Currency",
                                         "safeName": "Currency"
                                     }
-                                },
-                                "wireValue": "currency"
+                                }
                             },
                             "typeReference": {
                                 "type": "named",

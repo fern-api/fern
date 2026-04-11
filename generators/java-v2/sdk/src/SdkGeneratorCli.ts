@@ -48,35 +48,56 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         if (context.config.output.snippetFilepath != null) {
-            // Pre-populate snippets cache following C# approach
-            await context.snippetGenerator.populateSnippetsCache();
+            const dynamicIr = context.ir.dynamic;
+            if (!dynamicIr) {
+                throw new Error("Cannot generate dynamic snippets without dynamic IR");
+            }
+
+            // Single IR conversion and generator instance shared across all snippet consumers.
+            // Previously, populateSnippetsCache() and generateSnippets() each created their own
+            // DynamicSnippetsGenerator (duplicating convertIr() and constructor work).
+            // Type cast needed: java-v2/sdk uses ir-sdk@65.4.0, dynamic-snippets uses dynamic-ir-sdk@61.7.0.
+            // Runtime data shapes are compatible; only TS types diverge across SDK versions.
+            // biome-ignore lint/suspicious/noExplicitAny: version boundary cast
+            const convertedIr: any = convertIr(dynamicIr);
+            const sharedSnippetsGenerator = new DynamicSnippetsGenerator({
+                ir: convertedIr,
+                config: context.config
+            });
+
+            // Pre-populate snippets cache with the shared generator (used by reference.md)
+            await context.snippetGenerator.populateSnippetsCache(sharedSnippetsGenerator);
 
             const snippetFilepath = context.config.output.snippetFilepath;
             let endpointSnippets: Endpoint[] = [];
             try {
-                endpointSnippets = await this.generateSnippets({ context });
+                endpointSnippets = await this.generateSnippets({
+                    context,
+                    dynamicIr,
+                    dynamicSnippetsGenerator: sharedSnippetsGenerator
+                });
             } catch (e) {
                 context.logger.warn("Failed to generate snippets, this is OK.");
             }
 
-            try {
-                context.logger.debug("Starting README.md generation...");
-                await this.generateReadme({
-                    context,
-                    endpointSnippets
-                });
-                context.logger.debug("Successfully generated README.md");
-            } catch (e) {
-                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
-            }
+            // Run README and reference generation in parallel
+            context.logger.debug("Starting README.md and reference.md generation...");
+            const [readmeResult, referenceResult] = await Promise.allSettled([
+                this.generateReadme({ context, endpointSnippets }),
+                this.generateReference({ context })
+            ]);
 
-            try {
-                context.logger.debug("Starting reference.md generation...");
-                await this.generateReference({ context });
-                context.logger.debug("Successfully generated reference.md");
-            } catch (e) {
-                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
+            const docErrors: string[] = [];
+            if (readmeResult.status === "rejected") {
+                docErrors.push(`README.md: ${extractErrorMessage(readmeResult.reason)}`);
             }
+            if (referenceResult.status === "rejected") {
+                docErrors.push(`reference.md: ${extractErrorMessage(referenceResult.reason)}`);
+            }
+            if (docErrors.length > 0) {
+                throw new Error(`Failed to generate documentation:\n${docErrors.join("\n")}`);
+            }
+            context.logger.debug("Successfully generated README.md and reference.md");
 
             try {
                 await this.generateSnippetsJson({
@@ -95,22 +116,16 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         await context.project.persist();
     }
 
-    private async generateSnippets({ context }: { context: SdkGeneratorContext }): Promise<Endpoint[]> {
+    private async generateSnippets({
+        context,
+        dynamicIr,
+        dynamicSnippetsGenerator
+    }: {
+        context: SdkGeneratorContext;
+        dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
+        dynamicSnippetsGenerator: DynamicSnippetsGenerator;
+    }): Promise<Endpoint[]> {
         const endpointSnippets: Endpoint[] = [];
-        const dynamicIr = context.ir.dynamic;
-
-        if (!dynamicIr) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
-        }
-
-        // Type cast needed: java-v2/sdk uses ir-sdk@65.4.0, dynamic-snippets uses dynamic-ir-sdk@61.7.0.
-        // Runtime data shapes are compatible; only TS types diverge across SDK versions.
-        // biome-ignore lint/suspicious/noExplicitAny: version boundary cast
-        const convertedIr: any = convertIr(dynamicIr);
-        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertedIr,
-            config: context.config
-        });
 
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
             const method = endpoint.location.method;

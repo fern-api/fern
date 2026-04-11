@@ -32,6 +32,12 @@ export interface GeneratorsConfigurationSchema {
      * Can be overridden at the individual generator level.
      */
     autorelease?: boolean;
+    /**
+     * Controls which automation features (GitHub Actions workflows) are enabled.
+     * Can be overridden at the group or generator level.
+     * All features default to true when not specified.
+     */
+    automation?: GeneratorsYml.AutomationSchema;
     /** Deprecated, use the `api` key instead */
     openapi?: GeneratorsYml.GeneratorsOpenApiSchema;
     /** Deprecated, use the `api` key instead */

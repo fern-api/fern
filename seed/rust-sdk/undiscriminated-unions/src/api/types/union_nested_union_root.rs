@@ -5,7 +5,7 @@ pub use crate::prelude::*;
 pub enum NestedUnionRoot {
     String(String),
 
-    List1(Vec<String>),
+    StringList(Vec<String>),
 
     NestedUnionL1(NestedUnionL1),
 }
@@ -15,15 +15,15 @@ impl NestedUnionRoot {
         matches!(self, Self::String(_))
     }
 
-    pub fn is_list1(&self) -> bool {
-        matches!(self, Self::List1(_))
+    pub fn is_string_list(&self) -> bool {
+        matches!(self, Self::StringList(_))
     }
 
-    pub fn is_nestedunionl1(&self) -> bool {
+    pub fn is_nested_union_l1(&self) -> bool {
         matches!(self, Self::NestedUnionL1(_))
     }
 
-    pub fn as_string(&self) -> Option<&String> {
+    pub fn as_string(&self) -> Option<&str> {
         match self {
             Self::String(value) => Some(value),
             _ => None,
@@ -37,28 +37,28 @@ impl NestedUnionRoot {
         }
     }
 
-    pub fn as_list1(&self) -> Option<&Vec<String>> {
+    pub fn as_string_list(&self) -> Option<&Vec<String>> {
         match self {
-            Self::List1(value) => Some(value),
+            Self::StringList(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_list1(self) -> Option<Vec<String>> {
+    pub fn into_string_list(self) -> Option<Vec<String>> {
         match self {
-            Self::List1(value) => Some(value),
+            Self::StringList(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn as_nestedunionl1(&self) -> Option<&NestedUnionL1> {
+    pub fn as_nested_union_l1(&self) -> Option<&NestedUnionL1> {
         match self {
             Self::NestedUnionL1(value) => Some(value),
             _ => None,
         }
     }
 
-    pub fn into_nestedunionl1(self) -> Option<NestedUnionL1> {
+    pub fn into_nested_union_l1(self) -> Option<NestedUnionL1> {
         match self {
             Self::NestedUnionL1(value) => Some(value),
             _ => None,

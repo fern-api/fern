@@ -4,11 +4,12 @@ package primitive
 
 import (
 	context "context"
+	time "time"
+
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	uuid "github.com/google/uuid"
-	time "time"
 )
 
 type Client struct {
@@ -145,12 +146,12 @@ func (c *Client) GetAndReturnDate(
 	return response.Body, nil
 }
 
-func (c *Client) GetAndReturnUuid(
+func (c *Client) GetAndReturnUUID(
 	ctx context.Context,
 	request uuid.UUID,
 	opts ...option.RequestOption,
 ) (uuid.UUID, error) {
-	response, err := c.WithRawResponse.GetAndReturnUuid(
+	response, err := c.WithRawResponse.GetAndReturnUUID(
 		ctx,
 		request,
 		opts...,

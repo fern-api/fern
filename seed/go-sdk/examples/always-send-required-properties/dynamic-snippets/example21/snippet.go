@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/examples/fern"
     client "github.com/examples/fern/client"
     option "github.com/examples/fern/option"
-    fern "github.com/examples/fern"
-    context "context"
 )
 
 func do() {
@@ -17,7 +18,7 @@ func do() {
         ),
     )
     request := &fern.RefreshTokenRequest{
-        Ttl: 420,
+        TTL: 420,
     }
     client.Service.RefreshToken(
         context.TODO(),

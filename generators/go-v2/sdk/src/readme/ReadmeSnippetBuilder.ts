@@ -37,7 +37,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         super({ endpointSnippets });
         this.context = context;
 
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.isPaginationEnabled =
+            (context.config.generatePaginatedClients ?? false) || context.ir.sdkConfig.hasPaginatedEndpoints;
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
         this.defaultEndpointId =
@@ -394,14 +395,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => this.context.caseConverter.pascalUnsafe(part));
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
     }
 
     private getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
-        return endpoint.name.pascalCase.unsafeName;
+        return this.context.caseConverter.pascalUnsafe(endpoint.name);
     }
 
     private getDefaultEnvironmentId(): FernIr.dynamic.EnvironmentId | undefined {
@@ -433,7 +434,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return undefined;
         }
 
-        return `${this.rootPackageName}.Environments.${defaultEnvironment.name.pascalCase.unsafeName}`;
+        return `${this.rootPackageName}.Environments.${this.context.caseConverter.pascalUnsafe(defaultEnvironment.name)}`;
     }
 
     private getRootPackageClientName(): string {

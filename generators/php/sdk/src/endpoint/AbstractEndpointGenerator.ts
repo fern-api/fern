@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -54,7 +55,7 @@ export abstract class AbstractEndpointGenerator {
             ...endpoint.pathParameters
         ]) {
             const parameterName = this.context.getParameterName(pathParam.name);
-            pathParameterReferences[pathParam.name.originalName] = this.accessPathParameterValue({
+            pathParameterReferences[getOriginalName(pathParam.name)] = this.accessPathParameterValue({
                 pathParameter: pathParam,
                 sdkRequest: endpoint.sdkRequest,
                 includePathParametersInEndpointSignature: includePathParametersInSignature

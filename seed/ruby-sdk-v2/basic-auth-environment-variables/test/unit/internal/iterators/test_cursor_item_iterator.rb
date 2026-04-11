@@ -6,7 +6,7 @@ require "json"
 require "test_helper"
 
 NUMBERS = (1..65).to_a
-PageResponse = Struct.new(:cards, :next_cursor)
+PageResponse = Struct.new(:cards, :next_cursor, keyword_init: true)
 
 class CursorItemIteratorTest < Minitest::Test
   def make_iterator(initial_cursor:)

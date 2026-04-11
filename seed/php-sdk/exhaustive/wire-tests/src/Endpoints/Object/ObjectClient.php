@@ -19,6 +19,8 @@ use Seed\Core\Json\JsonSerializer;
 use Seed\Types\Object\Types\ObjectWithUnknownField;
 use Seed\Types\Object\Types\ObjectWithDocumentedUnknownType;
 use Seed\Core\Json\JsonDecoder;
+use Seed\Types\Object\Types\ObjectWithMixedRequiredAndOptionalFields;
+use Seed\Types\Object\Types\ObjectWithRequiredNestedObject;
 use Seed\Types\Object\Types\ObjectWithDatetimeLikeString;
 
 class ObjectClient
@@ -67,11 +69,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithOptionalField
+     * @return ?ObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): ObjectWithOptionalField
+    public function getAndReturnWithOptionalField(ObjectWithOptionalField $request, ?array $options = null): ?ObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -87,6 +89,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -111,11 +116,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithRequiredField
+     * @return ?ObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): ObjectWithRequiredField
+    public function getAndReturnWithRequiredField(ObjectWithRequiredField $request, ?array $options = null): ?ObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -131,6 +136,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -155,11 +163,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithMapOfMap
+     * @return ?ObjectWithMapOfMap
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): ObjectWithMapOfMap
+    public function getAndReturnWithMapOfMap(ObjectWithMapOfMap $request, ?array $options = null): ?ObjectWithMapOfMap
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -175,6 +183,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithMapOfMap::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -199,11 +210,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return NestedObjectWithOptionalField
+     * @return ?NestedObjectWithOptionalField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): NestedObjectWithOptionalField
+    public function getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField $request, ?array $options = null): ?NestedObjectWithOptionalField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -219,6 +230,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return NestedObjectWithOptionalField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -244,11 +258,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return NestedObjectWithRequiredField
+     * @return ?NestedObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): NestedObjectWithRequiredField
+    public function getAndReturnNestedWithRequiredField(string $string, NestedObjectWithRequiredField $request, ?array $options = null): ?NestedObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -264,6 +278,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -288,11 +305,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return NestedObjectWithRequiredField
+     * @return ?NestedObjectWithRequiredField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): NestedObjectWithRequiredField
+    public function getAndReturnNestedWithRequiredFieldAsList(array $request, ?array $options = null): ?NestedObjectWithRequiredField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -308,6 +325,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return NestedObjectWithRequiredField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -332,11 +352,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithUnknownField
+     * @return ?ObjectWithUnknownField
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithUnknownField(ObjectWithUnknownField $request, ?array $options = null): ObjectWithUnknownField
+    public function getAndReturnWithUnknownField(ObjectWithUnknownField $request, ?array $options = null): ?ObjectWithUnknownField
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -352,6 +372,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithUnknownField::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -376,11 +399,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithDocumentedUnknownType
+     * @return ?ObjectWithDocumentedUnknownType
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithDocumentedUnknownType(ObjectWithDocumentedUnknownType $request, ?array $options = null): ObjectWithDocumentedUnknownType
+    public function getAndReturnWithDocumentedUnknownType(ObjectWithDocumentedUnknownType $request, ?array $options = null): ?ObjectWithDocumentedUnknownType
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -396,6 +419,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithDocumentedUnknownType::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -420,11 +446,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<string, mixed>
+     * @return ?array<string, mixed>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnMapOfDocumentedUnknownType(array $request, ?array $options = null): array
+    public function getAndReturnMapOfDocumentedUnknownType(array $request, ?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -440,7 +466,112 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, ['string' => 'mixed']); // @phpstan-ignore-line
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Tests that dynamic snippets include all required properties in the
+     * object initializer, even when the example omits some required fields.
+     *
+     * @param ObjectWithMixedRequiredAndOptionalFields $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?ObjectWithMixedRequiredAndOptionalFields
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function getAndReturnWithMixedRequiredAndOptionalFields(ObjectWithMixedRequiredAndOptionalFields $request, ?array $options = null): ?ObjectWithMixedRequiredAndOptionalFields
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/object/get-and-return-with-mixed-required-and-optional-fields",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ObjectWithMixedRequiredAndOptionalFields::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Tests that dynamic snippets recursively construct default objects for
+     * required properties whose type is a named object. When the example
+     * omits the nested object, the generator should construct a default
+     * initializer with the nested object's required properties filled in.
+     *
+     * @param ObjectWithRequiredNestedObject $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?ObjectWithRequiredNestedObject
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function getAndReturnWithRequiredNestedObject(ObjectWithRequiredNestedObject $request, ?array $options = null): ?ObjectWithRequiredNestedObject
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/object/get-and-return-with-required-nested-object",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ObjectWithRequiredNestedObject::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
@@ -468,11 +599,11 @@ class ObjectClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return ObjectWithDatetimeLikeString
+     * @return ?ObjectWithDatetimeLikeString
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString $request, ?array $options = null): ObjectWithDatetimeLikeString
+    public function getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString $request, ?array $options = null): ?ObjectWithDatetimeLikeString
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -488,6 +619,9 @@ class ObjectClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return ObjectWithDatetimeLikeString::fromJson($json);
             }
         } catch (JsonException $e) {

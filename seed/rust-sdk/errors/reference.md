@@ -26,6 +26,7 @@ async fn main() {
         .foo_without_endpoint_error(
             &FooRequest {
                 bar: "bar".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -68,6 +69,7 @@ async fn main() {
         .foo(
             &FooRequest {
                 bar: "bar".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -110,6 +112,7 @@ async fn main() {
         .foo_with_examples(
             &FooRequest {
                 bar: "hello".to_string(),
+                ..Default::default()
             },
             None,
         )

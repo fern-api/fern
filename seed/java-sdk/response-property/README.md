@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:response-property'
+  implementation 'com.fern:response-property:0.0.1'
 }
 ```
 

@@ -17,7 +17,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
-      # @option params [Seed::Types::Types::MovieId] :movie_id
+      # @option params [Seed::Types::Types::MovieID] :movie_id
       #
       # @return [Seed::Types::Types::Movie]
       def get_movie(request_options: {}, **params)
@@ -67,7 +67,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::Types::MovieId.load(response.body)
+          Seed::Types::Types::MovieID.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

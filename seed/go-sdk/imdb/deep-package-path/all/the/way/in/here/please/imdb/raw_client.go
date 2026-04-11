@@ -4,11 +4,12 @@ package imdb
 
 import (
 	context "context"
+	http "net/http"
+
 	please "github.com/imdb/fern/all/the/way/in/here/please"
 	core "github.com/imdb/fern/all/the/way/in/here/please/core"
 	internal "github.com/imdb/fern/all/the/way/in/here/please/internal"
 	option "github.com/imdb/fern/all/the/way/in/here/please/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -34,7 +35,7 @@ func (r *RawClient) CreateMovie(
 	ctx context.Context,
 	request *please.CreateMovieRequest,
 	opts ...option.RequestOption,
-) (*core.Response[please.MovieId], error) {
+) (*core.Response[please.MovieID], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -46,7 +47,7 @@ func (r *RawClient) CreateMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response please.MovieId
+	var response please.MovieID
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -64,7 +65,7 @@ func (r *RawClient) CreateMovie(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[please.MovieId]{
+	return &core.Response[please.MovieID]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,
@@ -73,7 +74,7 @@ func (r *RawClient) CreateMovie(
 
 func (r *RawClient) GetMovie(
 	ctx context.Context,
-	movieId please.MovieId,
+	movieID please.MovieID,
 	opts ...option.RequestOption,
 ) (*core.Response[*please.Movie], error) {
 	options := core.NewRequestOptions(opts...)
@@ -84,7 +85,7 @@ func (r *RawClient) GetMovie(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/movies/%v",
-		movieId,
+		movieID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

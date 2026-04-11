@@ -20,6 +20,6 @@ describe("EnumClient", () => {
             .build();
 
         const response = await client.endpoints.enum.getAndReturnEnum("SUNNY");
-        expect(response).toEqual("SUNNY");
+        expect(response).toEqual(rawResponseBody);
     });
 });

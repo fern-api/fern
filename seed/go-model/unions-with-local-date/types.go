@@ -5,8 +5,9 @@ package unions
 import (
 	json "encoding/json"
 	fmt "fmt"
-	internal "github.com/unions-with-local-date/fern/internal"
 	time "time"
+
+	internal "github.com/unions-with-local-date/fern/internal"
 )
 
 // This is a simple union.
@@ -64,7 +65,7 @@ type UnionWithLiteral struct {
 
 type UnionWithBaseProperties struct {
 	Type        string
-	Id          string
+	ID          string
 	Integer     int
 	FieldString string
 	Foo         Foo

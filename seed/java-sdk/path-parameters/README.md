@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:path-parameters'
+  implementation 'com.fern:path-parameters:0.0.1'
 }
 ```
 

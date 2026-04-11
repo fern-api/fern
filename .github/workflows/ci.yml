@@ -22,16 +22,15 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 10
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
 jobs:
   compile:
-    runs-on: Seed
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -43,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -55,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -67,7 +66,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -79,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -102,7 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -116,12 +115,20 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           lfs: true
 
       - name: Install
         uses: ./.github/actions/install
+
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
       - name: Build CLI for install-dependencies
         run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
@@ -167,10 +174,48 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
+
+      - name: Log in to Docker Hub
+        if: ${{ env.DOCKERHUB_USERNAME != '' }}
+        uses: docker/login-action@v3
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+        with:
+          username: ${{ secrets.DOCKER_USERNAME_PUBLIC_READONLY }}
+          password: ${{ secrets.DOCKER_PASSWORD_PUBLIC_READONLY }}
+
+      - name: Clear stale Docker image cache
+        run: rm -rf /tmp/docker-cache
+
+      - name: Cache Docker images
+        id: docker-cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/docker-cache
+          key: ${{ runner.os }}-docker-ete-${{ hashFiles('**/Dockerfile*') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-ete-
+
+      - name: Load cached Docker images
+        run: |
+          for f in /tmp/docker-cache/*.tar; do
+            [ -f "$f" ] && docker load -i "$f" || true
+          done
+
+      - name: Record pre-existing Docker images
+        run: docker images -q | sort -u > /tmp/docker-images-before.txt
+
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
       - name: Build CLI for install-dependencies
         run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
@@ -217,6 +262,21 @@ jobs:
             echo "No snapshot changes to commit"
           fi
 
+      - name: Save Docker images for cache
+        if: always()
+        run: |
+          if [ ! -f /tmp/docker-images-before.txt ]; then
+            echo "Skipping cache save: docker-images-before.txt not found"
+            exit 0
+          fi
+          mkdir -p /tmp/docker-cache
+          comm -13 /tmp/docker-images-before.txt <(docker images -q | sort -u) | while read -r id; do
+            img=$(docker inspect --format '{{index .RepoTags 0}}' "$id" 2>/dev/null || true)
+            [ -z "$img" ] && continue
+            fname=$(echo "$img" | tr '/:' '_')
+            docker save "$img" -o "/tmp/docker-cache/${fname}.tar" 2>/dev/null || true
+          done
+
       - name: Ensure no changes to git-tracked files
         if: ${{ !github.event.inputs.update_snapshots }}
         run: git --no-pager diff --exit-code
@@ -227,7 +287,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
@@ -249,16 +309,15 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: "20.x"
-          package-manager-cache: false
 
       - name: Assert docs are generated
         env:
@@ -286,16 +345,15 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: "20.x"
-          package-manager-cache: false
 
       - name: Check API definition is valid
         env:

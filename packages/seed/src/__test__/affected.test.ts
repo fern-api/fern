@@ -29,14 +29,11 @@ function createGenerator(workspaceName: string): GeneratorWorkspace {
 // Standard set of generators used across tests
 const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("ts-sdk"),
-    createGenerator("ts-express"),
     createGenerator("python-sdk"),
     createGenerator("pydantic"),
     createGenerator("pydantic-v2"),
-    createGenerator("fastapi"),
     createGenerator("java-sdk"),
     createGenerator("java-model"),
-    createGenerator("java-spring"),
     createGenerator("go-sdk"),
     createGenerator("go-model"),
     createGenerator("csharp-sdk"),
@@ -48,8 +45,7 @@ const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("swift-sdk"),
     createGenerator("rust-sdk"),
     createGenerator("rust-model"),
-    createGenerator("openapi"),
-    createGenerator("postman")
+    createGenerator("openapi")
 ];
 
 // Standard set of fixtures
@@ -75,6 +71,30 @@ describe("detectAffected", () => {
             expect(result.affectedGenerators).toEqual([]);
             expect(result.generatorsWithAllFixtures).toEqual([]);
             expect(result.affectedFixtures).toEqual([]);
+        });
+
+        it("skips all seed tests when only versions.yml files change", () => {
+            const result = detectAffected(
+                ["generators/csharp/sdk/versions.yml", "generators/csharp/model/versions.yml"],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.generatorsWithAllFixtures).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
+        });
+
+        it("skips seed for versions.yml but still detects other generator changes", () => {
+            const result = detectAffected(
+                ["generators/csharp/sdk/versions.yml", "generators/python/src/generator.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.affectedGenerators).toContain("python-sdk");
+            expect(result.affectedGenerators).not.toContain("csharp-sdk");
+            expect(result.affectedGenerators).not.toContain("csharp-model");
         });
 
         it("skips all seed tests when only CLI code changes", () => {
@@ -258,17 +278,14 @@ describe("detectAffected", () => {
             expect(result.allGeneratorsAffected).toBe(false);
             expect(result.affectedGenerators).toContain("python-sdk");
             expect(result.affectedGenerators).toContain("pydantic");
-            expect(result.affectedGenerators).toContain("fastapi");
             expect(result.generatorsWithAllFixtures).toContain("python-sdk");
             expect(result.generatorsWithAllFixtures).toContain("pydantic");
-            expect(result.generatorsWithAllFixtures).toContain("fastapi");
         });
 
         it("detects typescript generator source change", () => {
             const result = detectAffected(["generators/typescript/src/index.ts"], ALL_GENERATORS);
 
             expect(result.affectedGenerators).toContain("ts-sdk");
-            expect(result.affectedGenerators).toContain("ts-express");
         });
 
         it("detects v2 generator source change affects same workspaces", () => {
@@ -277,7 +294,6 @@ describe("detectAffected", () => {
             expect(result.affectedGenerators).toContain("python-sdk");
             expect(result.affectedGenerators).toContain("pydantic");
             expect(result.affectedGenerators).toContain("pydantic-v2");
-            expect(result.affectedGenerators).toContain("fastapi");
             // pydantic (non-v2) also maps to python-v2/ in GENERATOR_SOURCE_PATHS
         });
 
@@ -320,6 +336,70 @@ describe("detectAffected", () => {
         });
     });
 
+    describe("docker/seed/ Dockerfile detection", () => {
+        it("detects Dockerfile.java change affects Java generators", () => {
+            const result = detectAffected(["docker/seed/Dockerfile.java"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.affectedGenerators).toContain("java-sdk");
+            expect(result.affectedGenerators).toContain("java-model");
+            expect(result.generatorsWithAllFixtures).toContain("java-sdk");
+            expect(result.generatorsWithAllFixtures).toContain("java-model");
+            expect(result.affectedGenerators).not.toContain("ts-sdk");
+            expect(result.affectedGenerators).not.toContain("python-sdk");
+        });
+
+        it("detects Dockerfile.ts change affects TypeScript generators", () => {
+            const result = detectAffected(["docker/seed/Dockerfile.ts"], ALL_GENERATORS);
+
+            expect(result.affectedGenerators).toContain("ts-sdk");
+            expect(result.affectedGenerators).not.toContain("java-sdk");
+        });
+
+        it("detects Dockerfile.python change affects Python generators", () => {
+            const result = detectAffected(["docker/seed/Dockerfile.python"], ALL_GENERATORS);
+
+            expect(result.affectedGenerators).toContain("python-sdk");
+            expect(result.affectedGenerators).toContain("pydantic");
+        });
+
+        it("detects Dockerfile.go change affects Go generators", () => {
+            const result = detectAffected(["docker/seed/Dockerfile.go"], ALL_GENERATORS);
+
+            expect(result.affectedGenerators).toContain("go-sdk");
+            expect(result.affectedGenerators).toContain("go-model");
+        });
+
+        it("detects Dockerfile.csharp change affects C# generators", () => {
+            const result = detectAffected(["docker/seed/Dockerfile.csharp"], ALL_GENERATORS);
+
+            expect(result.affectedGenerators).toContain("csharp-sdk");
+            expect(result.affectedGenerators).toContain("csharp-model");
+        });
+
+        it("detects Dockerfile.php change affects PHP generators", () => {
+            const result = detectAffected(["docker/seed/Dockerfile.php"], ALL_GENERATORS);
+
+            expect(result.affectedGenerators).toContain("php-sdk");
+            expect(result.affectedGenerators).toContain("php-model");
+        });
+
+        it("detects Dockerfile.dockerignore change runs everything", () => {
+            const result = detectAffected(["docker/seed/Dockerfile.dockerignore"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("ignores unknown files in docker/seed/", () => {
+            const result = detectAffected(["docker/seed/README.md"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+        });
+    });
+
     describe("combined generator + fixture changes (precise union)", () => {
         it("returns precise union: affected generators get all fixtures, others get changed fixtures", () => {
             const result = detectAffected(
@@ -334,7 +414,6 @@ describe("detectAffected", () => {
             // python generators should be in generatorsWithAllFixtures
             expect(result.generatorsWithAllFixtures).toContain("python-sdk");
             expect(result.generatorsWithAllFixtures).toContain("pydantic");
-            expect(result.generatorsWithAllFixtures).toContain("fastapi");
             // imdb should be in affectedFixtures
             expect(result.affectedFixtures).toContain("imdb");
         });
@@ -513,7 +592,7 @@ describe("resolveAffectedFixtures", () => {
                 allGeneratorsAffected: true,
                 allFixturesAffected: false,
                 affectedGenerators: [],
-                generatorsWithAllFixtures: ["python-sdk", "pydantic", "fastapi"],
+                generatorsWithAllFixtures: ["python-sdk", "pydantic"],
                 affectedFixtures: ["imdb"],
                 summary: []
             };
@@ -532,7 +611,7 @@ describe("resolveAffectedFixtures", () => {
                 allGeneratorsAffected: true,
                 allFixturesAffected: false,
                 affectedGenerators: [],
-                generatorsWithAllFixtures: ["python-sdk", "pydantic", "fastapi"],
+                generatorsWithAllFixtures: ["python-sdk", "pydantic"],
                 affectedFixtures: ["imdb"],
                 summary: []
             };
@@ -602,7 +681,6 @@ describe("end-to-end scenario tests", () => {
         const names = generators.map((g) => g.workspaceName);
         expect(names).toContain("python-sdk");
         expect(names).toContain("pydantic");
-        expect(names).toContain("fastapi");
         expect(names).not.toContain("ts-sdk");
 
         // Each python generator should run ALL fixtures
@@ -687,8 +765,45 @@ describe("end-to-end scenario tests", () => {
         const names = generators.map((g) => g.workspaceName);
         expect(names).toContain("python-sdk");
         expect(names).toContain("pydantic");
-        expect(names).toContain("fastapi");
         expect(names).not.toContain("ts-sdk");
         expect(names).not.toContain("java-sdk");
+    });
+
+    it("scenario: docker/seed/Dockerfile.java change runs Java generators with all fixtures", () => {
+        const changedFiles = ["docker/seed/Dockerfile.java"];
+        const affected = detectAffected(changedFiles, ALL_GENERATORS);
+
+        // Only Java generators should run
+        const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
+        const names = generators.map((g) => g.workspaceName);
+        expect(names).toContain("java-sdk");
+        expect(names).toContain("java-model");
+        expect(names).not.toContain("ts-sdk");
+        expect(names).not.toContain("python-sdk");
+
+        // Each Java generator should run ALL fixtures
+        for (const gen of generators) {
+            const fixtures = resolveAffectedFixtures(affected, ALL_FIXTURES, gen.workspaceName);
+            expect(fixtures).toEqual(ALL_FIXTURES);
+        }
+    });
+
+    it("scenario: versions.yml changes are fully ignored for seed detection", () => {
+        const changedFiles = [
+            "generators/csharp/sdk/versions.yml",
+            "generators/csharp/model/versions.yml",
+            "generators/python/sdk/versions.yml"
+        ];
+        const affected = detectAffected(changedFiles, ALL_GENERATORS);
+
+        // No generators should run
+        const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
+        expect(generators).toHaveLength(0);
+
+        // No fixtures should be resolved
+        for (const gen of ALL_GENERATORS) {
+            const fixtures = resolveAffectedFixtures(affected, ALL_FIXTURES, gen.workspaceName);
+            expect(fixtures).toEqual([]);
+        }
     });
 });

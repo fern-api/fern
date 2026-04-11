@@ -1,9 +1,9 @@
 // ReSharper disable NullableWarningSuppressionIsUsed
 // ReSharper disable InconsistentNaming
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Nodes;
+using global::System.Text.Json.Serialization;
 using SeedUnions.Core;
 
 namespace SeedUnions;
@@ -64,7 +64,7 @@ public record UnionWithOptionalTime
     public DateOnly? AsDate() =>
         IsDate
             ? (DateOnly?)Value!
-            : throw new System.Exception("UnionWithOptionalTime.Type is not 'date'");
+            : throw new global::System.Exception("UnionWithOptionalTime.Type is not 'date'");
 
     /// <summary>
     /// Returns the value as a <see cref="DateTime?"/> if <see cref="Type"/> is 'datetime', otherwise throws an exception.
@@ -73,7 +73,7 @@ public record UnionWithOptionalTime
     public DateTime? AsDatetime() =>
         IsDatetime
             ? (DateTime?)Value!
-            : throw new System.Exception("UnionWithOptionalTime.Type is not 'datetime'");
+            : throw new global::System.Exception("UnionWithOptionalTime.Type is not 'datetime'");
 
     public T Match<T>(
         Func<DateOnly?, T> onDate,
@@ -148,12 +148,12 @@ public record UnionWithOptionalTime
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionWithOptionalTime>
     {
-        public override bool CanConvert(System.Type typeToConvert) =>
+        public override bool CanConvert(global::System.Type typeToConvert) =>
             typeof(UnionWithOptionalTime).IsAssignableFrom(typeToConvert);
 
         public override UnionWithOptionalTime Read(
             ref Utf8JsonReader reader,
-            System.Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -208,6 +208,27 @@ public record UnionWithOptionalTime
                 } ?? new JsonObject();
             json["type"] = value.Type;
             json.WriteTo(writer, options);
+        }
+
+        public override UnionWithOptionalTime ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            global::System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new JsonException("The JSON property name could not be read as a string.");
+            return new UnionWithOptionalTime(stringValue, stringValue);
+        }
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            UnionWithOptionalTime value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WritePropertyName(value.Type);
         }
     }
 

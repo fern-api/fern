@@ -17,6 +17,21 @@ devbox shell
 
 DevBox automatically provides: Node.js 22, pnpm 9.4.0, Go 1.23, Python 3.10, Poetry 1.8, JDK 17, buf 1.50.0, and git-lfs. All versions are pinned in `devbox.json` to match CI.
 
+**Manual .NET Installation** (Required for C# generator development):
+
+DevBox cannot pin multiple .NET SDK versions simultaneously, so .NET must be installed separately. The C# generators require:
+- **.NET 10** (latest)
+- **.NET 9** (test TFM)
+
+We provide a setup script that helps:
+```bash
+bash scripts/setup-dotnet.sh
+```
+
+This script checks for required .NET versions and can automatically install them using official Microsoft installation scripts, or provide links to the official guides. When you run `devbox shell`, the setup script runs automatically and the `.NET` installation is added to your PATH.
+
+Alternatively, follow [Microsoft .NET Installation Guide](https://learn.microsoft.com/en-us/dotnet/core/install/) for your platform (macOS, Linux, Windows) and install to `$HOME/.dotnet`.
+
 **Available DevBox Scripts**:
 ```bash
 devbox run install                # Run pnpm install
@@ -88,7 +103,7 @@ Fern is a CLI tool for API-first development that transforms API definitions int
 Language-specific generators that consume IR and produce outputs:
 - **Pattern**: Each language has `base/`, `ast/`, `model/`, `sdk/`, sometimes `server/`
 - **Supported**: TypeScript, Python, Java, Go, C#, Ruby, PHP, Rust, Swift
-- **Special**: OpenAPI export, Postman collections, TypeScript MCP servers
+- **Special**: OpenAPI export
 
 ### 4. Testing (`/seed/`)
 Comprehensive generator testing with Docker-based fixtures across all supported languages.
@@ -208,11 +223,34 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 
 **Always provide explicit return types for exported functions and public methods.** This serves as documentation and catches accidental return type changes.
 
-**Prefer type guards and discriminated unions over type assertions for narrowing.** Write `if ('kind' in x)` or custom type guards rather than asserting.
+**Prefer named type guard functions over inline `in` checks.** Instead of scattering `"prop" in obj && obj.prop === value` throughout business logic, extract these into well-named type guard functions (e.g., `isInlineSchema(s)`, `schemaAllowsNull(s)`). This keeps call sites readable and centralizes the narrowing logic. Use TypeScript's `x is T` return type for type guards that narrow.
+
+**Prefer type guards and discriminated unions over type assertions for narrowing.** Write custom type guards rather than asserting.
 
 **Prefer `unknown` over `any` in generic constraints when the type truly varies.** Use `<T>` or `<T extends SomeBase>` rather than accepting `any`.
 
 **When working with external data (API responses, JSON parsing), validate and narrow with type guards—never assert the shape blindly.**
+
+#### Exhaustive Checks
+
+**Always handle all cases when switching on discriminated unions.** Every `switch` statement on a discriminated union's type field must include a `case` for every variant. The `default` case must call `assertNever` from `@fern-api/core-utils` to ensure compile-time exhaustiveness—if a new variant is added to the union, any unhandled switch will fail to compile.
+
+```typescript
+import { assertNever } from "@fern-api/core-utils";
+
+switch (shape.type) {
+    case "circle":
+        return handleCircle(shape);
+    case "square":
+        return handleSquare(shape);
+    default:
+        assertNever(shape);
+}
+```
+
+**Never leave a `default` case that silently ignores unknown variants.** The whole point of `assertNever` is to turn missed cases into compile-time errors rather than silent runtime bugs. If you find yourself wanting to skip a variant, handle it explicitly (even if the handler is a no-op with a comment explaining why).
+
+**This applies to all discriminated union patterns in the codebase**, including IR types, generator configuration unions, OpenAPI schema variants, and any other tagged union. Use `assertNeverNoThrow` from `@fern-api/core-utils` only when you intentionally want to ignore unexpected variants without throwing (e.g., forward-compatible parsing), and add a comment explaining why.
 
 Here are additional TypeScript rules beyond type safety:
 
@@ -280,7 +318,7 @@ When creating pull requests in this repository:
 
    **Allowed types**: `fix`, `feat`, `revert`, `break`, `chore`
 
-   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `postman`, `ci`, `lint`, `fastapi`, `spring`, `express`, `openapi`, `deps`, `deps-dev`, `fiber`, `pydantic`, `ai-search`, `swift`, `rust`
+   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `ci`, `lint`, `fastapi`, `spring`, `openapi`, `deps`, `deps-dev`, `pydantic`, `ai-search`, `swift`, `rust`
 
    **Examples**: `chore(docs): update guidelines`, `feat(python): add new feature`, `fix(cli): resolve config loading bug`
 

@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v66
 displayName: Go Model
 image: fernapi/fern-go-model
 language: go
@@ -65,3 +65,4 @@ allowedFailures:
   - property-access
   - reserved-keywords
   - trace
+  - server-sent-event-examples

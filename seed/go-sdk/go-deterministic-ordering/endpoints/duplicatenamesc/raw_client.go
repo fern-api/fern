@@ -4,12 +4,13 @@ package duplicatenamesc
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/go-deterministic-ordering/fern"
 	core "github.com/go-deterministic-ordering/fern/core"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	option "github.com/go-deterministic-ordering/fern/option"
 	types "github.com/go-deterministic-ordering/fern/types"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -85,7 +86,7 @@ func (r *RawClient) Get(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/duplicate-names-c/%v",
-		request.Id,
+		request.ID,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {

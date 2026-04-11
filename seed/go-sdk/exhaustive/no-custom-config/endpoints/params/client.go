@@ -4,12 +4,13 @@ package params
 
 import (
 	context "context"
+	io "io"
+
 	core "github.com/exhaustive/fern/core"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
-	io "io"
 )
 
 type Client struct {
@@ -189,6 +190,40 @@ func (c *Client) UploadWithPath(
 	)
 	if err != nil {
 		return nil, err
+	}
+	return response.Body, nil
+}
+
+// GET with boolean path param
+func (c *Client) GetWithBooleanPath(
+	ctx context.Context,
+	param bool,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.GetWithBooleanPath(
+		ctx,
+		param,
+		opts...,
+	)
+	if err != nil {
+		return "", err
+	}
+	return response.Body, nil
+}
+
+// GET with path param that can throw errors
+func (c *Client) GetWithPathAndErrors(
+	ctx context.Context,
+	param string,
+	opts ...option.RequestOption,
+) (string, error) {
+	response, err := c.WithRawResponse.GetWithPathAndErrors(
+		ctx,
+		param,
+		opts...,
+	)
+	if err != nil {
+		return "", err
 	}
 	return response.Body, nil
 }

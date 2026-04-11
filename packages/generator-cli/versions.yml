@@ -1,4 +1,90 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Upgrade @fern-api/replay to 0.10.3 (pinned).
+      type: chore
+  createdAt: "2026-04-10"
+  version: 0.9.6
+
+- changelogEntry:
+    - summary: |
+        Upgrade @fern-api/replay to 0.10.2 (pinned).
+      type: chore
+  createdAt: "2026-04-10"
+  version: 0.9.5
+
+- changelogEntry:
+    - summary: |
+        Upgrade @fern-api/replay to 0.10.1.
+      type: chore
+  createdAt: "2026-04-09"
+  version: 0.9.4
+
+- changelogEntry:
+    - summary: |
+        Add .gitattributes with linguist-generated markers for replay lockfile. Sync .fernignore entries with fern-replay to include .fern/replay.yml and .gitattributes.
+      type: fix
+  createdAt: "2026-04-07"
+  version: 0.9.3
+
+- changelogEntry:
+    - summary: |
+        Re-publish to include Go SDK after upgrading fern-go-sdk from 0.22.0 to 1.33.2.
+      type: chore
+  createdAt: "2026-04-07"
+  version: 0.9.2
+
+- changelogEntry:
+    - summary: |
+        Upgrade @fern-api/replay to 0.9.1.
+      type: chore
+  createdAt: "2026-04-06"
+  version: 0.9.1
+
+- changelogEntry:
+    - summary: |
+        Internal CLI improvements and dependency updates.
+      type: feat
+  createdAt: "2026-04-06"
+  version: 0.9.0
+
+- changelogEntry:
+    - summary: |
+        Make GitHub token optional for replay init. Public repos no longer require a token.
+      type: fix
+  createdAt: "2026-04-06"
+  version: 0.8.1
+
+- changelogEntry:
+    - summary: |
+        Upgrade replay to 0.8.0 with support for detecting git revert commits and cancelling matching patches.
+      type: feat
+  createdAt: "2026-03-30"
+  version: 0.8.0
+
+- changelogEntry:
+    - summary: |
+        Update generator-cli to trigger new publish after changing to oidc auth for publish action.
+      type: chore
+  createdAt: "2026-03-25"
+  version: 0.6.14
+
+- changelogEntry:
+    - summary: |
+        Fix publish by bundling @fern-api/core-utils into the API build and
+        filtering workspace protocol dependencies from the dist package.json.
+      type: fix
+  createdAt: "2026-03-25"
+  version: 0.6.13
+
+- changelogEntry:
+    - summary: |
+        Include version number in the Gradle installation snippet for Java SDKs
+        in generated README.md files. Previously only the Maven snippet included
+        the version.
+      type: fix
+  createdAt: "2026-03-25"
+  version: 0.6.12
 
 - changelogEntry:
     - summary: |

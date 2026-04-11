@@ -23,7 +23,7 @@ from .custom_test_cases_unsupported import CustomTestCasesUnsupported
 from .error_info import ErrorInfo, ErrorInfo_CompileError, ErrorInfo_InternalError, ErrorInfo_RuntimeError
 from .errored_response import ErroredResponse
 from .exception_info import ExceptionInfo
-from .exception_v_2 import ExceptionV2, ExceptionV2_Generic, ExceptionV2_Timeout
+from .exception_v2 import ExceptionV2, ExceptionV2_Generic, ExceptionV2_Timeout
 from .execution_session_response import ExecutionSessionResponse
 from .execution_session_state import ExecutionSessionState
 from .execution_session_status import ExecutionSessionStatus
@@ -34,7 +34,7 @@ from .get_execution_session_state_response import GetExecutionSessionStateRespon
 from .get_submission_state_response import GetSubmissionStateResponse
 from .get_trace_responses_page_request import GetTraceResponsesPageRequest
 from .graded_response import GradedResponse
-from .graded_response_v_2 import GradedResponseV2
+from .graded_response_v2 import GradedResponseV2
 from .graded_test_case_update import GradedTestCaseUpdate
 from .initialize_problem_request import InitializeProblemRequest
 from .internal_error import InternalError
@@ -86,10 +86,10 @@ from .submission_status_for_test_case import (
     SubmissionStatusForTestCase_GradedV2,
     SubmissionStatusForTestCase_Traced,
 )
-from .submission_status_v_2 import SubmissionStatusV2, SubmissionStatusV2_Test, SubmissionStatusV2_Workspace
+from .submission_status_v2 import SubmissionStatusV2, SubmissionStatusV2_Test, SubmissionStatusV2_Workspace
 from .submission_type_enum import SubmissionTypeEnum
 from .submission_type_state import SubmissionTypeState, SubmissionTypeState_Test, SubmissionTypeState_Workspace
-from .submit_request_v_2 import SubmitRequestV2
+from .submit_request_v2 import SubmitRequestV2
 from .terminated_response import TerminatedResponse
 from .test_case_grade import TestCaseGrade, TestCaseGrade_Hidden, TestCaseGrade_NonHidden
 from .test_case_hidden_grade import TestCaseHiddenGrade
@@ -104,7 +104,7 @@ from .test_submission_status import (
     TestSubmissionStatus_Stopped,
     TestSubmissionStatus_TestCaseIdToState,
 )
-from .test_submission_status_v_2 import TestSubmissionStatusV2
+from .test_submission_status_v2 import TestSubmissionStatusV2
 from .test_submission_update import TestSubmissionUpdate
 from .test_submission_update_info import (
     TestSubmissionUpdateInfo,
@@ -116,9 +116,9 @@ from .test_submission_update_info import (
     TestSubmissionUpdateInfo_Stopped,
 )
 from .trace_response import TraceResponse
-from .trace_response_v_2 import TraceResponseV2
+from .trace_response_v2 import TraceResponseV2
 from .trace_responses_page import TraceResponsesPage
-from .trace_responses_page_v_2 import TraceResponsesPageV2
+from .trace_responses_page_v2 import TraceResponsesPageV2
 from .traced_file import TracedFile
 from .traced_test_case import TracedTestCase
 from .unexpected_language_error import UnexpectedLanguageError
@@ -126,7 +126,7 @@ from .workspace_files import WorkspaceFiles
 from .workspace_ran_response import WorkspaceRanResponse
 from .workspace_run_details import WorkspaceRunDetails
 from .workspace_starter_files_response import WorkspaceStarterFilesResponse
-from .workspace_starter_files_response_v_2 import WorkspaceStarterFilesResponseV2
+from .workspace_starter_files_response_v2 import WorkspaceStarterFilesResponseV2
 from .workspace_submission_state import WorkspaceSubmissionState
 from .workspace_submission_status import (
     WorkspaceSubmissionStatus,
@@ -136,7 +136,7 @@ from .workspace_submission_status import (
     WorkspaceSubmissionStatus_Stopped,
     WorkspaceSubmissionStatus_Traced,
 )
-from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
+from .workspace_submission_status_v2 import WorkspaceSubmissionStatusV2
 from .workspace_submission_update import WorkspaceSubmissionUpdate
 from .workspace_submission_update_info import (
     WorkspaceSubmissionUpdateInfo,

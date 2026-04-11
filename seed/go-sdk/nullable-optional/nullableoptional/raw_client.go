@@ -4,11 +4,12 @@ package nullableoptional
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/nullable-optional/fern"
 	core "github.com/nullable-optional/fern/core"
 	internal "github.com/nullable-optional/fern/internal"
 	option "github.com/nullable-optional/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -32,7 +33,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) GetUser(
 	ctx context.Context,
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.UserResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -43,7 +44,7 @@ func (r *RawClient) GetUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v",
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -116,7 +117,7 @@ func (r *RawClient) CreateUser(
 
 func (r *RawClient) UpdateUser(
 	ctx context.Context,
-	userId string,
+	userID string,
 	request *fern.UpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.UserResponse], error) {
@@ -128,7 +129,7 @@ func (r *RawClient) UpdateUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v",
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -296,7 +297,7 @@ func (r *RawClient) CreateComplexProfile(
 
 func (r *RawClient) GetComplexProfile(
 	ctx context.Context,
-	profileId string,
+	profileID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.ComplexProfile], error) {
 	options := core.NewRequestOptions(opts...)
@@ -307,7 +308,7 @@ func (r *RawClient) GetComplexProfile(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/profiles/complex/%v",
-		profileId,
+		profileID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -339,7 +340,7 @@ func (r *RawClient) GetComplexProfile(
 
 func (r *RawClient) UpdateComplexProfile(
 	ctx context.Context,
-	profileId string,
+	profileID string,
 	request *fern.UpdateComplexProfileRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.ComplexProfile], error) {
@@ -351,7 +352,7 @@ func (r *RawClient) UpdateComplexProfile(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/profiles/complex/%v",
-		profileId,
+		profileID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -472,7 +473,7 @@ func (r *RawClient) FilterByRole(
 
 func (r *RawClient) GetNotificationSettings(
 	ctx context.Context,
-	userId string,
+	userID string,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.NotificationMethod], error) {
 	options := core.NewRequestOptions(opts...)
@@ -483,7 +484,7 @@ func (r *RawClient) GetNotificationSettings(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v/notifications",
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -515,7 +516,7 @@ func (r *RawClient) GetNotificationSettings(
 
 func (r *RawClient) UpdateTags(
 	ctx context.Context,
-	userId string,
+	userID string,
 	request *fern.UpdateTagsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]string], error) {
@@ -527,7 +528,7 @@ func (r *RawClient) UpdateTags(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v/tags",
-		userId,
+		userID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

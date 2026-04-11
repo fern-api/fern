@@ -1,11 +1,12 @@
 package example
 
 import (
+    context "context"
+
+    uuid "github.com/google/uuid"
+    fern "github.com/query-parameters/fern"
     client "github.com/query-parameters/fern/client"
     option "github.com/query-parameters/fern/option"
-    fern "github.com/query-parameters/fern"
-    uuid "github.com/google/uuid"
-    context "context"
 )
 
 func do() {
@@ -16,7 +17,7 @@ func do() {
     )
     request := &fern.GetUsersRequest{
         Limit: 1,
-        Id: uuid.MustParse(
+        ID: uuid.MustParse(
             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         ),
         Date: fern.MustParseDate(

@@ -4,6 +4,7 @@ package object
 
 import (
 	context "context"
+
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
@@ -168,6 +169,44 @@ func (c *Client) GetAndReturnMapOfDocumentedUnknownType(
 	opts ...option.RequestOption,
 ) (types.MapOfDocumentedUnknownType, error) {
 	response, err := c.WithRawResponse.GetAndReturnMapOfDocumentedUnknownType(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Tests that dynamic snippets include all required properties in the
+// object initializer, even when the example omits some required fields.
+func (c *Client) GetAndReturnWithMixedRequiredAndOptionalFields(
+	ctx context.Context,
+	request *types.ObjectWithMixedRequiredAndOptionalFields,
+	opts ...option.RequestOption,
+) (*types.ObjectWithMixedRequiredAndOptionalFields, error) {
+	response, err := c.WithRawResponse.GetAndReturnWithMixedRequiredAndOptionalFields(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Tests that dynamic snippets recursively construct default objects for
+// required properties whose type is a named object. When the example
+// omits the nested object, the generator should construct a default
+// initializer with the nested object's required properties filled in.
+func (c *Client) GetAndReturnWithRequiredNestedObject(
+	ctx context.Context,
+	request *types.ObjectWithRequiredNestedObject,
+	opts ...option.RequestOption,
+) (*types.ObjectWithRequiredNestedObject, error) {
+	response, err := c.WithRawResponse.GetAndReturnWithRequiredNestedObject(
 		ctx,
 		request,
 		opts...,

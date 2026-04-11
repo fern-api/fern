@@ -1,20 +1,20 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import { FileContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export interface RequestParameter {
-    getInitialStatements: (context: SdkContext, args: { variablesInScope: string[] }) => ts.Statement[];
-    getType(context: SdkContext): ts.TypeNode;
-    getParameterDeclaration: (context: SdkContext) => OptionalKind<ParameterDeclarationStructure>;
-    getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
-    getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;
-    getReferenceToPathParameter: (pathParameterKey: string, context: SdkContext) => ts.Expression;
-    getAllQueryParameters: (context: SdkContext) => FernIr.QueryParameter[];
-    getReferenceToNonLiteralHeader: (header: FernIr.HttpHeader, context: SdkContext) => ts.Expression;
+    getInitialStatements: (context: FileContext, args: { variablesInScope: string[] }) => ts.Statement[];
+    getType(context: FileContext): ts.TypeNode;
+    getParameterDeclaration: (context: FileContext) => OptionalKind<ParameterDeclarationStructure>;
+    getReferenceToRequestBody: (context: FileContext) => ts.Expression | undefined;
+    getReferenceToQueryParameter: (queryParameterKey: string, context: FileContext) => ts.Expression;
+    getReferenceToPathParameter: (pathParameterKey: string, context: FileContext) => ts.Expression;
+    getAllQueryParameters: (context: FileContext) => FernIr.QueryParameter[];
+    getReferenceToNonLiteralHeader: (header: FernIr.HttpHeader, context: FileContext) => ts.Expression;
     withQueryParameter: (
         queryParameter: FernIr.QueryParameter,
-        context: SdkContext,
+        context: FileContext,
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[],
         queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[]
     ) => ts.Statement[];
@@ -23,9 +23,9 @@ export interface RequestParameter {
         example,
         opts
     }: {
-        context: SdkContext;
+        context: FileContext;
         example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined;
-    isOptional({ context }: { context: SdkContext }): boolean;
+    isOptional({ context }: { context: FileContext }): boolean;
 }

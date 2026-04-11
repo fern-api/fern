@@ -112,7 +112,8 @@ export function parseAsyncAPIV2({
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
                     source,
-                    explode: undefined
+                    explode: undefined,
+                    clientDefault: undefined
                 });
             }
         }
@@ -145,7 +146,8 @@ export function parseAsyncAPIV2({
                             parameterNameOverride: undefined,
                             env: undefined,
                             availability: convertAvailability(resolvedSchema),
-                            source
+                            source,
+                            clientDefault: undefined
                         });
                         continue;
                     }
@@ -168,7 +170,8 @@ export function parseAsyncAPIV2({
                         parameterNameOverride: undefined,
                         env: undefined,
                         availability: convertAvailability(schema),
-                        source
+                        source,
+                        clientDefault: undefined
                     });
                 }
             }
@@ -198,7 +201,8 @@ export function parseAsyncAPIV2({
                             parameterNameOverride: undefined,
                             availability: convertAvailability(resolvedSchema),
                             source,
-                            explode: undefined
+                            explode: undefined,
+                            clientDefault: undefined
                         });
                         continue;
                     }
@@ -221,7 +225,8 @@ export function parseAsyncAPIV2({
                         parameterNameOverride: undefined,
                         availability: convertAvailability(schema),
                         source,
-                        explode: undefined
+                        explode: undefined,
+                        clientDefault: undefined
                     });
                 }
             }

@@ -73,11 +73,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Foo
+     * @return ?Foo
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getFoo(GetFooRequest $request, ?array $options = null): Foo
+    public function getFoo(GetFooRequest $request, ?array $options = null): ?Foo
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
@@ -102,6 +102,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Foo::fromJson($json);
             }
         } catch (JsonException $e) {
@@ -127,11 +130,11 @@ class SeedClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Foo
+     * @return ?Foo
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateFoo(string $id, UpdateFooRequest $request, ?array $options = null): Foo
+    public function updateFoo(string $id, UpdateFooRequest $request, ?array $options = null): ?Foo
     {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
@@ -150,6 +153,9 @@ class SeedClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Foo::fromJson($json);
             }
         } catch (JsonException $e) {

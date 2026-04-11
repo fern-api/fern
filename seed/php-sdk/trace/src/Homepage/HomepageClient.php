@@ -59,11 +59,11 @@ class HomepageClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return array<string>
+     * @return ?array<string>
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getHomepageProblems(?array $options = null): array
+    public function getHomepageProblems(?array $options = null): ?array
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -78,6 +78,9 @@ class HomepageClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return JsonDecoder::decodeArray($json, ['string']); // @phpstan-ignore-line
             }
         } catch (JsonException $e) {

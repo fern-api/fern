@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
@@ -128,7 +128,8 @@ public partial class PaginationClient : IPaginationClient
                 request,
                 options,
                 async (request, options, cancellationToken) =>
-                    await ListItemsInternalAsync(request, options, cancellationToken),
+                    await ListItemsInternalAsync(request, options, cancellationToken)
+                        .WithRawResponse(),
                 (request, cursor) =>
                 {
                     request.Cursor = cursor;

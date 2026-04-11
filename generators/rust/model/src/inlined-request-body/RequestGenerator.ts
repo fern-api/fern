@@ -1,7 +1,9 @@
+import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
-import { isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
+import { collectBuilderFieldsFromProperties, writeBuilderCode } from "../utils/builderUtils.js";
+import { hasDefaultImpl, isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
@@ -16,6 +18,8 @@ export declare namespace RequestGenerator {
         extendedProperties?: FernIr.ObjectProperty[];
         docsContent?: string;
         context: ModelGeneratorContext;
+        /** Field names that are query parameters and should be excluded from JSON serialization */
+        queryParamFieldNames?: Set<string>;
     }
 }
 
@@ -26,12 +30,15 @@ export class RequestGenerator {
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
 
-    public constructor({ name, properties, extendedProperties, docsContent, context }: RequestGenerator.Args) {
+    private readonly queryParamFieldNames: Set<string>;
+
+    public constructor({ name, properties, extendedProperties, docsContent, context, queryParamFieldNames }: RequestGenerator.Args) {
         this.name = name;
         this.properties = properties;
         this.extendedProperties = extendedProperties ?? [];
         this.docsContent = docsContent;
         this.context = context;
+        this.queryParamFieldNames = queryParamFieldNames ?? new Set();
     }
 
     public generate(): rust.Struct {
@@ -51,13 +58,7 @@ export class RequestGenerator {
         let docs = undefined;
         if (this.docsContent) {
             docs = rust.docComment({
-                summary: this.docsContent,
-                description: `Request type for the ${this.name} operation.`
-            });
-        } else {
-            // Fallback documentation
-            docs = rust.docComment({
-                summary: `Request type for API operation`
+                summary: this.docsContent
             });
         }
 
@@ -76,8 +77,8 @@ export class RequestGenerator {
         // Build derives conditionally based on actual needs
         const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
 
-        // Default - only add if all properties are optional
-        if (this.allPropertiesAreOptional()) {
+        // Default - add if all fields support Default
+        if (this.canDeriveDefault()) {
             derives.push("Default");
         }
 
@@ -96,15 +97,18 @@ export class RequestGenerator {
         return attributes;
     }
 
-    private allPropertiesAreOptional(): boolean {
-        // Check if all regular properties are optional
-        const allRegularPropsOptional = this.properties.every((property) => isOptionalType(property.valueType));
+    private canDeriveDefault(): boolean {
+        // Check if all regular properties have types that implement Default in Rust
+        const propertiesSupport = this.properties.every((property) =>
+            hasDefaultImpl(property.valueType, this.context)
+        );
 
-        // Check if there are any extended properties (inheritance fields)
-        // If there are extended properties, we can't derive Default because we can't default the parent type
-        const hasExtendedProperties = this.extendedProperties.length > 0;
+        // Check if all extended properties (inheritance fields) support Default
+        const extendsSupport = this.extendedProperties.every((property) =>
+            hasDefaultImpl(property.valueType, this.context)
+        );
 
-        return allRegularPropsOptional && !hasExtendedProperties;
+        return propertiesSupport && extendsSupport;
     }
 
     private needsPartialEq(): boolean {
@@ -121,7 +125,7 @@ export class RequestGenerator {
                         default: undefined,
                         inline: undefined,
                         fernFilepath: property.valueType.fernFilepath,
-                        displayName: property.valueType.name.originalName
+                        displayName: getOriginalName(property.valueType.name)
                     },
                     this.context
                 );
@@ -143,7 +147,7 @@ export class RequestGenerator {
                         default: undefined,
                         inline: undefined,
                         fernFilepath: property.valueType.fernFilepath,
-                        displayName: property.valueType.name.originalName
+                        displayName: getOriginalName(property.valueType.name)
                     },
                     this.context
                 );
@@ -155,8 +159,9 @@ export class RequestGenerator {
 
     private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
         const fieldType = generateFieldType(property, this.context);
-        const fieldAttributes = generateFieldAttributes(property, this.context);
-        const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
+        const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(property.name));
+        const skipSerialization = this.queryParamFieldNames.has(fieldName);
+        const fieldAttributes = generateFieldAttributes(property, this.context, { skipSerialization });
 
         // Add field documentation if available
         let docs = undefined;
@@ -187,7 +192,7 @@ export class RequestGenerator {
 
                 fields.push(
                     rust.field({
-                        name: `${property.name.name.snakeCase.unsafeName}_fields`,
+                        name: `${this.context.case.snakeUnsafe(property.name)}_fields`,
                         type: rust.Type.reference(rust.reference({ name: parentTypeName })),
                         visibility: PUBLIC,
                         attributes: [Attribute.serde.flatten()]
@@ -209,6 +214,11 @@ export class RequestGenerator {
         // Write the struct
         const rustStruct = this.generateStructForTypeDeclaration();
         rustStruct.write(writer);
+
+        // Write builder code
+        const fields = collectBuilderFieldsFromProperties(this.properties, this.context);
+        writeBuilderCode(writer, this.name, fields);
+
         writer.newLine(); // Ensure file ends with newline
 
         return writer.toString();

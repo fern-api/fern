@@ -12,6 +12,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension.js";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
 import { convertReferenceObject, convertSchema, convertSchemaObject } from "./convertSchemas.js";
+import { inferDiscriminatorContext, inferDiscriminatorContextFromVariants } from "./inferDiscriminatorContext.js";
 import { SchemaParserContext } from "./SchemaParserContext.js";
 import { isReferenceObject } from "./utils/isReferenceObject.js";
 
@@ -53,7 +54,8 @@ export function convertDiscriminatedOneOf({
     const discriminant = discriminator.propertyName;
     const discriminantNameOverride = getExtension<string>(discriminator, FernOpenAPIExtension.FERN_PROPERTY_NAME);
     const discriminatorContext =
-        getExtension<"data" | "protocol">(discriminator, FernOpenAPIExtension.DISCRIMINATOR_CONTEXT) ?? "data";
+        getExtension<"data" | "protocol">(discriminator, FernOpenAPIExtension.DISCRIMINATOR_CONTEXT) ??
+        inferDiscriminatorContext({ discriminator, context });
     const unionSubTypes = Object.fromEntries(
         Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema]) => {
             const subtypeReference = convertReferenceObject(
@@ -114,6 +116,7 @@ export function convertDiscriminatedOneOf({
         discriminantNameOverride,
         discriminatorContext,
         subtypes: unionSubTypes,
+        defaultDiscriminantValue: undefined,
         namespace,
         groupName,
         source
@@ -133,6 +136,7 @@ export function convertDiscriminatedOneOfWithVariants({
     wrapAsNullable,
     discriminant,
     variants,
+    defaultDiscriminantValue,
     context,
     namespace,
     groupName,
@@ -151,6 +155,7 @@ export function convertDiscriminatedOneOfWithVariants({
     wrapAsNullable: boolean;
     discriminant: string;
     variants: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
+    defaultDiscriminantValue: string | undefined;
     context: SchemaParserContext;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -222,8 +227,9 @@ export function convertDiscriminatedOneOfWithVariants({
         availability,
         discriminant,
         discriminantNameOverride: undefined,
-        discriminatorContext: "data", // variants don't have discriminator object, default to data
+        discriminatorContext: inferDiscriminatorContextFromVariants({ variants, context }),
         subtypes: unionSubTypes,
+        defaultDiscriminantValue,
         namespace,
         groupName,
         source
@@ -243,6 +249,7 @@ export function wrapDiscriminatedOneOf({
     discriminantNameOverride,
     discriminatorContext,
     subtypes,
+    defaultDiscriminantValue,
     namespace,
     groupName,
     source
@@ -259,6 +266,7 @@ export function wrapDiscriminatedOneOf({
     discriminantNameOverride: string | undefined;
     discriminatorContext: "data" | "protocol";
     subtypes: Record<string, SchemaWithExample>;
+    defaultDiscriminantValue: string | undefined;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     source: Source;
@@ -270,6 +278,7 @@ export function wrapDiscriminatedOneOf({
             discriminantProperty: discriminant,
             discriminantPropertyNameOverride: discriminantNameOverride,
             discriminatorContext,
+            defaultDiscriminantValue,
             nameOverride,
             generatedName,
             title,

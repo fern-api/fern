@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	client "github.com/exhaustive/fern/client"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	option "github.com/exhaustive/fern/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,9 +72,10 @@ func TestEndpointsPutAddWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &endpoints.PutRequest{
-		Id: "id",
+		ID: "id",
 	}
 	_, invocationErr := client.Endpoints.Put.Add(
 		context.TODO(),

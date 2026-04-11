@@ -9,6 +9,10 @@ public class Example4 {
         SeedUnionsClient client =
                 SeedUnionsClient.builder().url("https://api.fern.com").build();
 
-        client.union().update(Shape.circle(Circle.builder().radius(1.1).build()));
+        client.union()
+                .update(Shape.circle(Circle.builder()
+                        .radius(1.1)
+                        .additionalProperty("id", "id")
+                        .build()));
     }
 }

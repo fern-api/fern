@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/inferred-auth-explicit/fern/client"
     option "github.com/inferred-auth-explicit/fern/option"
-    context "context"
 )
 
 func do() {
@@ -11,9 +12,17 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        nil,
+        option.WithXAPIKey(
+            "X-Api-Key",
+        ),
+        option.WithClientID(
+            "client_id",
+        ),
+        option.WithClientSecret(
+            "client_secret",
+        ),
     )
-    client.Nested.Api.GetSomething(
+    client.Nested.API.GetSomething(
         context.TODO(),
     )
 }

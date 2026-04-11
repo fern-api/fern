@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "access_token",
                         "name": {
                             "originalName": "access_token",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "AccessToken",
                                 "safeName": "AccessToken"
                             }
-                        },
-                        "wireValue": "access_token"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -100,6 +100,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "refresh_token",
                         "name": {
                             "originalName": "refresh_token",
                             "camelCase": {
@@ -118,8 +119,7 @@
                                 "unsafeName": "RefreshToken",
                                 "safeName": "RefreshToken"
                             }
-                        },
-                        "wireValue": "refresh_token"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -204,6 +204,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "sendText",
                         "name": {
                             "originalName": "sendText",
                             "camelCase": {
@@ -222,8 +223,7 @@
                                 "unsafeName": "SendText",
                                 "safeName": "SendText"
                             }
-                        },
-                        "wireValue": "sendText"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -234,6 +234,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "sendParam",
                         "name": {
                             "originalName": "sendParam",
                             "camelCase": {
@@ -252,8 +253,7 @@
                                 "unsafeName": "SendParam",
                                 "safeName": "SendParam"
                             }
-                        },
-                        "wireValue": "sendParam"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -335,6 +335,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "send_text",
                         "name": {
                             "originalName": "send_text",
                             "camelCase": {
@@ -353,8 +354,7 @@
                                 "unsafeName": "SendText",
                                 "safeName": "SendText"
                             }
-                        },
-                        "wireValue": "send_text"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -365,6 +365,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "send_param",
                         "name": {
                             "originalName": "send_param",
                             "camelCase": {
@@ -383,8 +384,7 @@
                                 "unsafeName": "SendParam",
                                 "safeName": "SendParam"
                             }
-                        },
-                        "wireValue": "send_param"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -466,6 +466,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "alpha",
                         "name": {
                             "originalName": "alpha",
                             "camelCase": {
@@ -484,8 +485,7 @@
                                 "unsafeName": "Alpha",
                                 "safeName": "Alpha"
                             }
-                        },
-                        "wireValue": "alpha"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -496,6 +496,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "beta",
                         "name": {
                             "originalName": "beta",
                             "camelCase": {
@@ -514,8 +515,7 @@
                                 "unsafeName": "Beta",
                                 "safeName": "Beta"
                             }
-                        },
-                        "wireValue": "beta"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -597,6 +597,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "receive_text",
                         "name": {
                             "originalName": "receive_text",
                             "camelCase": {
@@ -615,8 +616,7 @@
                                 "unsafeName": "ReceiveText",
                                 "safeName": "ReceiveText"
                             }
-                        },
-                        "wireValue": "receive_text"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -627,6 +627,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "receive_int",
                         "name": {
                             "originalName": "receive_int",
                             "camelCase": {
@@ -645,8 +646,7 @@
                                 "unsafeName": "ReceiveInt",
                                 "safeName": "ReceiveInt"
                             }
-                        },
-                        "wireValue": "receive_int"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -728,6 +728,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "sendText2",
                         "name": {
                             "originalName": "sendText2",
                             "camelCase": {
@@ -746,8 +747,7 @@
                                 "unsafeName": "SendText2",
                                 "safeName": "SendText2"
                             }
-                        },
-                        "wireValue": "sendText2"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -758,6 +758,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "sendParam2",
                         "name": {
                             "originalName": "sendParam2",
                             "camelCase": {
@@ -776,8 +777,7 @@
                                 "unsafeName": "SendParam2",
                                 "safeName": "SendParam2"
                             }
-                        },
-                        "wireValue": "sendParam2"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -859,6 +859,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "gamma",
                         "name": {
                             "originalName": "gamma",
                             "camelCase": {
@@ -877,8 +878,7 @@
                                 "unsafeName": "Gamma",
                                 "safeName": "Gamma"
                             }
-                        },
-                        "wireValue": "gamma"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -889,6 +889,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "delta",
                         "name": {
                             "originalName": "delta",
                             "camelCase": {
@@ -907,8 +908,7 @@
                                 "unsafeName": "Delta",
                                 "safeName": "Delta"
                             }
-                        },
-                        "wireValue": "delta"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -919,6 +919,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "epsilon",
                         "name": {
                             "originalName": "epsilon",
                             "camelCase": {
@@ -937,8 +938,7 @@
                                 "unsafeName": "Epsilon",
                                 "safeName": "Epsilon"
                             }
-                        },
-                        "wireValue": "epsilon"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -1020,6 +1020,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "receiveText3",
                         "name": {
                             "originalName": "receiveText3",
                             "camelCase": {
@@ -1038,8 +1039,7 @@
                                 "unsafeName": "ReceiveText3",
                                 "safeName": "ReceiveText3"
                             }
-                        },
-                        "wireValue": "receiveText3"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -1061,6 +1061,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "X-Api-Key",
                             "name": {
                                 "originalName": "X-Api-Key",
                                 "camelCase": {
@@ -1079,8 +1080,7 @@
                                     "unsafeName": "XAPIKey",
                                     "safeName": "XAPIKey"
                                 }
-                            },
-                            "wireValue": "X-Api-Key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1091,6 +1091,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_id",
                             "name": {
                                 "originalName": "client_id",
                                 "camelCase": {
@@ -1109,8 +1110,7 @@
                                     "unsafeName": "ClientID",
                                     "safeName": "ClientID"
                                 }
-                            },
-                            "wireValue": "client_id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1121,6 +1121,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_secret",
                             "name": {
                                 "originalName": "client_secret",
                                 "camelCase": {
@@ -1139,8 +1140,7 @@
                                     "unsafeName": "ClientSecret",
                                     "safeName": "ClientSecret"
                                 }
-                            },
-                            "wireValue": "client_secret"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1151,6 +1151,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "scope",
                             "name": {
                                 "originalName": "scope",
                                 "camelCase": {
@@ -1169,8 +1170,7 @@
                                     "unsafeName": "Scope",
                                     "safeName": "Scope"
                                 }
-                            },
-                            "wireValue": "scope"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1323,6 +1323,7 @@
                 "headers": [
                     {
                         "name": {
+                            "wireValue": "X-Api-Key",
                             "name": {
                                 "originalName": "X-Api-Key",
                                 "camelCase": {
@@ -1341,8 +1342,7 @@
                                     "unsafeName": "XAPIKey",
                                     "safeName": "XAPIKey"
                                 }
-                            },
-                            "wireValue": "X-Api-Key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1357,6 +1357,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "client_id",
                                 "name": {
                                     "originalName": "client_id",
                                     "camelCase": {
@@ -1375,8 +1376,7 @@
                                         "unsafeName": "ClientID",
                                         "safeName": "ClientID"
                                     }
-                                },
-                                "wireValue": "client_id"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -1387,6 +1387,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "client_secret",
                                 "name": {
                                     "originalName": "client_secret",
                                     "camelCase": {
@@ -1405,8 +1406,7 @@
                                         "unsafeName": "ClientSecret",
                                         "safeName": "ClientSecret"
                                     }
-                                },
-                                "wireValue": "client_secret"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -1417,6 +1417,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "audience",
                                 "name": {
                                     "originalName": "audience",
                                     "camelCase": {
@@ -1435,8 +1436,7 @@
                                         "unsafeName": "Audience",
                                         "safeName": "Audience"
                                     }
-                                },
-                                "wireValue": "audience"
+                                }
                             },
                             "typeReference": {
                                 "type": "literal",
@@ -1450,6 +1450,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "grant_type",
                                 "name": {
                                     "originalName": "grant_type",
                                     "camelCase": {
@@ -1468,8 +1469,7 @@
                                         "unsafeName": "GrantType",
                                         "safeName": "GrantType"
                                     }
-                                },
-                                "wireValue": "grant_type"
+                                }
                             },
                             "typeReference": {
                                 "type": "literal",
@@ -1483,6 +1483,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "scope",
                                 "name": {
                                     "originalName": "scope",
                                     "camelCase": {
@@ -1501,8 +1502,7 @@
                                         "unsafeName": "Scope",
                                         "safeName": "Scope"
                                     }
-                                },
-                                "wireValue": "scope"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",
@@ -1532,6 +1532,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "X-Api-Key",
                             "name": {
                                 "originalName": "X-Api-Key",
                                 "camelCase": {
@@ -1550,8 +1551,7 @@
                                     "unsafeName": "XAPIKey",
                                     "safeName": "XAPIKey"
                                 }
-                            },
-                            "wireValue": "X-Api-Key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1562,6 +1562,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_id",
                             "name": {
                                 "originalName": "client_id",
                                 "camelCase": {
@@ -1580,8 +1581,7 @@
                                     "unsafeName": "ClientID",
                                     "safeName": "ClientID"
                                 }
-                            },
-                            "wireValue": "client_id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1592,6 +1592,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_secret",
                             "name": {
                                 "originalName": "client_secret",
                                 "camelCase": {
@@ -1610,8 +1611,7 @@
                                     "unsafeName": "ClientSecret",
                                     "safeName": "ClientSecret"
                                 }
-                            },
-                            "wireValue": "client_secret"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1622,6 +1622,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "scope",
                             "name": {
                                 "originalName": "scope",
                                 "camelCase": {
@@ -1640,8 +1641,7 @@
                                     "unsafeName": "Scope",
                                     "safeName": "Scope"
                                 }
-                            },
-                            "wireValue": "scope"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1794,6 +1794,7 @@
                 "headers": [
                     {
                         "name": {
+                            "wireValue": "X-Api-Key",
                             "name": {
                                 "originalName": "X-Api-Key",
                                 "camelCase": {
@@ -1812,8 +1813,7 @@
                                     "unsafeName": "XAPIKey",
                                     "safeName": "XAPIKey"
                                 }
-                            },
-                            "wireValue": "X-Api-Key"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1828,6 +1828,7 @@
                     "value": [
                         {
                             "name": {
+                                "wireValue": "client_id",
                                 "name": {
                                     "originalName": "client_id",
                                     "camelCase": {
@@ -1846,8 +1847,7 @@
                                         "unsafeName": "ClientID",
                                         "safeName": "ClientID"
                                     }
-                                },
-                                "wireValue": "client_id"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -1858,6 +1858,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "client_secret",
                                 "name": {
                                     "originalName": "client_secret",
                                     "camelCase": {
@@ -1876,8 +1877,7 @@
                                         "unsafeName": "ClientSecret",
                                         "safeName": "ClientSecret"
                                     }
-                                },
-                                "wireValue": "client_secret"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -1888,6 +1888,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "refresh_token",
                                 "name": {
                                     "originalName": "refresh_token",
                                     "camelCase": {
@@ -1906,8 +1907,7 @@
                                         "unsafeName": "RefreshToken",
                                         "safeName": "RefreshToken"
                                     }
-                                },
-                                "wireValue": "refresh_token"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -1918,6 +1918,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "audience",
                                 "name": {
                                     "originalName": "audience",
                                     "camelCase": {
@@ -1936,8 +1937,7 @@
                                         "unsafeName": "Audience",
                                         "safeName": "Audience"
                                     }
-                                },
-                                "wireValue": "audience"
+                                }
                             },
                             "typeReference": {
                                 "type": "literal",
@@ -1951,6 +1951,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "grant_type",
                                 "name": {
                                     "originalName": "grant_type",
                                     "camelCase": {
@@ -1969,8 +1970,7 @@
                                         "unsafeName": "GrantType",
                                         "safeName": "GrantType"
                                     }
-                                },
-                                "wireValue": "grant_type"
+                                }
                             },
                             "typeReference": {
                                 "type": "literal",
@@ -1984,6 +1984,7 @@
                         },
                         {
                             "name": {
+                                "wireValue": "scope",
                                 "name": {
                                     "originalName": "scope",
                                     "camelCase": {
@@ -2002,8 +2003,7 @@
                                         "unsafeName": "Scope",
                                         "safeName": "Scope"
                                     }
-                                },
-                                "wireValue": "scope"
+                                }
                             },
                             "typeReference": {
                                 "type": "optional",

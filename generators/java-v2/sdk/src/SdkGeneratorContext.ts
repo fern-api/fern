@@ -1,10 +1,11 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { GeneratorNotificationService, getOriginalName, NameInput } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { java } from "@fern-api/java-ast";
 import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { camelCase } from "lodash-es";
+
 import { TYPES_DIRECTORY } from "./constants.js";
 import { JavaGeneratorAgent } from "./JavaGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
@@ -112,7 +113,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         typeDeclaration: FernIr.TypeDeclaration;
     }): java.ClassReference {
         return java.classReference({
-            name: typeDeclaration.name.name.pascalCase.unsafeName,
+            name: this.caseConverter.pascalUnsafe(typeDeclaration.name.name),
             packageName: this.getTypesPackageName(typeDeclaration.name.fernFilepath)
         });
     }
@@ -191,7 +192,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
         const serviceCount = Object.keys(this.ir.services).length;
         const serviceNames = Object.values(this.ir.services).map(
-            (service) => service.name?.fernFilepath?.allParts?.map((part) => part.originalName).join("") || ""
+            (service) => service.name?.fernFilepath?.allParts?.map((part) => getOriginalName(part)).join("") || ""
         );
 
         if (
@@ -239,7 +240,10 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     public getApiExceptionClassName(): string {
-        return this.customConfig?.["base-api-exception-class-name"] ?? `${this.getBaseNamePrefix()}ApiException`;
+        return (
+            this.customConfig?.["base-api-exception-class-name"] ??
+            `${this.customConfig?.["client-class-name"] ?? this.getBaseNamePrefix()}ApiException`
+        );
     }
 
     public getHttpResponseClassName(): string {
@@ -349,8 +353,8 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return this.joinPackageTokens(tokens);
     }
 
-    private getPackageNameSegment(name: FernIr.Name): string {
-        return name.camelCase.safeName.toLowerCase();
+    private getPackageNameSegment(name: NameInput): string {
+        return this.caseConverter.camelSafe(name).toLowerCase();
     }
 
     public getExampleEndpointCallOrThrow(endpoint: FernIr.HttpEndpoint): FernIr.ExampleEndpointCall {

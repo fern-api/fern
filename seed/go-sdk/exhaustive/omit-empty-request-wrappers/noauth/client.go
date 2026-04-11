@@ -4,6 +4,7 @@ package noauth
 
 import (
 	context "context"
+
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"

@@ -18,7 +18,7 @@ import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
+import type { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -29,6 +29,7 @@ import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 import { AutoVersioningCache } from "./AutoVersioningCache.js";
+import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
@@ -46,7 +47,13 @@ export async function runLocalGenerationForWorkspace({
     ai,
     replay,
     noReplay,
-    validateWorkspace
+    validateWorkspace,
+    requireEnvVars,
+    skipFernignore,
+    publishToRegistry,
+    isPreview: isPreviewOverride,
+    automationMode,
+    autoMerge
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -62,6 +69,12 @@ export async function runLocalGenerationForWorkspace({
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
     validateWorkspace?: boolean;
+    requireEnvVars?: boolean;
+    skipFernignore?: boolean;
+    publishToRegistry?: boolean;
+    isPreview?: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -89,8 +102,19 @@ export async function runLocalGenerationForWorkspace({
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
                 const substituteEnvVars = <T>(stringOrObject: T) =>
-                    replaceEnvVariables(stringOrObject, { onError: (e) => interactiveTaskContext.failAndThrow(e) });
+                    replaceEnvVariables(
+                        stringOrObject,
+                        {
+                            onError: (e) => {
+                                if (!isPreview && (requireEnvVars ?? true)) {
+                                    interactiveTaskContext.failAndThrow(e);
+                                }
+                            }
+                        },
+                        { substituteAsEmpty: isPreview }
+                    );
 
                 generatorInvocation = substituteEnvVars(generatorInvocation);
 
@@ -153,9 +177,7 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                const organization = await venus.organization.get(
-                    FernVenusApi.OrganizationId(projectConfig.organization)
-                );
+                const organization = await venus.organization.get(projectConfig.organization);
 
                 if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
                     interactiveTaskContext.failWithoutThrowing(
@@ -302,7 +324,8 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningCommitMessage,
                     autoVersioningChangelogEntry,
                     autoVersioningPrDescription,
-                    autoVersioningVersionBumpReason
+                    autoVersioningVersionBumpReason,
+                    autoVersioningVersionBump
                 } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
                     absolutePathToFernConfig:
@@ -327,10 +350,12 @@ export async function runLocalGenerationForWorkspace({
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
                     whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
+                    publishToRegistry,
                     runner,
                     ai,
                     autoVersioningCache,
-                    absolutePathToSpecRepo: dirname(workspace.absoluteFilePath)
+                    absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
+                    skipFernignore
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
@@ -343,6 +368,8 @@ export async function runLocalGenerationForWorkspace({
                         warn: (msg) => interactiveTaskContext.logger.warn(msg),
                         error: (msg) => interactiveTaskContext.logger.error(msg)
                     };
+
+                    const hasBreakingChanges = autoVersioningVersionBump === "MAJOR";
 
                     const pipeline = new PostGenerationPipeline(
                         {
@@ -359,7 +386,12 @@ export async function runLocalGenerationForWorkspace({
                                 prDescription: autoVersioningPrDescription,
                                 versionBumpReason: autoVersioningVersionBumpReason,
                                 previewMode: selfhostedGithubConfig.previewMode,
-                                generatorName: generatorInvocation.name
+                                generatorName: generatorInvocation.name,
+                                automationMode,
+                                autoMerge,
+                                hasBreakingChanges,
+                                breakingChangesSummary: hasBreakingChanges ? autoVersioningPrDescription : undefined,
+                                runId: process.env.FERN_RUN_ID
                             },
                             cliVersion: workspace.cliVersion ?? "unknown",
                             generatorVersions: {
@@ -380,6 +412,14 @@ export async function runLocalGenerationForWorkspace({
                             warn: (msg) => interactiveTaskContext.logger.warn(chalk.yellow(msg)),
                             error: (msg) => interactiveTaskContext.logger.error(chalk.red(msg))
                         });
+                    }
+
+                    if (pipelineResult.steps.github?.skippedNoDiff) {
+                        interactiveTaskContext.logger.info(chalk.green("No changes detected — skipping PR creation"));
+                    }
+
+                    if (pipelineResult.steps.github?.autoMergeEnabled) {
+                        interactiveTaskContext.logger.info(chalk.green("Automerge enabled on PR"));
                     }
 
                     if (!pipelineResult.success) {
@@ -404,10 +444,8 @@ function resolveAbsolutePathToLocalPreview(
     if (absolutePathToPreview == null) {
         return undefined;
     }
-    const generatorName = generatorInvocation.name.split("/").pop() ?? "sdk";
-    const subfolderName = generatorName.replace(/[^a-zA-Z0-9-_]/g, "_");
-
-    return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
+    const subfolderName = getGeneratorOutputSubfolder(generatorInvocation.name);
+    return join(absolutePathToPreview, RelativeFilePath.of(subfolderName));
 }
 
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
@@ -433,18 +471,13 @@ function getPublishConfig({
     context: TaskContext;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
-        const [owner, repo] = generatorInvocation.raw.github.uri.split("/");
-        if (owner == null || repo == null) {
-            return context.failAndThrow(
-                `Invalid GitHub repository URI: ${generatorInvocation.raw.github.uri}. Expected format: owner/repo`
-            );
-        }
+        const parsed = parseRepository(generatorInvocation.raw.github.uri);
 
         const irMode = generatorInvocation.raw.github.mode === "pull-request" ? "pull-request" : undefined;
 
         return FernIr.PublishingConfig.github({
-            owner,
-            repo,
+            owner: parsed.owner,
+            repo: parsed.repo,
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
             mode: irMode,

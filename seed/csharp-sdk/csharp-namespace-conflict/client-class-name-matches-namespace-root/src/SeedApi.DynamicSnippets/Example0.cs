@@ -1,11 +1,11 @@
-using global::Seed.CsharpNamespaceConflict;
+using Seed.CsharpNamespaceConflict;
 
 namespace Usage;
 
 public class Example0
 {
-    public async global::System.Threading.Tasks.Task Do() {
-        var client = new global::Seed.CsharpNamespaceConflict.Seed(
+    public async System.Threading.Tasks.Task Do() {
+        var client = new Seed.CsharpNamespaceConflict.Seed(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }

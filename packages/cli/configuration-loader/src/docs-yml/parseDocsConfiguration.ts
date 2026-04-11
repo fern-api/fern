@@ -10,7 +10,7 @@ import path from "path";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
 import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
 import { getAllPages, loadAllPages } from "./getAllPages.js";
-import { buildNavigationForDirectory, getFrontmatterTitle, nameToSlug, nameToTitle } from "./navigationUtils.js";
+import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -83,6 +83,8 @@ export async function parseDocsConfiguration({
         aiChat,
         aiSearch,
 
+        agents,
+
         pageActions,
 
         experimental
@@ -129,14 +131,46 @@ export async function parseDocsConfiguration({
 
     const metadataPromise = convertMetadata(rawMetadata, absoluteFilepathToDocsConfig);
 
-    const [navigation, pages, typography, css, js, metadata] = await Promise.all([
-        convertedNavigationPromise,
-        pagesPromise,
-        typographyPromise,
-        cssPromise,
-        jsPromise,
-        metadataPromise
-    ]);
+    const context7FilePromise = parseContext7File({
+        rawPath: rawDocsConfiguration.integrations?.context7,
+        absoluteFilepathToDocsConfig,
+        context
+    });
+
+    const llmsTxtFilePromise = parseTextFile({
+        rawPath: agents?.llmsTxt,
+        absoluteFilepathToDocsConfig
+    });
+
+    const llmsFullTxtFilePromise = parseTextFile({
+        rawPath: agents?.llmsFullTxt,
+        absoluteFilepathToDocsConfig
+    });
+
+    const [navigation, pages, typography, css, js, metadata, context7File, llmsTxtFile, llmsFullTxtFile] =
+        await Promise.all([
+            convertedNavigationPromise,
+            pagesPromise,
+            typographyPromise,
+            cssPromise,
+            jsPromise,
+            metadataPromise,
+            context7FilePromise,
+            llmsTxtFilePromise,
+            llmsFullTxtFilePromise
+        ]);
+
+    // Validate incompatible tabs configuration: sidebar placement + center alignment
+    const resolvedTheme = convertThemeConfig(rawDocsConfiguration.theme);
+    const tabsObj =
+        resolvedTheme?.tabs != null && typeof resolvedTheme.tabs === "object" ? resolvedTheme.tabs : undefined;
+    const effectivePlacement = tabsObj?.placement ?? layout?.tabsPlacement ?? "sidebar";
+    const effectiveAlignment = tabsObj?.alignment ?? "left";
+    if (effectivePlacement === "sidebar" && effectiveAlignment === "center") {
+        context.logger.warn(
+            "Tabs alignment 'center' is not supported when tabs placement is 'sidebar'. The alignment will be ignored."
+        );
+    }
 
     return {
         title,
@@ -172,9 +206,12 @@ export async function parseDocsConfiguration({
         backgroundImage,
         colors: convertColorsConfiguration(colors, context),
         typography,
-        layout: convertLayoutConfig(layout),
+        layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
-        theme: convertThemeConfig(rawDocsConfiguration.theme),
+        context7File,
+        llmsTxtFile,
+        llmsFullTxtFile,
+        theme: resolvedTheme,
         analyticsConfig: {
             ...rawDocsConfiguration.analytics,
             intercom: rawDocsConfiguration.analytics?.intercom
@@ -218,6 +255,8 @@ export async function parseDocsConfiguration({
         js,
 
         aiChatConfig: aiSearch ?? aiChat,
+
+        agents,
 
         pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
 
@@ -395,9 +434,22 @@ function convertThemeConfig(
         return undefined;
     }
 
+    // theme.tabs can be a string ("default"|"bubble") or an object { style?, alignment?, placement? }
+    let resolvedTabs: docsYml.RawSchemas.TabsThemeConfig | undefined;
+    if (theme.tabs != null && typeof theme.tabs === "object") {
+        const tabsObj = theme.tabs as docsYml.RawSchemas.TabsThemeObjectConfig;
+        resolvedTabs = {
+            style: tabsObj.style ?? "default",
+            alignment: tabsObj.alignment,
+            placement: tabsObj.placement
+        };
+    } else {
+        resolvedTabs = (theme.tabs as docsYml.RawSchemas.TabsThemeStyle | undefined) ?? "default";
+    }
+
     return {
         sidebar: theme.sidebar ?? "default",
-        tabs: theme.tabs ?? "default",
+        tabs: resolvedTabs,
         body: theme.body ?? "default",
         pageActions: theme.pageActions ?? "default",
         footerNav: theme.footerNav ?? "default",
@@ -427,11 +479,78 @@ function convertSettingsConfig(
     };
 }
 
-function convertLayoutConfig(
-    layout: docsYml.RawSchemas.LayoutConfig | undefined
-): docsYml.ParsedDocsConfiguration["layout"] {
-    if (layout == null) {
+async function parseTextFile({
+    rawPath,
+    absoluteFilepathToDocsConfig
+}: {
+    rawPath: string | undefined;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+}): Promise<AbsoluteFilePath | undefined> {
+    if (rawPath == null) {
         return undefined;
+    }
+
+    const absolutePath = resolveFilepath(rawPath, absoluteFilepathToDocsConfig);
+    await readFile(absolutePath, "utf8");
+
+    return absolutePath;
+}
+
+async function parseContext7File({
+    rawPath,
+    absoluteFilepathToDocsConfig,
+    context
+}: {
+    rawPath: string | undefined;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<AbsoluteFilePath | undefined> {
+    if (rawPath == null) {
+        return undefined;
+    }
+
+    const absolutePath = resolveFilepath(rawPath, absoluteFilepathToDocsConfig);
+    const contents = await readFile(absolutePath, "utf8");
+
+    try {
+        JSON.parse(contents);
+    } catch (error) {
+        context.failAndThrow(
+            `Invalid JSON in Context7 config file: ${rawPath}`,
+            error instanceof Error ? error.message : String(error)
+        );
+    }
+
+    return absolutePath;
+}
+
+function convertLayoutConfig(
+    layout: docsYml.RawSchemas.LayoutConfig | undefined,
+    themeTabsAlignment: string | undefined,
+    themeTabsPlacement: string | undefined
+): docsYml.ParsedDocsConfiguration["layout"] {
+    if (layout == null && themeTabsAlignment == null && themeTabsPlacement == null) {
+        return undefined;
+    }
+
+    // tabsAlignment is resolved from theme.tabs.alignment, not layout.
+    // Cast needed until the fern-platform companion PR merges and the SDK is updated.
+    const resolvedTabsAlignment = themeTabsAlignment === "center" ? "CENTER" : "LEFT";
+
+    // tabsPlacement: theme.tabs.placement overrides layout.tabs-placement.
+    const resolvedTabsPlacement =
+        themeTabsPlacement === "header"
+            ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
+            : themeTabsPlacement === "sidebar"
+              ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar
+              : undefined;
+
+    if (layout == null) {
+        // No layout section, but theme.tabs properties are set — return minimal layout.
+        return {
+            ...(resolvedTabsPlacement != null ? { tabsPlacement: resolvedTabsPlacement } : {}),
+            tabsAlignment: resolvedTabsAlignment
+        } as unknown as docsYml.ParsedDocsConfiguration["layout"];
     }
 
     return {
@@ -452,9 +571,10 @@ function convertLayoutConfig(
                 ? CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Header
                 : CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Sidebar,
         tabsPlacement:
-            layout.tabsPlacement === "header"
+            resolvedTabsPlacement ??
+            (layout.tabsPlacement === "header"
                 ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
-                : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar,
+                : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar),
         contentAlignment:
             layout.contentAlignment === "left"
                 ? CjsFdrSdk.docs.v1.commons.ContentAlignment.Left
@@ -465,8 +585,9 @@ function convertLayoutConfig(
                 : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
-        hideFeedback: layout.hideFeedback ?? false
-    };
+        hideFeedback: layout.hideFeedback ?? false,
+        tabsAlignment: resolvedTabsAlignment
+    } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
 
 function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.commons.SizeConfig | undefined {
@@ -1035,7 +1156,7 @@ async function expandFolderConfiguration({
     const folderName = path.basename(folderPath);
     const indexFrontmatterTitle =
         effectiveTitleSource === "frontmatter" && indexPage?.type === "page"
-            ? await getFrontmatterTitle({ absolutePath: indexPage.absolutePath })
+            ? (await getFrontmatterMetadata({ absolutePath: indexPage.absolutePath })).title
             : undefined;
     const title = rawConfig.title ?? indexFrontmatterTitle ?? nameToTitle({ name: folderName });
     const slug = rawConfig.slug ?? nameToSlug({ name: folderName });

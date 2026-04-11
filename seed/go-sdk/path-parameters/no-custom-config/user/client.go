@@ -4,6 +4,7 @@ package user
 
 import (
 	context "context"
+
 	fern "github.com/path-parameters/fern"
 	core "github.com/path-parameters/fern/core"
 	internal "github.com/path-parameters/fern/internal"
@@ -50,13 +51,13 @@ func (c *Client) GetUser(
 
 func (c *Client) CreateUser(
 	ctx context.Context,
-	tenantId string,
+	tenantID string,
 	request *fern.User,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	response, err := c.WithRawResponse.CreateUser(
 		ctx,
-		tenantId,
+		tenantID,
 		request,
 		opts...,
 	)

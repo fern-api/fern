@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/examples/fern"
     client "github.com/examples/fern/client"
     option "github.com/examples/fern/option"
-    fern "github.com/examples/fern"
-    context "context"
 )
 
 func do() {
@@ -25,7 +26,7 @@ func do() {
                 "development",
             ),
         },
-        XApiVersion: "0.0.1",
+        XAPIVersion: "0.0.1",
     }
     client.Service.GetMetadata(
         context.TODO(),

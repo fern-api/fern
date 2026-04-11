@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    unions "github.com/fern-api/unions-go"
     client "github.com/fern-api/unions-go/client"
     option "github.com/fern-api/unions-go/option"
-    unions "github.com/fern-api/unions-go"
-    context "context"
 )
 
 func do() {
@@ -18,7 +19,7 @@ func do() {
             NormalSweet: &unions.NormalSweet{
                 Value: "value",
             },
-            Id: "id",
+            ID: "id",
             CreatedAt: unions.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
@@ -32,7 +33,7 @@ func do() {
             NormalSweet: &unions.NormalSweet{
                 Value: "value",
             },
-            Id: "id",
+            ID: "id",
             CreatedAt: unions.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),

@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
 import {
+    caseConverter,
     casingsGenerator,
     createDeclaredTypeName,
     primitiveTypeRefNode,
@@ -137,7 +138,8 @@ function createAliasGenerator(opts: {
         noOptionalProperties: false,
         retainOriginalCasing: false,
         enableInlineTypes: opts.enableInlineTypes ?? false,
-        generateReadWriteOnlyTypes: false
+        generateReadWriteOnlyTypes: false,
+        caseConverter
     });
 }
 
@@ -168,7 +170,8 @@ function createBrandedGenerator(opts: {
         noOptionalProperties: false,
         retainOriginalCasing: false,
         enableInlineTypes: false,
-        generateReadWriteOnlyTypes: false
+        generateReadWriteOnlyTypes: false,
+        caseConverter
     });
 }
 

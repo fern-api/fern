@@ -1,4 +1,4 @@
-using System.Text.Json;
+using global::System.Text.Json;
 using SeedPagination.Core;
 
 namespace SeedPagination;
@@ -153,7 +153,7 @@ public partial class ComplexClient : IComplexClient
                         options,
                         async (request, options, cancellationToken) =>
                             await SearchInternalAsync(index, request, options, cancellationToken)
-                                .ConfigureAwait(false),
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.Pagination ??= new StartingAfterPaging() { PerPage = 0 };

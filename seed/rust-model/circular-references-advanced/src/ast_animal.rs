@@ -45,7 +45,6 @@ impl Animal {
                     _ => None,
                 }
     }
-
 }
 
 impl fmt::Display for Animal {

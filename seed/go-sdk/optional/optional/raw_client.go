@@ -4,11 +4,12 @@ package optional
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/optional/fern"
 	core "github.com/optional/fern/core"
 	internal "github.com/optional/fern/internal"
 	option "github.com/optional/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -114,7 +115,7 @@ func (r *RawClient) SendOptionalTypedBody(
 
 func (r *RawClient) SendOptionalNullableWithAllOptionalProperties(
 	ctx context.Context,
-	actionId string,
+	actionID string,
 	id string,
 	request *fern.DeployParams,
 	opts ...option.RequestOption,
@@ -127,7 +128,7 @@ func (r *RawClient) SendOptionalNullableWithAllOptionalProperties(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/deploy/%v/versions/%v",
-		actionId,
+		actionID,
 		id,
 	)
 	headers := internal.MergeHeaders(

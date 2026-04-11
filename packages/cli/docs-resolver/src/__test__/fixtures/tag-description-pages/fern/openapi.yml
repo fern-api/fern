@@ -11,7 +11,21 @@ servers:
   - url: /api/v31
 tags:
   - name: pet
-    description: Everything about your Pets
+    description: |-
+      Everything about your Pets.
+
+      Use the `{petId}` path parameter to identify a specific pet.
+      For example: `GET /pets/{petId}`
+
+      ```json
+      {
+        "id": 10,
+        "name": "doggie",
+        "status": "available"
+      }
+      ```
+
+      Filter pets with query params like `status=available` or `tags=<indoor>`.
   - name: store
     description: Access to Petstore orders
   - name: user

@@ -4,6 +4,7 @@ package object
 
 import (
 	context "context"
+
 	core "github.com/go-deterministic-ordering/fern/core"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	option "github.com/go-deterministic-ordering/fern/option"

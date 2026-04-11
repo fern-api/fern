@@ -1,10 +1,11 @@
 package example
 
 import (
-    client "github.com/examples/fern/client"
-    option "github.com/examples/fern/option"
-    file "github.com/examples/fern/file"
     context "context"
+
+    client "github.com/examples/fern/client"
+    file "github.com/examples/fern/file"
+    option "github.com/examples/fern/option"
 )
 
 func do() {
@@ -17,7 +18,7 @@ func do() {
         ),
     )
     request := &file.GetFileRequest{
-        XFileApiVersion: "X-File-API-Version",
+        XFileAPIVersion: "X-File-API-Version",
     }
     client.File.Service.GetFile(
         context.TODO(),

@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/content-type/fern"
     client "github.com/content-type/fern/client"
     option "github.com/content-type/fern/option"
-    fern "github.com/content-type/fern"
-    context "context"
 )
 
 func do() {
@@ -41,7 +42,7 @@ func do() {
         Bio: fern.String(
             "bio",
         ),
-        ProfileImageUrl: fern.String(
+        ProfileImageURL: fern.String(
             "profileImageUrl",
         ),
         Settings: map[string]any{

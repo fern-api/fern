@@ -1,3 +1,4 @@
+import { getOriginalName, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
@@ -5,7 +6,9 @@ import { rust, UseStatement } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { EnvironmentGenerator } from "../environment/EnvironmentGenerator.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
+
 
 interface EndpointParameter {
     name: string;
@@ -28,9 +31,11 @@ export class SubClientGenerator {
     private readonly subpackage: FernIr.Subpackage;
     private readonly service?: FernIr.HttpService;
     private readonly clientGeneratorContext: ClientGeneratorContext;
+    private readonly environmentGenerator: EnvironmentGenerator;
 
     constructor(context: SdkGeneratorContext, subpackage: FernIr.Subpackage) {
         this.context = context;
+        this.environmentGenerator = new EnvironmentGenerator({ context: this.context });
         this.subpackage = subpackage;
         this.service = subpackage.service ? this.context.getHttpServiceOrThrow(subpackage.service) : undefined;
         this.clientGeneratorContext = new ClientGeneratorContext({
@@ -44,6 +49,13 @@ export class SubClientGenerator {
     // =============================================================================
 
     public generate(): RustFile | null {
+        // Skip generating HTTP client stubs for subpackages that only have a WebSocket
+        // channel and no HTTP service. The actual WebSocket functionality is handled by
+        // the WebSocketChannelGenerator which generates files in src/api/websocket/.
+        if (this.context.isWebSocketOnlySubpackage(this.subpackage)) {
+            return null;
+        }
+
         const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
 
         // If this subpackage has any children at all and is in a nested directory,
@@ -147,7 +159,7 @@ export class SubClientGenerator {
 
         // Build module documentation
         const moduleDoc: string[] = [];
-        const serviceName = this.subpackage.displayName ?? this.subpackage.name.pascalCase.safeName;
+        const serviceName = this.subpackage.displayName ?? this.context.case.pascalSafe(this.subpackage.name);
         moduleDoc.push(`${serviceName} service client`);
         moduleDoc.push("");
 
@@ -165,7 +177,7 @@ export class SubClientGenerator {
                 service.endpoints.slice(0, 10).forEach((endpoint) => {
                     const method = endpoint.method.toUpperCase();
                     const path = endpoint.path.head;
-                    const name = endpoint.name.pascalCase.safeName;
+                    const name = this.context.case.pascalSafe(endpoint.name);
                     moduleDoc.push(`- \`${method} ${path}\` - ${name}`);
                 });
                 if (service.endpoints.length > 10) {
@@ -705,13 +717,12 @@ export class SubClientGenerator {
                     bigInteger: () => requiredTypes.add("BigInt"), // Direct BigInt parameter
                     date: () => requiredTypes.add("NaiveDate"), // Direct NaiveDate parameter
                     dateTime: () => {
-                        // Direct DateTime parameter - use FixedOffset or Utc based on config
                         requiredTypes.add("DateTime");
-                        if (this.context.getDateTimeType() === "utc") {
-                            requiredTypes.add("Utc");
-                        } else {
-                            requiredTypes.add("FixedOffset");
-                        }
+                        requiredTypes.add(this.context.getDateTimeType() === "utc" ? "Utc" : "FixedOffset");
+                    },
+                    dateTimeRfc2822: () => {
+                        requiredTypes.add("DateTime");
+                        requiredTypes.add(this.context.getDateTimeType() === "utc" ? "Utc" : "FixedOffset");
                     },
                     base64: () => {
                         // String is built-in
@@ -819,6 +830,7 @@ export class SubClientGenerator {
                     bigInteger: () => false,
                     date: () => false,
                     dateTime: () => false,
+                    dateTimeRfc2822: () => false,
                     base64: () => false,
                     uuid: () => false,
                     _other: () => false
@@ -845,6 +857,21 @@ export class SubClientGenerator {
         return methods;
     }
 
+    /**
+     * Returns the URL method name for an endpoint's base URL, or undefined
+     * if no multi-URL resolution is needed (single-URL env or no baseUrl on endpoint).
+     */
+    private getEndpointUrlMethodName(endpoint: FernIr.HttpEndpoint): string | undefined {
+        if (!this.context.hasMultipleBaseUrls()) {
+            return undefined;
+        }
+        const baseUrlId = endpoint.baseUrl ?? undefined;
+        if (!baseUrlId) {
+            return undefined;
+        }
+        return this.environmentGenerator.getUrlMethodNameForBaseUrlId(baseUrlId);
+    }
+
     private generateHttpMethod(endpoint: FernIr.HttpEndpoint): rust.Client.SimpleMethod {
         const params = this.extractParametersFromEndpoint(endpoint);
         const parameters = this.buildMethodParameters(params, endpoint);
@@ -866,6 +893,8 @@ export class SubClientGenerator {
         let typeParameter = "";
         let executeArgs = "";
 
+        const isBytesRequest = this.isBytesEndpoint(endpoint);
+
         if (isFileUpload) {
             // Use multipart request for file uploads
             executeMethod = "execute_multipart_request";
@@ -874,6 +903,18 @@ export class SubClientGenerator {
             Method::${httpMethod},
             ${pathExpression},
             ${multipartBody},
+            ${this.buildQueryParameters(endpoint)},
+            options,`;
+        } else if (isBytesRequest) {
+            // Use bytes request for octet-stream endpoints
+            executeMethod = "execute_bytes_request";
+            const bytesBody = endpoint.queryParameters.length > 0
+                ? "Some(request.body.to_vec())"
+                : "Some(request.to_vec())";
+            executeArgs = `
+            Method::${httpMethod},
+            ${pathExpression},
+            ${bytesBody},
             ${this.buildQueryParameters(endpoint)},
             options,`;
         } else {
@@ -900,13 +941,31 @@ export class SubClientGenerator {
             }
         }
 
+        // Determine if this endpoint needs multi-URL resolution.
+        // Only apply to execute_request and execute_stream_request (we have _with_base_url variants for these).
+        const urlMethodName = this.getEndpointUrlMethodName(endpoint);
+        const supportsBaseUrlOverride = executeMethod === "execute_request" || executeMethod === "execute_stream_request";
+        let body: string;
+
+        if (urlMethodName && supportsBaseUrlOverride) {
+            // Multi-URL: resolve base URL at call time from environment
+            const baseUrlResolution =
+                `let base_url = self.http_client.config().environment.as_ref()\n` +
+                `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
+            body = `${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
+            base_url,${executeArgs}
+        ).await`;
+        } else {
+            body = `self.http_client.${executeMethod}${typeParameter}(${executeArgs}
+        ).await`;
+        }
+
         return {
-            name: endpoint.name.snakeCase.safeName,
+            name: this.context.case.snakeSafe(endpoint.name),
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
-            body: `self.http_client.${executeMethod}${typeParameter}(${executeArgs}
-        ).await`,
+            body,
             docs: endpoint.docs
                 ? rust.docComment({
                       summary: endpoint.docs,
@@ -929,7 +988,8 @@ export class SubClientGenerator {
             let paramType = param.type.toString();
 
             if (param.isRef) {
-                paramType = `&${paramType}`;
+                // Use &str instead of &String for idiomatic Rust (more flexible, accepts both &String and literals)
+                paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
 
             if (param.optional) {
@@ -943,7 +1003,8 @@ export class SubClientGenerator {
         if (requestBodyParam) {
             let paramType = requestBodyParam.type.toString();
             if (requestBodyParam.isRef) {
-                paramType = `&${paramType}`;
+                // Use &str instead of &String for idiomatic Rust
+                paramType = paramType === "String" ? "&str" : `&${paramType}`;
             }
             methodParams.push(`${requestBodyParam.name}: ${paramType}`);
         }
@@ -966,15 +1027,8 @@ export class SubClientGenerator {
 
         // Handle all three scenarios properly
         if (endpoint.requestBody && endpoint.queryParameters.length > 0) {
-            if (this.isBytesEndpoint(endpoint)) {
-                // BYTES + QUERY: bytes body can't hold query fields, add them separately
-                this.addRequestBodyParameter(endpoint, params);
-                this.addIndividualQueryParameters(endpoint, params);
-            } else {
-                // MIXED: Request body contains both body + query fields
-                this.addRequestBodyParameter(endpoint, params);
-                // Query params are now included in the request body struct
-            }
+            // Request body struct contains both body fields and query params
+            this.addRequestBodyParameter(endpoint, params);
         } else if (endpoint.requestBody) {
             // BODY-ONLY: Traditional request body
             this.addRequestBodyParameter(endpoint, params);
@@ -989,7 +1043,7 @@ export class SubClientGenerator {
 
     private addIndividualQueryParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
         for (const queryParam of endpoint.queryParameters) {
-            const paramName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
+            const paramName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(queryParam.name));
             params.push({
                 name: paramName,
                 type: generateRustTypeForTypeReference(queryParam.valueType, this.context),
@@ -1002,9 +1056,9 @@ export class SubClientGenerator {
     private addPathParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
         endpoint.fullPath.parts.forEach((part) => {
             if (part.pathParameter) {
-                const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
+                const pathParam = endpoint.allPathParameters.find((p) => getOriginalName(p.name) === part.pathParameter);
                 if (pathParam) {
-                    const paramName = this.context.escapeRustKeyword(pathParam.name.snakeCase.safeName);
+                    const paramName = this.context.escapeRustKeyword(this.context.case.snakeSafe(pathParam.name));
                     params.push({
                         name: paramName,
                         type: generateRustTypeForTypeReference(pathParam.valueType, this.context),
@@ -1050,7 +1104,15 @@ export class SubClientGenerator {
                     const requestTypeName = this.getRequestTypeName(endpoint);
                     return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 },
-                bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
+                bytes: () => {
+                    // If there are query parameters, use the generated request struct
+                    if (endpoint.queryParameters.length > 0) {
+                        const requestTypeName = this.context.getBytesRequestTypeName(endpoint.id);
+                        return rust.Type.reference(rust.reference({ name: requestTypeName }));
+                    }
+                    // No query params — use raw Vec<u8>
+                    return rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8));
+                },
                 _other: () => {
                     // Generate proper request type for unknown cases too
                     const requestTypeName = this.getRequestTypeName(endpoint);
@@ -1071,11 +1133,11 @@ export class SubClientGenerator {
         // For inlined request bodies, use the name from the IR to ensure consistency
         if (endpoint.requestBody?.type === "inlinedRequestBody") {
             const inlinedRequestBody = endpoint.requestBody as FernIr.HttpRequestBody.InlinedRequestBody;
-            return inlinedRequestBody.name.pascalCase.safeName;
+            return this.context.case.pascalSafe(inlinedRequestBody.name);
         }
 
         // Generate TypeScript-style request type name: GetTokenRequest, CreateMovieRequest, etc.
-        const methodName = endpoint.name.pascalCase.safeName;
+        const methodName = this.context.case.pascalSafe(endpoint.name);
         return `${methodName}Request`;
     }
 
@@ -1102,7 +1164,7 @@ export class SubClientGenerator {
         }
 
         // Check for structured query parameter by name (only for non-array queries)
-        if (queryParam.name.wireValue === "query" && this.isStringType(valueType)) {
+        if (getWireValue(queryParam.name) === "query" && this.isStringType(valueType)) {
             return "structured_query";
         }
 
@@ -1121,6 +1183,7 @@ export class SubClientGenerator {
                     bigInteger: () => "big_int",
                     date: () => "date",
                     dateTime: () => "datetime",
+                    dateTimeRfc2822: () => "datetime",
                     base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
@@ -1211,6 +1274,7 @@ export class SubClientGenerator {
                     bigInteger: () => "big_int",
                     date: () => "date",
                     dateTime: () => "datetime",
+                    dateTimeRfc2822: () => "datetime",
                     base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
@@ -1306,7 +1370,7 @@ export class SubClientGenerator {
         const paginationParamNames = this.extractPaginationParameterNames(paginationConfig);
 
         // Filter out pagination parameters
-        const filteredParams = queryParams.filter((param) => !paginationParamNames.has(param.name.wireValue));
+        const filteredParams = queryParams.filter((param) => !paginationParamNames.has(getWireValue(param.name)));
 
         if (filteredParams.length === 0) {
             return "None";
@@ -1317,7 +1381,7 @@ export class SubClientGenerator {
 
     private buildQueryParameterStatements(queryParams: FernIr.QueryParameter[], endpoint?: FernIr.HttpEndpoint): string {
         const builderChain = queryParams.map((queryParam) => {
-            const wireValue = queryParam.name.wireValue;
+            const wireValue = getWireValue(queryParam.name);
             const method = this.getQueryBuilderMethod(queryParam);
 
             // Determine parameter source based on endpoint type
@@ -1335,12 +1399,9 @@ export class SubClientGenerator {
 
     // Smart parameter source detection
     private getQueryParameterSource(queryParam: FernIr.QueryParameter, endpoint?: FernIr.HttpEndpoint): string {
-        const fieldName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
+        const fieldName = this.context.escapeRustKeyword(this.context.case.snakeUnsafe(queryParam.name));
 
-        if (endpoint && this.isBytesEndpoint(endpoint)) {
-            // BYTES body: query params are individual method parameters
-            return `${fieldName}.clone()`;
-        } else if (endpoint?.requestBody) {
+        if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct
             return `request.${fieldName}.clone()`;
         } else if (endpoint && endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
@@ -1389,10 +1450,10 @@ export class SubClientGenerator {
                 cursor: (cursor) => {
                     cursor.page.property._visit({
                         query: (query) => {
-                            paginationParamNames.add(query.name.wireValue);
+                            paginationParamNames.add(getWireValue(query.name));
                         },
                         body: (body) => {
-                            paginationParamNames.add(body.name.wireValue);
+                            paginationParamNames.add(getWireValue(body.name));
                         },
                         _other: () => {
                             /* no-op */
@@ -1402,10 +1463,10 @@ export class SubClientGenerator {
                 offset: (offset) => {
                     offset.page.property._visit({
                         query: (query) => {
-                            paginationParamNames.add(query.name.wireValue);
+                            paginationParamNames.add(getWireValue(query.name));
                         },
                         body: (body) => {
-                            paginationParamNames.add(body.name.wireValue);
+                            paginationParamNames.add(getWireValue(body.name));
                         },
                         _other: () => {
                             /* no-op */
@@ -1414,10 +1475,10 @@ export class SubClientGenerator {
                     if (offset.step) {
                         offset.step.property._visit({
                             query: (query) => {
-                                paginationParamNames.add(query.name.wireValue);
+                                paginationParamNames.add(getWireValue(query.name));
                             },
                             body: (body) => {
-                                paginationParamNames.add(body.name.wireValue);
+                                paginationParamNames.add(getWireValue(body.name));
                             },
                             _other: () => {
                                 /* no-op */
@@ -1426,6 +1487,12 @@ export class SubClientGenerator {
                     }
                 },
                 custom: () => {
+                    /* no-op */
+                },
+                uri: () => {
+                    /* no-op */
+                },
+                path: () => {
                     /* no-op */
                 },
                 _other: () => {
@@ -1450,10 +1517,10 @@ export class SubClientGenerator {
 
         endpoint.fullPath.parts.forEach((part) => {
             if (part.pathParameter) {
-                const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
+                const pathParam = endpoint.allPathParameters.find((p) => getOriginalName(p.name) === part.pathParameter);
                 if (pathParam) {
                     path += "{}";
-                    const escapedName = this.context.escapeRustKeyword(pathParam.name.snakeCase.safeName);
+                    const escapedName = this.context.escapeRustKeyword(this.context.case.snakeSafe(pathParam.name));
                     const paramName = this.getPathParameterExpression(
                         pathParam.valueType,
                         escapedName
@@ -1505,10 +1572,10 @@ export class SubClientGenerator {
         if (requestBodyParam && endpoint.requestBody) {
             // For referenced body with query parameters, serialize request.body
             if (endpoint.requestBody.type === "reference" && endpoint.queryParameters.length > 0) {
-                return "Some(serde_json::to_value(&request.body).unwrap_or_default())";
+                return "Some(serde_json::to_value(&request.body).map_err(ApiError::Serialization)?)";
             }
             // For other cases, serialize the whole request
-            return "Some(serde_json::to_value(request).unwrap_or_default())";
+            return "Some(serde_json::to_value(request).map_err(ApiError::Serialization)?)";
         }
         return "None";
     }
@@ -1642,6 +1709,7 @@ export class SubClientGenerator {
                             bigInteger: () => false,
                             date: () => false,
                             dateTime: () => false,
+                            dateTimeRfc2822: () => false,
                             base64: () => true,
                             uuid: () => false,
                             _other: () => false
@@ -1732,6 +1800,7 @@ export class SubClientGenerator {
                     bigInteger: () => true, // BigInt is large, pass by reference
                     date: () => true,
                     dateTime: () => true,
+                    dateTimeRfc2822: () => true,
                     base64: () => true, // Base64 strings are typically large
                     uuid: () => true,
                     _other: () => true
@@ -1809,7 +1878,7 @@ export class SubClientGenerator {
 
         const params = this.extractParametersFromEndpoint(endpoint);
         const parameters = this.buildMethodParameters(params, endpoint);
-        const baseName = endpoint.name.snakeCase.safeName;
+        const baseName = this.context.case.snakeSafe(endpoint.name);
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
@@ -1856,6 +1925,8 @@ export class SubClientGenerator {
             offset: (offset) =>
                 this.generateOffsetPaginationLogic(endpoint, httpMethod, pathExpression, requestBody, offset),
             custom: (_custom) => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
+            uri: () => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
+            path: () => this.generateCustomPaginationLogic(endpoint, httpMethod, pathExpression, requestBody),
             _other: () => {
                 throw new Error("Unknown pagination type");
             }
@@ -1938,7 +2009,8 @@ export class SubClientGenerator {
             .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
             .join("\n            ");
 
-        const pageParamName = offset.page?.property?.name?.wireValue || "page";
+        const pageProperty = offset.page?.property?.name;
+        const pageParamName = pageProperty != null ? getWireValue(pageProperty) : "page";
 
         return `let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = ${queryParams};
@@ -2091,6 +2163,8 @@ export class SubClientGenerator {
             cursor: (cursor) => this.generateGenericCursorExtraction(cursor),
             offset: (offset) => this.generateGenericOffsetExtraction(offset, isOffsetPagination),
             custom: () => this.generateGenericCustomExtraction(),
+            uri: () => this.generateGenericCustomExtraction(),
+            path: () => this.generateGenericCustomExtraction(),
             _other: () => this.generateGenericCustomExtraction()
         });
     }
@@ -2211,12 +2285,12 @@ export class SubClientGenerator {
         // If there's a propertyPath (nested properties), add them first
         if (property.propertyPath && Array.isArray(property.propertyPath)) {
             property.propertyPath.forEach((pathItem) => {
-                path.push(pathItem.name.originalName);
+                path.push(getOriginalName(pathItem.name));
             });
         }
 
         // Finally, add the property name itself
-        path.push(property.property.name.wireValue);
+        path.push(getWireValue(property.property.name));
 
         // If path is still empty, use default
         return path.length > 0 ? path : ["data"];
@@ -2225,8 +2299,8 @@ export class SubClientGenerator {
     private getCursorParamName(cursor: FernIr.CursorPagination): string {
         // Extract cursor parameter name from pagination configuration
         return cursor.page.property._visit({
-            query: (query) => query.name.wireValue,
-            body: (body) => body.name.wireValue,
+            query: (query) => getWireValue(query.name),
+            body: (body) => getWireValue(body.name),
             _other: () => "cursor"
         });
     }
@@ -2235,8 +2309,8 @@ export class SubClientGenerator {
         // Extract step parameter name from pagination configuration
         if (offset.step) {
             return offset.step.property._visit({
-                query: (query) => query.name.wireValue,
-                body: (body) => body.name.wireValue,
+                query: (query) => getWireValue(query.name),
+                body: (body) => getWireValue(body.name),
                 _other: () => "step"
             });
         }
@@ -2254,7 +2328,7 @@ export class SubClientGenerator {
         endpoint.allPathParameters.forEach((pathParam) => {
             if (pathParam.docs) {
                 paramDocs.push({
-                    name: pathParam.name.snakeCase.safeName,
+                    name: this.context.case.snakeSafe(pathParam.name),
                     description: pathParam.docs
                 });
             }
@@ -2264,7 +2338,7 @@ export class SubClientGenerator {
         endpoint.queryParameters.forEach((queryParam) => {
             if (queryParam.docs) {
                 paramDocs.push({
-                    name: queryParam.name.name.snakeCase.safeName,
+                    name: this.context.case.snakeSafe(queryParam.name),
                     description: queryParam.docs
                 });
             }

@@ -247,11 +247,11 @@ func TestSettersMarkExplicitPostSubmitResponse(t *testing.T) {
 }
 
 func TestSettersTokenRequest(t *testing.T) {
-	t.Run("SetClientId", func(t *testing.T) {
+	t.Run("SetClientID", func(t *testing.T) {
 		obj := &TokenRequest{}
-		var fernTestValueClientId string
-		obj.SetClientId(fernTestValueClientId)
-		assert.Equal(t, fernTestValueClientId, obj.ClientId)
+		var fernTestValueClientID string
+		obj.SetClientID(fernTestValueClientID)
+		assert.Equal(t, fernTestValueClientID, obj.ClientID)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -266,18 +266,18 @@ func TestSettersTokenRequest(t *testing.T) {
 }
 
 func TestGettersTokenRequest(t *testing.T) {
-	t.Run("GetClientId", func(t *testing.T) {
+	t.Run("GetClientID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TokenRequest{}
 		var expected string
-		obj.ClientId = expected
+		obj.ClientID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetClientId(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetClientID(), "getter should return the property value")
 	})
 
-	t.Run("GetClientId_NilReceiver", func(t *testing.T) {
+	t.Run("GetClientID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *TokenRequest
 		// Should not panic - getters should handle nil receiver gracefully
@@ -286,7 +286,7 @@ func TestGettersTokenRequest(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetClientId() // Should return zero value
+		_ = obj.GetClientID() // Should return zero value
 	})
 
 	t.Run("GetClientSecret", func(t *testing.T) {
@@ -315,14 +315,14 @@ func TestGettersTokenRequest(t *testing.T) {
 }
 
 func TestSettersMarkExplicitTokenRequest(t *testing.T) {
-	t.Run("SetClientId_MarksExplicit", func(t *testing.T) {
+	t.Run("SetClientID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &TokenRequest{}
-		var fernTestValueClientId string
+		var fernTestValueClientID string
 
 		// Act
-		obj.SetClientId(fernTestValueClientId)
+		obj.SetClientID(fernTestValueClientID)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

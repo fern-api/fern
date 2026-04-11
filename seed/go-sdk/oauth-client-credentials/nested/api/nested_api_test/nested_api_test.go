@@ -6,12 +6,13 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
-	client "github.com/oauth-client-credentials/fern/client"
-	option "github.com/oauth-client-credentials/fern/option"
-	require "github.com/stretchr/testify/require"
 	http "net/http"
 	os "os"
 	testing "testing"
+
+	client "github.com/oauth-client-credentials/fern/client"
+	option "github.com/oauth-client-credentials/fern/option"
+	require "github.com/stretchr/testify/require"
 )
 
 func VerifyRequestCount(
@@ -61,7 +62,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestNestedApiGetSomethingWithWireMock(
+func TestNestedAPIGetSomethingWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -71,13 +72,13 @@ func TestNestedApiGetSomethingWithWireMock(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	invocationErr := client.Nested.Api.GetSomething(
+	invocationErr := client.Nested.API.GetSomething(
 		context.TODO(),
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestNestedApiGetSomethingWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestNestedAPIGetSomethingWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestNestedApiGetSomethingWithWireMock", "GET", "/nested/get-something", nil, 1)
+	VerifyRequestCount(t, "TestNestedAPIGetSomethingWithWireMock", "GET", "/nested/get-something", nil, 1)
 }

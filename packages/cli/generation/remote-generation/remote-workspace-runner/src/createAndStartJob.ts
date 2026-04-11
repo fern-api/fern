@@ -34,8 +34,13 @@ export async function createAndStartJob({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
+    fiddlePreview,
+    pushPreviewBranch,
     fernignorePath,
-    retryRateLimited
+    skipFernignore,
+    retryRateLimited,
+    automationMode,
+    autoMerge
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -49,12 +54,24 @@ export async function createAndStartJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. Requires fiddle-sdk with pushPreviewBranch support. */
+    pushPreviewBranch?: boolean;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     retryRateLimited: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
-    // Read fernignore file contents if path is provided
+    // Determine fernignore contents:
+    // - If --skip-fernignore is set, upload an empty .fernignore so nothing is ignored
+    // - If a fernignore path is provided, read it
+    // - Otherwise, no fernignore contents
     let fernignoreContents: string | undefined;
-    if (fernignorePath != null) {
+    if (skipFernignore) {
+        fernignoreContents = "";
+    } else if (fernignorePath != null) {
         try {
             fernignoreContents = await readFile(fernignorePath, "utf-8");
         } catch (error) {
@@ -75,7 +92,11 @@ export async function createAndStartJob({
                 token,
                 whitelabel,
                 absolutePathToPreview,
-                fernignoreContents
+                fiddlePreview,
+                pushPreviewBranch,
+                fernignoreContents,
+                automationMode,
+                autoMerge
             }),
         retryRateLimited,
         logger: context.logger,
@@ -99,6 +120,8 @@ async function createJob({
     token,
     whitelabel,
     absolutePathToPreview,
+    fiddlePreview,
+    pushPreviewBranch,
     fernignoreContents
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -111,7 +134,13 @@ async function createJob({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to absolutePathToPreview != null. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. Requires fiddle-sdk with pushPreviewBranch support. */
+    pushPreviewBranch?: boolean;
     fernignoreContents: string | undefined;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -135,8 +164,24 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
-        preview: absolutePathToPreview != null,
+        // fiddlePreview overrides what we send to Fiddle as `preview`.
+        // For sdk preview: fiddlePreview=false so Fiddle doesn't set dryRun=true
+        //   (Fiddle uses `dryRun = generatePreview`, so preview=false → actual publish).
+        // For fern generate --preview: fiddlePreview is undefined, falls back to
+        //   absolutePathToPreview != null (true) → Fiddle sets dryRun=true → npm publish --dry-run.
+        // This is the only mechanism preventing dryRun for sdk preview jobs;
+        // Fiddle's dryRun logic is intentionally unchanged.
+        preview: fiddlePreview ?? absolutePathToPreview != null,
+        // TODO: Send pushPreviewBranch to Fiddle once @fern-fern/fiddle-sdk is bumped
+        // to include the pushPreviewBranch field on CreateJobRequestV2.
+        // pushPreviewBranch,
         fernignoreContents
+        // TODO(FER-9671): Pass automation flags to Fiddle once its API is updated:
+        //   automationMode,
+        //   autoMerge,
+        //   runId: process.env.FERN_RUN_ID
+        // Fiddle will use these for server-side no-diff detection, separate PRs,
+        // automerge, run_id correlation, and breaking change handling.
     });
 
     if (!createResponse.ok) {

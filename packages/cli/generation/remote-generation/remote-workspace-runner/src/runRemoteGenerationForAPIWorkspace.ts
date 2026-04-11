@@ -30,11 +30,18 @@ export async function runRemoteGenerationForAPIWorkspace({
     token,
     whitelabel,
     absolutePathToPreview,
+    isPreview,
+    fiddlePreview,
+    pushPreviewBranch,
     mode,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
     validateWorkspace,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars,
+    automationMode,
+    autoMerge
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -46,11 +53,21 @@ export async function runRemoteGenerationForAPIWorkspace({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
+    isPreview?: boolean;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to isPreview. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. */
+    pushPreviewBranch?: boolean;
     mode: "pull-request" | undefined;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
     validateWorkspace?: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -80,14 +97,17 @@ export async function runRemoteGenerationForAPIWorkspace({
                     });
                 }
 
-                // Auto-discover .fernignore from the generator's local output directory
-                // if not explicitly provided via --fernignore
-                const effectiveFernignorePath =
-                    fernignorePath ??
-                    (await resolveAutoDiscoveredFernignorePath({
-                        generatorInvocation,
-                        context: interactiveTaskContext
-                    }));
+                // When --skip-fernignore is set, skip auto-discovery and use no fernignore path.
+                // The skipFernignore flag is passed downstream to upload an empty .fernignore.
+                // Otherwise, auto-discover .fernignore from the generator's local output directory
+                // if not explicitly provided via --fernignore.
+                const effectiveFernignorePath = skipFernignore
+                    ? undefined
+                    : (fernignorePath ??
+                      (await resolveAutoDiscoveredFernignorePath({
+                          generatorInvocation,
+                          context: interactiveTaskContext
+                      })));
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
@@ -125,9 +145,16 @@ export async function runRemoteGenerationForAPIWorkspace({
                     readme: generatorInvocation.readme,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
+                    isPreview,
+                    fiddlePreview,
+                    pushPreviewBranch,
                     fernignorePath: effectiveFernignorePath,
+                    skipFernignore,
                     dynamicIrOnly,
-                    retryRateLimited
+                    retryRateLimited,
+                    requireEnvVars,
+                    automationMode,
+                    autoMerge
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

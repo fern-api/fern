@@ -16,9 +16,11 @@
 //!     let client = PaginationClient::new(config).expect("Failed to build client");
 //!     client
 //!         .users
-//!         .list_usernames_custom(
-//!             &ListUsernamesCustomQueryRequest {
+//!         .list_with_custom_pager(
+//!             &ListWithCustomPagerQueryRequest {
+//!                 limit: Some(1),
 //!                 starting_after: Some("starting_after".to_string()),
+//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )
@@ -46,4 +48,4 @@ pub use api::*;
 pub use client::*;
 pub use config::*;
 pub use core::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

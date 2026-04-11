@@ -14,7 +14,7 @@
 //!         ..Default::default()
 //!     };
 //!     let client = TraceClient::new(config).expect("Failed to build client");
-//!     client.v_2.test(None).await;
+//!     client.v2.test(None).await;
 //! }
 //! ```
 //!
@@ -40,4 +40,4 @@ pub use client::*;
 pub use config::*;
 pub use core::*;
 pub use environment::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

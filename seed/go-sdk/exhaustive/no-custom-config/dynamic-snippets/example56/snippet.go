@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    context "context"
 )
 
 func do() {
@@ -15,11 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]any{
-        "key": "value",
-    }
-    client.NoAuth.PostWithNoAuth(
+    client.Endpoints.URLs.WithMixedCase(
         context.TODO(),
-        request,
     )
 }

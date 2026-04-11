@@ -10,6 +10,7 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 import { Semaphore } from "../../Semaphore.js";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace.js";
 import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "../test/index.js";
+import { printTestCases } from "../test/printTestCases.js";
 import { TaskContextFactory } from "../test/TaskContextFactory.js";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner/index.js";
 
@@ -21,7 +22,8 @@ export async function runWithCustomFixture({
     outputPath,
     inspect,
     local,
-    keepContainer
+    keepContainer,
+    skipAutogenerationIfManualExamplesExist
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
@@ -31,6 +33,7 @@ export async function runWithCustomFixture({
     inspect: boolean;
     local: boolean;
     keepContainer: boolean;
+    skipAutogenerationIfManualExamplesExist?: boolean;
 }): Promise<void> {
     const lock = new Semaphore(1);
     const absolutePathToOutput = outputPath ?? AbsoluteFilePath.of((await tmp.dir()).path);
@@ -48,7 +51,7 @@ export async function runWithCustomFixture({
     if (!skipScripts) {
         scriptRunner = local
             ? new LocalScriptRunner(workspace, skipScripts, taskContext, logLevel)
-            : new ContainerScriptRunner(workspace, skipScripts, taskContext, logLevel);
+            : new ContainerScriptRunner(workspace, skipScripts, taskContext, logLevel, undefined, 1);
     }
 
     if (local) {
@@ -133,7 +136,7 @@ export async function runWithCustomFixture({
 
         await testRunner.build();
 
-        await testRunner.run({
+        const result = await testRunner.run({
             fixture: "custom",
             configuration: runFixtureConfig,
             inspect,
@@ -142,8 +145,11 @@ export async function runWithCustomFixture({
             generatorInvocation: generatorGroup.invocation,
             organization: projectConfig?.organization,
             absolutePathToFernConfig: projectConfig?.absolutePathToFernConfig,
-            lenient: true
+            lenient: true,
+            skipAutogenerationIfManualExamplesExist
         });
+
+        printTestCases([result]);
 
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
 

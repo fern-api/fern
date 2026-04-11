@@ -15,7 +15,7 @@
 //!     };
 //!     let client = MultiUrlEnvironmentClient::new(config).expect("Failed to build client");
 //!     client
-//!         .ec_2
+//!         .ec2
 //!         .boot_instance(
 //!             &BootInstanceRequest {
 //!                 size: "size".to_string(),
@@ -48,4 +48,4 @@ pub use client::*;
 pub use config::*;
 pub use core::*;
 pub use environment::*;
-pub use error::ApiError;
+pub use error::{ApiError, BuildError};

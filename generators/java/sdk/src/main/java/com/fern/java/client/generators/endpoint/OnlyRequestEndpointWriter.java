@@ -34,6 +34,7 @@ import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -372,18 +373,17 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 return null;
             }
 
-            // Handle octet-stream content type — send raw bytes, not JSON-encoded
+            // Handle octet-stream content type — send raw bytes using InputStreamRequestBody
             if (contentType.equals("application/octet-stream")) {
                 codeBlock.addStatement(
-                        "$T $L = $T.create($T.valueOf($L).getBytes($T.UTF_8), $T.parse($S))",
+                        "$T $L = new $T($T.parse($S), new $T($L))",
                         RequestBody.class,
                         variables.getOkhttpRequestBodyName(),
-                        RequestBody.class,
-                        String.class,
-                        requestBodyGetter,
-                        ClassName.get("java.nio.charset", "StandardCharsets"),
+                        clientGeneratorContext.getPoetClassNameFactory().getInputStreamRequestBodyClassName(),
                         MediaType.class,
-                        "application/octet-stream");
+                        "application/octet-stream",
+                        ClassName.get("java.io", "ByteArrayInputStream"),
+                        requestBodyGetter);
                 return null;
             }
 
@@ -495,10 +495,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             Optional<String> requestBodyGetterName = getRequestBodyGetterName();
             String bodySource;
             if (requestBodyGetterName.isPresent()) {
-                bodySource = sdkRequest.getRequestParameterName().getCamelCase().getSafeName() + "."
-                        + requestBodyGetterName.get() + "()";
+                bodySource = NameUtils.toName(sdkRequest.getRequestParameterName())
+                                .getCamelCase()
+                                .getSafeName() + "." + requestBodyGetterName.get() + "()";
             } else {
-                bodySource = sdkRequest.getRequestParameterName().getCamelCase().getSafeName();
+                bodySource = NameUtils.toName(sdkRequest.getRequestParameterName())
+                        .getCamelCase()
+                        .getSafeName();
             }
             codeBlock.addStatement(
                     "$T $L = new $T($T.parse($S), $L)",

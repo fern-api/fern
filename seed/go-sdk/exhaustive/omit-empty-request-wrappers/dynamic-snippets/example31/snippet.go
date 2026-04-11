@@ -1,10 +1,12 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    endpoints "github.com/exhaustive/fern/endpoints"
-    context "context"
+    types "github.com/exhaustive/fern/types"
 )
 
 func do() {
@@ -16,11 +18,13 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithQuery{
-        Query: "query",
-        Number: 1,
+    request := &types.ObjectWithDatetimeLikeString{
+        DatetimeLikeString: "datetimeLikeString",
+        ActualDatetime: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
     }
-    client.Endpoints.Params.GetWithQuery(
+    client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
         context.TODO(),
         request,
     )

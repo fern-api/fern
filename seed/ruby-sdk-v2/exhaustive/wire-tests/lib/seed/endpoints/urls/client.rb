@@ -2,7 +2,7 @@
 
 module Seed
   module Endpoints
-    module Urls
+    module URLs
       class Client
         # @param client [Seed::Internal::Http::RawClient]
         #

@@ -4,11 +4,12 @@ package object
 
 import (
 	context "context"
+	http "net/http"
+
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	types "github.com/exhaustive/fern/types"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -397,6 +398,88 @@ func (r *RawClient) GetAndReturnMapOfDocumentedUnknownType(
 		return nil, err
 	}
 	return &core.Response[types.MapOfDocumentedUnknownType]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) GetAndReturnWithMixedRequiredAndOptionalFields(
+	ctx context.Context,
+	request *types.ObjectWithMixedRequiredAndOptionalFields,
+	opts ...option.RequestOption,
+) (*core.Response[*types.ObjectWithMixedRequiredAndOptionalFields], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/object/get-and-return-with-mixed-required-and-optional-fields"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *types.ObjectWithMixedRequiredAndOptionalFields
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*types.ObjectWithMixedRequiredAndOptionalFields]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) GetAndReturnWithRequiredNestedObject(
+	ctx context.Context,
+	request *types.ObjectWithRequiredNestedObject,
+	opts ...option.RequestOption,
+) (*core.Response[*types.ObjectWithRequiredNestedObject], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/object/get-and-return-with-required-nested-object"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *types.ObjectWithRequiredNestedObject
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*types.ObjectWithRequiredNestedObject]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

@@ -1,10 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/enum/fern"
     client "github.com/enum/fern/client"
     option "github.com/enum/fern/option"
-    context "context"
-    fern "github.com/enum/fern"
 )
 
 func do() {

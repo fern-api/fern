@@ -1,6 +1,7 @@
 imports:
   ai: ./ai.yml
   auth: ./fernDefinition/auth.yml
+  automation: ./automation.yml
   file: ./fernDefinition/file.yml
   environments: ./fernDefinition/environments.yml
   group: ./group.yml
@@ -48,6 +49,12 @@ types:
         docs: |
           If true, automatically release SDKs when changes are detected.
           Can be overridden at the individual generator level.
+      automation:
+        type: optional<automation.AutomationSchema>
+        docs: |
+          Controls which automation features (GitHub Actions workflows) are enabled.
+          Can be overridden at the group or generator level.
+          All features default to true when not specified.
       openapi:
         type: optional<GeneratorsOpenAPISchema>
         availability: deprecated
@@ -409,6 +416,32 @@ types:
           If false, throw hard errors when schema collisions are detected.
           Defaults to false.
         default: false
+      infer-forward-compatible:
+        type: optional<boolean>
+        docs: |
+          If true, infer forward-compatible enums from oneOf [enum, string] or anyOf [enum, string] patterns. Defaults to false.
+        default: false
+      infer-default-environment:
+        type: optional<boolean>
+        docs: Whether to automatically infer the default environment from the first server. Defaults to true. When false, SDK users must explicitly provide a base URL.
+        default: true
+      coerce-consts-to:
+        type: optional<CoerceConstsTo>
+        docs: |
+          Controls how `const` values in OpenAPI specs are represented.
+          - `literals`: Convert const values directly to literals with defaults.
+          - `enums`: Convert const values to single-element enums; blocks transitive coercion via `coerce-enums-to-literals`.
+          - `enums-coerceable-to-literals`: Convert const values to single-element enums, but allow `coerce-enums-to-literals` to coerce them transitively.
+          Defaults to `enums-coerceable-to-literals`.
+        default: enums-coerceable-to-literals
+
+  CoerceConstsTo:
+    docs: Controls how const values in OpenAPI specs are represented.
+    enum:
+      - literals
+      - enums
+      - name: enumsCoerceableToLiterals
+        value: enums-coerceable-to-literals
 
   OpenAPISettingsSchema:
     extends:
@@ -585,6 +618,22 @@ types:
   ProtobufSpecSchema:
     properties:
       proto: ProtobufDefinitionSchema
+
+  GeneratorImageObjectSchema:
+    audiences:
+      - generators-yml
+    docs: |
+      Explicit Docker image configuration with a custom container registry.
+    properties:
+      name:
+        type: string
+        docs: |
+          The Docker image name (e.g., `fernapi/fern-typescript-sdk`).
+      registry:
+        type: string
+        docs: |
+          The container registry URL to pull the image from during local generation.
+          Example: `ghcr.io/myorg` or `123456789.dkr.ecr.us-east-1.amazonaws.com`
 
   Language:
     enum:

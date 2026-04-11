@@ -814,4 +814,89 @@ org: acme
             expect(result.success).toBe(false);
         });
     });
+
+    describe("custom container registry", () => {
+        it("string image override has undefined registry", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  targets:
+    my-gen:
+      lang: typescript
+      image: "fernapi/fern-typescript-sdk"
+      version: "1.0.0"
+      output:
+        path: ./sdks/ts
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = converter.convert({ fernYml });
+
+            expect(result.success).toBe(true);
+            if (result.success) {
+                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-sdk");
+                expect(result.config.targets[0]?.registry).toBeUndefined();
+                expect(result.config.targets[0]?.version).toBe("1.0.0");
+            }
+        });
+
+        it("object image with registry preserves registry field", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  targets:
+    my-gen:
+      lang: typescript
+      image:
+        name: fernapi/fern-typescript-sdk
+        registry: ghcr.io/myorg
+      version: "2.0.0"
+      output:
+        path: ./sdks/ts
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = converter.convert({ fernYml });
+
+            expect(result.success).toBe(true);
+            if (result.success) {
+                expect(result.config.targets[0]?.image).toBe("fernapi/fern-typescript-sdk");
+                expect(result.config.targets[0]?.registry).toBe("ghcr.io/myorg");
+                expect(result.config.targets[0]?.version).toBe("2.0.0");
+            }
+        });
+
+        it("no image field defaults to language-resolved image with undefined registry", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  targets:
+    python:
+      version: "3.0.0"
+      output:
+        path: ./sdks/python
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = converter.convert({ fernYml });
+
+            expect(result.success).toBe(true);
+            if (result.success) {
+                expect(result.config.targets[0]?.image).toBe("fernapi/fern-python-sdk");
+                expect(result.config.targets[0]?.registry).toBeUndefined();
+            }
+        });
+    });
 });

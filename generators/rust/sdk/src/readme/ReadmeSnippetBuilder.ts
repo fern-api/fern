@@ -21,6 +21,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId =
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
     private static WEBSOCKETS_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKETS";
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
@@ -78,6 +79,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const wsSnippets = this.buildWebSocketSnippets();
         if (wsSnippets.length > 0) {
             snippets[ReadmeSnippetBuilder.WEBSOCKETS_FEATURE_ID] = wsSnippets;
+        }
+
+        // Environments
+        if (this.context.ir.environments != null) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
         }
 
         // Pagination disable it for now, currently only support normal pagination
@@ -255,12 +261,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getMethodCall(endpoint: EndpointWithFilepath): string {
         const clientAccess = this.getAccessFromRootClient(endpoint.fernFilepath);
-        const methodName = endpoint.endpoint.name.snakeCase.safeName;
+        const methodName = this.context.case.snakeSafe(endpoint.endpoint.name);
         return `${clientAccess}.${methodName}`;
     }
 
     private getAccessFromRootClient(fernFilepath: FernIr.FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => this.context.case.snakeSafe(part));
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
@@ -337,7 +343,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const requestBody = endpoint.endpoint.requestBody;
 
         // Use the name property which gives us the proper PascalCase name
-        return requestBody.name.pascalCase.safeName;
+        return this.context.case.pascalSafe(requestBody.name);
     }
 
     private getClientConfigStruct(
@@ -610,22 +616,26 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const serverMessages = channel.messages.filter((m) => m.origin === "server");
 
         // Get the subpackage access path (e.g., "market_data" or "realtime")
-        const subpackageName = subpackage.name.snakeCase.safeName;
+        const subpackageName = this.context.case.snakeSafe(subpackage.name);
 
         // Build connect params from IR (without the url, since connectors provide it from config)
         const connectParams: string[] = [];
         for (const pathParam of channel.pathParameters) {
-            connectParams.push(`"${pathParam.name.snakeCase.safeName}"`);
+            connectParams.push(`"${this.context.case.snakeSafe(pathParam.name)}"`);
         }
         for (const header of channel.headers) {
-            connectParams.push(`"${header.name.name.snakeCase.safeName}"`);
+            // Skip authorization header — the connector auto-injects it from the stored token
+            if (this.context.case.snakeSafe(header.name) === "authorization") {
+                continue;
+            }
+            connectParams.push(`"${this.context.case.snakeSafe(header.name)}"`);
         }
         for (const qp of channel.queryParameters) {
             const isOptional = qp.valueType.type === "container" && qp.valueType.container.type === "optional";
             if (isOptional) {
                 connectParams.push("None");
             } else {
-                connectParams.push(`"${qp.name.name.snakeCase.safeName}"`);
+                connectParams.push(`"${this.context.case.snakeSafe(qp.name)}"`);
             }
         }
 
@@ -639,24 +649,19 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         writer.newLine();
         writer.newLine();
 
-        // Create client config and root client (same pattern as pagination snippets)
+        // Create client using ClientConfig with token auth (matching the standard SDK pattern)
         const rootClientName = this.context.getClientName();
-        const configStatement = Statement.let({
-            name: "config",
-            value: this.getClientConfigStruct("error")
-        });
-        configStatement.write(writer);
+        writer.write(`let client = ${rootClientName}::new(ClientConfig {`);
         writer.newLine();
-        const clientBuild = Expression.methodCall({
-            target: Expression.raw(`${rootClientName}::new(config)`),
-            method: "expect",
-            args: [Expression.stringLiteral("Failed to build client")]
-        });
-        const clientStatement = Statement.let({
-            name: "client",
-            value: clientBuild
-        });
-        clientStatement.write(writer);
+        writer.indent();
+        writer.write(`token: Some("your-api-key".to_string()),`);
+        writer.newLine();
+        writer.write(`..Default::default()`);
+        writer.dedent();
+        writer.newLine();
+        writer.write(`})`);
+        writer.newLine();
+        writer.write(`.expect("Failed to create client");`);
         writer.newLine();
         writer.newLine();
 
@@ -760,12 +765,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // Detect name collisions
         const nameCount = new Map<string, number>();
         for (const channel of Object.values(websocketChannels)) {
-            const baseName = channel.name.snakeCase.safeName;
+            const baseName = this.context.case.snakeSafe(channel.name);
             nameCount.set(baseName, (nameCount.get(baseName) ?? 0) + 1);
         }
 
         for (const [channelId, channel] of Object.entries(websocketChannels)) {
-            const baseName = channel.name.snakeCase.safeName;
+            const baseName = this.context.case.snakeSafe(channel.name);
 
             if ((nameCount.get(baseName) ?? 0) > 1) {
                 // Derive unique name from channel ID
@@ -780,8 +785,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 });
             } else {
                 nameMap.set(channelId, {
-                    moduleName: channel.name.snakeCase.safeName,
-                    clientName: `${channel.name.pascalCase.safeName}Client`
+                    moduleName: this.context.case.snakeSafe(channel.name),
+                    clientName: `${this.context.case.pascalSafe(channel.name)}Client`
                 });
             }
         }
@@ -791,7 +796,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private getWebSocketMessageMethodName(msg: FernIr.WebSocketMessage, prefix: string): string {
         const name = msg.body.type === "inlinedBody"
-            ? msg.body.name.snakeCase.safeName
+            ? this.context.case.snakeSafe(msg.body.name)
             : msg.type
                 .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
                 .replace(/([A-Z])([A-Z][a-z])/g, "$1_$2")
@@ -810,9 +815,60 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
         }
         if (msg.body.type === "inlinedBody") {
-            return msg.body.name.pascalCase.safeName;
+            return this.context.case.pascalSafe(msg.body.name);
         }
         return undefined;
+    }
+
+    private buildEnvironmentsSnippets(): string[] {
+        const envConfig = this.context.ir.environments;
+        if (envConfig == null) {
+            return [];
+        }
+
+        const environmentEnumName = this.context.customConfig.environmentEnumName || "Environment";
+        const defaultEnvName = this.getDefaultEnvironmentName(envConfig);
+        if (defaultEnvName == null) {
+            return [];
+        }
+
+        const writer = new Writer();
+
+        const useStatement = new UseStatement({
+            path: `${this.crateName}::prelude`,
+            items: ["*"]
+        });
+        useStatement.write(writer);
+        writer.newLine();
+        writer.newLine();
+
+        writer.write(`let config = ClientConfig {`);
+        writer.newLine();
+        writer.indent();
+        writer.write(`base_url: ${environmentEnumName}::${defaultEnvName}.url().to_string(),`);
+        writer.newLine();
+        writer.write(`..Default::default()`);
+        writer.newLine();
+        writer.dedent();
+        writer.write(`};`);
+        writer.newLine();
+        writer.write(`let ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = Client::new(config).expect("Failed to build client");`);
+
+        return [this.writeCode(writer.toString().trim())];
+    }
+
+    private getDefaultEnvironmentName(envConfig: FernIr.EnvironmentsConfig): string | undefined {
+        const defaultEnvId = envConfig.defaultEnvironment;
+        const envs = envConfig.environments.environments;
+
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            if (defaultEnv != null) {
+                return this.context.case.pascalSafe(defaultEnv.name);
+            }
+        }
+        const firstName = envs[0]?.name;
+        return firstName != null ? this.context.case.pascalSafe(firstName) : undefined;
     }
 
     private writeCode(code: string): string {

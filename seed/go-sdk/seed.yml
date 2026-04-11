@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v66
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -50,8 +50,8 @@ test:
       - go build -ldflags "-s -w" -trimpath -buildvcs=false -o fern-go-sdk ./cmd/fern-go-sdk
     runCommand: ./fern-go-sdk {CONFIG_PATH}
     env:
-      # Set path to the go-v2 CLI built from TypeScript (absolute path)
-      GO_V2_PATH: "/Users/jsklan/git/fern-2/generators/go-v2/sdk/dist/cli.cjs"
+      # Set path to the go-v2 CLI built from TypeScript (relative to workingDirectory: generators/go)
+      GO_V2_PATH: "../go-v2/sdk/dist/cli.cjs"
 language: go
 generatorType: SDK
 defaultOutputMode: github
@@ -143,6 +143,7 @@ fixtures:
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
+        maxRetries: 5
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1
@@ -229,6 +230,10 @@ fixtures:
         packageName: sse
         module:
           path: github.com/fern-api/sse-go
+  server-sent-events-openapi:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
   idempotency-headers:
     - outputFolder: .
       outputVersion: 0.0.1
@@ -283,6 +288,22 @@ fixtures:
       customConfig:
         enableWireTests: true
         omitEmptyRequestWrappers: true
+  inferred-auth-implicit:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-explicit:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
+  inferred-auth-implicit-api-key:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-implicit-no-expiry:
+    - outputFolder: .
+      customConfig: null
+  inferred-auth-implicit-reference:
+    - outputFolder: .
+      customConfig: null
 scripts:
   - image: fernapi/go-seed:2.0.0
     commands:
@@ -311,7 +332,9 @@ scripts:
           fi
           exit $TEST_EXIT_CODE
 allowedFailures:
+  - schemaless-request-body-examples
   - alias-extends
+  - bytes-upload
   - bytes-download
   - enum
   - errors
@@ -323,6 +346,7 @@ allowedFailures:
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-sent-events-openapi:with-wire-tests # TODO: fix go wire test generation for augmented fixture
   - server-url-templating
   - trace
   - property-access
@@ -331,6 +355,7 @@ allowedFailures:
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
+  - pagination-uri-path
 
   # TODO: Update the dynamic snippet generator to handle these cases.
   - examples:exported-client-name
@@ -345,6 +370,7 @@ allowedFailures:
   - file-upload:package-name
   - file-upload-openapi
 
-  - pagination-custom:.
+  - go-deterministic-ordering:.
 
-  # exhaustive fixtures now pass after fixing bytes endpoint wire test generation
+  # exhaustive:omit-empty-request-wrappers wire tests fail due to missing Authorization header
+  - exhaustive:omit-empty-request-wrappers

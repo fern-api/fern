@@ -20,18 +20,31 @@ impl ApiClient {
     }
 
     pub async fn get_users(&self, options: Option<RequestOptions>) -> Result<Vec<User>, ApiError> {
+        let base_url = self
+            .http_client
+            .config()
+            .environment
+            .as_ref()
+            .map_or(self.http_client.base_url(), |env| env.base_url());
         self.http_client
-            .execute_request(Method::GET, "users", None, None, options)
+            .execute_request_with_base_url(base_url, Method::GET, "users", None, None, options)
             .await
     }
 
     pub async fn get_user(
         &self,
-        user_id: &String,
+        user_id: &str,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
+        let base_url = self
+            .http_client
+            .config()
+            .environment
+            .as_ref()
+            .map_or(self.http_client.base_url(), |env| env.base_url());
         self.http_client
-            .execute_request(
+            .execute_request_with_base_url(
+                base_url,
                 Method::GET,
                 &format!("users/{}", user_id),
                 None,
@@ -46,11 +59,18 @@ impl ApiClient {
         request: &TokenRequest,
         options: Option<RequestOptions>,
     ) -> Result<TokenResponse, ApiError> {
+        let base_url = self
+            .http_client
+            .config()
+            .environment
+            .as_ref()
+            .map_or(self.http_client.base_url(), |env| env.auth_url());
         self.http_client
-            .execute_request(
+            .execute_request_with_base_url(
+                base_url,
                 Method::POST,
                 "auth/token",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

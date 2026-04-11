@@ -391,6 +391,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
+		inferredParams := resolveInferredAuthParams(ir.Auth, ir.Services, ir.Types)
 		if err := writer.WriteRequestOptionsDefinition(
 			ir.Auth,
 			ir.Headers,
@@ -399,6 +400,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ModuleConfig,
 			g.config.Version,
 			ir.Environments,
+			inferredParams,
 		); err != nil {
 			return nil, err
 		}
@@ -460,7 +462,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers, ir.Environments)
+		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers, ir.Environments, inferredParams)
 		if err != nil {
 			return nil, err
 		}
@@ -599,9 +601,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newOptionalTestFile(g.coordinator))
 		}
 		files = append(files, newApiErrorFile(g.coordinator))
-		if hasOAuthScheme(ir.Auth) {
-			files = append(files, newOAuthFile(g.coordinator))
-		}
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
 		files = append(files, newHttpInternalFile(g.coordinator))
@@ -1094,16 +1093,36 @@ func (g *Generator) generateReadme(
 }
 
 // readIR reads the *IntermediateRepresentation from the given filename.
+// It extracts the casingsConfig first so that Name.UnmarshalJSON can
+// produce the correct casing variants (e.g. with or without initialisms).
 func readIR(irFilename string) (*fernir.IntermediateRepresentation, error) {
 	bytes, err := os.ReadFile(irFilename)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read intermediate representation: %v", err)
 	}
-	ir := new(fernir.IntermediateRepresentation)
-	if err := json.Unmarshal(bytes, ir); err != nil {
+
+	// Extract casingsConfig before full deserialization so that
+	// Name.UnmarshalJSON (called during Unmarshal) uses the correct settings.
+	var irHeader struct {
+		CasingsConfig *struct {
+			SmartCasing        bool     `json:"smartCasing"`
+			GenerationLanguage string   `json:"generationLanguage"`
+			Keywords           []string `json:"keywords"`
+		} `json:"casingsConfig"`
+	}
+	if err := json.Unmarshal(bytes, &irHeader); err == nil && irHeader.CasingsConfig != nil {
+		common.ConfigureCasing(
+			irHeader.CasingsConfig.SmartCasing,
+			irHeader.CasingsConfig.GenerationLanguage,
+			irHeader.CasingsConfig.Keywords,
+		)
+	}
+
+	result := new(fernir.IntermediateRepresentation)
+	if err := json.Unmarshal(bytes, result); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal intermediate representation: %v", err)
 	}
-	return ir, nil
+	return result, nil
 }
 
 // declaredTypeNamesForTypeIDs resolves the set of typeIDs to their respective
@@ -1128,6 +1147,7 @@ func hasOAuthScheme(auth *ir.ApiAuth) bool {
 	}
 	return false
 }
+
 
 // newPointerFile returns a *File containing the pointer helper functions
 // used to more easily instantiate pointers to primitive values (e.g. *string).
@@ -1299,13 +1319,6 @@ func newApiErrorFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-func newOAuthFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"core/oauth.go",
-		[]byte(oauthFile),
-	)
-}
 
 // func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {
 // 	content := replaceCoreImportPath(errorDecoderFile, baseImportPath)

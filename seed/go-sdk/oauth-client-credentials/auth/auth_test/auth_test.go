@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	fern "github.com/oauth-client-credentials/fern"
 	client "github.com/oauth-client-credentials/fern/client"
 	option "github.com/oauth-client-credentials/fern/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -73,7 +74,7 @@ func TestAuthGetTokenWithClientCredentialsWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.GetTokenRequest{
-		ClientId:     "my_oauth_app_123",
+		ClientID:     "my_oauth_app_123",
 		ClientSecret: "sk_live_abcdef123456789",
 		Scope: fern.String(
 			"read:users",
@@ -102,7 +103,7 @@ func TestAuthRefreshTokenWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &fern.RefreshTokenRequest{
-		ClientId:     "my_oauth_app_123",
+		ClientID:     "my_oauth_app_123",
 		ClientSecret: "sk_live_abcdef123456789",
 		RefreshToken: "refresh_token",
 		Scope: fern.String(

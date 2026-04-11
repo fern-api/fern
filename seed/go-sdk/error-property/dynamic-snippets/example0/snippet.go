@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/error-property/fern/client"
     option "github.com/error-property/fern/option"
-    context "context"
 )
 
 func do() {

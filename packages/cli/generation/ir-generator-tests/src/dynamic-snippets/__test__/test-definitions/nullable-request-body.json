@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -65,6 +65,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -83,8 +84,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -274,6 +274,7 @@
                 "queryParameters": [
                     {
                         "name": {
+                            "wireValue": "query_param_object",
                             "name": {
                                 "originalName": "query_param_object",
                                 "camelCase": {
@@ -292,8 +293,7 @@
                                     "unsafeName": "QueryParamObject",
                                     "safeName": "QueryParamObject"
                                 }
-                            },
-                            "wireValue": "query_param_object"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -310,6 +310,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "query_param_integer",
                             "name": {
                                 "originalName": "query_param_integer",
                                 "camelCase": {
@@ -328,8 +329,7 @@
                                     "unsafeName": "QueryParamInteger",
                                     "safeName": "QueryParamInteger"
                                 }
-                            },
-                            "wireValue": "query_param_integer"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",

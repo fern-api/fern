@@ -1,10 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    endpoints "github.com/exhaustive/fern/endpoints"
-    context "context"
 )
 
 func do() {
@@ -16,10 +16,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.PutRequest{
-        Id: "id",
-    }
-    client.Endpoints.Put.Add(
+    request := int64(1000000)
+    client.Endpoints.Primitive.GetAndReturnLong(
         context.TODO(),
         request,
     )

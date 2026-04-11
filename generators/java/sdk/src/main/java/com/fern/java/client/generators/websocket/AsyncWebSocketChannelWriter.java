@@ -16,8 +16,6 @@
 
 package com.fern.java.client.generators.websocket;
 
-import com.fern.ir.model.http.HttpPath;
-import com.fern.ir.model.http.HttpPathPart;
 import com.fern.ir.model.http.PathParameter;
 import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.ir.Subpackage;
@@ -27,6 +25,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -97,21 +96,27 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc(
                         "Creates a new async WebSocket client for the $L channel.\n",
-                        websocketChannel.getName().get().getCamelCase().getSafeName())
+                        NameUtils.toName(websocketChannel.getName().get())
+                                .getCamelCase()
+                                .getSafeName())
                 .addParameter(clientOptionsField.type, clientOptionsField.name);
 
         // Add path parameters
         for (PathParameter pathParam : websocketChannel.getPathParameters()) {
             TypeName paramType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, pathParam.getValueType());
-            builder.addParameter(paramType, pathParam.getName().getCamelCase().getSafeName())
+            builder.addParameter(
+                            paramType,
+                            NameUtils.toName(pathParam.getName()).getCamelCase().getSafeName())
                     .addJavadoc(
                             "@param $L $L\n",
-                            pathParam.getName().getCamelCase().getSafeName(),
+                            NameUtils.toName(pathParam.getName()).getCamelCase().getSafeName(),
                             pathParam
                                     .getDocs()
                                     .orElse("the "
-                                            + pathParam.getName().getCamelCase().getSafeName() + " path parameter"));
+                                            + NameUtils.toName(pathParam.getName())
+                                                    .getCamelCase()
+                                                    .getSafeName() + " path parameter"));
         }
 
         // Constructor body
@@ -121,7 +126,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
 
         // Assign path parameters
         for (PathParameter pathParam : websocketChannel.getPathParameters()) {
-            String paramName = pathParam.getName().getCamelCase().getSafeName();
+            String paramName =
+                    NameUtils.toName(pathParam.getName()).getCamelCase().getSafeName();
             builder.addStatement("this.$L = $L", paramName, paramName);
         }
 
@@ -148,27 +154,7 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 "String baseUrl = $N.environment().$L()", clientOptionsField, getEnvironmentUrlMethodName());
 
         // Build path with parameters
-        builder.addStatement("$T pathBuilder = new $T()", StringBuilder.class, StringBuilder.class);
-
-        HttpPath path = websocketChannel.getPath();
-        builder.addStatement("pathBuilder.append($S)", path.getHead());
-
-        for (HttpPathPart part : path.getParts()) {
-            String pathParamId = part.getPathParameter();
-            if (pathParamId != null && !pathParamId.isEmpty()) {
-                // Find the matching path parameter
-                PathParameter matchingParam = websocketChannel.getPathParameters().stream()
-                        .filter(p -> p.getName().getOriginalName().equals(pathParamId))
-                        .findFirst()
-                        .orElseThrow();
-                String paramFieldName = matchingParam.getName().getCamelCase().getSafeName();
-                builder.addStatement("pathBuilder.append($L)", paramFieldName);
-            }
-            builder.addStatement("pathBuilder.append($S)", part.getTail());
-        }
-
-        // Build HttpUrl with query parameters
-        builder.addStatement("String fullPath = pathBuilder.toString()");
+        appendPathBuildingCode(builder);
         builder.beginControlFlow("if (baseUrl.endsWith(\"/\") && fullPath.startsWith(\"/\"))");
         builder.addStatement("fullPath = fullPath.substring(1)");
         builder.endControlFlow();
@@ -194,9 +180,10 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
         if (connectOptionsClassName.isPresent()) {
             for (QueryParameter queryParam : websocketChannel.getQueryParameters()) {
                 String getterName = "get"
-                        + capitalize(
-                                queryParam.getName().getName().getCamelCase().getSafeName());
-                String wireValue = queryParam.getName().getWireValue();
+                        + capitalize(NameUtils.getName(queryParam.getName())
+                                .getCamelCase()
+                                .getSafeName());
+                String wireValue = NameUtils.getWireValue(queryParam.getName());
 
                 boolean isOptional = queryParam.getValueType().getContainer().isPresent()
                         && queryParam.getValueType().getContainer().get().isOptional();
@@ -374,8 +361,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 .returns(ParameterizedTypeName.get(ClassName.get(CompletableFuture.class), TypeName.VOID.box()))
                 .addParameter(messageType, "message")
                 .addJavadoc(
-                        "Sends a $L message to the server asynchronously.\n",
-                        message.getType().get())
+                        "Sends $L message to the server asynchronously.\n",
+                        articleFor(message.getType().get()))
                 .addJavadoc("@param message the message to send\n")
                 .addJavadoc("@return a CompletableFuture that completes when the message is sent\n");
 
@@ -420,14 +407,8 @@ public class AsyncWebSocketChannelWriter extends AbstractWebSocketChannelWriter 
                 .addStatement("assertSocketIsOpen()")
                 .addStatement("String json = $N.writeValueAsString(body)", objectMapperField)
                 .addComment("Use reconnecting listener's send method which handles queuing")
-                .addStatement("boolean sent = $N.send(json)", reconnectingListenerField)
-                .beginControlFlow("if (sent)")
+                .addStatement("$N.send(json)", reconnectingListenerField)
                 .addStatement("future.complete(null)")
-                .endControlFlow()
-                .beginControlFlow("else")
-                .addComment("Message was queued for later delivery when reconnected")
-                .addStatement("future.complete(null)")
-                .endControlFlow()
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IllegalStateException.class)
                 .addStatement("future.completeExceptionally(e)")

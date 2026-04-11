@@ -27,6 +27,13 @@ export interface AffectedResult {
 }
 
 /**
+ * Files that should never trigger seed tests, even if they live under
+ * a generator source path.  These are metadata / changelog files that
+ * do not affect generated code.
+ */
+const IGNORED_FILENAMES = ["versions.yml"];
+
+/**
  * Paths that, when changed, affect ALL generators and ALL fixtures.
  * These are infrastructure-level changes that feed into IR generation
  * or affect how seed tests execute. Includes:
@@ -59,19 +66,30 @@ const GLOBAL_AFFECT_PATHS = [
 const TEST_DEFINITION_PATHS = ["test-definitions/fern/apis/", "test-definitions-openapi/fern/apis/"];
 
 /**
+ * Maps docker/seed/ Dockerfiles to the generator workspaces they affect.
+ * When a seed Dockerfile changes, the corresponding generators need to re-run
+ * all their fixtures to verify the updated Docker image works correctly.
+ */
+const DOCKER_SEED_GENERATOR_PATHS: Record<string, string[]> = {
+    "docker/seed/Dockerfile.java": ["java-sdk", "java-model"],
+    "docker/seed/Dockerfile.ts": ["ts-sdk"],
+    "docker/seed/Dockerfile.python": ["python-sdk", "pydantic", "pydantic-v2"],
+    "docker/seed/Dockerfile.go": ["go-sdk", "go-model"],
+    "docker/seed/Dockerfile.csharp": ["csharp-sdk", "csharp-model"],
+    "docker/seed/Dockerfile.php": ["php-sdk", "php-model"]
+};
+
+/**
  * Maps generator workspace names to their source code paths.
  * Used to detect which generators are affected by file changes.
  */
 const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     "ts-sdk": ["generators/typescript/", "generators/typescript-v2/"],
-    "ts-express": ["generators/typescript/", "generators/typescript-v2/"],
     "python-sdk": ["generators/python/", "generators/python-v2/"],
     pydantic: ["generators/python/", "generators/python-v2/"],
     "pydantic-v2": ["generators/python-v2/"],
-    fastapi: ["generators/python/", "generators/python-v2/"],
     "java-sdk": ["generators/java/", "generators/java-v2/"],
     "java-model": ["generators/java/", "generators/java-v2/"],
-    "java-spring": ["generators/java/", "generators/java-v2/"],
     "go-sdk": ["generators/go/", "generators/go-v2/"],
     "go-model": ["generators/go/", "generators/go-v2/"],
     "ruby-sdk": ["generators/ruby-v2/"],
@@ -83,8 +101,7 @@ const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     "swift-sdk": ["generators/swift/"],
     "rust-sdk": ["generators/rust/"],
     "rust-model": ["generators/rust/"],
-    openapi: ["generators/openapi/"],
-    postman: ["generators/postman/"]
+    openapi: ["generators/openapi/"]
 };
 
 /**
@@ -194,6 +211,11 @@ export function detectAffected(changedFiles: string[], allGenerators: GeneratorW
 
     // === GENERATOR DETECTION (git diff path matching) ===
     for (const file of changedFiles) {
+        // Skip metadata files that live under generator paths but don't affect codegen
+        const basename = file.split("/").pop() ?? "";
+        if (IGNORED_FILENAMES.includes(basename)) {
+            continue;
+        }
         for (const [generatorName, sourcePaths] of Object.entries(GENERATOR_SOURCE_PATHS)) {
             if (!allGeneratorNames.includes(generatorName)) {
                 continue;
@@ -206,6 +228,40 @@ export function detectAffected(changedFiles: string[], allGenerators: GeneratorW
                 }
             }
         }
+    }
+
+    // === DOCKER SEED DOCKERFILE DETECTION ===
+    // When a docker/seed/ Dockerfile changes, the generators that use that Docker
+    // image need to re-run all their fixtures to verify the updated image works.
+    for (const file of changedFiles) {
+        if (file.startsWith("docker/seed/")) {
+            if (file === "docker/seed/Dockerfile.dockerignore") {
+                // The shared .dockerignore affects all seed Docker builds
+                allGeneratorsAffected = true;
+                allFixturesAffected = true;
+                summary.push(`Seed Docker ignore changed: ${file} — affects all seed builds`);
+                break;
+            }
+            const generators = DOCKER_SEED_GENERATOR_PATHS[file];
+            if (generators != null) {
+                for (const gen of generators) {
+                    affectedGeneratorSet.add(gen);
+                }
+                summary.push(`Seed Dockerfile changed: ${file} — affects ${generators.join(", ")}`);
+            }
+        }
+    }
+
+    // If global changes detected from dockerignore, return early
+    if (allGeneratorsAffected && allFixturesAffected) {
+        return {
+            allGeneratorsAffected: true,
+            allFixturesAffected: true,
+            affectedGenerators: [],
+            generatorsWithAllFixtures: [],
+            affectedFixtures: [],
+            summary
+        };
     }
 
     // === SEED.YML DETECTION (always via git diff) ===

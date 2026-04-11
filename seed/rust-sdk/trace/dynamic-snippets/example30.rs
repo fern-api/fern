@@ -8,5 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.v_2.problem.get_lightweight_problems(None).await;
+    client.v2.problem.get_lightweight_problems(None).await;
 }

@@ -4,6 +4,7 @@ package foo
 
 import (
 	context "context"
+
 	fern "github.com/audiences/fern"
 	core "github.com/audiences/fern/core"
 	internal "github.com/audiences/fern/internal"

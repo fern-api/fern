@@ -15,6 +15,7 @@ function join(...segments: string[]): string {
     return segments.filter(Boolean).join("/");
 }
 
+import { CaseConverter } from "@fern-api/base-generator";
 import * as ast from "../ast/index.js";
 import { ClassReference } from "../ast/types/ClassReference.js";
 import { Type } from "../ast/types/IType.js";
@@ -89,6 +90,16 @@ export class Generation {
             getChildNamespaceSegments: (fernFilepath: FernFilepath) => []
         }
     ) {
+        // Initialize the CaseConverter from IR config
+        const irConfig = is.IR.IntermediateRepresentation(intermediateRepresentation)
+            ? intermediateRepresentation.casingsConfig
+            : undefined;
+        this.case = new CaseConverter({
+            generationLanguage: "csharp",
+            keywords: irConfig?.keywords,
+            smartCasing: irConfig?.smartCasing ?? true
+        });
+
         // Initialize the model navigator to traverse and query the IR
         this.model = new ModelNavigator(intermediateRepresentation, this);
 
@@ -120,6 +131,12 @@ export class Generation {
      * Provides access to types, endpoints, errors, and other IR elements.
      */
     public readonly model: ModelNavigator;
+
+    /**
+     * CaseConverter for converting names to C# casing conventions.
+     * Constructed from the IR's casingsConfig for proper keyword handling.
+     */
+    public readonly case: CaseConverter;
 
     /**
      * Manager for external dependencies and imports.
@@ -224,6 +241,8 @@ export class Generation {
         slnFormat: () => this.customConfig["sln-format"] ?? "slnx",
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
+        /** Override the default max retries for the SDK client. Default: 2. */
+        maxRetries: () => this.customConfig.maxRetries,
         /**
          * Output path configuration for generated files.
          * Returns normalized paths for library, test, solution, and other files.
@@ -459,7 +478,6 @@ export class Generation {
      * - `ExceptionInterceptor`, `ExceptionHandler`: Exception processing
      *
      * ### Serialization:
-     * - `EnumSerializer`: Enum serialization
      * - `DateTimeSerializer`: DateTime handling
      * - `JsonUtils`: JSON utilities
      * - `OneOfSerializer`: Union type serialization
@@ -640,12 +658,6 @@ export class Generation {
                 origin: this.model.staticExplicit("Constants"),
                 namespace: this.namespaces.core
             }),
-        /** JSON serializer for enum types */
-        EnumSerializer: () =>
-            this.csharp.classReference({
-                origin: this.model.staticExplicit("EnumSerializer"),
-                namespace: this.namespaces.core
-            }),
         /** JSON serializer for DateTime types */
         DateTimeSerializer: () =>
             this.csharp.classReference({
@@ -815,6 +827,12 @@ export class Generation {
         WebSocketClosed: () =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("Closed"),
+                namespace: this.namespaces.webSocketsCore
+            }),
+        /** Reconnection info for WebSocket connections */
+        ReconnectionInfo: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("ReconnectionInfo"),
                 namespace: this.namespaces.webSocketsCore
             }),
         /**

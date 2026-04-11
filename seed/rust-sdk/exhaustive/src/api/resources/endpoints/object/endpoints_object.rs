@@ -22,7 +22,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-optional-field",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -38,7 +38,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-required-field",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -54,7 +54,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-map-of-map",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -70,7 +70,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-nested-with-optional-field",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -79,7 +79,7 @@ impl ObjectClient {
 
     pub async fn get_and_return_nested_with_required_field(
         &self,
-        string: &String,
+        string: &str,
         request: &NestedObjectWithRequiredField,
         options: Option<RequestOptions>,
     ) -> Result<NestedObjectWithRequiredField, ApiError> {
@@ -90,7 +90,7 @@ impl ObjectClient {
                     "/object/get-and-return-nested-with-required-field/{}",
                     string
                 ),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -106,7 +106,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-nested-with-required-field-list",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -122,7 +122,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-unknown-field",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -138,7 +138,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-documented-unknown-type",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -154,7 +154,61 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-map-of-documented-unknown-type",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Tests that dynamic snippets include all required properties in the
+    /// object initializer, even when the example omits some required fields.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn get_and_return_with_mixed_required_and_optional_fields(
+        &self,
+        request: &ObjectWithMixedRequiredAndOptionalFields,
+        options: Option<RequestOptions>,
+    ) -> Result<ObjectWithMixedRequiredAndOptionalFields, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/object/get-and-return-with-mixed-required-and-optional-fields",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// Tests that dynamic snippets recursively construct default objects for
+    /// required properties whose type is a named object. When the example
+    /// omits the nested object, the generator should construct a default
+    /// initializer with the nested object's required properties filled in.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn get_and_return_with_required_nested_object(
+        &self,
+        request: &ObjectWithRequiredNestedObject,
+        options: Option<RequestOptions>,
+    ) -> Result<ObjectWithRequiredNestedObject, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/object/get-and-return-with-required-nested-object",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )
@@ -181,7 +235,7 @@ impl ObjectClient {
             .execute_request(
                 Method::POST,
                 "/object/get-and-return-with-datetime-like-string",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
             )

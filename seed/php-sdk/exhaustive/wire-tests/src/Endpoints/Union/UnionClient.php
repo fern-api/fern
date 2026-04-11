@@ -58,11 +58,11 @@ class UnionClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Animal
+     * @return ?Animal
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getAndReturnUnion(Animal $request, ?array $options = null): Animal
+    public function getAndReturnUnion(Animal $request, ?array $options = null): ?Animal
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -78,6 +78,9 @@ class UnionClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Animal::fromJson($json);
             }
         } catch (JsonException $e) {

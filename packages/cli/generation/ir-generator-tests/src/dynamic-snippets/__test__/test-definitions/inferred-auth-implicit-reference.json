@@ -70,6 +70,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "client_id",
                         "name": {
                             "originalName": "client_id",
                             "camelCase": {
@@ -88,8 +89,7 @@
                                 "unsafeName": "ClientID",
                                 "safeName": "ClientID"
                             }
-                        },
-                        "wireValue": "client_id"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -100,6 +100,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "client_secret",
                         "name": {
                             "originalName": "client_secret",
                             "camelCase": {
@@ -118,8 +119,7 @@
                                 "unsafeName": "ClientSecret",
                                 "safeName": "ClientSecret"
                             }
-                        },
-                        "wireValue": "client_secret"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -130,6 +130,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "audience",
                         "name": {
                             "originalName": "audience",
                             "camelCase": {
@@ -148,8 +149,7 @@
                                 "unsafeName": "Audience",
                                 "safeName": "Audience"
                             }
-                        },
-                        "wireValue": "audience"
+                        }
                     },
                     "typeReference": {
                         "type": "literal",
@@ -163,6 +163,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "grant_type",
                         "name": {
                             "originalName": "grant_type",
                             "camelCase": {
@@ -181,8 +182,7 @@
                                 "unsafeName": "GrantType",
                                 "safeName": "GrantType"
                             }
-                        },
-                        "wireValue": "grant_type"
+                        }
                     },
                     "typeReference": {
                         "type": "literal",
@@ -196,6 +196,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "scope",
                         "name": {
                             "originalName": "scope",
                             "camelCase": {
@@ -214,8 +215,7 @@
                                 "unsafeName": "Scope",
                                 "safeName": "Scope"
                             }
-                        },
-                        "wireValue": "scope"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -300,6 +300,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "client_id",
                         "name": {
                             "originalName": "client_id",
                             "camelCase": {
@@ -318,8 +319,7 @@
                                 "unsafeName": "ClientID",
                                 "safeName": "ClientID"
                             }
-                        },
-                        "wireValue": "client_id"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -330,6 +330,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "client_secret",
                         "name": {
                             "originalName": "client_secret",
                             "camelCase": {
@@ -348,8 +349,7 @@
                                 "unsafeName": "ClientSecret",
                                 "safeName": "ClientSecret"
                             }
-                        },
-                        "wireValue": "client_secret"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -360,6 +360,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "refresh_token",
                         "name": {
                             "originalName": "refresh_token",
                             "camelCase": {
@@ -378,8 +379,7 @@
                                 "unsafeName": "RefreshToken",
                                 "safeName": "RefreshToken"
                             }
-                        },
-                        "wireValue": "refresh_token"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -390,6 +390,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "audience",
                         "name": {
                             "originalName": "audience",
                             "camelCase": {
@@ -408,8 +409,7 @@
                                 "unsafeName": "Audience",
                                 "safeName": "Audience"
                             }
-                        },
-                        "wireValue": "audience"
+                        }
                     },
                     "typeReference": {
                         "type": "literal",
@@ -423,6 +423,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "grant_type",
                         "name": {
                             "originalName": "grant_type",
                             "camelCase": {
@@ -441,8 +442,7 @@
                                 "unsafeName": "GrantType",
                                 "safeName": "GrantType"
                             }
-                        },
-                        "wireValue": "grant_type"
+                        }
                     },
                     "typeReference": {
                         "type": "literal",
@@ -456,6 +456,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "scope",
                         "name": {
                             "originalName": "scope",
                             "camelCase": {
@@ -474,8 +475,7 @@
                                 "unsafeName": "Scope",
                                 "safeName": "Scope"
                             }
-                        },
-                        "wireValue": "scope"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -560,6 +560,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "access_token",
                         "name": {
                             "originalName": "access_token",
                             "camelCase": {
@@ -578,8 +579,7 @@
                                 "unsafeName": "AccessToken",
                                 "safeName": "AccessToken"
                             }
-                        },
-                        "wireValue": "access_token"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -590,6 +590,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "expires_in",
                         "name": {
                             "originalName": "expires_in",
                             "camelCase": {
@@ -608,8 +609,7 @@
                                 "unsafeName": "ExpiresIn",
                                 "safeName": "ExpiresIn"
                             }
-                        },
-                        "wireValue": "expires_in"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -620,6 +620,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "refresh_token",
                         "name": {
                             "originalName": "refresh_token",
                             "camelCase": {
@@ -638,8 +639,7 @@
                                 "unsafeName": "RefreshToken",
                                 "safeName": "RefreshToken"
                             }
-                        },
-                        "wireValue": "refresh_token"
+                        }
                     },
                     "typeReference": {
                         "type": "optional",
@@ -664,6 +664,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "client_id",
                             "name": {
                                 "originalName": "client_id",
                                 "camelCase": {
@@ -682,8 +683,7 @@
                                     "unsafeName": "ClientID",
                                     "safeName": "ClientID"
                                 }
-                            },
-                            "wireValue": "client_id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -694,6 +694,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_secret",
                             "name": {
                                 "originalName": "client_secret",
                                 "camelCase": {
@@ -712,8 +713,7 @@
                                     "unsafeName": "ClientSecret",
                                     "safeName": "ClientSecret"
                                 }
-                            },
-                            "wireValue": "client_secret"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -724,6 +724,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "scope",
                             "name": {
                                 "originalName": "scope",
                                 "camelCase": {
@@ -742,8 +743,7 @@
                                     "unsafeName": "Scope",
                                     "safeName": "Scope"
                                 }
-                            },
-                            "wireValue": "scope"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -847,6 +847,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "client_id",
                             "name": {
                                 "originalName": "client_id",
                                 "camelCase": {
@@ -865,8 +866,7 @@
                                     "unsafeName": "ClientID",
                                     "safeName": "ClientID"
                                 }
-                            },
-                            "wireValue": "client_id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -877,6 +877,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_secret",
                             "name": {
                                 "originalName": "client_secret",
                                 "camelCase": {
@@ -895,8 +896,7 @@
                                     "unsafeName": "ClientSecret",
                                     "safeName": "ClientSecret"
                                 }
-                            },
-                            "wireValue": "client_secret"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -907,6 +907,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "scope",
                             "name": {
                                 "originalName": "scope",
                                 "camelCase": {
@@ -925,8 +926,7 @@
                                     "unsafeName": "Scope",
                                     "safeName": "Scope"
                                 }
-                            },
-                            "wireValue": "scope"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1030,6 +1030,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "client_id",
                             "name": {
                                 "originalName": "client_id",
                                 "camelCase": {
@@ -1048,8 +1049,7 @@
                                     "unsafeName": "ClientID",
                                     "safeName": "ClientID"
                                 }
-                            },
-                            "wireValue": "client_id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1060,6 +1060,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_secret",
                             "name": {
                                 "originalName": "client_secret",
                                 "camelCase": {
@@ -1078,8 +1079,7 @@
                                     "unsafeName": "ClientSecret",
                                     "safeName": "ClientSecret"
                                 }
-                            },
-                            "wireValue": "client_secret"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1090,6 +1090,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "scope",
                             "name": {
                                 "originalName": "scope",
                                 "camelCase": {
@@ -1108,8 +1109,7 @@
                                     "unsafeName": "Scope",
                                     "safeName": "Scope"
                                 }
-                            },
-                            "wireValue": "scope"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1246,6 +1246,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "client_id",
                             "name": {
                                 "originalName": "client_id",
                                 "camelCase": {
@@ -1264,8 +1265,7 @@
                                     "unsafeName": "ClientID",
                                     "safeName": "ClientID"
                                 }
-                            },
-                            "wireValue": "client_id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1276,6 +1276,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_secret",
                             "name": {
                                 "originalName": "client_secret",
                                 "camelCase": {
@@ -1294,8 +1295,7 @@
                                     "unsafeName": "ClientSecret",
                                     "safeName": "ClientSecret"
                                 }
-                            },
-                            "wireValue": "client_secret"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1306,6 +1306,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "scope",
                             "name": {
                                 "originalName": "scope",
                                 "camelCase": {
@@ -1324,8 +1325,7 @@
                                     "unsafeName": "Scope",
                                     "safeName": "Scope"
                                 }
-                            },
-                            "wireValue": "scope"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",
@@ -1462,6 +1462,7 @@
                 "parameters": [
                     {
                         "name": {
+                            "wireValue": "client_id",
                             "name": {
                                 "originalName": "client_id",
                                 "camelCase": {
@@ -1480,8 +1481,7 @@
                                     "unsafeName": "ClientID",
                                     "safeName": "ClientID"
                                 }
-                            },
-                            "wireValue": "client_id"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1492,6 +1492,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "client_secret",
                             "name": {
                                 "originalName": "client_secret",
                                 "camelCase": {
@@ -1510,8 +1511,7 @@
                                     "unsafeName": "ClientSecret",
                                     "safeName": "ClientSecret"
                                 }
-                            },
-                            "wireValue": "client_secret"
+                            }
                         },
                         "typeReference": {
                             "type": "primitive",
@@ -1522,6 +1522,7 @@
                     },
                     {
                         "name": {
+                            "wireValue": "scope",
                             "name": {
                                 "originalName": "scope",
                                 "camelCase": {
@@ -1540,8 +1541,7 @@
                                     "unsafeName": "Scope",
                                     "safeName": "Scope"
                                 }
-                            },
-                            "wireValue": "scope"
+                            }
                         },
                         "typeReference": {
                             "type": "optional",

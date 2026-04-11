@@ -29,12 +29,15 @@
     "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --run -u"
+    "test:update": "vitest --run -u",
+    "test:v2": "vitest --run v2",
+    "test:v2:update": "vitest --run -u v2"
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/fdr-sdk": "catalog:",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "execa": "^5.1.1",

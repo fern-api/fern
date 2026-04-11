@@ -77,6 +77,12 @@ export namespace GeneratorPipeline {
 
         /** Path to .fernignore file */
         fernignorePath?: string;
+
+        /** Ignore the .fernignore file and upload an empty one */
+        skipFernignore?: boolean;
+
+        /** Require all referenced environment variables to be defined */
+        requireEnvVars?: boolean;
     }
 
     export interface Result {
@@ -111,6 +117,14 @@ export class GeneratorPipeline {
             if (this.isLocalGeneration(args)) {
                 return await this.runLocalGeneration(args);
             }
+            // Custom image registries are only supported with local generation
+            if (args.target.registry != null) {
+                throw new CliError({
+                    message:
+                        `Custom image configurations are only supported with local generation (--local). ` +
+                        `Target "${args.target.name}" uses a custom image registry.`
+                });
+            }
             return await this.runRemoteGeneration(args);
         } catch (error) {
             const message = extractErrorMessage(error);
@@ -139,7 +153,9 @@ export class GeneratorPipeline {
             preview: args.preview,
             outputPath: args.outputPath,
             containerEngine: args.containerEngine,
-            token: args.token
+            token: args.token,
+            skipFernignore: args.skipFernignore,
+            requireEnvVars: args.requireEnvVars
         });
         if (!result.success) {
             return {
@@ -175,7 +191,9 @@ export class GeneratorPipeline {
             shouldLogS3Url: args.shouldLogS3Url,
             preview: args.preview,
             outputPath: args.outputPath,
-            fernignorePath: args.fernignorePath
+            fernignorePath: args.fernignorePath,
+            skipFernignore: args.skipFernignore,
+            requireEnvVars: args.requireEnvVars
         });
         if (!result.success) {
             return {

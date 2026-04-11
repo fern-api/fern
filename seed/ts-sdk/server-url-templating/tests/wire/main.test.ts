@@ -16,13 +16,7 @@ describe("SeedApiClient", () => {
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.getUsers();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-                email: "email",
-            },
-        ]);
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getUser", async () => {
@@ -39,11 +33,7 @@ describe("SeedApiClient", () => {
         const response = await client.getUser({
             userId: "userId",
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-            email: "email",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("getToken", async () => {
@@ -68,9 +58,6 @@ describe("SeedApiClient", () => {
             client_id: "client_id",
             client_secret: "client_secret",
         });
-        expect(response).toEqual({
-            access_token: "access_token",
-            expires_in: 1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

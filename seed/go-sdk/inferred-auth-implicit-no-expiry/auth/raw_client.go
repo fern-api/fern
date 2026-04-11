@@ -4,11 +4,12 @@ package auth
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/inferred-auth-implicit-no-expiry/fern"
 	core "github.com/inferred-auth-implicit-no-expiry/fern/core"
 	internal "github.com/inferred-auth-implicit-no-expiry/fern/internal"
 	option "github.com/inferred-auth-implicit-no-expiry/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -46,7 +47,7 @@ func (r *RawClient) GetTokenWithClientCredentials(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-Api-Key", request.XApiKey)
+	headers.Add("X-Api-Key", request.XAPIKey)
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,
@@ -88,7 +89,7 @@ func (r *RawClient) RefreshToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-Api-Key", request.XApiKey)
+	headers.Add("X-Api-Key", request.XAPIKey)
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

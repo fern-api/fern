@@ -3,8 +3,9 @@
 package trace
 
 import (
-    fmt "fmt"
     json "encoding/json"
+    fmt "fmt"
+
     internal "github.com/trace/fern/internal"
 )
 

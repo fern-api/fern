@@ -321,16 +321,24 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.BasicAuth;
         values: FernIr.dynamic.BasicAuthValues;
     }): NamedArgument[] {
-        return [
-            {
+        // usernameOmit/passwordOmit may exist in newer IR versions
+        const authRecord = auth as unknown as Record<string, unknown>;
+        const usernameOmitted = !!authRecord.usernameOmit;
+        const passwordOmitted = !!authRecord.passwordOmit;
+        const args: NamedArgument[] = [];
+        if (!usernameOmitted) {
+            args.push({
                 name: this.context.getPropertyName(auth.username),
                 assignment: php.TypeLiteral.string(values.username)
-            },
-            {
+            });
+        }
+        if (!passwordOmitted) {
+            args.push({
                 name: this.context.getPropertyName(auth.password),
                 assignment: php.TypeLiteral.string(values.password)
-            }
-        ];
+            });
+        }
+        return args;
     }
 
     private getConstructorEnvironmentArg({

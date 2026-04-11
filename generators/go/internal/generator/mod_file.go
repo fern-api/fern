@@ -3,6 +3,7 @@ package generator
 import (
 	"bytes"
 	"fmt"
+	"sort"
 
 	"github.com/fern-api/fern-go/internal/coordinator"
 )
@@ -45,10 +46,15 @@ func NewModFile(coordinator *coordinator.Client, c *ModuleConfig) (*File, string
 	fmt.Fprintf(buffer, "go %s\n", version)
 	fmt.Fprintln(buffer)
 
-	// Write all of the imports in a single require block.
+	// Write all of the imports in a single require block (sorted for determinism).
+	paths := make([]string, 0, len(c.Imports))
+	for p := range c.Imports {
+		paths = append(paths, p)
+	}
+	sort.Strings(paths)
 	fmt.Fprint(buffer, "require (\n")
-	for path, version := range c.Imports {
-		fmt.Fprintf(buffer, "\t%s %s\n", path, version)
+	for _, p := range paths {
+		fmt.Fprintf(buffer, "\t%s %s\n", p, c.Imports[p])
 	}
 	fmt.Fprint(buffer, ")\n")
 	fmt.Fprintln(buffer)

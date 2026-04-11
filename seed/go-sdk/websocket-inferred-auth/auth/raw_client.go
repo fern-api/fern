@@ -4,11 +4,12 @@ package auth
 
 import (
 	context "context"
+	http "net/http"
+
 	fern "github.com/websocket-inferred-auth/fern"
 	core "github.com/websocket-inferred-auth/fern/core"
 	internal "github.com/websocket-inferred-auth/fern/internal"
 	option "github.com/websocket-inferred-auth/fern/option"
-	http "net/http"
 )
 
 type RawClient struct {
@@ -46,7 +47,7 @@ func (r *RawClient) GetTokenWithClientCredentials(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-Api-Key", request.XApiKey)
+	headers.Add("X-Api-Key", request.XAPIKey)
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,
@@ -88,7 +89,7 @@ func (r *RawClient) RefreshToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	headers.Add("X-Api-Key", request.XApiKey)
+	headers.Add("X-Api-Key", request.XAPIKey)
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

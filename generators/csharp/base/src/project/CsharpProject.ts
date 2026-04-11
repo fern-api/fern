@@ -47,6 +47,9 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     protected get generation(): Generation {
         return this.context.generation;
     }
+    protected get case(): Generation["case"] {
+        return this.generation.case;
+    }
     protected get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }
@@ -665,12 +668,12 @@ dotnet_diagnostic.IDE0005.severity = error
         if (!isOptional) {
             for (const scheme of this.context.ir.auth.schemes) {
                 if (scheme.type === "bearer") {
-                    parts.push(`${scheme.token.pascalCase.safeName} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.token)} = "test"`);
                 } else if (scheme.type === "basic") {
-                    parts.push(`${scheme.username.pascalCase.safeName} = "test"`);
-                    parts.push(`${scheme.password.pascalCase.safeName} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.username)} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.password)} = "test"`);
                 } else if (scheme.type === "header") {
-                    parts.push(`${scheme.name.name.pascalCase.safeName} = "test"`);
+                    parts.push(`${this.context.case.pascalSafe(scheme.name)} = "test"`);
                 } else if (scheme.type === "oauth") {
                     parts.push(`ClientId = "test"`);
                     parts.push(`ClientSecret = "test"`);
@@ -858,6 +861,8 @@ class CsProj extends WithGeneration {
     public override toString(): string {
         const projectGroup = this.getProjectGroup();
         const dependencies = this.getDependencies();
+        const indent = this.generation.constants.formatting.indent;
+        const legacyDeps = this.getLegacyFrameworkDependencies();
         return `
 <Project Sdk="Microsoft.NET.Sdk">
 ${projectGroup.join("\n")}
@@ -877,21 +882,22 @@ ${projectGroup.join("\n")}
       <Using Include="System.Threading.Tasks" />
     </ItemGroup>
     <ItemGroup Condition="'$(UsePortableDateOnly)' == 'true'">
-        <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.2" />
+        <PackageReference Include="Portable.System.DateTimeOnly" Version="9.0.1" />
     </ItemGroup>
     <ItemGroup Condition="'$(UsePortableDateOnly)' == 'false'">
         <Compile Remove="Core\\DateOnlyConverter.cs" />
     </ItemGroup>
     <ItemGroup>
-        ${dependencies.join(`\n${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}`)}
-        ${this.getSseDependencies().join(`\n${this.generation.constants.formatting.indent}`)}
-        ${this.getWebSocketAsyncDependencies().join(`\n${this.generation.constants.formatting.indent}`)}
+        ${dependencies.join(`\n${indent}${indent}`)}
     </ItemGroup>
-${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${this.generation.constants.formatting.indent}`)}
+    <ItemGroup Condition="${LEGACY_FRAMEWORK_CONDITION}">
+        ${legacyDeps.join(`\n${indent}${indent}`)}
+    </ItemGroup>
+${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${indent}`)}
     <ItemGroup>
         <None Include="${this.readmeRelativePathFromProject}" Pack="true" PackagePath=""/>
     </ItemGroup>
-${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.indent}`)}
+${this.getAdditionalItemGroups().join(`\n${indent}`)}
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>${this.generation.names.files.testProject}</_Parameter1>
@@ -903,46 +909,121 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
 `;
     }
 
+    /**
+     * Returns package references that are needed on all target frameworks.
+     * Packages that ship in-box with net6.0+ are excluded here and emitted
+     * conditionally via {@link getLegacyFrameworkDependencies}.
+     */
     private getDependencies(): string[] {
+        // Collect extra dependency names (case-insensitive) so user-specified
+        // versions take precedence over bundled ones.
+        const extraDeps = this.generation.settings.extraDependencies;
+        const extraDepNames = new Set(Object.keys(extraDeps).map((n) => n.toLowerCase()));
+
+        const pushIfNotOverridden = (result: string[], packageName: string, line: string) => {
+            if (!extraDepNames.has(packageName.toLowerCase())) {
+                result.push(line);
+            }
+        };
+
         const result: string[] = [];
-        result.push('<PackageReference Include="PolySharp" Version="1.15.0">');
+        // PolySharp always needs <IncludeAssets> and <PrivateAssets> metadata,
+        // even when the user overrides the version via extra-dependencies.
+        let polySharpVersion = "1.15.0";
+        for (const [name, version] of Object.entries(extraDeps)) {
+            if (name.toLowerCase() === "polysharp") {
+                polySharpVersion = version;
+                break;
+            }
+        }
+        result.push(`<PackageReference Include="PolySharp" Version="${polySharpVersion}">`);
         result.push(
             `${this.generation.constants.formatting.indent}<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>`
         );
         result.push(`${this.generation.constants.formatting.indent}<PrivateAssets>all</PrivateAssets>`);
         result.push("</PackageReference>");
-        // When use-undiscriminated-unions is false, we need the OneOf package
+        // When use-undiscriminated-unions is false, we need the OneOf package.
+        // System.Net.Http and System.Text.RegularExpressions are security version-floor
+        // overrides for OneOf.Extended's unpatched transitive dependencies — only needed
+        // when OneOf is present. System.Net.Http is also needed on net462 for the
+        // HttpClient assembly reference, which is handled separately via
+        // getLegacyFrameworkDependencies().
         if (!this.generation.settings.shouldGenerateUndiscriminatedUnions) {
-            result.push('<PackageReference Include="OneOf" Version="3.0.271" />');
-            result.push('<PackageReference Include="OneOf.Extended" Version="3.0.271" />');
+            pushIfNotOverridden(result, "OneOf", '<PackageReference Include="OneOf" Version="3.0.271" />');
+            pushIfNotOverridden(
+                result,
+                "OneOf.Extended",
+                '<PackageReference Include="OneOf.Extended" Version="3.0.271" />'
+            );
+            pushIfNotOverridden(
+                result,
+                "System.Net.Http",
+                '<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />'
+            );
+            pushIfNotOverridden(
+                result,
+                "System.Text.RegularExpressions",
+                '<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />'
+            );
         }
-        result.push('<PackageReference Include="System.Text.Json" Version="8.0.5" />');
-        result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
-        result.push('<PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />');
-        for (const [name, version] of Object.entries(this.generation.settings.extraDependencies)) {
+        for (const [name, version] of Object.entries(extraDeps)) {
+            // PolySharp is already handled above with its required metadata.
+            if (name.toLowerCase() === "polysharp") {
+                continue;
+            }
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
+        }
+        if (this.context.hasWebSocketEndpoints) {
+            pushIfNotOverridden(
+                result,
+                "Microsoft.IO.RecyclableMemoryStream",
+                '<PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />'
+            );
+            pushIfNotOverridden(
+                result,
+                "Microsoft.Extensions.Logging.Abstractions",
+                '<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.13" />'
+            );
+            pushIfNotOverridden(
+                result,
+                "System.Threading.Channels",
+                '<PackageReference Include="System.Threading.Channels" Version="9.0.13" />'
+            );
+        }
+        // SSE package — only in-box starting with net9.0, so keep unconditional for
+        // multi-targeted projects that include net8.0
+        if (this.context.hasSseEndpoints) {
+            pushIfNotOverridden(
+                result,
+                "System.Net.ServerSentEvents",
+                '<PackageReference Include="System.Net.ServerSentEvents" Version="9.0.14" />'
+            );
         }
         return result;
     }
 
     /**
-     * Adds the nuget dependencies for the websocket api client.
-     *
-     * @returns an array of strings that represent the nuget dependencies.
+     * Returns package references that should only be emitted for legacy (pre-net8.0) TFMs.
+     * These packages are included in the .NET shared framework starting with net8.0.
      */
-    private getWebSocketAsyncDependencies(): string[] {
-        return this.context.hasWebSocketEndpoints
-            ? [
-                  '    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />',
-                  '    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />'
-              ]
-            : [];
-    }
-
-    private getSseDependencies(): string[] {
-        return this.context.hasSseEndpoints
-            ? ['    <PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" />']
-            : [];
+    private getLegacyFrameworkDependencies(): string[] {
+        const extraDepNames = new Set(
+            Object.keys(this.generation.settings.extraDependencies).map((n) => n.toLowerCase())
+        );
+        const result: string[] = [];
+        for (const pkg of NET8_INBOX_PACKAGES) {
+            if (!extraDepNames.has(pkg.name.toLowerCase())) {
+                result.push(`<PackageReference Include="${pkg.name}" Version="${pkg.version}" />`);
+            }
+        }
+        // System.Net.Http is in-box on net8.0+ but needed on legacy TFMs for the
+        // net462 assembly reference. When OneOf is used, it's already in the
+        // unconditional group as a security version-floor override, so skip here
+        // to avoid a duplicate PackageReference.
+        if (this.generation.settings.shouldGenerateUndiscriminatedUnions && !extraDepNames.has("system.net.http")) {
+            result.push('<PackageReference Include="System.Net.Http" Version="[4.3.4,)" />');
+        }
+        return result;
     }
 
     private getProtobufDependencies(protobufSourceFilePaths: RelativeFilePath[]): string[] {
@@ -996,7 +1077,7 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
             );
         }
         result.push(
-            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;netstandard2.0</TargetFrameworks>`
+            `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<TargetFrameworks>net462;net8.0;net9.0;netstandard2.0</TargetFrameworks>`
         );
         result.push(
             `${this.generation.constants.formatting.indent}${this.generation.constants.formatting.indent}<ImplicitUsings>enable</ImplicitUsings>`
@@ -1073,3 +1154,24 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
  * Grpc.Tools compilation to avoid conflicting type definitions.
  */
 const EXTERNAL_PROTO_FILE_PREFIXES = ["google/rpc/", "google/api/"];
+
+/**
+ * MSBuild condition that matches target frameworks compatible with net8.0 or later.
+ * Uses IsTargetFrameworkCompatible for >= semantics rather than hardcoded TFM equality.
+ */
+const NET8_COMPATIBLE_CONDITION = "$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))";
+
+/**
+ * MSBuild condition that matches legacy (pre-net8.0) target frameworks.
+ * This is the negation of NET8_COMPATIBLE_CONDITION.
+ */
+const LEGACY_FRAMEWORK_CONDITION = `!${NET8_COMPATIBLE_CONDITION}`;
+
+/**
+ * Packages that are included in the .NET shared framework for net8.0+ and should
+ * only be emitted as PackageReference when targeting legacy TFMs (netstandard2.0, net462, etc.).
+ * Extend this list as more packages become in-box in future .NET versions.
+ */
+const NET8_INBOX_PACKAGES: ReadonlyArray<{ name: string; version: string }> = [
+    { name: "System.Text.Json", version: "9.0.9" }
+];

@@ -6,13 +6,14 @@ import (
 	bytes "bytes"
 	context "context"
 	json "encoding/json"
+	http "net/http"
+	os "os"
+	testing "testing"
+
 	fern "github.com/go-deterministic-ordering/fern"
 	client "github.com/go-deterministic-ordering/fern/client"
 	option "github.com/go-deterministic-ordering/fern/option"
 	require "github.com/stretchr/testify/require"
-	http "net/http"
-	os "os"
-	testing "testing"
 )
 
 func VerifyRequestCount(
@@ -71,6 +72,7 @@ func TestEndpointsDuplicateNamesCCreateWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &fern.CreateRequestC{
 		Label:    "label",
@@ -97,9 +99,10 @@ func TestEndpointsDuplicateNamesCGetWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &fern.GetRequestC{
-		Id: "id",
+		ID: "id",
 		Verbose: fern.Bool(
 			true,
 		),
@@ -125,6 +128,7 @@ func TestEndpointsDuplicateNamesCListWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := &fern.ListRequestC{
 		Offset: fern.Int(

@@ -1,9 +1,10 @@
 package example
 
 import (
+    context "context"
+
     client "github.com/go-deterministic-ordering/fern/client"
     option "github.com/go-deterministic-ordering/fern/option"
-    context "context"
 )
 
 func do() {
@@ -15,7 +16,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.HttpMethods.TestGet(
+    client.Endpoints.HTTPMethods.TestGet(
         context.TODO(),
         "id",
     )

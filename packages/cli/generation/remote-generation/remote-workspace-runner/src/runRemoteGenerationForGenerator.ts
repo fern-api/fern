@@ -12,10 +12,10 @@ import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
-import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob.js";
@@ -37,10 +37,17 @@ export async function runRemoteGenerationForGenerator({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
+    isPreview: isPreviewOverride,
+    fiddlePreview,
+    pushPreviewBranch,
     readme,
     fernignorePath,
+    skipFernignore,
     dynamicIrOnly,
-    retryRateLimited
+    retryRateLimited,
+    requireEnvVars,
+    automationMode,
+    autoMerge
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -54,10 +61,20 @@ export async function runRemoteGenerationForGenerator({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    /** Controls CLI-side behavior (lenient env vars, skip version check). Falls back to absolutePathToPreview != null. */
+    isPreview?: boolean;
+    /** When provided, overrides the `preview` flag sent to Fiddle. When omitted, falls back to isPreview. */
+    fiddlePreview?: boolean;
+    /** When true, tells Fiddle to push a preview branch to the SDK repo. */
+    pushPreviewBranch?: boolean;
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
+    skipFernignore?: boolean;
     dynamicIrOnly: boolean;
     retryRateLimited: boolean;
+    requireEnvVars: boolean;
+    automationMode?: boolean;
+    autoMerge?: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -67,12 +84,18 @@ export async function runRemoteGenerationForGenerator({
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
     /** Sugar to substitute templated env vars in a standard way */
-    const isPreview = absolutePathToPreview != null;
+    const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
 
     const substituteEnvVars = <T>(stringOrObject: T) =>
         replaceEnvVariables(
             stringOrObject,
-            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+            {
+                onError: (e) => {
+                    if (!isPreview && requireEnvVars) {
+                        interactiveTaskContext.failAndThrow(e);
+                    }
+                }
+            },
             { substituteAsEmpty: isPreview }
         );
 
@@ -132,7 +155,7 @@ export async function runRemoteGenerationForGenerator({
 
     const venus = createVenusService({ token: token.value });
     if (!isAirGapped) {
-        const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
+        const orgResponse = await venus.organization.get(projectConfig.organization);
 
         if (orgResponse.ok) {
             if (orgResponse.body.isWhitelabled) {
@@ -166,7 +189,7 @@ export async function runRemoteGenerationForGenerator({
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: FdrAPI.OrgId(organization),
-        apiId: FdrAPI.ApiId(ir.apiName.originalName),
+        apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
         definition: apiDefinition,
         sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
     });
@@ -256,8 +279,13 @@ export async function runRemoteGenerationForGenerator({
         whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
         irVersionOverride,
         absolutePathToPreview,
+        fiddlePreview,
+        pushPreviewBranch,
         fernignorePath,
-        retryRateLimited
+        skipFernignore,
+        retryRateLimited,
+        automationMode,
+        autoMerge
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 

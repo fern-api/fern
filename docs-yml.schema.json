@@ -218,6 +218,16 @@
         }
       ]
     },
+    "agents": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AgentsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -235,6 +245,16 @@
           "items": {
             "$ref": "#/definitions/docs.RedirectConfig"
           }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "check": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.CheckConfig"
         },
         {
           "type": "null"
@@ -485,16 +505,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.CustomDomain"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "private": {
-          "oneOf": [
-            {
-              "type": "boolean"
             },
             {
               "type": "null"
@@ -4357,6 +4367,59 @@
       },
       "additionalProperties": false
     },
+    "docs.PageDescriptionSource": {
+      "type": "string",
+      "enum": [
+        "description",
+        "subtitle"
+      ]
+    },
+    "docs.AgentsConfig": {
+      "type": "object",
+      "properties": {
+        "page-directive": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page-description-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageDescriptionSource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "llms-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "llms-full-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.TwitterCardSetting": {
       "type": "string",
       "enum": [
@@ -4586,6 +4649,105 @@
         "source",
         "destination"
       ],
+      "additionalProperties": false
+    },
+    "docs.CheckRuleSeverity": {
+      "type": "string",
+      "enum": [
+        "warn",
+        "error"
+      ]
+    },
+    "docs.CheckRulesConfig": {
+      "type": "object",
+      "properties": {
+        "example-validation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "broken-links": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "no-non-component-refs": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valid-local-references": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "no-circular-redirects": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "valid-docs-endpoints": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "missing-redirects": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.CheckConfig": {
+      "type": "object",
+      "properties": {
+        "rules": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRulesConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
       "additionalProperties": false
     },
     "docs.LogoConfiguration": {
@@ -5439,11 +5601,64 @@
         "canvas"
       ]
     },
-    "docs.TabsThemeConfig": {
+    "docs.TabsThemeStyle": {
       "type": "string",
       "enum": [
         "default",
         "bubble"
+      ]
+    },
+    "docs.TabsAlignment": {
+      "type": "string",
+      "enum": [
+        "left",
+        "center"
+      ]
+    },
+    "docs.TabsThemeObjectConfig": {
+      "type": "object",
+      "properties": {
+        "style": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsThemeStyle"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "alignment": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsAlignment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "placement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.TabsThemeConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabsThemeStyle"
+        },
+        {
+          "$ref": "#/definitions/docs.TabsThemeObjectConfig"
+        }
       ]
     },
     "docs.PageActionsThemeConfig": {
@@ -5554,6 +5769,16 @@
       "type": "object",
       "properties": {
         "intercom": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "context7": {
           "oneOf": [
             {
               "type": "string"

@@ -1,12 +1,13 @@
 package example
 
 import (
-    client "github.com/examples/fern/pleaseinhere/client"
-    option "github.com/examples/fern/pleaseinhere/option"
-    pleaseinhere "github.com/examples/fern/pleaseinhere"
-    commons "github.com/examples/fern/pleaseinhere/commons"
-    uuid "github.com/google/uuid"
     context "context"
+
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
+    client "github.com/examples/fern/pleaseinhere/client"
+    commons "github.com/examples/fern/pleaseinhere/commons"
+    option "github.com/examples/fern/pleaseinhere/option"
+    uuid "github.com/google/uuid"
 )
 
 func do() {
@@ -22,7 +23,7 @@ func do() {
         CastMember: &pleaseinhere.CastMember{
             Actor: &pleaseinhere.Actor{
                 Name: "name",
-                Id: "id",
+                ID: "id",
             },
         },
         ExtendedMovie: &pleaseinhere.ExtendedMovie{
@@ -30,7 +31,7 @@ func do() {
                 "cast",
                 "cast",
             },
-            Id: "id",
+            ID: "id",
             Prequel: pleaseinhere.String(
                 "prequel",
             ),
@@ -63,21 +64,21 @@ func do() {
             },
         },
         CommonMetadata: &commons.Metadata{
-            Id: "id",
+            ID: "id",
             Data: map[string]string{
                 "data": "data",
             },
-            JsonString: pleaseinhere.String(
+            JSONString: pleaseinhere.String(
                 "jsonString",
             ),
         },
         EventInfo: &commons.EventInfo{
             Metadata: &commons.Metadata{
-                Id: "id",
+                ID: "id",
                 Data: map[string]string{
                     "data": "data",
                 },
-                JsonString: pleaseinhere.String(
+                JSONString: pleaseinhere.String(
                     "jsonString",
                 ),
             },
@@ -226,7 +227,7 @@ func do() {
             },
         },
         Moment: &pleaseinhere.Moment{
-            Id: uuid.MustParse(
+            ID: uuid.MustParse(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             Date: pleaseinhere.MustParseDate(

@@ -19,7 +19,6 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 10
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
@@ -29,24 +28,26 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/typescript-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v4
         with:
-          github_token: ${{ github.token }}
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
-      - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: 🧪 Build
         run: pnpm turbo run compile --filter=@fern-api/typescript-dynamic-snippets
@@ -59,24 +60,26 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/python-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v4
         with:
-          github_token: ${{ github.token }}
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
-      - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: 🧪 Build
         run: pnpm turbo run compile --filter=@fern-api/python-dynamic-snippets
@@ -89,24 +92,26 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/csharp/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v4
         with:
-          github_token: ${{ github.token }}
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
-      - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: 🧪 Build
         run: pnpm turbo run compile --filter=@fern-api/csharp-dynamic-snippets
@@ -119,24 +124,26 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/go-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v4
         with:
-          github_token: ${{ github.token }}
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
-      - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: 🧪 Build
         run: pnpm turbo run compile --filter=@fern-api/go-dynamic-snippets
@@ -149,24 +156,26 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/ruby-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v4
         with:
-          github_token: ${{ github.token }}
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
-      - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: 🧪 Build
         run: pnpm turbo run compile --filter=@fern-api/ruby-dynamic-snippets
@@ -179,24 +188,26 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/php/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v4
         with:
-          github_token: ${{ github.token }}
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
-      - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: 🧪 Build
         run: pnpm turbo run compile --filter=@fern-api/php-dynamic-snippets
@@ -209,24 +220,26 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/swift/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v4
         with:
-          github_token: ${{ github.token }}
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
-      - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: 🧪 Build
         run: pnpm turbo run compile --filter=@fern-api/swift-dynamic-snippets
@@ -239,24 +252,26 @@ jobs:
     if: contains(github.event.pull_request.changed_files, 'generators/java-v2/dynamic-snippets/')
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 📥 Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Cache Fern bin dependencies
+        uses: actions/cache@v4
         with:
-          github_token: ${{ github.token }}
+          path: ~/.fern/bin
+          key: ${{ runner.os }}-fern-bin-${{ hashFiles('packages/cli/workspace/lazy-fern-workspace/src/protobuf/BufDownloader.ts', 'packages/cli/workspace/lazy-fern-workspace/src/protobuf/ProtocGenOpenAPIDownloader.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-fern-bin-
 
-      - uses: actions/setup-go@v6
-        with:
-          go-version: "stable"
+      - name: Build CLI for install-dependencies
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli
 
-      - name: Install protoc-gen-openapi
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+      - name: Install protobuf dependencies (buf + protoc-gen-openapi)
+        run: |
+          FERN_NO_VERSION_REDIRECTION=true node packages/cli/cli/dist/dev/cli.cjs install-dependencies
+          echo "$HOME/.fern/bin" >> $GITHUB_PATH
 
       - name: 🧪 Build
         run: pnpm turbo run compile --filter=@fern-api/java-dynamic-snippets

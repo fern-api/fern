@@ -1,9 +1,11 @@
 package example
 
 import (
+    context "context"
+
+    fern "github.com/exhaustive/fern"
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    context "context"
 )
 
 func do() {
@@ -15,7 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.NoEndingSlash(
+    request := fern.MustParseDateTime(
+        "2024-01-15T09:30:00Z",
+    )
+    client.Endpoints.Primitive.GetAndReturnDatetime(
         context.TODO(),
+        request,
     )
 }

@@ -32,6 +32,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "id",
                         "name": {
                             "originalName": "id",
                             "camelCase": {
@@ -50,8 +51,7 @@
                                 "unsafeName": "ID",
                                 "safeName": "ID"
                             }
-                        },
-                        "wireValue": "id"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -62,6 +62,7 @@
                 },
                 {
                     "name": {
+                        "wireValue": "name",
                         "name": {
                             "originalName": "name",
                             "camelCase": {
@@ -80,8 +81,7 @@
                                 "unsafeName": "Name",
                                 "safeName": "Name"
                             }
-                        },
-                        "wireValue": "name"
+                        }
                     },
                     "typeReference": {
                         "type": "primitive",

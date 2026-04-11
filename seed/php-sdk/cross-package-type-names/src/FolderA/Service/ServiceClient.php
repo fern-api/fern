@@ -57,11 +57,11 @@ class ServiceClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
-     * @return Response
+     * @return ?Response
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getDirectThread(?array $options = null): Response
+    public function getDirectThread(?array $options = null): ?Response
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -76,6 +76,9 @@ class ServiceClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
                 return Response::fromJson($json);
             }
         } catch (JsonException $e) {

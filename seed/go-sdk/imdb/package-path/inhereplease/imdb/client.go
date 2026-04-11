@@ -4,6 +4,7 @@ package imdb
 
 import (
 	context "context"
+
 	inhereplease "github.com/imdb/fern/inhereplease"
 	core "github.com/imdb/fern/inhereplease/core"
 	internal "github.com/imdb/fern/inhereplease/internal"
@@ -37,7 +38,7 @@ func (c *Client) CreateMovie(
 	ctx context.Context,
 	request *inhereplease.CreateMovieRequest,
 	opts ...option.RequestOption,
-) (inhereplease.MovieId, error) {
+) (inhereplease.MovieID, error) {
 	response, err := c.WithRawResponse.CreateMovie(
 		ctx,
 		request,
@@ -51,12 +52,12 @@ func (c *Client) CreateMovie(
 
 func (c *Client) GetMovie(
 	ctx context.Context,
-	movieId inhereplease.MovieId,
+	movieID inhereplease.MovieID,
 	opts ...option.RequestOption,
 ) (*inhereplease.Movie, error) {
 	response, err := c.WithRawResponse.GetMovie(
 		ctx,
-		movieId,
+		movieID,
 		opts...,
 	)
 	if err != nil {

@@ -19,6 +19,7 @@ export declare namespace PublishCommand {
     export interface Args extends GlobalArgs {
         force: boolean;
         instance?: string;
+        previewId?: string;
         strict: boolean;
         preview: boolean;
         "skip-upload": boolean;
@@ -136,6 +137,7 @@ export class PublishCommand {
             const result = await publisher.publish({
                 instanceUrl,
                 preview: args.preview,
+                previewId: args.previewId,
                 skipUpload: args["skip-upload"] || undefined
             });
             if (!result.success) {

@@ -260,6 +260,7 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "if",
         "import",
         "interface",
+        "internal",
         "map",
         "package",
         "range",

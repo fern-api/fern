@@ -14,10 +14,10 @@ impl ServiceClient {
 
     pub async fn post(
         &self,
-        path_param: &String,
-        service_param: &String,
+        path_param: &str,
+        service_param: &str,
         endpoint_param: i64,
-        resource_param: &String,
+        resource_param: &str,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

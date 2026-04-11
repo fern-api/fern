@@ -16,6 +16,7 @@ import com.seed.pagination.core.SeedPaginationHttpResponse;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
 import com.seed.pagination.resources.users.requests.ListUsernamesWithOptionalResponseRequest;
+import com.seed.pagination.resources.users.requests.ListUsersAliasedDataRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
@@ -29,6 +30,7 @@ import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest
 import com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
+import com.seed.pagination.resources.users.types.ListUsersAliasedDataPaginationResponse;
 import com.seed.pagination.resources.users.types.ListUsersExtendedOptionalListResponse;
 import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersMixedTypePaginationResponse;
@@ -1457,6 +1459,100 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<User>(true, result, parsedResponse, () -> {
                                     try {
                                         return listWithOptionalData(nextRequest, requestOptions)
+                                                .get()
+                                                .body();
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }),
+                                response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedPaginationApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedPaginationException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithAliasedData() {
+        return listWithAliasedData(ListUsersAliasedDataRequest.builder().build());
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithAliasedData(
+            RequestOptions requestOptions) {
+        return listWithAliasedData(ListUsersAliasedDataRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithAliasedData(
+            ListUsersAliasedDataRequest request) {
+        return listWithAliasedData(request, null);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithAliasedData(
+            ListUsersAliasedDataRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegments("aliased-data");
+        if (request.getPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get(), false);
+        }
+        if (request.getPerPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "per_page", request.getPerPage().get(), false);
+        }
+        if (request.getStartingAfter().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "starting_after", request.getStartingAfter().get(), false);
+        }
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        ListUsersAliasedDataPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                                responseBodyString, ListUsersAliasedDataPaginationResponse.class);
+                        Optional<String> startingAfter =
+                                parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
+                        ListUsersAliasedDataRequest nextRequest = ListUsersAliasedDataRequest.builder()
+                                .from(request)
+                                .startingAfter(startingAfter)
+                                .build();
+                        List<User> result = parsedResponse.getData();
+                        future.complete(new SeedPaginationHttpResponse<>(
+                                new SyncPagingIterable<User>(startingAfter.isPresent(), result, parsedResponse, () -> {
+                                    try {
+                                        return listWithAliasedData(nextRequest, requestOptions)
                                                 .get()
                                                 .body();
                                     } catch (InterruptedException | ExecutionException e) {

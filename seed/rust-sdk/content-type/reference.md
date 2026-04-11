@@ -27,6 +27,7 @@ async fn main() {
             &PatchProxyRequest {
                 application: Some("application".to_string()),
                 require_auth: Some(true),
+                ..Default::default()
             },
             None,
         )
@@ -117,14 +118,15 @@ async fn main() {
                     serde_json::json!({"key":"value"}),
                 )])),
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
-                email: Some(Some("email".to_string())),
-                nickname: Some(Some("nickname".to_string())),
-                bio: Some(Some("bio".to_string())),
-                profile_image_url: Some(Some("profileImageUrl".to_string())),
-                settings: Some(Some(HashMap::from([(
+                email: Some("email".to_string()),
+                nickname: Some("nickname".to_string()),
+                bio: Some("bio".to_string()),
+                profile_image_url: Some("profileImageUrl".to_string()),
+                settings: Some(HashMap::from([(
                     "settings".to_string(),
                     serde_json::json!({"key":"value"}),
-                )]))),
+                )])),
+                ..Default::default()
             },
             None,
         )
@@ -280,6 +282,7 @@ async fn main() {
                 app_id: Some("appId".to_string()),
                 instructions: Some("instructions".to_string()),
                 active: Some(true),
+                ..Default::default()
             },
             None,
         )
@@ -485,8 +488,9 @@ async fn main() {
         .regular_patch(
             &"id".to_string(),
             &RegularPatchRequest {
-                field_1: Some("field1".to_string()),
-                field_2: Some(1),
+                field1: Some("field1".to_string()),
+                field2: Some(1),
+                ..Default::default()
             },
             None,
         )
@@ -514,7 +518,7 @@ async fn main() {
 <dl>
 <dd>
 
-**field_1:** `Option<String>` 
+**field1:** `Option<String>` 
     
 </dd>
 </dl>
@@ -522,7 +526,7 @@ async fn main() {
 <dl>
 <dd>
 
-**field_2:** `Option<i64>` 
+**field2:** `Option<i64>` 
     
 </dd>
 </dl>

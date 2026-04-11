@@ -31,6 +31,7 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
 import com.fern.java.utils.InlineTypeIdResolver;
+import com.fern.java.utils.NameUtils;
 import com.fern.java.utils.NamedTypeId;
 import com.fern.java.utils.TypeReferenceInlineChecker;
 import com.fern.java.utils.TypeReferenceUtils;
@@ -43,6 +44,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -71,6 +73,32 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
             boolean isTopLevelClass,
             List<ObjectProperty> fileProperties,
             List<ObjectProperty> allowMultipleProperties) {
+        this(
+                objectTypeDeclaration,
+                selfInterface,
+                extendedInterfaces,
+                generatorContext,
+                allGeneratedInterfaces,
+                className,
+                reservedTypeNames,
+                isTopLevelClass,
+                fileProperties,
+                allowMultipleProperties,
+                Collections.emptySet());
+    }
+
+    public ObjectGenerator(
+            ObjectTypeDeclaration objectTypeDeclaration,
+            Optional<GeneratedJavaInterface> selfInterface,
+            List<GeneratedJavaInterface> extendedInterfaces,
+            AbstractGeneratorContext<?, ?> generatorContext,
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
+            ClassName className,
+            Set<String> reservedTypeNames,
+            boolean isTopLevelClass,
+            List<ObjectProperty> fileProperties,
+            List<ObjectProperty> allowMultipleProperties,
+            Set<ObjectProperty> queryParameterProperties) {
         super(className, generatorContext, reservedTypeNames, isTopLevelClass);
 
         List<GeneratedJavaInterface> allExtendedInterfaces = new ArrayList<>();
@@ -86,7 +114,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 objectTypeDeclaration,
                 generatorContext.getPoetTypeNameMapper(),
                 fileProperties,
-                allowMultipleProperties);
+                allowMultipleProperties,
+                queryParameterProperties);
         List<ImplementsInterface> implemented = implementsInterfaces(generatorContext, ancestors);
 
         if (generatorContext.getCustomConfig().enableInlineTypes()) {
@@ -273,9 +302,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                             Preconditions.checkState(
                                     typeName instanceof ParameterizedTypeName,
                                     "Found optional/nullable with non-parameterized type name "
-                                            + prop.objectProperty()
-                                                    .getName()
-                                                    .getName()
+                                            + NameUtils.getName(prop.objectProperty()
+                                                            .getName())
                                                     .getOriginalName());
                             TypeName parameterType =
                                     Objects.requireNonNull(((ParameterizedTypeName) typeName).typeArguments.get(0));
@@ -306,6 +334,7 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     .docs(prop.docs())
                     .literal(prop.literal())
                     .typeDeclaration(prop.typeDeclaration())
+                    .queryParameter(prop.queryParameter())
                     .build();
             result.put(prop, overridden);
         }
@@ -329,7 +358,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
             ObjectTypeDeclaration objectTypeDeclaration,
             PoetTypeNameMapper poetTypeNameMapper,
             List<ObjectProperty> fileProperties,
-            List<ObjectProperty> allowMultipleProperties) {
+            List<ObjectProperty> allowMultipleProperties,
+            Set<ObjectProperty> queryParameterProperties) {
         List<EnrichedObjectProperty> result = new ArrayList<>();
         // NOTE: We don't support file as a type in the IR, and we require type declarations to
         //  use the poet type name mapper in the object generator. This implementation lets us
@@ -372,7 +402,8 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                                 Preconditions.checkState(
                                         poetTypeName instanceof ParameterizedTypeName,
                                         "Found optional/nullable with non-parameterized type name "
-                                                + prop.getName().getName().getOriginalName());
+                                                + NameUtils.getName(prop.getName())
+                                                        .getOriginalName());
                                 TypeName parameterType = Objects.requireNonNull(
                                         ((ParameterizedTypeName) poetTypeName).typeArguments.get(0));
                                 poetTypeName = ParameterizedTypeName.get(
@@ -421,7 +452,36 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                     })
                     .collect(Collectors.toList()));
         }
+        // Mark query parameter properties so they are excluded from JSON body serialization
+        if (!queryParameterProperties.isEmpty()) {
+            result = result.stream()
+                    .map(prop -> queryParameterProperties.contains(prop.objectProperty())
+                            ? rebuildWithQueryParameter(prop)
+                            : prop)
+                    .collect(Collectors.toList());
+        }
         return result;
+    }
+
+    private static EnrichedObjectProperty rebuildWithQueryParameter(EnrichedObjectProperty prop) {
+        return EnrichedObjectProperty.builder()
+                .camelCaseKey(prop.camelCaseKey())
+                .pascalCaseKey(prop.pascalCaseKey())
+                .poetTypeName(prop.poetTypeName())
+                .fromInterface(prop.fromInterface())
+                .inline(prop.inline())
+                .wrappedAliases(prop.wrappedAliases())
+                .objectProperty(prop.objectProperty())
+                .nullableNonemptyFilterClassName(prop.nullableNonemptyFilterClassName())
+                .generator(prop.generator())
+                .allowMultiple(prop.allowMultiple())
+                .useNullableAnnotation(prop.useNullableAnnotation())
+                .wireKey(prop.wireKey())
+                .docs(prop.docs())
+                .literal(prop.literal())
+                .typeDeclaration(prop.typeDeclaration())
+                .queryParameter(true)
+                .build();
     }
 
     private static List<EnrichedObjectProperty> getEnrichedObjectProperties(

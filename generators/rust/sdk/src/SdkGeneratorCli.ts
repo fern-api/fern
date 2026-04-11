@@ -14,13 +14,14 @@ import {
     DynamicSnippetsGeneratorContext,
     EndpointSnippetGenerator
 } from "@fern-api/rust-dynamic-snippets";
-import { generateModels } from "@fern-api/rust-model";
+import { generateModels, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
 import { ErrorGenerator } from "./error/ErrorGenerator.js";
+import { ApiClientBuilderGenerator } from "./generators/ApiClientBuilderGenerator.js";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator.js";
 import { RootClientGenerator } from "./generators/RootClientGenerator.js";
 import { SubClientGenerator } from "./generators/SubClientGenerator.js";
@@ -196,7 +197,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         context.logger.debug(
-            `Starting SDK generation for ${context.ir.apiName.pascalCase.safeName} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
+            `Starting SDK generation for ${context.case.pascalSafe(context.ir.apiName)} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
         );
 
         const projectFiles = await this.generateProjectFiles(context);
@@ -251,6 +252,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug("Generating client configuration files...");
         const clientConfigGenerator = new ClientConfigGenerator(context);
         files.push(clientConfigGenerator.generate());
+        const apiClientBuilderGenerator = new ApiClientBuilderGenerator(context);
+        files.push(apiClientBuilderGenerator.generate());
 
         // Client.rs and nested mod.rs files
         context.logger.debug(`Generating root client: ${context.getClientName()}...`);
@@ -317,6 +320,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateCoreModFile(context: SdkGeneratorContext): RustFile {
         const hasStreaming = context.hasStreamingEndpoints();
         const hasWebSocket = context.hasWebSocketChannels();
+        const hasDateTime = context.usesDateTime();
+        const hasBase64 = context.usesBase64();
+        const hasBigInteger = context.usesBigInteger();
+        const hasFloatingPoint = context.usesFloatingPoint();
 
         const lines: string[] = [];
         lines.push("//! Core client infrastructure");
@@ -334,9 +341,18 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             lines.push("mod websocket;");
         }
         lines.push("mod utils;");
-        lines.push("pub mod flexible_datetime;");
-        lines.push("pub mod base64_bytes;");
-        lines.push("pub mod bigint_string;");
+        if (hasDateTime) {
+            lines.push("pub mod flexible_datetime;");
+        }
+        if (hasBase64) {
+            lines.push("pub mod base64_bytes;");
+        }
+        if (hasBigInteger) {
+            lines.push("pub mod bigint_string;");
+        }
+        if (hasFloatingPoint) {
+            lines.push("pub mod number_serializers;");
+        }
         lines.push("");
         lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig};");
         lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
@@ -348,7 +364,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
         if (hasWebSocket) {
             lines.push('#[cfg(feature = "websocket")]');
-            lines.push("pub use websocket::{WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState, parse_websocket_message};");
+            lines.push("pub use websocket::{DisconnectInfo, WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState};");
         }
         lines.push("pub use utils::join_url;");
         lines.push("");
@@ -367,7 +383,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Build module documentation
         const moduleDoc: string[] = [];
-        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiNameRaw = context.ir.apiName;
+        const apiName = context.ir.apiDisplayName ?? (apiNameRaw != null ? context.case.pascalSafe(apiNameRaw) : null) ?? "API";
         const apiDescription = context.ir.apiDocs;
 
         moduleDoc.push(`API client and types for the ${apiName}`);
@@ -422,9 +439,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // WebSocket channel clients are accessible via the `websocket` submodule
         // (e.g. `crate::websocket::RealtimeClient`). We intentionally do NOT
-        // glob re-export them here to avoid name collisions with HTTP resource
-        // clients that share the same subpackage name (e.g. both resources and
-        // websocket may define a `RealtimeClient`).
+        // glob re-export them here to keep the WebSocket API separate from
+        // the HTTP resource clients.
 
         const apiModule = new Module({
             moduleDoc,
@@ -462,30 +478,34 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private generateTypeFiles(context: SdkGeneratorContext): RustFile[] {
         const files: RustFile[] = [];
 
-        // Generate model files
-        const modelFiles = this.generateModelFiles(context);
+        // Generate model files (includes build_error.rs for builders)
+        // This also populates inlinedUnionVariantTypeIds on the model context
+        const modelContext = context.toModelGeneratorContext();
+        const modelFiles = this.generateModelFilesWithContext(context, modelContext);
         files.push(...modelFiles);
 
-        // Generate types module file
-        const typesModFile = this.generateTypesModFile(context);
+        // Generate types module file, passing inlined type IDs so we skip their mod declarations
+        const typesModFile = this.generateTypesModFile(context, modelContext.inlinedUnionVariantTypeIds);
         files.push(typesModFile);
 
         return files;
     }
 
-    private generateModelFiles(context: SdkGeneratorContext): RustFile[] {
-        return generateModels({ context: context.toModelGeneratorContext() }).map(
-            (file) =>
-                new RustFile({
-                    filename: file.filename,
-                    directory: RelativeFilePath.of("src/api/types"),
-                    fileContents: this.getFileContents(file)
-                })
-        );
+    private generateModelFilesWithContext(context: SdkGeneratorContext, modelContext: ModelGeneratorContext): RustFile[] {
+        return generateModels({ context: modelContext })
+            .filter((file) => file.filename !== "error.rs")
+            .map(
+                (file) =>
+                    new RustFile({
+                        filename: file.filename,
+                        directory: RelativeFilePath.of("src/api/types"),
+                        fileContents: this.getFileContents(file)
+                    })
+            );
     }
 
-    private generateTypesModFile(context: SdkGeneratorContext): RustFile {
-        const typesModule = this.buildTypesModule(context);
+    private generateTypesModFile(context: SdkGeneratorContext, inlinedTypeIds?: Set<string>): RustFile {
+        const typesModule = this.buildTypesModule(context, inlinedTypeIds);
         return new RustFile({
             filename: "mod.rs",
             directory: RelativeFilePath.of("src/api/types"),
@@ -504,7 +524,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Build module documentation
         const moduleDoc: string[] = [];
-        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiNameRaw2 = context.ir.apiName;
+        const apiName = context.ir.apiDisplayName ?? (apiNameRaw2 != null ? context.case.pascalSafe(apiNameRaw2) : null) ?? "API";
         const apiDescription = context.ir.apiDocs;
 
         // Add main title
@@ -563,11 +584,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Add all sub-clients
         subpackages.forEach((subpackage) => {
-            const subClientName = `${subpackage.name.pascalCase.safeName}Client`;
+            const subClientName = `${context.case.pascalSafe(subpackage.name)}Client`;
             clientExports.push(subClientName);
         });
 
-        useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "error", items: ["ApiError", "BuildError"], isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             useStatements.push(new UseStatement({ path: "environment", items: ["*"], isPublic: true }));
@@ -591,7 +612,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         });
     }
 
-    private buildTypesModule(context: SdkGeneratorContext): Module {
+    private buildTypesModule(context: SdkGeneratorContext, inlinedTypeIds?: Set<string>): Module {
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
         const rawDeclarations: string[] = [];
@@ -600,7 +621,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const uniqueModuleNames = new Set<string>();
 
         // Add regular IR types
-        for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+        for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+            // Skip types that are inlined into discriminated union variants
+            if (inlinedTypeIds?.has(typeId)) {
+                continue;
+            }
             // Use centralized method to get unique filename and extract module name from it
             const filename = context.getUniqueFilenameForType(typeDeclaration);
             const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
@@ -714,6 +739,29 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                     const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 
                     // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: [uniqueRequestName],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
+        // Add bytes request body types for bytes endpoints with query parameters
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
+                    const uniqueRequestName = context.getBytesRequestTypeName(endpoint.id);
+                    const rawModuleName = context.getModuleNameForBytesRequestBody(endpoint.id);
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+
                     if (!uniqueModuleNames.has(escapedModuleName)) {
                         uniqueModuleNames.add(escapedModuleName);
                         moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
@@ -950,19 +998,16 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             return true;
         }
 
-        // Check for inline request bodies
+        // Check for endpoints that generate request types
         for (const service of Object.values(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     return true;
                 }
-            }
-        }
-
-        // Check for query-only endpoints that generate request types
-        for (const service of Object.values(context.ir.services)) {
-            for (const endpoint of service.endpoints) {
                 if (endpoint.queryParameters?.length > 0 && !endpoint.requestBody) {
+                    return true;
+                }
+                if (endpoint.requestBody?.type === "bytes" && endpoint.queryParameters.length > 0) {
                     return true;
                 }
             }
@@ -989,6 +1034,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         topLevelSubpackageIds.forEach((subpackageId) => {
             const subpackage = context.ir.subpackages[subpackageId];
             if (subpackage) {
+                // Skip WebSocket-only subpackages — they don't generate HTTP client stubs
+                // in resources/, so there's nothing to re-export.
+                if (context.isWebSocketOnlySubpackage(subpackage)) {
+                    return;
+                }
                 // Use registered client name from context
                 // Deduplicate - multiple subpackages can resolve to the same client name
                 // (e.g., HTTP and AsyncAPI sources both creating a "market_data" subpackage)

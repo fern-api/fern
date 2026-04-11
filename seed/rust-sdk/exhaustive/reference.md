@@ -68,9 +68,11 @@ async fn main() {
             &vec![
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
             ],
             None,
@@ -155,6 +157,7 @@ async fn main() {
         .get_and_return_set_of_objects(
             &HashSet::from([ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             }]),
             None,
         )
@@ -243,6 +246,7 @@ async fn main() {
                 "string".to_string(),
                 ObjectWithRequiredField {
                     string: "string".to_string(),
+                    ..Default::default()
                 },
             )]),
             None,
@@ -330,6 +334,7 @@ async fn main() {
         .get_and_return_optional(
             &Some(ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             }),
             None,
         )
@@ -382,7 +387,7 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -391,6 +396,7 @@ async fn main() {
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -442,7 +448,7 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -451,6 +457,7 @@ async fn main() {
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -590,6 +597,7 @@ async fn main() {
         .test_post(
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -635,6 +643,7 @@ async fn main() {
             &"id".to_string(),
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -702,7 +711,7 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -711,6 +720,7 @@ async fn main() {
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -832,7 +842,7 @@ async fn main() {
                 datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some(
+                base64: Some(
                     base64::engine::general_purpose::STANDARD
                         .decode("SGVsbG8gd29ybGQh")
                         .unwrap(),
@@ -841,6 +851,7 @@ async fn main() {
                 set: Some(HashSet::from(["set".to_string()])),
                 map: Some(HashMap::from([(1, "map".to_string())])),
                 bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                ..Default::default()
             },
             None,
         )
@@ -885,6 +896,7 @@ async fn main() {
         .get_and_return_with_required_field(
             &ObjectWithRequiredField {
                 string: "string".to_string(),
+                ..Default::default()
             },
             None,
         )
@@ -932,6 +944,7 @@ async fn main() {
                     "map".to_string(),
                     HashMap::from([("map".to_string(), "map".to_string())]),
                 )]),
+                ..Default::default()
             },
             None,
         )
@@ -985,7 +998,7 @@ async fn main() {
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some(
+                    base64: Some(
                         base64::engine::general_purpose::STANDARD
                             .decode("SGVsbG8gd29ybGQh")
                             .unwrap(),
@@ -994,7 +1007,9 @@ async fn main() {
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
                     bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                    ..Default::default()
                 }),
+                ..Default::default()
             },
             None,
         )
@@ -1049,7 +1064,7 @@ async fn main() {
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some(
+                    base64: Some(
                         base64::engine::general_purpose::STANDARD
                             .decode("SGVsbG8gd29ybGQh")
                             .unwrap(),
@@ -1058,7 +1073,9 @@ async fn main() {
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
                     bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                    ..Default::default()
                 },
+                ..Default::default()
             },
             None,
         )
@@ -1132,7 +1149,7 @@ async fn main() {
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some(
+                        base64: Some(
                             base64::engine::general_purpose::STANDARD
                                 .decode("SGVsbG8gd29ybGQh")
                                 .unwrap(),
@@ -1141,7 +1158,9 @@ async fn main() {
                         set: Some(HashSet::from(["set".to_string()])),
                         map: Some(HashMap::from([(1, "map".to_string())])),
                         bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                        ..Default::default()
                     },
+                    ..Default::default()
                 },
                 NestedObjectWithRequiredField {
                     string: "string".to_string(),
@@ -1158,7 +1177,7 @@ async fn main() {
                         uuid: Some(
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
-                        base_64: Some(
+                        base64: Some(
                             base64::engine::general_purpose::STANDARD
                                 .decode("SGVsbG8gd29ybGQh")
                                 .unwrap(),
@@ -1167,7 +1186,9 @@ async fn main() {
                         set: Some(HashSet::from(["set".to_string()])),
                         map: Some(HashMap::from([(1, "map".to_string())])),
                         bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                        ..Default::default()
                     },
+                    ..Default::default()
                 },
             ],
             None,
@@ -1213,6 +1234,7 @@ async fn main() {
         .get_and_return_with_unknown_field(
             &ObjectWithUnknownField {
                 unknown: serde_json::json!({"$ref":"https://example.com/schema"}),
+                ..Default::default()
             },
             None,
         )
@@ -1257,6 +1279,7 @@ async fn main() {
         .get_and_return_with_documented_unknown_type(
             &ObjectWithDocumentedUnknownType {
                 documented_unknown_type: DocumentedUnknownType(serde_json::json!({"key":"value"})),
+                ..Default::default()
             },
             None,
         )
@@ -1318,6 +1341,138 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_mixed_required_and_optional_fields</a>(request: ObjectWithMixedRequiredAndOptionalFields) -> Result&lt;ObjectWithMixedRequiredAndOptionalFields, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets include all required properties in the
+object initializer, even when the example omits some required fields.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .object
+        .get_and_return_with_mixed_required_and_optional_fields(
+            &ObjectWithMixedRequiredAndOptionalFields {
+                required_string: "hello".to_string(),
+                required_integer: 0,
+                optional_string: Some("world".to_string()),
+                required_long: 0,
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_required_nested_object</a>(request: ObjectWithRequiredNestedObject) -> Result&lt;ObjectWithRequiredNestedObject, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tests that dynamic snippets recursively construct default objects for
+required properties whose type is a named object. When the example
+omits the nested object, the generator should construct a default
+initializer with the nested object's required properties filled in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .object
+        .get_and_return_with_required_nested_object(
+            &ObjectWithRequiredNestedObject {
+                required_string: "hello".to_string(),
+                required_object: NestedObjectWithRequiredField {
+                    string: "nested".to_string(),
+                    nested_object: ObjectWithOptionalField {
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                ..Default::default()
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints().object.<a href="/src/api/resources/endpoints/object/client.rs">get_and_return_with_datetime_like_string</a>(request: ObjectWithDatetimeLikeString) -> Result&lt;ObjectWithDatetimeLikeString, ApiError&gt;</code></summary>
 <dl>
 <dd>
@@ -1363,6 +1518,7 @@ async fn main() {
             &ObjectWithDatetimeLikeString {
                 datetime_like_string: "2023-08-31T14:15:22Z".to_string(),
                 actual_datetime: DateTime::parse_from_rfc3339("2023-08-31T14:15:22Z").unwrap(),
+                ..Default::default()
             },
             None,
         )
@@ -1423,6 +1579,7 @@ async fn main() {
             &ListItemsQueryRequest {
                 cursor: Some("cursor".to_string()),
                 limit: Some(1),
+                ..Default::default()
             },
             None,
         )
@@ -2102,11 +2259,143 @@ async fn main() {
     client
         .endpoints
         .params
-        .upload_with_path(
-            &"upload-path".to_string(),
-            &todo!("Invalid bytes value"),
-            None,
-        )
+        .upload_with_path(&"upload-path".to_string(), &vec![], None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_boolean_path</a>(param: bool) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with boolean path param
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .params
+        .get_with_boolean_path(true, None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints().params.<a href="/src/api/resources/endpoints/params/client.rs">get_with_path_and_errors</a>(param: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+GET with path param that can throw errors
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_exhaustive::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    client
+        .endpoints
+        .params
+        .get_with_path(&"param".to_string(), None)
         .await;
 }
 ```
@@ -2457,7 +2746,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_base_64</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.endpoints().primitive.<a href="/src/api/resources/endpoints/primitive/client.rs">get_and_return_base64</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2482,7 +2771,7 @@ async fn main() {
     client
         .endpoints
         .primitive
-        .get_and_return_base_64(
+        .get_and_return_base64(
             &base64::engine::general_purpose::STANDARD
                 .decode("SGVsbG8gd29ybGQh")
                 .unwrap(),
@@ -2583,6 +2872,7 @@ async fn main() {
                 data: Dog {
                     name: "name".to_string(),
                     likes_to_woof: true,
+                    ..Default::default()
                 },
             },
             None,
@@ -2793,7 +3083,7 @@ async fn main() {
                     datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                    base_64: Some(
+                    base64: Some(
                         base64::engine::general_purpose::STANDARD
                             .decode("SGVsbG8gd29ybGQh")
                             .unwrap(),
@@ -2802,6 +3092,7 @@ async fn main() {
                     set: Some(HashSet::from(["set".to_string()])),
                     map: Some(HashMap::from([(1, "map".to_string())])),
                     bigint: Some(BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap()),
+                    ..Default::default()
                 },
             },
             None,

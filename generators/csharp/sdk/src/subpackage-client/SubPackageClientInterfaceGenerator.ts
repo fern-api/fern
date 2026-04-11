@@ -8,6 +8,7 @@ type HttpService = FernIr.HttpService;
 type Subpackage = FernIr.Subpackage;
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 
 export declare namespace SubPackageClientInterfaceGenerator {
     interface Args {
@@ -43,7 +44,7 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
         for (const childSubpackage of this.getSubpackages()) {
             if (this.context.subPackageHasEndpointsRecursively(childSubpackage)) {
                 interface_.addField({
-                    name: childSubpackage.name.pascalCase.safeName,
+                    name: this.case.pascalSafe(childSubpackage.name),
                     enclosingType: interface_,
                     access: ast.Access.Public,
                     get: true,
@@ -56,12 +57,14 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
             this.generateEndpointSignatures(interface_);
         }
 
+        this.generateWebsocketInterfaceFactories(interface_);
+
         return new CSharpFile({
             clazz: interface_,
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
-            allNamespaceSegments: this.registry.allNamespacesOf(this.interfaceReference.namespace),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.namespaces.root,
+            namespace: this.interfaceReference.namespace,
             generation: this.generation
         });
     }
@@ -82,6 +85,25 @@ export class SubPackageClientInterfaceGenerator extends FileGenerator<CSharpFile
                 endpoint,
                 grpcClientInfo
             });
+        }
+    }
+
+    private generateWebsocketInterfaceFactories(interface_: ast.Interface) {
+        if (this.settings.enableWebsockets) {
+            for (const subpackage of this.getSubpackages()) {
+                if (subpackage.websocket != null) {
+                    const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                    if (websocketChannel != null) {
+                        WebSocketClientGenerator.createWebSocketApiInterfaceFactories(
+                            interface_,
+                            subpackage,
+                            this.context,
+                            this.interfaceReference.namespace,
+                            websocketChannel
+                        );
+                    }
+                }
+            }
         }
     }
 

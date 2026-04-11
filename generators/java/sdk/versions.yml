@@ -1,4 +1,193 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.2.0-rc.1
+  changelogEntry:
+    - summary: |
+        Bump IR dependency to v66.1.0 Maven artifact, replacing custom deserializer
+        workarounds with native irV66 types.
+      type: chore
+    - summary: |
+        Support default discriminant values on unions. When a discriminated union variant
+        has a default value on its discriminator field, the Java SDK now falls back to that
+        variant instead of treating missing discriminators as unknown. This fixes deserialization
+        of payloads where the discriminator is omitted and the API expects a default variant.
+      type: feat
+  createdAt: "2026-04-10"
+  irVersion: 66
+
+- version: 4.2.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
+- version: 4.1.4
+  changelogEntry:
+    - summary: |
+        Update Node.js from 24.13.0 to 24.14.1 in the generator Docker image
+        to fix 7 CVEs (CVE-2026-21710, CVE-2026-21717, CVE-2026-21713,
+        CVE-2026-21714, CVE-2026-21712, CVE-2026-21715, CVE-2026-21716).
+      type: chore
+  createdAt: "2026-04-10"
+  irVersion: 65
+
+- version: 4.1.3
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant matching in dynamic snippets selecting
+        incorrect variants when errors are added during conversion. The matcher
+        now checks whether errors were added (via `errors.size() > errorsBefore`)
+        alongside the existing `isNop` check, preventing empty objects from being
+        returned for union fields like `options` in generated code snippets.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 65
+
+- version: 4.1.2
+  changelogEntry:
+    - summary: |
+        Fix wire test snippets dropping additional properties not declared in the
+        schema. Types with `@JsonAnySetter` now emit `.additionalProperty()` builder
+        calls for extra fields present in example data, so the serialized output
+        matches the expected JSON.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 65
+
+- version: 4.1.1
+  changelogEntry:
+    - summary: |
+        Fix `custom-dependencies` not being able to override bundled dependency
+        versions (OkHttp, Jackson, etc.). Previously, custom dependencies were
+        appended alongside bundled ones, so Gradle's dependency resolution would
+        pick the higher version. Custom dependencies now replace any bundled
+        dependency with the same group and artifact, allowing users to pin
+        specific versions for CVE remediation or compatibility.
+      type: fix
+  createdAt: "2026-04-02"
+  irVersion: 65
+
+- version: 4.1.0
+  changelogEntry:
+    - summary: |
+        Add `maxRetries` custom config option to override the default maximum
+        number of retries for failed requests. The default remains 2 when not
+        specified.
+      type: feat
+  createdAt: "2026-04-02"
+  irVersion: 65
+
+- version: 4.0.9
+  changelogEntry:
+    - summary: |
+        Fix RetryInterceptor sharing a single ExponentialBackoff instance across
+        all requests. Once the retry budget was exhausted by any request, no further
+        retries were attempted for the lifetime of the client. Each request now gets
+        its own backoff instance.
+      type: fix
+  createdAt: "2026-03-30"
+  irVersion: 65
+
+- version: 4.0.8
+  changelogEntry:
+    - summary: |
+        Fix multipart form data string fields being JSON-encoded with
+        `writeValueAsString()`, which wraps values in literal quote characters.
+        String fields, primitives, and enums now use plain string conversion
+        instead of JSON serialization. Complex types (objects, maps) continue
+        to use JSON serialization as before.
+      type: fix
+  createdAt: "2026-03-27"
+  irVersion: 65
+
+- version: 4.0.7
+  changelogEntry:
+    - summary: |
+        Thread endpoint ID through dynamic snippet generator to differentiate
+        generated snippets by endpoint.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 4.0.6
+  changelogEntry:
+    - summary: |
+        Fix custom license not being resolved in `build.gradle` when using
+        local generation (`--local`). The license file is mounted at `/tmp/LICENSE`
+        inside Docker, but the generator was looking for it at a relative path that
+        did not exist. The generator now checks `/tmp/<filename>` as a fallback.
+        Additionally, markdown formatting (headers, bold, etc.) is now stripped
+        from the first line of the license file when used as the license name.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+
+- version: 4.0.5
+  changelogEntry:
+    - summary: |
+        Fix generated README exception handling snippet using `{org}ApiException`
+        instead of `{clientClassName}ApiException` when `client-class-name` is
+        specified in the Java custom config. The README now uses the same exception
+        type name that is actually generated in the SDK.
+      type: fix
+  createdAt: "2026-03-25"
+  irVersion: 65
+- version: 4.0.4
+  changelogEntry:
+    - summary: |
+        Fix query parameters being serialized into the JSON request body for
+        endpoints that combine query parameters with an inlined request body.
+        Query parameter getters on wrapped request classes now use `@JsonIgnore`
+        instead of `@JsonProperty`, preventing them from appearing in both the
+        URL query string and the POST body.
+      type: fix
+  createdAt: "2026-03-24"
+  irVersion: 65
+
+- version: 4.0.3
+  changelogEntry:
+    - summary: |
+        Fix WebSocket `handleIncomingMessage()` using Fern-internal message IDs
+        (e.g. `AgentV1Welcome`, `ListenV1Results`) instead of the wire discriminant
+        values from the spec (e.g. `Welcome`, `Results`). This caused all incoming
+        message handlers to never fire, falling through to the unknown type handler.
+
+        The generator now extracts wire discriminant values from each message body's
+        `type` property — resolving literal values (e.g. `literal<"Welcome">`) and
+        enum values (e.g. `enum[Flushed, Cleared]`) — and dispatches via a `switch`
+        statement on those values. This aligns with the approach used by the Python
+        generator.
+      type: fix
+    - summary: |
+        WebSocket handler registration methods and field names now use
+        wire discriminant values instead of Fern-internal prefixed names. For example,
+        `onAgentV1Welcome(handler)` is now `onWelcome(handler)`, and
+        `onAgentV1PromptUpdated(handler)` is now `onPromptUpdated(handler)`. Methods
+        that were already backed by a custom `x-fern-sdk-method-name` (e.g.
+        `onFunctionCallResponse`) are unchanged.
+      type: fix
+    - summary: |
+        Improve generated WebSocket client code quality: use a string literal for
+        static URL paths instead of `StringBuilder`, remove dead if/else branches in
+        async `sendMessage()`, consolidate redundant catch blocks in message dispatch,
+        and correct Javadoc articles ("a" vs "an") for type names starting with vowels.
+      type: chore
+  createdAt: "2026-03-20"
+  irVersion: 65
+
+- version: 4.0.2
+  changelogEntry:
+    - summary: |
+        Fix binary file upload for wrapped request endpoints (endpoints with
+        query parameters alongside an `application/octet-stream` body). The body
+        type is now `byte[]` instead of `String`, and the request is sent via
+        `InputStreamRequestBody` instead of `String.valueOf().getBytes(UTF_8)`,
+        which was corrupting binary data.
+      type: fix
+  createdAt: "2026-03-19"
+  irVersion: 65
+
 - version: 4.0.1
   changelogEntry:
     - summary: |

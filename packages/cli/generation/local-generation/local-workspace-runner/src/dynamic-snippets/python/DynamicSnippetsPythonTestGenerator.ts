@@ -6,6 +6,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
+import { DynamicSnippetsTestRequest } from "../DynamicSnippetsTestSuite.js";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest.js";
 import { convertIr } from "../utils/convertIr.js";
 
@@ -41,16 +42,18 @@ export class DynamicSnippetsPythonTestGenerator {
         requests
     }: {
         outputDir: AbsoluteFilePath;
-        requests: dynamic.EndpointSnippetRequest[];
+        requests: DynamicSnippetsTestRequest[];
     }): Promise<void> {
         this.context.logger.debug("Generating dynamic snippet tests...");
-        for (const [idx, request] of requests.entries()) {
+        for (const [idx, { endpointId, request }] of requests.entries()) {
             try {
                 const convertedRequest = convertDynamicEndpointSnippetRequest(request);
                 if (convertedRequest == null) {
                     continue;
                 }
-                const response = await this.dynamicSnippetsGenerator.generate(convertedRequest);
+                const response = await this.dynamicSnippetsGenerator.generate(convertedRequest, {
+                    endpointId
+                });
                 const dynamicSnippetFilePath = this.getTestFilePath({ outputDir, idx });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
                 await writeFile(dynamicSnippetFilePath, response.snippet);

@@ -234,8 +234,11 @@
           "ConnectionInfo": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
-            "discriminant": "status",
+            "default-variant": undefined,
+            "discriminant": {
+              "context": "data",
+              "value": "status",
+            },
             "docs": undefined,
             "encoding": undefined,
             "source": {
@@ -925,14 +928,15 @@ types:
     source:
       openapi: ../openapi.json
   ConnectionInfo:
-    discriminant: status
+    discriminant:
+      value: status
+      context: data
     base-properties: {}
     union:
       starting: StartingConnectionInfo
       active: ActiveConnectionInfo
     source:
       openapi: ../openapi.json
-    context: data
 ",
     },
     "appV1.yml": {
@@ -1390,7 +1394,7 @@ service:
           "base-path": "",
           "endpoints": {
             "LoginAnonymous": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1426,7 +1430,7 @@ service:
               },
             },
             "LoginGoogle": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.UnauthorizedError",
@@ -1474,7 +1478,7 @@ service:
               },
             },
             "LoginNickname": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1583,6 +1587,7 @@ service:
     LoginAnonymous:
       path: /auth/v1/{appId}/login/anonymous
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -1604,6 +1609,7 @@ service:
     LoginNickname:
       path: /auth/v1/{appId}/login/nickname
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -1631,6 +1637,7 @@ service:
     LoginGoogle:
       path: /auth/v1/{appId}/login/google
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2426,7 +2433,7 @@ service:
           "base-path": "",
           "endpoints": {
             "GetPingServiceEndpoints": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "examples": [
                 {
@@ -2468,6 +2475,7 @@ service:
     GetPingServiceEndpoints:
       path: /discovery/v1/ping
       method: GET
+      auth: false
       source:
         openapi: ../openapi.json
       response:
@@ -2495,7 +2503,7 @@ service:
           "base-path": "",
           "endpoints": {
             "CreatePrivateLobbyDeprecated": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2541,7 +2549,7 @@ service:
               },
             },
             "CreatePublicLobbyDeprecated": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2587,7 +2595,7 @@ service:
               },
             },
             "ListActivePublicLobbiesDeprecated": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2660,6 +2668,7 @@ service:
     CreatePrivateLobbyDeprecated:
       path: /lobby/v1/{appId}/create/private
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2690,6 +2699,7 @@ service:
     CreatePublicLobbyDeprecated:
       path: /lobby/v1/{appId}/create/public
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2720,6 +2730,7 @@ service:
     ListActivePublicLobbiesDeprecated:
       path: /lobby/v1/{appId}/list
       method: GET
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2770,7 +2781,7 @@ service:
           "base-path": "",
           "endpoints": {
             "CreateLobby": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.UnauthorizedError",
@@ -2841,7 +2852,7 @@ service:
               },
             },
             "CreateLocalLobby": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2911,7 +2922,7 @@ service:
               },
             },
             "CreatePrivateLobby": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2981,7 +2992,7 @@ service:
               },
             },
             "CreatePublicLobby": {
-              "auth": undefined,
+              "auth": false,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -3051,7 +3062,7 @@ service:
               },
             },
             "GetLobbyInfo": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3101,7 +3112,7 @@ service:
               },
             },
             "ListActivePublicLobbies": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "examples": [
                 {
@@ -3246,6 +3257,7 @@ service:
     CreatePrivateLobby:
       path: /lobby/v2/{appId}/create/private
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3293,6 +3305,7 @@ service:
     CreatePublicLobby:
       path: /lobby/v2/{appId}/create/public
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3340,6 +3353,7 @@ service:
     CreateLocalLobby:
       path: /lobby/v2/{appId}/create/local
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3387,6 +3401,7 @@ service:
     CreateLobby:
       path: /lobby/v2/{appId}/create
       method: POST
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3435,6 +3450,7 @@ service:
     ListActivePublicLobbies:
       path: /lobby/v2/{appId}/list/public
       method: GET
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3466,6 +3482,7 @@ service:
     GetLobbyInfo:
       path: /lobby/v2/{appId}/info/{roomId}
       method: GET
+      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -4389,7 +4406,7 @@ service:
               },
             },
             "GetConnectionInfo": {
-              "auth": undefined,
+              "auth": false,
               "docs": undefined,
               "errors": [
                 "root.BadRequestError",
@@ -4755,6 +4772,7 @@ service:
     GetConnectionInfo:
       path: /rooms/v1/{appId}/connectioninfo/{roomId}
       method: GET
+      auth: false
       source:
         openapi: ../openapi.json
       request:

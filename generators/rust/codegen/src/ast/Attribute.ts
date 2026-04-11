@@ -82,6 +82,12 @@ export class Attribute extends AstNode {
                 args: ["skip"]
             }),
 
+        skipSerializing: (): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: ["skip_serializing"]
+            }),
+
         skipSerializingIf: (condition: string): Attribute =>
             new Attribute({
                 name: "serde",
@@ -132,4 +138,10 @@ export class Attribute extends AstNode {
                 args: ["transparent"]
             })
     };
+
+    public static nonExhaustive(): Attribute {
+        return new Attribute({
+            name: "non_exhaustive"
+        });
+    }
 }
