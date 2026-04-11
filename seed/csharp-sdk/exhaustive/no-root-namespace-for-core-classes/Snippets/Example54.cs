@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Endpoints;
 
 public partial class Examples
 {
@@ -11,7 +12,11 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Urls.WithUnderscoresAsync();
+        await client.Endpoints.Put.AddAsync(
+            new PutRequest {
+                Id = "id"
+            }
+        );
     }
 
 }

@@ -1,7 +1,7 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-java-sdk",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "use-default-request-parameter-values": true,
     "collapse-optional-nullable": true

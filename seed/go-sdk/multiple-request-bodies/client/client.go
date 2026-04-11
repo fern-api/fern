@@ -35,12 +35,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) UploadJsonDocument(
+func (c *Client) UploadJSONDocument(
 	ctx context.Context,
 	request *fern.UploadDocumentRequest,
 	opts ...option.RequestOption,
 ) (*fern.UploadDocumentResponse, error) {
-	response, err := c.WithRawResponse.UploadJsonDocument(
+	response, err := c.WithRawResponse.UploadJSONDocument(
 		ctx,
 		request,
 		opts...,

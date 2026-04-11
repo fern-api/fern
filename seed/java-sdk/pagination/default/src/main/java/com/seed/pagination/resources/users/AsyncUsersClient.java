@@ -8,6 +8,7 @@ import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
 import com.seed.pagination.resources.users.requests.ListUsernamesWithOptionalResponseRequest;
+import com.seed.pagination.resources.users.requests.ListUsersAliasedDataRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
@@ -354,5 +355,22 @@ public class AsyncUsersClient {
     public CompletableFuture<SyncPagingIterable<User>> listWithOptionalData(
             ListUsersOptionalDataRequest request, RequestOptions requestOptions) {
         return this.rawClient.listWithOptionalData(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithAliasedData() {
+        return this.rawClient.listWithAliasedData().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithAliasedData(RequestOptions requestOptions) {
+        return this.rawClient.listWithAliasedData(requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithAliasedData(ListUsersAliasedDataRequest request) {
+        return this.rawClient.listWithAliasedData(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithAliasedData(
+            ListUsersAliasedDataRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listWithAliasedData(request, requestOptions).thenApply(response -> response.body());
     }
 }

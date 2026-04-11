@@ -184,6 +184,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             base_url_example_value=base_url_example_value,
             sync_init_parameters=self._get_constructor_parameters(is_async=False),
             async_init_parameters=self._get_constructor_parameters(is_async=True),
+            sync_constructor_overloads=self._get_constructor_overloads(is_async=False),
+            async_constructor_overloads=self._get_constructor_overloads(is_async=True),
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -205,6 +207,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             declaration=class_declaration,
             should_export=False,
         )
+        source_file.add_arbitrary_code(AST.CodeWriter(self._write_make_default_async_client))
         source_file.add_class_declaration(
             declaration=async_class_declaration,
             should_export=False,
@@ -1437,6 +1440,23 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ),
                 ),
             )
+        elif is_async:
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
+                    AST.Expression(
+                        AST.ConditionalExpression(
+                            left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
+                            right=AST.Expression(
+                                f"_make_default_async_client(timeout={timeout_local_variable}, follow_redirects={self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME})"
+                            ),
+                            test=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
+                            ),
+                        ),
+                    ),
+                )
+            )
         else:
             client_wrapper_constructor_kwargs.append(
                 (
@@ -1446,11 +1466,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
                             right=AST.ConditionalExpression(
                                 left=AST.ClassInstantiation(
-                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    HttpX.CLIENT,
                                     kwargs=httpx_client_kwargs_with_redirects,
                                 ),
                                 right=AST.ClassInstantiation(
-                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    HttpX.CLIENT,
                                     kwargs=httpx_client_kwargs_without_redirects,
                                 ),
                                 test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
@@ -1485,6 +1505,35 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
 
         return client_wrapper_constructor_kwargs
+
+    def _write_make_default_async_client(self, writer: AST.NodeWriter) -> None:
+        writer.write_line("")
+        writer.write_line("def _make_default_async_client(")
+        with writer.indent():
+            writer.write_line("timeout: typing.Optional[float],")
+            writer.write_line("follow_redirects: typing.Optional[bool],")
+        writer.write_line(") -> httpx.AsyncClient:")
+        with writer.indent():
+            writer.write_line("try:")
+            with writer.indent():
+                writer.write_line("import httpx_aiohttp  # type: ignore[import-not-found]")
+            writer.write_line("except ImportError:")
+            with writer.indent():
+                writer.write_line("pass")
+            writer.write_line("else:")
+            with writer.indent():
+                writer.write_line("if follow_redirects is not None:")
+                with writer.indent():
+                    writer.write_line(
+                        "return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)"
+                    )
+                writer.write_line("return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)")
+            writer.write_line("")
+            writer.write_line("if follow_redirects is not None:")
+            with writer.indent():
+                writer.write_line("return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)")
+            writer.write_line("return httpx.AsyncClient(timeout=timeout)")
+        writer.write_line("")
 
     def _write_get_base_url_function(self, writer: AST.NodeWriter) -> None:
         writer.write_line(f"if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None:")
@@ -1603,6 +1652,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             base_url_example_value: Optional[AST.Expression] = None,
             sync_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
             async_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
+            sync_constructor_overloads: Optional[List[AST.FunctionSignature]] = None,
+            async_constructor_overloads: Optional[List[AST.FunctionSignature]] = None,
         ):
             self._module_path = module_path
             self._class_name = class_name
@@ -1617,6 +1668,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
+            self._sync_constructor_overloads = sync_constructor_overloads
+            self._async_constructor_overloads = async_constructor_overloads
 
         def build(self) -> GeneratedRootClient:
             def create_class_reference(class_name: str) -> AST.ClassReference:
@@ -1657,6 +1710,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 - Use kwargs (many root client params are keyword-only).
                 - Include required parameters (those without defaults) with reasonable placeholders.
                 - Prefer inferred-auth credentials (e.g. api_key) when present.
+                - Include client_id/client_secret for OAuth client credentials flows.
                 """
 
                 required_params = [
@@ -1689,6 +1743,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         continue
 
                     kwargs.append((name, AST.Expression(f'"YOUR_{name.upper()}"')))
+
+                # For OAuth client credentials, explicitly include client_id and client_secret
+                # even though they have os.getenv() defaults.
+                if self._oauth_token_override:
+                    oauth_param_names_in_kwargs = {name for name, _ in kwargs}
+                    if "client_id" not in oauth_param_names_in_kwargs:
+                        kwargs.append(("client_id", AST.Expression('"YOUR_CLIENT_ID"')))
+                    if "client_secret" not in oauth_param_names_in_kwargs:
+                        kwargs.append(("client_secret", AST.Expression('"YOUR_CLIENT_SECRET"')))
 
                 return kwargs
 
@@ -1774,11 +1837,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     class_reference=async_class_reference,
                     parameters=self._constructor_parameters,
                     init_parameters=self._async_init_parameters,
+                    constructor_overloads=self._async_constructor_overloads,
                 ),
                 sync_instantiations=sync_instantiations,
                 sync_client=RootClient(
                     class_reference=sync_class_reference,
                     parameters=self._constructor_parameters,
                     init_parameters=self._sync_init_parameters,
+                    constructor_overloads=self._sync_constructor_overloads,
                 ),
             )

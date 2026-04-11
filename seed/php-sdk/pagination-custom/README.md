@@ -38,13 +38,14 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Users\Requests\ListUsernamesRequestCustom;
+use Seed\Users\Requests\ListWithCustomPagerRequest;
 
 $client = new SeedClient(
     token: '<token>',
 );
-$client->users->listUsernamesCustom(
-    new ListUsernamesRequestCustom([
+$client->users->listWithCustomPager(
+    new ListWithCustomPagerRequest([
+        'limit' => 1,
         'startingAfter' => 'starting_after',
     ]),
 );
@@ -60,7 +61,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->users->listUsernamesCustom(...);
+    $response = $client->users->listWithCustomPager(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -81,7 +82,7 @@ $client = new SeedClient(
     ['baseUrl' => 'https://api.example.com'],
 );
 
-$items = $client->users->listUsernamesCustom(['limit' => 10]);
+$items = $client->users->listWithCustomPager(['limit' => 10]);
 
 foreach ($items as $item) {
     var_dump($item);
@@ -143,7 +144,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->users->listUsernamesCustom(
+$response = $client->users->listWithCustomPager(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -156,7 +157,7 @@ $response = $client->users->listUsernamesCustom(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->users->listUsernamesCustom(
+$response = $client->users->listWithCustomPager(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

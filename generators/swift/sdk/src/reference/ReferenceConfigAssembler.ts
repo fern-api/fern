@@ -36,7 +36,8 @@ export class ReferenceConfigAssembler {
 
     private getReferenceSectionTitle(service: FernIr.HttpService): string {
         return (
-            service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ")
+            service.displayName ??
+            service.name.fernFilepath.allParts.map((part) => this.context.caseConverter.pascalSafe(part)).join(" ")
         );
     }
 

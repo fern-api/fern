@@ -78,8 +78,9 @@ export class WebhooksHelperGenerator {
     }
 
     private buildHmacParameters(config: FernIr.HmacSignatureVerification): Array<{ name: string; type: string }> {
+        const requestBodyType = config.payloadFormat.bodySort != null ? "string | Record<string, string>" : "string";
         const params: Array<{ name: string; type: string }> = [
-            { name: "requestBody", type: "string" },
+            { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" },
             { name: "signatureKey", type: "string" }
         ];
@@ -339,8 +340,20 @@ export class WebhooksHelperGenerator {
     }
 
     private addPayloadConstruction(lines: string[], payloadFormat: FernIr.WebhookPayloadFormat): void {
+        const hasBodySort = payloadFormat.bodySort != null;
+
+        if (hasBodySort) {
+            lines.push(
+                'const bodyString = typeof requestBody === "string"',
+                "    ? requestBody",
+                '    : Object.keys(requestBody).sort().map(key => key + requestBody[key]).join("");'
+            );
+        }
+
+        const bodyExpr = hasBodySort ? "bodyString" : "requestBody";
+
         if (payloadFormat.components.length === 1 && payloadFormat.components[0] === "BODY") {
-            lines.push("const payload = requestBody;");
+            lines.push(`const payload = ${bodyExpr};`);
             return;
         }
 
@@ -348,7 +361,7 @@ export class WebhooksHelperGenerator {
         for (const component of payloadFormat.components) {
             switch (component) {
                 case "BODY":
-                    componentExprs.push("requestBody");
+                    componentExprs.push(bodyExpr);
                     break;
                 case "TIMESTAMP":
                     componentExprs.push("timestampHeader");
@@ -424,6 +437,12 @@ export class WebhooksHelperGenerator {
         if (config.timestamp != null) {
             lines.push(
                 `Extract the timestamp from the "${getWireValue(config.timestamp.headerName)}" header and pass it as the timestampHeader parameter.`
+            );
+        }
+        if (config.payloadFormat.bodySort != null) {
+            lines.push(
+                "The requestBody parameter accepts either a raw string or a Record<string, string> of POST body parameters.",
+                "When a Record is provided, parameters are sorted alphabetically by key and concatenated as key-value pairs before signing."
             );
         }
         return lines.join("\n");

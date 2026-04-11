@@ -131,6 +131,7 @@
             "name": "Update",
             "typeId": "Update",
             "inline": false,
+            "displayName": "Update",
             "type": "named"
           },
           "type": "reference"

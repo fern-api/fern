@@ -127,7 +127,7 @@ public class TypeReferenceUtils {
 
         @Override
         public String visitNamed(NamedType named) {
-            return named.getName().getPascalCase().getUnsafeName();
+            return NameUtils.toName(named.getName()).getPascalCase().getUnsafeName();
         }
 
         @Override

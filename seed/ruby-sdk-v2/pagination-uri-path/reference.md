@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_uri_pagination</a>() -> Seed::Users::Types::ListUsersUriPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_uri_pagination</a>() -> Seed::Users::Types::ListUsersURIPaginationResponse</code></summary>
 <dl>
 <dd>
 

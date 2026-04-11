@@ -1,4 +1,157 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.59.6
+  changelogEntry:
+    - summary: |
+        Add domain-specific event properties (e.g. AssistantMessage, ChatMetadata,
+        AudioOutput) and UnknownMessage to the generated WebSocket client interface.
+        Previously, these events were only available on the concrete class, forcing
+        consumers to downcast from the interface type to access them.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
+- version: 2.59.5
+  changelogEntry:
+    - summary: |
+        Skip mock server test examples with empty string path parameters. An
+        empty path parameter causes the mock server to register a collapsed URL
+        (e.g. `/v0/tools/version/1`) while the SDK client sends a double-slash
+        URL (e.g. `/v0/tools//version/1`), resulting in a 404 from WireMock.
+      type: fix
+    - summary: |
+        Fix dynamic snippet generation for literal types when `generate-literals`
+        (or `experimental-readonly-constants`) is enabled. Inline literal
+        properties now correctly omit the value (relying on the `= new()`
+        default initializer), and named literal alias types emit `new TypeName()`
+        instead of a raw string, preventing CS0029 compilation errors.
+      type: fix
+    - summary: |
+        Fix file upload request properties declared as `list<file>` generating
+        a single `FileParameter` field instead of `List<FileParameter>`.
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
+- version: 2.59.4
+  changelogEntry:
+    - summary: |
+        Add `GetSingle()` fallback to `JsonElementComparer` number comparison.
+        When two JSON numbers differ as decimals but match as singles, they
+        represent the same float32 value and are now considered equal. This
+        fixes mock server test failures for fields declared as `format: float`
+        where C#'s `System.Text.Json` serializes `System.Single` with a shorter
+        decimal representation than the original JSON string (e.g.
+        0.10722749680280685 vs 0.1072275).
+      type: fix
+  createdAt: "2026-04-10"
+  irVersion: 66
+
+- version: 2.59.3
+  changelogEntry:
+    - summary: |
+        Fix mock server test and snippet generation to skip literal properties
+        in object initializers when `generate-literals` is enabled. Previously,
+        the generator emitted plain string/boolean assignments for `TypeLiteral`
+        properties, causing CS0029 compilation errors. Literal properties now
+        rely on their `= new()` default initializer.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 2.59.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation failing with "Endpoint does not have an
+        example that matches the snippet" when the endpoint has examples but the
+        request is a plain `EndpointSnippetRequest` without an `id`. The guard now
+        only validates the example match when the snippet includes an `id`.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 2.59.1
+  changelogEntry:
+    - summary: |
+        Fix undiscriminated union variant matching in dynamic snippets selecting
+        incorrect variants when errors are added during conversion. The matcher
+        now checks whether errors were added (via `errors.size() > errorsBefore`)
+        alongside the existing `isNop` check, and adds a missing `nop` check that
+        was causing the first variant to be unconditionally returned. This prevents
+        empty objects from being returned for union fields like `options` in
+        generated code snippets.
+      type: fix
+  createdAt: "2026-04-09"
+  irVersion: 66
+
+- version: 2.59.0
+  changelogEntry:
+    - summary: |
+        Expose HTTP response metadata on paginated endpoints. `Page<TItem>` now includes
+        `StatusCode`, `Headers`, and `Response` properties, giving users access to HTTP
+        status codes, response headers, and the full API response object for each page.
+      type: feat
+  createdAt: "2026-04-08"
+  irVersion: 66
+
+- version: 2.58.1
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation to include all required properties in
+        object initializers. Previously, required properties missing from the
+        example data were omitted, causing CS9035 compilation errors in C#.
+        Required properties now receive deterministic placeholder values when
+        not present in the snippet request.
+      type: fix
+  createdAt: "2026-04-08"
+  irVersion: 66
+
+- version: 2.58.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
+      type: feat
+  createdAt: "2026-04-03"
+  irVersion: 66
+
+- version: 2.57.0-rc.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR v66 which compresses the IR Name type, reducing IR size and increasing performance.
+      type: feat
+  createdAt: "2026-04-01"
+  irVersion: 66
+
+- version: 2.56.6
+  changelogEntry:
+    - type: fix
+      summary: >-
+        Ensure extra-dependencies overrides take precedence over bundled dependency
+        versions, preventing duplicate PackageReference entries in generated .csproj files.
+  irVersion: 65
+  createdAt: "2026-04-03"
+
+- version: 2.56.5
+  changelogEntry:
+    - summary: |
+        Fix mock server test generation to omit null values for non-nullable
+        properties in inlined request bodies, matching the SDK's
+        JsonIgnoreCondition.WhenWritingNull serialization behavior. When
+        enableExplicitNullableOptional is disabled (default), all nulls are
+        now unconditionally omitted from expected request JSON.
+      type: fix
+    - summary: |
+        Fix pagination test build errors (CS8411) when generatePaginatedClients
+        is disabled. The test generator now checks the config flag before emitting
+        `await foreach` code, preventing attempts to iterate over plain response
+        types that do not implement IAsyncEnumerable.
+      type: fix
+  createdAt: "2026-04-03"
+  irVersion: 65
+
 - version: 2.56.4
   changelogEntry:
     - summary: |
@@ -67,7 +220,6 @@
       type: fix
   createdAt: "2026-04-01"
   irVersion: 65
-
 - version: 2.55.3
   changelogEntry:
     - summary: |

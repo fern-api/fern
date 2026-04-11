@@ -1,0 +1,10 @@
+instances:
+  - url: product-test.docs.dev.buildwithfern.com
+
+products:
+  - display-name: Docs
+    path: ./products/product-a/docs.yml
+    slug: product-docs
+  - display-name: SDKs
+    path: ./products/product-b/sdks.yml
+    slug: product-sdks

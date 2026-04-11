@@ -10,7 +10,6 @@ public partial class Examples
         );
 
         await client.Path.SendAsync(
-            "123"
         );
     }
 

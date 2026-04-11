@@ -97,6 +97,36 @@ public final class ObjectClient: Sendable {
         )
     }
 
+    /// Tests that dynamic snippets include all required properties in the
+    /// object initializer, even when the example omits some required fields.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getAndReturnWithMixedRequiredAndOptionalFields(request: ObjectWithMixedRequiredAndOptionalFields, requestOptions: RequestOptions? = nil) async throws -> ObjectWithMixedRequiredAndOptionalFields {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/object/get-and-return-with-mixed-required-and-optional-fields",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ObjectWithMixedRequiredAndOptionalFields.self
+        )
+    }
+
+    /// Tests that dynamic snippets recursively construct default objects for
+    /// required properties whose type is a named object. When the example
+    /// omits the nested object, the generator should construct a default
+    /// initializer with the nested object's required properties filled in.
+    ///
+    /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
+    public func getAndReturnWithRequiredNestedObject(request: ObjectWithRequiredNestedObject, requestOptions: RequestOptions? = nil) async throws -> ObjectWithRequiredNestedObject {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/object/get-and-return-with-required-nested-object",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: ObjectWithRequiredNestedObject.self
+        )
+    }
+
     /// Tests that string fields containing datetime-like values are NOT reformatted.
     /// The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
     /// without being converted to "2023-08-31T14:15:22.000Z".

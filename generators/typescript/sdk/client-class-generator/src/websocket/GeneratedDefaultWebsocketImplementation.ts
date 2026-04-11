@@ -62,7 +62,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private readonly retainOriginalCasing: boolean;
     private readonly omitUndefined: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
     public readonly channel: FernIr.WebSocketChannel;
 
     constructor({
@@ -90,7 +90,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
         this.parameterNaming = parameterNaming;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
     }
 
     public getSignature(context: FileContext): ChannelSignature {
@@ -757,11 +757,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         propertyName: string;
     } {
         return {
-            safeName: this.caseConverter.camelSafe(name),
+            safeName: this.case.camelSafe(name),
             propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing
-                    ? this.caseConverter.camelUnsafe(name)
-                    : getWireValue(name)
+                this.includeSerdeLayer && !this.retainOriginalCasing ? this.case.camelUnsafe(name) : getWireValue(name)
         };
     }
 
@@ -770,13 +768,13 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         propertyName: string;
     } {
         return {
-            safeName: this.caseConverter.camelSafe(pathParameter.name),
+            safeName: this.case.camelSafe(pathParameter.name),
             propertyName: getParameterNameForPropertyPathParameterName({
                 pathParameterName: pathParameter.name,
                 retainOriginalCasing: this.retainOriginalCasing,
                 includeSerdeLayer: this.includeSerdeLayer,
                 parameterNaming: this.parameterNaming,
-                caseConverter: this.caseConverter
+                caseConverter: this.case
             })
         };
     }

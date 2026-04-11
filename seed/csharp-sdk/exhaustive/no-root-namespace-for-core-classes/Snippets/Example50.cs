@@ -1,6 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Types;
+using System.Globalization;
 
 public partial class Examples
 {
@@ -12,13 +12,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Union.GetAndReturnUnionAsync(
-            new Animal(
-                new Dog {
-                    Name = "name",
-                    LikesToWoof = true
-                }
-            )
+        await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
+            DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal)
         );
     }
 

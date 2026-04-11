@@ -976,7 +976,7 @@
             "requestBodyType": {
               "_visit": [Function],
               "default": undefined,
-              "displayName": undefined,
+              "displayName": "Plant",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
@@ -1042,7 +1042,7 @@
                 "responseBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "PlantResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -1308,7 +1308,7 @@
                 "requestBodyType": {
                   "_visit": [Function],
                   "default": undefined,
-                  "displayName": undefined,
+                  "displayName": "Plant",
                   "fernFilepath": {
                     "allParts": [],
                     "file": undefined,
@@ -1378,7 +1378,7 @@
                     "responseBodyType": {
                       "_visit": [Function],
                       "default": undefined,
-                      "displayName": undefined,
+                      "displayName": "PlantResponse",
                       "fernFilepath": {
                         "allParts": [],
                         "file": undefined,

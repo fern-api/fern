@@ -236,8 +236,13 @@ export const AIChatWebsiteDatasource = z.object({
 
 export const AIChatDatasource = AIChatWebsiteDatasource;
 
+export const PageDescriptionSource = z.enum(["description", "subtitle"]);
+
 export const AgentsConfig = z.object({
-    "page-directive": z.string().optional()
+    "page-directive": z.string().optional(),
+    "page-description-source": PageDescriptionSource.optional(),
+    "llms-txt": z.string().optional(),
+    "llms-full-txt": z.string().optional()
 });
 
 export const AIChatConfig = z.object({
@@ -391,7 +396,6 @@ export const EditThisPageConfig = z.object({
 export const DocsInstance = z.object({
     url: z.string(),
     "custom-domain": CustomDomain.optional(),
-    private: z.boolean().optional(),
     "edit-this-page": EditThisPageConfig.optional(),
     audiences: Audience.optional()
 });

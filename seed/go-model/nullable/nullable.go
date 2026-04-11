@@ -12,7 +12,7 @@ import (
 
 type Email = *string
 
-type UserId = string
+type UserID = string
 
 type WeirdNumber struct {
 	Integer                int
@@ -23,7 +23,7 @@ type WeirdNumber struct {
 
 type User struct {
 	Name           string         `json:"name" url:"name"`
-	Id             UserId         `json:"id" url:"id"`
+	ID             UserID         `json:"id" url:"id"`
 	Tags           []string       `json:"tags" url:"tags"`
 	Metadata       *Metadata      `json:"metadata,omitempty" url:"metadata,omitempty"`
 	Email          Email          `json:"email" url:"email"`
@@ -42,11 +42,11 @@ func (u *User) GetName() string {
 	return u.Name
 }
 
-func (u *User) GetId() UserId {
+func (u *User) GetID() UserID {
 	if u == nil {
 		return ""
 	}
-	return u.Id
+	return u.ID
 }
 
 func (u *User) GetTags() []string {

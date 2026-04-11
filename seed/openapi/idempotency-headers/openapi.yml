@@ -18,7 +18,7 @@ paths:
                 type: string
                 format: uuid
       security:
-        - BearerAuth: []
+        - Bearer: []
       requestBody:
         required: true
         content:
@@ -48,7 +48,7 @@ paths:
         '204':
           description: ''
       security:
-        - BearerAuth: []
+        - Bearer: []
 components:
   schemas:
     Currency:
@@ -58,6 +58,6 @@ components:
         - USD
         - YEN
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

@@ -10,8 +10,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnLongAsync(
-            1000000L
+        await client.Endpoints.Params.GetWithBooleanPathAsync(
+            true
         );
     }
 

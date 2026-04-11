@@ -1,6 +1,5 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
 
 public partial class Examples
 {
@@ -12,10 +11,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Put.AddAsync(
-            new PutRequest {
-                Id = "id"
-            }
+        await client.Endpoints.Primitive.GetAndReturnBoolAsync(
+            true
         );
     }
 

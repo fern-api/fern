@@ -146,7 +146,8 @@ public partial class PaginationClient : IPaginationClient
                         request,
                         options,
                         async (request, options, cancellationToken) =>
-                            await ListItemsInternalAsync(request, options, cancellationToken),
+                            await ListItemsInternalAsync(request, options, cancellationToken)
+                                .WithRawResponse(),
                         (request, cursor) =>
                         {
                             request.Cursor = cursor;

@@ -1,5 +1,5 @@
 using SeedExhaustive;
-using SeedExhaustive.Endpoints.Pagination;
+using SeedExhaustive.Types.Object;
 
 public partial class Examples
 {
@@ -11,10 +11,13 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Pagination.ListItemsAsync(
-            new ListItemsRequest {
-                Cursor = "cursor",
-                Limit = 1
+        await client.Endpoints.Object.GetAndReturnWithRequiredNestedObjectAsync(
+            new ObjectWithRequiredNestedObject {
+                RequiredString = "hello",
+                RequiredObject = new NestedObjectWithRequiredField {
+                    String = "nested",
+                    NestedObject = new ObjectWithOptionalField()
+                }
             }
         );
     }

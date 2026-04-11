@@ -1029,6 +1029,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -1265,6 +1266,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [

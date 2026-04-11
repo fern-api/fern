@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { convertToSnakeCase, RustFile } from "@fern-api/rust-base";
@@ -102,12 +103,12 @@ export class WebSocketChannelGenerator {
         // Detect name collisions
         const nameCount = new Map<string, number>();
         for (const channel of Object.values(websocketChannels)) {
-            const baseName = channel.name.snakeCase.safeName;
+            const baseName = this.context.case.snakeSafe(channel.name);
             nameCount.set(baseName, (nameCount.get(baseName) ?? 0) + 1);
         }
 
         for (const [channelId, channel] of Object.entries(websocketChannels)) {
-            const baseName = channel.name.snakeCase.safeName;
+            const baseName = this.context.case.snakeSafe(channel.name);
 
             if ((nameCount.get(baseName) ?? 0) > 1) {
                 // Derive unique name from the channel path (e.g., "/v2/listen" → "listen_v2").
@@ -120,9 +121,9 @@ export class WebSocketChannelGenerator {
                 });
             } else {
                 this.channelNameMap.set(channelId, {
-                    moduleName: channel.name.snakeCase.safeName,
-                    clientName: `${channel.name.pascalCase.safeName}Client`,
-                    enumPrefix: channel.name.pascalCase.safeName
+                    moduleName: this.context.case.snakeSafe(channel.name),
+                    clientName: `${this.context.case.pascalSafe(channel.name)}Client`,
+                    enumPrefix: this.context.case.pascalSafe(channel.name)
                 });
             }
         }
@@ -432,7 +433,7 @@ ${methods.join("\n\n")}
      * inject a Bearer token from the stored ClientConfig token.
      */
     private isAuthorizationHeader(header: FernIr.HttpHeader): boolean {
-        return header.name.wireValue.toLowerCase() === AUTH_PARAM_NAME;
+        return getWireValue(header.name).toLowerCase() === AUTH_PARAM_NAME;
     }
 
     private needsImplicitAuth(channel: FernIr.WebSocketChannel): boolean {
@@ -446,7 +447,7 @@ ${methods.join("\n\n")}
      * tungstenite will fail the handshake if the server does not echo it back.
      */
     private isWebSocketProtocolHeader(header: FernIr.HttpHeader): boolean {
-        return header.name.wireValue.toLowerCase() === "sec-websocket-protocol";
+        return getWireValue(header.name).toLowerCase() === "sec-websocket-protocol";
     }
 
     /**
@@ -457,7 +458,7 @@ ${methods.join("\n\n")}
         const params: Array<{ name: string; type: string }> = [];
 
         for (const pathParam of channel.pathParameters) {
-            params.push({ name: pathParam.name.snakeCase.safeName, type: "&str" });
+            params.push({ name: this.context.case.snakeSafe(pathParam.name), type: "&str" });
         }
 
         // If auth is required but no explicit Authorization header, add it as optional
@@ -476,7 +477,7 @@ ${methods.join("\n\n")}
             // skip the header entirely when no token is configured, rather
             // than sending an empty `Authorization: ""` header.
             params.push({
-                name: header.name.name.snakeCase.safeName,
+                name: this.context.case.snakeSafe(header.name),
                 type: this.isAuthorizationHeader(header) ? "Option<&str>" : "&str"
             });
         }
@@ -524,8 +525,8 @@ ${methods.join("\n\n")}
             if (this.isWebSocketProtocolHeader(header)) {
                 continue;
             }
-            const paramName = header.name.name.snakeCase.safeName;
-            const wireValue = header.name.wireValue;
+            const paramName = this.context.case.snakeSafe(header.name);
+            const wireValue = getWireValue(header.name);
             const isAuthHeader = this.isAuthorizationHeader(header);
             if (isAuthHeader) {
                 headerLines.push(`        if let Some(auth) = ${paramName} {`);
@@ -753,7 +754,7 @@ impl ${connectorName} {
 
     private getMessageVariantName(msg: FernIr.WebSocketMessage): string {
         if (msg.body.type === "inlinedBody") {
-            return msg.body.name.pascalCase.safeName;
+            return this.context.case.pascalSafe(msg.body.name);
         }
         // For reference body types, derive variant name from the referenced type
         // Use disambiguated name so variant matches body type (e.g., AuthResponse2(AuthResponse2))
@@ -778,7 +779,7 @@ impl ${connectorName} {
             return convertToSnakeCase(msg.methodName);
         }
         const name = msg.body.type === "inlinedBody"
-            ? msg.body.name.snakeCase.safeName
+            ? this.context.case.snakeSafe(msg.body.name)
             : convertToSnakeCase(msg.type);
         return `${prefix}_${name}`;
     }
@@ -796,8 +797,8 @@ impl ${connectorName} {
         const fields: string[] = [];
 
         for (const qp of channel.queryParameters) {
-            const fieldName = qp.name.name.snakeCase.safeName;
-            const wireValue = qp.name.wireValue;
+            const fieldName = this.context.case.snakeSafe(qp.name);
+            const wireValue = getWireValue(qp.name);
             const isAlreadyOptional = isOptionalType(qp.valueType);
 
             let fieldType: string;
@@ -944,8 +945,8 @@ ${fields.join("\n")}
      */
     private buildQueryBuilderChain(queryParams: FernIr.QueryParameter[]): string {
         const lines = queryParams.map((qp) => {
-            const wireValue = qp.name.wireValue;
-            const fieldName = qp.name.name.snakeCase.safeName;
+            const wireValue = getWireValue(qp.name);
+            const fieldName = this.context.case.snakeSafe(qp.name);
             const method = this.getQueryBuilderMethodForParam(qp);
 
             // All fields in the options struct are Option<T> (or Vec<T> for allowMultiple),

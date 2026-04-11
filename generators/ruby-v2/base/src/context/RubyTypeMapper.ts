@@ -1,3 +1,4 @@
+import { CaseConverter } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -15,9 +16,11 @@ export declare namespace RubyTypeMapper {
 
 export class RubyTypeMapper {
     private context: AbstractRubyGeneratorContext<object>;
+    private readonly case: CaseConverter;
 
     constructor(context: AbstractRubyGeneratorContext<object>) {
         this.context = context;
+        this.case = context.caseConverter;
     }
 
     public convert({ reference, unboxOptionals = false, fullyQualified = false }: RubyTypeMapper.Args): ruby.Type {
@@ -59,7 +62,7 @@ export class RubyTypeMapper {
     ): ruby.ClassReference {
         // In Ruby, modules are used for namespaces.
         return ruby.classReference({
-            name: declaredTypeName.name.pascalCase.safeName,
+            name: this.case.pascalSafe(declaredTypeName.name),
             modules: this.context.getModuleNamesForTypeId(declaredTypeName.typeId),
             fullyQualified: !!fullyQualified
         });
@@ -109,6 +112,7 @@ export class RubyTypeMapper {
             string: () => ruby.Type.string(),
             date: () => ruby.Type.string(),
             dateTime: () => ruby.Type.string(),
+            dateTimeRfc2822: () => ruby.Type.string(),
             uuid: () => ruby.Type.string(),
             base64: () => ruby.Type.string(),
             bigInteger: () => ruby.Type.string(),

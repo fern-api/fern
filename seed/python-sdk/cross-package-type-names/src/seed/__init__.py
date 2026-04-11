@@ -7,12 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import commons, folder_a, folder_b, folder_c, folder_d, foo
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedCrossPackageTypeNames, SeedCrossPackageTypeNames
     from .commons import Imported
     from .foo import ImportingType, OptionalString
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedCrossPackageTypeNames": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Imported": ".commons",
     "ImportingType": ".foo",
     "OptionalString": ".foo",
@@ -50,6 +53,8 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedCrossPackageTypeNames",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Imported",
     "ImportingType",
     "OptionalString",

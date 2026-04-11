@@ -489,6 +489,52 @@ public class RawParamsClient {
     }
 
     /**
+     * GET with boolean path param
+     */
+    public SeedExhaustiveHttpResponse<String> getWithBooleanPath(boolean param) {
+        return getWithBooleanPath(param, null);
+    }
+
+    /**
+     * GET with boolean path param
+     */
+    public SeedExhaustiveHttpResponse<String> getWithBooleanPath(boolean param, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("params")
+                .addPathSegments("path-bool")
+                .addPathSegment(Boolean.toString(param));
+        if (requestOptions != null) {
+            requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                httpUrl.addQueryParameter(_key, _value);
+            });
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedExhaustiveHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedExhaustiveApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedExhaustiveException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
      * GET with path param that can throw errors
      */
     public SeedExhaustiveHttpResponse<String> getWithPathAndErrors(String param) {

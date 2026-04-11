@@ -1,4 +1,4 @@
-irVersion: v62
+irVersion: v66
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
@@ -26,6 +26,10 @@ generatorType: SDK
 defaultOutputMode: github
 fixtures:
   basic-auth:
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
+  basic-auth-pw-omitted:
     - outputFolder: wire-tests
       customConfig:
         enable-wire-tests: true

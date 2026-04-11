@@ -24,7 +24,8 @@ public partial class Examples
                         },
                     }
 
-                }
+                },
+                Ending = "$ending"
             }
         );
     }

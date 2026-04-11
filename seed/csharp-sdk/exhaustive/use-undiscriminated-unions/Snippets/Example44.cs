@@ -10,8 +10,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnBoolAsync(
-            true
+        await client.Endpoints.Params.GetWithPathAndErrorsAsync(
+            "param"
         );
     }
 

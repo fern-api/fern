@@ -10,8 +10,9 @@ public partial class Examples
             }
         );
 
-        await client.Users.ListUsernamesCustomAsync(
-            new ListUsernamesRequestCustom {
+        await client.Users.ListWithCustomPagerAsync(
+            new ListWithCustomPagerRequest {
+                Limit = 1,
                 StartingAfter = "starting_after"
             }
         );

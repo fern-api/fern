@@ -33,7 +33,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
     private readonly shouldIncludeDefaultCaseInTransform: boolean;
     private readonly includeUtilsOnUnionMembers: boolean;
     private readonly shape: FernIr.UnionTypeDeclaration | undefined;
-    private readonly caseConverter: CaseConverter;
+    private readonly case: CaseConverter;
 
     constructor({
         shape,
@@ -50,7 +50,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
         super(superInit);
         this.shape = shape;
         this.discriminant = discriminant;
-        this.caseConverter = caseConverter;
+        this.case = caseConverter;
         this.singleUnionTypes = singleUnionTypes;
         this.baseProperties = baseProperties;
         this.getGeneratedUnion = getGeneratedUnion;

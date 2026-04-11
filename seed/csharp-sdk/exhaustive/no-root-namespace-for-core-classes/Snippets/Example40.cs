@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Endpoints;
 
 public partial class Examples
 {
@@ -11,8 +12,11 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnStringAsync(
-            "string"
+        await client.Endpoints.Params.ModifyWithInlinePathAsync(
+            new ModifyResourceAtInlinedPath {
+                Param = "param",
+                Body = "string"
+            }
         );
     }
 

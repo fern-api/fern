@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v66
 displayName: OpenAPI
 image: fernapi/fern-openapi
 changelogLocation: ../../generators/openapi/versions.yml
@@ -52,5 +52,4 @@ fixtures:
               Operand: 
                 type: null     
       outputFolder: custom-overrides
-allowedFailures:
-  - server-sent-events-openapi
+allowedFailures: []

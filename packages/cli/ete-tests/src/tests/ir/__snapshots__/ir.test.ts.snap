@@ -24699,6 +24699,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "docs": "i am docs"
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [

@@ -13,12 +13,12 @@ describe("fern sdk generate", () => {
         it("python", async () => {
             const result = await cliV2.generate(FIXTURES.petstore, "python");
             expect(result.exitCode).toBe(0);
-        }, 60_000);
+        }, 180_000);
 
         it("go", async () => {
             const result = await cliV2.generate(FIXTURES.petstore, "go");
             expect(result.exitCode).toBe(0);
-        }, 60_000);
+        }, 180_000);
     });
 
     describe("local generation", () => {

@@ -532,6 +532,7 @@
               "name": "TreeCreate",
               "typeId": "TreeCreate",
               "inline": false,
+              "displayName": "TreeCreate",
               "type": "named"
             },
             "v2Examples": {
@@ -557,6 +558,7 @@
                   "name": "TreeCreate",
                   "typeId": "TreeCreate",
                   "inline": false,
+                  "displayName": "TreeCreate",
                   "type": "named"
                 },
                 "v2Examples": {

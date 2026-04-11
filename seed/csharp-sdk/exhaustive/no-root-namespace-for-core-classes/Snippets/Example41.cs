@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using System.Text;
 
 public partial class Examples
 {
@@ -11,8 +12,9 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnIntAsync(
-            1
+        await client.Endpoints.Params.UploadWithPathAsync(
+            "upload-path",
+            new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
         );
     }
 

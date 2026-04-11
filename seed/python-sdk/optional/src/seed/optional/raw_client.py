@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
@@ -144,7 +144,7 @@ class RawOptionalClient:
         HttpResponse[DeployResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"deploy/{jsonable_encoder(action_id)}/versions/{jsonable_encoder(id)}",
+            f"deploy/{encode_path_param(action_id)}/versions/{encode_path_param(id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Optional[DeployParams], direction="write"
@@ -296,7 +296,7 @@ class AsyncRawOptionalClient:
         AsyncHttpResponse[DeployResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"deploy/{jsonable_encoder(action_id)}/versions/{jsonable_encoder(id)}",
+            f"deploy/{encode_path_param(action_id)}/versions/{encode_path_param(id)}",
             method="POST",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Optional[DeployParams], direction="write"

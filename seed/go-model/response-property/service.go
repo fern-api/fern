@@ -63,18 +63,18 @@ func (w *WithDocs) String() string {
 type OptionalWithDocs = *WithDocs
 
 type Movie struct {
-	Id   string `json:"id" url:"id"`
+	ID   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (m *Movie) GetId() string {
+func (m *Movie) GetID() string {
 	if m == nil {
 		return ""
 	}
-	return m.Id
+	return m.ID
 }
 
 func (m *Movie) GetName() string {

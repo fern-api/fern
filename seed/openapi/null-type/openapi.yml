@@ -89,9 +89,10 @@ components:
           description: Always null when dry_run is true.
         dry_run:
           type: boolean
-          const: true
           description: Always true for this response.
+          example: true
       required:
+        - conversation_id
         - dry_run
     User:
       title: User
@@ -109,4 +110,5 @@ components:
       required:
         - id
         - name
+        - deleted_at
   securitySchemes: {}

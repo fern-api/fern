@@ -5,8 +5,24 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.req_with_headers.get_with_custom_header(
-  x_test_service_header: "X-TEST-SERVICE-HEADER",
-  x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
-  body: "string"
+client.inlined_requests.post_with_object_bodyand_response(
+  string: "string",
+  integer: 1,
+  nested_object: {
+    string: "string",
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: "2024-01-15T09:30:00Z",
+    date: "2023-01-15",
+    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    base64: "SGVsbG8gd29ybGQh",
+    list: %w[list list],
+    set: Set.new(["set"]),
+    map: {
+      1 => "map"
+    },
+    bigint: "1000000"
+  }
 )

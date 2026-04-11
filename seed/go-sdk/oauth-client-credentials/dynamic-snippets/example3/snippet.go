@@ -19,7 +19,7 @@ func do() {
         ),
     )
     request := &fern.RefreshTokenRequest{
-        ClientId: "client_id",
+        ClientID: "client_id",
         ClientSecret: "client_secret",
         RefreshToken: "refresh_token",
         Scope: fern.String(

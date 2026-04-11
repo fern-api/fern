@@ -11,7 +11,9 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Urls.WithMixedCaseAsync();
+        await client.Endpoints.Primitive.GetAndReturnDateAsync(
+            DateOnly.Parse("2023-01-15")
+        );
     }
 
 }

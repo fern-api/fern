@@ -3,6 +3,7 @@ package com.fern.java;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.java.utils.KeyWordUtils;
+import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -126,7 +127,7 @@ public abstract class AbstractPoetClassNameFactory {
         prefix.add("com");
         prefix.addAll(splitOnNonAlphaNumericChar(KeyWordUtils.getKeyWordCompatibleName(organization)));
         prefix.addAll(splitOnNonAlphaNumericChar(KeyWordUtils.getKeyWordCompatibleName(
-                ir.getApiName().getCamelCase().getSafeName())));
+                NameUtils.toName(ir.getApiName()).getCamelCase().getSafeName())));
         return prefix;
     }
 }

@@ -116,6 +116,7 @@ export function convertDiscriminatedOneOf({
         discriminantNameOverride,
         discriminatorContext,
         subtypes: unionSubTypes,
+        defaultDiscriminantValue: undefined,
         namespace,
         groupName,
         source
@@ -135,6 +136,7 @@ export function convertDiscriminatedOneOfWithVariants({
     wrapAsNullable,
     discriminant,
     variants,
+    defaultDiscriminantValue,
     context,
     namespace,
     groupName,
@@ -153,6 +155,7 @@ export function convertDiscriminatedOneOfWithVariants({
     wrapAsNullable: boolean;
     discriminant: string;
     variants: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
+    defaultDiscriminantValue: string | undefined;
     context: SchemaParserContext;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -226,6 +229,7 @@ export function convertDiscriminatedOneOfWithVariants({
         discriminantNameOverride: undefined,
         discriminatorContext: inferDiscriminatorContextFromVariants({ variants, context }),
         subtypes: unionSubTypes,
+        defaultDiscriminantValue,
         namespace,
         groupName,
         source
@@ -245,6 +249,7 @@ export function wrapDiscriminatedOneOf({
     discriminantNameOverride,
     discriminatorContext,
     subtypes,
+    defaultDiscriminantValue,
     namespace,
     groupName,
     source
@@ -261,6 +266,7 @@ export function wrapDiscriminatedOneOf({
     discriminantNameOverride: string | undefined;
     discriminatorContext: "data" | "protocol";
     subtypes: Record<string, SchemaWithExample>;
+    defaultDiscriminantValue: string | undefined;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     source: Source;
@@ -272,6 +278,7 @@ export function wrapDiscriminatedOneOf({
             discriminantProperty: discriminant,
             discriminantPropertyNameOverride: discriminantNameOverride,
             discriminatorContext,
+            defaultDiscriminantValue,
             nameOverride,
             generatedName,
             title,

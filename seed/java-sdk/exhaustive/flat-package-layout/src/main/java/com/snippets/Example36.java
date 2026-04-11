@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.endpoints.types.ModifyResourceAtInlinedPath;
+import com.seed.exhaustive.endpoints.types.GetWithMultipleQuery;
+import java.util.Arrays;
 
 public class Example36 {
     public static void main(String[] args) {
@@ -12,8 +13,9 @@ public class Example36 {
 
         client.endpoints()
                 .params()
-                .modifyWithInlinePath(
-                        "param",
-                        ModifyResourceAtInlinedPath.builder().body("string").build());
+                .getWithAllowMultipleQuery(GetWithMultipleQuery.builder()
+                        .query(Arrays.asList("query"))
+                        .number(Arrays.asList(1))
+                        .build());
     }
 }

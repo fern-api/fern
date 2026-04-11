@@ -1,5 +1,5 @@
 using SeedExhaustive;
-using SeedExhaustive.Endpoints.Params;
+using SeedExhaustive.Endpoints.Pagination;
 
 public partial class Examples
 {
@@ -11,16 +11,10 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Params.GetWithAllowMultipleQueryAsync(
-            new GetWithMultipleQuery {
-                Query = new List<string>(){
-                    "query",
-                }
-                ,
-                Number = new List<int>(){
-                    1,
-                }
-
+        await client.Endpoints.Pagination.ListItemsAsync(
+            new ListItemsRequest {
+                Cursor = "cursor",
+                Limit = 1
             }
         );
     }

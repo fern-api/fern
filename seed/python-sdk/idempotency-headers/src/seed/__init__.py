@@ -7,12 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import payment
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedIdempotencyHeaders, SeedIdempotencyHeaders
     from .payment import Currency
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedIdempotencyHeaders": ".client",
     "Currency": ".payment",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "SeedIdempotencyHeaders": ".client",
     "__version__": ".version",
     "payment": ".payment",
@@ -40,4 +43,12 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedIdempotencyHeaders", "Currency", "SeedIdempotencyHeaders", "__version__", "payment"]
+__all__ = [
+    "AsyncSeedIdempotencyHeaders",
+    "Currency",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
+    "SeedIdempotencyHeaders",
+    "__version__",
+    "payment",
+]

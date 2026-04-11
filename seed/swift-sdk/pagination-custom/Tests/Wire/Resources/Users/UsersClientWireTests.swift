@@ -3,19 +3,31 @@ import Testing
 import Pagination
 
 @Suite("UsersClient Wire Tests") struct UsersClientWireTests {
-    @Test func listUsernamesCustom1() async throws -> Void {
+    @Test func listWithCustomPager1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
                 {
-                  "cursor": {
-                    "after": "after",
-                    "data": [
-                      "data",
-                      "data"
-                    ]
-                  }
+                  "limit": 1,
+                  "count": 1,
+                  "has_more": true,
+                  "links": [
+                    {
+                      "rel": "rel",
+                      "method": "method",
+                      "href": "href"
+                    },
+                    {
+                      "rel": "rel",
+                      "method": "method",
+                      "href": "href"
+                    }
+                  ],
+                  "data": [
+                    "data",
+                    "data"
+                  ]
                 }
                 """.utf8
             )
@@ -25,16 +37,29 @@ import Pagination
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = UsernameCursor(
-            cursor: UsernamePage(
-                after: Optional("after"),
-                data: [
-                    "data",
-                    "data"
-                ]
-            )
+        let expectedResponse = UsersListResponse(
+            limit: Optional(1),
+            count: Optional(1),
+            hasMore: Optional(true),
+            links: [
+                Link(
+                    rel: "rel",
+                    method: "method",
+                    href: "href"
+                ),
+                Link(
+                    rel: "rel",
+                    method: "method",
+                    href: "href"
+                )
+            ],
+            data: [
+                "data",
+                "data"
+            ]
         )
-        let response = try await client.users.listUsernamesCustom(
+        let response = try await client.users.listWithCustomPager(
+            limit: 1,
             startingAfter: "starting_after",
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

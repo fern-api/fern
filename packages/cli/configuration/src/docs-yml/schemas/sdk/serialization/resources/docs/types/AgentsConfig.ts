@@ -3,14 +3,21 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { PageDescriptionSource } from "./PageDescriptionSource.js";
 
 export const AgentsConfig: core.serialization.ObjectSchema<serializers.AgentsConfig.Raw, FernDocsConfig.AgentsConfig> =
     core.serialization.object({
         pageDirective: core.serialization.property("page-directive", core.serialization.string().optional()),
+        pageDescriptionSource: core.serialization.property("page-description-source", PageDescriptionSource.optional()),
+        llmsTxt: core.serialization.property("llms-txt", core.serialization.string().optional()),
+        llmsFullTxt: core.serialization.property("llms-full-txt", core.serialization.string().optional()),
     });
 
 export declare namespace AgentsConfig {
     export interface Raw {
         "page-directive"?: string | null;
+        "page-description-source"?: PageDescriptionSource.Raw | null;
+        "llms-txt"?: string | null;
+        "llms-full-txt"?: string | null;
     }
 }

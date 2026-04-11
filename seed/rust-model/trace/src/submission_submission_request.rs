@@ -72,7 +72,7 @@ impl SubmissionRequest {
         Self::InitializeWorkspaceRequest {}
     }
 
-    pub fn submit_v_2(submission_id: SubmissionId, language: Language, submission_files: Vec<SubmissionFileInfo>, problem_id: ProblemId) -> Self {
+    pub fn submit_v2(submission_id: SubmissionId, language: Language, submission_files: Vec<SubmissionFileInfo>, problem_id: ProblemId) -> Self {
         Self::SubmitV2 { submission_id, language, submission_files, problem_id, problem_version: None, user_id: None }
     }
 
@@ -88,11 +88,11 @@ impl SubmissionRequest {
         Self::InitializeProblemRequest { problem_id, problem_version: Some(problem_version) }
     }
 
-    pub fn submit_v_2_with_problem_version(submission_id: SubmissionId, language: Language, submission_files: Vec<SubmissionFileInfo>, problem_id: ProblemId, problem_version: i64, user_id: Option<String>) -> Self {
+    pub fn submit_v2_with_problem_version(submission_id: SubmissionId, language: Language, submission_files: Vec<SubmissionFileInfo>, problem_id: ProblemId, problem_version: i64, user_id: Option<String>) -> Self {
         Self::SubmitV2 { submission_id, language, submission_files, problem_id, problem_version: Some(problem_version), user_id }
     }
 
-    pub fn submit_v_2_with_user_id(submission_id: SubmissionId, language: Language, submission_files: Vec<SubmissionFileInfo>, problem_id: ProblemId, problem_version: Option<i64>, user_id: String) -> Self {
+    pub fn submit_v2_with_user_id(submission_id: SubmissionId, language: Language, submission_files: Vec<SubmissionFileInfo>, problem_id: ProblemId, problem_version: Option<i64>, user_id: String) -> Self {
         Self::SubmitV2 { submission_id, language, submission_files, problem_id, problem_version, user_id: Some(user_id) }
     }
 

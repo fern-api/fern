@@ -1098,6 +1098,7 @@
                         "docs": "lorem ipsum"
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -1970,6 +1971,7 @@
                         "docs": "lorem ipsum"
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -2711,6 +2713,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -2816,6 +2819,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -2909,6 +2913,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [
@@ -3000,6 +3005,7 @@
                         "docs": null
                     }
                 ],
+                "default": null,
                 "discriminatorContext": "data"
             },
             "referencedTypes": [

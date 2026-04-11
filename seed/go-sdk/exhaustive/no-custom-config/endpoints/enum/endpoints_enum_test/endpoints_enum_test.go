@@ -72,6 +72,7 @@ func TestEndpointsEnumGetAndReturnEnumWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	request := types.WeatherReportSunny.Ptr()
 	_, invocationErr := client.Endpoints.Enum.GetAndReturnEnum(

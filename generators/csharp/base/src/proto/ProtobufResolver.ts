@@ -1,4 +1,5 @@
 import { fail } from "node:assert";
+import { getOriginalName } from "@fern-api/base-generator";
 import { ast, text, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -59,7 +60,7 @@ export class ProtobufResolver extends WithGeneration {
                 // Nested proto types use underscore-separated names (e.g. "InvoiceBundle_Status")
                 // from protoc-gen-openapi. In C# protobuf codegen, nested types are
                 // accessed as "ParentMessage.Types.NestedType".
-                const originalName = protobufType.name.originalName;
+                const originalName = getOriginalName(protobufType.name);
                 const protoClassName = originalName.includes("_")
                     ? originalName.split("_").join(".Types.")
                     : originalName;
@@ -121,7 +122,8 @@ export class ProtobufResolver extends WithGeneration {
         // Fallback: match on the type's declared name for cases where
         // proto source may not be fully resolved.
         const typeDeclaration = this.generation.ir.types[typeId];
-        const typeName = typeDeclaration?.name?.name?.originalName;
+        const nameOrString = typeDeclaration?.name?.name;
+        const typeName = nameOrString != null ? getOriginalName(nameOrString) : undefined;
         return typeName != null && EXTERNAL_PROTO_TYPE_NAMES.has(typeName);
     }
 
@@ -131,7 +133,8 @@ export class ProtobufResolver extends WithGeneration {
      */
     public getExternalProtobufClassReference(typeId: TypeId): ast.ClassReference {
         const typeDeclaration = this.generation.ir.types[typeId];
-        const typeName = typeDeclaration?.name?.name?.originalName;
+        const nameOrString = typeDeclaration?.name?.name;
+        const typeName = nameOrString != null ? getOriginalName(nameOrString) : undefined;
         const mapping = EXTERNAL_PROTO_TYPE_CLASS_REFERENCES[typeName ?? ""];
         if (mapping != null) {
             return this.csharp.classReference({

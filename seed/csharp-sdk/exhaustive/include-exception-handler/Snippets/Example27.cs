@@ -1,6 +1,5 @@
 using SeedExhaustive;
 using SeedExhaustive.Types;
-using System.Globalization;
 
 public partial class Examples
 {
@@ -12,10 +11,12 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
-            new ObjectWithDatetimeLikeString {
-                DatetimeLikeString = "datetimeLikeString",
-                ActualDatetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal)
+        await client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFieldsAsync(
+            new ObjectWithMixedRequiredAndOptionalFields {
+                RequiredString = "requiredString",
+                RequiredInteger = 1,
+                OptionalString = "optionalString",
+                RequiredLong = 1000000L
             }
         );
     }

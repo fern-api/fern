@@ -1,4 +1,4 @@
-irVersion: v65
+irVersion: v66
 displayName: Rust Model
 image: fernapi/fern-rust-model
 changelogLocation: ../../generators/rust/model/versions.yml

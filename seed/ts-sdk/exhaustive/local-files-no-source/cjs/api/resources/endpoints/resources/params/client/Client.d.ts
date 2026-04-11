@@ -130,6 +130,17 @@ export declare class ParamsClient {
     uploadWithPath(uploadable: core.file.Uploadable, param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField>;
     private __uploadWithPath;
     /**
+     * GET with boolean path param
+     *
+     * @param {boolean} param
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.params.getWithBooleanPath(true)
+     */
+    getWithBooleanPath(param: boolean, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
+    private __getWithBooleanPath;
+    /**
      * GET with path param that can throw errors
      *
      * @param {string} param

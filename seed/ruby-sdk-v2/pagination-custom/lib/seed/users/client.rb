@@ -17,13 +17,15 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_query_parameters
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer, nil] :limit
       # @option params [String, nil] :starting_after
       #
-      # @return [Seed::Types::UsernameCursor]
-      def list_usernames_custom(request_options: {}, **params)
+      # @return [Seed::Types::UsersListResponse]
+      def list_with_custom_pager(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        query_param_names = %i[starting_after]
+        query_param_names = %i[limit starting_after]
         query_params = {}
+        query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
         params.except(*query_param_names)
 
@@ -41,7 +43,7 @@ module Seed
         end
         code = response.code.to_i
         if code.between?(200, 299)
-          parsed_response = Seed::Types::UsernameCursor.load(response.body)
+          parsed_response = Seed::Types::UsersListResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(response.body, code: code)

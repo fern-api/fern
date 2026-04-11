@@ -1,5 +1,4 @@
 using SeedExhaustive;
-using System.Globalization;
 
 public partial class Examples
 {
@@ -11,8 +10,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
-            DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal)
+        await client.Endpoints.Primitive.GetAndReturnStringAsync(
+            "string"
         );
     }
 

@@ -11,7 +11,7 @@ public partial class Examples
             }
         );
 
-        await client.NoReqBody.GetWithNoRequestBodyAsync();
+        await client.Endpoints.Urls.WithUnderscoresAsync();
     }
 
 }
