@@ -5,7 +5,7 @@ import type { GithubPrUrlInfo } from "./gitUrl.js";
 interface GithubPrBranchInfo {
     /** The head branch of the PR (e.g. "my-feature-branch") */
     branch: string;
-    /** The repository URI as "owner/repo" */
+    /** The full repository URL (e.g. "https://github.com/owner/repo") */
     uri: string;
 }
 
@@ -38,6 +38,6 @@ export async function resolveGithubPrBranch(pr: GithubPrUrlInfo, token: string):
 
     return {
         branch,
-        uri: headRepoFullName
+        uri: `https://github.com/${headRepoFullName}`
     };
 }
