@@ -1,7 +1,0 @@
-# Benchmark fixture for Stripe's public OpenAPI spec.
-# The openapi.json file is fetched at CI runtime by the fetch-benchmark-specs action.
-# This workspace is used only for docs generation benchmarks (API Reference section).
-api:
-  specs:
-    - openapi: ./openapi.json
-generators: []

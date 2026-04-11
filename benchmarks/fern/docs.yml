@@ -5,7 +5,7 @@
 # Pages are generated at CI time by generate-fixture-pages.sh from a template.
 # The page-NN.md references below correspond to generated files.
 instances:
-  - url: fern.docs.buildwithfern.com
+  - url: ferndevtest.docs.dev.buildwithfern.com
 
 navigation:
   - section: Getting Started
@@ -94,8 +94,6 @@ navigation:
         path: pages/page-37.md
   - api: Square API Reference
     api-name: square
-  - api: Stripe API Reference
-    api-name: stripe
 
 colors:
   accentPrimary: "#818CF8"
