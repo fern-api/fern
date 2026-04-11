@@ -28,6 +28,14 @@ export async function resolveGithubPrBranch(pr: GithubPrUrlInfo, token: string):
         throw new Error(`Could not determine head repository for PR #${pr.prNumber}`);
     }
 
+    const baseRepo = `${pr.owner}/${pr.repo}`;
+    if (headRepoFullName !== baseRepo) {
+        throw new Error(
+            `PR #${pr.prNumber} is from a fork (${headRepoFullName}). ` +
+                `Pushing to fork-based PRs is not supported — the head branch must be on ${baseRepo}.`
+        );
+    }
+
     return {
         branch,
         uri: headRepoFullName
