@@ -1,0 +1,51 @@
+# Benchmark fixture for docs generation performance testing.
+# Uses --preview flag at CI runtime to create ephemeral preview deployments
+# without affecting any production docs site.
+instances:
+  - url: fern.docs.buildwithfern.com
+
+navigation:
+  - section: Getting Started
+    contents:
+      - page: Introduction
+        path: pages/introduction.md
+      - page: Getting Started
+        path: pages/getting-started.md
+      - page: Authentication
+        path: pages/authentication.md
+  - section: Core Concepts
+    contents:
+      - page: API Overview
+        path: pages/api-overview.md
+      - page: Error Handling
+        path: pages/error-handling.md
+      - page: Pagination
+        path: pages/pagination.md
+      - page: Rate Limiting
+        path: pages/rate-limiting.md
+  - section: Guides
+    contents:
+      - page: Webhooks
+        path: pages/webhooks.md
+      - page: SDKs
+        path: pages/sdks.md
+      - page: Environments
+        path: pages/environments.md
+      - page: Configuration
+        path: pages/configuration.md
+  - section: Resources
+    contents:
+      - page: Migration Guide
+        path: pages/migration-guide.md
+      - page: Best Practices
+        path: pages/best-practices.md
+      - page: Troubleshooting
+        path: pages/troubleshooting.md
+      - page: Changelog
+        path: pages/changelog.md
+  - api: API Reference
+    api-name: square
+
+colors:
+  accentPrimary: "#818CF8"
+  background: "#0F172A"
