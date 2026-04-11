@@ -214,6 +214,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         if (publishInfo.type !== "go") {
             return config;
         }
+        // Prefer the version from the original config's output mode (set during
+        // generation via --version flag) over the dynamic IR's publish info version,
+        // which may reflect the generator's own version rather than the SDK version.
+        const originalVersion =
+            config.output.mode.type === "github" || config.output.mode.type === "publish"
+                ? config.output.mode.version
+                : undefined;
         return {
             ...config,
             customConfig: generatorConfig.customConfig ?? config.customConfig,
@@ -221,7 +228,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                 ...config.output,
                 mode: {
                     type: "github",
-                    version: publishInfo.version,
+                    version: originalVersion ?? publishInfo.version,
                     repoUrl: publishInfo.repoUrl
                 } as FernGeneratorExec.OutputMode
             }
