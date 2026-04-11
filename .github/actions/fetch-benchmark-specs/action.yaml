@@ -41,6 +41,8 @@ runs:
           echo "square-ok=false" >> $GITHUB_OUTPUT
         fi
 
+    # Stripe spec is used only by the docs generation benchmark (not SDK benchmarks).
+    # SDK benchmarks loop over `for SPEC in square;` and do not reference Stripe.
     - name: Fetch Stripe OpenAPI spec
       id: fetch-stripe
       shell: bash

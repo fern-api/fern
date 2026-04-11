@@ -3,7 +3,8 @@
 # Usage: format-docs-benchmark-report.sh <pr-results-dir> <baseline-results-dir>
 #
 # Each directory contains .jsonl files with one JSON object per line:
-#   {"type":"docs","spec":"square","duration_seconds":45,"exit_code":0}
+#   {"type":"docs","spec":"combined","duration_seconds":21.3,"exit_code":0}
+# duration_seconds may be a float (sub-second precision) or integer.
 
 set -euo pipefail
 
@@ -57,14 +58,14 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
     DELTA="N/A"
 
     if [ "$BASELINE_VAL" != "N/A" ] && [ "$BASELINE_VAL" != "0" ]; then
-      DIFF=$(( PR_DURATION - BASELINE_VAL ))
-      if [ "$BASELINE_VAL" -gt 0 ]; then
-        PCT=$(awk "BEGIN {printf \"%.1f\", ($DIFF / $BASELINE_VAL) * 100}")
-        if [ "$DIFF" -ge 0 ]; then
-          DELTA="+${DIFF}s (+${PCT}%)"
-        else
-          DELTA="${DIFF}s (${PCT}%)"
-        fi
+      # Use awk for float-safe arithmetic (duration_seconds may be a float)
+      DIFF=$(awk "BEGIN {printf \"%.1f\", ${PR_DURATION} - ${BASELINE_VAL}}")
+      PCT=$(awk "BEGIN {printf \"%.1f\", ((${PR_DURATION} - ${BASELINE_VAL}) / ${BASELINE_VAL}) * 100}")
+      IS_POS=$(awk "BEGIN {print (${PR_DURATION} >= ${BASELINE_VAL}) ? 1 : 0}")
+      if [ "$IS_POS" -eq 1 ]; then
+        DELTA="+${DIFF}s (+${PCT}%)"
+      else
+        DELTA="${DIFF}s (${PCT}%)"
       fi
       MAIN_DISPLAY="${BASELINE_VAL}s"
     else
