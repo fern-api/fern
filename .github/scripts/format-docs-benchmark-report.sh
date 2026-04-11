@@ -27,6 +27,7 @@ lookup_docs_baseline() {
   done
 }
 
+echo "<!-- fern-docs-benchmark-results -->"
 echo "## Docs Generation Benchmark Results"
 echo ""
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
@@ -85,3 +86,4 @@ echo "_Delta is computed against the nightly baseline on \`main\`._"
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
   echo "_Baseline from nightly run on \`main\` (${BASELINE_TIMESTAMP}). Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"
 fi
+echo "_Last updated: $(date -u '+%Y-%m-%d %H:%M') UTC_"

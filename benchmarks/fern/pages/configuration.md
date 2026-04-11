@@ -120,8 +120,8 @@ Configure timeouts based on your use case:
 
 | Operation | Recommended timeout |
 |-----------|-------------------|
-| Short text TTS (<500 chars) | 10-15 seconds |
-| Long text TTS (>2000 chars) | 30-60 seconds |
+| Short text TTS (under 500 chars) | 10-15 seconds |
+| Long text TTS (over 2000 chars) | 30-60 seconds |
 | Streaming TTS | 120 seconds |
 | Voice cloning | 120 seconds |
 | Dubbing | 300 seconds |
