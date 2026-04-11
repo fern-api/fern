@@ -1044,12 +1044,12 @@ jobs:
             echo "Updating existing benchmark comment ${COMMENT_ID}"
             gh api "repos/${REPO}/issues/comments/${COMMENT_ID}" \
               --method PATCH \
-              --field body="$BODY"
+              --input <(jq -n --arg body "$BODY" '{"body": $body}')
           else
             echo "Creating new benchmark comment"
             gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" \
               --method POST \
-              --field body="$BODY"
+              --input <(jq -n --arg body "$BODY" '{"body": $body}')
           fi
 
       # PostHog step runs after the PR comment is posted so that comment generation
