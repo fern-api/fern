@@ -111,6 +111,7 @@ lookup_baseline() {
   fi
 }
 
+echo "<!-- fern-sdk-benchmark-results -->"
 echo "## SDK Generation Benchmark Results"
 echo ""
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
