@@ -1,103 +1,120 @@
 ---
 title: Error Handling
-description: Handle Square API errors gracefully with proper error categories, codes, and retry strategies.
+description: Handle ElevenLabs API errors gracefully with proper error categories, codes, and retry strategies.
 slug: error-handling
 ---
 
 # Error Handling
 
-The Square API returns structured error responses that help you diagnose and handle failures. This guide covers error categories, common error codes, and recommended retry strategies.
+The ElevenLabs API returns structured error responses that help you diagnose and handle failures. This guide covers error categories, common error codes, and recommended retry strategies.
 
 ## Error response structure
 
-All error responses follow the same format:
+All error responses follow a consistent format:
 
 ```json
 {
-  "errors": [
-    {
-      "category": "INVALID_REQUEST_ERROR",
-      "code": "MISSING_REQUIRED_PARAMETER",
-      "detail": "Missing required parameter: `source_id`",
-      "field": "source_id"
-    }
-  ]
+  "detail": {
+    "status": "invalid_api_key",
+    "message": "The API key you provided is invalid. Please check your API key and try again."
+  }
 }
 ```
 
-A single response may contain multiple errors if several validation failures occurred.
+Some endpoints return additional context:
 
-## Error categories
+```json
+{
+  "detail": {
+    "status": "quota_exceeded",
+    "message": "You have exceeded your character quota for this billing period.",
+    "quota": {
+      "used": 100000,
+      "limit": 100000,
+      "remaining": 0,
+      "reset_at": "2024-02-01T00:00:00Z"
+    }
+  }
+}
+```
 
-| Category | HTTP status | Description | Retryable? |
-|----------|-------------|-------------|------------|
-| `API_ERROR` | 500 | Internal server error | Yes, with backoff |
-| `AUTHENTICATION_ERROR` | 401 | Invalid or expired token | No (refresh token first) |
-| `INVALID_REQUEST_ERROR` | 400 | Malformed request | No (fix the request) |
-| `RATE_LIMIT_ERROR` | 429 | Too many requests | Yes, after delay |
-| `PAYMENT_METHOD_ERROR` | 402 | Payment was declined | No (use different payment) |
-| `REFUND_ERROR` | 400 | Refund cannot be processed | Depends on code |
-| `MERCHANT_SUBSCRIPTION_ERROR` | 403 | Feature not available on plan | No |
+## HTTP status codes
+
+| Status | Meaning | Retryable? |
+|--------|---------|------------|
+| 200 | Success | N/A |
+| 400 | Bad request (invalid parameters) | No (fix the request) |
+| 401 | Unauthorized (invalid API key) | No (check credentials) |
+| 403 | Forbidden (insufficient permissions) | No (upgrade plan or check scopes) |
+| 404 | Resource not found | No (check resource ID) |
+| 408 | Request timeout | Yes, with backoff |
+| 422 | Unprocessable entity (validation error) | No (fix input) |
+| 429 | Rate limited | Yes, after delay |
+| 500 | Internal server error | Yes, with backoff |
+| 503 | Service unavailable | Yes, with backoff |
 
 ## Common error codes
 
-### Payment errors
+### Authentication errors
 
 | Code | Description | Resolution |
 |------|-------------|------------|
-| `CARD_DECLINED` | The card was declined | Ask customer for a different card |
-| `CARD_EXPIRED` | The card has expired | Ask customer for a valid card |
-| `INSUFFICIENT_FUNDS` | Not enough balance | Ask customer for a different card |
-| `CVV_FAILURE` | CVV verification failed | Ask customer to re-enter CVV |
-| `ADDRESS_VERIFICATION_FAILURE` | AVS check failed | Verify billing address |
-| `INVALID_CARD` | Card number is invalid | Check card number for typos |
-| `CARD_TOKEN_EXPIRED` | Payment token has expired | Generate a new token |
+| `invalid_api_key` | API key is invalid or revoked | Check key in Dashboard |
+| `api_key_missing` | No API key provided | Add `xi-api-key` header |
+| `insufficient_permissions` | Key lacks required scope | Use a key with proper permissions |
 
-### Request errors
+### Quota and billing errors
 
 | Code | Description | Resolution |
 |------|-------------|------------|
-| `MISSING_REQUIRED_PARAMETER` | A required field is missing | Check API docs for required fields |
-| `INVALID_VALUE` | A field has an invalid value | Validate input before sending |
-| `VALUE_TOO_LOW` | Amount is below minimum | Check minimum amount for currency |
-| `VALUE_TOO_HIGH` | Amount exceeds maximum | Check maximum amount limits |
-| `IDEMPOTENCY_KEY_REUSED` | Key used for a different request | Generate a new idempotency key |
+| `quota_exceeded` | Character quota exhausted | Upgrade plan or wait for reset |
+| `max_concurrent_requests` | Too many simultaneous requests | Queue requests |
+| `voice_limit_reached` | Maximum custom voices created | Delete unused voices |
+| `professional_clone_limit` | PVC quota reached | Upgrade plan |
+
+### Input validation errors
+
+| Code | Description | Resolution |
+|------|-------------|------------|
+| `text_too_long` | Text exceeds model character limit | Split text into smaller chunks |
+| `invalid_voice_id` | Voice ID does not exist | Check voice ID |
+| `invalid_model_id` | Model ID not recognized | Check available models |
+| `invalid_output_format` | Unsupported audio format | Use a supported format |
+| `empty_text` | Text field is empty | Provide text content |
 
 ## Handling errors in code
 
 ```typescript
-import { SquareClient, SquareError } from "square";
+import { ElevenLabsClient, ElevenLabsError } from "@elevenlabs/elevenlabs-js";
 
-async function processPayment(sourceId: string, amount: number) {
+async function generateSpeech(text: string, voiceId: string) {
   try {
-    const response = await client.payments.create({
-      sourceId,
-      idempotencyKey: crypto.randomUUID(),
-      amountMoney: {
-        amount: BigInt(amount),
-        currency: "USD",
-      },
+    const audio = await client.textToSpeech.convert(voiceId, {
+      text,
+      modelId: "eleven_flash_v2_5",
     });
-    return response.payment;
+    return audio;
   } catch (error) {
-    if (error instanceof SquareError) {
-      for (const e of error.errors) {
-        console.error(`[${e.category}] ${e.code}: ${e.detail}`);
+    if (error instanceof ElevenLabsError) {
+      const status = error.statusCode;
 
-        switch (e.category) {
-          case "RATE_LIMIT_ERROR":
-            // Wait and retry
-            await sleep(1000);
-            return processPayment(sourceId, amount);
-          case "PAYMENT_METHOD_ERROR":
-            // Don't retry - payment method issue
-            throw new PaymentDeclinedError(e.detail);
-          case "API_ERROR":
-            // Retry with exponential backoff
-            throw new RetryableError(e.detail);
-          default:
-            throw error;
-        }
+      switch (status) {
+        case 429:
+          // Rate limited - wait and retry
+          await sleep(1000);
+          return generateSpeech(text, voiceId);
+        case 401:
+          // Invalid API key
+          throw new AuthenticationError("Invalid API key");
+        case 422:
+          // Validation error - don't retry
+          throw new ValidationError(error.message);
+        case 500:
+        case 503:
+          // Server error - retry with backoff
+          throw new RetryableError(error.message);
+        default:
+          throw error;
       }
     }
     throw error;
@@ -121,11 +138,8 @@ async function withRetry<T>(
     } catch (error) {
       if (attempt === maxRetries) throw error;
 
-      if (error instanceof SquareError) {
-        const isRetryable = error.errors.some(
-          (e) =>
-            e.category === "API_ERROR" || e.category === "RATE_LIMIT_ERROR"
-        );
+      if (error instanceof ElevenLabsError) {
+        const isRetryable = [408, 429, 500, 503].includes(error.statusCode);
         if (!isRetryable) throw error;
       }
 
@@ -138,16 +152,10 @@ async function withRetry<T>(
 }
 ```
 
-## HTTP status code reference
+## Best practices
 
-| Status | Meaning |
-|--------|---------|
-| 200 | Success |
-| 400 | Bad request (check error details) |
-| 401 | Unauthorized (check token) |
-| 403 | Forbidden (check permissions/scopes) |
-| 404 | Resource not found |
-| 409 | Conflict (resource already exists) |
-| 422 | Unprocessable entity |
-| 429 | Rate limited (slow down) |
-| 500 | Internal server error (retry) |
+1. **Always check status codes** before processing responses
+2. **Implement retry logic** with exponential backoff for transient errors
+3. **Handle quota errors gracefully** by informing users and suggesting plan upgrades
+4. **Log error details** for debugging but never log API keys
+5. **Set reasonable timeouts** to avoid hanging requests

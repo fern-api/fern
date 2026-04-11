@@ -1,138 +1,132 @@
 ---
 title: API Overview
-description: Understand the core concepts and architecture of the Square API platform.
+description: Understand the core concepts and architecture of the ElevenLabs API platform.
 slug: api-overview
 ---
 
 # API Overview
 
-The Square API follows RESTful conventions and uses JSON for request and response bodies. This page covers the fundamental concepts you'll encounter when working with the API.
+The ElevenLabs API follows RESTful conventions and returns audio data or JSON depending on the endpoint. This page covers the fundamental concepts you'll encounter when working with the API.
 
-## Base URLs
+## Base URL
 
-| Environment | Base URL |
-|------------|----------|
-| Production | `https://connect.squareup.com/v2` |
-| Sandbox | `https://connect.squaresandbox.com/v2` |
+All API requests are made to:
+
+```
+https://api.elevenlabs.io/v1
+```
 
 ## Request format
 
 All API requests must include:
 
-- `Authorization` header with a Bearer token
-- `Content-Type: application/json` header for requests with a body
-- `Square-Version` header (optional, defaults to the latest version)
+- `xi-api-key` header with your API key
+- `Content-Type: application/json` header for requests with a JSON body
 
 ```bash
-curl -X POST https://connect.squareup.com/v2/payments \
-  -H 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
+curl -X POST https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb \
+  -H 'xi-api-key: YOUR_API_KEY' \
   -H 'Content-Type: application/json' \
-  -H 'Square-Version: 2024-01-18' \
   -d '{
-    "source_id": "cnon:card-nonce-ok",
-    "idempotency_key": "unique-key-123",
-    "amount_money": {
-      "amount": 1000,
-      "currency": "USD"
+    "text": "Hello, this is a test.",
+    "model_id": "eleven_flash_v2_5",
+    "voice_settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.75
     }
-  }'
+  }' \
+  --output output.mp3
 ```
 
-## Response format
+## Response formats
 
-Successful responses return a JSON object. The response structure depends on the endpoint, but typically includes:
+Responses vary by endpoint type:
+
+| Endpoint type | Response format | Content-Type |
+|--------------|----------------|--------------|
+| Text to Speech | Audio binary | `audio/mpeg` |
+| Speech to Text | JSON | `application/json` |
+| Voices | JSON | `application/json` |
+| Models | JSON | `application/json` |
+| History | JSON or audio | Varies |
+
+### JSON response example
 
 ```json
 {
-  "payment": {
-    "id": "R2B3Z8WMVt3EAmzYWLZvz7Y69EbZY",
-    "created_at": "2024-01-15T20:14:30.639Z",
-    "updated_at": "2024-01-15T20:14:31.098Z",
-    "amount_money": {
-      "amount": 1000,
-      "currency": "USD"
-    },
-    "status": "COMPLETED",
-    "source_type": "CARD"
-  }
+  "voices": [
+    {
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "name": "George",
+      "category": "premade",
+      "labels": {
+        "accent": "British",
+        "age": "middle-aged",
+        "gender": "male",
+        "use_case": "narration"
+      },
+      "preview_url": "https://storage.elevenlabs.io/preview/JBFqnCBsd6RMkjVDRZzb.mp3"
+    }
+  ]
 }
 ```
 
-## Idempotency
+## Output formats
 
-Most write endpoints require an `idempotency_key` to ensure operations are only performed once, even if the request is retried. The key must be unique per operation and should be a UUID or similar unique string.
+Text to Speech endpoints support multiple audio formats via the `output_format` query parameter:
 
-```typescript
-import { v4 as uuid } from "uuid";
+| Format | Description | Quality | File size |
+|--------|-------------|---------|-----------|
+| `mp3_44100_128` | MP3 44.1kHz 128kbps | High | Medium |
+| `mp3_44100_64` | MP3 44.1kHz 64kbps | Medium | Small |
+| `mp3_22050_32` | MP3 22.05kHz 32kbps | Low | Smallest |
+| `pcm_16000` | PCM 16kHz 16-bit | Lossless | Large |
+| `pcm_22050` | PCM 22.05kHz 16-bit | Lossless | Larger |
+| `pcm_24000` | PCM 24kHz 16-bit | Lossless | Larger |
+| `pcm_44100` | PCM 44.1kHz 16-bit | Lossless | Largest |
+| `ulaw_8000` | mu-law 8kHz | Phone | Tiny |
 
-const response = await client.payments.create({
-  sourceId: "cnon:card-nonce-ok",
-  idempotencyKey: uuid(),
-  amountMoney: {
-    amount: BigInt(1000),
-    currency: "USD",
-  },
-});
-```
+## Voice settings
 
-If you retry a request with the same idempotency key within 24 hours, the API returns the original response without performing the operation again.
-
-## Versioning
-
-Square uses date-based API versioning (e.g., `2024-01-18`). You can specify the version in the `Square-Version` header. If omitted, the API uses the version associated with your application.
-
-Breaking changes are introduced in new versions only. Non-breaking changes (new fields, new endpoints) may be added to existing versions.
-
-## Money amounts
-
-All monetary amounts in the Square API are represented in the smallest currency unit (e.g., cents for USD):
-
-| Display amount | API amount | Currency |
-|---------------|------------|----------|
-| $10.00 | 1000 | USD |
-| 10.50 | 1050 | USD |
-| 100.00 | 10000 | USD |
-| 1,234.56 | 123456 | USD |
+Fine-tune voice output with these parameters:
 
 ```typescript
-// $25.50 in the API
-const amount = {
-  amount: BigInt(2550),
-  currency: "USD",
+const voiceSettings = {
+  stability: 0.5,        // 0.0 - 1.0: Lower = more expressive, higher = more consistent
+  similarityBoost: 0.75, // 0.0 - 1.0: Higher = closer to original voice
+  style: 0.0,            // 0.0 - 1.0: Style exaggeration (v2 models only)
+  useSpeakerBoost: true,  // Enhance voice clarity
+  speed: 1.0,            // 0.7 - 1.2: Playback speed adjustment
 };
 ```
 
-## Cursor-based pagination
+## Streaming
 
-List endpoints return paginated results. Use the `cursor` field from the response to fetch the next page:
+For real-time applications, use streaming endpoints that return audio chunks as they're generated:
 
 ```typescript
-let cursor: string | undefined;
-const allCustomers = [];
+const audioStream = await client.textToSpeech.stream("JBFqnCBsd6RMkjVDRZzb", {
+  text: "This text will be streamed as audio chunks.",
+  modelId: "eleven_flash_v2_5",
+  outputFormat: "mp3_44100_128",
+});
 
-do {
-  const response = await client.customers.list({ cursor });
-  if (response.customers) {
-    allCustomers.push(...response.customers);
-  }
-  cursor = response.cursor;
-} while (cursor);
+for await (const chunk of audioStream) {
+  // Process each audio chunk as it arrives
+  process.stdout.write(chunk);
+}
 ```
 
 ## Error responses
 
-Error responses include an `errors` array with details about what went wrong:
+Error responses include a JSON object with details about what went wrong:
 
 ```json
 {
-  "errors": [
-    {
-      "category": "INVALID_REQUEST_ERROR",
-      "code": "MISSING_REQUIRED_PARAMETER",
-      "detail": "Missing required parameter: `source_id`",
-      "field": "source_id"
-    }
-  ]
+  "detail": {
+    "status": "invalid_api_key",
+    "message": "The API key you provided is invalid. Please check your API key and try again."
+  }
 }
 ```
 

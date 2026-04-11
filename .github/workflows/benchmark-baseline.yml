@@ -141,7 +141,7 @@ jobs:
       - name: Run docs benchmark
         uses: ./.github/actions/run-docs-benchmark
         with:
-          fern-token: ${{ secrets.FERN_TOKEN }}
+          fern-token: ${{ secrets.FERN_FERN_TOKEN }}
 
       - name: Upload docs baseline results
         uses: actions/upload-artifact@v4

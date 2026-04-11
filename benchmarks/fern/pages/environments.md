@@ -1,134 +1,121 @@
 ---
 title: Environments
-description: Understand Square's sandbox and production environments for development and testing.
+description: Understand ElevenLabs environments and data residency options for development and production.
 slug: environments
 ---
 
 # Environments
 
-Square provides separate environments for development and production. Understanding the differences helps you build and test safely.
+ElevenLabs provides options for managing your API usage across different environments and data residency requirements.
 
-## Environment comparison
+## API environments
 
-| Feature | Sandbox | Production |
-|---------|---------|------------|
-| Base URL | `connect.squaresandbox.com` | `connect.squareup.com` |
-| Real payments | No | Yes |
-| Real money | No | Yes |
-| Test cards | Yes | No |
-| Rate limits | Same as production | Standard limits |
-| Data isolation | Completely separate | Live data |
-| Webhooks | Sandbox-specific | Production events |
+| Feature | Standard | Enterprise |
+|---------|----------|------------|
+| Base URL | `api.elevenlabs.io` | Custom endpoint |
+| Data residency | US (default) | US, EU, or custom |
+| SLA | Best effort | 99.9% uptime |
+| Rate limits | Plan-based | Custom |
+| Zero retention | Per-request opt-in | Default enabled |
+| Support | Community + email | Dedicated |
 
-## Sandbox environment
+## Data residency
 
-The sandbox is a fully functional replica of the production API that uses test data and never processes real payments.
+Enterprise customers can choose where their data is processed and stored:
 
-### Setting up sandbox
+| Region | Endpoint | Data center |
+|--------|----------|-------------|
+| United States | `api.elevenlabs.io` | US East |
+| European Union | `api.eu.elevenlabs.io` | EU West |
 
-1. Log in to the [Square Developer Dashboard](https://developer.squareup.com)
-2. Create or select an application
-3. Navigate to the "Credentials" tab
-4. Copy the Sandbox Access Token
+### Configuring data residency
 
 ```typescript
-const client = new SquareClient({
-  token: process.env.SQUARE_SANDBOX_TOKEN,
-  environment: "sandbox",
+const client = new ElevenLabsClient({
+  apiKey: process.env.ELEVENLABS_API_KEY,
+  baseUrl: "https://api.eu.elevenlabs.io", // EU data residency
 });
 ```
 
-### Sandbox test accounts
+```python
+client = ElevenLabs(
+    api_key=os.environ["ELEVENLABS_API_KEY"],
+    base_url="https://api.eu.elevenlabs.io",
+)
+```
 
-The sandbox provides default test accounts for each supported country:
+### Data isolation guarantees
 
-| Country | Currency | Default location |
-|---------|----------|-----------------|
-| United States | USD | Pre-configured |
-| Canada | CAD | Pre-configured |
-| United Kingdom | GBP | Pre-configured |
-| Australia | AUD | Pre-configured |
-| Japan | JPY | Pre-configured |
-| Ireland | EUR | Pre-configured |
-| France | EUR | Pre-configured |
-| Spain | EUR | Pre-configured |
+- Audio data is processed and stored only in the selected region
+- Voice clones and custom models are region-specific
+- API keys work across regions but data does not transfer
+- Webhook events are dispatched from the selected region
 
-### Sandbox test cards
+## Development workflow
 
-Use these card numbers for testing different scenarios:
+### Local development
 
-| Card | Number | Result |
-|------|--------|--------|
-| Visa (success) | 4532 7597 3454 5858 | Successful charge |
-| Visa (decline) | 4000 0000 0000 0002 | Card declined |
-| Mastercard | 5105 1051 0510 5100 | Successful charge |
-| Amex | 3400 000000 00009 | Successful charge |
-| Discover | 6011 0000 0000 0004 | Successful charge |
-| CVV failure | 4000 0000 0000 0010 | CVV check failed |
-| AVS failure | 4000 0000 0000 0028 | Address check failed |
+For local development, use your personal API key with standard rate limits:
 
-All test cards use:
-- Any future expiration date
-- Any 3-digit CVV (4 digits for Amex)
-- Any billing ZIP code
+```typescript
+const client = new ElevenLabsClient({
+  apiKey: process.env.ELEVENLABS_API_KEY,
+});
 
-## Production environment
+// Use a test voice for development
+const TEST_VOICE_ID = "JBFqnCBsd6RMkjVDRZzb"; // George (pre-made)
+```
 
-### Switching to production
+### Staging environment
 
-Before going live, ensure you've completed the following checklist:
+For staging, use a separate workspace with its own API keys and quotas:
 
-- [ ] All tests pass in the sandbox environment
+```typescript
+const client = new ElevenLabsClient({
+  apiKey: process.env.NODE_ENV === "production"
+    ? process.env.ELEVENLABS_PROD_KEY
+    : process.env.ELEVENLABS_STAGING_KEY,
+});
+```
+
+## Production checklist
+
+Before going live, ensure you've completed the following:
+
+- [ ] Using service account API keys (not personal keys)
 - [ ] Error handling covers all error categories
-- [ ] Idempotency keys are properly implemented
-- [ ] Webhook signature verification is in place
-- [ ] Rate limiting and retry logic is implemented
-- [ ] OAuth token refresh is working (if applicable)
-- [ ] PCI compliance requirements are met
-- [ ] Application has been reviewed and approved (if using OAuth)
-
-### Production credentials
-
-```typescript
-const client = new SquareClient({
-  token: process.env.SQUARE_PRODUCTION_TOKEN,
-  environment: "production",
-});
-```
+- [ ] Retry logic with exponential backoff is implemented
+- [ ] Rate limiting is properly managed
+- [ ] Character quota monitoring is in place
+- [ ] Webhook signature verification is enabled
+- [ ] Audio caching is configured for repeated requests
+- [ ] Data residency requirements are met
+- [ ] Zero retention mode is enabled if required
 
 ## Environment-specific configuration
 
-Use environment variables to manage configuration across environments:
+Use environment variables to manage configuration:
 
 ```typescript
 interface Config {
-  squareToken: string;
-  squareEnvironment: "sandbox" | "production";
-  webhookSignatureKey: string;
+  apiKey: string;
+  baseUrl: string;
+  maxRetries: number;
+  enableLogging: boolean;
 }
 
 function getConfig(): Config {
-  const env = process.env.NODE_ENV === "production" ? "production" : "sandbox";
+  const isProd = process.env.NODE_ENV === "production";
 
   return {
-    squareToken:
-      env === "production"
-        ? process.env.SQUARE_PRODUCTION_TOKEN!
-        : process.env.SQUARE_SANDBOX_TOKEN!,
-    squareEnvironment: env,
-    webhookSignatureKey:
-      env === "production"
-        ? process.env.SQUARE_PROD_WEBHOOK_KEY!
-        : process.env.SQUARE_SANDBOX_WEBHOOK_KEY!,
+    apiKey: isProd
+      ? process.env.ELEVENLABS_PROD_KEY!
+      : process.env.ELEVENLABS_DEV_KEY!,
+    baseUrl: isProd
+      ? "https://api.eu.elevenlabs.io"
+      : "https://api.elevenlabs.io",
+    maxRetries: isProd ? 3 : 1,
+    enableLogging: !isProd,
   };
 }
 ```
-
-## Data isolation
-
-Sandbox and production environments are completely isolated:
-
-- Objects created in sandbox do not exist in production (and vice versa)
-- Tokens from one environment cannot be used in the other
-- Webhook events are environment-specific
-- OAuth authorizations are separate per environment

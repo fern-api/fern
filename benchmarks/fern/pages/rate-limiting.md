@@ -1,37 +1,40 @@
 ---
 title: Rate Limiting
-description: Understand Square API rate limits and how to handle them in your application.
+description: Understand ElevenLabs API rate limits and how to handle them in your application.
 slug: rate-limiting
 ---
 
 # Rate Limiting
 
-Square enforces rate limits to ensure fair usage and platform stability. Understanding these limits helps you build reliable integrations.
+Rate limits ensure fair usage and platform stability. Understanding these limits helps you build reliable integrations.
 
 ## Rate limit overview
 
-Square applies rate limits per application and per endpoint. When you exceed the limit, the API returns a `429 Too Many Requests` response with a `RATE_LIMIT_ERROR` category.
+Rate limits are applied per API key and vary by subscription plan. When you exceed the limit, the API returns a `429 Too Many Requests` response.
 
-## Default limits
+## Default limits by plan
 
-| Tier | Requests per second | Applies to |
-|------|-------------------|------------|
-| Standard | 20 RPS | Most endpoints |
-| Payments | 30 RPS | Payments endpoints |
-| Catalog | 15 RPS | Catalog batch endpoints |
-| Search | 10 RPS | Search endpoints |
-| OAuth | 5 RPS | OAuth token endpoints |
+| Plan | Requests per second | Concurrent requests | Daily character limit |
+|------|-------------------|-------------------|---------------------|
+| Free | 2 RPS | 2 | 10,000 |
+| Starter | 5 RPS | 5 | 30,000 |
+| Creator | 10 RPS | 10 | 100,000 |
+| Pro | 20 RPS | 20 | 500,000 |
+| Scale | 50 RPS | 50 | 2,000,000 |
+| Enterprise | Custom | Custom | Custom |
 
-These limits are per-application (identified by your application ID), not per-token. If your application uses multiple merchant tokens, all requests count toward the same limit.
+These limits are per API key. If your application uses multiple keys, each has its own rate limit allocation.
 
 ## Rate limit headers
 
-Square includes rate limit information in response headers:
+Rate limit information is included in response headers:
 
 ```
 X-RateLimit-Limit: 20
 X-RateLimit-Remaining: 15
 X-RateLimit-Reset: 1705344000
+X-CharacterCount: 5000
+X-CharacterLimit: 500000
 ```
 
 | Header | Description |
@@ -39,6 +42,8 @@ X-RateLimit-Reset: 1705344000
 | `X-RateLimit-Limit` | Maximum requests allowed per window |
 | `X-RateLimit-Remaining` | Requests remaining in current window |
 | `X-RateLimit-Reset` | Unix timestamp when the window resets |
+| `X-CharacterCount` | Characters used in current billing period |
+| `X-CharacterLimit` | Character limit for current billing period |
 
 ## Handling rate limits
 
@@ -54,12 +59,11 @@ async function callWithRateLimit<T>(
       return await fn();
     } catch (error) {
       if (
-        error instanceof SquareError &&
-        error.errors.some((e) => e.category === "RATE_LIMIT_ERROR")
+        error instanceof ElevenLabsError &&
+        error.statusCode === 429
       ) {
         if (attempt === maxRetries) throw error;
 
-        // Exponential backoff: 1s, 2s, 4s, 8s, 16s
         const delay = Math.pow(2, attempt) * 1000;
         console.log(`Rate limited. Retrying in ${delay}ms...`);
         await new Promise((resolve) => setTimeout(resolve, delay));
@@ -83,7 +87,7 @@ class RateLimiter {
 
   constructor(
     private maxTokens: number = 20,
-    private refillRate: number = 20 // tokens per second
+    private refillRate: number = 20
   ) {
     this.tokens = maxTokens;
     this.lastRefill = Date.now();
@@ -112,46 +116,38 @@ class RateLimiter {
   }
 }
 
-const limiter = new RateLimiter(20, 20);
+const limiter = new RateLimiter(10, 10);
 
-async function listAllCustomers() {
-  let cursor: string | undefined;
-  do {
+async function generateBatch(texts: string[]) {
+  for (const text of texts) {
     await limiter.acquire();
-    const response = await client.customers.list({ cursor });
-    cursor = response.cursor;
-  } while (cursor);
+    await client.textToSpeech.convert(voiceId, {
+      text,
+      modelId: "eleven_flash_v2_5",
+    });
+  }
 }
 ```
 
-## Batch endpoints
+## Character quotas
 
-For bulk operations, use batch endpoints instead of making individual requests. Batch endpoints count as a single request against the rate limit:
+In addition to request rate limits, the API enforces character quotas based on your subscription plan. Character usage is tracked per billing period and resets monthly.
 
 ```typescript
-// Instead of 100 individual requests:
-const response = await client.catalog.batchUpsert({
-  idempotencyKey: crypto.randomUUID(),
-  batches: [
-    {
-      objects: items.map((item) => ({
-        type: "ITEM",
-        id: `#${item.name}`,
-        itemData: {
-          name: item.name,
-          description: item.description,
-        },
-      })),
-    },
-  ],
-});
+// Check remaining quota before generating
+const subscription = await client.user.getSubscription();
+const remaining = subscription.characterLimit - subscription.characterCount;
+
+if (text.length > remaining) {
+  throw new QuotaError(`Need ${text.length} chars but only ${remaining} remaining`);
+}
 ```
 
 ## Best practices
 
 1. **Monitor rate limit headers** to stay within limits proactively
 2. **Implement exponential backoff** for automatic retry on 429 responses
-3. **Use batch endpoints** when processing multiple items
-4. **Spread requests over time** rather than sending bursts
-5. **Cache responses** when possible to reduce API calls
-6. **Use webhooks** instead of polling for real-time updates
+3. **Use streaming endpoints** for long texts to get audio faster
+4. **Batch requests intelligently** rather than sending bursts
+5. **Cache generated audio** when the same text will be requested multiple times
+6. **Monitor character usage** to avoid unexpected quota exhaustion

@@ -1,112 +1,127 @@
 ---
 title: Migration Guide
-description: Migrate your Square API integration between versions with minimal disruption.
+description: Migrate your ElevenLabs API integration between versions with minimal disruption.
 slug: migration-guide
 ---
 
 # Migration Guide
 
-This guide helps you migrate your Square API integration between versions. Square uses date-based versioning, and each version may include breaking changes that require updates to your code.
+This guide helps you migrate your ElevenLabs API integration between SDK and model versions.
 
-## Version history
+## Model version history
 
-| Version | Release date | End of support |
-|---------|-------------|----------------|
-| 2024-01-18 | January 2024 | Current |
-| 2023-10-18 | October 2023 | January 2025 |
-| 2023-07-20 | July 2023 | October 2024 |
-| 2023-04-20 | April 2023 | July 2024 |
-| 2023-01-19 | January 2023 | April 2024 |
+| Model | Release | Status |
+|-------|---------|--------|
+| Eleven v3 | March 2025 | Current (latest) |
+| Eleven Flash v2.5 | October 2024 | Current |
+| Eleven Multilingual v2 | June 2024 | Current |
+| Eleven English v2 | January 2024 | Deprecated |
+| Eleven Multilingual v1 | August 2023 | End of life |
+| Eleven English v1 | January 2023 | End of life |
 
-## Migrating to 2024-01-18
+## Migrating to Eleven v3
 
-### Breaking changes
+### Key changes
 
-#### 1. Money fields now use BigInt
+#### 1. Expanded language support
 
-All monetary amount fields now return `BigInt` instead of `number` in the TypeScript SDK:
-
-```typescript
-// Before (2023-10-18)
-const amount: number = payment.amountMoney.amount;
-
-// After (2024-01-18)
-const amount: bigint = payment.amountMoney.amount;
-
-// Converting for display
-const displayAmount = Number(amount) / 100;
-```
-
-#### 2. Deprecated endpoints removed
-
-The following deprecated endpoints have been removed:
-
-| Removed endpoint | Replacement |
-|-----------------|-------------|
-| `POST /v2/locations/{id}/transactions` | `POST /v2/payments` |
-| `GET /v2/locations/{id}/transactions` | `GET /v2/payments` |
-| `POST /v2/locations/{id}/refunds` | `POST /v2/refunds` |
-| `GET /v1/items` | `GET /v2/catalog/list` |
-| `POST /v1/items` | `POST /v2/catalog/object` |
-
-#### 3. Search endpoint changes
-
-Search endpoints now require explicit pagination:
+Eleven v3 supports 70+ languages compared to 29 in Multilingual v2:
 
 ```typescript
-// Before
-const response = await client.orders.search({
-  locationIds: ["L8GF7GQBX3M2T"],
-  query: { /* ... */ },
+// Before (Multilingual v2)
+const audio = await client.textToSpeech.convert(voiceId, {
+  text: "Hello world",
+  modelId: "eleven_multilingual_v2",
 });
 
-// After - must include limit
-const response = await client.orders.search({
-  locationIds: ["L8GF7GQBX3M2T"],
-  query: { /* ... */ },
-  limit: 100,
+// After (v3)
+const audio = await client.textToSpeech.convert(voiceId, {
+  text: "Hello world",
+  modelId: "eleven_v3",
 });
 ```
 
-### New features
+#### 2. Natural multi-speaker dialogue
 
-- **Terminal API** - Manage Square Terminal devices programmatically
-- **Gift cards** - Create, activate, and manage gift cards
-- **Vendor management** - Manage vendor relationships for inventory
-- **Snippet API** - Embed custom content on Square Online sites
+v3 introduces support for multi-speaker dialogue in a single request:
+
+```typescript
+const audio = await client.textToSpeech.convert(voiceId, {
+  text: `
+    [Speaker 1]: Welcome to the show!
+    [Speaker 2]: Thanks for having me.
+    [Speaker 1]: Let's dive right in.
+  `,
+  modelId: "eleven_v3",
+});
+```
+
+#### 3. Character limit changes
+
+| Model | Character limit |
+|-------|----------------|
+| Eleven v3 | 5,000 |
+| Multilingual v2 | 10,000 |
+| Flash v2.5 | 40,000 |
+
+For texts longer than the limit, split into chunks and concatenate the audio.
+
+### New features in v3
+
+- **Dramatic delivery** - Enhanced emotional range for performative content
+- **Better prosody** - More natural pacing, emphasis, and intonation
+- **Tag support** - Inline tags like `[laughs]`, `[whispers]`, `[sarcastically]`
+- **Improved multilingual** - Better accent handling across language pairs
+
+## SDK migration
+
+### TypeScript SDK v1.x to v2.x
+
+```typescript
+// Before (v1.x)
+import { ElevenLabsClient } from "elevenlabs";
+const client = new ElevenLabsClient({ apiKey: "..." });
+
+// After (v2.x)
+import { ElevenLabsClient } from "@elevenlabs/elevenlabs-js";
+const client = new ElevenLabsClient({ apiKey: "..." });
+```
+
+### Python SDK v0.x to v1.x
+
+```python
+# Before (v0.x)
+from elevenlabs import generate, play
+audio = generate(text="Hello", voice="George")
+
+# After (v1.x)
+from elevenlabs.client import ElevenLabs
+from elevenlabs import play
+client = ElevenLabs(api_key="...")
+audio = client.text_to_speech.convert(
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    text="Hello",
+    model_id="eleven_flash_v2_5",
+)
+```
 
 ## General migration steps
 
 1. **Read the changelog** for your target version
 2. **Update your SDK** to the latest version
-3. **Set the API version header** explicitly during migration:
-   ```typescript
-   // Pin to the old version while migrating
-   headers: { "Square-Version": "2023-10-18" }
-   ```
-4. **Update affected code** for each breaking change
-5. **Run your test suite** against the sandbox
-6. **Remove the version header** to use the new default
-7. **Monitor production** for errors after deployment
+3. **Update model IDs** in your configuration
+4. **Test with sample inputs** to verify output quality
+5. **Run your test suite** to catch breaking changes
+6. **Monitor production** for errors after deployment
+7. **Update documentation** to reflect new capabilities
 
 ## Backward compatibility
 
-Non-breaking changes are added to all supported versions:
+Non-breaking changes are added without version bumps:
 
 - New optional fields in request/response objects
-- New endpoints
-- New enum values
+- New voice settings parameters
+- New output format options
 - New webhook event types
 
 You do not need to update your code for non-breaking changes, but you should handle unknown fields gracefully.
-
-## SDK version mapping
-
-| SDK version | API version | Notes |
-|------------|-------------|-------|
-| 35.x | 2024-01-18 | Latest |
-| 33.x | 2023-10-18 | Deprecated |
-| 30.x | 2023-07-20 | End of life |
-| 28.x | 2023-04-20 | End of life |
-
-Always use the latest SDK version for the best experience and security patches.

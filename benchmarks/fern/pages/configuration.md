@@ -1,51 +1,47 @@
 ---
 title: Configuration
-description: Configure your Square API integration with best practices for security and performance.
+description: Configure your ElevenLabs API integration with best practices for security and performance.
 slug: configuration
 ---
 
 # Configuration
 
-This guide covers how to configure your Square API integration for different environments, manage credentials securely, and optimize for performance.
+This guide covers how to configure your ElevenLabs API integration for different environments, manage credentials securely, and optimize for performance.
 
 ## Client configuration
 
 ### TypeScript
 
 ```typescript
-import { SquareClient } from "square";
+import { ElevenLabsClient } from "@elevenlabs/elevenlabs-js";
 
-const client = new SquareClient({
-  // Required
-  token: process.env.SQUARE_ACCESS_TOKEN,
-
-  // Optional - defaults to "production"
-  environment: process.env.NODE_ENV === "production" ? "production" : "sandbox",
+const client = new ElevenLabsClient({
+  apiKey: process.env.ELEVENLABS_API_KEY,
+  timeout: 60000,
+  maxRetries: 3,
 });
 ```
 
 ### Python
 
 ```python
-from square.client import Client
+from elevenlabs.client import ElevenLabs
 
-client = Client(
-    access_token=os.environ["SQUARE_ACCESS_TOKEN"],
-    environment="sandbox",
+client = ElevenLabs(
+    api_key=os.environ["ELEVENLABS_API_KEY"],
+    timeout=60,
     max_retries=3,
-    timeout=30,
 )
 ```
 
-### Java
+### Go
 
-```java
-SquareClient client = new SquareClient.Builder()
-    .accessToken(System.getenv("SQUARE_ACCESS_TOKEN"))
-    .environment("sandbox")
-    .connectTimeout(30, TimeUnit.SECONDS)
-    .readTimeout(30, TimeUnit.SECONDS)
-    .build();
+```go
+client := elevenlabs.NewClient(
+    os.Getenv("ELEVENLABS_API_KEY"),
+    elevenlabs.WithTimeout(60 * time.Second),
+    elevenlabs.WithMaxRetries(3),
+)
 ```
 
 ## Credential management
@@ -56,11 +52,10 @@ Store credentials as environment variables, never in source code:
 
 ```bash
 # .env (do NOT commit this file)
-SQUARE_ACCESS_TOKEN=EAAAl...
-SQUARE_APP_ID=sq0idp-...
-SQUARE_APP_SECRET=sq0csp-...
-SQUARE_WEBHOOK_SIGNATURE_KEY=...
-SQUARE_LOCATION_ID=L8GF7GQBX3M2T
+ELEVENLABS_API_KEY=xi-...
+ELEVENLABS_WEBHOOK_SECRET=whsec-...
+DEFAULT_VOICE_ID=JBFqnCBsd6RMkjVDRZzb
+DEFAULT_MODEL_ID=eleven_flash_v2_5
 ```
 
 ### Secrets managers
@@ -78,39 +73,45 @@ For production deployments, use a secrets manager:
 ```typescript
 import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
 
-async function getSquareToken(): Promise<string> {
-  const client = new SecretsManagerClient({ region: "us-east-1" });
-  const response = await client.send(
-    new GetSecretValueCommand({ SecretId: "square/api-token" })
+async function getApiKey(): Promise<string> {
+  const smClient = new SecretsManagerClient({ region: "us-east-1" });
+  const response = await smClient.send(
+    new GetSecretValueCommand({ SecretId: "elevenlabs/api-key" })
   );
   return response.SecretString!;
 }
 ```
 
-## Location configuration
+## Voice configuration
 
-Most Square API calls require a `location_id`. If your business has multiple locations, you may need to manage which location is used for each operation:
+Configure default voice settings for consistent output across your application:
 
 ```typescript
-interface LocationConfig {
-  id: string;
-  name: string;
-  currency: string;
-  timezone: string;
+interface VoiceConfig {
+  voiceId: string;
+  modelId: string;
+  voiceSettings: {
+    stability: number;
+    similarityBoost: number;
+    style: number;
+    useSpeakerBoost: boolean;
+    speed: number;
+  };
+  outputFormat: string;
 }
 
-async function getLocations(): Promise<LocationConfig[]> {
-  const response = await client.locations.list();
-
-  return (response.locations ?? [])
-    .filter((loc) => loc.status === "ACTIVE")
-    .map((loc) => ({
-      id: loc.id!,
-      name: loc.name!,
-      currency: loc.currency!,
-      timezone: loc.timezone!,
-    }));
-}
+const defaultVoiceConfig: VoiceConfig = {
+  voiceId: "JBFqnCBsd6RMkjVDRZzb",
+  modelId: "eleven_flash_v2_5",
+  voiceSettings: {
+    stability: 0.5,
+    similarityBoost: 0.75,
+    style: 0.0,
+    useSpeakerBoost: true,
+    speed: 1.0,
+  },
+  outputFormat: "mp3_44100_128",
+};
 ```
 
 ## Timeout configuration
@@ -119,66 +120,52 @@ Configure timeouts based on your use case:
 
 | Operation | Recommended timeout |
 |-----------|-------------------|
-| Simple reads (get, list) | 10-15 seconds |
-| Payments | 30 seconds |
-| Batch operations | 60 seconds |
-| File uploads | 120 seconds |
-| Search queries | 30 seconds |
+| Short text TTS (<500 chars) | 10-15 seconds |
+| Long text TTS (>2000 chars) | 30-60 seconds |
+| Streaming TTS | 120 seconds |
+| Voice cloning | 120 seconds |
+| Dubbing | 300 seconds |
+| Speech to text | 60 seconds |
 
 ## Logging configuration
 
-Enable request/response logging for debugging:
+Enable request logging for debugging:
 
 ```typescript
-import { SquareClient } from "square";
-
-const client = new SquareClient({
-  token: process.env.SQUARE_ACCESS_TOKEN,
-  environment: "sandbox",
+const client = new ElevenLabsClient({
+  apiKey: process.env.ELEVENLABS_API_KEY,
 });
 
-// Log all requests in development
+// Log requests in development
 if (process.env.NODE_ENV !== "production") {
-  client.interceptors.request.use((config) => {
-    console.log(`[Square] ${config.method?.toUpperCase()} ${config.url}`);
-    return config;
-  });
+  console.log("ElevenLabs client initialized in development mode");
 }
 ```
 
-## Multi-tenant configuration
+## Multi-workspace configuration
 
-For applications serving multiple merchants (OAuth), manage per-merchant configuration:
+For applications managing multiple workspaces:
 
 ```typescript
-interface MerchantConfig {
-  merchantId: string;
-  accessToken: string;
-  refreshToken: string;
-  tokenExpiresAt: Date;
-  locationIds: string[];
+interface WorkspaceConfig {
+  workspaceId: string;
+  apiKey: string;
+  voiceIds: string[];
+  quotaLimit: number;
 }
 
-class MerchantConfigStore {
-  private configs: Map<string, MerchantConfig> = new Map();
+class WorkspaceManager {
+  private configs: Map<string, WorkspaceConfig> = new Map();
 
-  async getClient(merchantId: string): Promise<SquareClient> {
-    let config = this.configs.get(merchantId);
+  async getClient(workspaceId: string): Promise<ElevenLabsClient> {
+    const config = this.configs.get(workspaceId);
 
     if (!config) {
-      config = await this.loadFromDatabase(merchantId);
-      this.configs.set(merchantId, config);
+      throw new Error(`Unknown workspace: ${workspaceId}`);
     }
 
-    // Check if token needs refresh
-    if (config.tokenExpiresAt < new Date()) {
-      config = await this.refreshToken(config);
-      this.configs.set(merchantId, config);
-    }
-
-    return new SquareClient({
-      token: config.accessToken,
-      environment: "production",
+    return new ElevenLabsClient({
+      apiKey: config.apiKey,
     });
   }
 }
@@ -186,20 +173,22 @@ class MerchantConfigStore {
 
 ## Feature flags
 
-Use feature flags to gradually roll out Square API features:
+Use feature flags to gradually roll out capabilities:
 
 ```typescript
 interface FeatureFlags {
-  enableSubscriptions: boolean;
-  enableInvoicing: boolean;
-  enableLoyalty: boolean;
-  maxPaymentAmount: number;
+  enableStreaming: boolean;
+  enableVoiceCloning: boolean;
+  enableDubbing: boolean;
+  maxCharactersPerRequest: number;
+  defaultModel: string;
 }
 
 const defaultFlags: FeatureFlags = {
-  enableSubscriptions: false,
-  enableInvoicing: false,
-  enableLoyalty: false,
-  maxPaymentAmount: 100000, // $1,000.00
+  enableStreaming: true,
+  enableVoiceCloning: false,
+  enableDubbing: false,
+  maxCharactersPerRequest: 5000,
+  defaultModel: "eleven_flash_v2_5",
 };
 ```

@@ -1,196 +1,219 @@
 ---
 title: Troubleshooting
-description: Common issues and solutions when working with the Square API.
+description: Common issues and solutions when working with the ElevenLabs API.
 slug: troubleshooting
 ---
 
 # Troubleshooting
 
-This guide covers common issues you might encounter when working with the Square API and how to resolve them.
+This guide covers common issues encountered when integrating with the ElevenLabs API and how to resolve them.
 
-## Authentication issues
+## Authentication errors
 
-### "UNAUTHORIZED" error (401)
+### "Invalid API key" (401)
 
-**Symptoms**: API returns `401` with `AUTHENTICATION_ERROR` category.
+**Symptoms:** All API calls return 401 Unauthorized.
 
-**Common causes**:
-1. **Expired access token** - OAuth tokens expire after 30 days
-2. **Wrong environment** - Using a sandbox token in production or vice versa
-3. **Revoked token** - Token was revoked in the Developer Dashboard
-4. **Missing Bearer prefix** - Authorization header must be `Bearer YOUR_TOKEN`
+**Causes:**
+- API key is expired or revoked
+- Using a key from a different workspace
+- Extra whitespace or newline characters in the key
 
-**Solutions**:
+**Solution:**
 
-```typescript
-// Check token format
-const headers = {
-  Authorization: `Bearer ${token}`, // Must include "Bearer " prefix
-};
-
-// Check environment matches token
-const client = new SquareClient({
-  token: sandboxToken,
-  environment: "sandbox", // Must match token type
-});
-
-// Refresh expired OAuth tokens
-if (error.category === "AUTHENTICATION_ERROR") {
-  const newToken = await refreshOAuthToken(merchantId);
-  // Retry with new token
-}
-```
-
-### OAuth token refresh fails
-
-**Symptoms**: `obtainToken` with `grant_type: refresh_token` returns an error.
-
-**Common causes**:
-- Refresh token has been revoked
-- Application credentials have changed
-- Merchant has deauthorized your application
-
-**Solution**: Direct the merchant to re-authorize your application through the OAuth flow.
-
-## Payment issues
-
-### "CARD_DECLINED" error
-
-**Symptoms**: Payment creation fails with `PAYMENT_METHOD_ERROR` category and `CARD_DECLINED` code.
-
-**Common causes**:
-- Insufficient funds
-- Card issuer declined the transaction
-- Card is blocked or frozen
-
-**Solutions**:
-1. Ask the customer to try a different payment method
-2. Verify the card details are correct
-3. Suggest the customer contact their card issuer
-
-### "IDEMPOTENCY_KEY_REUSED" error
-
-**Symptoms**: `INVALID_REQUEST_ERROR` with code `IDEMPOTENCY_KEY_REUSED`.
-
-**Cause**: The same idempotency key was used for a different request body.
-
-**Solution**: Generate a unique idempotency key for each distinct operation:
-
-```typescript
-// Each unique operation needs its own key
-const key1 = crypto.randomUUID(); // For payment 1
-const key2 = crypto.randomUUID(); // For payment 2
-
-// Retries of the same operation should use the SAME key
-const retryKey = `payment-${orderId}`; // Same key for retries
-```
-
-### Payment amount is wrong
-
-**Symptoms**: Customer is charged a different amount than expected.
-
-**Cause**: Amount is in the smallest currency unit (cents), not dollars.
-
-```typescript
-// Wrong: $10.00 creates a $1000.00 charge
-{ amount: 1000, currency: "USD" } // This is $10.00
-
-// Wrong: charging 10 cents instead of $10.00
-{ amount: 10, currency: "USD" } // This is $0.10
-
-// Correct: $10.00
-{ amount: 1000, currency: "USD" } // 1000 cents = $10.00
-```
-
-## Webhook issues
-
-### Webhooks not being received
-
-**Checklist**:
-1. Verify the webhook URL is correct in the Developer Dashboard
-2. Ensure the URL is publicly accessible (not localhost)
-3. Check that the URL uses HTTPS
-4. Verify the server returns 200 within 10 seconds
-5. Check the webhook subscription is enabled for the event type
-6. Review the Developer Dashboard for delivery attempts and errors
-
-### Signature verification fails
-
-**Common causes**:
-1. Using the wrong signature key (check Developer Dashboard)
-2. Body was modified before verification (use raw body)
-3. Notification URL doesn't match the registered URL exactly
-
-```typescript
-// Make sure to use the raw body, not parsed JSON
-app.post(
-  "/webhooks",
-  express.raw({ type: "application/json" }), // Raw body
-  (req, res) => {
-    const rawBody = req.body.toString(); // String, not parsed
-    const isValid = verifySignature(rawBody, req.headers);
-  }
-);
-```
-
-## Rate limiting issues
-
-### Frequent 429 responses
-
-**Solutions**:
-1. Implement request queuing with rate limiting
-2. Use batch endpoints for bulk operations
-3. Cache responses to reduce API calls
-4. Use webhooks instead of polling
-
-### Identifying rate limit source
-
-```typescript
-// Check rate limit headers
-const remaining = response.headers["x-ratelimit-remaining"];
-const resetTime = response.headers["x-ratelimit-reset"];
-
-if (Number(remaining) < 5) {
-  console.warn(
-    `Rate limit nearly exhausted. Resets at ${new Date(
-      Number(resetTime) * 1000
-    )}`
-  );
-}
-```
-
-## SDK issues
-
-### TypeScript BigInt serialization
-
-**Symptoms**: `TypeError: Do not know how to serialize a BigInt`
-
-**Cause**: `JSON.stringify` doesn't support BigInt natively.
-
-**Solution**:
-```typescript
-// Use a custom serializer
-JSON.stringify(data, (key, value) =>
-  typeof value === "bigint" ? value.toString() : value
-);
-```
-
-### Python SDK version conflicts
-
-**Symptoms**: Import errors or unexpected behavior after upgrade.
-
-**Solution**:
 ```bash
-# Clean install
-pip uninstall squareup
-pip install squareup==35.0.0
+# Verify your API key works
+curl -s https://api.elevenlabs.io/v1/user \
+  -H "xi-api-key: $ELEVENLABS_API_KEY" | jq .
 ```
+
+If this returns user info, your key is valid. If not, generate a new key from the Dashboard.
+
+### "Insufficient permissions" (403)
+
+**Symptoms:** Certain endpoints return 403 while others work.
+
+**Causes:**
+- Using a scoped API key without the required scope
+- Workspace role doesn't have access to the feature
+- Feature requires a higher subscription plan
+
+**Solution:** Check that your API key has the required scopes for the endpoints you're calling. Admin keys have full access; scoped keys are limited to their defined permissions.
+
+## Audio quality issues
+
+### Generated speech sounds robotic
+
+**Possible causes:**
+- Stability setting too high (>0.8)
+- Using an older model version
+- Input text contains unusual formatting
+
+**Solution:**
+```typescript
+const audio = await client.textToSpeech.convert(voiceId, {
+  text: cleanedText,
+  modelId: "eleven_v3", // Use the latest model
+  voiceSettings: {
+    stability: 0.5,        // Lower for more expression
+    similarityBoost: 0.75, // Balance between clarity and expression
+    style: 0.3,            // Add some stylistic variation
+    useSpeakerBoost: true,
+  },
+});
+```
+
+### Audio has unexpected pauses or pacing
+
+**Possible causes:**
+- Punctuation issues in input text
+- Very long paragraphs without breaks
+- Special characters being interpreted as pauses
+
+**Solution:** Clean your input text before sending:
+
+```typescript
+function cleanTextForTTS(text: string): string {
+  return text
+    .replace(/\s+/g, " ")           // Normalize whitespace
+    .replace(/\.{2,}/g, ".")         // Collapse multiple periods
+    .replace(/[^\w\s.,!?;:'"()-]/g, "") // Remove special characters
+    .trim();
+}
+```
+
+## Rate limiting
+
+### Hitting rate limits frequently
+
+**Symptoms:** Frequent 429 responses, especially during batch processing.
+
+**Solution:** Implement a request queue with concurrency control:
+
+```typescript
+class RequestQueue {
+  private queue: Array<() => Promise<void>> = [];
+  private running = 0;
+  private maxConcurrent: number;
+
+  constructor(maxConcurrent: number) {
+    this.maxConcurrent = maxConcurrent;
+  }
+
+  async add<T>(fn: () => Promise<T>): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.queue.push(async () => {
+        try {
+          resolve(await fn());
+        } catch (e) {
+          reject(e);
+        }
+      });
+      this.processQueue();
+    });
+  }
+
+  private async processQueue() {
+    if (this.running >= this.maxConcurrent || this.queue.length === 0) return;
+    this.running++;
+    const task = this.queue.shift()!;
+    await task();
+    this.running--;
+    this.processQueue();
+  }
+}
+
+const queue = new RequestQueue(5); // Max 5 concurrent requests
+```
+
+## Character quota
+
+### "Quota exceeded" error
+
+**Symptoms:** 429 response with `quota_exceeded` error code.
+
+**Solution:**
+
+```typescript
+// Check remaining quota before generating
+const subscription = await client.user.getSubscription();
+const remaining = subscription.characterLimit - subscription.characterCount;
+const resetDate = new Date(subscription.nextCharacterCountResetUnix * 1000);
+
+console.log(`Remaining: ${remaining} characters`);
+console.log(`Resets: ${resetDate.toISOString()}`);
+```
+
+**Options when quota is exhausted:**
+1. Wait for the monthly reset
+2. Upgrade your subscription plan
+3. Purchase additional character packs (if available on your plan)
+
+## Streaming issues
+
+### Stream disconnects mid-generation
+
+**Possible causes:**
+- Network timeout
+- Text too long for streaming
+- Server-side processing error
+
+**Solution:** Implement reconnection logic:
+
+```typescript
+async function streamWithReconnect(
+  client: ElevenLabsClient,
+  voiceId: string,
+  text: string,
+  maxRetries = 3
+): Promise<Buffer> {
+  const chunks: Buffer[] = [];
+
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const stream = await client.textToSpeech.stream(voiceId, {
+        text,
+        modelId: "eleven_flash_v2_5",
+      });
+
+      for await (const chunk of stream) {
+        chunks.push(Buffer.from(chunk));
+      }
+
+      return Buffer.concat(chunks);
+    } catch (error) {
+      if (attempt === maxRetries - 1) throw error;
+      console.warn(`Stream attempt ${attempt + 1} failed, retrying...`);
+      chunks.length = 0; // Reset chunks for retry
+      await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+    }
+  }
+
+  throw new Error("Unreachable");
+}
+```
+
+## Voice cloning
+
+### Cloned voice sounds different from source
+
+**Possible causes:**
+- Source audio quality is too low
+- Source audio contains background noise
+- Not enough source audio provided
+
+**Best practices for source audio:**
+- Use at least 30 seconds of clean audio (Professional Clone)
+- Ensure minimal background noise
+- Use consistent microphone placement
+- Avoid audio with music or multiple speakers
+- Use WAV or FLAC format for best quality
 
 ## Debugging tips
 
-1. **Enable verbose logging** in your SDK client
-2. **Check the Developer Dashboard** for API call logs
-3. **Use the API Explorer** to test requests manually
-4. **Compare sandbox vs production** behavior
-5. **Check the Square Status Page** for outages
-6. **Review webhook delivery logs** in the Dashboard
+1. **Enable request logging** to see exactly what's being sent
+2. **Check the response headers** for rate limit and quota information
+3. **Use the History page** in the Dashboard to review recent generations
+4. **Test with simple inputs first** before complex text
+5. **Compare models** - try the same text with different models
+6. **Check service status** at status.elevenlabs.io for outages

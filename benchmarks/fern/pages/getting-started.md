@@ -1,116 +1,110 @@
 ---
 title: Getting Started
-description: Set up your development environment and make your first Square API call.
+description: Set up your development environment and make your first ElevenLabs API call.
 slug: getting-started
 ---
 
 # Getting Started
 
-This guide walks you through setting up your development environment and making your first API call to Square.
+This guide walks you through setting up your development environment and making your first text-to-speech API call.
 
 ## Prerequisites
 
 Before you begin, make sure you have:
 
-- A Square developer account ([sign up here](https://squareup.com/signup))
-- An API access token from the Developer Dashboard
-- A programming language environment (Node.js 18+, Python 3.8+, Java 11+, or similar)
+- An ElevenLabs account ([sign up here](https://elevenlabs.io))
+- An API key from the Dashboard
+- A programming language environment (Node.js 18+, Python 3.8+, or similar)
 
 ## Install an SDK
 
-Square provides official SDKs for multiple languages. Install the one that matches your stack:
+Official SDKs are available for multiple languages:
 
 ```bash
 # Node.js / TypeScript
-npm install square
+npm install @elevenlabs/elevenlabs-js
 
 # Python
-pip install squareup
+pip install elevenlabs
 
-# Java (Maven)
-# Add to pom.xml:
-# <dependency>
-#   <groupId>com.squareup</groupId>
-#   <artifactId>square</artifactId>
-#   <version>35.0.0</version>
-# </dependency>
+# Go
+go get github.com/elevenlabs/elevenlabs-go
 
 # Ruby
-gem install square.rb
+gem install elevenlabs
 
 # .NET
-dotnet add package Square
+dotnet add package ElevenLabs
 
 # PHP
-composer require square/square
+composer require elevenlabs/elevenlabs-php
 ```
 
 ## Configure the client
 
-Initialize the Square client with your access token:
+Initialize the client with your API key:
 
 ```typescript
-import { SquareClient } from "square";
+import { ElevenLabsClient } from "@elevenlabs/elevenlabs-js";
 
-const client = new SquareClient({
-  token: process.env.SQUARE_ACCESS_TOKEN,
-  environment: "sandbox", // Use "production" for live transactions
+const client = new ElevenLabsClient({
+  apiKey: process.env.ELEVENLABS_API_KEY,
 });
 ```
 
 ```python
-from square.client import Client
+from elevenlabs.client import ElevenLabs
 
-client = Client(
-    access_token=os.environ["SQUARE_ACCESS_TOKEN"],
-    environment="sandbox",
+client = ElevenLabs(
+    api_key=os.environ["ELEVENLABS_API_KEY"],
 )
 ```
 
 ## Make your first API call
 
-Let's retrieve your business locations to verify the connection:
+Let's generate speech from text to verify the connection:
 
 ```typescript
-async function listLocations() {
-  const response = await client.locations.list();
+import { play } from "@elevenlabs/elevenlabs-js";
 
-  if (response.locations) {
-    for (const location of response.locations) {
-      console.log(`${location.name} (${location.id})`);
-      console.log(`  Status: ${location.status}`);
-      console.log(`  Currency: ${location.currency}`);
-    }
-  }
+async function generateSpeech() {
+  const audio = await client.textToSpeech.convert("JBFqnCBsd6RMkjVDRZzb", {
+    text: "The first move is what sets everything in motion.",
+    modelId: "eleven_flash_v2_5",
+    outputFormat: "mp3_44100_128",
+  });
+
+  await play(audio);
 }
 
-listLocations();
+generateSpeech();
 ```
 
-## Sandbox vs Production
+## Models
 
-Square provides two environments:
+ElevenLabs offers several models optimized for different use cases:
 
-| Environment | Base URL | Purpose |
-|------------|----------|---------|
-| Sandbox | `https://connect.squaresandbox.com` | Testing and development |
-| Production | `https://connect.squareup.com` | Live transactions |
+| Model | Latency | Quality | Languages | Best for |
+|-------|---------|---------|-----------|----------|
+| Eleven v3 | Medium | Highest | 70+ | Dramatic, expressive content |
+| Multilingual v2 | Medium | High | 29 | Long-form, consistent quality |
+| Flash v2.5 | ~75ms | Good | 32 | Real-time, low-latency apps |
+| English v1 | Low | Good | 1 | English-only applications |
 
-The sandbox environment uses test credentials and never processes real payments. Always develop and test in sandbox before switching to production.
+## Voice options
 
-### Sandbox test values
+You can use voices from several sources:
 
-Use these test card numbers in the sandbox:
-
-| Card number | Result |
-|------------|--------|
-| 4532 7597 3454 5858 | Successful charge |
-| 4000 0000 0000 0002 | Card declined |
-| 4000 0000 0000 0010 | CVV failure |
-| 4000 0000 0000 0028 | Address verification failure |
+| Source | Description |
+|--------|-------------|
+| Pre-made voices | Curated voices ready to use immediately |
+| Voice Library | Community-shared voices with diverse styles |
+| Instant Clone | Clone a voice from a short audio sample |
+| Professional Clone | High-fidelity clone from extended recordings |
+| Voice Design | Generate a voice from a text description |
 
 ## Next steps
 
-- [Authentication](/authentication) - Understand OAuth and API key authentication
-- [Error Handling](/error-handling) - Handle API errors gracefully
+- [Authentication](/authentication) - Understand API key management
+- [Text to Speech](/text-to-speech) - Deep dive into speech generation
 - [API Reference](/api-reference) - Explore the complete API

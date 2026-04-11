@@ -1,118 +1,114 @@
 ---
 title: Authentication
-description: Learn about Square API authentication methods including OAuth 2.0 and personal access tokens.
+description: Learn about ElevenLabs API authentication methods and best practices for securing your API keys.
 slug: authentication
 ---
 
 # Authentication
 
-Square supports two authentication methods: personal access tokens for server-to-server calls, and OAuth 2.0 for third-party applications that need access to merchant data.
+The ElevenLabs API uses API keys for authentication. Every request must include a valid API key to access the platform's capabilities.
 
-## Personal access tokens
+## API keys
 
-Personal access tokens are the simplest way to authenticate. They're ideal for:
+API keys are the primary way to authenticate with the ElevenLabs API. You can create and manage keys in the [Dashboard](https://elevenlabs.io/app/settings/api-keys).
 
-- Server-to-server API calls
-- Internal tools and scripts
-- Testing and development
-
-Include your token in the `Authorization` header:
+Include your API key in the `xi-api-key` header:
 
 ```bash
-curl https://connect.squareup.com/v2/locations \
-  -H 'Authorization: Bearer YOUR_ACCESS_TOKEN'
+curl https://api.elevenlabs.io/v1/voices \
+  -H 'xi-api-key: YOUR_API_KEY'
 ```
 
-### Token security best practices
+### Key types
 
-- Never expose tokens in client-side code or public repositories
-- Store tokens in environment variables or a secrets manager
-- Rotate tokens periodically
-- Use the minimum required permissions
+| Key type | Scope | Use case |
+|----------|-------|----------|
+| Personal API key | Full account access | Development, personal projects |
+| Service account key | Workspace-scoped | Production applications, CI/CD |
+| Scoped key | Limited permissions | Third-party integrations |
 
-## OAuth 2.0
+### Key security best practices
 
-OAuth 2.0 is required when your application needs to access another merchant's Square account. The flow works as follows:
+- Never expose API keys in client-side code or public repositories
+- Store keys in environment variables or a secrets manager
+- Rotate keys periodically and revoke unused ones
+- Use service account keys for production workloads
+- Use scoped keys with minimum required permissions for third-party integrations
 
-1. **Authorization request**: Redirect the merchant to Square's authorization page
-2. **Authorization grant**: The merchant approves your application
-3. **Token exchange**: Exchange the authorization code for an access token
-4. **API access**: Use the access token to make API calls on behalf of the merchant
-
-### Authorization URL
-
-```
-https://connect.squareup.com/oauth2/authorize?
-  client_id=YOUR_APP_ID&
-  scope=PAYMENTS_WRITE+ORDERS_READ&
-  state=RANDOM_STATE_VALUE
-```
-
-### Token exchange
+## Using API keys with SDKs
 
 ```typescript
-const response = await client.oAuth.obtainToken({
-  clientId: process.env.SQUARE_APP_ID,
-  clientSecret: process.env.SQUARE_APP_SECRET,
-  grantType: "authorization_code",
-  code: authorizationCode,
-});
+import { ElevenLabsClient } from "@elevenlabs/elevenlabs-js";
 
-const accessToken = response.result.accessToken;
-const refreshToken = response.result.refreshToken;
-```
-
-### Refreshing tokens
-
-Access tokens expire after 30 days. Use the refresh token to obtain a new access token:
-
-```typescript
-const response = await client.oAuth.obtainToken({
-  clientId: process.env.SQUARE_APP_ID,
-  clientSecret: process.env.SQUARE_APP_SECRET,
-  grantType: "refresh_token",
-  refreshToken: savedRefreshToken,
+const client = new ElevenLabsClient({
+  apiKey: process.env.ELEVENLABS_API_KEY,
 });
 ```
 
-## OAuth scopes
+```python
+from elevenlabs.client import ElevenLabs
 
-Request only the scopes your application needs:
+client = ElevenLabs(
+    api_key=os.environ["ELEVENLABS_API_KEY"],
+)
+```
 
-| Scope | Description |
-|-------|-------------|
-| `PAYMENTS_READ` | View payment information |
-| `PAYMENTS_WRITE` | Process payments |
-| `ORDERS_READ` | View orders |
-| `ORDERS_WRITE` | Create and update orders |
-| `CUSTOMERS_READ` | View customer profiles |
-| `CUSTOMERS_WRITE` | Create and update customers |
-| `ITEMS_READ` | View catalog items |
-| `ITEMS_WRITE` | Create and update catalog items |
-| `MERCHANT_PROFILE_READ` | View merchant profile |
-| `EMPLOYEES_READ` | View team member information |
-| `INVENTORY_READ` | View inventory counts |
-| `INVENTORY_WRITE` | Adjust inventory counts |
+## Workspace authentication
 
-## Webhook authentication
+For team environments, workspace-level authentication provides additional controls:
 
-Square signs webhook notifications with an HMAC-SHA256 signature. Verify the signature before processing:
+### Service accounts
+
+Service accounts are non-human identities designed for automated workflows:
+
+1. Navigate to **Workspace Settings > Service Accounts**
+2. Create a new service account with a descriptive name
+3. Assign the appropriate role (Admin, Editor, or Viewer)
+4. Generate an API key for the service account
 
 ```typescript
-import crypto from "crypto";
-
-function verifyWebhookSignature(
-  body: string,
-  signature: string,
-  signatureKey: string,
-  notificationUrl: string
-): boolean {
-  const combined = notificationUrl + body;
-  const expectedSignature = crypto
-    .createHmac("sha256", signatureKey)
-    .update(combined)
-    .digest("base64");
-
-  return signature === expectedSignature;
-}
+// Service account key works the same as a personal key
+const client = new ElevenLabsClient({
+  apiKey: process.env.ELEVENLABS_SERVICE_ACCOUNT_KEY,
+});
 ```
+
+### Single Sign-On (SSO)
+
+Enterprise workspaces can configure SSO for centralized access management:
+
+- SAML 2.0 support for major identity providers (Okta, Azure AD, Google Workspace)
+- Automatic user provisioning via SCIM
+- Enforced SSO login for all workspace members
+
+## Zero retention mode
+
+For sensitive applications, enable zero retention mode by setting `enable_logging` to `false` on API requests. This ensures:
+
+- No request data is stored on ElevenLabs servers
+- History features are unavailable for the request
+- Request stitching is disabled
+
+```bash
+curl -X POST https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb?enable_logging=false \
+  -H 'xi-api-key: YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "text": "Sensitive content that should not be logged.",
+    "model_id": "eleven_flash_v2_5"
+  }' \
+  --output speech.mp3
+```
+
+## Rate limits by plan
+
+| Plan | Requests per second | Concurrent requests |
+|------|-------------------|-------------------|
+| Free | 2 RPS | 2 |
+| Starter | 5 RPS | 5 |
+| Creator | 10 RPS | 10 |
+| Pro | 20 RPS | 20 |
+| Scale | 50 RPS | 50 |
+| Enterprise | Custom | Custom |
+
+See [Rate Limiting](/rate-limiting) for details on handling rate limit errors.

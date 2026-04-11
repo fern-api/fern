@@ -1,173 +1,165 @@
 ---
 title: Best Practices
-description: Best practices for building reliable and performant Square API integrations.
+description: Best practices for building reliable and performant ElevenLabs API integrations.
 slug: best-practices
 ---
 
 # Best Practices
 
-Follow these best practices to build reliable, secure, and performant integrations with the Square API.
+Follow these best practices to build reliable, secure, and performant integrations with the ElevenLabs API.
 
 ## Security
 
 ### Protect your credentials
 
-- **Never hardcode tokens** in source code or commit them to version control
+- **Never hardcode API keys** in source code or commit them to version control
 - **Use environment variables** or a secrets manager for all credentials
-- **Rotate tokens regularly** and revoke unused tokens
-- **Use minimum required scopes** for OAuth applications
-
-### Validate webhook signatures
-
-Always verify the HMAC-SHA256 signature before processing webhook events. Never trust webhook data without verification.
+- **Rotate keys regularly** and revoke unused keys
+- **Use service account keys** for production workloads instead of personal keys
 
 ### Handle sensitive data carefully
 
-- **Never log full card numbers** or sensitive payment data
-- **Mask tokens in logs** - show only the last 4 characters
-- **Use PCI-compliant hosting** for payment processing
-- **Encrypt data at rest** in your database
+- **Enable zero retention mode** for sensitive content by setting `enable_logging=false`
+- **Never log audio content** from voice cloning or private text-to-speech requests
+- **Mask API keys in logs** - show only the last 4 characters
+- **Audit API key usage** regularly via the Dashboard
 
 ## Reliability
 
-### Implement idempotency
+### Implement retry logic
 
-Every write request should include an `idempotency_key`. Use a deterministic key when possible:
+Every API call should handle transient failures with exponential backoff:
 
 ```typescript
-// Good: deterministic key based on business logic
-const idempotencyKey = `order-${orderId}-payment-${attemptNumber}`;
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  maxRetries = 3,
+  baseDelay = 1000
+): Promise<T> {
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (attempt === maxRetries) throw error;
 
-// Acceptable: UUID for one-time operations
-const idempotencyKey = crypto.randomUUID();
+      if (error instanceof ElevenLabsError) {
+        const isRetryable = [408, 429, 500, 503].includes(error.statusCode);
+        if (!isRetryable) throw error;
+      }
 
-// Bad: no idempotency key (request may be duplicated on retry)
+      const delay = baseDelay * Math.pow(2, attempt);
+      const jitter = Math.random() * delay * 0.1;
+      await new Promise((r) => setTimeout(r, delay + jitter));
+    }
+  }
+  throw new Error("Unreachable");
+}
 ```
 
 ### Handle all error categories
 
 ```typescript
 try {
-  const result = await client.payments.create(request);
+  const audio = await client.textToSpeech.convert(voiceId, request);
 } catch (error) {
-  if (error instanceof SquareError) {
-    for (const e of error.errors) {
-      switch (e.category) {
-        case "AUTHENTICATION_ERROR":
-          // Refresh token or alert admin
-          break;
-        case "INVALID_REQUEST_ERROR":
-          // Fix the request (don't retry)
-          break;
-        case "RATE_LIMIT_ERROR":
-          // Wait and retry with backoff
-          break;
-        case "PAYMENT_METHOD_ERROR":
-          // Ask customer for different payment
-          break;
-        case "API_ERROR":
-          // Retry with exponential backoff
-          break;
-      }
+  if (error instanceof ElevenLabsError) {
+    switch (error.statusCode) {
+      case 401:
+        // Invalid API key - check credentials
+        break;
+      case 403:
+        // Insufficient permissions or plan limit
+        break;
+      case 422:
+        // Validation error - fix the request
+        break;
+      case 429:
+        // Rate limited - wait and retry
+        break;
+      case 500:
+      case 503:
+        // Server error - retry with backoff
+        break;
     }
   }
 }
 ```
 
-### Implement retry logic
+### Monitor character quota
 
-Use exponential backoff with jitter for retryable errors:
+```typescript
+async function checkQuotaBeforeGeneration(textLength: number) {
+  const subscription = await client.user.getSubscription();
+  const remaining = subscription.characterLimit - subscription.characterCount;
 
-| Attempt | Base delay | With jitter |
-|---------|-----------|-------------|
-| 1 | 1s | 0.9-1.1s |
-| 2 | 2s | 1.8-2.2s |
-| 3 | 4s | 3.6-4.4s |
-| 4 | 8s | 7.2-8.8s |
-| 5 | 16s | 14.4-17.6s |
+  if (textLength > remaining) {
+    throw new QuotaError(
+      `Need ${textLength} chars but only ${remaining} remaining. ` +
+      `Quota resets on ${subscription.nextCharacterCountResetUnix}.`
+    );
+  }
+}
+```
 
 ## Performance
 
-### Use batch endpoints
+### Choose the right model
 
-Batch operations are more efficient than individual requests:
+| Use case | Recommended model | Why |
+|----------|------------------|-----|
+| Real-time chat | Flash v2.5 | Lowest latency (~75ms) |
+| Audiobooks | Multilingual v2 | Most consistent long-form |
+| Dramatic content | Eleven v3 | Most expressive delivery |
+| English-only | English v2 | Optimized for English |
+| Budget-conscious | Flash v2.5 | 50% lower price per character |
+
+### Use streaming for long texts
+
+Streaming returns audio chunks as they're generated, reducing time-to-first-byte:
 
 ```typescript
-// Instead of 50 individual catalog updates:
-await client.catalog.batchUpsert({
-  idempotencyKey: crypto.randomUUID(),
-  batches: [{ objects: catalogItems }],
-});
+// Non-streaming: waits for entire audio to generate
+const audio = await client.textToSpeech.convert(voiceId, { text, modelId });
+
+// Streaming: starts playing immediately
+const stream = await client.textToSpeech.stream(voiceId, { text, modelId });
+for await (const chunk of stream) {
+  outputStream.write(chunk);
+}
 ```
 
-### Cache frequently accessed data
+### Cache generated audio
 
-Cache data that changes infrequently:
+Cache audio for repeated requests to reduce API calls and character usage:
 
-| Data | Recommended TTL | Invalidation |
-|------|----------------|--------------|
-| Locations | 1 hour | Manual refresh |
-| Catalog items | 15 minutes | Webhook: `catalog.version.updated` |
-| Customer profiles | 5 minutes | Webhook: `customer.updated` |
-| Team members | 30 minutes | Manual refresh |
+| Content type | Recommended TTL | Invalidation |
+|-------------|----------------|--------------|
+| Static content (docs, help) | 24 hours | On content change |
+| Dynamic content (names) | 1 hour | On data change |
+| Real-time (chat) | No cache | N/A |
 
-### Use webhooks instead of polling
+### Split long texts intelligently
 
-Webhooks provide real-time updates without the overhead of continuous polling:
+When text exceeds the model's character limit, split at natural boundaries:
 
 ```typescript
-// Bad: polling every 30 seconds
-setInterval(async () => {
-  const payments = await client.payments.list({
-    beginTime: lastCheck.toISOString(),
-  });
-  // Process new payments...
-}, 30000);
+function splitText(text: string, maxChars: number): string[] {
+  const chunks: string[] = [];
+  const paragraphs = text.split("\n\n");
+  let current = "";
 
-// Good: webhook handler
-app.post("/webhooks/square", (req, res) => {
-  const event = verifyAndParse(req);
-  if (event.type === "payment.completed") {
-    processPayment(event.data.object.payment);
+  for (const paragraph of paragraphs) {
+    if ((current + "\n\n" + paragraph).length > maxChars) {
+      if (current) chunks.push(current.trim());
+      current = paragraph;
+    } else {
+      current += (current ? "\n\n" : "") + paragraph;
+    }
   }
-  res.sendStatus(200);
-});
-```
+  if (current) chunks.push(current.trim());
 
-## Testing
-
-### Use the sandbox environment
-
-- Test all payment flows in sandbox before production
-- Use test card numbers to simulate different scenarios
-- Verify error handling with decline and failure cards
-- Test webhook handling with sandbox events
-
-### Write integration tests
-
-```typescript
-describe("Payment processing", () => {
-  it("should process a successful payment", async () => {
-    const result = await processPayment({
-      sourceId: "cnon:card-nonce-ok",
-      amount: 1000,
-      currency: "USD",
-    });
-
-    expect(result.status).toBe("COMPLETED");
-    expect(result.amountMoney.amount).toBe(1000n);
-  });
-
-  it("should handle a declined card", async () => {
-    await expect(
-      processPayment({
-        sourceId: "cnon:card-nonce-declined",
-        amount: 1000,
-        currency: "USD",
-      })
-    ).rejects.toThrow("CARD_DECLINED");
-  });
-});
+  return chunks;
+}
 ```
 
 ## Monitoring
@@ -177,7 +169,7 @@ describe("Payment processing", () => {
 | Metric | Description | Alert threshold |
 |--------|-------------|-----------------|
 | API error rate | Percentage of failed API calls | > 1% |
-| Payment success rate | Percentage of successful payments | < 95% |
-| API latency (p95) | 95th percentile response time | > 5s |
-| Webhook delivery rate | Percentage of successful webhook deliveries | < 99% |
-| Token refresh failures | Failed OAuth token refreshes | Any failure |
+| Generation latency (p95) | 95th percentile response time | > 10s |
+| Character usage | Daily character consumption | > 80% of quota |
+| Rate limit hits | Number of 429 responses | > 10/minute |
+| Cache hit rate | Percentage of cached responses | < 50% |

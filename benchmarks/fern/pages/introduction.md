@@ -1,66 +1,57 @@
 ---
 title: Introduction
-description: Learn about the Square API platform and how to integrate payments, inventory, and customer management into your applications.
+description: Learn about the ElevenLabs API platform and how to integrate text-to-speech, voice cloning, and audio AI into your applications.
 slug: introduction
 ---
 
 # Introduction
 
-The Square API platform provides a comprehensive suite of tools for building commerce applications. Whether you're processing payments, managing inventory, or building customer loyalty programs, Square's APIs offer the building blocks you need.
+The ElevenLabs API platform provides a comprehensive suite of tools for building AI-powered audio applications. Whether you're generating lifelike speech, cloning voices, transcribing audio, or building conversational agents, the APIs offer the building blocks you need.
 
-## Why Square?
+## Why ElevenLabs?
 
-Square processes billions of dollars in transactions annually. The platform is designed for:
+The platform is designed for:
 
-- **Reliability**: 99.99% uptime SLA for payment processing
-- **Security**: PCI DSS Level 1 certified, end-to-end encryption
-- **Scale**: Handle thousands of transactions per second
-- **Global reach**: Available in the US, Canada, UK, Australia, Japan, and more
+- **Quality**: Industry-leading voice synthesis with natural intonation and emotional delivery
+- **Low latency**: Sub-75ms streaming for real-time applications
+- **Multilingual**: Support for 32+ languages with native-quality pronunciation
+- **Scalability**: Handle millions of characters per day with enterprise-grade infrastructure
 
 ## Platform overview
 
-The Square API platform consists of several interconnected services:
+The API platform consists of several interconnected services:
 
 | Service | Description | Common use cases |
 |---------|-------------|-----------------|
-| Payments | Process card and digital wallet payments | Point of sale, e-commerce checkout |
-| Orders | Create and manage orders with line items | Restaurant ordering, retail checkout |
-| Catalog | Manage products, categories, and pricing | Inventory management, menu systems |
-| Customers | Store and manage customer profiles | Loyalty programs, CRM |
-| Locations | Manage business locations and settings | Multi-location businesses |
-| Invoices | Create and send invoices | Service businesses, B2B |
-| Subscriptions | Manage recurring billing | SaaS, membership sites |
+| Text to Speech | Convert text into lifelike spoken audio | Audiobooks, podcasts, accessibility |
+| Speech to Text | Transcribe audio into accurate text | Meeting notes, subtitles, search indexing |
+| Voice Cloning | Create custom voices from audio samples | Brand voices, personalization, dubbing |
+| Voice Library | Browse and use pre-made voices | Prototyping, content creation |
+| Sound Effects | Generate sound effects from text descriptions | Game audio, film production |
+| Dubbing | Translate audio preserving speaker identity | Content localization, media |
+| Voice Agents | Build conversational AI with natural voices | Customer support, virtual assistants |
 
 ## Getting started
 
-To start building with the Square API:
+To start building with the API:
 
-1. Create a Square developer account
-2. Generate API credentials in the Developer Dashboard
+1. Create an ElevenLabs account
+2. Generate an API key in the Dashboard
 3. Install the SDK for your programming language
 4. Make your first API call
 
 ```bash
-curl https://connect.squareup.com/v2/locations \
-  -H 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
-  -H 'Content-Type: application/json'
+curl -X POST https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb \
+  -H 'xi-api-key: YOUR_API_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "text": "Hello world! This is a test of the text to speech API.",
+    "model_id": "eleven_flash_v2_5"
+  }' \
+  --output speech.mp3
 ```
 
-The response includes your business locations:
-
-```json
-{
-  "locations": [
-    {
-      "id": "L8GF7GQBX3M2T",
-      "name": "Default Location",
-      "status": "ACTIVE",
-      "currency": "USD",
-      "country": "US"
-    }
-  ]
-}
-```
+The response is an audio file containing the generated speech.
 
 ## Next steps
 

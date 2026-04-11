@@ -1,29 +1,26 @@
 ---
 title: Pagination
-description: Navigate large result sets with cursor-based pagination in the Square API.
+description: Navigate large result sets with cursor-based pagination in the ElevenLabs API.
 slug: pagination
 ---
 
 # Pagination
 
-Square API list endpoints return paginated results to keep response sizes manageable. This guide explains how to navigate through large result sets using cursor-based pagination.
+List endpoints in the ElevenLabs API return paginated results to keep response sizes manageable. This guide explains how to navigate through large result sets.
 
 ## How pagination works
 
-When a list endpoint has more results than can fit in a single response, the response includes a `cursor` field. Pass this cursor in your next request to retrieve the next page of results.
+When a list endpoint has more results than the page size, the response includes pagination metadata. Use the returned values to fetch subsequent pages.
 
 ```
-Request 1: GET /v2/customers?limit=100
-Response:  { "customers": [...100 items...], "cursor": "abc123" }
+Request 1: GET /v1/voices?page_size=100
+Response:  { "voices": [...100 items...], "has_more": true, "next_cursor": "abc123" }
 
-Request 2: GET /v2/customers?limit=100&cursor=abc123
-Response:  { "customers": [...100 items...], "cursor": "def456" }
-
-Request 3: GET /v2/customers?limit=100&cursor=def456
-Response:  { "customers": [...50 items...] }  // No cursor = last page
+Request 2: GET /v1/voices?page_size=100&cursor=abc123
+Response:  { "voices": [...50 items...], "has_more": false }
 ```
 
-When the response does not include a `cursor` field, you have reached the last page.
+When `has_more` is `false`, you have reached the last page.
 
 ## Page size limits
 
@@ -31,38 +28,34 @@ Each endpoint has its own default and maximum page sizes:
 
 | Endpoint | Default | Maximum |
 |----------|---------|---------|
-| List Customers | 100 | 100 |
-| List Payments | 100 | 100 |
-| List Orders | 500 | 500 |
-| List Catalog Objects | 100 | 1000 |
-| List Invoices | 100 | 200 |
-| List Subscriptions | 200 | 200 |
-| Search Orders | 500 | 500 |
-| List Transactions | 50 | 50 |
+| List Voices | 30 | 100 |
+| List History Items | 100 | 1000 |
+| List Voice Library | 30 | 100 |
+| List Models | All | All |
+| List Pronunciation Dictionaries | 100 | 500 |
+| List Sound Effects | 100 | 500 |
+| List Dubbing Projects | 100 | 100 |
 
 ## Pagination examples
 
 ### Basic pagination
 
 ```typescript
-async function getAllCustomers(): Promise<Customer[]> {
-  const allCustomers: Customer[] = [];
+async function getAllVoices(): Promise<Voice[]> {
+  const allVoices: Voice[] = [];
   let cursor: string | undefined;
 
   do {
-    const response = await client.customers.list({
-      limit: 100,
+    const response = await client.voices.list({
+      pageSize: 100,
       cursor,
     });
 
-    if (response.customers) {
-      allCustomers.push(...response.customers);
-    }
-
-    cursor = response.cursor;
+    allVoices.push(...response.voices);
+    cursor = response.hasMore ? response.nextCursor : undefined;
   } while (cursor);
 
-  return allCustomers;
+  return allVoices;
 }
 ```
 
@@ -71,30 +64,29 @@ async function getAllCustomers(): Promise<Customer[]> {
 Some endpoints support filtering alongside pagination:
 
 ```typescript
-async function getRecentPayments(
-  locationId: string,
+async function getRecentHistory(
+  voiceId: string,
   since: string
-): Promise<Payment[]> {
-  const payments: Payment[] = [];
+): Promise<HistoryItem[]> {
+  const items: HistoryItem[] = [];
   let cursor: string | undefined;
 
   do {
-    const response = await client.payments.list({
-      locationId,
-      beginTime: since,
-      sortOrder: "DESC",
-      limit: 100,
-      cursor,
+    const response = await client.history.list({
+      voiceId,
+      startAfterHistoryItemId: cursor,
+      pageSize: 100,
     });
 
-    if (response.payments) {
-      payments.push(...response.payments);
-    }
+    const filtered = response.history.filter(
+      (item) => new Date(item.dateUnix * 1000) > new Date(since)
+    );
+    items.push(...filtered);
 
-    cursor = response.cursor;
+    cursor = response.hasMore ? response.lastHistoryItemId : undefined;
   } while (cursor);
 
-  return payments;
+  return items;
 }
 ```
 
@@ -103,49 +95,26 @@ async function getRecentPayments(
 For cleaner code, wrap pagination in an async generator:
 
 ```typescript
-async function* paginateCustomers(
-  limit = 100
-): AsyncGenerator<Customer> {
+async function* paginateHistory(
+  pageSize = 100
+): AsyncGenerator<HistoryItem> {
   let cursor: string | undefined;
 
   do {
-    const response = await client.customers.list({ limit, cursor });
+    const response = await client.history.list({ pageSize, cursor });
 
-    if (response.customers) {
-      for (const customer of response.customers) {
-        yield customer;
-      }
+    for (const item of response.history) {
+      yield item;
     }
 
-    cursor = response.cursor;
+    cursor = response.hasMore ? response.lastHistoryItemId : undefined;
   } while (cursor);
 }
 
 // Usage
-for await (const customer of paginateCustomers()) {
-  console.log(customer.givenName, customer.familyName);
+for await (const item of paginateHistory()) {
+  console.log(`${item.voiceName}: ${item.text.substring(0, 50)}...`);
 }
-```
-
-## Search endpoints
-
-Some endpoints use `SearchXxx` instead of `ListXxx`. These accept a request body with query filters and return results with the same cursor-based pagination:
-
-```typescript
-const response = await client.orders.search({
-  locationIds: ["L8GF7GQBX3M2T"],
-  query: {
-    filter: {
-      stateFilter: { states: ["COMPLETED"] },
-      dateTimeFilter: {
-        createdAt: { startAt: "2024-01-01T00:00:00Z" },
-      },
-    },
-    sort: { sortField: "CREATED_AT", sortOrder: "DESC" },
-  },
-  limit: 100,
-  cursor: previousCursor,
-});
 ```
 
 ## Best practices

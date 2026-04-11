@@ -1,108 +1,96 @@
 ---
 title: SDKs
-description: Official Square SDKs for TypeScript, Python, Java, Ruby, .NET, and PHP.
+description: Official ElevenLabs SDKs for TypeScript, Python, and other languages.
 slug: sdks
 ---
 
 # SDKs
 
-Square provides official SDKs for popular programming languages. Each SDK wraps the REST API with idiomatic interfaces, type safety, and built-in error handling.
+ElevenLabs provides official SDKs that wrap the REST API with idiomatic interfaces, type safety, and built-in error handling.
 
 ## Available SDKs
 
-| Language | Package | Version | Install |
-|----------|---------|---------|---------|
-| TypeScript/Node.js | `square` | 35.0.0 | `npm install square` |
-| Python | `squareup` | 35.0.0 | `pip install squareup` |
-| Java | `com.squareup:square` | 35.0.0 | Maven/Gradle |
-| Ruby | `square.rb` | 35.0.0 | `gem install square.rb` |
-| .NET | `Square` | 35.0.0 | `dotnet add package Square` |
-| PHP | `square/square` | 35.0.0 | `composer require square/square` |
+| Language | Package | Install |
+|----------|---------|---------|
+| TypeScript/Node.js | `@elevenlabs/elevenlabs-js` | `npm install @elevenlabs/elevenlabs-js` |
+| Python | `elevenlabs` | `pip install elevenlabs` |
+| Go | `elevenlabs-go` | `go get github.com/elevenlabs/elevenlabs-go` |
+| Ruby | `elevenlabs` | `gem install elevenlabs` |
+| .NET | `ElevenLabs` | `dotnet add package ElevenLabs` |
+| PHP | `elevenlabs/elevenlabs-php` | `composer require elevenlabs/elevenlabs-php` |
 
 ## TypeScript SDK
 
 The TypeScript SDK provides full type safety and works in Node.js 18+:
 
 ```typescript
-import { SquareClient } from "square";
+import { ElevenLabsClient } from "@elevenlabs/elevenlabs-js";
+import { play } from "@elevenlabs/elevenlabs-js";
 
-const client = new SquareClient({
-  token: process.env.SQUARE_ACCESS_TOKEN,
-  environment: "sandbox",
+const client = new ElevenLabsClient({
+  apiKey: process.env.ELEVENLABS_API_KEY,
 });
 
-// Create a payment
-const payment = await client.payments.create({
-  sourceId: "cnon:card-nonce-ok",
-  idempotencyKey: crypto.randomUUID(),
-  amountMoney: {
-    amount: BigInt(1000),
-    currency: "USD",
-  },
-  locationId: "L8GF7GQBX3M2T",
+// Generate speech
+const audio = await client.textToSpeech.convert("JBFqnCBsd6RMkjVDRZzb", {
+  text: "Hello from the TypeScript SDK!",
+  modelId: "eleven_flash_v2_5",
+  outputFormat: "mp3_44100_128",
 });
 
-console.log(`Payment ${payment.payment?.id}: ${payment.payment?.status}`);
+await play(audio);
 ```
 
 ## Python SDK
 
 ```python
-from square.client import Client
+from elevenlabs.client import ElevenLabs
+from elevenlabs import play
 import os
-import uuid
 
-client = Client(
-    access_token=os.environ["SQUARE_ACCESS_TOKEN"],
-    environment="sandbox",
+client = ElevenLabs(
+    api_key=os.environ["ELEVENLABS_API_KEY"],
 )
 
-# Create a payment
-result = client.payments.create_payment(
-    body={
-        "source_id": "cnon:card-nonce-ok",
-        "idempotency_key": str(uuid.uuid4()),
-        "amount_money": {
-            "amount": 1000,
-            "currency": "USD",
-        },
-        "location_id": "L8GF7GQBX3M2T",
-    }
+# Generate speech
+audio = client.text_to_speech.convert(
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    text="Hello from the Python SDK!",
+    model_id="eleven_flash_v2_5",
+    output_format="mp3_44100_128",
 )
 
-if result.is_success():
-    payment = result.body["payment"]
-    print(f"Payment {payment['id']}: {payment['status']}")
-elif result.is_error():
-    for error in result.errors:
-        print(f"Error: {error['detail']}")
+play(audio)
 ```
 
-## Java SDK
+## Go SDK
 
-```java
-import com.squareup.square.SquareClient;
-import com.squareup.square.models.*;
+```go
+package main
 
-SquareClient client = new SquareClient.Builder()
-    .accessToken(System.getenv("SQUARE_ACCESS_TOKEN"))
-    .environment("sandbox")
-    .build();
-
-CreatePaymentRequest body = new CreatePaymentRequest.Builder(
-    "cnon:card-nonce-ok",
-    UUID.randomUUID().toString()
+import (
+    "context"
+    "os"
+    elevenlabs "github.com/elevenlabs/elevenlabs-go"
 )
-    .amountMoney(new Money.Builder()
-        .amount(1000L)
-        .currency("USD")
-        .build())
-    .locationId("L8GF7GQBX3M2T")
-    .build();
 
-CreatePaymentResponse response = client.getPaymentsApi().createPayment(body);
-Payment payment = response.getPayment();
-System.out.println("Payment " + payment.getId() + ": " + payment.getStatus());
+func main() {
+    client := elevenlabs.NewClient(os.Getenv("ELEVENLABS_API_KEY"))
+
+    audio, err := client.TextToSpeech.Convert(
+        context.Background(),
+        "JBFqnCBsd6RMkjVDRZzb",
+        &elevenlabs.TextToSpeechRequest{
+            Text:    "Hello from the Go SDK!",
+            ModelID: "eleven_flash_v2_5",
+        },
+    )
+    if err != nil {
+        panic(err)
+    }
+
+    os.WriteFile("output.mp3", audio, 0644)
+}
 ```
 
 ## SDK features
@@ -112,29 +100,27 @@ All official SDKs include:
 - **Type safety** - Request and response types are fully typed
 - **Automatic serialization** - Objects are serialized/deserialized automatically
 - **Error handling** - Structured error types with detailed messages
-- **Pagination helpers** - Built-in cursor management for list endpoints
-- **Retry logic** - Automatic retries for transient errors
-- **Idempotency** - Built-in idempotency key support
-- **Sandbox support** - Easy switching between sandbox and production
+- **Streaming support** - Built-in support for audio streaming responses
+- **Retry logic** - Automatic retries for transient errors with exponential backoff
+- **Audio playback** - Helper utilities for playing generated audio
 
 ## SDK configuration
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `token` | Access token for authentication | Required |
-| `environment` | `sandbox` or `production` | `production` |
+| `apiKey` | API key for authentication | Required |
 | `timeout` | Request timeout in milliseconds | 60000 |
-| `httpClient` | Custom HTTP client | Built-in |
-| `userAgent` | Custom user agent suffix | SDK default |
+| `maxRetries` | Maximum number of retry attempts | 3 |
+| `baseUrl` | Custom base URL | `https://api.elevenlabs.io` |
 
 ## Community SDKs
 
 In addition to official SDKs, community-maintained SDKs are available for:
 
-- Go
 - Rust
 - Swift
 - Kotlin
 - Elixir
+- Dart/Flutter
 
-These are not officially supported by Square but may be useful for projects in those languages.
+These are not officially supported but may be useful for projects in those languages.
