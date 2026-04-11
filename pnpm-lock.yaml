@@ -4829,6 +4829,9 @@ importers:
       '@fern-fern/generators-sdk':
         specifier: 'catalog:'
         version: 0.114.0-5745f9e74
+      '@octokit/rest':
+        specifier: 'catalog:'
+        version: 22.0.1
       '@sentry/node':
         specifier: ^10.45.0
         version: 10.47.0
