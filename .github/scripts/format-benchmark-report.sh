@@ -205,3 +205,4 @@ echo "_⚠️ = generation exited with a non-zero exit code (timing may not refl
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
   echo "_Baseline from nightly runs on \`main\` (latest: ${BASELINE_TIMESTAMP}). Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"
 fi
+echo "_Last updated: $(date -u '+%Y-%m-%d %H:%M') UTC_"
