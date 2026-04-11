@@ -5,7 +5,7 @@
 # Pages are generated at CI time by generate-fixture-pages.sh from a template.
 # The page-NN.md references below correspond to generated files.
 instances:
-  - url: ferndevtest.docs.dev.buildwithfern.com
+  - url: fern.docs.buildwithfern.com
 
 navigation:
   - section: Getting Started
