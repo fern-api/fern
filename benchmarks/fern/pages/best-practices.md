@@ -1,12 +1,12 @@
 ---
 title: Best Practices
-description: Best practices for building reliable and performant ElevenLabs API integrations.
+description: Best practices for building reliable and performant Acme API integrations.
 slug: best-practices
 ---
 
 # Best Practices
 
-Follow these best practices to build reliable, secure, and performant integrations with the ElevenLabs API.
+Follow these best practices to build reliable, secure, and performant integrations with the Acme API.
 
 ## Security
 
@@ -20,7 +20,7 @@ Follow these best practices to build reliable, secure, and performant integratio
 ### Handle sensitive data carefully
 
 - **Enable zero retention mode** for sensitive content by setting `enable_logging=false`
-- **Never log audio content** from voice cloning or private text-to-speech requests
+- **Never log request payloads** containing private or sensitive data
 - **Mask API keys in logs** - show only the last 4 characters
 - **Audit API key usage** regularly via the Dashboard
 
@@ -42,7 +42,7 @@ async function withRetry<T>(
     } catch (error) {
       if (attempt === maxRetries) throw error;
 
-      if (error instanceof ElevenLabsError) {
+      if (error instanceof AcmeError) {
         const isRetryable = [408, 429, 500, 503].includes(error.statusCode);
         if (!isRetryable) throw error;
       }
@@ -60,9 +60,9 @@ async function withRetry<T>(
 
 ```typescript
 try {
-  const audio = await client.textToSpeech.convert(voiceId, request);
+  const result = await client.data.process(request);
 } catch (error) {
-  if (error instanceof ElevenLabsError) {
+  if (error instanceof AcmeError) {
     switch (error.statusCode) {
       case 401:
         // Invalid API key - check credentials
@@ -85,17 +85,17 @@ try {
 }
 ```
 
-### Monitor character quota
+### Monitor request quota
 
 ```typescript
-async function checkQuotaBeforeGeneration(textLength: number) {
+async function checkQuotaBeforeProcessing(batchSize: number) {
   const subscription = await client.user.getSubscription();
-  const remaining = subscription.characterLimit - subscription.characterCount;
+  const remaining = subscription.requestLimit - subscription.requestCount;
 
-  if (textLength > remaining) {
+  if (batchSize > remaining) {
     throw new QuotaError(
-      `Need ${textLength} chars but only ${remaining} remaining. ` +
-      `Quota resets on ${subscription.nextCharacterCountResetUnix}.`
+      `Need ${batchSize} requests but only ${remaining} remaining. ` +
+      `Quota resets on ${subscription.nextResetTimestamp}.`
     );
   }
 }
@@ -103,47 +103,47 @@ async function checkQuotaBeforeGeneration(textLength: number) {
 
 ## Performance
 
-### Choose the right model
+### Choose the right pipeline
 
-| Use case | Recommended model | Why |
-|----------|------------------|-----|
-| Real-time chat | Flash v2.5 | Lowest latency (~75ms) |
-| Audiobooks | Multilingual v2 | Most consistent long-form |
-| Dramatic content | Eleven v3 | Most expressive delivery |
-| English-only | English v2 | Optimized for English |
-| Budget-conscious | Flash v2.5 | 50% lower price per character |
+| Use case | Recommended pipeline | Why |
+|----------|---------------------|-----|
+| Real-time queries | Express v1 | Lowest latency |
+| Batch analytics | Standard v2 | Most consistent throughput |
+| Compliance reports | Precision v3 | Highest accuracy |
+| English-only | Legacy v1 | Optimized for English |
+| Budget-conscious | Express v1 | 50% lower cost per request |
 
-### Use streaming for long texts
+### Use streaming for large datasets
 
-Streaming returns audio chunks as they're generated, reducing time-to-first-byte:
+Streaming returns results as they're generated, reducing time-to-first-byte:
 
 ```typescript
-// Non-streaming: waits for entire audio to generate
-const audio = await client.textToSpeech.convert(voiceId, { text, modelId });
+// Non-streaming: waits for entire result
+const result = await client.data.process({ input, pipeline });
 
-// Streaming: starts playing immediately
-const stream = await client.textToSpeech.stream(voiceId, { text, modelId });
+// Streaming: starts returning immediately
+const stream = await client.data.stream({ input, pipeline });
 for await (const chunk of stream) {
   outputStream.write(chunk);
 }
 ```
 
-### Cache generated audio
+### Cache results
 
-Cache audio for repeated requests to reduce API calls and character usage:
+Cache responses for repeated requests to reduce API calls and quota usage:
 
 | Content type | Recommended TTL | Invalidation |
 |-------------|----------------|--------------|
-| Static content (docs, help) | 24 hours | On content change |
-| Dynamic content (names) | 1 hour | On data change |
-| Real-time (chat) | No cache | N/A |
+| Static lookups (config, schema) | 24 hours | On config change |
+| Dynamic queries (search, filter) | 1 hour | On data change |
+| Real-time (monitoring) | No cache | N/A |
 
-### Split long texts intelligently
+### Split large inputs intelligently
 
-When text exceeds the model's character limit, split at natural boundaries:
+When input exceeds the pipeline's size limit, split at natural boundaries:
 
 ```typescript
-function splitText(text: string, maxChars: number): string[] {
+function splitInput(text: string, maxChars: number): string[] {
   const chunks: string[] = [];
   const paragraphs = text.split("\n\n");
   let current = "";
@@ -169,7 +169,7 @@ function splitText(text: string, maxChars: number): string[] {
 | Metric | Description | Alert threshold |
 |--------|-------------|-----------------|
 | API error rate | Percentage of failed API calls | > 1% |
-| Generation latency (p95) | 95th percentile response time | > 10s |
-| Character usage | Daily character consumption | > 80% of quota |
+| Processing latency (p95) | 95th percentile response time | > 10s |
+| Request usage | Daily request consumption | > 80% of quota |
 | Rate limit hits | Number of 429 responses | > 10/minute |
 | Cache hit rate | Percentage of cached responses | < 50% |

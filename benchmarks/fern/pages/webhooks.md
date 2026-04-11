@@ -1,17 +1,17 @@
 ---
 title: Webhooks
-description: Receive real-time notifications about events in your ElevenLabs account using webhooks.
+description: Receive real-time notifications about events in your Acme account using webhooks.
 slug: webhooks
 ---
 
 # Webhooks
 
-Webhooks enable your application to receive real-time notifications when events occur in your ElevenLabs account. Instead of polling the API for status changes, events are pushed directly to your server.
+Webhooks enable your application to receive real-time notifications when events occur in your Acme account. Instead of polling the API for status changes, events are pushed directly to your server.
 
 ## How webhooks work
 
-1. You register a webhook endpoint URL in the ElevenLabs Dashboard
-2. When an event occurs (e.g., a dubbing job completes), a POST request is sent to your URL
+1. You register a webhook endpoint URL in the Acme Dashboard
+2. When an event occurs (e.g., a workflow completes), a POST request is sent to your URL
 3. Your server processes the event and returns a 200 response
 4. If the delivery fails, retries are attempted with exponential backoff
 
@@ -19,16 +19,16 @@ Webhooks enable your application to receive real-time notifications when events 
 
 | Event type | Description |
 |-----------|-------------|
-| `text_to_speech.completed` | A text-to-speech generation finished |
-| `text_to_speech.failed` | A text-to-speech generation failed |
-| `voice_clone.completed` | A voice clone was successfully created |
-| `voice_clone.failed` | A voice clone processing failed |
-| `dubbing.completed` | A dubbing project finished rendering |
-| `dubbing.failed` | A dubbing project encountered an error |
-| `pronunciation_dictionary.updated` | A dictionary was modified |
+| `processing.completed` | A data processing job finished |
+| `processing.failed` | A data processing job failed |
+| `resource.created` | A new resource was provisioned |
+| `resource.deleted` | A resource was removed |
+| `workflow.completed` | A workflow finished executing |
+| `workflow.failed` | A workflow encountered an error |
+| `export.ready` | A data export is ready for download |
 | `subscription.updated` | Subscription plan was changed |
-| `quota.warning` | Character quota approaching limit |
-| `quota.exhausted` | Character quota fully consumed |
+| `quota.warning` | Request quota approaching limit |
+| `quota.exhausted` | Request quota fully consumed |
 
 ## Webhook payload
 
@@ -37,15 +37,14 @@ Each webhook delivery includes an event object:
 ```json
 {
   "event_id": "evt_a1b2c3d4e5f6",
-  "type": "text_to_speech.completed",
+  "type": "processing.completed",
   "created_at": "2024-01-15T20:14:31.000Z",
   "data": {
-    "history_item_id": "h1b2c3d4e5f6",
-    "voice_id": "JBFqnCBsd6RMkjVDRZzb",
-    "model_id": "eleven_flash_v2_5",
-    "character_count": 150,
+    "job_id": "job_h1b2c3d4e5f6",
+    "pipeline_id": "standard_v2",
+    "input_size": 150,
     "status": "completed",
-    "audio_url": "https://api.elevenlabs.io/v1/history/h1b2c3d4e5f6/audio"
+    "result_url": "https://api.acme.io/v1/jobs/job_h1b2c3d4e5f6/result"
   }
 }
 ```
@@ -58,16 +57,16 @@ Always verify the webhook signature before processing events:
 import crypto from "crypto";
 import express from "express";
 
-const WEBHOOK_SECRET = process.env.ELEVENLABS_WEBHOOK_SECRET!;
+const WEBHOOK_SECRET = process.env.ACME_WEBHOOK_SECRET!;
 
 const app = express();
 
 app.post(
-  "/webhooks/elevenlabs",
+  "/webhooks/acme",
   express.raw({ type: "application/json" }),
   (req, res) => {
-    const signature = req.headers["x-elevenlabs-signature"] as string;
-    const timestamp = req.headers["x-elevenlabs-timestamp"] as string;
+    const signature = req.headers["x-acme-signature"] as string;
+    const timestamp = req.headers["x-acme-timestamp"] as string;
     const body = req.body.toString();
 
     const expectedSignature = crypto
@@ -99,11 +98,11 @@ async function processEvent(event: WebhookEvent) {
   }
 
   switch (event.type) {
-    case "text_to_speech.completed":
-      await handleTTSCompleted(event.data);
+    case "processing.completed":
+      await handleProcessingCompleted(event.data);
       break;
-    case "dubbing.completed":
-      await handleDubbingCompleted(event.data);
+    case "workflow.completed":
+      await handleWorkflowCompleted(event.data);
       break;
     case "quota.warning":
       await handleQuotaWarning(event.data);

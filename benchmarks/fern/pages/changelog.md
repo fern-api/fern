@@ -1,50 +1,50 @@
 ---
 title: Changelog
-description: Recent updates, new features, and improvements to the ElevenLabs API.
+description: Recent updates, new features, and improvements to the Acme API.
 slug: changelog
 ---
 
 # Changelog
 
-Stay up to date with the latest changes and improvements to the ElevenLabs API and SDKs.
+Stay up to date with the latest changes and improvements to the Acme API and SDKs.
 
 ## March 2025
 
-### Eleven v3 model release
+### Precision v3 pipeline release
 
-- **New model:** Eleven v3 now available with support for 70+ languages
-- **Multi-speaker dialogue:** Generate conversations with speaker tags in a single request
-- **Dramatic delivery:** Enhanced emotional range for performative and narrative content
-- **Inline tags:** Use `[laughs]`, `[whispers]`, `[sarcastically]` for expressive output
-- **Improved prosody:** More natural pacing, emphasis, and intonation across all languages
+- **New pipeline:** Precision v3 now available with support for 70+ data formats
+- **Multi-source joins:** Combine data from multiple inputs in a single request
+- **Advanced validation:** Enhanced data quality checks with detailed error reports
+- **Custom transforms:** Use inline transformation rules for complex processing
+- **Improved accuracy:** More accurate entity extraction and classification across all languages
 
 ### SDK updates
 
-- **TypeScript SDK v2.4.0:** Added v3 model support and multi-speaker helpers
-- **Python SDK v1.8.0:** Added v3 model support and async streaming improvements
+- **TypeScript SDK v2.4.0:** Added v3 pipeline support and batch processing helpers
+- **Python SDK v1.8.0:** Added v3 pipeline support and async streaming improvements
 
 ## February 2025
 
-### Voice Agents API (General Availability)
+### Workflow Engine (General Availability)
 
-- **Conversational AI:** Build real-time voice agents with sub-300ms latency
-- **Tool calling:** Agents can invoke external tools and APIs during conversation
-- **Custom knowledge bases:** Connect documents and URLs for agent grounding
-- **Webhook events:** Receive notifications when agent calls start, end, or encounter errors
+- **Orchestration:** Build multi-step automated workflows with sub-300ms step latency
+- **Tool integration:** Workflows can invoke external APIs and services at each step
+- **Knowledge bases:** Connect documents and data sources for context-aware processing
+- **Webhook events:** Receive notifications when workflows start, complete, or encounter errors
 
 ### API improvements
 
-- **New endpoint:** `POST /v1/speech-to-text` for audio transcription
-- **New parameter:** `speed` (0.7-1.3) for controlling speech rate in TTS
-- **New output format:** `ulaw_8000` for telephony integrations
+- **New endpoint:** `POST /v1/data/export` for bulk data export
+- **New parameter:** `batch_size` (1-1000) for controlling processing throughput
+- **New output format:** `arrow` for Apache Arrow IPC format
 
 ## January 2025
 
-### Voice Library enhancements
+### Pipeline library enhancements
 
-- **Sharing controls:** Set voices as public, unlisted, or private
-- **Usage analytics:** Track how often shared voices are used
-- **Categories:** Browse voice library by accent, age, gender, and use case
+- **Sharing controls:** Set pipelines as public, unlisted, or private
+- **Usage analytics:** Track how often shared pipelines are used
+- **Categories:** Browse pipeline library by domain, format, and use case
 
 ### Platform updates
 
@@ -54,10 +54,10 @@ Stay up to date with the latest changes and improvements to the ElevenLabs API a
 
 ## December 2024
 
-### Flash v2.5 improvements
+### Express v1 improvements
 
-- **Lower latency:** Time-to-first-byte reduced by 30% compared to Flash v2
-- **Better multilingual:** Improved accent handling for code-switched text
+- **Lower latency:** Time-to-first-byte reduced by 30% compared to previous version
+- **Better multilingual:** Improved handling for mixed-language inputs
 - **Higher throughput:** Increased concurrent request limits for all plans
 
 ### SDK updates
@@ -68,34 +68,34 @@ Stay up to date with the latest changes and improvements to the ElevenLabs API a
 
 ## November 2024
 
-### Dubbing API (General Availability)
+### Batch Processing API (General Availability)
 
-- **Automatic dubbing:** Translate and dub video/audio content into 29 languages
-- **Voice preservation:** Maintain the original speaker's voice characteristics
-- **Subtitle generation:** Automatic subtitle creation for dubbed content
-- **Batch processing:** Queue multiple dubbing jobs via the API
+- **Automatic batching:** Process large datasets with automatic chunking and parallelization
+- **Priority queues:** Assign priority levels to batch jobs for scheduling control
+- **Progress tracking:** Monitor batch job progress via API or Dashboard
+- **Result aggregation:** Automatically combine results from batch operations
 
-### Pronunciation Dictionaries
+### Custom Pipelines
 
-- **Custom pronunciations:** Define how specific words and phrases should be pronounced
-- **IPA and CMU support:** Use phonetic alphabets for precise pronunciation control
-- **Per-voice dictionaries:** Apply different pronunciation rules to different voices
-- **API management:** Full CRUD operations for dictionary entries
+- **User-defined pipelines:** Create custom processing pipelines with configurable steps
+- **Template library:** Start from pre-built pipeline templates for common use cases
+- **Per-pipeline settings:** Apply different configurations to different pipelines
+- **API management:** Full CRUD operations for pipeline definitions
 
 ## October 2024
 
-### Eleven Flash v2.5 release
+### Express v1 release
 
-- **New model:** Optimized for low-latency applications like real-time chat
-- **~75ms latency:** Time-to-first-byte for short text inputs
-- **32 languages:** Multilingual support with automatic language detection
-- **50% cost reduction:** Lower character cost compared to Multilingual v2
+- **New pipeline:** Optimized for low-latency applications like real-time queries
+- **Sub-100ms latency:** Time-to-first-byte for small inputs
+- **32 format support:** Handle diverse data formats with automatic detection
+- **50% cost reduction:** Lower cost per request compared to Standard v2
 
-### Sound Effects API
+### File Processing API
 
-- **Text to sound effects:** Generate sound effects from text descriptions
-- **Variable duration:** Control output length from 0.5 to 22 seconds
-- **High quality:** 44.1kHz stereo output in MP3 or WAV format
+- **Document processing:** Extract and transform data from uploaded documents
+- **Variable formats:** Support for PDF, DOCX, CSV, and more
+- **High quality:** Structured output with confidence scores
 
 ## September 2024
 

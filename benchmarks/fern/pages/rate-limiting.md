@@ -1,6 +1,6 @@
 ---
 title: Rate Limiting
-description: Understand ElevenLabs API rate limits and how to handle them in your application.
+description: Understand Acme API rate limits and how to handle them in your application.
 slug: rate-limiting
 ---
 
@@ -14,7 +14,7 @@ Rate limits are applied per API key and vary by subscription plan. When you exce
 
 ## Default limits by plan
 
-| Plan | Requests per second | Concurrent requests | Daily character limit |
+| Plan | Requests per second | Concurrent requests | Daily request limit |
 |------|-------------------|-------------------|---------------------|
 | Free | 2 RPS | 2 | 10,000 |
 | Starter | 5 RPS | 5 | 30,000 |
@@ -33,8 +33,8 @@ Rate limit information is included in response headers:
 X-RateLimit-Limit: 20
 X-RateLimit-Remaining: 15
 X-RateLimit-Reset: 1705344000
-X-CharacterCount: 5000
-X-CharacterLimit: 500000
+X-RequestCount: 5000
+X-RequestLimit: 500000
 ```
 
 | Header | Description |
@@ -42,8 +42,8 @@ X-CharacterLimit: 500000
 | `X-RateLimit-Limit` | Maximum requests allowed per window |
 | `X-RateLimit-Remaining` | Requests remaining in current window |
 | `X-RateLimit-Reset` | Unix timestamp when the window resets |
-| `X-CharacterCount` | Characters used in current billing period |
-| `X-CharacterLimit` | Character limit for current billing period |
+| `X-RequestCount` | Requests used in current billing period |
+| `X-RequestLimit` | Request limit for current billing period |
 
 ## Handling rate limits
 
@@ -59,7 +59,7 @@ async function callWithRateLimit<T>(
       return await fn();
     } catch (error) {
       if (
-        error instanceof ElevenLabsError &&
+        error instanceof AcmeError &&
         error.statusCode === 429
       ) {
         if (attempt === maxRetries) throw error;
@@ -118,28 +118,28 @@ class RateLimiter {
 
 const limiter = new RateLimiter(10, 10);
 
-async function generateBatch(texts: string[]) {
-  for (const text of texts) {
+async function processBatch(inputs: string[]) {
+  for (const input of inputs) {
     await limiter.acquire();
-    await client.textToSpeech.convert(voiceId, {
-      text,
-      modelId: "eleven_flash_v2_5",
+    await client.data.process({
+      input,
+      pipeline: "standard_v2",
     });
   }
 }
 ```
 
-## Character quotas
+## Request quotas
 
-In addition to request rate limits, the API enforces character quotas based on your subscription plan. Character usage is tracked per billing period and resets monthly.
+In addition to request rate limits, the API enforces request quotas based on your subscription plan. Usage is tracked per billing period and resets monthly.
 
 ```typescript
-// Check remaining quota before generating
+// Check remaining quota before processing
 const subscription = await client.user.getSubscription();
-const remaining = subscription.characterLimit - subscription.characterCount;
+const remaining = subscription.requestLimit - subscription.requestCount;
 
-if (text.length > remaining) {
-  throw new QuotaError(`Need ${text.length} chars but only ${remaining} remaining`);
+if (batchSize > remaining) {
+  throw new QuotaError(`Need ${batchSize} requests but only ${remaining} remaining`);
 }
 ```
 
@@ -147,7 +147,7 @@ if (text.length > remaining) {
 
 1. **Monitor rate limit headers** to stay within limits proactively
 2. **Implement exponential backoff** for automatic retry on 429 responses
-3. **Use streaming endpoints** for long texts to get audio faster
+3. **Use streaming endpoints** for large datasets to get results faster
 4. **Batch requests intelligently** rather than sending bursts
-5. **Cache generated audio** when the same text will be requested multiple times
-6. **Monitor character usage** to avoid unexpected quota exhaustion
+5. **Cache results** when the same input will be requested multiple times
+6. **Monitor request usage** to avoid unexpected quota exhaustion

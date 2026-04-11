@@ -1,21 +1,21 @@
 ---
 title: Introduction
-description: Learn about the ElevenLabs API platform and how to integrate text-to-speech, voice cloning, and audio AI into your applications.
+description: Learn about the Acme API platform and how to integrate cloud services, data processing, and automation into your applications.
 slug: introduction
 ---
 
 # Introduction
 
-The ElevenLabs API platform provides a comprehensive suite of tools for building AI-powered audio applications. Whether you're generating lifelike speech, cloning voices, transcribing audio, or building conversational agents, the APIs offer the building blocks you need.
+The Acme API platform provides a comprehensive suite of tools for building cloud-powered applications. Whether you're processing data, managing resources, orchestrating workflows, or building real-time integrations, the APIs offer the building blocks you need.
 
-## Why ElevenLabs?
+## Why Acme?
 
 The platform is designed for:
 
-- **Quality**: Industry-leading voice synthesis with natural intonation and emotional delivery
-- **Low latency**: Sub-75ms streaming for real-time applications
-- **Multilingual**: Support for 32+ languages with native-quality pronunciation
-- **Scalability**: Handle millions of characters per day with enterprise-grade infrastructure
+- **Reliability**: Enterprise-grade infrastructure with 99.99% uptime SLA
+- **Low latency**: Sub-100ms response times for real-time operations
+- **Global**: Available in 30+ regions with automatic geo-routing
+- **Scalability**: Handle millions of requests per day with auto-scaling infrastructure
 
 ## Platform overview
 
@@ -23,35 +23,35 @@ The API platform consists of several interconnected services:
 
 | Service | Description | Common use cases |
 |---------|-------------|-----------------|
-| Text to Speech | Convert text into lifelike spoken audio | Audiobooks, podcasts, accessibility |
-| Speech to Text | Transcribe audio into accurate text | Meeting notes, subtitles, search indexing |
-| Voice Cloning | Create custom voices from audio samples | Brand voices, personalization, dubbing |
-| Voice Library | Browse and use pre-made voices | Prototyping, content creation |
-| Sound Effects | Generate sound effects from text descriptions | Game audio, film production |
-| Dubbing | Translate audio preserving speaker identity | Content localization, media |
-| Voice Agents | Build conversational AI with natural voices | Customer support, virtual assistants |
+| Data Processing | Transform and analyze structured data | ETL pipelines, analytics, reporting |
+| Resource Management | Create and manage cloud resources | Infrastructure provisioning, scaling |
+| Workflow Orchestration | Build multi-step automated workflows | CI/CD, approval flows, scheduling |
+| Real-time Streaming | Subscribe to live event streams | Monitoring, alerts, live dashboards |
+| File Storage | Upload and manage files at scale | Document management, media hosting |
+| Identity | Manage users, roles, and permissions | Authentication, authorization |
+| Notifications | Send alerts via email, SMS, and push | User engagement, system alerts |
 
 ## Getting started
 
 To start building with the API:
 
-1. Create an ElevenLabs account
+1. Create an Acme account
 2. Generate an API key in the Dashboard
 3. Install the SDK for your programming language
 4. Make your first API call
 
 ```bash
-curl -X POST https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb \
-  -H 'xi-api-key: YOUR_API_KEY' \
+curl -X POST https://api.acme.io/v1/data/process \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
-    "text": "Hello world! This is a test of the text to speech API.",
-    "model_id": "eleven_flash_v2_5"
+    "input": "Hello world! This is a test of the data processing API.",
+    "pipeline": "standard_v2"
   }' \
-  --output speech.mp3
+  | jq .
 ```
 
-The response is an audio file containing the generated speech.
+The response is a JSON object containing the processed result.
 
 ## Next steps
 

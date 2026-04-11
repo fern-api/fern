@@ -1,12 +1,12 @@
 ---
 title: Error Handling
-description: Handle ElevenLabs API errors gracefully with proper error categories, codes, and retry strategies.
+description: Handle Acme API errors gracefully with proper error categories, codes, and retry strategies.
 slug: error-handling
 ---
 
 # Error Handling
 
-The ElevenLabs API returns structured error responses that help you diagnose and handle failures. This guide covers error categories, common error codes, and recommended retry strategies.
+The Acme API returns structured error responses that help you diagnose and handle failures. This guide covers error categories, common error codes, and recommended retry strategies.
 
 ## Error response structure
 
@@ -27,7 +27,7 @@ Some endpoints return additional context:
 {
   "detail": {
     "status": "quota_exceeded",
-    "message": "You have exceeded your character quota for this billing period.",
+    "message": "You have exceeded your request quota for this billing period.",
     "quota": {
       "used": 100000,
       "limit": 100000,
@@ -60,49 +60,49 @@ Some endpoints return additional context:
 | Code | Description | Resolution |
 |------|-------------|------------|
 | `invalid_api_key` | API key is invalid or revoked | Check key in Dashboard |
-| `api_key_missing` | No API key provided | Add `xi-api-key` header |
+| `api_key_missing` | No API key provided | Add `Authorization` header |
 | `insufficient_permissions` | Key lacks required scope | Use a key with proper permissions |
 
 ### Quota and billing errors
 
 | Code | Description | Resolution |
 |------|-------------|------------|
-| `quota_exceeded` | Character quota exhausted | Upgrade plan or wait for reset |
+| `quota_exceeded` | Request quota exhausted | Upgrade plan or wait for reset |
 | `max_concurrent_requests` | Too many simultaneous requests | Queue requests |
-| `voice_limit_reached` | Maximum custom voices created | Delete unused voices |
-| `professional_clone_limit` | PVC quota reached | Upgrade plan |
+| `resource_limit_reached` | Maximum resources created | Delete unused resources |
+| `storage_limit_exceeded` | Storage quota reached | Upgrade plan |
 
 ### Input validation errors
 
 | Code | Description | Resolution |
 |------|-------------|------------|
-| `text_too_long` | Text exceeds model character limit | Split text into smaller chunks |
-| `invalid_voice_id` | Voice ID does not exist | Check voice ID |
-| `invalid_model_id` | Model ID not recognized | Check available models |
-| `invalid_output_format` | Unsupported audio format | Use a supported format |
-| `empty_text` | Text field is empty | Provide text content |
+| `input_too_large` | Input exceeds size limit | Split input into smaller chunks |
+| `invalid_resource_id` | Resource ID does not exist | Check resource ID |
+| `invalid_pipeline_id` | Pipeline ID not recognized | Check available pipelines |
+| `invalid_output_format` | Unsupported output format | Use a supported format |
+| `empty_input` | Input field is empty | Provide input content |
 
 ## Handling errors in code
 
 ```typescript
-import { ElevenLabsClient, ElevenLabsError } from "@elevenlabs/elevenlabs-js";
+import { AcmeClient, AcmeError } from "@acme/acme-js";
 
-async function generateSpeech(text: string, voiceId: string) {
+async function processData(input: string, pipelineId: string) {
   try {
-    const audio = await client.textToSpeech.convert(voiceId, {
-      text,
-      modelId: "eleven_flash_v2_5",
+    const result = await client.data.process({
+      input,
+      pipeline: pipelineId,
     });
-    return audio;
+    return result;
   } catch (error) {
-    if (error instanceof ElevenLabsError) {
+    if (error instanceof AcmeError) {
       const status = error.statusCode;
 
       switch (status) {
         case 429:
           // Rate limited - wait and retry
           await sleep(1000);
-          return generateSpeech(text, voiceId);
+          return processData(input, pipelineId);
         case 401:
           // Invalid API key
           throw new AuthenticationError("Invalid API key");
@@ -138,7 +138,7 @@ async function withRetry<T>(
     } catch (error) {
       if (attempt === maxRetries) throw error;
 
-      if (error instanceof ElevenLabsError) {
+      if (error instanceof AcmeError) {
         const isRetryable = [408, 429, 500, 503].includes(error.statusCode);
         if (!isRetryable) throw error;
       }

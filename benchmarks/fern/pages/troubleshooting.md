@@ -1,12 +1,12 @@
 ---
 title: Troubleshooting
-description: Common issues and solutions when working with the ElevenLabs API.
+description: Common issues and solutions when working with the Acme API.
 slug: troubleshooting
 ---
 
 # Troubleshooting
 
-This guide covers common issues encountered when integrating with the ElevenLabs API and how to resolve them.
+This guide covers common issues encountered when integrating with the Acme API and how to resolve them.
 
 ## Authentication errors
 
@@ -23,8 +23,8 @@ This guide covers common issues encountered when integrating with the ElevenLabs
 
 ```bash
 # Verify your API key works
-curl -s https://api.elevenlabs.io/v1/user \
-  -H "xi-api-key: $ELEVENLABS_API_KEY" | jq .
+curl -s https://api.acme.io/v1/user \
+  -H "Authorization: Bearer $ACME_API_KEY" | jq .
 ```
 
 If this returns user info, your key is valid. If not, generate a new key from the Dashboard.
@@ -40,40 +40,40 @@ If this returns user info, your key is valid. If not, generate a new key from th
 
 **Solution:** Check that your API key has the required scopes for the endpoints you're calling. Admin keys have full access; scoped keys are limited to their defined permissions.
 
-## Audio quality issues
+## Data quality issues
 
-### Generated speech sounds robotic
+### Processing results are incomplete
 
 **Possible causes:**
-- Stability setting too high (>0.8)
-- Using an older model version
-- Input text contains unusual formatting
+- Input data contains invalid encoding
+- Using an older pipeline version
+- Input data contains unusual formatting
 
 **Solution:**
 ```typescript
-const audio = await client.textToSpeech.convert(voiceId, {
-  text: cleanedText,
-  modelId: "eleven_v3", // Use the latest model
-  voiceSettings: {
-    stability: 0.5,        // Lower for more expression
-    similarityBoost: 0.75, // Balance between clarity and expression
-    style: 0.3,            // Add some stylistic variation
-    useSpeakerBoost: true,
+const result = await client.data.process({
+  input: cleanedInput,
+  pipeline: "precision_v3", // Use the latest pipeline
+  settings: {
+    quality: 0.8,           // Higher quality setting
+    enrichMetadata: true,   // Include additional context
+    dedup: true,            // Remove duplicates
+    validateInput: true,
   },
 });
 ```
 
-### Audio has unexpected pauses or pacing
+### Results have unexpected formatting
 
 **Possible causes:**
-- Punctuation issues in input text
-- Very long paragraphs without breaks
-- Special characters being interpreted as pauses
+- Encoding issues in input data
+- Very long inputs without structure
+- Special characters being misinterpreted
 
-**Solution:** Clean your input text before sending:
+**Solution:** Clean your input data before sending:
 
 ```typescript
-function cleanTextForTTS(text: string): string {
+function cleanInput(text: string): string {
   return text
     .replace(/\s+/g, " ")           // Normalize whitespace
     .replace(/\.{2,}/g, ".")         // Collapse multiple periods
@@ -126,7 +126,7 @@ class RequestQueue {
 const queue = new RequestQueue(5); // Max 5 concurrent requests
 ```
 
-## Character quota
+## Request quota
 
 ### "Quota exceeded" error
 
@@ -135,45 +135,44 @@ const queue = new RequestQueue(5); // Max 5 concurrent requests
 **Solution:**
 
 ```typescript
-// Check remaining quota before generating
+// Check remaining quota before processing
 const subscription = await client.user.getSubscription();
-const remaining = subscription.characterLimit - subscription.characterCount;
-const resetDate = new Date(subscription.nextCharacterCountResetUnix * 1000);
+const remaining = subscription.requestLimit - subscription.requestCount;
+const resetDate = new Date(subscription.nextResetTimestamp);
 
-console.log(`Remaining: ${remaining} characters`);
+console.log(`Remaining: ${remaining} requests`);
 console.log(`Resets: ${resetDate.toISOString()}`);
 ```
 
 **Options when quota is exhausted:**
 1. Wait for the monthly reset
 2. Upgrade your subscription plan
-3. Purchase additional character packs (if available on your plan)
+3. Purchase additional request packs (if available on your plan)
 
 ## Streaming issues
 
-### Stream disconnects mid-generation
+### Stream disconnects mid-processing
 
 **Possible causes:**
 - Network timeout
-- Text too long for streaming
+- Input too large for streaming
 - Server-side processing error
 
 **Solution:** Implement reconnection logic:
 
 ```typescript
 async function streamWithReconnect(
-  client: ElevenLabsClient,
-  voiceId: string,
-  text: string,
+  client: AcmeClient,
+  input: string,
   maxRetries = 3
 ): Promise<Buffer> {
   const chunks: Buffer[] = [];
 
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
-      const stream = await client.textToSpeech.stream(voiceId, {
-        text,
-        modelId: "eleven_flash_v2_5",
+      const stream = await client.data.stream({
+        input,
+        pipeline: "standard_v2",
       });
 
       for await (const chunk of stream) {
@@ -193,27 +192,27 @@ async function streamWithReconnect(
 }
 ```
 
-## Voice cloning
+## Resource provisioning
 
-### Cloned voice sounds different from source
+### Resource creation times out
 
 **Possible causes:**
-- Source audio quality is too low
-- Source audio contains background noise
-- Not enough source audio provided
+- Resource type requires extended provisioning
+- Region capacity constraints
+- Dependent resources not yet available
 
-**Best practices for source audio:**
-- Use at least 30 seconds of clean audio (Professional Clone)
-- Ensure minimal background noise
-- Use consistent microphone placement
-- Avoid audio with music or multiple speakers
-- Use WAV or FLAC format for best quality
+**Best practices for resource provisioning:**
+- Use async provisioning with webhook callbacks for large resources
+- Set appropriate timeouts (5+ minutes for databases)
+- Implement polling with exponential backoff
+- Monitor resource status via the Dashboard
+- Use pre-provisioned resource pools for latency-sensitive workloads
 
 ## Debugging tips
 
 1. **Enable request logging** to see exactly what's being sent
 2. **Check the response headers** for rate limit and quota information
-3. **Use the History page** in the Dashboard to review recent generations
-4. **Test with simple inputs first** before complex text
-5. **Compare models** - try the same text with different models
-6. **Check service status** at status.elevenlabs.io for outages
+3. **Use the Activity page** in the Dashboard to review recent requests
+4. **Test with simple inputs first** before complex data
+5. **Compare pipelines** - try the same input with different pipelines
+6. **Check service status** at status.acme.io for outages

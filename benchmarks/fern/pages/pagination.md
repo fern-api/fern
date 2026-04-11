@@ -1,23 +1,23 @@
 ---
 title: Pagination
-description: Navigate large result sets with cursor-based pagination in the ElevenLabs API.
+description: Navigate large result sets with cursor-based pagination in the Acme API.
 slug: pagination
 ---
 
 # Pagination
 
-List endpoints in the ElevenLabs API return paginated results to keep response sizes manageable. This guide explains how to navigate through large result sets.
+List endpoints in the Acme API return paginated results to keep response sizes manageable. This guide explains how to navigate through large result sets.
 
 ## How pagination works
 
 When a list endpoint has more results than the page size, the response includes pagination metadata. Use the returned values to fetch subsequent pages.
 
 ```
-Request 1: GET /v1/voices?page_size=100
-Response:  { "voices": [...100 items...], "has_more": true, "next_cursor": "abc123" }
+Request 1: GET /v1/resources?page_size=100
+Response:  { "resources": [...100 items...], "has_more": true, "next_cursor": "abc123" }
 
-Request 2: GET /v1/voices?page_size=100&cursor=abc123
-Response:  { "voices": [...50 items...], "has_more": false }
+Request 2: GET /v1/resources?page_size=100&cursor=abc123
+Response:  { "resources": [...50 items...], "has_more": false }
 ```
 
 When `has_more` is `false`, you have reached the last page.
@@ -28,34 +28,34 @@ Each endpoint has its own default and maximum page sizes:
 
 | Endpoint | Default | Maximum |
 |----------|---------|---------|
-| List Voices | 30 | 100 |
-| List History Items | 100 | 1000 |
-| List Voice Library | 30 | 100 |
+| List Resources | 30 | 100 |
+| List Jobs | 100 | 1000 |
+| List Pipelines | 30 | 100 |
 | List Models | All | All |
-| List Pronunciation Dictionaries | 100 | 500 |
-| List Sound Effects | 100 | 500 |
-| List Dubbing Projects | 100 | 100 |
+| List Exports | 100 | 500 |
+| List Workflows | 100 | 500 |
+| List Events | 100 | 100 |
 
 ## Pagination examples
 
 ### Basic pagination
 
 ```typescript
-async function getAllVoices(): Promise<Voice[]> {
-  const allVoices: Voice[] = [];
+async function getAllResources(): Promise<Resource[]> {
+  const allResources: Resource[] = [];
   let cursor: string | undefined;
 
   do {
-    const response = await client.voices.list({
+    const response = await client.resources.list({
       pageSize: 100,
       cursor,
     });
 
-    allVoices.push(...response.voices);
+    allResources.push(...response.resources);
     cursor = response.hasMore ? response.nextCursor : undefined;
   } while (cursor);
 
-  return allVoices;
+  return allResources;
 }
 ```
 
@@ -64,26 +64,26 @@ async function getAllVoices(): Promise<Voice[]> {
 Some endpoints support filtering alongside pagination:
 
 ```typescript
-async function getRecentHistory(
-  voiceId: string,
+async function getRecentJobs(
+  pipelineId: string,
   since: string
-): Promise<HistoryItem[]> {
-  const items: HistoryItem[] = [];
+): Promise<Job[]> {
+  const items: Job[] = [];
   let cursor: string | undefined;
 
   do {
-    const response = await client.history.list({
-      voiceId,
-      startAfterHistoryItemId: cursor,
+    const response = await client.jobs.list({
+      pipelineId,
+      startAfterJobId: cursor,
       pageSize: 100,
     });
 
-    const filtered = response.history.filter(
-      (item) => new Date(item.dateUnix * 1000) > new Date(since)
+    const filtered = response.jobs.filter(
+      (item) => new Date(item.createdAt) > new Date(since)
     );
     items.push(...filtered);
 
-    cursor = response.hasMore ? response.lastHistoryItemId : undefined;
+    cursor = response.hasMore ? response.lastJobId : undefined;
   } while (cursor);
 
   return items;
@@ -95,25 +95,25 @@ async function getRecentHistory(
 For cleaner code, wrap pagination in an async generator:
 
 ```typescript
-async function* paginateHistory(
+async function* paginateJobs(
   pageSize = 100
-): AsyncGenerator<HistoryItem> {
+): AsyncGenerator<Job> {
   let cursor: string | undefined;
 
   do {
-    const response = await client.history.list({ pageSize, cursor });
+    const response = await client.jobs.list({ pageSize, cursor });
 
-    for (const item of response.history) {
+    for (const item of response.jobs) {
       yield item;
     }
 
-    cursor = response.hasMore ? response.lastHistoryItemId : undefined;
+    cursor = response.hasMore ? response.lastJobId : undefined;
   } while (cursor);
 }
 
 // Usage
-for await (const item of paginateHistory()) {
-  console.log(`${item.voiceName}: ${item.text.substring(0, 50)}...`);
+for await (const item of paginateJobs()) {
+  console.log(`${item.pipelineName}: ${item.input.substring(0, 50)}...`);
 }
 ```
 

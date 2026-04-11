@@ -1,22 +1,22 @@
 ---
 title: Configuration
-description: Configure your ElevenLabs API integration with best practices for security and performance.
+description: Configure your Acme API integration with best practices for security and performance.
 slug: configuration
 ---
 
 # Configuration
 
-This guide covers how to configure your ElevenLabs API integration for different environments, manage credentials securely, and optimize for performance.
+This guide covers how to configure your Acme API integration for different environments, manage credentials securely, and optimize for performance.
 
 ## Client configuration
 
 ### TypeScript
 
 ```typescript
-import { ElevenLabsClient } from "@elevenlabs/elevenlabs-js";
+import { AcmeClient } from "@acme/acme-js";
 
-const client = new ElevenLabsClient({
-  apiKey: process.env.ELEVENLABS_API_KEY,
+const client = new AcmeClient({
+  apiKey: process.env.ACME_API_KEY,
   timeout: 60000,
   maxRetries: 3,
 });
@@ -25,10 +25,10 @@ const client = new ElevenLabsClient({
 ### Python
 
 ```python
-from elevenlabs.client import ElevenLabs
+from acme.client import Acme
 
-client = ElevenLabs(
-    api_key=os.environ["ELEVENLABS_API_KEY"],
+client = Acme(
+    api_key=os.environ["ACME_API_KEY"],
     timeout=60,
     max_retries=3,
 )
@@ -37,10 +37,10 @@ client = ElevenLabs(
 ### Go
 
 ```go
-client := elevenlabs.NewClient(
-    os.Getenv("ELEVENLABS_API_KEY"),
-    elevenlabs.WithTimeout(60 * time.Second),
-    elevenlabs.WithMaxRetries(3),
+client := acme.NewClient(
+    os.Getenv("ACME_API_KEY"),
+    acme.WithTimeout(60 * time.Second),
+    acme.WithMaxRetries(3),
 )
 ```
 
@@ -52,10 +52,10 @@ Store credentials as environment variables, never in source code:
 
 ```bash
 # .env (do NOT commit this file)
-ELEVENLABS_API_KEY=xi-...
-ELEVENLABS_WEBHOOK_SECRET=whsec-...
-DEFAULT_VOICE_ID=JBFqnCBsd6RMkjVDRZzb
-DEFAULT_MODEL_ID=eleven_flash_v2_5
+ACME_API_KEY=ak_live_...
+ACME_WEBHOOK_SECRET=whsec_...
+DEFAULT_REGION=us-east-1
+DEFAULT_PIPELINE=standard_v2
 ```
 
 ### Secrets managers
@@ -76,41 +76,41 @@ import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-sec
 async function getApiKey(): Promise<string> {
   const smClient = new SecretsManagerClient({ region: "us-east-1" });
   const response = await smClient.send(
-    new GetSecretValueCommand({ SecretId: "elevenlabs/api-key" })
+    new GetSecretValueCommand({ SecretId: "acme/api-key" })
   );
   return response.SecretString!;
 }
 ```
 
-## Voice configuration
+## Pipeline configuration
 
-Configure default voice settings for consistent output across your application:
+Configure default processing settings for consistent output across your application:
 
 ```typescript
-interface VoiceConfig {
-  voiceId: string;
-  modelId: string;
-  voiceSettings: {
-    stability: number;
-    similarityBoost: number;
-    style: number;
-    useSpeakerBoost: boolean;
-    speed: number;
+interface PipelineConfig {
+  pipelineId: string;
+  region: string;
+  settings: {
+    quality: number;
+    throughput: number;
+    cacheEnabled: boolean;
+    retryOnFailure: boolean;
+    batchSize: number;
   };
   outputFormat: string;
 }
 
-const defaultVoiceConfig: VoiceConfig = {
-  voiceId: "JBFqnCBsd6RMkjVDRZzb",
-  modelId: "eleven_flash_v2_5",
-  voiceSettings: {
-    stability: 0.5,
-    similarityBoost: 0.75,
-    style: 0.0,
-    useSpeakerBoost: true,
-    speed: 1.0,
+const defaultPipelineConfig: PipelineConfig = {
+  pipelineId: "standard_v2",
+  region: "us-east-1",
+  settings: {
+    quality: 0.5,
+    throughput: 0.75,
+    cacheEnabled: true,
+    retryOnFailure: true,
+    batchSize: 100,
   },
-  outputFormat: "mp3_44100_128",
+  outputFormat: "json",
 };
 ```
 
@@ -120,25 +120,25 @@ Configure timeouts based on your use case:
 
 | Operation | Recommended timeout |
 |-----------|-------------------|
-| Short text TTS (under 500 chars) | 10-15 seconds |
-| Long text TTS (over 2000 chars) | 30-60 seconds |
-| Streaming TTS | 120 seconds |
-| Voice cloning | 120 seconds |
-| Dubbing | 300 seconds |
-| Speech to text | 60 seconds |
+| Simple queries (under 500 chars) | 10-15 seconds |
+| Batch processing (over 2000 items) | 30-60 seconds |
+| Streaming operations | 120 seconds |
+| File uploads | 120 seconds |
+| Workflow execution | 300 seconds |
+| Data export | 60 seconds |
 
 ## Logging configuration
 
 Enable request logging for debugging:
 
 ```typescript
-const client = new ElevenLabsClient({
-  apiKey: process.env.ELEVENLABS_API_KEY,
+const client = new AcmeClient({
+  apiKey: process.env.ACME_API_KEY,
 });
 
 // Log requests in development
 if (process.env.NODE_ENV !== "production") {
-  console.log("ElevenLabs client initialized in development mode");
+  console.log("Acme client initialized in development mode");
 }
 ```
 
@@ -150,21 +150,21 @@ For applications managing multiple workspaces:
 interface WorkspaceConfig {
   workspaceId: string;
   apiKey: string;
-  voiceIds: string[];
+  regions: string[];
   quotaLimit: number;
 }
 
 class WorkspaceManager {
   private configs: Map<string, WorkspaceConfig> = new Map();
 
-  async getClient(workspaceId: string): Promise<ElevenLabsClient> {
+  async getClient(workspaceId: string): Promise<AcmeClient> {
     const config = this.configs.get(workspaceId);
 
     if (!config) {
       throw new Error(`Unknown workspace: ${workspaceId}`);
     }
 
-    return new ElevenLabsClient({
+    return new AcmeClient({
       apiKey: config.apiKey,
     });
   }
@@ -178,17 +178,17 @@ Use feature flags to gradually roll out capabilities:
 ```typescript
 interface FeatureFlags {
   enableStreaming: boolean;
-  enableVoiceCloning: boolean;
-  enableDubbing: boolean;
-  maxCharactersPerRequest: number;
-  defaultModel: string;
+  enableBatchProcessing: boolean;
+  enableWorkflows: boolean;
+  maxItemsPerRequest: number;
+  defaultPipeline: string;
 }
 
 const defaultFlags: FeatureFlags = {
   enableStreaming: true,
-  enableVoiceCloning: false,
-  enableDubbing: false,
-  maxCharactersPerRequest: 5000,
-  defaultModel: "eleven_flash_v2_5",
+  enableBatchProcessing: false,
+  enableWorkflows: false,
+  maxItemsPerRequest: 5000,
+  defaultPipeline: "standard_v2",
 };
 ```

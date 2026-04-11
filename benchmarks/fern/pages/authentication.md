@@ -1,22 +1,22 @@
 ---
 title: Authentication
-description: Learn about ElevenLabs API authentication methods and best practices for securing your API keys.
+description: Learn about Acme API authentication methods and best practices for securing your API keys.
 slug: authentication
 ---
 
 # Authentication
 
-The ElevenLabs API uses API keys for authentication. Every request must include a valid API key to access the platform's capabilities.
+The Acme API uses API keys for authentication. Every request must include a valid API key to access the platform's capabilities.
 
 ## API keys
 
-API keys are the primary way to authenticate with the ElevenLabs API. You can create and manage keys in the [Dashboard](https://elevenlabs.io/app/settings/api-keys).
+API keys are the primary way to authenticate with the Acme API. You can create and manage keys in the [Dashboard](https://acme.io/app/settings/api-keys).
 
-Include your API key in the `xi-api-key` header:
+Include your API key in the `Authorization` header:
 
 ```bash
-curl https://api.elevenlabs.io/v1/voices \
-  -H 'xi-api-key: YOUR_API_KEY'
+curl https://api.acme.io/v1/resources \
+  -H 'Authorization: Bearer YOUR_API_KEY'
 ```
 
 ### Key types
@@ -38,18 +38,18 @@ curl https://api.elevenlabs.io/v1/voices \
 ## Using API keys with SDKs
 
 ```typescript
-import { ElevenLabsClient } from "@elevenlabs/elevenlabs-js";
+import { AcmeClient } from "@acme/acme-js";
 
-const client = new ElevenLabsClient({
-  apiKey: process.env.ELEVENLABS_API_KEY,
+const client = new AcmeClient({
+  apiKey: process.env.ACME_API_KEY,
 });
 ```
 
 ```python
-from elevenlabs.client import ElevenLabs
+from acme.client import Acme
 
-client = ElevenLabs(
-    api_key=os.environ["ELEVENLABS_API_KEY"],
+client = Acme(
+    api_key=os.environ["ACME_API_KEY"],
 )
 ```
 
@@ -68,8 +68,8 @@ Service accounts are non-human identities designed for automated workflows:
 
 ```typescript
 // Service account key works the same as a personal key
-const client = new ElevenLabsClient({
-  apiKey: process.env.ELEVENLABS_SERVICE_ACCOUNT_KEY,
+const client = new AcmeClient({
+  apiKey: process.env.ACME_SERVICE_ACCOUNT_KEY,
 });
 ```
 
@@ -85,19 +85,19 @@ Enterprise workspaces can configure SSO for centralized access management:
 
 For sensitive applications, enable zero retention mode by setting `enable_logging` to `false` on API requests. This ensures:
 
-- No request data is stored on ElevenLabs servers
+- No request data is stored on Acme servers
 - History features are unavailable for the request
-- Request stitching is disabled
+- Request tracing is disabled
 
 ```bash
-curl -X POST https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb?enable_logging=false \
-  -H 'xi-api-key: YOUR_API_KEY' \
+curl -X POST https://api.acme.io/v1/data/process?enable_logging=false \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
-    "text": "Sensitive content that should not be logged.",
-    "model_id": "eleven_flash_v2_5"
+    "input": "Sensitive content that should not be logged.",
+    "pipeline": "standard_v2"
   }' \
-  --output speech.mp3
+  | jq .
 ```
 
 ## Rate limits by plan
