@@ -305,7 +305,8 @@ jobs:
             DOCS_AFFECTED=true
           else
             DOCS_PATHS="packages/cli/docs-resolver packages/cli/remote-workspace-runner packages/cli/docs-validator packages/cli/configuration-loader packages/cli/cli/src/commands/generate/generateDocsWorkspace benchmarks/fern/docs.yml benchmarks/fern/pages .github/actions/run-docs-benchmark"
-            CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
+            MERGE_BASE=$(git merge-base HEAD origin/main 2>/dev/null || echo "HEAD~1")
+            CHANGED_FILES=$(git diff --name-only "$MERGE_BASE" HEAD 2>/dev/null || echo "")
             for DPATH in $DOCS_PATHS; do
               if echo "$CHANGED_FILES" | grep -q "^${DPATH}"; then
                 DOCS_AFFECTED=true
@@ -849,7 +850,7 @@ jobs:
     if: >-
       ${{
         github.event_name == 'pull_request'
-        && needs.get-all-test-matrices.outputs.benchmark-generators != ''
+        && (needs.get-all-test-matrices.outputs.benchmark-generators != '' || needs.get-all-test-matrices.outputs.docs-benchmark-affected != '')
         && github.event.pull_request.draft == false
       }}
     steps:
