@@ -180,7 +180,9 @@ export class GenerateCommand {
         });
 
         const targets = workspace.sdks?.targets ?? [];
-        await this.runGeneration({ context, workspace, targets, args });
+        // No-config mode always runs locally — override args.local so that
+        // runGeneration (and its isLocal / isTokenRequired checks) behave correctly.
+        await this.runGeneration({ context, workspace, targets, args: { ...args, local: true } });
     }
 
     private async runGeneration({
