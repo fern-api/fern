@@ -32,7 +32,7 @@ function makeTarget(overrides: Partial<Target>): Target {
 describe("GeneratorPipeline", () => {
     describe("custom registry constraint", () => {
         it("rejects custom registry with remote generation", async () => {
-            const context = createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
+            const context = await createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
             const pipeline = new GeneratorPipeline({ context, cliVersion: "0.0.0" });
             const task = createMockTask();
 
@@ -50,7 +50,7 @@ describe("GeneratorPipeline", () => {
         });
 
         it("allows undefined registry with remote generation", async () => {
-            const context = createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
+            const context = await createTestContext({ cwd: AbsoluteFilePath.of("/tmp") });
             const pipeline = new GeneratorPipeline({ context, cliVersion: "0.0.0" });
             const task = createMockTask();
 

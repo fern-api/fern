@@ -1,6 +1,6 @@
 import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
 import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { getPosthogManager } from "@fern-api/posthog-manager";
+import { getPosthogManager, PosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { Finishable, PosthogEvent, Startable, TaskAbortSignal, TaskContext, TaskResult } from "@fern-api/task-context";
@@ -31,6 +31,7 @@ export interface FernUpgradeInfo {
 export class CliContext {
     public readonly environment: CliEnvironment;
     private readonly sentryClient: SentryClient;
+    private readonly posthogManager: PosthogManager;
 
     private didSucceed = true;
 
@@ -42,9 +43,23 @@ export class CliContext {
     private readonly stdoutRedirector = new StdoutRedirector();
     private jsonMode = false;
 
-    constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
+    public static async create(
+        stdout: NodeJS.WriteStream,
+        stderr: NodeJS.WriteStream,
+        { isLocal }: { isLocal?: boolean }
+    ): Promise<CliContext> {
+        const posthogManager = await getPosthogManager();
+        return new CliContext(stdout, stderr, { isLocal, posthogManager });
+    }
+
+    protected constructor(
+        stdout: NodeJS.WriteStream,
+        stderr: NodeJS.WriteStream,
+        { isLocal, posthogManager }: { isLocal?: boolean; posthogManager: PosthogManager }
+    ) {
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
         this.isLocal = isLocal ?? false;
+        this.posthogManager = posthogManager;
 
         const packageName = this.getPackageName();
         const packageVersion = this.getPackageVersion();
@@ -138,8 +153,7 @@ export class CliContext {
             await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
-        const posthogManager = await getPosthogManager();
-        await posthogManager.flush();
+        await this.posthogManager.flush();
         await this.sentryClient.flush();
         this.exitProgram({ code });
     }
@@ -240,9 +254,9 @@ export class CliContext {
         return result;
     }
 
-    public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
+    public instrumentPostHogEvent(event: PosthogEvent): void {
         if (!this.isLocal) {
-            (await getPosthogManager()).sendEvent(event);
+            this.posthogManager.sendEvent(event);
         }
     }
 
@@ -287,8 +301,8 @@ export class CliContext {
                     this.didSucceed = false;
                 }
             },
-            instrumentPostHogEvent: async (event) => {
-                await this.instrumentPostHogEvent(event);
+            instrumentPostHogEvent: (event) => {
+                this.instrumentPostHogEvent(event);
             },
             shouldBufferLogs: false
         };

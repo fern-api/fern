@@ -27,7 +27,7 @@ export function createTaskContext(): TaskContext {
             // no-op
             return false;
         },
-        instrumentPostHogEvent: async (_event: PosthogEvent) => {
+        instrumentPostHogEvent: (_event: PosthogEvent) => {
             // no-op
         }
     };

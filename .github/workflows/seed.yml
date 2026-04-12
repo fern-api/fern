@@ -1026,11 +1026,31 @@ jobs:
           echo "Generated benchmark report"
 
       - name: Post or update PR comment
-        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body-path: benchmark-comment.md
-          comment-tag: sdk-benchmark-results
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          SENTINEL="<!-- fern-sdk-benchmark-results -->"
+          BODY=$(cat benchmark-comment.md)
+
+          # Search existing comments for the sentinel marker
+          COMMENT_ID=$(gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+            --paginate --jq '.[] | select(.body | contains("'"${SENTINEL}"'")) | .id' \
+            | head -n1)
+
+          if [ -n "$COMMENT_ID" ]; then
+            echo "Updating existing benchmark comment ${COMMENT_ID}"
+            gh api "repos/${REPO}/issues/comments/${COMMENT_ID}" \
+              --method PATCH \
+              --input <(jq -n --arg body "$BODY" '{"body": $body}')
+          else
+            echo "Creating new benchmark comment"
+            gh api "repos/${REPO}/issues/${PR_NUMBER}/comments" \
+              --method POST \
+              --input <(jq -n --arg body "$BODY" '{"body": $body}')
+          fi
 
       # PostHog step runs after the PR comment is posted so that comment generation
       # is never affected by PostHog failures. Fire-and-forget: all errors suppressed.

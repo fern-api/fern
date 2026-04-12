@@ -18,9 +18,15 @@ export class TelemetryClient {
     private readonly sentry: Sentry.NodeClient | undefined;
     private readonly baseTags: Tags;
     private readonly accumulatedTags: Tags = {};
-    private cachedDistinctId: string | undefined;
+    private readonly distinctId: string;
 
-    constructor({ isTTY }: { isTTY: boolean }) {
+    public static async create({ isTTY }: { isTTY: boolean }): Promise<TelemetryClient> {
+        const distinctId = await TelemetryClient.getDistinctId();
+        return new TelemetryClient({ isTTY, distinctId });
+    }
+
+    private constructor({ isTTY, distinctId }: { isTTY: boolean; distinctId: string }) {
+        this.distinctId = distinctId;
         const isTelemetryEnabled = this.isTelemetryEnabled();
         const apiKey = process.env.POSTHOG_API_KEY;
         this.baseTags = {
@@ -52,13 +58,13 @@ export class TelemetryClient {
     }
 
     /** Send a named event that inherits base + accumulated properties. */
-    public async sendEvent(event: string, tags?: Tags): Promise<void> {
+    public sendEvent(event: string, tags?: Tags): void {
         if (this.posthog == null) {
             return;
         }
         try {
             this.posthog.capture({
-                distinctId: await this.getDistinctId(),
+                distinctId: this.distinctId,
                 event,
                 properties: { ...this.baseTags, ...this.accumulatedTags, ...tags }
             });
@@ -71,13 +77,13 @@ export class TelemetryClient {
      *
      * This is not meant to be called directly by command handlers.
      */
-    public async sendLifecycleEvent(event: LifecycleEvent): Promise<void> {
+    public sendLifecycleEvent(event: LifecycleEvent): void {
         if (this.posthog == null) {
             return;
         }
         try {
             this.posthog.capture({
-                distinctId: await this.getDistinctId(),
+                distinctId: this.distinctId,
                 event: "cli",
                 properties: {
                     ...this.baseTags,
@@ -101,14 +107,14 @@ export class TelemetryClient {
      * The caller is responsible for deciding which errors are worth reporting
      * (see `shouldReportToSentry` in withContext.ts).
      */
-    public async captureException(error: unknown): Promise<void> {
+    public captureException(error: unknown): void {
         if (this.sentry === undefined) {
             return;
         }
         try {
             this.sentry.captureException(error, {
                 captureContext: {
-                    user: { id: await this.getDistinctId() },
+                    user: { id: this.distinctId },
                     tags: { ...this.baseTags, ...this.accumulatedTags }
                 }
             });
@@ -128,12 +134,9 @@ export class TelemetryClient {
         await Promise.all(promises);
     }
 
-    private async getDistinctId(): Promise<string> {
-        if (this.cachedDistinctId != null) {
-            return this.cachedDistinctId;
-        }
-
-        const distinctIdFilepath = this.getDistinctIdFilepath();
+    private static async getDistinctId(): Promise<string> {
+        const distinctIdFilepath = TelemetryClient.getDistinctIdFilepath();
+        let distinctId: string | null = null;
 
         try {
             if (!(await doesPathExist(distinctIdFilepath))) {
@@ -142,23 +145,22 @@ export class TelemetryClient {
             }
 
             const content = (await readFile(distinctIdFilepath)).toString().trim();
-            this.cachedDistinctId = content;
-
+            distinctId = content;
             if (!isValidUUID(content)) {
                 // Update the cached ID if it was corrupted.
                 const newId = uuidv4();
                 await writeFile(distinctIdFilepath, newId);
-                this.cachedDistinctId = newId;
+                distinctId = newId;
             }
         } catch {
-            this.cachedDistinctId = uuidv4(); // Fallback to a new ID.
+            distinctId = uuidv4(); // Fallback to a new ID.
         }
 
-        if (this.cachedDistinctId == null || this.cachedDistinctId.length === 0) {
-            this.cachedDistinctId = uuidv4();
+        if (distinctId == null || distinctId.length === 0) {
+            distinctId = uuidv4();
         }
 
-        return this.cachedDistinctId;
+        return distinctId;
     }
 
     /**
@@ -167,7 +169,7 @@ export class TelemetryClient {
      * Note that all telemetry is anonymous, but we still use a shared distinct ID
      * to correlate metrics from the same user/machine across multiple CLI invocations.
      */
-    private getDistinctIdFilepath(): AbsoluteFilePath {
+    private static getDistinctIdFilepath(): AbsoluteFilePath {
         return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(".fern"), RelativeFilePath.of("id"));
     }
 
