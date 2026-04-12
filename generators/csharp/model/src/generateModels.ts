@@ -297,9 +297,10 @@ function generateInlineEnum({
             writer.indent();
 
             enumDeclaration.values.forEach((member, index) => {
-                const wireValue = JSON.stringify(member.name.wireValue);
+                const resolved = context.case.resolveNameAndWireValue(member.name);
+                const wireValue = JSON.stringify(resolved.wireValue);
                 writer.writeLine(`[global::System.Runtime.Serialization.EnumMember(Value = ${wireValue})]`);
-                writer.write(member.name.name.pascalCase.safeName);
+                writer.write(context.case.pascalSafe(resolved.name));
                 if (index < enumDeclaration.values.length - 1) {
                     writer.writeLine(",");
                     writer.newLine();
@@ -324,8 +325,9 @@ function generateInlineEnum({
             writer.writeLine("{");
             writer.indent();
             for (const field of enumDeclaration.values) {
+                const resolvedField1 = context.case.resolveNameAndWireValue(field.name);
                 writer.writeLine(
-                    `{ ${JSON.stringify(field.name.wireValue)}, ${enumName}.${field.name.name.pascalCase.safeName} },`
+                    `{ ${JSON.stringify(resolvedField1.wireValue)}, ${enumName}.${context.case.pascalSafe(resolvedField1.name)} },`
                 );
             }
             writer.dedent();
@@ -339,8 +341,9 @@ function generateInlineEnum({
             writer.writeLine("{");
             writer.indent();
             for (const field of enumDeclaration.values) {
+                const resolvedField2 = context.case.resolveNameAndWireValue(field.name);
                 writer.writeLine(
-                    `{ ${enumName}.${field.name.name.pascalCase.safeName}, ${JSON.stringify(field.name.wireValue)} },`
+                    `{ ${enumName}.${context.case.pascalSafe(resolvedField2.name)}, ${JSON.stringify(resolvedField2.wireValue)} },`
                 );
             }
             writer.dedent();
