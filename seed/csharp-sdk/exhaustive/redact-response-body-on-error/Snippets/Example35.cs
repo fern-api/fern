@@ -1,5 +1,5 @@
 using SeedExhaustive;
-using SeedExhaustive.Endpoints.Params;
+using SeedExhaustive.Endpoints;
 
 public partial class Examples
 {

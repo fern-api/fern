@@ -1,6 +1,5 @@
 using SeedExhaustive;
-using SeedExhaustive.InlinedRequests;
-using SeedExhaustive.Types.Object;
+using SeedExhaustive.Types;
 using System.Globalization;
 
 public partial class Examples

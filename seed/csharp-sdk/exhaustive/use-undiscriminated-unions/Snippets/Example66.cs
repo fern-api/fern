@@ -1,10 +1,8 @@
 using SeedExhaustive;
 
-namespace Usage;
-
-public class Example66
+public partial class Examples
 {
-    public async Task Do() {
+    public async Task Example66() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions {

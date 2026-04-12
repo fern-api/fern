@@ -1,10 +1,8 @@
 using SeedApi;
 
-namespace Usage;
-
-public class Example27
+public partial class Examples
 {
-    public async Task Do() {
+    public async Task Example27() {
         var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"

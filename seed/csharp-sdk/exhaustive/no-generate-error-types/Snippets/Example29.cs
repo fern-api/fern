@@ -1,5 +1,5 @@
 using SeedExhaustive;
-using SeedExhaustive.Types.Object;
+using SeedExhaustive.Types;
 using System.Globalization;
 
 public partial class Examples
