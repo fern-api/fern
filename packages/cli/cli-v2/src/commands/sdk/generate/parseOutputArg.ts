@@ -47,6 +47,13 @@ export async function parseOutputArg(
     }
 
     if (isGitUrl(outputArg)) {
+        if (!local) {
+            throw new Error(
+                `Remote generation is not supported with a git URL for --output.\n\n` +
+                    `  Use --local to generate locally:\n` +
+                    `    fern generate --local --output ${outputArg}`
+            );
+        }
         const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
         if (token == null) {
             throw new Error(
