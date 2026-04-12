@@ -270,6 +270,19 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                             ...this.extractNamedTypeIdsFromDynamicTypeReference(property.typeReference)
                         );
                     }
+                    // Also scan inherited properties from extended types
+                    if (namedType.extends) {
+                        for (const extTypeId of namedType.extends) {
+                            const extType = this.ir.types[extTypeId];
+                            if (extType?.type === "object") {
+                                for (const prop of extType.properties) {
+                                    referencedTypeIds.push(
+                                        ...this.extractNamedTypeIdsFromDynamicTypeReference(prop.typeReference)
+                                    );
+                                }
+                            }
+                        }
+                    }
                     break;
                 case "enum":
                     // Enums don't reference other types
@@ -378,6 +391,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
      * Returns the parent typeId for an inline type, or undefined if not inline.
      */
     public getInlineTypeParent(typeId: TypeId): TypeId | undefined {
+        if (!this.settings.enableInlineTypes) {
+            return undefined;
+        }
         this.buildInlineTypeMaps();
         return this._inlineTypeParentMap?.get(typeId);
     }
@@ -386,6 +402,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
      * Returns the set of direct inline child typeIds for a parent type.
      */
     public getInlineTypeChildren(typeId: TypeId): Set<TypeId> | undefined {
+        if (!this.settings.enableInlineTypes) {
+            return undefined;
+        }
         this.buildInlineTypeMaps();
         return this._inlineTypeChildrenMap?.get(typeId);
     }
