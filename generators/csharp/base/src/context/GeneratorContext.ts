@@ -1121,13 +1121,13 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                 : typeDeclaration.shape.type === "union"
                   ? typeDeclaration.shape.baseProperties
                   : [];
-        const propertyNames = new Set(properties.map((p) => p.name.name.pascalCase.safeName));
+        const propertyNames = new Set(properties.map((p) => this.case.pascalSafe(p.name)));
 
         // Also check union variant struct names since discriminated unions generate
         // nested structs for each variant (e.g. `public struct Status { }`).
         if (typeDeclaration.shape.type === "union") {
             for (const variant of typeDeclaration.shape.types) {
-                propertyNames.add(variant.discriminantValue.name.pascalCase.safeName);
+                propertyNames.add(this.case.pascalSafe(variant.discriminantValue));
             }
         }
 
