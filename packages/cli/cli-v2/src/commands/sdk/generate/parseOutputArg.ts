@@ -12,8 +12,18 @@ import { resolveGithubPrBranch } from "../utils/resolveGithubPrBranch.js";
  *   produce a self-hosted git output with token from GITHUB_TOKEN or GIT_TOKEN env vars.
  * - Anything else is treated as a local path.
  */
-export async function parseOutputArg(outputArg: string): Promise<schemas.OutputObjectSchema> {
+export async function parseOutputArg(
+    outputArg: string,
+    { local }: { local: boolean }
+): Promise<schemas.OutputObjectSchema> {
     if (isGithubPrUrl(outputArg)) {
+        if (!local) {
+            throw new Error(
+                `Remote generation is not supported with a GitHub PR URL for --output.\n\n` +
+                    `  Use --local to generate locally:\n` +
+                    `    fern generate --local --output ${outputArg}`
+            );
+        }
         const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
         if (token == null) {
             throw new Error(

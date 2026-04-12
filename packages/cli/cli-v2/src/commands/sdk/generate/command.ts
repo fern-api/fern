@@ -125,16 +125,13 @@ export class GenerateCommand {
             groupName: args.target != null ? undefined : (args.group ?? workspaceWithOverrides.sdks?.defaultGroup)
         });
 
-        // When --output is a PR URL, force local generation since it produces a self-hosted git output.
-        const forceLocal = args.output != null && isGithubPrUrl(args.output);
-
         this.validateArgs({
             workspace: workspaceWithOverrides,
-            args: { ...args, local: args.local || forceLocal },
+            args,
             targets
         });
 
-        await this.runGeneration({ context, workspace: workspaceWithOverrides, targets, args, forceLocal });
+        await this.runGeneration({ context, workspace: workspaceWithOverrides, targets, args });
     }
 
     private async handleWithFlags(context: Context, args: GenerateCommand.Args): Promise<void> {
@@ -183,21 +180,19 @@ export class GenerateCommand {
         });
 
         const targets = workspace.sdks?.targets ?? [];
-        await this.runGeneration({ context, workspace, targets, args, forceLocal: true });
+        await this.runGeneration({ context, workspace, targets, args });
     }
 
     private async runGeneration({
         context,
         workspace,
         targets,
-        args,
-        forceLocal
+        args
     }: {
         context: Context;
         workspace: Workspace;
         targets: Target[];
         args: GenerateCommand.Args;
-        forceLocal: boolean;
     }): Promise<void> {
         if (workspace.sdks == null) {
             throw new Error("No SDKs configured");
@@ -247,7 +242,7 @@ export class GenerateCommand {
             cliVersion: workspace.cliVersion
         });
 
-        const isLocal = forceLocal || args.local;
+        const isLocal = args.local;
 
         const token = this.isTokenRequired({ targets, args: { ...args, local: isLocal } })
             ? await context.getTokenOrPrompt()
@@ -450,6 +445,14 @@ export class GenerateCommand {
      */
     private async parseTargetOutput(args: GenerateCommand.Args): Promise<schemas.OutputObjectSchema> {
         if (args.output != null && isGithubPrUrl(args.output)) {
+            if (!args.local) {
+                throw new CliError({
+                    message:
+                        `Remote generation is not supported with a GitHub PR URL for --output.\n\n` +
+                        `  Use --local to generate locally:\n` +
+                        `    fern generate --local --output ${args.output}`
+                });
+            }
             const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
             if (token == null) {
                 throw new CliError({
