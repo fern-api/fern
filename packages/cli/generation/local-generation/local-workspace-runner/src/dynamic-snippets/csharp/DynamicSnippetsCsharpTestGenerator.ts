@@ -19,7 +19,7 @@ const PROJECT_FILE_CONTENT = `<Project Sdk="Microsoft.NET.Sdk">
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\\src\\**\\*.csproj" Exclude="..\\src\\**\\*.Test.csproj" />
+    <ProjectReference Include="..\\**\\*.csproj" Exclude="..\\**\\*.Test.csproj;..\\Snippets\\*.csproj" />
   </ItemGroup>
 </Project>`;
 
