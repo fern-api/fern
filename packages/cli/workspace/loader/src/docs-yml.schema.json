@@ -218,6 +218,16 @@
         }
       ]
     },
+    "agents": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AgentsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -505,16 +515,6 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.CustomDomain"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "private": {
-          "oneOf": [
-            {
-              "type": "boolean"
             },
             {
               "type": "null"
@@ -4377,6 +4377,59 @@
       },
       "additionalProperties": false
     },
+    "docs.PageDescriptionSource": {
+      "type": "string",
+      "enum": [
+        "description",
+        "subtitle"
+      ]
+    },
+    "docs.AgentsConfig": {
+      "type": "object",
+      "properties": {
+        "page-directive": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "page-description-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.PageDescriptionSource"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "llms-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "llms-full-txt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.TwitterCardSetting": {
       "type": "string",
       "enum": [
@@ -4669,6 +4722,16 @@
           ]
         },
         "valid-docs-endpoints": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CheckRuleSeverity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "missing-redirects": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.CheckRuleSeverity"
@@ -5716,6 +5779,16 @@
       "type": "object",
       "properties": {
         "intercom": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "context7": {
           "oneOf": [
             {
               "type": "string"

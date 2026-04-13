@@ -19,6 +19,7 @@ async fn main() {
                         email_address: "emailAddress".to_string(),
                         subject: "subject".to_string(),
                         html_content: Some("htmlContent".to_string()),
+                        ..Default::default()
                     },
                 }),
                 nullable_search_result: Some(SearchResult::User {
@@ -39,13 +40,16 @@ async fn main() {
                             country: Some("country".to_string()),
                             building_id: NullableUserId(Some("buildingId".to_string())),
                             tenant_id: OptionalUserId(Some("tenantId".to_string())),
+                            ..Default::default()
                         }),
+                        ..Default::default()
                     },
                 }),
                 nullable_array: Some(vec![
                     "nullableArray".to_string(),
                     "nullableArray".to_string(),
                 ]),
+                ..Default::default()
             },
             None,
         )

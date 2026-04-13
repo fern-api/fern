@@ -271,6 +271,9 @@ types-python-dateutil = "^2.9.0.20240316"
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
+markers = [
+    "aiohttp: tests that require httpx_aiohttp to be installed",
+]
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]{mypy_exclude_config}

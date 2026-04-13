@@ -12,7 +12,7 @@ pub struct StackInformation {
 
 impl StackInformation {
     pub fn builder() -> StackInformationBuilder {
-        StackInformationBuilder::default()
+        <StackInformationBuilder as Default>::default()
     }
 }
 

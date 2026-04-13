@@ -9,7 +9,7 @@ pub struct TranscriptEvent {
 
 impl TranscriptEvent {
     pub fn builder() -> TranscriptEventBuilder {
-        TranscriptEventBuilder::default()
+        <TranscriptEventBuilder as Default>::default()
     }
 }
 

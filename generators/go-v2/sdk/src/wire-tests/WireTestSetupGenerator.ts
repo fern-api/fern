@@ -26,6 +26,8 @@ export class WireTestSetupGenerator {
     }
 
     public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+        // @ts-expect-error mock-utils uses ir-sdk v61 while this package uses v66;
+        // the IR is structurally compatible (v66 is a superset) so this is safe.
         return new WireMock().convertToWireMock(ir);
     }
 
@@ -34,7 +36,7 @@ export class WireTestSetupGenerator {
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
-            JSON.stringify(wireMockConfigContent)
+            JSON.stringify(wireMockConfigContent, null, 2)
         );
         this.context.project.addRawFiles(wireMockConfigFile);
         this.context.logger.debug("Generated wiremock-mappings.json for WireMock");

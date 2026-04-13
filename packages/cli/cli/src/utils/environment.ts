@@ -57,6 +57,35 @@ export function detectCISource(): CISource | undefined {
     return undefined;
 }
 
+export interface DeployerAuthor {
+    username?: string;
+    email?: string;
+}
+
+/**
+ * Detects the deployer author from CI environment variables.
+ * Username fallback: GITHUB_ACTOR → GITLAB_USER_LOGIN → CIRCLE_USERNAME → BUILD_REQUESTEDFOR
+ * Email fallback: GITLAB_USER_EMAIL → BUILD_REQUESTEDFOREMAIL
+ * Returns undefined when neither username nor email is found.
+ */
+export function detectDeployerAuthor(): DeployerAuthor | undefined {
+    const username = nonEmpty(
+        process.env.GITHUB_ACTOR ??
+            process.env.GITLAB_USER_LOGIN ??
+            process.env.CIRCLE_USERNAME ??
+            process.env.BUILD_REQUESTEDFOR
+    );
+    const email = nonEmpty(process.env.GITLAB_USER_EMAIL ?? process.env.BUILD_REQUESTEDFOREMAIL);
+    if (username == null && email == null) {
+        return undefined;
+    }
+    return { username, email };
+}
+
+function nonEmpty(value: string | undefined): string | undefined {
+    return value != null && value.length > 0 ? value : undefined;
+}
+
 /**
  * Checks if the current process is running in a CI/CD environment
  * @returns true if running in any common CI/CD environment

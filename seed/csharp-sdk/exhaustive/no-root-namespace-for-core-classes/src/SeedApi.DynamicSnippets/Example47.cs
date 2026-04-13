@@ -1,6 +1,5 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
 
 namespace Usage;
 
@@ -14,10 +13,8 @@ public class Example47
             }
         );
 
-        await client.Endpoints.Put.AddAsync(
-            new PutRequest {
-                Id = "id"
-            }
+        await client.Endpoints.Primitive.GetAndReturnLongAsync(
+            1000000L
         );
     }
 

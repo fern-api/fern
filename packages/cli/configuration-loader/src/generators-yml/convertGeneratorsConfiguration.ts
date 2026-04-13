@@ -85,6 +85,7 @@ export async function convertGeneratorsConfiguration({
                               group,
                               maybeTopLevelMetadata,
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
+                              maybeRootAutomation: rawGeneratorsConfiguration.automation,
                               readme,
                               context
                           })
@@ -554,6 +555,7 @@ async function convertGroup({
     group,
     maybeTopLevelMetadata,
     maybeTopLevelReviewers,
+    maybeRootAutomation,
     readme,
     context
 }: {
@@ -562,6 +564,7 @@ async function convertGroup({
     group: generatorsYml.GeneratorGroupSchema;
     maybeTopLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
@@ -579,11 +582,41 @@ async function convertGroup({
                     maybeGroupLevelMetadata,
                     maybeTopLevelReviewers,
                     maybeGroupLevelReviewers: group.reviewers,
+                    maybeRootAutomation,
+                    maybeGroupAutomation: group.automation,
                     readme,
                     context
                 })
             )
         )
+    };
+}
+
+function getGeneratorNameAndImage(
+    generator: generatorsYml.GeneratorInvocationSchema,
+    context: TaskContext
+): {
+    normalizedName: string;
+    containerImage: string | undefined;
+} {
+    if ("image" in generator) {
+        // CustomGeneratorInvocationSchema — normalize the image name for IR version resolution
+        // (FDR expects fully-qualified names like "fernapi/fern-typescript-sdk"), but use the
+        // corrected (non-prefixed) name for the containerImage since the fernapi/ Docker Hub
+        // org should not appear in custom registry paths.
+        const correctedImageName = correctIncorrectDockerOrgWithWarning(generator.image.name, context);
+        const normalizedImageName = addDefaultDockerOrgIfNotPresent(correctedImageName);
+        return {
+            normalizedName: normalizedImageName,
+            containerImage: `${generator.image.registry}/${correctedImageName}`
+        };
+    }
+    // DefaultGeneratorInvocationSchema — apply Docker Hub org normalization
+    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
+    const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
+    return {
+        normalizedName,
+        containerImage: undefined
     };
 }
 
@@ -594,6 +627,8 @@ async function convertGenerator({
     maybeTopLevelMetadata,
     maybeGroupLevelReviewers,
     maybeTopLevelReviewers,
+    maybeRootAutomation,
+    maybeGroupAutomation,
     readme,
     context
 }: {
@@ -603,16 +638,21 @@ async function convertGenerator({
     maybeTopLevelMetadata: OutputMetadata | undefined;
     maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
+    maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
+    maybeGroupAutomation: generatorsYml.AutomationSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
-    // Warn and correct incorrect "fern-api/" org prefix in generators.yml
-    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
-    // Normalize the generator name by adding the default Docker org prefix if not present
-    const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
+    const { normalizedName, containerImage } = getGeneratorNameAndImage(generator, context);
     return {
         raw: generator,
+        automation: generatorsYml.resolveAutomationConfig({
+            rootAutomation: maybeRootAutomation,
+            groupAutomation: maybeGroupAutomation,
+            generatorAutomation: generator.automation
+        }),
         name: normalizedName,
+        containerImage,
         version: generator.version,
         config: generator.config,
         outputMode: await convertOutputMode({

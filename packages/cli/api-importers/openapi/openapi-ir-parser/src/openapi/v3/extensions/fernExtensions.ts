@@ -548,7 +548,24 @@ export const FernOpenAPIExtension = {
      *         - $ref: '#/components/schemas/CompletionEvent'
      *         - $ref: '#/components/schemas/ErrorEvent'
      */
-    DISCRIMINATOR_CONTEXT: "x-fern-discriminator-context"
+    DISCRIMINATOR_CONTEXT: "x-fern-discriminator-context",
+
+    /**
+     * Used to specify a client-side default value for a parameter (path, header, or query).
+     * When present, the parameter becomes optional in the generated SDK, and the
+     * default value is sent when the user doesn't provide one.
+     *
+     * Supports string and boolean literal values.
+     *
+     * Example usage:
+     *   parameters:
+     *     - name: X-API-Version
+     *       in: header
+     *       schema:
+     *         type: string
+     *       x-fern-default: "2024-02-08"
+     */
+    FERN_DEFAULT: "x-fern-default"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

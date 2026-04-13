@@ -8,7 +8,7 @@ pub struct Package {
 
 impl Package {
     pub fn builder() -> PackageBuilder {
-        PackageBuilder::default()
+        <PackageBuilder as Default>::default()
     }
 }
 

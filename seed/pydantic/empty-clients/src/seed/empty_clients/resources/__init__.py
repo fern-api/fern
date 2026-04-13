@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from . import level_1
+from . import level1
 
-__all__ = ["level_1"]
+__all__ = ["level1"]

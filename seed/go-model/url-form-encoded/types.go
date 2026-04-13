@@ -70,7 +70,7 @@ func (p *PostSubmitResponse) String() string {
 
 type TokenRequest struct {
 	// Client identifier
-	ClientId string `json:"client_id" url:"client_id"`
+	ClientID string `json:"client_id" url:"client_id"`
 	// Client secret
 	ClientSecret string `json:"client_secret" url:"client_secret"`
 
@@ -78,11 +78,11 @@ type TokenRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (t *TokenRequest) GetClientId() string {
+func (t *TokenRequest) GetClientID() string {
 	if t == nil {
 		return ""
 	}
-	return t.ClientId
+	return t.ClientID
 }
 
 func (t *TokenRequest) GetClientSecret() string {

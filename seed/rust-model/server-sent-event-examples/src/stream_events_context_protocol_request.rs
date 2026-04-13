@@ -8,7 +8,7 @@ pub struct StreamEventsContextProtocolRequest {
 
 impl StreamEventsContextProtocolRequest {
     pub fn builder() -> StreamEventsContextProtocolRequestBuilder {
-        StreamEventsContextProtocolRequestBuilder::default()
+        <StreamEventsContextProtocolRequestBuilder as Default>::default()
     }
 }
 

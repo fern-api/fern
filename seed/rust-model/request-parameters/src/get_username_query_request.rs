@@ -53,7 +53,7 @@ pub struct GetUsernameQueryRequest {
 
 impl GetUsernameQueryRequest {
     pub fn builder() -> GetUsernameQueryRequestBuilder {
-        GetUsernameQueryRequestBuilder::default()
+        <GetUsernameQueryRequestBuilder as Default>::default()
     }
 }
 

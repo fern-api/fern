@@ -14,6 +14,7 @@ async fn main() {
         .get_and_return_with_unknown_field(
             &ObjectWithUnknownField {
                 unknown: serde_json::json!({"key":"value"}),
+                ..Default::default()
             },
             None,
         )

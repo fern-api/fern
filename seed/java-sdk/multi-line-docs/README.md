@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:multi-line-docs'
+  implementation 'com.fern:multi-line-docs:0.0.1'
 }
 ```
 

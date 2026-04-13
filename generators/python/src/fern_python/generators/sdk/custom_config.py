@@ -172,6 +172,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # X-Fern-Runtime, X-Fern-Platform, User-Agent) from generated SDK requests.
     omit_fern_headers: bool = False
 
+    # The default number of retries for failed requests in the generated SDK.
+    # Set to 0 to disable retries by default (useful for non-idempotent APIs).
+    # SDK users can still override this per-request via request_options.
+    default_max_retries: int = pydantic.Field(2, ge=0)
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -185,6 +190,8 @@ class SDKCustomConfig(pydantic.BaseModel):
                 obj["offset_semantics"] = obj.pop("offsetSemantics")
             if "omitFernHeaders" in obj and "omit_fern_headers" not in obj:
                 obj["omit_fern_headers"] = obj.pop("omitFernHeaders")
+            if "maxRetries" in obj and "default_max_retries" not in obj:
+                obj["default_max_retries"] = obj.pop("maxRetries")
 
         obj = super().parse_obj(obj)
 

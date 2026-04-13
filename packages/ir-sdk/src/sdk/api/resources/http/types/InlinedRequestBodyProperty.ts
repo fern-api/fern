@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface InlinedRequestBodyProperty extends FernIr.WithDocsAndAvailability {
-    name: FernIr.NameAndWireValue;
+    name: FernIr.NameAndWireValueOrString;
     valueType: FernIr.TypeReference;
     v2Examples: FernIr.V2SchemaExamples | undefined;
     propertyAccess: FernIr.ObjectPropertyAccess | undefined;

@@ -8,7 +8,7 @@ pub struct UsernameContainer2 {
 
 impl UsernameContainer2 {
     pub fn builder() -> UsernameContainer2Builder {
-        UsernameContainer2Builder::default()
+        <UsernameContainer2Builder as Default>::default()
     }
 }
 

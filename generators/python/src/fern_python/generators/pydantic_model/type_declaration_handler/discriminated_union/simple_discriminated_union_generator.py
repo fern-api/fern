@@ -138,10 +138,14 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                     )
                 ]
                 discriminant_wire_value = self._union.discriminant.wire_value
+                base_property_wire_values = {bp.name.wire_value for bp in self._union.base_properties}
                 object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
                 for object_property in object_properties:
                     # Skip properties that match the discriminant field to avoid duplicate fields
                     if object_property.name.wire_value == discriminant_wire_value:
+                        continue
+                    # Skip properties already declared in the union's base properties
+                    if object_property.name.wire_value in base_property_wire_values:
                         continue
                     self._all_referenced_types.append(object_property.value_type)
                     same_properties_as_object_property_fields.append(

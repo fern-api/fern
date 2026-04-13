@@ -71,6 +71,7 @@ func TestNoReqBodyGetWithNoRequestBodyWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.NoReqBody.GetWithNoRequestBody(
 		context.TODO(),
@@ -92,6 +93,7 @@ func TestNoReqBodyPostWithNoRequestBodyWithWireMock(
 	}
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
 	)
 	_, invocationErr := client.NoReqBody.PostWithNoRequestBody(
 		context.TODO(),

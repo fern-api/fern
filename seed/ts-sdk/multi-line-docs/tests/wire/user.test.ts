@@ -33,10 +33,6 @@ describe("UserClient", () => {
             name: "name",
             age: 1,
         });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-            age: 1,
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

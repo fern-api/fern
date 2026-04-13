@@ -153,6 +153,18 @@ export async function collectFilesFromDocsConfig({
         });
     }
 
+    if (parsedDocsConfig.context7File != null) {
+        filepaths.add(parsedDocsConfig.context7File);
+    }
+
+    if (parsedDocsConfig.llmsTxtFile != null) {
+        filepaths.add(parsedDocsConfig.llmsTxtFile);
+    }
+
+    if (parsedDocsConfig.llmsFullTxtFile != null) {
+        filepaths.add(parsedDocsConfig.llmsFullTxtFile);
+    }
+
     /* custom page action icons */
     if (parsedDocsConfig.pageActions?.options?.custom != null) {
         await Promise.all(

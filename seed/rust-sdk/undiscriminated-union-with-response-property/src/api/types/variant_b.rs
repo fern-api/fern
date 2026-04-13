@@ -10,7 +10,7 @@ pub struct VariantB {
 
 impl VariantB {
     pub fn builder() -> VariantBBuilder {
-        VariantBBuilder::default()
+        <VariantBBuilder as Default>::default()
     }
 }
 

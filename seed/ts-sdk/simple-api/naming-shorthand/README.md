@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
@@ -43,6 +44,18 @@ import { AcmeClient, AcmeEnvironment } from "@fern/simple-api";
 
 const client = new AcmeClient({ environment: AcmeEnvironment.Production, token: "YOUR_TOKEN" });
 await client.user.get("id");
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```typescript
+import { AcmeClient, acmeEnvironment } from "@fern/simple-api";
+
+const client = new AcmeClient({
+    environment: acmeEnvironment.Production,
+});
 ```
 
 ## Exception Handling

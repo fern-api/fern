@@ -10,6 +10,7 @@ import { addDeleteCommand } from "./delete/index.js";
 export declare namespace PreviewCommand {
     export interface Args extends GlobalArgs {
         instance?: string;
+        id?: string;
         strict: boolean;
         "skip-upload": boolean;
     }
@@ -22,6 +23,7 @@ export class PreviewCommand {
         await this.publishCommand.handle(context, {
             ...args,
             preview: true,
+            previewId: args.id,
             force: true
         });
     }
@@ -52,6 +54,11 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     default: false,
                     description: "Treat all validation warnings as errors"
+                })
+                .option("id", {
+                    type: "string",
+                    description:
+                        "A stable identifier for the preview. Reusing the same ID overwrites the previous preview, keeping the URL stable."
                 })
                 .option("skip-upload", {
                     type: "boolean",

@@ -18,10 +18,10 @@ paths:
             application/json:
               schema: {}
       security:
-        - BearerAuth: []
+        - Bearer: []
 components:
   schemas: {}
   securitySchemes:
-    BearerAuth:
+    Bearer:
       type: http
       scheme: bearer

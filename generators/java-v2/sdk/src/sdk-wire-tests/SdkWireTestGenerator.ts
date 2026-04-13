@@ -1,4 +1,4 @@
-import { File } from "@fern-api/base-generator";
+import { File, getOriginalName } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { java } from "@fern-api/java-ast";
@@ -12,6 +12,7 @@ import { TestMethodBuilder } from "./builders/TestMethodBuilder.js";
 import { SnippetExtractor } from "./extractors/SnippetExtractor.js";
 import { WireTestDataExtractor, WireTestExample } from "./extractors/TestDataExtractor.js";
 import { TestResourceWriter } from "./resources/TestResourceWriter.js";
+
 /**
  * Generates wire tests that validate SDK adherence to API specifications.
  */
@@ -182,14 +183,16 @@ export class SdkWireTestGenerator {
                 if (firstDynamicExample) {
                     try {
                         this.context.logger.debug(
-                            `Generating snippet for endpoint ${endpoint.id} (${endpoint.name.originalName}) with FernIr.dynamic endpoint ${dynamicEndpoint.declaration.name.originalName}`
+                            `Generating snippet for endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}) with FernIr.dynamic endpoint ${getOriginalName(dynamicEndpoint.declaration.name)}`
                         );
 
                         const expectedServiceName = serviceName.toLowerCase();
                         // Use the same fallback strategy as IR service resolution
                         const dynamicServiceName = (
-                            dynamicEndpoint.declaration.fernFilepath?.allParts?.[0]?.originalName ||
-                            dynamicEndpoint.declaration.name.originalName ||
+                            (dynamicEndpoint.declaration.fernFilepath?.allParts?.[0] != null
+                                ? getOriginalName(dynamicEndpoint.declaration.fernFilepath.allParts[0])
+                                : undefined) ||
+                            getOriginalName(dynamicEndpoint.declaration.name) ||
                             "Service"
                         ).toLowerCase();
 
@@ -215,11 +218,11 @@ export class SdkWireTestGenerator {
                         const testMethodCall = snippetExtractor.extractMethodCall(fullSnippet);
                         if (testMethodCall === null) {
                             this.context.logger.debug(
-                                `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Could not extract method call from snippet`
+                                `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Could not extract method call from snippet`
                             );
                             skippedEndpoints.push({
                                 endpointId: endpoint.id,
-                                endpointName: endpoint.name.originalName,
+                                endpointName: getOriginalName(endpoint.name),
                                 reason: `Could not extract method call from snippet - likely service mismatch or invalid snippet format`
                             });
                             continue;
@@ -241,11 +244,11 @@ export class SdkWireTestGenerator {
                     } catch (error) {
                         const errorMessage = extractErrorMessage(error);
                         this.context.logger.debug(
-                            `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Failed to generate snippet - ${errorMessage}`
+                            `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Failed to generate snippet - ${errorMessage}`
                         );
                         skippedEndpoints.push({
                             endpointId: endpoint.id,
-                            endpointName: endpoint.name.originalName,
+                            endpointName: getOriginalName(endpoint.name),
                             reason: `Snippet generation failed: ${errorMessage}`
                         });
                     }
@@ -266,11 +269,11 @@ export class SdkWireTestGenerator {
                         const testMethodCall = snippetExtractor.extractMethodCall(fullSnippet);
                         if (testMethodCall === null) {
                             this.context.logger.debug(
-                                `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Could not extract method call from default snippet`
+                                `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Could not extract method call from default snippet`
                             );
                             skippedEndpoints.push({
                                 endpointId: endpoint.id,
-                                endpointName: endpoint.name.originalName,
+                                endpointName: getOriginalName(endpoint.name),
                                 reason: `Could not extract method call from default snippet - likely service mismatch or invalid snippet format`
                             });
                             continue;
@@ -289,11 +292,11 @@ export class SdkWireTestGenerator {
                     } catch (error) {
                         const errorMessage = extractErrorMessage(error);
                         this.context.logger.debug(
-                            `Skipping endpoint ${endpoint.id} (${endpoint.name.originalName}): Failed to generate default snippet - ${errorMessage}`
+                            `Skipping endpoint ${endpoint.id} (${getOriginalName(endpoint.name)}): Failed to generate default snippet - ${errorMessage}`
                         );
                         skippedEndpoints.push({
                             endpointId: endpoint.id,
-                            endpointName: endpoint.name.originalName,
+                            endpointName: getOriginalName(endpoint.name),
                             reason: `Default snippet generation failed: ${errorMessage}`
                         });
                     }
@@ -358,7 +361,7 @@ export class SdkWireTestGenerator {
         testExample: WireTestExample
     ): string {
         const serviceNameLower = serviceName.toLowerCase();
-        const methodName = endpoint.name.camelCase.safeName;
+        const methodName = this.context.caseConverter.camelSafe(endpoint.name);
 
         let pathParamsStr = "";
         if (testExample.request.pathParams && Object.keys(testExample.request.pathParams).length > 0) {
@@ -386,7 +389,9 @@ export class SdkWireTestGenerator {
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName =
-                service.name?.fernFilepath?.allParts?.map((part) => part.pascalCase.safeName).join("") || "Service";
+                service.name?.fernFilepath?.allParts
+                    ?.map((part) => this.context.caseConverter.pascalSafe(part))
+                    .join("") || "Service";
 
             endpointsByService.set(serviceName, service.endpoints);
         }
@@ -530,7 +535,7 @@ export class SdkWireTestGenerator {
             transformedSnippet = transformedSnippet.replace(/Optional</g, "Iterable<");
         }
 
-        if (endpoint.name.originalName === "listUsernames") {
+        if (getOriginalName(endpoint.name) === "listUsernames") {
             transformedSnippet = transformedSnippet.replace(/\.listWithCursorPagination\(/g, ".listUsernames(");
             transformedSnippet = transformedSnippet.replace(
                 /ListUsersCursorPaginationRequest/g,
@@ -538,7 +543,7 @@ export class SdkWireTestGenerator {
             );
         }
 
-        if (endpoint.name.originalName === "listWithBodyCursorPagination") {
+        if (getOriginalName(endpoint.name) === "listWithBodyCursorPagination") {
             transformedSnippet = transformedSnippet.replace(
                 /\.listWithMixedTypeCursorPagination\(/g,
                 ".listWithBodyCursorPagination("
@@ -558,7 +563,7 @@ export class SdkWireTestGenerator {
             imports.push(`${packageName}.${resourcePath}.WithCursor`);
         }
 
-        if (endpoint.name.originalName === "listWithBodyOffsetPagination") {
+        if (getOriginalName(endpoint.name) === "listWithBodyOffsetPagination") {
             transformedSnippet = transformedSnippet.replace(
                 /\.listWithMixedTypeCursorPagination\(/g,
                 ".listWithBodyOffsetPagination("

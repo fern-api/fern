@@ -45,7 +45,7 @@ paths:
     get:
       operationId: nestedNoAuth_api_getSomething
       tags:
-        - NestedNoAuthApi
+        - NestedNoAuthAPI
       parameters: []
       responses:
         '204':
@@ -54,13 +54,13 @@ paths:
     get:
       operationId: nested_api_getSomething
       tags:
-        - NestedApi
+        - NestedAPI
       parameters: []
       responses:
         '204':
           description: ''
       security:
-        - BearerAuth: []
+        - OAuthScheme: []
   /get-something:
     get:
       operationId: simple_getSomething
@@ -71,7 +71,7 @@ paths:
         '204':
           description: ''
       security:
-        - BearerAuth: []
+        - OAuthScheme: []
 components:
   schemas:
     authTokenResponse:
@@ -90,6 +90,6 @@ components:
         - access_token
         - expires_in
   securitySchemes:
-    BearerAuth:
+    OAuthScheme:
       type: http
       scheme: bearer

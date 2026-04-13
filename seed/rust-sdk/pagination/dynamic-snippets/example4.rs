@@ -17,6 +17,7 @@ async fn main() {
                 per_page: Some(1),
                 order: Some(Order::Asc),
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )

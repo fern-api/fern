@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:no-content-response'
+  implementation 'com.fern:no-content-response:0.0.1'
 }
 ```
 

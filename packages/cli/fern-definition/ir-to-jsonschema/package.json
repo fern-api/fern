@@ -37,9 +37,9 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@types/ajv": "catalog:",
     "ajv": "^8.18.0",
     "ajv-formats": "catalog:",
     "json-schema": "catalog:"

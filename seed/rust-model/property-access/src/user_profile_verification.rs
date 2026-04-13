@@ -10,7 +10,7 @@ pub struct UserProfileVerification {
 
 impl UserProfileVerification {
     pub fn builder() -> UserProfileVerificationBuilder {
-        UserProfileVerificationBuilder::default()
+        <UserProfileVerificationBuilder as Default>::default()
     }
 }
 

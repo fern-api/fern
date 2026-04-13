@@ -37,12 +37,43 @@ describe("SemVer.fromString", () => {
         expect(semver.prerelease).toBe(0);
     });
 
+    it("should parse valid semver with rc.0 (dot-separated prerelease)", () => {
+        const semver = SemVer.fromString("1.2.3-rc.0");
+        expect(semver.major).toBe(1);
+        expect(semver.minor).toBe(2);
+        expect(semver.patch).toBe(3);
+        expect(semver.prerelease).toBe(0);
+    });
+
+    it("should parse valid semver with rc.5 (dot-separated prerelease)", () => {
+        const semver = SemVer.fromString("1.2.3-rc.5");
+        expect(semver.major).toBe(1);
+        expect(semver.minor).toBe(2);
+        expect(semver.patch).toBe(3);
+        expect(semver.prerelease).toBe(5);
+    });
+
+    it("rc0 and rc.0 should produce the same SemVer", () => {
+        const a = SemVer.fromString("1.2.3-rc0");
+        const b = SemVer.fromString("1.2.3-rc.0");
+        expect(a.major).toBe(b.major);
+        expect(a.minor).toBe(b.minor);
+        expect(a.patch).toBe(b.patch);
+        expect(a.prerelease).toBe(b.prerelease);
+    });
+
     it("should throw error for invalid semver format", () => {
         expect(() => SemVer.fromString("1.2")).toThrow(InvalidSemVerError);
         expect(() => SemVer.fromString("1.2.3.4")).toThrow(InvalidSemVerError);
         expect(() => SemVer.fromString("invalid")).toThrow(InvalidSemVerError);
         expect(() => SemVer.fromString("1.2.3-")).toThrow(InvalidSemVerError);
         expect(() => SemVer.fromString("1.2.3-rc")).toThrow(InvalidSemVerError);
+    });
+
+    it("should throw error for invalid rc.x formats", () => {
+        expect(() => SemVer.fromString("1.2.3-rc.")).toThrow(InvalidSemVerError);
+        expect(() => SemVer.fromString("1.2.3-rc.0.1")).toThrow(InvalidSemVerError);
+        expect(() => SemVer.fromString("1.2.3-rc.a")).toThrow(InvalidSemVerError);
     });
 
     it("should throw error for non-numeric version parts", () => {
@@ -286,6 +317,13 @@ describe("assertValidSemVerOrThrow", () => {
         expect(() => assertValidSemVerOrThrow("1.2.3-rc5")).not.toThrow();
     });
 
+    it("should not throw for dot-separated prerelease (rc.0 format)", () => {
+        expect(() => assertValidSemVerOrThrow("1.2.3-rc.0")).not.toThrow();
+        expect(() => assertValidSemVerOrThrow("1.2.3-rc.5")).not.toThrow();
+        expect(() => assertValidSemVerOrThrow("0.20.0-rc.0")).not.toThrow();
+        expect(() => assertValidSemVerOrThrow("3.61.0-rc.0")).not.toThrow();
+    });
+
     it("should throw for invalid semver", () => {
         expect(() => assertValidSemVerOrThrow("1.2")).toThrow(InvalidSemVerError);
         expect(() => assertValidSemVerOrThrow("invalid")).toThrow(InvalidSemVerError);
@@ -358,6 +396,44 @@ describe("assertValidSemVerChangeOrThrow", () => {
             const previous = createMockReleaseRequest("1.2.2");
 
             expect(() => assertValidSemVerChangeOrThrow(current, previous)).not.toThrow(InvalidSemVerError);
+        });
+    });
+
+    describe("dot-separated prerelease (rc.0 format)", () => {
+        it("should treat rc.0 and rc0 as equivalent when validating", () => {
+            const current = createMockReleaseRequest("1.3.0-rc.0", true);
+            const previous = createMockReleaseRequest("1.2.0");
+            expect(() => assertValidSemVerChangeOrThrow(current, previous)).not.toThrow();
+        });
+
+        it("should allow rc.0 -> rc.1 increment", () => {
+            const current = createMockReleaseRequest("1.2.3-rc.1");
+            const previous = createMockReleaseRequest("1.2.3-rc.0");
+            expect(() => assertValidSemVerChangeOrThrow(current, previous)).not.toThrow();
+        });
+
+        it("should allow rc.0 (dot) -> rc1 (no dot) increment as equivalent", () => {
+            const current = createMockReleaseRequest("1.2.3-rc1");
+            const previous = createMockReleaseRequest("1.2.3-rc.0");
+            expect(() => assertValidSemVerChangeOrThrow(current, previous)).not.toThrow();
+        });
+
+        it("should allow rc0 (no dot) -> rc.1 (dot) increment as equivalent", () => {
+            const current = createMockReleaseRequest("1.2.3-rc.1");
+            const previous = createMockReleaseRequest("1.2.3-rc0");
+            expect(() => assertValidSemVerChangeOrThrow(current, previous)).not.toThrow();
+        });
+
+        it("should allow rc.x to final release transition", () => {
+            const current = createMockReleaseRequest("1.2.3");
+            const previous = createMockReleaseRequest("1.2.3-rc.2");
+            expect(() => assertValidSemVerChangeOrThrow(current, previous)).not.toThrow();
+        });
+
+        it("should throw for feature change with only rc.x increment", () => {
+            const current = createMockReleaseRequest("1.2.3-rc.1", true);
+            const previous = createMockReleaseRequest("1.2.2");
+            expect(() => assertValidSemVerChangeOrThrow(current, previous)).toThrow(InvalidSemVerError);
         });
     });
 

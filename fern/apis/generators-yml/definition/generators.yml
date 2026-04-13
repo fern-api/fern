@@ -1,6 +1,7 @@
 imports:
   ai: ./ai.yml
   auth: ./fernDefinition/auth.yml
+  automation: ./automation.yml
   file: ./fernDefinition/file.yml
   environments: ./fernDefinition/environments.yml
   group: ./group.yml
@@ -48,6 +49,12 @@ types:
         docs: |
           If true, automatically release SDKs when changes are detected.
           Can be overridden at the individual generator level.
+      automation:
+        type: optional<automation.AutomationSchema>
+        docs: |
+          Controls which automation features (GitHub Actions workflows) are enabled.
+          Can be overridden at the group or generator level.
+          All features default to true when not specified.
       openapi:
         type: optional<GeneratorsOpenAPISchema>
         availability: deprecated
@@ -611,6 +618,22 @@ types:
   ProtobufSpecSchema:
     properties:
       proto: ProtobufDefinitionSchema
+
+  GeneratorImageObjectSchema:
+    audiences:
+      - generators-yml
+    docs: |
+      Explicit Docker image configuration with a custom container registry.
+    properties:
+      name:
+        type: string
+        docs: |
+          The Docker image name (e.g., `fernapi/fern-typescript-sdk`).
+      registry:
+        type: string
+        docs: |
+          The container registry URL to pull the image from during local generation.
+          Example: `ghcr.io/myorg` or `123456789.dkr.ecr.us-east-1.amazonaws.com`
 
   Language:
     enum:

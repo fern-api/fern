@@ -20,7 +20,7 @@ describe("SeedExamplesClient", () => {
             .build();
 
         const response = await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
-        expect(response).toEqual("Hello world!\\n\\nwith\\n\\tnewlines");
+        expect(response).toEqual(rawResponseBody);
     });
 
     test("createType", async () => {
@@ -39,10 +39,6 @@ describe("SeedExamplesClient", () => {
             .build();
 
         const response = await client.createType("primitive");
-        expect(response).toEqual({
-            type: "primitive",
-            value: "value",
-            label: "label",
-        });
+        expect(response).toEqual(rawResponseBody);
     });
 });

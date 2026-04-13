@@ -2,7 +2,7 @@
 
 module Seed
   module Nested
-    module Api
+    module API
       class Client
         # @param client [Seed::Internal::Http::RawClient]
         #

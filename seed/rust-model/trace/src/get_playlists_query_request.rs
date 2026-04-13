@@ -24,7 +24,7 @@ pub struct GetPlaylistsQueryRequest {
 
 impl GetPlaylistsQueryRequest {
     pub fn builder() -> GetPlaylistsQueryRequestBuilder {
-        GetPlaylistsQueryRequestBuilder::default()
+        <GetPlaylistsQueryRequestBuilder as Default>::default()
     }
 }
 

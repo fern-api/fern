@@ -20,7 +20,7 @@ export async function testOutput({
     testCommand: string | undefined;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
-    await cliContext.instrumentPostHogEvent({
+    cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
         command: "fern test"
     });

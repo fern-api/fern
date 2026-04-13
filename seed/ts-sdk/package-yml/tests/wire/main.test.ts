@@ -23,6 +23,6 @@ describe("SeedPackageYmlClient", () => {
             name: "Hello world!",
             size: 20,
         });
-        expect(response).toEqual("Hello world!");
+        expect(response).toEqual(rawResponseBody);
     });
 });

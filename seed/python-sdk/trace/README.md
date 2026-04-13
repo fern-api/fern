@@ -10,6 +10,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -36,6 +37,7 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedTrace
 import uuid
+from seed.submission import TestSubmissionStatus_Stopped
 
 client = SeedTrace(
     token="<token>",
@@ -43,9 +45,20 @@ client = SeedTrace(
 
 client.admin.update_test_submission_status(
     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    request={
-        "type": "stopped"
-    },
+    request=TestSubmissionStatus_Stopped(),
+)
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
+
+client = SeedTrace(
+    environment=SeedTraceEnvironment.PROD,
 )
 ```
 
@@ -56,6 +69,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 import uuid
+from seed.submission import TestSubmissionStatus_Stopped
 
 from seed import AsyncSeedTrace
 
@@ -67,9 +81,7 @@ client = AsyncSeedTrace(
 async def main() -> None:
     await client.admin.update_test_submission_status(
         submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        request={
-            "type": "stopped"
-        },
+        request=TestSubmissionStatus_Stopped(),
     )
 
 

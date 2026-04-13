@@ -1240,7 +1240,7 @@ paginated endpoint.
 $client->users->listWithOffsetStepPagination(
     new ListUsersOffsetStepPaginationRequest([
         'page' => 1,
-        'limit' => 1,
+        'limit' => 3,
         'order' => Order::Asc->value,
     ]),
 );
@@ -1549,6 +1549,71 @@ $client->users->listWithOptionalData(
 <dd>
 
 **$page:** `?int` — Defaults to first page
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;users-&gt;listWithAliasedData($request) -> ?ListUsersAliasedDataPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->users->listWithAliasedData(
+    new ListUsersAliasedDataRequest([
+        'page' => 1,
+        'perPage' => 1,
+        'startingAfter' => 'starting_after',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$page:** `?int` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$perPage:** `?int` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$startingAfter:** `?string` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
     
 </dd>
 </dl>

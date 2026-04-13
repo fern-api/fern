@@ -94,6 +94,7 @@ export class LocalTaskHandler {
         autoVersioningChangelogEntry?: string;
         autoVersioningPrDescription?: string;
         autoVersioningVersionBumpReason?: string;
+        autoVersioningVersionBump?: string;
     }> {
         const isFernIgnorePresent = this.skipFernignore ? false : await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
@@ -171,7 +172,8 @@ export class LocalTaskHandler {
                 autoVersioningCommitMessage: autoVersionResult.commitMessage,
                 autoVersioningChangelogEntry: autoVersionResult.changelogEntry,
                 autoVersioningPrDescription: autoVersionResult.prDescription,
-                autoVersioningVersionBumpReason: autoVersionResult.versionBumpReason
+                autoVersioningVersionBumpReason: autoVersionResult.versionBumpReason,
+                autoVersioningVersionBump: autoVersionResult.versionBump
             };
         }
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };
@@ -203,7 +205,37 @@ export class LocalTaskHandler {
                 throw new Error("Version is required for auto versioning");
             }
 
-            const previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
+            let previousVersion: string | undefined;
+            try {
+                previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
+            } catch (e) {
+                if (!(e instanceof AutoVersioningException) || !e.magicVersionAbsent) {
+                    throw e;
+                }
+                // Magic version not found in diff — fall back to .fern/metadata.json then git tags.
+                // This happens for generators that don't embed versions in files (e.g., Swift
+                // uses git tags for versioning via SPM, not a version field in Package.swift).
+                this.context.logger.info(`Magic version not found in diff, trying fallbacks: ${e}`);
+                previousVersion = await this.getVersionFromLocalMetadata();
+                if (previousVersion == null) {
+                    const tagVersion = await autoVersioningService.getLatestVersionFromGitTags(
+                        this.absolutePathToLocalOutput
+                    );
+                    previousVersion = this.normalizeVersionPrefix(tagVersion);
+                }
+                if (previousVersion == null) {
+                    this.context.logger.info("No git tags found — treating as new SDK repository");
+                    const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                    const commitMessage = this.isWhitelabel
+                        ? "Initial SDK generation"
+                        : "Initial SDK generation\n\n🌿 Generated with Fern";
+                    return {
+                        version: initialVersion,
+                        commitMessage
+                    };
+                }
+                this.context.logger.debug(`Previous version from fallback: ${previousVersion}`);
+            }
             const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
 
             const rawDiffSizeKB = formatSizeKB(diffContent.length);
@@ -215,6 +247,22 @@ export class LocalTaskHandler {
                 `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} chars), ${rawFileCount} files changed. ` +
                     `Cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} chars), ${cleanedFileCount} files remaining`
             );
+
+            // If no previous version from diff (e.g., Version.swift is a new file in an existing SDK),
+            // try .fern/metadata.json first, then git tags before falling back to initial version
+            if (previousVersion == null) {
+                previousVersion = await this.getVersionFromLocalMetadata();
+                if (previousVersion == null) {
+                    const rawTagVersion = await autoVersioningService.getLatestVersionFromGitTags(
+                        this.absolutePathToLocalOutput
+                    );
+                    const normalizedTag = this.normalizeVersionPrefix(rawTagVersion);
+                    if (normalizedTag != null) {
+                        this.context.logger.info(`No previous version from diff; using git tag: ${normalizedTag}`);
+                        previousVersion = normalizedTag;
+                    }
+                }
+            }
 
             // Handle new SDK repository with no previous version
             if (previousVersion == null) {
@@ -439,7 +487,8 @@ export class LocalTaskHandler {
                 commitMessage,
                 changelogEntry,
                 prDescription,
-                versionBumpReason
+                versionBumpReason,
+                versionBump: finalBump
             };
         } catch (error) {
             if (error instanceof AutoVersioningException) {
@@ -571,6 +620,58 @@ export class LocalTaskHandler {
     }
 
     /**
+     * Reads the SDK version from the *previously committed* `.fern/metadata.json`.
+     * Uses `git show HEAD:.fern/metadata.json` instead of reading from the filesystem
+     * because by the time auto-versioning runs, the generated files have already been
+     * copied over — the on-disk metadata.json contains the magic placeholder version,
+     * not the real previous version.
+     * Returns undefined if the file doesn't exist in HEAD (older SDKs) or can't be parsed.
+     */
+    private async getVersionFromLocalMetadata(): Promise<string | undefined> {
+        try {
+            const result = await loggingExeca(this.context.logger, "git", ["show", "HEAD:.fern/metadata.json"], {
+                cwd: this.absolutePathToLocalOutput,
+                doNotPipeOutput: true,
+                reject: false
+            });
+            if (result.exitCode !== 0) {
+                this.context.logger.debug(".fern/metadata.json not found in HEAD commit");
+                return undefined;
+            }
+            const metadata = JSON.parse(result.stdout) as { sdkVersion?: string };
+            if (metadata.sdkVersion != null) {
+                const normalized = this.normalizeVersionPrefix(metadata.sdkVersion);
+                this.context.logger.info(`Found version from .fern/metadata.json (HEAD): ${normalized}`);
+                return normalized;
+            }
+            this.context.logger.debug(".fern/metadata.json found in HEAD but no sdkVersion field");
+            return undefined;
+        } catch (error) {
+            this.context.logger.debug(`Failed to read .fern/metadata.json from HEAD: ${error}`);
+            return undefined;
+        }
+    }
+
+    /**
+     * Normalizes a version string's `v` prefix to match the convention used by
+     * the magic version (`this.version`).  Git tags may use `v1.2.3` while the
+     * magic version is `0.0.0-fern-placeholder` (no prefix) or vice-versa.
+     * Without normalization the mismatch propagates into `replaceMagicVersion`
+     * and can produce invalid versions in package manifests (e.g. `v1.3.0` in
+     * a `package.json` that expects bare semver).
+     */
+    private normalizeVersionPrefix(version: string | undefined): string | undefined {
+        if (version == null) {
+            return undefined;
+        }
+        const stripped = version.startsWith("v") ? version.slice(1) : version;
+        if (this.version?.startsWith("v")) {
+            return `v${stripped}`;
+        }
+        return stripped;
+    }
+
+    /**
      * Gets the BAML client registry for AI analysis.
      * This method is adapted from sdkDiffCommand.ts but needs project configuration.
      */
@@ -651,16 +752,14 @@ export class LocalTaskHandler {
         // leverage git's file-tracking for resolving .fernignore paths. We inline the
         // user config, disable commit signing, and skip hooks to avoid prompts (e.g.
         // Touch ID on macOS) and unnecessary overhead.
-        await this.runGitCommand(["init"], tmpOutputResolutionDir);
-        await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
-        await this.runGitCommand(
+        await this.runThrowawayGitCommand(["init"], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["add", "."], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(
             [
                 "-c",
                 "user.name=fern",
                 "-c",
                 "user.email=hey@buildwithfern.com",
-                "-c",
-                "commit.gpgsign=false",
                 "commit",
                 "--allow-empty",
                 "--no-verify",
@@ -671,17 +770,17 @@ export class LocalTaskHandler {
         );
 
         // Stage deletions `git rm -rf .`
-        await this.runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir);
 
         // Copy all files from generated temp dir
         await this.copyGeneratedFilesToDirectory(tmpOutputResolutionDir);
 
-        await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["add", "."], tmpOutputResolutionDir);
 
         // Undo changes to preserved paths (fernignore + README.md if missing from output)
-        await this.runGitCommand(["reset", "--", ...pathsToPreserve], tmpOutputResolutionDir);
-        await this.runGitCommand(["clean", "-fd", "--", ...pathsToPreserve], tmpOutputResolutionDir);
-        await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["reset", "--", ...pathsToPreserve], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["clean", "-fd", "--", ...pathsToPreserve], tmpOutputResolutionDir);
+        await this.runThrowawayGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // remove .git dir before copying files over
         await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
@@ -798,6 +897,19 @@ export class LocalTaskHandler {
             cwd,
             doNotPipeOutput: true
         });
+        return response.stdout;
+    }
+
+    private async runThrowawayGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {
+        const response = await loggingExeca(
+            this.context.logger,
+            "git",
+            ["-c", "commit.gpgsign=false", "-c", "core.hooksPath=/dev/null", ...options],
+            {
+                cwd,
+                doNotPipeOutput: true
+            }
+        );
         return response.stdout;
     }
 

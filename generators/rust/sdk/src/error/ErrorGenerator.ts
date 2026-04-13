@@ -510,7 +510,7 @@ export class ErrorGenerator {
 
     // Helper methods
     private getErrorVariantName(errorDeclaration: FernIr.ErrorDeclaration): string {
-        const safeName = errorDeclaration.name.name.pascalCase.safeName;
+        const safeName = this.context.case.pascalSafe(errorDeclaration.name.name);
         if (!safeName) {
             throw new Error(`Error declaration missing safe name: ${JSON.stringify(errorDeclaration.name)}`);
         }

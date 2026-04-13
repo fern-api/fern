@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -13,11 +14,13 @@ public class Example55
             }
         );
 
-        await client.NoAuth.PostWithNoAuthAsync(
-            new Dictionary<string, object>()
-            {
-                ["key"] = "value",
-            }
+        await client.Endpoints.Union.GetAndReturnUnionAsync(
+            new Animal(
+                new Dog {
+                    Name = "name",
+                    LikesToWoof = true
+                }
+            )
         );
     }
 

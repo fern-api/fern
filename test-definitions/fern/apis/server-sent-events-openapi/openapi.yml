@@ -1,0 +1,924 @@
+openapi: 3.1.0
+info:
+  title: server-sent-events-openapi
+  description: >
+    Test fixture for SSE handling via OpenAPI's itemSchema property (introduced
+    in OAS 3.2). Although itemSchema originates from the 3.2 spec, Fern does not
+    yet claim exhaustive OAS 3.2 support, so this file's version is set to 3.1.0.
+    You should keep your spec version at 3.1 or below even when using itemSchema.
+
+    Endpoints 1-2 test context=protocol with the envelope+data schema pattern
+    and the full range of data types that protocol-level discrimination enables:
+    heartbeat (no data), string literal, number literal, and object. These vary
+    on whether the data payload has a field name collision with the envelope's
+    event discriminant.
+
+    Endpoints 3-4 test context=data (explicit and absent), the default behavior.
+    The discriminant ("event") and the payload fields are flattened together via
+    allOf, with no separate "data" wrapper. Each variant uses allOf to extend
+    a payload schema and adds an "event" discriminant at the same level. This
+    matches the real-world pattern where context=data is used.
+
+    Endpoints 5-6 test mismatched context/schema combinations to show what the
+    output looks like when the schema pattern doesn't match the context value.
+    Endpoint 5 uses context=protocol with the flat allOf pattern. Endpoint 6
+    uses context=data with the envelope+data pattern.
+
+    Endpoint 7 tests the OAS 3.2 spec-native pattern: inline oneOf variants
+    extending a base Event schema, using const on event fields and
+    contentSchema/contentMediaType on data fields. No discriminator object.
+
+    Endpoints 8-13 test x-fern-streaming extension patterns. These use the
+    Fern-specific x-fern-streaming extension to express streaming endpoints in
+    OpenAPI, with various request body shapes and stream-condition patterns.
+
+    Endpoint 8 tests x-fern-streaming with stream-condition and a $ref request
+    body. The stream-condition field on the request determines whether the
+    response is streamed (SSE) or returned as a single JSON response.
+
+    Endpoint 9 tests x-fern-streaming with stream-condition where the $ref
+    request schema has x-fern-type-name set, which previously caused name
+    collisions between streaming and non-streaming request wrapper names.
+
+    Endpoint 10 tests x-fern-streaming with a shared request schema that is
+    also referenced by a non-streaming endpoint (endpoint 11). This ensures the
+    shared schema is not excluded from the context during streaming processing.
+
+    Endpoint 11 is a non-streaming endpoint that shares its request schema with
+    endpoint 10, validating that shared $ref schemas remain available.
+
+    Endpoint 12 tests x-fern-streaming with stream-condition where the request
+    body is a discriminated union (oneOf) whose variants inherit the stream
+    condition field from a shared base schema via allOf. This directly
+    reproduces the Vectara regression (FER-9556) where the importer pins
+    stream_response to Literal[True/False] at the union level, but each
+    variant independently inherits stream_response: boolean from the base
+    via allOf, causing a type conflict. Three variants are tested to match
+    the real-world pattern.
+
+    Endpoint 13 tests x-fern-streaming with stream-condition where the
+    stream condition field is nullable (type: ["boolean", "null"] in OAS 3.1).
+    This reproduces the spread-order bug from PR #13605 where the nullable type
+    array would overwrite the const literal, producing stream?: true | null
+    instead of stream: true.
+
+    Endpoint 14 tests x-fern-streaming with format: sse but no stream-condition,
+    representing a stream-only endpoint with explicit SSE format marking.
+  version: "0.1.0"
+
+paths:
+  # ==========================================================================
+  # Endpoints 1-2: context=protocol with envelope+data pattern
+  # ==========================================================================
+  /stream/protocol-no-collision:
+    post:
+      operationId: streamProtocolNoCollision
+      summary: Protocol context with no field collision and mixed data types
+      description: >
+        Uses discriminator with mapping, x-fern-discriminator-context set to protocol.
+        Because the discriminant is at the protocol level, the data field can be any
+        type or absent entirely. Demonstrates heartbeat (no data), string literal,
+        number literal, and object data payloads.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamRequest"
+      responses:
+        "200":
+          description: SSE stream with protocol-level discrimination and mixed data types
+          content:
+            text/event-stream:
+              itemSchema:
+                oneOf:
+                  - $ref: "#/components/schemas/ProtocolHeartbeat"
+                  - $ref: "#/components/schemas/ProtocolStringEvent"
+                  - $ref: "#/components/schemas/ProtocolNumberEvent"
+                  - $ref: "#/components/schemas/ProtocolObjectEvent"
+                discriminator:
+                  propertyName: event
+                  x-fern-discriminator-context: protocol
+                  mapping:
+                    heartbeat: "#/components/schemas/ProtocolHeartbeat"
+                    string_data: "#/components/schemas/ProtocolStringEvent"
+                    number_data: "#/components/schemas/ProtocolNumberEvent"
+                    object_data: "#/components/schemas/ProtocolObjectEvent"
+
+  /stream/protocol-collision:
+    post:
+      operationId: streamProtocolCollision
+      summary: Protocol context with event field collision and mixed data types
+      description: >
+        Same as endpoint 1, but the object data payload contains its own "event"
+        property, which collides with the SSE envelope's "event" discriminator field.
+        Tests whether generators correctly separate the protocol-level discriminant
+        from the data-level field when context=protocol is specified.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamRequest"
+      responses:
+        "200":
+          description: SSE stream with protocol context and event field collision
+          content:
+            text/event-stream:
+              itemSchema:
+                oneOf:
+                  - $ref: "#/components/schemas/ProtocolHeartbeat"
+                  - $ref: "#/components/schemas/ProtocolStringEvent"
+                  - $ref: "#/components/schemas/ProtocolNumberEvent"
+                  - $ref: "#/components/schemas/ProtocolCollisionObjectEvent"
+                discriminator:
+                  propertyName: event
+                  x-fern-discriminator-context: protocol
+                  mapping:
+                    heartbeat: "#/components/schemas/ProtocolHeartbeat"
+                    string_data: "#/components/schemas/ProtocolStringEvent"
+                    number_data: "#/components/schemas/ProtocolNumberEvent"
+                    object_data: "#/components/schemas/ProtocolCollisionObjectEvent"
+
+  # ==========================================================================
+  # Endpoints 3-4: context=data with flat allOf pattern
+  # ==========================================================================
+  /stream/data-context:
+    post:
+      operationId: streamDataContext
+      summary: Explicit data context with discriminant flattened via allOf
+      description: >
+        x-fern-discriminator-context is explicitly set to "data" (the default value).
+        Each variant uses allOf to extend a payload schema and adds the "event"
+        discriminant property at the same level. There is no "data" wrapper. The
+        discriminant and payload fields coexist in a single flat object. This matches
+        the real-world pattern used by customers with context=data.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamRequest"
+      responses:
+        "200":
+          description: SSE stream with discriminator context set to data
+          content:
+            text/event-stream:
+              itemSchema:
+                oneOf:
+                  - $ref: "#/components/schemas/DataContextHeartbeat"
+                  - $ref: "#/components/schemas/DataContextEntityEvent"
+                discriminator:
+                  propertyName: event
+                  x-fern-discriminator-context: data
+                  mapping:
+                    heartbeat: "#/components/schemas/DataContextHeartbeat"
+                    entity: "#/components/schemas/DataContextEntityEvent"
+
+  /stream/no-context:
+    post:
+      operationId: streamNoContext
+      summary: No context extension, defaults to data context
+      description: >
+        The x-fern-discriminator-context extension is omitted entirely. Tests whether
+        Fern correctly infers the default behavior (context=data) when the extension
+        is absent. Same flat allOf pattern as endpoint 3.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamRequest"
+      responses:
+        "200":
+          description: SSE stream with no discriminator context hint
+          content:
+            text/event-stream:
+              itemSchema:
+                oneOf:
+                  - $ref: "#/components/schemas/DataContextHeartbeat"
+                  - $ref: "#/components/schemas/DataContextEntityEvent"
+                discriminator:
+                  propertyName: event
+                  mapping:
+                    heartbeat: "#/components/schemas/DataContextHeartbeat"
+                    entity: "#/components/schemas/DataContextEntityEvent"
+
+  # ==========================================================================
+  # Endpoints 5-6: Mismatched context/schema combinations
+  # ==========================================================================
+  /stream/protocol-with-flat-schema:
+    post:
+      operationId: streamProtocolWithFlatSchema
+      summary: Protocol context with flat allOf schema pattern
+      description: >
+        Mismatched combination: context=protocol with the flat allOf schema pattern
+        that is normally used with context=data. Shows what happens when the
+        discriminant is declared as protocol-level but the schema uses allOf to
+        flatten the event field alongside payload fields instead of wrapping them
+        in a data field.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamRequest"
+      responses:
+        "200":
+          description: SSE stream with protocol context but flat allOf schemas
+          content:
+            text/event-stream:
+              itemSchema:
+                oneOf:
+                  - $ref: "#/components/schemas/DataContextHeartbeat"
+                  - $ref: "#/components/schemas/DataContextEntityEvent"
+                discriminator:
+                  propertyName: event
+                  x-fern-discriminator-context: protocol
+                  mapping:
+                    heartbeat: "#/components/schemas/DataContextHeartbeat"
+                    entity: "#/components/schemas/DataContextEntityEvent"
+
+  /stream/data-context-with-envelope-schema:
+    post:
+      operationId: streamDataContextWithEnvelopeSchema
+      summary: Data context with envelope+data schema pattern
+      description: >
+        Mismatched combination: context=data with the envelope+data schema pattern
+        that is normally used with context=protocol. Shows what happens when the
+        discriminant is declared as data-level but the schema separates the event
+        field and data field into an envelope structure.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamRequest"
+      responses:
+        "200":
+          description: SSE stream with data context but envelope+data schemas
+          content:
+            text/event-stream:
+              itemSchema:
+                oneOf:
+                  - $ref: "#/components/schemas/ProtocolHeartbeat"
+                  - $ref: "#/components/schemas/ProtocolStringEvent"
+                  - $ref: "#/components/schemas/ProtocolNumberEvent"
+                  - $ref: "#/components/schemas/ProtocolObjectEvent"
+                discriminator:
+                  propertyName: event
+                  x-fern-discriminator-context: data
+                  mapping:
+                    heartbeat: "#/components/schemas/ProtocolHeartbeat"
+                    string_data: "#/components/schemas/ProtocolStringEvent"
+                    number_data: "#/components/schemas/ProtocolNumberEvent"
+                    object_data: "#/components/schemas/ProtocolObjectEvent"
+
+  # ==========================================================================
+  # Endpoint 7: OAS 3.2 spec-native pattern
+  # ==========================================================================
+  /stream/oas-spec-native:
+    post:
+      operationId: streamOasSpecNative
+      summary: OAS 3.2 spec-native SSE pattern with inline variants and contentSchema
+      description: >
+        Follows the pattern from the OAS 3.2 specification's own SSE example.
+        The itemSchema extends a base Event schema via $ref and uses inline oneOf
+        variants with const on the event field to distinguish event types. Data fields
+        use contentSchema/contentMediaType for structured payloads. No discriminator
+        object is used. Event type resolution relies on const matching.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamRequest"
+      responses:
+        "200":
+          description: SSE stream following the OAS 3.2 spec example pattern
+          content:
+            text/event-stream:
+              itemSchema:
+                $ref: "#/components/schemas/Event"
+                required: [event]
+                oneOf:
+                  - properties:
+                      event:
+                        const: heartbeat
+                  - properties:
+                      event:
+                        const: string_data
+                      data:
+                        type: string
+                  - properties:
+                      event:
+                        const: number_data
+                      data:
+                        format: int64
+                  - properties:
+                      event:
+                        const: object_data
+                      data:
+                        contentMediaType: application/json
+                        contentSchema:
+                          $ref: "#/components/schemas/StatusPayload"
+
+  # ==========================================================================
+  # Endpoints 8-9: x-fern-streaming with stream-condition
+  # ==========================================================================
+  /stream/x-fern-streaming-condition:
+    post:
+      operationId: streamXFernStreamingCondition
+      summary: x-fern-streaming with stream-condition and $ref request body
+      description: >
+        Uses x-fern-streaming extension with stream-condition to split into
+        streaming and non-streaming variants based on a request body field.
+        The request body is a $ref to a named schema. The response and
+        response-stream point to different schemas.
+      x-fern-streaming:
+        stream-condition: $request.stream
+        response:
+          $ref: "#/components/schemas/CompletionFullResponse"
+        response-stream:
+          $ref: "#/components/schemas/CompletionStreamChunk"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompletionRequest"
+      responses:
+        "200":
+          description: A completion response (full or streamed)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompletionFullResponse"
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/CompletionStreamChunk"
+
+  # Endpoint 9 commented out — causes ChatCompletionRequest name collision
+  # that blocks IR generation for the entire fixture. Uncomment to test the
+  # x-fern-type-name disambiguation fix (PR #14256) in isolation.
+  #
+  # /stream/x-fern-streaming-type-name:
+  #   post:
+  #     operationId: streamXFernStreamingTypeName
+  #     summary: x-fern-streaming with stream-condition and x-fern-type-name on request schema
+  #     description: >
+  #       Same pattern as endpoint 8, but the request schema has x-fern-type-name
+  #       set. This previously caused both streaming and non-streaming request
+  #       wrapper variants to inherit the same nameOverride, leading to duplicate
+  #       declaration errors. The auto-disambiguation logic now detects
+  #       x-fern-type-name and appends "Streaming" to the streaming variant.
+  #     x-fern-streaming:
+  #       stream-condition: $request.stream
+  #       response:
+  #         $ref: "#/components/schemas/CompletionFullResponse"
+  #       response-stream:
+  #         $ref: "#/components/schemas/CompletionStreamChunk"
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/ChatCompletionRequest"
+  #     responses:
+  #       "200":
+  #         description: A chat completion response
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/CompletionFullResponse"
+
+  # ==========================================================================
+  # Endpoints 10-11: Shared request schema across streaming and non-streaming
+  # ==========================================================================
+  /stream/x-fern-streaming-shared-schema:
+    post:
+      operationId: streamXFernStreamingSharedSchema
+      summary: x-fern-streaming with shared request schema
+      description: >
+        Uses x-fern-streaming with stream-condition. The request body $ref
+        (SharedCompletionRequest) is also referenced by a separate non-streaming
+        endpoint (/validate-completion). This tests that the shared request
+        schema is not excluded from the context during streaming processing.
+      x-fern-streaming:
+        stream-condition: $request.stream
+        response:
+          $ref: "#/components/schemas/CompletionFullResponse"
+        response-stream:
+          $ref: "#/components/schemas/CompletionStreamChunk"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SharedCompletionRequest"
+      responses:
+        "200":
+          description: A completion response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompletionFullResponse"
+
+  /validate-completion:
+    post:
+      operationId: validateCompletion
+      summary: Non-streaming endpoint sharing request schema with endpoint 10
+      description: >
+        A non-streaming endpoint that references the same SharedCompletionRequest
+        schema as endpoint 10. Ensures the shared $ref schema remains available
+        and is not excluded during the streaming endpoint's processing.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SharedCompletionRequest"
+      responses:
+        "200":
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompletionFullResponse"
+
+  # ==========================================================================
+  # Endpoint 12: x-fern-streaming with discriminated union request body
+  # ==========================================================================
+  /stream/x-fern-streaming-union:
+    post:
+      operationId: streamXFernStreamingUnion
+      summary: x-fern-streaming with discriminated union request body
+      description: >
+        Uses x-fern-streaming with stream-condition where the request body is a
+        discriminated union (oneOf) whose variants inherit the stream condition
+        field (stream_response) from a shared base schema via allOf. Tests that
+        the stream condition property is not duplicated in the generated output
+        when the base schema is expanded into each variant.
+      x-fern-streaming:
+        stream-condition: $request.stream_response
+        response:
+          $ref: "#/components/schemas/CompletionFullResponse"
+        response-stream:
+          $ref: "#/components/schemas/CompletionStreamChunk"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnionStreamRequest"
+      responses:
+        "200":
+          description: A completion response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompletionFullResponse"
+            text/event-stream:
+              schema:
+                $ref: "#/components/schemas/CompletionStreamChunk"
+
+  /validate-union-request:
+    post:
+      operationId: validateUnionRequest
+      summary: Non-streaming endpoint referencing the union base schema
+      description: >
+        References UnionStreamRequestBase directly, ensuring the base schema
+        cannot be excluded from the context. This endpoint exists to verify
+        that shared base schemas used in discriminated union variants with
+        stream-condition remain available.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UnionStreamRequestBase"
+      responses:
+        "200":
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+
+  # ==========================================================================
+  # Endpoint 13: x-fern-streaming with nullable stream-condition field
+  # ==========================================================================
+  /stream/x-fern-streaming-nullable-condition:
+    post:
+      operationId: streamXFernStreamingNullableCondition
+      summary: x-fern-streaming with nullable stream condition field
+      description: >
+        Uses x-fern-streaming with stream-condition where the stream field is
+        nullable (type: ["boolean", "null"] in OAS 3.1). Previously, the spread
+        order in the importer caused the nullable type array to overwrite the
+        const literal, producing stream?: true | null instead of stream: true.
+        The const/type override must be spread after the original property.
+      x-fern-streaming:
+        stream-condition: $request.stream
+        response:
+          $ref: "#/components/schemas/CompletionFullResponse"
+        response-stream:
+          $ref: "#/components/schemas/CompletionStreamChunk"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NullableStreamRequest"
+      responses:
+        "200":
+          description: A completion response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompletionFullResponse"
+
+  # ==========================================================================
+  # Endpoint 14: x-fern-streaming with SSE format only (no stream-condition)
+  # ==========================================================================
+  /stream/x-fern-streaming-sse-only:
+    post:
+      operationId: streamXFernStreamingSseOnly
+      summary: x-fern-streaming with SSE format but no stream-condition
+      description: >
+        Uses x-fern-streaming with format: sse but no stream-condition. This
+        represents a stream-only endpoint that always returns SSE. There is no
+        non-streaming variant, and the response is always a stream of chunks.
+      x-fern-streaming:
+        format: sse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StreamRequest"
+      responses:
+        "200":
+          description: SSE stream of completion chunks
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  schemas:
+    StreamRequest:
+      type: object
+      properties:
+        query:
+          type: string
+
+    # ==========================================================================
+    # Base SSE event schema (used by endpoint 7, per OAS 3.2 spec pattern)
+    # ==========================================================================
+    Event:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: string
+        event:
+          type: string
+        id:
+          type: string
+        retry:
+          type: integer
+          minimum: 0
+
+    # ==========================================================================
+    # Data payloads
+    # ==========================================================================
+    StatusPayload:
+      type: object
+      required:
+        - message
+        - timestamp
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    ObjectPayloadWithEventField:
+      type: object
+      required:
+        - id
+        - name
+        - event
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        event:
+          type: string
+          description: >
+            An event type field inside the data payload that collides with
+            the SSE envelope's event field used for discrimination.
+
+    HeartbeatPayload:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+
+    EntityEventPayload:
+      type: object
+      properties:
+        entityId:
+          type: string
+        eventType:
+          type: string
+          enum:
+            - CREATED
+            - UPDATED
+            - DELETED
+            - PREEXISTING
+        updatedTime:
+          type: string
+          format: date-time
+
+    # ==========================================================================
+    # Protocol-context envelope schemas (used by endpoints 1-2 and 6)
+    # ==========================================================================
+    ProtocolHeartbeat:
+      type: object
+      required:
+        - event
+      properties:
+        event:
+          type: string
+          enum:
+            - heartbeat
+
+    ProtocolStringEvent:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum:
+            - string_data
+        data:
+          type: string
+
+    ProtocolNumberEvent:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum:
+            - number_data
+        data:
+          type: number
+
+    ProtocolObjectEvent:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum:
+            - object_data
+        data:
+          $ref: "#/components/schemas/StatusPayload"
+
+    ProtocolCollisionObjectEvent:
+      type: object
+      required:
+        - event
+        - data
+      properties:
+        event:
+          type: string
+          enum:
+            - object_data
+        data:
+          $ref: "#/components/schemas/ObjectPayloadWithEventField"
+
+    # ==========================================================================
+    # Data-context schemas (used by endpoints 3-5)
+    # ==========================================================================
+    DataContextHeartbeat:
+      type: object
+      required:
+        - event
+      allOf:
+        - $ref: "#/components/schemas/HeartbeatPayload"
+      properties:
+        event:
+          type: string
+          enum:
+            - heartbeat
+
+    DataContextEntityEvent:
+      type: object
+      required:
+        - event
+      allOf:
+        - $ref: "#/components/schemas/EntityEventPayload"
+      properties:
+        event:
+          type: string
+          enum:
+            - entity
+
+    # ==========================================================================
+    # x-fern-streaming request/response schemas (endpoints 8-13)
+    # ==========================================================================
+
+    # -- Endpoint 8: Basic stream-condition request
+    CompletionRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: The prompt or query to complete.
+        stream:
+          type: boolean
+          description: Whether to stream the response.
+          default: false
+      required:
+        - query
+
+    # -- Endpoint 13: Nullable stream condition field
+    NullableStreamRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          description: The prompt or query to complete.
+        stream:
+          type:
+            - boolean
+            - "null"
+          description: >
+            Whether to stream the response. This field is nullable (OAS 3.1
+            type array), which previously caused the const literal to be
+            overwritten by the nullable type during spread in the importer.
+          default: false
+      required:
+        - query
+
+    # -- Endpoint 9: stream-condition with x-fern-type-name (commented out)
+    # ChatCompletionRequest:
+    #   type: object
+    #   properties:
+    #     message:
+    #       type: string
+    #       description: The user's chat message.
+    #     stream:
+    #       type: boolean
+    #       description: Whether to stream the response.
+    #   required:
+    #     - message
+    #   x-fern-type-name: ChatCompletionRequest
+
+    # -- Endpoints 10-11: Shared request schema
+    SharedCompletionRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+          description: The prompt to complete.
+        model:
+          type: string
+          description: The model to use.
+        stream:
+          type: boolean
+          description: Whether to stream the response.
+      required:
+        - prompt
+        - model
+
+    # -- Shared streaming response schemas
+    CompletionFullResponse:
+      type: object
+      description: Full response returned when streaming is disabled.
+      properties:
+        answer:
+          type: string
+          description: The complete generated answer.
+        finishReason:
+          type: string
+          description: Why generation stopped.
+          enum:
+            - complete
+            - length
+            - error
+
+    CompletionStreamChunk:
+      type: object
+      description: A single chunk in a streamed completion response.
+      properties:
+        delta:
+          type: string
+          description: The incremental text chunk.
+        tokens:
+          type: integer
+          description: Number of tokens in this chunk.
+
+    # -- Endpoint 12: Discriminated union request body with stream-condition
+    UnionStreamRequestBase:
+      type: object
+      description: >
+        Base schema for union stream requests. Contains the stream_response field
+        that is inherited by all oneOf variants via allOf. This schema is also
+        referenced directly by a non-streaming endpoint to ensure it is not
+        excluded from the context.
+      properties:
+        stream_response:
+          type: boolean
+          description: Whether to stream the response.
+          default: false
+        prompt:
+          type: string
+          description: The input prompt.
+      required:
+        - prompt
+
+    UnionStreamMessageVariant:
+      description: A user input message. Inherits stream_response from base via allOf.
+      allOf:
+        - $ref: "#/components/schemas/UnionStreamRequestBase"
+        - type: object
+          properties:
+            type:
+              type: string
+              default: message
+            message:
+              type: string
+              description: The message content.
+          required:
+            - type
+            - message
+
+    UnionStreamInterruptVariant:
+      description: Cancels the current operation. Inherits stream_response from base.
+      allOf:
+        - $ref: "#/components/schemas/UnionStreamRequestBase"
+        - type: object
+          properties:
+            type:
+              type: string
+              default: interrupt
+          required:
+            - type
+
+    UnionStreamCompactVariant:
+      description: >
+        Requests compaction of history. Inherits stream_response from base
+        and adds compact-specific fields.
+      allOf:
+        - $ref: "#/components/schemas/UnionStreamRequestBase"
+        - type: object
+          properties:
+            type:
+              type: string
+              default: compact
+            data:
+              type: string
+              description: Compact data payload.
+          required:
+            - type
+            - data
+
+    UnionStreamRequest:
+      description: >
+        A discriminated union request matching the Vectara pattern (FER-9556).
+        Each variant inherits stream_response from UnionStreamRequestBase via
+        allOf. The importer pins stream_response to Literal[True/False] at this
+        union level, but the allOf inheritance re-introduces it as boolean in
+        each variant, causing the type conflict.
+      properties:
+        type:
+          type: string
+          default: message
+      discriminator:
+        propertyName: type
+        mapping:
+          message: "#/components/schemas/UnionStreamMessageVariant"
+          interrupt: "#/components/schemas/UnionStreamInterruptVariant"
+          compact: "#/components/schemas/UnionStreamCompactVariant"
+      oneOf:
+        - $ref: "#/components/schemas/UnionStreamMessageVariant"
+        - $ref: "#/components/schemas/UnionStreamInterruptVariant"
+        - $ref: "#/components/schemas/UnionStreamCompactVariant"

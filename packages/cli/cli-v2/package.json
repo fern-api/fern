@@ -43,8 +43,10 @@
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/api-workspace-validator": "workspace:*",
     "@fern-api/auth": "workspace:*",
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-logger": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
+    "@fern-api/cli-telemetry": "workspace:*",
     "@fern-api/config": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/configuration": "workspace:*",
@@ -104,5 +106,8 @@
     "vitest": "catalog:",
     "yaml": "catalog:",
     "yargs": "^17.4.1"
+  },
+  "dependencies": {
+    "tmp-promise": "catalog:"
   }
 }

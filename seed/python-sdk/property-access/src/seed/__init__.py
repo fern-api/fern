@@ -18,11 +18,14 @@ if typing.TYPE_CHECKING:
         UserProfile,
         UserProfileVerification,
     )
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncSeedPropertyAccess, SeedPropertyAccess
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "Admin": ".types",
     "AsyncSeedPropertyAccess": ".client",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "Foo": ".types",
     "SeedPropertyAccess": ".client",
     "User": ".types",
@@ -61,6 +64,8 @@ def __dir__():
 __all__ = [
     "Admin",
     "AsyncSeedPropertyAccess",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "Foo",
     "SeedPropertyAccess",
     "User",

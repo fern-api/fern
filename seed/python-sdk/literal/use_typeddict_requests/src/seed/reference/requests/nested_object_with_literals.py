@@ -7,6 +7,6 @@ from ...core.serialization import FieldMetadata
 
 
 class NestedObjectWithLiteralsParams(typing_extensions.TypedDict):
-    literal_1: typing_extensions.Annotated[typing.Literal["literal1"], FieldMetadata(alias="literal1")]
-    literal_2: typing_extensions.Annotated[typing.Literal["literal2"], FieldMetadata(alias="literal2")]
+    literal1: typing.Literal["literal1"]
+    literal2: typing.Literal["literal2"]
     str_prop: typing_extensions.Annotated[str, FieldMetadata(alias="strProp")]

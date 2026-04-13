@@ -12,7 +12,7 @@ import (
 
 type BigUnion struct {
 	Type               string
-	Id                 string
+	ID                 string
 	CreatedAt          time.Time
 	ArchivedAt         *time.Time
 	NormalSweet        NormalSweet

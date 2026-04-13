@@ -9,7 +9,7 @@ pub struct NonVoidFunctionDefinition {
 
 impl NonVoidFunctionDefinition {
     pub fn builder() -> NonVoidFunctionDefinitionBuilder {
-        NonVoidFunctionDefinitionBuilder::default()
+        <NonVoidFunctionDefinitionBuilder as Default>::default()
     }
 }
 

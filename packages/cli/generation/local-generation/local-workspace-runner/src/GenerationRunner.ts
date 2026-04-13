@@ -4,7 +4,7 @@ import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { FernCliError, LoggableFernCliError, TaskContext } from "@fern-api/task-context";
+import { LoggableFernCliError, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
 import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
@@ -26,6 +26,7 @@ export declare namespace GenerationRunner {
         inspect: boolean;
         ai: generatorsYml.AiServicesSchema | undefined;
         skipFernignore?: boolean;
+        skipAutogenerationIfManualExamplesExist?: boolean;
     }
 }
 
@@ -46,7 +47,8 @@ export class GenerationRunner {
         shouldGenerateDynamicSnippetTests,
         skipUnstableDynamicSnippetTests,
         inspect,
-        skipFernignore
+        skipFernignore,
+        skipAutogenerationIfManualExamplesExist
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -71,7 +73,8 @@ export class GenerationRunner {
                                 outputVersionOverride,
                                 absolutePathToFernConfig,
                                 inspect,
-                                skipFernignore
+                                skipFernignore,
+                                skipAutogenerationIfManualExamplesExist
                             });
 
                             interactiveTaskContext.logger.info(
@@ -96,7 +99,7 @@ export class GenerationRunner {
                                 );
                             }
                         } catch (error) {
-                            if (error instanceof FernCliError) {
+                            if (error instanceof TaskAbortSignal) {
                                 // already logged by failAndThrow, nothing to do
                             } else if (error instanceof LoggableFernCliError) {
                                 interactiveTaskContext.failWithoutThrowing(`Generation failed: ${error.log}`, error);
@@ -123,7 +126,8 @@ export class GenerationRunner {
         outputVersionOverride,
         absolutePathToFernConfig,
         inspect,
-        skipFernignore
+        skipFernignore,
+        skipAutogenerationIfManualExamplesExist
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -135,6 +139,7 @@ export class GenerationRunner {
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;
         skipFernignore?: boolean;
+        skipAutogenerationIfManualExamplesExist?: boolean;
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -159,7 +164,8 @@ export class GenerationRunner {
             smartCasing: generatorInvocation.smartCasing,
             exampleGeneration: {
                 includeOptionalRequestPropertyExamples: true,
-                disabled: generatorInvocation.disableExamples
+                disabled: generatorInvocation.disableExamples,
+                skipAutogenerationIfManualExamplesExist: skipAutogenerationIfManualExamplesExist ?? false
             },
             readme: generatorInvocation.readme,
             version: outputVersionOverride,

@@ -8,7 +8,7 @@ pub struct WithName {
 
 impl WithName {
     pub fn builder() -> WithNameBuilder {
-        WithNameBuilder::default()
+        <WithNameBuilder as Default>::default()
     }
 }
 

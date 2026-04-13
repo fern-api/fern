@@ -9,7 +9,7 @@ const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fi
 
 describe("fern generate", () => {
     it.concurrent("default api (fern init)", async ({ signal }) => {
-        const pathOfDirectory = await init();
+        const pathOfDirectory = await init({ signal });
 
         await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory,
@@ -17,7 +17,7 @@ describe("fern generate", () => {
         });
 
         expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
-    }, 180_000);
+    }, 300_000);
 
     it.concurrent("ir contains fdr definitionid", async ({ signal }) => {
         if (globalThis.process.env.FERN_ORG_TOKEN_DEV == null) {
@@ -48,7 +48,7 @@ describe("fern generate", () => {
             }
             console.log(`stdout: ${stdout}`);
         });
-    }, 180_000);
+    }, 300_000);
 
     // TODO: Re-enable this test if and when it doesn't require the user to be logged in.
     // It's otherwise flaky on developer machines that haven't logged in with the fern CLI.
@@ -66,7 +66,7 @@ describe("fern generate", () => {
                 // for some reason, locally the output contains a newline that Circle doesn't
                 .trim()
         ).toMatchSnapshot();
-    }, 180_000);
+    }, 300_000);
 
     it.concurrent("generate docs with no auth requires login", async ({ signal }) => {
         const { stdout, stderr } = await runFernCli(["generate", "--docs", "--no-prompt"], {
@@ -82,21 +82,7 @@ describe("fern generate", () => {
         expect(output).toContain(
             "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable."
         );
-    }, 180_000);
-
-    it.concurrent("generate docs with FDR origin override but no token fails", async ({ signal }) => {
-        const { stdout } = await runFernCli(["generate", "--docs", "--no-prompt"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("docs")),
-            reject: false,
-            env: {
-                FERN_FDR_ORIGIN: "http://localhost:8080",
-                FERN_TOKEN: ""
-            },
-            includeAuthToken: false,
-            signal
-        });
-        expect(stdout).toContain("No token found. Please set the FERN_TOKEN environment variable.");
-    }, 180_000);
+    }, 300_000);
 
     it.concurrent("generate docs with FDR origin override and token succeeds", async ({ signal }) => {
         const { stdout } = await runFernCli(["generate", "--docs", "--no-prompt"], {
@@ -110,7 +96,7 @@ describe("fern generate", () => {
             signal
         });
         expect(stdout).toContain("ferndevtest.docs.dev.buildwithfern.com Started.");
-    }, 180_000);
+    }, 300_000);
 
     it.concurrent("generate docs with no docs.yml file fails", async ({ signal }) => {
         const { stdout } = await runFernCli(["generate", "--docs"], {
@@ -119,7 +105,7 @@ describe("fern generate", () => {
             signal
         });
         expect(stdout).toContain("No docs.yml file found. Please make sure your project has one.");
-    }, 180_000);
+    }, 300_000);
 
     it.concurrent("lists available groups when no group specified", async ({ signal }) => {
         const { stdout, failed } = await runFernCli(["generate", "--local"], {

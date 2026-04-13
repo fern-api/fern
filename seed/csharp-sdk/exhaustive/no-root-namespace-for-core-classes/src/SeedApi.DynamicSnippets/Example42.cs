@@ -13,7 +13,7 @@ public class Example42
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnBoolAsync(
+        await client.Endpoints.Params.GetWithBooleanPathAsync(
             true
         );
     }

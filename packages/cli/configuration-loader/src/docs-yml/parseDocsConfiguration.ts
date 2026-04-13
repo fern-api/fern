@@ -115,6 +115,8 @@ export async function parseDocsConfiguration({
         aiChat,
         aiSearch,
 
+        agents,
+
         pageActions,
 
         iconLibrary,
@@ -164,14 +166,34 @@ export async function parseDocsConfiguration({
 
     const metadataPromise = convertMetadata(rawMetadata, absoluteFilepathToDocsConfig);
 
-    const [navigation, pages, typography, css, js, metadata] = await Promise.all([
-        convertedNavigationPromise,
-        pagesPromise,
-        typographyPromise,
-        cssPromise,
-        jsPromise,
-        metadataPromise
-    ]);
+    const context7FilePromise = parseContext7File({
+        rawPath: rawDocsConfiguration.integrations?.context7,
+        absoluteFilepathToDocsConfig,
+        context
+    });
+
+    const llmsTxtFilePromise = parseTextFile({
+        rawPath: agents?.llmsTxt,
+        absoluteFilepathToDocsConfig
+    });
+
+    const llmsFullTxtFilePromise = parseTextFile({
+        rawPath: agents?.llmsFullTxt,
+        absoluteFilepathToDocsConfig
+    });
+
+    const [navigation, pages, typography, css, js, metadata, context7File, llmsTxtFile, llmsFullTxtFile] =
+        await Promise.all([
+            convertedNavigationPromise,
+            pagesPromise,
+            typographyPromise,
+            cssPromise,
+            jsPromise,
+            metadataPromise,
+            context7FilePromise,
+            llmsTxtFilePromise,
+            llmsFullTxtFilePromise
+        ]);
 
     // Validate incompatible tabs configuration: sidebar placement + center alignment
     const resolvedTheme = convertThemeConfig(rawDocsConfiguration.theme);
@@ -221,6 +243,9 @@ export async function parseDocsConfiguration({
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
+        context7File,
+        llmsTxtFile,
+        llmsFullTxtFile,
         theme: resolvedTheme,
         analyticsConfig: {
             ...rawDocsConfiguration.analytics,
@@ -265,6 +290,8 @@ export async function parseDocsConfiguration({
         js,
 
         aiChatConfig: aiSearch ?? aiChat,
+
+        agents,
 
         pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig, iconLibrary),
 
@@ -487,6 +514,51 @@ function convertSettingsConfig(
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
         disableAnalytics: settings.disableAnalytics ?? false
     };
+}
+
+async function parseTextFile({
+    rawPath,
+    absoluteFilepathToDocsConfig
+}: {
+    rawPath: string | undefined;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+}): Promise<AbsoluteFilePath | undefined> {
+    if (rawPath == null) {
+        return undefined;
+    }
+
+    const absolutePath = resolveFilepath(rawPath, absoluteFilepathToDocsConfig);
+    await readFile(absolutePath, "utf8");
+
+    return absolutePath;
+}
+
+async function parseContext7File({
+    rawPath,
+    absoluteFilepathToDocsConfig,
+    context
+}: {
+    rawPath: string | undefined;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<AbsoluteFilePath | undefined> {
+    if (rawPath == null) {
+        return undefined;
+    }
+
+    const absolutePath = resolveFilepath(rawPath, absoluteFilepathToDocsConfig);
+    const contents = await readFile(absolutePath, "utf8");
+
+    try {
+        JSON.parse(contents);
+    } catch (error) {
+        context.failAndThrow(
+            `Invalid JSON in Context7 config file: ${rawPath}`,
+            error instanceof Error ? error.message : String(error)
+        );
+    }
+
+    return absolutePath;
 }
 
 function convertLayoutConfig(

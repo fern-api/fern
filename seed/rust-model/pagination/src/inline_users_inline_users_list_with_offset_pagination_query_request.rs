@@ -19,7 +19,7 @@ pub struct InlineUsersInlineUsersListWithOffsetPaginationQueryRequest {
 
 impl InlineUsersInlineUsersListWithOffsetPaginationQueryRequest {
     pub fn builder() -> InlineUsersInlineUsersListWithOffsetPaginationQueryRequestBuilder {
-        InlineUsersInlineUsersListWithOffsetPaginationQueryRequestBuilder::default()
+        <InlineUsersInlineUsersListWithOffsetPaginationQueryRequestBuilder as Default>::default()
     }
 }
 

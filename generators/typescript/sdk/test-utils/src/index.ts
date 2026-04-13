@@ -1,3 +1,4 @@
+export { caseConverter } from "./caseConverter.js";
 export { casingsGenerator, createNameAndWireValue } from "./casings.js";
 export {
     createAuthScheme,

@@ -114,7 +114,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
-      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
+      # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
@@ -149,7 +149,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
-      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
+      # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
       # @return [Seed::Playlist::Types::Playlist, nil]
       def update_playlist(request_options: {}, **params)
@@ -183,7 +183,7 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
-      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
+      # @option params [Seed::Playlist::Types::PlaylistID] :playlist_id
       #
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)

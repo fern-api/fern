@@ -303,9 +303,9 @@ func (f *FieldValue) validate() error {
 	return nil
 }
 
-type JsonLike struct {
-	JsonLikeList      []*JsonLike
-	StringJsonLikeMap map[string]*JsonLike
+type JSONLike struct {
+	JSONLikeList      []*JSONLike
+	StringJSONLikeMap map[string]*JSONLike
 	String            string
 	Integer           int
 	Boolean           bool
@@ -313,52 +313,52 @@ type JsonLike struct {
 	typ string
 }
 
-func (j *JsonLike) GetJsonLikeList() []*JsonLike {
+func (j *JSONLike) GetJSONLikeList() []*JSONLike {
 	if j == nil {
 		return nil
 	}
-	return j.JsonLikeList
+	return j.JSONLikeList
 }
 
-func (j *JsonLike) GetStringJsonLikeMap() map[string]*JsonLike {
+func (j *JSONLike) GetStringJSONLikeMap() map[string]*JSONLike {
 	if j == nil {
 		return nil
 	}
-	return j.StringJsonLikeMap
+	return j.StringJSONLikeMap
 }
 
-func (j *JsonLike) GetString() string {
+func (j *JSONLike) GetString() string {
 	if j == nil {
 		return ""
 	}
 	return j.String
 }
 
-func (j *JsonLike) GetInteger() int {
+func (j *JSONLike) GetInteger() int {
 	if j == nil {
 		return 0
 	}
 	return j.Integer
 }
 
-func (j *JsonLike) GetBoolean() bool {
+func (j *JSONLike) GetBoolean() bool {
 	if j == nil {
 		return false
 	}
 	return j.Boolean
 }
 
-func (j *JsonLike) UnmarshalJSON(data []byte) error {
-	var valueJsonLikeList []*JsonLike
-	if err := json.Unmarshal(data, &valueJsonLikeList); err == nil {
-		j.typ = "JsonLikeList"
-		j.JsonLikeList = valueJsonLikeList
+func (j *JSONLike) UnmarshalJSON(data []byte) error {
+	var valueJSONLikeList []*JSONLike
+	if err := json.Unmarshal(data, &valueJSONLikeList); err == nil {
+		j.typ = "JSONLikeList"
+		j.JSONLikeList = valueJSONLikeList
 		return nil
 	}
-	var valueStringJsonLikeMap map[string]*JsonLike
-	if err := json.Unmarshal(data, &valueStringJsonLikeMap); err == nil {
-		j.typ = "StringJsonLikeMap"
-		j.StringJsonLikeMap = valueStringJsonLikeMap
+	var valueStringJSONLikeMap map[string]*JSONLike
+	if err := json.Unmarshal(data, &valueStringJSONLikeMap); err == nil {
+		j.typ = "StringJSONLikeMap"
+		j.StringJSONLikeMap = valueStringJSONLikeMap
 		return nil
 	}
 	var valueString string
@@ -382,12 +382,12 @@ func (j *JsonLike) UnmarshalJSON(data []byte) error {
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, j)
 }
 
-func (j JsonLike) MarshalJSON() ([]byte, error) {
-	if j.typ == "JsonLikeList" || j.JsonLikeList != nil {
-		return json.Marshal(j.JsonLikeList)
+func (j JSONLike) MarshalJSON() ([]byte, error) {
+	if j.typ == "JSONLikeList" || j.JSONLikeList != nil {
+		return json.Marshal(j.JSONLikeList)
 	}
-	if j.typ == "StringJsonLikeMap" || j.StringJsonLikeMap != nil {
-		return json.Marshal(j.StringJsonLikeMap)
+	if j.typ == "StringJSONLikeMap" || j.StringJSONLikeMap != nil {
+		return json.Marshal(j.StringJSONLikeMap)
 	}
 	if j.typ == "String" || j.String != "" {
 		return json.Marshal(j.String)
@@ -401,20 +401,20 @@ func (j JsonLike) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", j)
 }
 
-type JsonLikeVisitor interface {
-	VisitJsonLikeList([]*JsonLike) error
-	VisitStringJsonLikeMap(map[string]*JsonLike) error
+type JSONLikeVisitor interface {
+	VisitJSONLikeList([]*JSONLike) error
+	VisitStringJSONLikeMap(map[string]*JSONLike) error
 	VisitString(string) error
 	VisitInteger(int) error
 	VisitBoolean(bool) error
 }
 
-func (j *JsonLike) Accept(visitor JsonLikeVisitor) error {
-	if j.typ == "JsonLikeList" || j.JsonLikeList != nil {
-		return visitor.VisitJsonLikeList(j.JsonLikeList)
+func (j *JSONLike) Accept(visitor JSONLikeVisitor) error {
+	if j.typ == "JSONLikeList" || j.JSONLikeList != nil {
+		return visitor.VisitJSONLikeList(j.JSONLikeList)
 	}
-	if j.typ == "StringJsonLikeMap" || j.StringJsonLikeMap != nil {
-		return visitor.VisitStringJsonLikeMap(j.StringJsonLikeMap)
+	if j.typ == "StringJSONLikeMap" || j.StringJSONLikeMap != nil {
+		return visitor.VisitStringJSONLikeMap(j.StringJSONLikeMap)
 	}
 	if j.typ == "String" || j.String != "" {
 		return visitor.VisitString(j.String)
@@ -428,9 +428,9 @@ func (j *JsonLike) Accept(visitor JsonLikeVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", j)
 }
 
-type JsonLikeWithNullAndUndefined struct {
-	JsonLikeWithNullAndUndefinedOptionalList      []*JsonLikeWithNullAndUndefined
-	StringJsonLikeWithNullAndUndefinedOptionalMap map[string]*JsonLikeWithNullAndUndefined
+type JSONLikeWithNullAndUndefined struct {
+	JSONLikeWithNullAndUndefinedOptionalList      []*JSONLikeWithNullAndUndefined
+	StringJSONLikeWithNullAndUndefinedOptionalMap map[string]*JSONLikeWithNullAndUndefined
 	StringOptional                                *string
 	IntegerOptional                               *int
 	BooleanOptional                               *bool
@@ -438,52 +438,52 @@ type JsonLikeWithNullAndUndefined struct {
 	typ string
 }
 
-func (j *JsonLikeWithNullAndUndefined) GetJsonLikeWithNullAndUndefinedOptionalList() []*JsonLikeWithNullAndUndefined {
+func (j *JSONLikeWithNullAndUndefined) GetJSONLikeWithNullAndUndefinedOptionalList() []*JSONLikeWithNullAndUndefined {
 	if j == nil {
 		return nil
 	}
-	return j.JsonLikeWithNullAndUndefinedOptionalList
+	return j.JSONLikeWithNullAndUndefinedOptionalList
 }
 
-func (j *JsonLikeWithNullAndUndefined) GetStringJsonLikeWithNullAndUndefinedOptionalMap() map[string]*JsonLikeWithNullAndUndefined {
+func (j *JSONLikeWithNullAndUndefined) GetStringJSONLikeWithNullAndUndefinedOptionalMap() map[string]*JSONLikeWithNullAndUndefined {
 	if j == nil {
 		return nil
 	}
-	return j.StringJsonLikeWithNullAndUndefinedOptionalMap
+	return j.StringJSONLikeWithNullAndUndefinedOptionalMap
 }
 
-func (j *JsonLikeWithNullAndUndefined) GetStringOptional() *string {
+func (j *JSONLikeWithNullAndUndefined) GetStringOptional() *string {
 	if j == nil {
 		return nil
 	}
 	return j.StringOptional
 }
 
-func (j *JsonLikeWithNullAndUndefined) GetIntegerOptional() *int {
+func (j *JSONLikeWithNullAndUndefined) GetIntegerOptional() *int {
 	if j == nil {
 		return nil
 	}
 	return j.IntegerOptional
 }
 
-func (j *JsonLikeWithNullAndUndefined) GetBooleanOptional() *bool {
+func (j *JSONLikeWithNullAndUndefined) GetBooleanOptional() *bool {
 	if j == nil {
 		return nil
 	}
 	return j.BooleanOptional
 }
 
-func (j *JsonLikeWithNullAndUndefined) UnmarshalJSON(data []byte) error {
-	var valueJsonLikeWithNullAndUndefinedOptionalList []*JsonLikeWithNullAndUndefined
-	if err := json.Unmarshal(data, &valueJsonLikeWithNullAndUndefinedOptionalList); err == nil {
-		j.typ = "JsonLikeWithNullAndUndefinedOptionalList"
-		j.JsonLikeWithNullAndUndefinedOptionalList = valueJsonLikeWithNullAndUndefinedOptionalList
+func (j *JSONLikeWithNullAndUndefined) UnmarshalJSON(data []byte) error {
+	var valueJSONLikeWithNullAndUndefinedOptionalList []*JSONLikeWithNullAndUndefined
+	if err := json.Unmarshal(data, &valueJSONLikeWithNullAndUndefinedOptionalList); err == nil {
+		j.typ = "JSONLikeWithNullAndUndefinedOptionalList"
+		j.JSONLikeWithNullAndUndefinedOptionalList = valueJSONLikeWithNullAndUndefinedOptionalList
 		return nil
 	}
-	var valueStringJsonLikeWithNullAndUndefinedOptionalMap map[string]*JsonLikeWithNullAndUndefined
-	if err := json.Unmarshal(data, &valueStringJsonLikeWithNullAndUndefinedOptionalMap); err == nil {
-		j.typ = "StringJsonLikeWithNullAndUndefinedOptionalMap"
-		j.StringJsonLikeWithNullAndUndefinedOptionalMap = valueStringJsonLikeWithNullAndUndefinedOptionalMap
+	var valueStringJSONLikeWithNullAndUndefinedOptionalMap map[string]*JSONLikeWithNullAndUndefined
+	if err := json.Unmarshal(data, &valueStringJSONLikeWithNullAndUndefinedOptionalMap); err == nil {
+		j.typ = "StringJSONLikeWithNullAndUndefinedOptionalMap"
+		j.StringJSONLikeWithNullAndUndefinedOptionalMap = valueStringJSONLikeWithNullAndUndefinedOptionalMap
 		return nil
 	}
 	var valueStringOptional *string
@@ -507,12 +507,12 @@ func (j *JsonLikeWithNullAndUndefined) UnmarshalJSON(data []byte) error {
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, j)
 }
 
-func (j JsonLikeWithNullAndUndefined) MarshalJSON() ([]byte, error) {
-	if j.typ == "JsonLikeWithNullAndUndefinedOptionalList" || j.JsonLikeWithNullAndUndefinedOptionalList != nil {
-		return json.Marshal(j.JsonLikeWithNullAndUndefinedOptionalList)
+func (j JSONLikeWithNullAndUndefined) MarshalJSON() ([]byte, error) {
+	if j.typ == "JSONLikeWithNullAndUndefinedOptionalList" || j.JSONLikeWithNullAndUndefinedOptionalList != nil {
+		return json.Marshal(j.JSONLikeWithNullAndUndefinedOptionalList)
 	}
-	if j.typ == "StringJsonLikeWithNullAndUndefinedOptionalMap" || j.StringJsonLikeWithNullAndUndefinedOptionalMap != nil {
-		return json.Marshal(j.StringJsonLikeWithNullAndUndefinedOptionalMap)
+	if j.typ == "StringJSONLikeWithNullAndUndefinedOptionalMap" || j.StringJSONLikeWithNullAndUndefinedOptionalMap != nil {
+		return json.Marshal(j.StringJSONLikeWithNullAndUndefinedOptionalMap)
 	}
 	if j.typ == "StringOptional" || j.StringOptional != nil {
 		return json.Marshal(j.StringOptional)
@@ -526,20 +526,20 @@ func (j JsonLikeWithNullAndUndefined) MarshalJSON() ([]byte, error) {
 	return nil, fmt.Errorf("type %T does not include a non-empty union type", j)
 }
 
-type JsonLikeWithNullAndUndefinedVisitor interface {
-	VisitJsonLikeWithNullAndUndefinedOptionalList([]*JsonLikeWithNullAndUndefined) error
-	VisitStringJsonLikeWithNullAndUndefinedOptionalMap(map[string]*JsonLikeWithNullAndUndefined) error
+type JSONLikeWithNullAndUndefinedVisitor interface {
+	VisitJSONLikeWithNullAndUndefinedOptionalList([]*JSONLikeWithNullAndUndefined) error
+	VisitStringJSONLikeWithNullAndUndefinedOptionalMap(map[string]*JSONLikeWithNullAndUndefined) error
 	VisitStringOptional(*string) error
 	VisitIntegerOptional(*int) error
 	VisitBooleanOptional(*bool) error
 }
 
-func (j *JsonLikeWithNullAndUndefined) Accept(visitor JsonLikeWithNullAndUndefinedVisitor) error {
-	if j.typ == "JsonLikeWithNullAndUndefinedOptionalList" || j.JsonLikeWithNullAndUndefinedOptionalList != nil {
-		return visitor.VisitJsonLikeWithNullAndUndefinedOptionalList(j.JsonLikeWithNullAndUndefinedOptionalList)
+func (j *JSONLikeWithNullAndUndefined) Accept(visitor JSONLikeWithNullAndUndefinedVisitor) error {
+	if j.typ == "JSONLikeWithNullAndUndefinedOptionalList" || j.JSONLikeWithNullAndUndefinedOptionalList != nil {
+		return visitor.VisitJSONLikeWithNullAndUndefinedOptionalList(j.JSONLikeWithNullAndUndefinedOptionalList)
 	}
-	if j.typ == "StringJsonLikeWithNullAndUndefinedOptionalMap" || j.StringJsonLikeWithNullAndUndefinedOptionalMap != nil {
-		return visitor.VisitStringJsonLikeWithNullAndUndefinedOptionalMap(j.StringJsonLikeWithNullAndUndefinedOptionalMap)
+	if j.typ == "StringJSONLikeWithNullAndUndefinedOptionalMap" || j.StringJSONLikeWithNullAndUndefinedOptionalMap != nil {
+		return visitor.VisitStringJSONLikeWithNullAndUndefinedOptionalMap(j.StringJSONLikeWithNullAndUndefinedOptionalMap)
 	}
 	if j.typ == "StringOptional" || j.StringOptional != nil {
 		return visitor.VisitStringOptional(j.StringOptional)

@@ -11,12 +11,12 @@ import (
 
 // The request body for getting an OAuth token.
 var (
-	getTokenRequestFieldClientId     = big.NewInt(1 << 0)
+	getTokenRequestFieldClientID     = big.NewInt(1 << 0)
 	getTokenRequestFieldClientSecret = big.NewInt(1 << 1)
 )
 
 type GetTokenRequest struct {
-	ClientId     string `json:"client_id" url:"client_id"`
+	ClientID     string `json:"client_id" url:"client_id"`
 	ClientSecret string `json:"client_secret" url:"client_secret"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -26,11 +26,11 @@ type GetTokenRequest struct {
 	rawJSON         json.RawMessage
 }
 
-func (g *GetTokenRequest) GetClientId() string {
+func (g *GetTokenRequest) GetClientID() string {
 	if g == nil {
 		return ""
 	}
-	return g.ClientId
+	return g.ClientID
 }
 
 func (g *GetTokenRequest) GetClientSecret() string {
@@ -54,11 +54,11 @@ func (g *GetTokenRequest) require(field *big.Int) {
 	g.explicitFields.Or(g.explicitFields, field)
 }
 
-// SetClientId sets the ClientId field and marks it as non-optional;
+// SetClientID sets the ClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetClientId(clientId string) {
-	g.ClientId = clientId
-	g.require(getTokenRequestFieldClientId)
+func (g *GetTokenRequest) SetClientID(clientID string) {
+	g.ClientID = clientID
+	g.require(getTokenRequestFieldClientID)
 }
 
 // SetClientSecret sets the ClientSecret field and marks it as non-optional;

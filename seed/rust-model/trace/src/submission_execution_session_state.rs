@@ -21,7 +21,7 @@ pub struct ExecutionSessionState {
 
 impl ExecutionSessionState {
     pub fn builder() -> ExecutionSessionStateBuilder {
-        ExecutionSessionStateBuilder::default()
+        <ExecutionSessionStateBuilder as Default>::default()
     }
 }
 

@@ -20,11 +20,7 @@ describe("UserClient", () => {
         
                         
                                 const response = await client.user.get("id");
-                                expect(response).toEqual({
-    id: "id",
-    name: "name",
-    email: "email"
-});
+                                expect(response).toEqual(rawResponseBody);
                               
                     
     });

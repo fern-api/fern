@@ -1700,3 +1700,74 @@ client.users.list_with_optional_data(page: 1)
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_aliased_data</a>() -> Seed::Users::Types::ListUsersAliasedDataPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.users.list_with_aliased_data(
+  page: 1,
+  per_page: 1,
+  starting_after: "starting_after"
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Integer` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_page:** `Integer` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**starting_after:** `String` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Users::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

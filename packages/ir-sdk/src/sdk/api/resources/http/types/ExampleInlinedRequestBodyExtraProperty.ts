@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../index.js";
 
 export interface ExampleInlinedRequestBodyExtraProperty {
-    name: FernIr.NameAndWireValue;
+    name: FernIr.NameAndWireValueOrString;
     value: FernIr.ExampleTypeReference;
 }
