@@ -55,8 +55,11 @@ jobs:
               "Publish TypeScript SDK Generator")
                 echo 'generators=["ts-sdk"]' >> $GITHUB_OUTPUT
                 ;;
+              # NOTE: go-sdk is temporarily disabled because the published
+              # Docker image still contains unused wiremock/containerd deps that
+              # cause go mod tidy to crash. Re-enable after the next go-sdk release.
               "Publish Go SDK Generator")
-                echo 'generators=["go-sdk"]' >> $GITHUB_OUTPUT
+                echo 'generators=[]' >> $GITHUB_OUTPUT
                 ;;
               "Publish Java SDK Generator")
                 echo 'generators=["java-sdk"]' >> $GITHUB_OUTPUT
@@ -71,7 +74,8 @@ jobs:
             esac
           else
             # For push and workflow_dispatch, test all generators
-            echo 'generators=["ts-sdk", "java-sdk", "go-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
+            # NOTE: go-sdk is temporarily disabled (see comment above).
+            echo 'generators=["ts-sdk", "java-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
           fi
 
   compile-and-build:
