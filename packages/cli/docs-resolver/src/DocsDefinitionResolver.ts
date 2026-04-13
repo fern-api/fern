@@ -258,6 +258,7 @@ export class DocsDefinitionResolver {
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToSidebarTitle: Map<AbsoluteFilePath, string> = new Map();
+    private markdownFilesToFrontmatterTitle: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
     private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
     private markdownFilesToAvailability: Map<AbsoluteFilePath, docsYml.RawSchemas.Availability> = new Map();
@@ -651,6 +652,12 @@ export class DocsDefinitionResolver {
             const sidebarTitle = frontmatter.data["sidebar-title"];
             if (typeof sidebarTitle === "string" && sidebarTitle.trim().length > 0) {
                 this.markdownFilesToSidebarTitle.set(absolutePath, sidebarTitle.trim());
+            }
+
+            // Extract title (used as fallback for sidebar title when sidebar-title is not set)
+            const frontmatterTitle = frontmatter.data.title;
+            if (typeof frontmatterTitle === "string" && frontmatterTitle.trim().length > 0) {
+                this.markdownFilesToFrontmatterTitle.set(absolutePath, frontmatterTitle.trim());
             }
 
             // Extract noindex
@@ -1853,7 +1860,10 @@ export class DocsDefinitionResolver {
             id,
             type: "page",
             slug: slug.get(),
-            title: this.markdownFilesToSidebarTitle.get(item.absolutePath) ?? item.title,
+            title:
+                this.markdownFilesToSidebarTitle.get(item.absolutePath) ??
+                this.markdownFilesToFrontmatterTitle.get(item.absolutePath) ??
+                item.title,
             icon: this.resolveIconFileId(item.icon),
             hidden: hideChildren || item.hidden,
             viewers: item.viewers,
@@ -1932,7 +1942,9 @@ export class DocsDefinitionResolver {
             slug: slug.get(),
             title:
                 item.overviewAbsolutePath != null
-                    ? (this.markdownFilesToSidebarTitle.get(item.overviewAbsolutePath) ?? item.title)
+                    ? (this.markdownFilesToSidebarTitle.get(item.overviewAbsolutePath) ??
+                      this.markdownFilesToFrontmatterTitle.get(item.overviewAbsolutePath) ??
+                      item.title)
                     : item.title,
             icon: this.resolveIconFileId(item.icon),
             collapsed: item.collapsed,

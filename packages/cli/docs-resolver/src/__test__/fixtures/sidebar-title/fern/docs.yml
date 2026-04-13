@@ -5,6 +5,8 @@ navigation:
     path: ./page-with-sidebar-title.mdx
   - page: Page Without Override
     path: ./page-without-override.mdx
+  - page: Filename Derived Title
+    path: ./page-with-frontmatter-title.mdx
   - section: Original Section Title
     path: ./section-overview.mdx
     contents:

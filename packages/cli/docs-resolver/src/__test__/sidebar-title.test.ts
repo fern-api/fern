@@ -58,6 +58,14 @@ describe("sidebar-title frontmatter override", () => {
         const sectionOverview = await readFile(resolve(fixtureDir, "section-overview.mdx"), "utf-8");
         const frontmatter3 = matter(sectionOverview);
         expect(frontmatter3.data["sidebar-title"]).toBe("Custom Section Title");
+
+        const pageWithFrontmatterTitle = await readFile(
+            resolve(fixtureDir, "page-with-frontmatter-title.mdx"),
+            "utf-8"
+        );
+        const frontmatter4 = matter(pageWithFrontmatterTitle);
+        expect(frontmatter4.data["sidebar-title"]).toBeUndefined();
+        expect(frontmatter4.data.title).toBe("Port LLDP Info");
     });
 
     it("should load docs workspace with sidebar-title pages", async () => {
@@ -106,9 +114,23 @@ describe("sidebar-title frontmatter override", () => {
         // This should use the sidebar-title frontmatter override, not the original title
         expect(nestedPage?.title).toBe("Custom Nested Title");
 
+        // Find the page with frontmatter title but no sidebar-title
+        const frontmatterTitlePage = pageNodes.find((node) => node.pageId.includes("page-with-frontmatter-title.mdx"));
+        expect(frontmatterTitlePage).toBeDefined();
+        // This should use the frontmatter title as fallback, not the docs.yml config title
+        expect(frontmatterTitlePage?.title).toBe("Port LLDP Info");
+
+        // Find the page without any frontmatter override
+        const noOverridePage = pageNodes.find((node) => node.pageId.includes("page-without-override.mdx"));
+        expect(noOverridePage).toBeDefined();
+        // This should use the docs.yml config title since there's no frontmatter title or sidebar-title
+        expect(noOverridePage?.title).toBe("Page Without Override");
+
         // This test verifies that:
         // 1. The docs resolver correctly processes sidebar-title frontmatter
         // 2. The resolved page node uses the custom sidebar title instead of the original title
         // 3. The sidebar-title override functionality works after docs definition resolution
+        // 4. Frontmatter title is used as fallback when sidebar-title is not set
+        // 5. Acronyms in frontmatter titles are preserved (e.g., "LLDP" stays uppercase)
     });
 });

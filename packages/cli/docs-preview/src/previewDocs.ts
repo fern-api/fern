@@ -32,6 +32,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const frontmatterPositionCache = new Map<string, number | undefined>();
 const frontmatterSidebarTitleCache = new Map<string, string | undefined>();
+const frontmatterTitleCache = new Map<string, string | undefined>();
 const frontmatterSlugCache = new Map<string, string | undefined>();
 
 /**
@@ -75,6 +76,31 @@ function extractFrontmatterSidebarTitle(markdown: string): string | undefined {
 
         if (typeof sidebarTitle === "string") {
             return sidebarTitle;
+        }
+
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Extracts the title field from markdown frontmatter.
+ * Returns the string value if present, undefined otherwise.
+ * Used as a fallback for sidebar title when sidebar-title is not set.
+ */
+function extractFrontmatterTitle(markdown: string): string | undefined {
+    try {
+        const { data } = grayMatter(markdown);
+
+        if (data.title == null) {
+            return undefined;
+        }
+
+        const title = data.title;
+
+        if (typeof title === "string" && title.trim().length > 0) {
+            return title.trim();
         }
 
         return undefined;
@@ -165,6 +191,12 @@ export async function getPreviewDocsDefinition({
                 navAffectingChange = true;
             }
 
+            const currentTitle = extractFrontmatterTitle(markdown);
+            const cachedTitle = frontmatterTitleCache.get(absoluteFilePath);
+            if (cachedTitle !== currentTitle) {
+                navAffectingChange = true;
+            }
+
             const currentSlug = extractFrontmatterSlug(markdown);
             const cachedSlug = frontmatterSlugCache.get(absoluteFilePath);
             if (cachedSlug !== currentSlug) {
@@ -173,6 +205,7 @@ export async function getPreviewDocsDefinition({
 
             frontmatterPositionCache.set(absoluteFilePath, currentPosition);
             frontmatterSidebarTitleCache.set(absoluteFilePath, currentSidebarTitle);
+            frontmatterTitleCache.set(absoluteFilePath, currentTitle);
             frontmatterSlugCache.set(absoluteFilePath, currentSlug);
 
             if (isNewFile) {
@@ -293,15 +326,18 @@ export async function getPreviewDocsDefinition({
 
     frontmatterPositionCache.clear();
     frontmatterSidebarTitleCache.clear();
+    frontmatterTitleCache.clear();
     frontmatterSlugCache.clear();
     for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
         if (page.rawMarkdown != null) {
             const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
             const position = extractFrontmatterPosition(page.rawMarkdown);
             const sidebarTitle = extractFrontmatterSidebarTitle(page.rawMarkdown);
+            const title = extractFrontmatterTitle(page.rawMarkdown);
             const slug = extractFrontmatterSlug(page.rawMarkdown);
             frontmatterPositionCache.set(absolutePath, position);
             frontmatterSidebarTitleCache.set(absolutePath, sidebarTitle);
+            frontmatterTitleCache.set(absolutePath, title);
             frontmatterSlugCache.set(absolutePath, slug);
         }
     }

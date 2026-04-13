@@ -1,0 +1,7 @@
+- summary: |
+    Use frontmatter `title` as fallback for sidebar title when `sidebar-title` is not set.
+    Previously, pages using directory-based navigation would derive sidebar titles from
+    filenames using title-casing, which clobbered acronyms (e.g., "Port LLDP Info" became
+    "Port Lldp Info"). Now the frontmatter `title` is used as an intermediate fallback
+    before the filename-derived title.
+  type: fix
