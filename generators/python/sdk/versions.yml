@@ -1,25 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - version: 5.3.13
   changelogEntry:
-    - summary: >
-        Fix `NameError` when a type uses `extends` to inherit from a base type
-        in a different
-
-        file and that base type is part of a circular reference cycle. The
-        generator was
-
-        incorrectly deferring the base class import to the bottom of the file
-        via ghost
-
-        references, but Python requires base class imports before the class
-        definition.
-
-        Ghost references for extended (base class) types are now skipped so
-        their imports
-
+    - summary: |
+        Fix `NameError` when a type uses `extends` to inherit from a base type in a different
+        file and that base type is part of a circular reference cycle. The generator was
+        incorrectly deferring the base class import to the bottom of the file via ghost
+        references, but Python requires base class imports before the class definition.
+        Ghost references for extended (base class) types are now skipped so their imports
         remain at the top of the file.
       type: fix
-  createdAt: 2026-04-13
+  createdAt: "2026-04-13"
   irVersion: 65
 # For unreleased changes, use unreleased.yml
 - version: 5.3.12
