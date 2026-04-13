@@ -337,6 +337,14 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 });
             }
 
+            // Preserve outer schema metadata on the merged result so that
+            // description, deprecated, example, default, etc. are not silently dropped.
+            for (const key of TYPE_INVARIANT_KEYS) {
+                if (this.schema[key as keyof typeof this.schema] != null && mergedSchema[key] == null) {
+                    mergedSchema[key] = this.schema[key as keyof typeof this.schema];
+                }
+            }
+
             const mergedConverter = new SchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
