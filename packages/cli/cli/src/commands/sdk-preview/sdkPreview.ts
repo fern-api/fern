@@ -88,16 +88,6 @@ export async function sdkPreview({
             );
         }
 
-        // --push-diff is gated until the fiddle-sdk is bumped to include the
-        // pushPreviewBranch field on CreateJobRequestV2. Without it, Fiddle would
-        // receive a githubV2(push) job without pushPreviewBranch=true and treat it
-        // as a normal push — writing to the default branch, which is dangerous.
-        if (pushDiff) {
-            return cliContext.failAndThrow(
-                "--push-diff is not yet available. It requires a server-side update that has not been deployed."
-            );
-        }
-
         // 1. Auth
         const token = await cliContext.runTask(async (context) => {
             return askToLogin(context);
