@@ -223,18 +223,26 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         if (shouldMergeAllOf) {
             let mergedSchema: Record<string, unknown> = {};
-            const resolvedRefs = new Set<string>(this.visitedRefs);
+            // Track refs resolved in THIS allOf array (for dedup only).
+            // Ancestor cycle detection uses the separate `this.visitedRefs` set.
+            const localResolvedRefs = new Set<string>();
             let hasCycle = false;
             for (const allOfSchema of this.schema.allOf ?? []) {
                 let schemaToMerge: OpenAPIV3_1.SchemaObject;
 
                 if (this.context.isReferenceObject(allOfSchema)) {
                     const refPath = allOfSchema.$ref;
-                    if (resolvedRefs.has(refPath)) {
+                    // Check ancestor set for true cross-schema cycles
+                    if (this.visitedRefs.has(refPath)) {
                         hasCycle = true;
                         break;
                     }
-                    resolvedRefs.add(refPath);
+                    // Skip same-array duplicates (e.g. allOf: [$ref:Base, $ref:Base])
+                    // without triggering the cycle breaker
+                    if (localResolvedRefs.has(refPath)) {
+                        continue;
+                    }
+                    localResolvedRefs.add(refPath);
 
                     const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                         schemaOrReference: allOfSchema,
@@ -313,8 +321,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             // cycle detection in diamond inheritance patterns (A → B, C; B, C → D).
             // The mergeWith array-concatenation can produce duplicate $ref entries when
             // two sibling allOf elements both reference the same base schema.
+            const allResolvedRefs = new Set<string>([...this.visitedRefs, ...localResolvedRefs]);
             if (Array.isArray(mergedSchema.allOf)) {
-                const seenRefs = new Set<string>(resolvedRefs);
+                const seenRefs = new Set<string>(allResolvedRefs);
                 mergedSchema.allOf = (
                     mergedSchema.allOf as (OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject)[]
                 ).filter((element) => {
@@ -334,7 +343,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 schema: mergedSchema,
                 id: this.id,
                 inlined: this.inlined,
-                visitedRefs: resolvedRefs
+                visitedRefs: allResolvedRefs
             });
             return mergedConverter.convert();
         }

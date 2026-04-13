@@ -116,7 +116,9 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
 
         if (
             singleRef != null &&
-            inlineElements.every((s) => !s.properties && !s.enum && !s.oneOf && !s.anyOf && !s.allOf) &&
+            inlineElements.every(
+                (s) => !s.properties && !s.enum && !s.oneOf && !s.anyOf && !s.allOf && !s.format
+            ) &&
             !inlineElements.some((s) => s.type === "null")
         ) {
             const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
@@ -129,7 +131,8 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 !resolved.properties &&
                 !resolved.allOf &&
                 !resolved.oneOf &&
-                !resolved.anyOf
+                !resolved.anyOf &&
+                !resolved.format
             ) {
                 const response = this.context.convertReferenceToTypeReference({
                     reference: singleRef as OpenAPIV3_1.ReferenceObject,
