@@ -9,15 +9,15 @@ var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Service.GetMetadataAsync(
-    new GetMetadataRequest {
+await client.Service.GetmetadataAsync(
+    new ServiceGetMetadataRequest {
         Shallow = false,
         Tag = new List<string>(){
             "development",
             "public",
         }
         ,
-        XAPIVersion = "0.0.1"
+        APIVersion = "0.0.1"
     }
 );
 "
@@ -32,14 +32,14 @@ var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Service.GetMetadataAsync(
-    new GetMetadataRequest {
+await client.Service.GetmetadataAsync(
+    new ServiceGetMetadataRequest {
         Shallow = false,
         Tag = new List<string>(){
             "development",
         }
         ,
-        XAPIVersion = "0.0.1"
+        APIVersion = "0.0.1"
     }
 );
 "
@@ -47,15 +47,14 @@ await client.Service.GetMetadataAsync(
 
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "using Acme;
-using Acme.Types;
+using Acme.Service;
 using System.Collections.Generic;
-using Acme.Commons.Types;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Service.CreateBigEntityAsync(
+await client.Service.CreatebigentityAsync(
     new BigEntity {
         CastMember = new Actor {
             ID = "john.doe",
@@ -73,7 +72,7 @@ await client.Service.CreateBigEntityAsync(
             Title = "Pulp Fiction",
             From = "Quentin Tarantino",
             Rating = 8.5,
-            Type = "movie",
+            Type = MovieType.Movie,
             Tag = "tag-12efs9dv",
             Metadata = new Dictionary<string, object?>(){
                 ["academyAward"] = true,
@@ -88,17 +87,16 @@ await client.Service.CreateBigEntityAsync(
             ,
             Revenue = 1000000L
         },
-        EventInfo = new EventInfo(
-            new Metadata {
-                ID = "event-12345",
-                Data = new Dictionary<string, string>(){
-                    ["key1"] = "val1",
-                    ["key2"] = "val2",
-                }
-                ,
-                JSONString = "abc"
+        EventInfo = new CommonsEventInfoZero {
+            Type = CommonsEventInfoZeroType.Metadata,
+            ID = "event-12345",
+            Data = new Dictionary<string, string?>(){
+                ["key1"] = "val1",
+                ["key2"] = "val2",
             }
-        ),
+            ,
+            JSONString = "abc"
+        },
         Migration = new Migration {
             Name = "Migration 31 Aug",
             Status = MigrationStatus.Running
@@ -123,21 +121,20 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
 
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 "using Acme;
-using Acme.Types;
 using System.Collections.Generic;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Service.CreateMovieAsync(
+await client.Service.CreatemovieAsync(
     new Movie {
         ID = "movie-c06a4ad7",
         Prequel = "movie-cv9b914f",
         Title = "The Boy and the Heron",
         From = "Hayao Miyazaki",
         Rating = 8,
-        Type = "movie",
+        Type = MovieType.Movie,
         Tag = "development",
         Metadata = new Dictionary<string, object?>(){
             ["actors"] = new List<object>()
@@ -379,13 +376,16 @@ await client.Service.JustFileWithQueryParamsAsync(
 
 exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "using Acme;
+using Acme.Imdb;
 
 var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Imdb.GetMovieAsync(
-    "movie_xyz"
+await client.Imdb.GetmovieAsync(
+    new ImdbGetMovieRequest {
+        MovieID = "movie_xyz"
+    }
 );
 "
 `;
@@ -398,7 +398,7 @@ var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Imdb.CreateMovieAsync(
+await client.Imdb.CreatemovieAsync(
     new CreateMovieRequest {
         Title = "The Matrix",
         Rating = 8.2
@@ -408,25 +408,13 @@ await client.Imdb.CreateMovieAsync(
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
-"using Acme;
-using Acme.S3;
-
-var client = new AcmeClient(
-    token: "<YOUR_API_KEY>",
-    clientOptions: new ClientOptions {
-        Environment = new AcmeEnvironment {
-            Ec2 = "https://custom.ec2.aws.com",
-            S3 = "https://custom.s3.aws.com"
-        }
-    }
-);
-
-await client.S3.GetPresignedURLAsync(
-    new GetPresignedURLRequest {
-        S3Key = "xyz"
-    }
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
+  }
+]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
@@ -434,47 +422,29 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
   {
     "severity": "CRITICAL",
     "path": [],
-    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
+    "message": "Multiple environments are not supported for single base URL environments; use the baseUrl option instead"
   }
 ]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
-"using Acme;
-using Acme.S3;
-
-var client = new AcmeClient(
-    token: "<YOUR_API_KEY>",
-    clientOptions: new ClientOptions {
-        Environment = AcmeEnvironment.Production
-    }
-);
-
-await client.S3.GetPresignedURLAsync(
-    new GetPresignedURLRequest {
-        S3Key = "xyz"
-    }
-);
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Production\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
-"using Acme;
-using Acme.S3;
-
-var client = new AcmeClient(
-    token: "<YOUR_API_KEY>",
-    clientOptions: new ClientOptions {
-        Environment = AcmeEnvironment.Staging
-    }
-);
-
-await client.S3.GetPresignedURLAsync(
-    new GetPresignedURLRequest {
-        S3Key = "xyz"
-    }
-);
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Staging\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
@@ -500,8 +470,8 @@ var client = new AcmeClient(
     }
 );
 
-await client.Nullable.CreateUserAsync(
-    new CreateUserRequest {
+await client.Nullable.CreateuserAsync(
+    new NullableCreateUserRequest {
         Username = "john.doe",
         Tags = new List<string>(){
             "admin",
@@ -542,8 +512,8 @@ var client = new AcmeClient(
     }
 );
 
-await client.Nullable.GetUsersAsync(
-    new GetUsersRequest {
+await client.Nullable.GetusersAsync(
+    new NullableGetUsersRequest {
         Usernames = new List<string>(){
             "john.doe",
             "jane.doe",
@@ -573,13 +543,9 @@ await client.CreateUserAsync(
         Password = "password",
         Profile = new UserProfile {
             Name = "name",
-            Verification = new UserProfileVerification {
-                Verified = ""
-            },
+            Verification = new UserProfileVerification(),
             Ssn = "ssn"
-        },
-        ID = "",
-        Email = ""
+        }
     }
 );
 "
@@ -600,12 +566,9 @@ await client.CreateUserAsync(
         Password = "password",
         Profile = new UserProfile {
             Name = "name",
-            Verification = new UserProfileVerification {
-                Verified = ""
-            },
+            Verification = new UserProfileVerification(),
             Ssn = "ssn"
-        },
-        Email = ""
+        }
     }
 );
 "
@@ -651,22 +614,18 @@ var client = new AcmeClient(
     }
 );
 
-await client.Dummy.GetDummyAsync();
+await client.Dummy.GetdummyAsync();
 "
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
-"using Acme;
-
-var client = new AcmeClient(
-    token: "<YOUR_API_KEY>",
-    clientOptions: new ClientOptions {
-        BaseUrl = AcmeEnvironment.Staging
-    }
-);
-
-await client.Dummy.GetDummyAsync();
-"
+"[
+  {
+    "severity": "WARNING",
+    "path": [],
+    "message": "Environment \\"Staging\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
@@ -679,7 +638,7 @@ var client = new AcmeClient(
     }
 );
 
-await client.Dummy.GetDummyAsync();
+await client.Dummy.GetdummyAsync();
 "
 `;
 
@@ -711,7 +670,7 @@ var client = new AcmeClient(
     token: "<YOUR_API_KEY>"
 );
 
-await client.Imdb.CreateMovieAsync(
+await client.Imdb.CreatemovieAsync(
     new CreateMovieRequest {
         Title = "The Matrix",
         Rating = 8.2
