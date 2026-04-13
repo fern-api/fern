@@ -8,7 +8,7 @@
       "type": "integer"
     },
     "success": {
-      "type": "boolean"
+      "const": true
     }
   },
   "required": [
