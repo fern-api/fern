@@ -1,0 +1,19 @@
+using SeedApi;
+
+public partial class Examples
+{
+    public async Task Example15() {
+        var client = new SeedErrorsClient(
+            clientOptions: new ClientOptions {
+                BaseUrl = "https://api.fern.com"
+            }
+        );
+
+        await client.Simple.FoowithexamplesAsync(
+            new FooRequest {
+                Bar = "bar"
+            }
+        );
+    }
+
+}

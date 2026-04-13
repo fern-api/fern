@@ -1,0 +1,24 @@
+using SeedApi;
+
+public partial class Examples
+{
+    public async Task Example1() {
+        var client = new SeedOauthClientCredentialsMandatoryAuthClient(
+            clientOptions: new ClientOptions {
+                Token = "<token>",
+                BaseUrl = "https://api.fern.com"
+            }
+        );
+
+        await client.Auth.GettokenwithclientcredentialsAsync(
+            new AuthGetTokenWithClientCredentialsRequest {
+                ClientId = "client_id",
+                ClientSecret = "client_secret",
+                Audience = AuthGetTokenWithClientCredentialsRequestAudience.HttpsApiExampleCom,
+                GrantType = AuthGetTokenWithClientCredentialsRequestGrantType.ClientCredentials,
+                Scope = "scope"
+            }
+        );
+    }
+
+}
