@@ -185,9 +185,14 @@ vi.mock("../AutoVersioningService.js", () => ({
         }
     },
     AutoVersioningException: class AutoVersioningException extends Error {
-        constructor(message: string) {
+        public readonly magicVersionAbsent: boolean;
+        constructor(message: string, options?: { cause?: Error; magicVersionAbsent?: boolean }) {
             super(message);
             this.name = "AutoVersioningException";
+            this.magicVersionAbsent = options?.magicVersionAbsent ?? false;
+            if (options?.cause) {
+                this.cause = options.cause;
+            }
         }
     },
     countFilesInDiff: (diff: string) => {

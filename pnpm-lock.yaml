@@ -291,6 +291,9 @@ catalogs:
     domhandler:
       specifier: ^5.0.3
       version: 5.0.3
+    es-toolkit:
+      specifier: ^1.45.1
+      version: 1.45.1
     esbuild:
       specifier: ^0.27.3
       version: 0.27.7
@@ -589,15 +592,10 @@ overrides:
   qs: 6.15.0
   url-join: ^4.0.1
   '@fern-api/fdr-sdk': 0.145.12-b50d999d1
-  es-toolkit: ^1.45.1
-  ts-essentials: ^10.1.1
   form-data: ^4.0.4
   '@fern-api/ui-core-utils': 0.145.12-b50d999d1
   vite: ^7.3.2
   yauzl: ^3.2.1
-  brace-expansion: '>=5.0.5'
-  path-to-regexp@~0.1.12: 0.1.13
-  defu: '>=6.1.5'
 
 importers:
 
@@ -1259,8 +1257,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^66.0.0
-        version: 66.0.0
+        specifier: ^66.1.0
+        version: 66.1.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -1340,8 +1338,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^66.0.0
-        version: 66.0.0
+        specifier: ^66.1.0
+        version: 66.1.0
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
@@ -2280,8 +2278,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: 66.0.0
+        version: 66.0.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
@@ -2374,8 +2372,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: 66.0.0
+        version: 66.0.0
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -2453,11 +2451,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
-      '@fern-fern/ir-v59-sdk':
-        specifier: 0.0.8
-        version: 0.0.8
+        specifier: 66.0.0
+        version: 66.0.0
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
@@ -7819,13 +7814,13 @@ importers:
         specifier: workspace:*
         version: link:../commons/core-utils
       '@fern-api/replay':
-        specifier: 0.10.2
-        version: 0.10.2
+        specifier: 0.10.4
+        version: 0.10.4
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
       es-toolkit:
-        specifier: ^1.45.1
+        specifier: 'catalog:'
         version: 1.45.1
       tmp-promise:
         specifier: 'catalog:'
@@ -7989,6 +7984,12 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../cli/generation/ir-generator
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../cli/workspace/lazy-fern-workspace
       '@fern-api/local-workspace-runner':
         specifier: workspace:*
         version: link:../cli/generation/local-generation/local-workspace-runner
@@ -8001,6 +8002,9 @@ importers:
       '@fern-api/login':
         specifier: workspace:*
         version: link:../cli/login
+      '@fern-api/source-resolver':
+        specifier: workspace:*
+        version: link:../cli/generation/source-resolver
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../cli/task-context
@@ -9333,8 +9337,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@fern-api/replay@0.10.2':
-    resolution: {integrity: sha512-lUkmqtHqQw5H6Zm6efC+qYcOAVJ+XbeVs+BR/X1Ug39DjupaIjxUT3ADBks0A/2wtWQmkxb1ZSEUdc+J4kBT1g==}
+  '@fern-api/replay@0.10.4':
+    resolution: {integrity: sha512-j/stjn9QMrFPnuLy0KNCwb4rM8ruq7nPtem1ZD5d8E+T7q+yxx1R3QsIaKZcKwFp/LFoyf8PPLhOAa6H8il8WQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -9380,6 +9384,10 @@ packages:
     resolution: {integrity: sha512-scSdUIo0E30ES3Jvx6ox7kby7ZB8jAVDB/52a4TaHquQOMJqrR626NtKHVSfKRCZ7Ut0AjeJ9TR4RRN3zoy6og==}
     engines: {node: '>=18.0.0'}
 
+  '@fern-fern/ir-sdk@66.1.0':
+    resolution: {integrity: sha512-Gq/sxhxFtXIFnsDorSnmkBO9QTAgrM51GDuxx4uGXyUARwoKhGOhSx+AM+6kMVVUHcUHoZ8FDG7sGIOOryDjvQ==}
+    engines: {node: '>=18.0.0'}
+
   '@fern-fern/ir-v53-sdk@1.0.1':
     resolution: {integrity: sha512-SVNbkGBVgE/PkgurqqdFEYkmYBGNZzD2Qh8wF9nApp1NH2Wipte5zbzngl78snGTk/e9DN6+mYHfgQPzv6Pi4w==}
     engines: {node: '>=18.0.0'}
@@ -9403,9 +9411,6 @@ packages:
   '@fern-fern/ir-v58-sdk@1.0.1':
     resolution: {integrity: sha512-U2U1OwrFyviyaTDzRloDzgBw7Ko6TrbqQZqZfavDBl1Y1S20Q1QfZLqJfJcMhYQcntRbXKJeReNjYsSJFaBGsQ==}
     engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v59-sdk@0.0.8':
-    resolution: {integrity: sha512-rPk7crlijG0PvgYZ7g2y5EdhSMMohjGJGfGKo0g5BzdBnA4KqD/LHdful62aHuibYFdORjtGy6GHu1nEH5SD3Q==}
 
   '@fern-fern/ir-v59-sdk@1.0.1':
     resolution: {integrity: sha512-8qEWF6LW+Hr4Ssk8CjnyKcPNnEAKWQYid0sSLHhpsytCHuoywmId3i8/UsCkj2PCYqd+L2zX1xOQ+nATTVxeAQ==}
@@ -11250,8 +11255,8 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  basic-ftp@5.2.1:
-    resolution: {integrity: sha512-0yaL8JdxTknKDILitVpfYfV2Ob6yb3udX/hK97M7I3jOeznBNxQPtVvTUtnhUkyHlxFWyr5Lvknmgzoc7jf+1Q==}
+  basic-ftp@5.2.2:
+    resolution: {integrity: sha512-1tDrzKsdCg70WGvbFss/ulVAxupNauGnOlgpyjKzeQxzyllBLS0CGLV7tjIXTK3ZQA9/FBEm9qyFFN1bciA6pw==}
     engines: {node: '>=10.0.0'}
 
   before-after-hook@3.0.2:
@@ -16368,7 +16373,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@fern-api/replay@0.10.2':
+  '@fern-api/replay@0.10.4':
     dependencies:
       minimatch: 10.2.5
       node-diff3: 3.2.0
@@ -16474,6 +16479,8 @@ snapshots:
 
   '@fern-fern/ir-sdk@66.0.0-alpha.1': {}
 
+  '@fern-fern/ir-sdk@66.1.0': {}
+
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 
   '@fern-fern/ir-v54-sdk@1.0.1': {}
@@ -16485,16 +16492,6 @@ snapshots:
   '@fern-fern/ir-v57-sdk@1.0.1': {}
 
   '@fern-fern/ir-v58-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v59-sdk@0.0.8':
-    dependencies:
-      form-data: 4.0.5
-      formdata-node: 6.0.3
-      node-fetch: 2.7.0
-      qs: 6.15.0
-      readable-stream: 4.7.0
-    transitivePeerDependencies:
-      - encoding
 
   '@fern-fern/ir-v59-sdk@1.0.1': {}
 
@@ -18299,7 +18296,7 @@ snapshots:
 
   baseline-browser-mapping@2.10.16: {}
 
-  basic-ftp@5.2.1: {}
+  basic-ftp@5.2.2: {}
 
   before-after-hook@3.0.2: {}
 
@@ -19470,7 +19467,7 @@ snapshots:
 
   get-uri@6.0.5:
     dependencies:
-      basic-ftp: 5.2.1
+      basic-ftp: 5.2.2
       data-uri-to-buffer: 6.0.2
       debug: 4.4.3
     transitivePeerDependencies:

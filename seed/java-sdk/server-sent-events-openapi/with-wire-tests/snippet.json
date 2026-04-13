@@ -181,6 +181,292 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamOasSpecNative(\n            StreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamOasSpecNative(\n            StreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "9e6c48a6",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-condition",
+                "identifier_override": "endpoint_.streamXFernStreamingCondition_stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingConditionStream(\n            StreamXFernStreamingConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingConditionStream(\n            StreamXFernStreamingConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "91419290",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-condition",
+                "identifier_override": "endpoint_.streamXFernStreamingCondition_stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingConditionStream(\n            StreamXFernStreamingConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingConditionStream(\n            StreamXFernStreamingConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "a81f32a2",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-condition",
+                "identifier_override": "endpoint_.streamXFernStreamingCondition"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingConditionStream(\n            StreamXFernStreamingConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingConditionStream(\n            StreamXFernStreamingConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "4006b81c",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-condition",
+                "identifier_override": "endpoint_.streamXFernStreamingCondition"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingConditionStream(\n            StreamXFernStreamingConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingConditionStream(\n            StreamXFernStreamingConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e51cd0a8",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-shared-schema",
+                "identifier_override": "endpoint_.streamXFernStreamingSharedSchema_stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingSharedSchemaStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSharedSchemaStream(\n            StreamXFernStreamingSharedSchemaStreamRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingSharedSchemaStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSharedSchemaStream(\n            StreamXFernStreamingSharedSchemaStreamRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "afd6c607",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-shared-schema",
+                "identifier_override": "endpoint_.streamXFernStreamingSharedSchema_stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingSharedSchemaStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSharedSchemaStream(\n            StreamXFernStreamingSharedSchemaStreamRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingSharedSchemaStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSharedSchemaStream(\n            StreamXFernStreamingSharedSchemaStreamRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "315b1ff0",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-shared-schema",
+                "identifier_override": "endpoint_.streamXFernStreamingSharedSchema"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingSharedSchemaStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSharedSchemaStream(\n            StreamXFernStreamingSharedSchemaStreamRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingSharedSchemaStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSharedSchemaStream(\n            StreamXFernStreamingSharedSchemaStreamRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d08a04ab",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-shared-schema",
+                "identifier_override": "endpoint_.streamXFernStreamingSharedSchema"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingSharedSchemaStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSharedSchemaStream(\n            StreamXFernStreamingSharedSchemaStreamRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingSharedSchemaStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSharedSchemaStream(\n            StreamXFernStreamingSharedSchemaStreamRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "6a25fad5",
+            "id": {
+                "method": "POST",
+                "path": "/validate-completion",
+                "identifier_override": "endpoint_.validateCompletion"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.SharedCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.validateCompletion(\n            SharedCompletionRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.SharedCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.validateCompletion(\n            SharedCompletionRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2d13b397",
+            "id": {
+                "method": "POST",
+                "path": "/validate-completion",
+                "identifier_override": "endpoint_.validateCompletion"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.SharedCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.validateCompletion(\n            SharedCompletionRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .stream(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.SharedCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.validateCompletion(\n            SharedCompletionRequest\n                .builder()\n                .prompt(\"prompt\")\n                .model(\"model\")\n                .stream(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2f5b7571",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-union",
+                "identifier_override": "endpoint_.streamXFernStreamingUnion_stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamXFernStreamingUnionStreamRequest;\nimport com.seed.api.types.UnionStreamMessageVariant;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingUnionStream(\n            StreamXFernStreamingUnionStreamRequest.message(\n                UnionStreamMessageVariant\n                    .builder()\n                    .prompt(\"prompt\")\n                    .message(\"message\")\n                    .streamResponse(true)\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamXFernStreamingUnionStreamRequest;\nimport com.seed.api.types.UnionStreamMessageVariant;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingUnionStream(\n            StreamXFernStreamingUnionStreamRequest.message(\n                UnionStreamMessageVariant\n                    .builder()\n                    .prompt(\"prompt\")\n                    .message(\"message\")\n                    .streamResponse(true)\n                    .build()\n            )\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "8e1c4156",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-union",
+                "identifier_override": "endpoint_.streamXFernStreamingUnion_stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamXFernStreamingUnionStreamRequest;\nimport com.seed.api.types.UnionStreamMessageVariant;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingUnionStream(\n            StreamXFernStreamingUnionStreamRequest.message(\n                UnionStreamMessageVariant\n                    .builder()\n                    .prompt(\"prompt\")\n                    .message(\"message\")\n                    .streamResponse(true)\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamXFernStreamingUnionStreamRequest;\nimport com.seed.api.types.UnionStreamMessageVariant;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingUnionStream(\n            StreamXFernStreamingUnionStreamRequest.message(\n                UnionStreamMessageVariant\n                    .builder()\n                    .prompt(\"prompt\")\n                    .message(\"message\")\n                    .streamResponse(true)\n                    .build()\n            )\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "84e9dacd",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-union",
+                "identifier_override": "endpoint_.streamXFernStreamingUnion"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamXFernStreamingUnionStreamRequest;\nimport com.seed.api.types.UnionStreamMessageVariant;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingUnionStream(\n            StreamXFernStreamingUnionStreamRequest.message(\n                UnionStreamMessageVariant\n                    .builder()\n                    .prompt(\"prompt\")\n                    .message(\"message\")\n                    .streamResponse(false)\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamXFernStreamingUnionStreamRequest;\nimport com.seed.api.types.UnionStreamMessageVariant;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingUnionStream(\n            StreamXFernStreamingUnionStreamRequest.message(\n                UnionStreamMessageVariant\n                    .builder()\n                    .prompt(\"prompt\")\n                    .message(\"message\")\n                    .streamResponse(false)\n                    .build()\n            )\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "2d1f3920",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-union",
+                "identifier_override": "endpoint_.streamXFernStreamingUnion"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamXFernStreamingUnionStreamRequest;\nimport com.seed.api.types.UnionStreamMessageVariant;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingUnionStream(\n            StreamXFernStreamingUnionStreamRequest.message(\n                UnionStreamMessageVariant\n                    .builder()\n                    .prompt(\"prompt\")\n                    .message(\"message\")\n                    .streamResponse(false)\n                    .build()\n            )\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamXFernStreamingUnionStreamRequest;\nimport com.seed.api.types.UnionStreamMessageVariant;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingUnionStream(\n            StreamXFernStreamingUnionStreamRequest.message(\n                UnionStreamMessageVariant\n                    .builder()\n                    .prompt(\"prompt\")\n                    .message(\"message\")\n                    .streamResponse(false)\n                    .build()\n            )\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "56a45a69",
+            "id": {
+                "method": "POST",
+                "path": "/validate-union-request",
+                "identifier_override": "endpoint_.validateUnionRequest"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.UnionStreamRequestBase;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.validateUnionRequest(\n            UnionStreamRequestBase\n                .builder()\n                .prompt(\"prompt\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.UnionStreamRequestBase;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.validateUnionRequest(\n            UnionStreamRequestBase\n                .builder()\n                .prompt(\"prompt\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "46cee0d9",
+            "id": {
+                "method": "POST",
+                "path": "/validate-union-request",
+                "identifier_override": "endpoint_.validateUnionRequest"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.UnionStreamRequestBase;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.validateUnionRequest(\n            UnionStreamRequestBase\n                .builder()\n                .prompt(\"prompt\")\n                .streamResponse(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.UnionStreamRequestBase;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.validateUnionRequest(\n            UnionStreamRequestBase\n                .builder()\n                .prompt(\"prompt\")\n                .streamResponse(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "9e6c48a6",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-nullable-condition",
+                "identifier_override": "endpoint_.streamXFernStreamingNullableCondition_stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingNullableConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingNullableConditionStream(\n            StreamXFernStreamingNullableConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingNullableConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingNullableConditionStream(\n            StreamXFernStreamingNullableConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "91419290",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-nullable-condition",
+                "identifier_override": "endpoint_.streamXFernStreamingNullableCondition_stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingNullableConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingNullableConditionStream(\n            StreamXFernStreamingNullableConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingNullableConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingNullableConditionStream(\n            StreamXFernStreamingNullableConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "a81f32a2",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-nullable-condition",
+                "identifier_override": "endpoint_.streamXFernStreamingNullableCondition"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingNullableConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingNullableConditionStream(\n            StreamXFernStreamingNullableConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingNullableConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingNullableConditionStream(\n            StreamXFernStreamingNullableConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "4006b81c",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-nullable-condition",
+                "identifier_override": "endpoint_.streamXFernStreamingNullableCondition"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingNullableConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingNullableConditionStream(\n            StreamXFernStreamingNullableConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.StreamXFernStreamingNullableConditionStreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingNullableConditionStream(\n            StreamXFernStreamingNullableConditionStreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "6a4b64c4",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-sse-only",
+                "identifier_override": "endpoint_.streamXFernStreamingSseOnly"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSseOnly(\n            StreamRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSseOnly(\n            StreamRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "c66b1e00",
+            "id": {
+                "method": "POST",
+                "path": "/stream/x-fern-streaming-sse-only",
+                "identifier_override": "endpoint_.streamXFernStreamingSseOnly"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSseOnly(\n            StreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.StreamRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.streamXFernStreamingSseOnly(\n            StreamRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
         }
     ],
     "types": {}

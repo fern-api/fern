@@ -89,6 +89,7 @@
     "update:docs": "pnpm docs:generate && pnpm docs-yml:jsonschema",
     "prepare": "husky",
     "pre-commit": "tsx scripts/pre-commit.ts",
+    "release": "tsx scripts/release.ts",
     "test:update-package": "sh -c 'for arg in \"$@\"; do if [[ $arg == --package=* ]]; then PACKAGE=${arg#--package=}; break; fi; done; turbo run compile --filter \"$PACKAGE\" && turbo run test:update --filter \"$PACKAGE\"' --",
     "csharp:build": "turbo run dockerTagLatest --filter @fern-api/fern-csharp-sdk",
     "go:build": "turbo run dockerTagLatest --filter @fern-api/go-sdk",
@@ -154,15 +155,10 @@
       "qs": "6.15.0",
       "url-join": "^4.0.1",
       "@fern-api/fdr-sdk": "0.145.12-b50d999d1",
-      "es-toolkit": "^1.45.1",
-      "ts-essentials": "^10.1.1",
       "form-data": "^4.0.4",
       "@fern-api/ui-core-utils": "0.145.12-b50d999d1",
       "vite": "^7.3.2",
-      "yauzl": "^3.2.1",
-      "brace-expansion": ">=5.0.5",
-      "path-to-regexp@~0.1.12": "0.1.13",
-      "defu": ">=6.1.5"
+      "yauzl": "^3.2.1"
     }
   },
   "dependencies": {

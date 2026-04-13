@@ -1,12 +1,13 @@
 import { beforeAll, describe, expect, it } from "vitest";
+import { CliContext } from "../cli-context/CliContext.js";
 import { type Bump, diffGeneratorVersions, mergeDiffResults } from "../commands/diff/diff.js";
-import { MockCliContext } from "./mockCliContext.js";
+import { createMockCliContext } from "./mockCliContext.js";
 
 describe("mergeDiffResults tests", () => {
-    let context: MockCliContext;
+    let context: CliContext;
 
-    beforeAll(() => {
-        context = new MockCliContext();
+    beforeAll(async () => {
+        context = await createMockCliContext();
     });
 
     it.each([

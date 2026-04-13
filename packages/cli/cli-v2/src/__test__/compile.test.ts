@@ -39,7 +39,7 @@ describe("fern api compile", () => {
         });
 
         it("writes valid IR JSON to the specified file", async () => {
-            const { context } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+            const { context } = await createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
             await cmd.handle(context, baseArgs({ output: outputPath }));
 
             expect(await doesPathExist(AbsoluteFilePath.of(outputPath))).toBe(true);
@@ -50,7 +50,7 @@ describe("fern api compile", () => {
         });
 
         it("writes no human-readable output to stderr at default log level", async () => {
-            const { context, getStderr } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+            const { context, getStderr } = await createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
             await cmd.handle(context, baseArgs({ output: outputPath }));
 
             expect(getStderr()).toBe("");
@@ -59,14 +59,14 @@ describe("fern api compile", () => {
 
     describe("no --output (validate only)", () => {
         it("produces no stdout output", async () => {
-            const { context, getStdout } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+            const { context, getStdout } = await createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
             await cmd.handle(context, baseArgs());
 
             expect(getStdout()).toBe("");
         });
 
         it("produces no stderr output at default log level", async () => {
-            const { context, getStderr } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+            const { context, getStderr } = await createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
             await cmd.handle(context, baseArgs());
 
             expect(getStderr()).toBe("");
@@ -89,7 +89,7 @@ describe("fern api compile", () => {
         });
 
         it("compiles a specific API by name", async () => {
-            const { context } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+            const { context } = await createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
             await cmd.handle(context, baseArgs({ api: "api", output: outputPath }));
 
             const content = await readFile(outputPath, "utf-8");
@@ -98,7 +98,7 @@ describe("fern api compile", () => {
         });
 
         it("throws CliError for a non-existent API name", async () => {
-            const { context } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+            const { context } = await createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
             await expect(cmd.handle(context, baseArgs({ api: "nonexistent" }))).rejects.toThrow(
                 "API 'nonexistent' not found"
             );
@@ -107,7 +107,7 @@ describe("fern api compile", () => {
 
     describe("validation errors", () => {
         it("throws CliError with error details for an invalid API", async () => {
-            const { context, getStderr } = createTestContextWithCapture({ cwd: INVALID_API_DIR });
+            const { context, getStderr } = await createTestContextWithCapture({ cwd: INVALID_API_DIR });
             await expect(cmd.handle(context, baseArgs())).rejects.toThrow(CliError);
 
             const stderr = getStderr();

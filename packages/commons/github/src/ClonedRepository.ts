@@ -303,6 +303,26 @@ export class ClonedRepository {
         return result.trim();
     }
 
+    /**
+     * Returns true if the working tree has uncommitted changes (staged or unstaged).
+     */
+    public async hasChanges(): Promise<boolean> {
+        await this.git.cwd(this.clonePath);
+        const status = await this.git.status();
+        return !status.isClean();
+    }
+
+    /**
+     * Compares the tree hash of HEAD against a ref (e.g. `origin/main`).
+     * Returns true if the trees are identical (no content difference).
+     * Useful for detecting no-diff after committing — if trees match, the commit is a no-op.
+     */
+    public async treeHashEquals(ref: string): Promise<boolean> {
+        const headTree = await this.getHeadTreeHash();
+        const refTree = await this.getCommitTreeHash(ref);
+        return headTree === refTree;
+    }
+
     // This tag is a moving pointer (fern-generation-base--<generator>) that tracks the latest
     // clean generation SHA. --force is required because: (1) the tag is intentionally overwritten
     // each generation, and (2) --force-with-lease doesn't work for tags since git tag -f overwrites
