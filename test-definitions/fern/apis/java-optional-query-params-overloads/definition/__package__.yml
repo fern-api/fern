@@ -1,0 +1,62 @@
+service:
+  base-path: /api
+  auth: false
+  endpoints:
+    # Endpoint with all optional query parameters - should generate overloads without request wrapper
+    getLatestInsurance:
+      docs: Get latest insurance for a user. All query params are optional.
+      method: GET
+      path: /users/{userId}/insurance
+      path-parameters:
+        userId: string
+      request:
+        name: UserGetLatestInsuranceRequest
+        query-parameters:
+          includeExpired:
+            type: optional<boolean>
+            docs: Include expired insurance policies
+          policyType:
+            type: optional<PolicyType>
+            docs: Filter by policy type
+      response: InsurancePolicy
+
+    # Endpoint with required query parameters - should NOT generate overloads without request wrapper
+    searchPolicies:
+      docs: Search policies with required query params
+      method: GET
+      path: /policies/search
+      request:
+        name: SearchPoliciesRequest
+        query-parameters:
+          query:
+            type: string
+            docs: Required search query
+          limit:
+            type: optional<integer>
+            docs: Optional limit
+      response: list<InsurancePolicy>
+
+    # Endpoint with no query parameters - should work as before
+    listAllPolicies:
+      docs: List all policies
+      method: GET
+      path: /policies
+      response: list<InsurancePolicy>
+
+types:
+  PolicyType:
+    docs: Type of insurance policy
+    enum:
+      - HEALTH
+      - AUTO
+      - HOME
+      - LIFE
+
+  InsurancePolicy:
+    docs: Insurance policy details
+    properties:
+      id: string
+      userId: string
+      policyType: PolicyType
+      isExpired: boolean
+      coverageAmount: double

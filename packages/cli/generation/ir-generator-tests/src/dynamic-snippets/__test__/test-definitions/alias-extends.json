@@ -218,47 +218,9 @@
                     }
                 },
                 "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "",
-                        "camelCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "snakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        },
-                        "pascalCase": {
-                            "unsafeName": "",
-                            "safeName": ""
-                        }
-                    }
+                    "file": null
                 }
             },
             "location": {
@@ -269,66 +231,28 @@
                 "type": "inlined",
                 "declaration": {
                     "name": {
-                        "originalName": "ExtendedInlineRequestBodyRequest",
+                        "originalName": "InlinedChildRequest",
                         "camelCase": {
-                            "unsafeName": "extendedInlineRequestBodyRequest",
-                            "safeName": "extendedInlineRequestBodyRequest"
+                            "unsafeName": "inlinedChildRequest",
+                            "safeName": "inlinedChildRequest"
                         },
                         "snakeCase": {
-                            "unsafeName": "extended_inline_request_body_request",
-                            "safeName": "extended_inline_request_body_request"
+                            "unsafeName": "inlined_child_request",
+                            "safeName": "inlined_child_request"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "EXTENDED_INLINE_REQUEST_BODY_REQUEST",
-                            "safeName": "EXTENDED_INLINE_REQUEST_BODY_REQUEST"
+                            "unsafeName": "INLINED_CHILD_REQUEST",
+                            "safeName": "INLINED_CHILD_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "ExtendedInlineRequestBodyRequest",
-                            "safeName": "ExtendedInlineRequestBodyRequest"
+                            "unsafeName": "InlinedChildRequest",
+                            "safeName": "InlinedChildRequest"
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "",
-                                "camelCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "",
-                                    "safeName": ""
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "",
-                            "camelCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "snakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            },
-                            "pascalCase": {
-                                "unsafeName": "",
-                                "safeName": ""
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "pathParameters": [],
