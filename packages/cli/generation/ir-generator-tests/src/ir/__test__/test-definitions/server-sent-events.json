@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "server-sent-events",
-    "apiDisplayName": null,
+    "apiName": "api",
+    "apiDisplayName": "server-sent-events",
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -13,19 +13,17 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_completions:StreamedCompletion": {
+        "type_:StreamedCompletion": {
             "inline": null,
             "name": {
                 "name": "StreamedCompletion",
                 "fernFilepath": {
-                    "allParts": [
-                        "completions"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "completions"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_completions:StreamedCompletion"
+                "typeId": "type_:StreamedCompletion"
             },
             "shape": {
                 "_type": "object",
@@ -59,13 +57,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "INTEGER",
-                                        "v2": {
-                                            "type": "integer",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "INTEGER",
+                                                "v2": {
+                                                    "type": "integer",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -149,7 +153,7 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "StreamCompletionRequest",
+                        "name": "CompletionsStreamRequest",
                         "extends": [],
                         "properties": [
                             {
@@ -178,13 +182,13 @@
                         "extendedProperties": [],
                         "docs": null,
                         "v2Examples": null,
-                        "contentType": null
+                        "contentType": "application/json"
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "StreamCompletionRequest",
+                            "wrapperName": "CompletionsStreamRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -194,446 +198,18 @@
                     },
                     "response": {
                         "body": {
-                            "type": "streaming",
-                            "value": {
-                                "type": "sse",
-                                "payload": {
-                                    "_type": "named",
-                                    "name": "StreamedCompletion",
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            "completions"
-                                        ],
-                                        "packagePath": [],
-                                        "file": "completions"
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_completions:StreamedCompletion",
-                                    "default": null,
-                                    "inline": null
-                                },
-                                "terminator": "[[DONE]]",
-                                "docs": null,
-                                "v2Examples": null
-                            }
+                            "type": "fileDownload",
+                            "docs": "",
+                            "v2Examples": null
                         },
-                        "status-code": null,
+                        "status-code": 200,
                         "isWildcardStatusCode": null,
-                        "docs": null
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "Stream completions",
-                                "name": "Stream completions",
-                                "url": "/stream",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": {
-                                    "type": "inlinedRequestBody",
-                                    "properties": [
-                                        {
-                                            "name": "query",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "string",
-                                                        "string": {
-                                                            "original": "foo"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "foo"
-                                            },
-                                            "originalTypeDeclaration": null
-                                        }
-                                    ],
-                                    "extraProperties": null,
-                                    "jsonExample": {
-                                        "query": "foo"
-                                    }
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "sse",
-                                        "value": [
-                                            {
-                                                "event": "completion",
-                                                "data": {
-                                                    "shape": {
-                                                        "type": "named",
-                                                        "typeName": {
-                                                            "typeId": "type_completions:StreamedCompletion",
-                                                            "fernFilepath": {
-                                                                "allParts": [
-                                                                    "completions"
-                                                                ],
-                                                                "packagePath": [],
-                                                                "file": "completions"
-                                                            },
-                                                            "name": "StreamedCompletion",
-                                                            "displayName": null
-                                                        },
-                                                        "shape": {
-                                                            "type": "object",
-                                                            "properties": [
-                                                                {
-                                                                    "name": "delta",
-                                                                    "value": {
-                                                                        "shape": {
-                                                                            "type": "primitive",
-                                                                            "primitive": {
-                                                                                "type": "string",
-                                                                                "string": {
-                                                                                    "original": "hello"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": "hello"
-                                                                    },
-                                                                    "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "completions"
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": "completions"
-                                                                        },
-                                                                        "name": "StreamedCompletion",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "propertyAccess": null
-                                                                },
-                                                                {
-                                                                    "name": "tokens",
-                                                                    "value": {
-                                                                        "shape": {
-                                                                            "type": "container",
-                                                                            "container": {
-                                                                                "type": "optional",
-                                                                                "optional": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "integer",
-                                                                                            "integer": 1
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": 1
-                                                                                },
-                                                                                "valueType": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "INTEGER",
-                                                                                        "v2": {
-                                                                                            "type": "integer",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": 1
-                                                                    },
-                                                                    "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "completions"
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": "completions"
-                                                                        },
-                                                                        "name": "StreamedCompletion",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "propertyAccess": null
-                                                                }
-                                                            ],
-                                                            "extraProperties": null
-                                                        }
-                                                    },
-                                                    "jsonExample": {
-                                                        "delta": "hello",
-                                                        "tokens": 1
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                "event": "completion",
-                                                "data": {
-                                                    "shape": {
-                                                        "type": "named",
-                                                        "typeName": {
-                                                            "typeId": "type_completions:StreamedCompletion",
-                                                            "fernFilepath": {
-                                                                "allParts": [
-                                                                    "completions"
-                                                                ],
-                                                                "packagePath": [],
-                                                                "file": "completions"
-                                                            },
-                                                            "name": "StreamedCompletion",
-                                                            "displayName": null
-                                                        },
-                                                        "shape": {
-                                                            "type": "object",
-                                                            "properties": [
-                                                                {
-                                                                    "name": "delta",
-                                                                    "value": {
-                                                                        "shape": {
-                                                                            "type": "primitive",
-                                                                            "primitive": {
-                                                                                "type": "string",
-                                                                                "string": {
-                                                                                    "original": " world"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": " world"
-                                                                    },
-                                                                    "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "completions"
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": "completions"
-                                                                        },
-                                                                        "name": "StreamedCompletion",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "propertyAccess": null
-                                                                },
-                                                                {
-                                                                    "name": "tokens",
-                                                                    "value": {
-                                                                        "shape": {
-                                                                            "type": "container",
-                                                                            "container": {
-                                                                                "type": "optional",
-                                                                                "optional": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "integer",
-                                                                                            "integer": 2
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": 2
-                                                                                },
-                                                                                "valueType": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "INTEGER",
-                                                                                        "v2": {
-                                                                                            "type": "integer",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": 2
-                                                                    },
-                                                                    "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "completions"
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": "completions"
-                                                                        },
-                                                                        "name": "StreamedCompletion",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "propertyAccess": null
-                                                                }
-                                                            ],
-                                                            "extraProperties": null
-                                                        }
-                                                    },
-                                                    "jsonExample": {
-                                                        "delta": " world",
-                                                        "tokens": 2
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
-                    "autogeneratedExamples": [
-                        {
-                            "example": {
-                                "id": "7589812f",
-                                "url": "/stream",
-                                "name": null,
-                                "endpointHeaders": [],
-                                "endpointPathParameters": [],
-                                "queryParameters": [],
-                                "servicePathParameters": [],
-                                "serviceHeaders": [],
-                                "rootPathParameters": [],
-                                "request": {
-                                    "type": "inlinedRequestBody",
-                                    "properties": [
-                                        {
-                                            "name": "query",
-                                            "originalTypeDeclaration": null,
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "string",
-                                                        "string": {
-                                                            "original": "query"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "query"
-                                            }
-                                        }
-                                    ],
-                                    "extraProperties": null,
-                                    "jsonExample": {
-                                        "query": "query"
-                                    }
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "sse",
-                                        "value": [
-                                            {
-                                                "data": {
-                                                    "shape": {
-                                                        "type": "named",
-                                                        "shape": {
-                                                            "type": "object",
-                                                            "properties": [
-                                                                {
-                                                                    "name": "delta",
-                                                                    "originalTypeDeclaration": {
-                                                                        "name": "StreamedCompletion",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "completions"
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": "completions"
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_completions:StreamedCompletion"
-                                                                    },
-                                                                    "value": {
-                                                                        "shape": {
-                                                                            "type": "primitive",
-                                                                            "primitive": {
-                                                                                "type": "string",
-                                                                                "string": {
-                                                                                    "original": "delta"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": "delta"
-                                                                    },
-                                                                    "propertyAccess": null
-                                                                },
-                                                                {
-                                                                    "name": "tokens",
-                                                                    "originalTypeDeclaration": {
-                                                                        "name": "StreamedCompletion",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "completions"
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": "completions"
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_completions:StreamedCompletion"
-                                                                    },
-                                                                    "value": {
-                                                                        "shape": {
-                                                                            "type": "container",
-                                                                            "container": {
-                                                                                "type": "optional",
-                                                                                "optional": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "integer",
-                                                                                            "integer": 1
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": 1
-                                                                                },
-                                                                                "valueType": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "INTEGER",
-                                                                                        "v2": {
-                                                                                            "type": "integer",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": 1
-                                                                    },
-                                                                    "propertyAccess": null
-                                                                }
-                                                            ],
-                                                            "extraProperties": null
-                                                        },
-                                                        "typeName": {
-                                                            "name": "StreamedCompletion",
-                                                            "fernFilepath": {
-                                                                "allParts": [
-                                                                    "completions"
-                                                                ],
-                                                                "packagePath": [],
-                                                                "file": "completions"
-                                                            },
-                                                            "displayName": null,
-                                                            "typeId": "type_completions:StreamedCompletion"
-                                                        }
-                                                    },
-                                                    "jsonExample": {
-                                                        "delta": "delta",
-                                                        "tokens": 1
-                                                    }
-                                                },
-                                                "event": ""
-                                            }
-                                        ]
-                                    }
-                                },
-                                "docs": null
-                            }
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [],
                     "pagination": null,
                     "transport": null,
                     "v2Examples": null,
@@ -646,8 +222,8 @@
                     "docs": null
                 },
                 {
-                    "id": "endpoint_completions.streamWithoutTerminator",
-                    "name": "streamWithoutTerminator",
+                    "id": "endpoint_completions.streamwithoutterminator",
+                    "name": "streamwithoutterminator",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -670,7 +246,7 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "StreamCompletionRequestWithoutTerminator",
+                        "name": "CompletionsStreamWithoutTerminatorRequest",
                         "extends": [],
                         "properties": [
                             {
@@ -699,13 +275,13 @@
                         "extendedProperties": [],
                         "docs": null,
                         "v2Examples": null,
-                        "contentType": null
+                        "contentType": "application/json"
                     },
                     "v2RequestBodies": null,
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "StreamCompletionRequestWithoutTerminator",
+                            "wrapperName": "CompletionsStreamWithoutTerminatorRequest",
                             "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
@@ -715,342 +291,18 @@
                     },
                     "response": {
                         "body": {
-                            "type": "streaming",
-                            "value": {
-                                "type": "sse",
-                                "payload": {
-                                    "_type": "named",
-                                    "name": "StreamedCompletion",
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            "completions"
-                                        ],
-                                        "packagePath": [],
-                                        "file": "completions"
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_completions:StreamedCompletion",
-                                    "default": null,
-                                    "inline": null
-                                },
-                                "terminator": null,
-                                "docs": null,
-                                "v2Examples": null
-                            }
+                            "type": "fileDownload",
+                            "docs": "",
+                            "v2Examples": null
                         },
-                        "status-code": null,
+                        "status-code": 200,
                         "isWildcardStatusCode": null,
-                        "docs": null
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [
-                        {
-                            "example": {
-                                "id": "Stream without terminator",
-                                "name": "Stream without terminator",
-                                "url": "/stream-no-terminator",
-                                "rootPathParameters": [],
-                                "endpointPathParameters": [],
-                                "servicePathParameters": [],
-                                "endpointHeaders": [],
-                                "serviceHeaders": [],
-                                "queryParameters": [],
-                                "request": {
-                                    "type": "inlinedRequestBody",
-                                    "properties": [
-                                        {
-                                            "name": "query",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "string",
-                                                        "string": {
-                                                            "original": "query"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "query"
-                                            },
-                                            "originalTypeDeclaration": null
-                                        }
-                                    ],
-                                    "extraProperties": null,
-                                    "jsonExample": {
-                                        "query": "query"
-                                    }
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "sse",
-                                        "value": [
-                                            {
-                                                "event": "completion",
-                                                "data": {
-                                                    "shape": {
-                                                        "type": "named",
-                                                        "typeName": {
-                                                            "typeId": "type_completions:StreamedCompletion",
-                                                            "fernFilepath": {
-                                                                "allParts": [
-                                                                    "completions"
-                                                                ],
-                                                                "packagePath": [],
-                                                                "file": "completions"
-                                                            },
-                                                            "name": "StreamedCompletion",
-                                                            "displayName": null
-                                                        },
-                                                        "shape": {
-                                                            "type": "object",
-                                                            "properties": [
-                                                                {
-                                                                    "name": "delta",
-                                                                    "value": {
-                                                                        "shape": {
-                                                                            "type": "primitive",
-                                                                            "primitive": {
-                                                                                "type": "string",
-                                                                                "string": {
-                                                                                    "original": "delta"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": "delta"
-                                                                    },
-                                                                    "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "completions"
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": "completions"
-                                                                        },
-                                                                        "name": "StreamedCompletion",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "propertyAccess": null
-                                                                },
-                                                                {
-                                                                    "name": "tokens",
-                                                                    "value": {
-                                                                        "shape": {
-                                                                            "type": "container",
-                                                                            "container": {
-                                                                                "type": "optional",
-                                                                                "optional": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "integer",
-                                                                                            "integer": 1
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": 1
-                                                                                },
-                                                                                "valueType": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "INTEGER",
-                                                                                        "v2": {
-                                                                                            "type": "integer",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": 1
-                                                                    },
-                                                                    "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "completions"
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": "completions"
-                                                                        },
-                                                                        "name": "StreamedCompletion",
-                                                                        "displayName": null
-                                                                    },
-                                                                    "propertyAccess": null
-                                                                }
-                                                            ],
-                                                            "extraProperties": null
-                                                        }
-                                                    },
-                                                    "jsonExample": {
-                                                        "delta": "delta",
-                                                        "tokens": 1
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                "docs": null
-                            },
-                            "codeSamples": null
-                        }
-                    ],
-                    "autogeneratedExamples": [
-                        {
-                            "example": {
-                                "id": "7589812f",
-                                "url": "/stream-no-terminator",
-                                "name": null,
-                                "endpointHeaders": [],
-                                "endpointPathParameters": [],
-                                "queryParameters": [],
-                                "servicePathParameters": [],
-                                "serviceHeaders": [],
-                                "rootPathParameters": [],
-                                "request": {
-                                    "type": "inlinedRequestBody",
-                                    "properties": [
-                                        {
-                                            "name": "query",
-                                            "originalTypeDeclaration": null,
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "string",
-                                                        "string": {
-                                                            "original": "query"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "query"
-                                            }
-                                        }
-                                    ],
-                                    "extraProperties": null,
-                                    "jsonExample": {
-                                        "query": "query"
-                                    }
-                                },
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "sse",
-                                        "value": [
-                                            {
-                                                "data": {
-                                                    "shape": {
-                                                        "type": "named",
-                                                        "shape": {
-                                                            "type": "object",
-                                                            "properties": [
-                                                                {
-                                                                    "name": "delta",
-                                                                    "originalTypeDeclaration": {
-                                                                        "name": "StreamedCompletion",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "completions"
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": "completions"
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_completions:StreamedCompletion"
-                                                                    },
-                                                                    "value": {
-                                                                        "shape": {
-                                                                            "type": "primitive",
-                                                                            "primitive": {
-                                                                                "type": "string",
-                                                                                "string": {
-                                                                                    "original": "delta"
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": "delta"
-                                                                    },
-                                                                    "propertyAccess": null
-                                                                },
-                                                                {
-                                                                    "name": "tokens",
-                                                                    "originalTypeDeclaration": {
-                                                                        "name": "StreamedCompletion",
-                                                                        "fernFilepath": {
-                                                                            "allParts": [
-                                                                                "completions"
-                                                                            ],
-                                                                            "packagePath": [],
-                                                                            "file": "completions"
-                                                                        },
-                                                                        "displayName": null,
-                                                                        "typeId": "type_completions:StreamedCompletion"
-                                                                    },
-                                                                    "value": {
-                                                                        "shape": {
-                                                                            "type": "container",
-                                                                            "container": {
-                                                                                "type": "optional",
-                                                                                "optional": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "integer",
-                                                                                            "integer": 1
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": 1
-                                                                                },
-                                                                                "valueType": {
-                                                                                    "_type": "primitive",
-                                                                                    "primitive": {
-                                                                                        "v1": "INTEGER",
-                                                                                        "v2": {
-                                                                                            "type": "integer",
-                                                                                            "default": null,
-                                                                                            "validation": null
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        "jsonExample": 1
-                                                                    },
-                                                                    "propertyAccess": null
-                                                                }
-                                                            ],
-                                                            "extraProperties": null
-                                                        },
-                                                        "typeName": {
-                                                            "name": "StreamedCompletion",
-                                                            "fernFilepath": {
-                                                                "allParts": [
-                                                                    "completions"
-                                                                ],
-                                                                "packagePath": [],
-                                                                "file": "completions"
-                                                            },
-                                                            "displayName": null,
-                                                            "typeId": "type_completions:StreamedCompletion"
-                                                        }
-                                                    },
-                                                    "jsonExample": {
-                                                        "delta": "delta",
-                                                        "tokens": 1
-                                                    }
-                                                },
-                                                "event": ""
-                                            }
-                                        ]
-                                    }
-                                },
-                                "docs": null
-                            }
-                        }
-                    ],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [],
                     "pagination": null,
                     "transport": null,
                     "v2Examples": null,
@@ -1077,12 +329,10 @@
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
-        "typesReferencedOnlyByService": {
-            "service_completions": [
-                "type_completions:StreamedCompletion"
-            ]
-        },
-        "sharedTypes": []
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_:StreamedCompletion"
+        ]
     },
     "webhookGroups": {},
     "websocketChannels": {},
@@ -1092,7 +342,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_completions:StreamedCompletion": {
+            "type_:StreamedCompletion": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1115,47 +365,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "completions",
-                                "camelCase": {
-                                    "unsafeName": "completions",
-                                    "safeName": "completions"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "completions",
-                                    "safeName": "completions"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "COMPLETIONS",
-                                    "safeName": "COMPLETIONS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Completions",
-                                    "safeName": "Completions"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "completions",
-                            "camelCase": {
-                                "unsafeName": "completions",
-                                "safeName": "completions"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "completions",
-                                "safeName": "completions"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "COMPLETIONS",
-                                "safeName": "COMPLETIONS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Completions",
-                                "safeName": "Completions"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -1215,8 +427,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "INTEGER"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "INTEGER"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -1303,22 +518,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "StreamCompletionRequest",
+                            "originalName": "CompletionsStreamRequest",
                             "camelCase": {
-                                "unsafeName": "streamCompletionRequest",
-                                "safeName": "streamCompletionRequest"
+                                "unsafeName": "completionsStreamRequest",
+                                "safeName": "completionsStreamRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "stream_completion_request",
-                                "safeName": "stream_completion_request"
+                                "unsafeName": "completions_stream_request",
+                                "safeName": "completions_stream_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "STREAM_COMPLETION_REQUEST",
-                                "safeName": "STREAM_COMPLETION_REQUEST"
+                                "unsafeName": "COMPLETIONS_STREAM_REQUEST",
+                                "safeName": "COMPLETIONS_STREAM_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "StreamCompletionRequest",
-                                "safeName": "StreamCompletionRequest"
+                                "unsafeName": "CompletionsStreamRequest",
+                                "safeName": "CompletionsStreamRequest"
                             }
                         },
                         "fernFilepath": {
@@ -1409,30 +624,30 @@
                     }
                 },
                 "response": {
-                    "type": "streaming"
+                    "type": "fileDownload"
                 },
                 "examples": null
             },
-            "endpoint_completions.streamWithoutTerminator": {
+            "endpoint_completions.streamwithoutterminator": {
                 "auth": null,
                 "declaration": {
                     "name": {
-                        "originalName": "streamWithoutTerminator",
+                        "originalName": "streamwithoutterminator",
                         "camelCase": {
-                            "unsafeName": "streamWithoutTerminator",
-                            "safeName": "streamWithoutTerminator"
+                            "unsafeName": "streamwithoutterminator",
+                            "safeName": "streamwithoutterminator"
                         },
                         "snakeCase": {
-                            "unsafeName": "stream_without_terminator",
-                            "safeName": "stream_without_terminator"
+                            "unsafeName": "streamwithoutterminator",
+                            "safeName": "streamwithoutterminator"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "STREAM_WITHOUT_TERMINATOR",
-                            "safeName": "STREAM_WITHOUT_TERMINATOR"
+                            "unsafeName": "STREAMWITHOUTTERMINATOR",
+                            "safeName": "STREAMWITHOUTTERMINATOR"
                         },
                         "pascalCase": {
-                            "unsafeName": "StreamWithoutTerminator",
-                            "safeName": "StreamWithoutTerminator"
+                            "unsafeName": "Streamwithoutterminator",
+                            "safeName": "Streamwithoutterminator"
                         }
                     },
                     "fernFilepath": {
@@ -1487,22 +702,22 @@
                     "type": "inlined",
                     "declaration": {
                         "name": {
-                            "originalName": "StreamCompletionRequestWithoutTerminator",
+                            "originalName": "CompletionsStreamWithoutTerminatorRequest",
                             "camelCase": {
-                                "unsafeName": "streamCompletionRequestWithoutTerminator",
-                                "safeName": "streamCompletionRequestWithoutTerminator"
+                                "unsafeName": "completionsStreamWithoutTerminatorRequest",
+                                "safeName": "completionsStreamWithoutTerminatorRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "stream_completion_request_without_terminator",
-                                "safeName": "stream_completion_request_without_terminator"
+                                "unsafeName": "completions_stream_without_terminator_request",
+                                "safeName": "completions_stream_without_terminator_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "STREAM_COMPLETION_REQUEST_WITHOUT_TERMINATOR",
-                                "safeName": "STREAM_COMPLETION_REQUEST_WITHOUT_TERMINATOR"
+                                "unsafeName": "COMPLETIONS_STREAM_WITHOUT_TERMINATOR_REQUEST",
+                                "safeName": "COMPLETIONS_STREAM_WITHOUT_TERMINATOR_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "StreamCompletionRequestWithoutTerminator",
-                                "safeName": "StreamCompletionRequestWithoutTerminator"
+                                "unsafeName": "CompletionsStreamWithoutTerminatorRequest",
+                                "safeName": "CompletionsStreamWithoutTerminatorRequest"
                             }
                         },
                         "fernFilepath": {
@@ -1593,7 +808,7 @@
                     }
                 },
                 "response": {
-                    "type": "streaming"
+                    "type": "fileDownload"
                 },
                 "examples": null
             }
@@ -1623,9 +838,7 @@
                 "file": "completions"
             },
             "service": "service_completions",
-            "types": [
-                "type_completions:StreamedCompletion"
-            ],
+            "types": [],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -1643,7 +856,9 @@
         },
         "websocket": null,
         "service": null,
-        "types": [],
+        "types": [
+            "type_:StreamedCompletion"
+        ],
         "errors": [],
         "subpackages": [
             "subpackage_completions"
@@ -1655,9 +870,9 @@
     },
     "sdkConfig": {
         "isAuthMandatory": false,
-        "hasStreamingEndpoints": true,
+        "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
-        "hasFileDownloadEndpoints": false,
+        "hasFileDownloadEndpoints": true,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

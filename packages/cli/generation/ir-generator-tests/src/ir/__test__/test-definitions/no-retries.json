@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "no-retries",
-    "apiDisplayName": null,
+    "apiName": "api",
+    "apiDisplayName": "no-retries",
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -13,19 +13,17 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_retries:User": {
+        "type_:User": {
             "inline": null,
             "name": {
                 "name": "User",
                 "fernFilepath": {
-                    "allParts": [
-                        "retries"
-                    ],
+                    "allParts": [],
                     "packagePath": [],
-                    "file": "retries"
+                    "file": null
                 },
                 "displayName": null,
-                "typeId": "type_retries:User"
+                "typeId": "type_:User"
             },
             "shape": {
                 "_type": "object",
@@ -105,7 +103,7 @@
             },
             "displayName": null,
             "basePath": {
-                "head": "/users",
+                "head": "",
                 "parts": []
             },
             "headers": [],
@@ -119,8 +117,8 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_retries.getUsers",
-                    "name": "getUsers",
+                    "id": "endpoint_retries.getusers",
+                    "name": "getusers",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -130,11 +128,11 @@
                     "method": "GET",
                     "basePath": null,
                     "path": {
-                        "head": "",
+                        "head": "/users",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/users",
+                        "head": "users",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -157,34 +155,161 @@
                                             "_type": "named",
                                             "name": "User",
                                             "fernFilepath": {
-                                                "allParts": [
-                                                    "retries"
-                                                ],
+                                                "allParts": [],
                                                 "packagePath": [],
-                                                "file": "retries"
+                                                "file": null
                                             },
                                             "displayName": null,
-                                            "typeId": "type_retries:User",
+                                            "typeId": "type_:User",
                                             "default": null,
                                             "inline": null
                                         }
                                     }
                                 },
-                                "docs": null,
+                                "docs": "",
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null,
+                        "status-code": 200,
                         "isWildcardStatusCode": null,
-                        "docs": null
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "8092e21e",
+                                "name": null,
+                                "url": "/users",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "list",
+                                                    "list": [
+                                                        {
+                                                            "shape": {
+                                                                "type": "named",
+                                                                "typeName": {
+                                                                    "typeId": "type_:User",
+                                                                    "fernFilepath": {
+                                                                        "allParts": [],
+                                                                        "packagePath": [],
+                                                                        "file": null
+                                                                    },
+                                                                    "name": "User",
+                                                                    "displayName": null
+                                                                },
+                                                                "shape": {
+                                                                    "type": "object",
+                                                                    "properties": [
+                                                                        {
+                                                                            "name": "id",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "id"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "id"
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:User",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "User",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        },
+                                                                        {
+                                                                            "name": "name",
+                                                                            "value": {
+                                                                                "shape": {
+                                                                                    "type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "type": "string",
+                                                                                        "string": {
+                                                                                            "original": "name"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": "name"
+                                                                            },
+                                                                            "originalTypeDeclaration": {
+                                                                                "typeId": "type_:User",
+                                                                                "fernFilepath": {
+                                                                                    "allParts": [],
+                                                                                    "packagePath": [],
+                                                                                    "file": null
+                                                                                },
+                                                                                "name": "User",
+                                                                                "displayName": null
+                                                                            },
+                                                                            "propertyAccess": null
+                                                                        }
+                                                                    ],
+                                                                    "extraProperties": null
+                                                                }
+                                                            },
+                                                            "jsonExample": {
+                                                                "id": "id",
+                                                                "name": "name"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "itemType": {
+                                                        "_type": "named",
+                                                        "name": "User",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_:User",
+                                                        "default": null,
+                                                        "inline": null
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": [
+                                                {
+                                                    "id": "id",
+                                                    "name": "name"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "b2ba5002",
+                                "id": "b4ac0cba",
                                 "url": "/users",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -215,14 +340,12 @@
                                                                             "originalTypeDeclaration": {
                                                                                 "name": "User",
                                                                                 "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "retries"
-                                                                                    ],
+                                                                                    "allParts": [],
                                                                                     "packagePath": [],
-                                                                                    "file": "retries"
+                                                                                    "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "typeId": "type_retries:User"
+                                                                                "typeId": "type_:User"
                                                                             },
                                                                             "value": {
                                                                                 "shape": {
@@ -243,14 +366,12 @@
                                                                             "originalTypeDeclaration": {
                                                                                 "name": "User",
                                                                                 "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "retries"
-                                                                                    ],
+                                                                                    "allParts": [],
                                                                                     "packagePath": [],
-                                                                                    "file": "retries"
+                                                                                    "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "typeId": "type_retries:User"
+                                                                                "typeId": "type_:User"
                                                                             },
                                                                             "value": {
                                                                                 "shape": {
@@ -272,14 +393,12 @@
                                                                 "typeName": {
                                                                     "name": "User",
                                                                     "fernFilepath": {
-                                                                        "allParts": [
-                                                                            "retries"
-                                                                        ],
+                                                                        "allParts": [],
                                                                         "packagePath": [],
-                                                                        "file": "retries"
+                                                                        "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "typeId": "type_retries:User"
+                                                                    "typeId": "type_:User"
                                                                 }
                                                             },
                                                             "jsonExample": {
@@ -298,14 +417,12 @@
                                                                             "originalTypeDeclaration": {
                                                                                 "name": "User",
                                                                                 "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "retries"
-                                                                                    ],
+                                                                                    "allParts": [],
                                                                                     "packagePath": [],
-                                                                                    "file": "retries"
+                                                                                    "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "typeId": "type_retries:User"
+                                                                                "typeId": "type_:User"
                                                                             },
                                                                             "value": {
                                                                                 "shape": {
@@ -326,14 +443,12 @@
                                                                             "originalTypeDeclaration": {
                                                                                 "name": "User",
                                                                                 "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "retries"
-                                                                                    ],
+                                                                                    "allParts": [],
                                                                                     "packagePath": [],
-                                                                                    "file": "retries"
+                                                                                    "file": null
                                                                                 },
                                                                                 "displayName": null,
-                                                                                "typeId": "type_retries:User"
+                                                                                "typeId": "type_:User"
                                                                             },
                                                                             "value": {
                                                                                 "shape": {
@@ -355,14 +470,12 @@
                                                                 "typeName": {
                                                                     "name": "User",
                                                                     "fernFilepath": {
-                                                                        "allParts": [
-                                                                            "retries"
-                                                                        ],
+                                                                        "allParts": [],
                                                                         "packagePath": [],
-                                                                        "file": "retries"
+                                                                        "file": null
                                                                     },
                                                                     "displayName": null,
-                                                                    "typeId": "type_retries:User"
+                                                                    "typeId": "type_:User"
                                                                 }
                                                             },
                                                             "jsonExample": {
@@ -375,14 +488,12 @@
                                                         "_type": "named",
                                                         "name": "User",
                                                         "fernFilepath": {
-                                                            "allParts": [
-                                                                "retries"
-                                                            ],
+                                                            "allParts": [],
                                                             "packagePath": [],
-                                                            "file": "retries"
+                                                            "file": null
                                                         },
                                                         "displayName": null,
-                                                        "typeId": "type_retries:User",
+                                                        "typeId": "type_:User",
                                                         "default": null,
                                                         "inline": null
                                                     }
@@ -410,9 +521,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
-                    "retries": {
-                        "disabled": true
-                    },
+                    "retries": null,
                     "apiPlayground": null,
                     "responseHeaders": [],
                     "availability": null,
@@ -435,7 +544,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_retries": [
-                "type_retries:User"
+                "type_:User"
             ]
         },
         "sharedTypes": []
@@ -448,7 +557,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_retries:User": {
+            "type_:User": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -471,47 +580,9 @@
                         }
                     },
                     "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "retries",
-                                "camelCase": {
-                                    "unsafeName": "retries",
-                                    "safeName": "retries"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "retries",
-                                    "safeName": "retries"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "RETRIES",
-                                    "safeName": "RETRIES"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Retries",
-                                    "safeName": "Retries"
-                                }
-                            }
-                        ],
+                        "allParts": [],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "retries",
-                            "camelCase": {
-                                "unsafeName": "retries",
-                                "safeName": "retries"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "retries",
-                                "safeName": "retries"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "RETRIES",
-                                "safeName": "RETRIES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Retries",
-                                "safeName": "Retries"
-                            }
-                        }
+                        "file": null
                     }
                 },
                 "properties": [
@@ -582,26 +653,26 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_retries.getUsers": {
+            "endpoint_retries.getusers": {
                 "auth": null,
                 "declaration": {
                     "name": {
-                        "originalName": "getUsers",
+                        "originalName": "getusers",
                         "camelCase": {
-                            "unsafeName": "getUsers",
-                            "safeName": "getUsers"
+                            "unsafeName": "getusers",
+                            "safeName": "getusers"
                         },
                         "snakeCase": {
-                            "unsafeName": "get_users",
-                            "safeName": "get_users"
+                            "unsafeName": "getusers",
+                            "safeName": "getusers"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "GET_USERS",
-                            "safeName": "GET_USERS"
+                            "unsafeName": "GETUSERS",
+                            "safeName": "GETUSERS"
                         },
                         "pascalCase": {
-                            "unsafeName": "GetUsers",
-                            "safeName": "GetUsers"
+                            "unsafeName": "Getusers",
+                            "safeName": "Getusers"
                         }
                     },
                     "fernFilepath": {
@@ -688,9 +759,7 @@
                 "file": "retries"
             },
             "service": "service_retries",
-            "types": [
-                "type_retries:User"
-            ],
+            "types": [],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -708,7 +777,9 @@
         },
         "websocket": null,
         "service": null,
-        "types": [],
+        "types": [
+            "type_:User"
+        ],
         "errors": [],
         "subpackages": [
             "subpackage_retries"

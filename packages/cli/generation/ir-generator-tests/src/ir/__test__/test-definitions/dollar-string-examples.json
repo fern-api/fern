@@ -2,8 +2,8 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "dollar-string-examples",
-    "apiDisplayName": null,
+    "apiName": "api",
+    "apiDisplayName": "dollar-string-examples",
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
@@ -78,13 +78,19 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "primitive",
-                                    "primitive": {
-                                        "v1": "STRING",
-                                        "v2": {
-                                            "type": "string",
-                                            "default": null,
-                                            "validation": null
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -133,287 +139,7 @@
             "type_:PaymentInfo"
         ]
     },
-    "webhookGroups": {
-        "webhooks_": [
-            {
-                "id": "webhooks_.paymentProcessed",
-                "displayName": "Payment Processed",
-                "method": "POST",
-                "name": "paymentProcessed",
-                "headers": [],
-                "payload": {
-                    "type": "reference",
-                    "payloadType": {
-                        "_type": "named",
-                        "name": "PaymentInfo",
-                        "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": [],
-                            "file": null
-                        },
-                        "displayName": null,
-                        "typeId": "type_:PaymentInfo",
-                        "default": null,
-                        "inline": null
-                    },
-                    "docs": null
-                },
-                "signatureVerification": null,
-                "fileUploadPayload": null,
-                "responses": null,
-                "examples": [
-                    {
-                        "name": "PaymentProcessedExample",
-                        "payload": {
-                            "shape": {
-                                "type": "named",
-                                "typeName": {
-                                    "typeId": "type_:PaymentInfo",
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "name": "PaymentInfo",
-                                    "displayName": null
-                                },
-                                "shape": {
-                                    "type": "object",
-                                    "properties": [
-                                        {
-                                            "name": "amount",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "string",
-                                                        "string": {
-                                                            "original": "$3.00"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "$3.00"
-                                            },
-                                            "originalTypeDeclaration": {
-                                                "typeId": "type_:PaymentInfo",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "name": "PaymentInfo",
-                                                "displayName": null
-                                            },
-                                            "propertyAccess": null
-                                        },
-                                        {
-                                            "name": "currency",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "string",
-                                                        "string": {
-                                                            "original": "USD"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "USD"
-                                            },
-                                            "originalTypeDeclaration": {
-                                                "typeId": "type_:PaymentInfo",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "name": "PaymentInfo",
-                                                "displayName": null
-                                            },
-                                            "propertyAccess": null
-                                        },
-                                        {
-                                            "name": "description",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "container",
-                                                    "container": {
-                                                        "type": "optional",
-                                                        "optional": {
-                                                            "shape": {
-                                                                "type": "primitive",
-                                                                "primitive": {
-                                                                    "type": "string",
-                                                                    "string": {
-                                                                        "original": "Payment for order #12345"
-                                                                    }
-                                                                }
-                                                            },
-                                                            "jsonExample": "Payment for order #12345"
-                                                        },
-                                                        "valueType": {
-                                                            "_type": "primitive",
-                                                            "primitive": {
-                                                                "v1": "STRING",
-                                                                "v2": {
-                                                                    "type": "string",
-                                                                    "default": null,
-                                                                    "validation": null
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "Payment for order #12345"
-                                            },
-                                            "originalTypeDeclaration": {
-                                                "typeId": "type_:PaymentInfo",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "name": "PaymentInfo",
-                                                "displayName": null
-                                            },
-                                            "propertyAccess": null
-                                        }
-                                    ],
-                                    "extraProperties": null
-                                }
-                            },
-                            "jsonExample": {
-                                "amount": "$3.00",
-                                "currency": "USD",
-                                "description": "Payment for order #12345"
-                            }
-                        },
-                        "docs": "Triggered when a payment is processed.\nThis webhook tests that dollar sign values like \"$3.00\" are treated as literal strings,\nnot as example references."
-                    },
-                    {
-                        "name": "PaymentProcessedWithLargeAmount",
-                        "payload": {
-                            "shape": {
-                                "type": "named",
-                                "typeName": {
-                                    "typeId": "type_:PaymentInfo",
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "name": "PaymentInfo",
-                                    "displayName": null
-                                },
-                                "shape": {
-                                    "type": "object",
-                                    "properties": [
-                                        {
-                                            "name": "amount",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "string",
-                                                        "string": {
-                                                            "original": "$1,234.56"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "$1,234.56"
-                                            },
-                                            "originalTypeDeclaration": {
-                                                "typeId": "type_:PaymentInfo",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "name": "PaymentInfo",
-                                                "displayName": null
-                                            },
-                                            "propertyAccess": null
-                                        },
-                                        {
-                                            "name": "currency",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "primitive",
-                                                    "primitive": {
-                                                        "type": "string",
-                                                        "string": {
-                                                            "original": "USD"
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": "USD"
-                                            },
-                                            "originalTypeDeclaration": {
-                                                "typeId": "type_:PaymentInfo",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "name": "PaymentInfo",
-                                                "displayName": null
-                                            },
-                                            "propertyAccess": null
-                                        },
-                                        {
-                                            "name": "description",
-                                            "value": {
-                                                "shape": {
-                                                    "type": "container",
-                                                    "container": {
-                                                        "type": "optional",
-                                                        "optional": null,
-                                                        "valueType": {
-                                                            "_type": "primitive",
-                                                            "primitive": {
-                                                                "v1": "STRING",
-                                                                "v2": {
-                                                                    "type": "string",
-                                                                    "default": null,
-                                                                    "validation": null
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                },
-                                                "jsonExample": null
-                                            },
-                                            "originalTypeDeclaration": {
-                                                "typeId": "type_:PaymentInfo",
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "name": "PaymentInfo",
-                                                "displayName": null
-                                            },
-                                            "propertyAccess": null
-                                        }
-                                    ],
-                                    "extraProperties": null
-                                }
-                            },
-                            "jsonExample": {
-                                "amount": "$1,234.56",
-                                "currency": "USD",
-                                "description": null
-                            }
-                        },
-                        "docs": "Triggered when a payment is processed.\nThis webhook tests that dollar sign values like \"$3.00\" are treated as literal strings,\nnot as example references."
-                    }
-                ],
-                "v2Examples": null,
-                "availability": null,
-                "docs": "Triggered when a payment is processed.\nThis webhook tests that dollar sign values like \"$3.00\" are treated as literal strings,\nnot as example references."
-            }
-        ]
-    },
+    "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
     "sourceConfig": null,
@@ -536,8 +262,11 @@
                         "typeReference": {
                             "type": "optional",
                             "value": {
-                                "type": "primitive",
-                                "value": "STRING"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
                             }
                         },
                         "propertyAccess": null,
@@ -577,7 +306,7 @@
         ],
         "errors": [],
         "subpackages": [],
-        "webhooks": "webhooks_",
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
         "docs": null
