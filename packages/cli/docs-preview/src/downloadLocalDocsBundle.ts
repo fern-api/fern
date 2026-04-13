@@ -447,7 +447,7 @@ export async function downloadBundle({
                         );
                         if (pnpmWorkspaceExists) {
                             const content = (await readFile(pnpmWorkspacePath)).toString();
-                            const updatedContent = content.replace(/^trustPolicy:.*$/gm, "");
+                            const updatedContent = content.replace(/^trustPolicy:.*$(?:\n(?=[ \t]).*$)*/gm, "");
                             await writeFile(pnpmWorkspacePath, updatedContent);
                         }
                         try {
