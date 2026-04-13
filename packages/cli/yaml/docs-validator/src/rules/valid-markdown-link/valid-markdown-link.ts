@@ -19,7 +19,7 @@ const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
-    create: async ({ workspace, apiWorkspaces, ossWorkspaces }) => {
+    create: async ({ workspace, apiWorkspaces, ossWorkspaces, logger }) => {
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
@@ -40,9 +40,10 @@ export const ValidMarkdownLinks: Rule = {
         let resolvedDocsDefinition;
         try {
             resolvedDocsDefinition = await docsDefinitionResolver.resolve();
-        } catch {
+        } catch (error) {
             // Docs workspace may lack navigation/versions (e.g. minimal docs.yml).
             // Nothing to validate in that case, so return an empty visitor.
+            logger.debug(`Skipping broken link validation: docs definition could not be resolved. ${error}`);
             return {};
         }
 
