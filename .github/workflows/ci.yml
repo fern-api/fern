@@ -237,8 +237,14 @@ jobs:
         run: |
           # Pull images in parallel to warm the Docker cache before tests run.
           # This prevents Docker pull time from eating into individual test timeouts.
+          #
+          # v1 fixture images (packages/cli/ete-tests/src/tests/generate/fixtures/):
           docker pull fernapi/fern-pydantic-model:1.11.2 &
           docker pull fernapi/fern-typescript-sdk:2.3.2 &
+          docker pull fernapi/fern-typescript-sdk:3.60.9 &
+          # v2 fixture images (packages/cli/ete-tests/src/tests/v2/fixtures/):
+          docker pull fernapi/fern-python-sdk:4.50.1 &
+          docker pull fernapi/fern-go-sdk:1.30.0 &
           wait
 
       - name: Run ETE tests
