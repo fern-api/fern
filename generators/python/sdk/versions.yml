@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+# For unreleased changes, use unreleased.yml
+- version: 5.4.0
+  changelogEntry:
+    - summary: |
+        Support omitting username or password from basic auth when configured via
+        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
+        the SDK's public API and treated as empty strings internally (e.g., omitting
+        password encodes `username:`, omitting username encodes `:password`). When
+        both are omitted, the Authorization header is skipped entirely.
+      type: feat
+  createdAt: "2026-04-09"
+  irVersion: 65
+
 - version: 5.3.13
   changelogEntry:
     - summary: |
@@ -11,17 +24,34 @@
       type: fix
   createdAt: "2026-04-13"
   irVersion: 65
-# For unreleased changes, use unreleased.yml
-- version: 5.4.0
+
+- version: 5.3.12
   changelogEntry:
     - summary: |
-        Support omitting username or password from basic auth when configured via
-        `usernameOmit` or `passwordOmit` in the IR. Omitted fields are removed from
-        the SDK's public API and treated as empty strings internally (e.g., omitting
-        password encodes `username:`, omitting username encodes `:password`). When
-        both are omitted, the Authorization header is skipped entirely.
-      type: feat
-  createdAt: "2026-04-09"
+        Bump generator-cli to 0.9.7 which upgrades @fern-api/replay to 0.10.4.
+      type: chore
+  createdAt: "2026-04-12"
+  irVersion: 65
+
+- version: 5.3.11
+  changelogEntry:
+    - summary: |
+        Fix duplicate keyword arguments in generated code for discriminated union
+        request bodies with stream condition properties. When a union variant inherits
+        the stream condition field from a base schema via extends, the property was
+        emitted twice — once from the union's base properties and once from the
+        variant's extended properties — causing SyntaxError in generated Python code.
+      type: fix
+    - summary: |
+        Escape triple quotes in docstrings to prevent premature docstring termination
+        when OpenAPI descriptions contain Python code examples with triple-quoted strings.
+      type: fix
+    - summary: |
+        Fix mypy call-overload errors in exported client wrapper by mirroring the
+        base client's @overload signatures and using **kwargs pass-through, instead
+        of suppressing the error with a type: ignore comment.
+      type: fix
+  createdAt: "2026-04-10"
   irVersion: 65
 
 - version: 5.3.10
