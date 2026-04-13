@@ -59,27 +59,6 @@ export class DynamicTypeMapper extends WithGeneration {
     }
 
     convertToClassReference(named: FernIr.dynamic.NamedType, typeId?: string): ast.ClassReference {
-        // When inline types are enabled and this type is inline, nest it inside
-        // the parent type's `Types` static class: ParentType.Types.InlineTypeName
-        if (typeId != null && this.context.isInlineType(typeId)) {
-            const parentTypeId = this.context.getInlineTypeParent(typeId);
-            if (parentTypeId != null) {
-                const parentNamedType = this.context.ir.types[parentTypeId];
-                if (parentNamedType != null) {
-                    const parentClassRef = this.convertToClassReference(parentNamedType, parentTypeId);
-                    const typesClassName = this.context.getInlineTypesClassName(parentTypeId);
-                    const typesClassRef = this.csharp.classReference({
-                        name: typesClassName,
-                        enclosingType: parentClassRef
-                    });
-                    return this.csharp.classReference({
-                        origin: named.declaration,
-                        enclosingType: typesClassRef
-                    });
-                }
-            }
-        }
-
         return this.csharp.classReference({
             origin: named.declaration,
             namespace: this.context.getNamespace(named.declaration.fernFilepath)

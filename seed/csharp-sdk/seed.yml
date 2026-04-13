@@ -395,6 +395,7 @@ fixtures:
     - customConfig:
         enable-inline-types: true
       outputFolder: inline-types
+      disableDynamicSnippetTests: true
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
