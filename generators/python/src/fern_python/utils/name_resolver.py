@@ -10,9 +10,10 @@ import keyword
 import re
 from typing import Union
 
-import fern.ir.resources as ir_types
 from .pascal_case import pascal_case as to_pascal
 from .snake_case import snake_case as to_snake
+
+import fern.ir.resources as ir_types
 
 _DIGIT_SPLIT = re.compile(r"(\d+)")
 
