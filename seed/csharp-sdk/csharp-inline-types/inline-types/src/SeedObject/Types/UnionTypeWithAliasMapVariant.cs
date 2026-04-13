@@ -38,9 +38,6 @@ public record UnionTypeWithAliasMapVariant
     /// </summary>
     public object? Value { get; internal set; }
 
-    [JsonPropertyName("prop")]
-    public required AliasPropertyType Prop { get; set; }
-
     /// <summary>
     /// Returns true if <see cref="Type"/> is "aliasVariant"
     /// </summary>
@@ -99,15 +96,9 @@ public record UnionTypeWithAliasMapVariant
 
     public override string ToString() => JsonUtils.Serialize(this);
 
-    /// <summary>
-    /// Base properties for the discriminated union
-    /// </summary>
-    [Serializable]
-    internal record BaseProperties
-    {
-        [JsonPropertyName("prop")]
-        public required AliasPropertyType Prop { get; set; }
-    }
+    public static implicit operator UnionTypeWithAliasMapVariant(
+        UnionTypeWithAliasMapVariant.AliasVariant value
+    ) => new(value);
 
     [Serializable]
     internal sealed class JsonConverter : JsonConverter<UnionTypeWithAliasMapVariant>
@@ -151,15 +142,7 @@ public record UnionTypeWithAliasMapVariant
                     ),
                 _ => json.Deserialize<object?>(options),
             };
-            var baseProperties =
-                json.Deserialize<UnionTypeWithAliasMapVariant.BaseProperties>(options)
-                ?? throw new JsonException(
-                    "Failed to deserialize UnionTypeWithAliasMapVariant.BaseProperties"
-                );
-            return new UnionTypeWithAliasMapVariant(discriminator, value)
-            {
-                Prop = baseProperties.Prop,
-            };
+            return new UnionTypeWithAliasMapVariant(discriminator, value);
         }
 
         public override void Write(
@@ -178,18 +161,6 @@ public record UnionTypeWithAliasMapVariant
                     _ => JsonSerializer.SerializeToNode(value.Value, options),
                 } ?? new JsonObject();
             json["type"] = value.Type;
-            var basePropertiesJson =
-                JsonSerializer.SerializeToNode(
-                    new UnionTypeWithAliasMapVariant.BaseProperties { Prop = value.Prop },
-                    options
-                )
-                ?? throw new JsonException(
-                    "Failed to serialize UnionTypeWithAliasMapVariant.BaseProperties"
-                );
-            foreach (var property in basePropertiesJson.AsObject())
-            {
-                json[property.Key] = property.Value;
-            }
             json.WriteTo(writer, options);
         }
     }

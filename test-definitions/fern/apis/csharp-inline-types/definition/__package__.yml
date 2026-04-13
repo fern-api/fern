@@ -363,27 +363,19 @@ types:
         docs: lorem ipsum
 
   UnionTypeWithAliasVariant:
-    base-properties:
-      prop: AliasProperty
     union:
       aliasVariant: AliasVariant
       nonAliasVariant: NonAliasVariant
 
   UnionTypeWithAliasMapVariant:
-    base-properties:
-      prop: AliasProperty
     union:
       aliasVariant: map<AliasVariant, OtherAliasVariant>
 
   UnionTypeWithAliasListVariant:
-    base-properties:
-      prop: AliasProperty
     union:
       aliasVariant: list<AliasVariant>
 
   UnionTypeWithAliasSetVariant:
-    base-properties:
-      prop: AliasProperty
     union:
       aliasVariant: set<AliasVariant>
 
