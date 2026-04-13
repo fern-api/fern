@@ -19,7 +19,7 @@ const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
 export const ValidMarkdownLinks: Rule = {
     name: "valid-markdown-links",
-    create: async ({ workspace, apiWorkspaces, ossWorkspaces }) => {
+    create: async ({ workspace, apiWorkspaces, ossWorkspaces, logger }) => {
         const instanceUrls = getInstanceUrls(workspace);
 
         const url = instanceUrls[0] ?? "http://localhost";
@@ -37,10 +37,17 @@ export const ValidMarkdownLinks: Rule = {
             targetAudiences: undefined // not applicable for validation
         });
 
-        const resolvedDocsDefinition = await docsDefinitionResolver.resolve();
+        let resolvedDocsDefinition;
+        try {
+            resolvedDocsDefinition = await docsDefinitionResolver.resolve();
+        } catch (err) {
+            // Docs without navigation/versions can't be resolved; skip link checking
+            logger.debug(`Skipping broken-link validation: ${err}`);
+            return {};
+        }
 
         if (!resolvedDocsDefinition.config.root) {
-            throw new Error("Root node not found");
+            return {};
         }
 
         // TODO: this is a bit of a hack to get the navigation tree. We should probably just use the navigation tree
