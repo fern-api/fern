@@ -6,6 +6,7 @@ Similarly, NameAndWireValue fields may be compressed (NameAndWireValueOrString =
 These helpers safely access properties regardless of whether the value is compressed.
 """
 
+import functools
 import keyword
 import re
 from typing import Union
@@ -52,11 +53,8 @@ def _make_safe(name: str) -> str:
     return name
 
 
-def resolve_name(name_or_str: Union[str, ir_types.Name]) -> ir_types.Name:
-    """Resolve a NameOrString to a full Name object with all casings."""
-    if isinstance(name_or_str, ir_types.Name):
-        return name_or_str
-    s = name_or_str
+@functools.lru_cache(maxsize=None)
+def _resolve_string_name(s: str) -> ir_types.Name:
     snake = _smart_snake(s)
     pascal = to_pascal(s)
     camel = _to_camel(s)
@@ -68,6 +66,18 @@ def resolve_name(name_or_str: Union[str, ir_types.Name]) -> ir_types.Name:
         snake_case=ir_types.SafeAndUnsafeString(safe_name=_make_safe(snake), unsafe_name=snake),
         screaming_snake_case=ir_types.SafeAndUnsafeString(safe_name=_make_safe(screaming), unsafe_name=screaming),
     )
+
+
+def resolve_name(name_or_str: Union[str, ir_types.Name]) -> ir_types.Name:
+    """Resolve a NameOrString to a full Name object with all casings.
+
+    Hot path in generators: property names ("id", "name", etc.) repeat many
+    times across an API, so cache string-input results — Name is frozen and
+    safe to share.
+    """
+    if isinstance(name_or_str, ir_types.Name):
+        return name_or_str
+    return _resolve_string_name(name_or_str)
 
 
 def get_wire_value(name_and_wire_value_or_str: Union[str, ir_types.NameAndWireValue]) -> str:
