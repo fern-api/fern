@@ -5,6 +5,7 @@
 # Each directory contains .jsonl files with one JSON object per line:
 #   {"type":"docs","spec":"combined","duration_seconds":21.3,"exit_code":0}
 # duration_seconds may be a float (sub-second precision) or integer.
+# When iterations > 1, duration_seconds is the median and all_durations has per-run values.
 #
 # The baseline-results-dir may contain either:
 #   - Flat .jsonl files (single baseline)
@@ -120,17 +121,32 @@ for PR_FILE in "${PR_DIR}"/*.jsonl; do
       MAIN_DISPLAY="N/A"
     fi
 
+    ITERATIONS=$(echo "$LINE" | jq -r '.iterations // 1')
+    ALL_DURATIONS_RAW=$(echo "$LINE" | jq -r '.all_durations // empty | map(tostring + "s") | join(", ")' 2>/dev/null || true)
+
     PR_DISPLAY="${PR_DURATION}s"
+    if [ "$ITERATIONS" != "1" ] && [ "$ITERATIONS" != "null" ] && [ -n "$ITERATIONS" ]; then
+      PR_DISPLAY="${PR_DURATION}s (median of ${ITERATIONS})"
+    fi
     if [ "$PR_EXIT" != "0" ] && [ "$PR_EXIT" != "null" ]; then
       PR_DISPLAY="${PR_DURATION}s (exit ${PR_EXIT})"
     fi
 
     echo "| docs | ${MAIN_DISPLAY} | ${PR_DISPLAY} | ${DELTA} |"
+
+    # Collect individual iteration durations if available
+    if [ -n "$ALL_DURATIONS_RAW" ] && [ "$ITERATIONS" != "1" ]; then
+      ITER_DETAIL="_Individual runs: ${ALL_DURATIONS_RAW}_"
+    fi
   done < "$PR_FILE"
 done
 
 echo ""
-echo "_Docs generation runs \`fern generate --docs --preview\` end-to-end against the benchmark fixture (includes markdown processing, OpenAPI-to-IR conversion, and FDR upload)._"
+if [ -n "${ITER_DETAIL:-}" ]; then
+  echo "$ITER_DETAIL"
+  echo ""
+fi
+echo "_Docs generation runs \`fern generate --docs --preview\` end-to-end against the benchmark fixture (includes markdown processing, OpenAPI-to-IR conversion, and FDR upload). Result is the **median of ${ITERATIONS:-1} iterations** to reduce network I/O variance._"
 echo "_Delta is computed against the nightly baseline on \`main\`._"
 if [ -n "${BASELINE_TIMESTAMP:-}" ]; then
   echo "_Baseline from nightly run(s) on \`main\` (latest: ${BASELINE_TIMESTAMP}). Trigger [benchmark-baseline](../actions/workflows/benchmark-baseline.yml) to refresh._"

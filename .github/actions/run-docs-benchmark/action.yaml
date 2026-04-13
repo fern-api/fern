@@ -51,34 +51,53 @@ runs:
           exit 0
         fi
 
-        echo "::group::Benchmarking docs generation (${SPECS_FOUND} API spec(s))"
+        ITERATIONS=3
+        echo "::group::Benchmarking docs generation (${SPECS_FOUND} API spec(s), ${ITERATIONS} iterations → median)"
 
-        # Use sub-second precision timing (date +%s.%N) since the benchmark
-        # runs ~20-40s and 1-second granularity adds ~5% noise floor.
-        START_TIME=$(date +%s.%N)
-        EXIT_CODE=0
+        DURATIONS=()
+        LAST_EXIT_CODE=0
 
-        # Run the actual docs generation command with --preview for safety.
-        # --preview creates an ephemeral preview deployment, never touches production.
-        # --id ensures repeated runs overwrite the same preview URL.
-        # --no-prompt skips interactive confirmation prompts in CI.
-        # FERN_CWD tells the CLI which project directory to use (avoids fragile `cd`).
-        FERN_CWD="${GITHUB_WORKSPACE}/benchmarks/fern" \
-        node --enable-source-maps "${GITHUB_WORKSPACE}/packages/cli/cli/dist/prod/cli.cjs" \
-          generate --docs --preview --id benchmark-run --no-prompt \
-          2>&1 || EXIT_CODE=$?
+        for ITER in $(seq 1 "$ITERATIONS"); do
+          echo "--- Iteration ${ITER}/${ITERATIONS} ---"
 
-        END_TIME=$(date +%s.%N)
-        DURATION=$(awk "BEGIN {printf \"%.1f\", ${END_TIME} - ${START_TIME}}")
+          # Use sub-second precision timing (date +%s.%N) since the benchmark
+          # runs ~20-40s and 1-second granularity adds ~5% noise floor.
+          START_TIME=$(date +%s.%N)
+          EXIT_CODE=0
 
-        if [ "$EXIT_CODE" -ne 0 ]; then
-          echo "::warning::Docs benchmark exited with code ${EXIT_CODE} after ${DURATION}s"
-        fi
+          # Run the actual docs generation command with --preview for safety.
+          # --preview creates an ephemeral preview deployment, never touches production.
+          # --id ensures repeated runs overwrite the same preview URL.
+          # --no-prompt skips interactive confirmation prompts in CI.
+          # FERN_CWD tells the CLI which project directory to use (avoids fragile `cd`).
+          FERN_CWD="${GITHUB_WORKSPACE}/benchmarks/fern" \
+          node --enable-source-maps "${GITHUB_WORKSPACE}/packages/cli/cli/dist/prod/cli.cjs" \
+            generate --docs --preview --id benchmark-run --no-prompt \
+            2>&1 || EXIT_CODE=$?
 
-        echo "Benchmark: docs (${SPECS_FOUND} specs) = ${DURATION}s (exit ${EXIT_CODE})"
+          END_TIME=$(date +%s.%N)
+          DURATION=$(awk "BEGIN {printf \"%.1f\", ${END_TIME} - ${START_TIME}}")
 
-        # Write result as JSON. duration_seconds is a float for sub-second precision.
-        echo "{\"type\":\"docs\",\"spec\":\"combined\",\"specs_count\":${SPECS_FOUND},\"duration_seconds\":${DURATION},\"exit_code\":${EXIT_CODE}}" \
+          if [ "$EXIT_CODE" -ne 0 ]; then
+            echo "::warning::Iteration ${ITER}: exited with code ${EXIT_CODE} after ${DURATION}s"
+            LAST_EXIT_CODE=$EXIT_CODE
+          fi
+
+          echo "Iteration ${ITER}: ${DURATION}s (exit ${EXIT_CODE})"
+          DURATIONS+=("$DURATION")
+        done
+
+        # Compute median of all iterations
+        MEDIAN=$(printf '%s\n' "${DURATIONS[@]}" | sort -n | awk '{a[NR]=$1} END {
+          if (NR%2==1) { printf "%.1f\n", a[(NR+1)/2] }
+          else { printf "%.1f\n", (a[NR/2] + a[NR/2+1]) / 2 }
+        }')
+
+        ALL_DURATIONS=$(printf '%s, ' "${DURATIONS[@]}" | sed 's/, $//')
+        echo "All durations: [${ALL_DURATIONS}] → median: ${MEDIAN}s"
+
+        # Write result as JSON. duration_seconds is the median across iterations.
+        echo "{\"type\":\"docs\",\"spec\":\"combined\",\"specs_count\":${SPECS_FOUND},\"duration_seconds\":${MEDIAN},\"iterations\":${ITERATIONS},\"all_durations\":[${ALL_DURATIONS}],\"exit_code\":${LAST_EXIT_CODE}}" \
           >> "${RESULTS_DIR}/docs.jsonl"
 
         echo "::endgroup::"
