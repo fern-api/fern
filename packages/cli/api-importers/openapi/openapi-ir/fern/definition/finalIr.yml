@@ -150,6 +150,7 @@ types:
   WebsocketMessageSchema:
     properties:
       name: string
+      displayName: optional<string>
       origin: WebsocketMessageOrigin
       body: Schema
       methodName: optional<string>

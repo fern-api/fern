@@ -152,6 +152,11 @@ class FernAwarePydanticModel:
         # Get the type id we're checking cycles against (either this model's type or the original type for union members)
         type_id_to_reference = self._type_id_for_forward_ref()
 
+        # Types used as base classes (extends) must have their imports at the top of the file.
+        # Python needs the actual class object at class definition time for base classes,
+        # so we must not add deferred ghost references for them.
+        extended_type_ids = {ext.type_id for ext in self._extends}
+
         # Get all types that are in a mutual reference cycle with the field's type
         # This handles complex cycles like A -> Union1 -> Union2 -> B -> A
         types_in_cycle = self._context.get_types_in_cycle_with(type_id)
@@ -161,6 +166,9 @@ class FernAwarePydanticModel:
                 continue
             # Skip if we've already added this as a forward reference
             if dependency in self._forward_referenced_models:
+                continue
+            # Skip base classes — their imports must remain at the top of the file
+            if dependency in extended_type_ids:
                 continue
 
             import dataclasses
@@ -180,8 +188,10 @@ class FernAwarePydanticModel:
         )
         for dependency in self_referencing_dependencies_from_non_union_types:
             if (
-                not self._type_name or self._type_name.type_id != dependency
-            ) and dependency not in self._forward_referenced_models:
+                (not self._type_name or self._type_name.type_id != dependency)
+                and dependency not in self._forward_referenced_models
+                and dependency not in extended_type_ids
+            ):
                 self.add_ghost_reference(dependency)
 
     def add_private_instance_field_unsafe(

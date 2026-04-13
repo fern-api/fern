@@ -6,6 +6,9 @@ export default defineConfig(
             // ETE tests spawn heavy child processes (Node CLI, Docker containers).
             // Limit parallelism to avoid resource contention on CI runners.
             maxConcurrency: 5,
+            // Retry failed tests in CI to handle transient Docker/network issues
+            // that cause intermittent timeouts.
+            retry: process.env.CI ? 2 : 0,
             poolOptions: {
                 threads: {
                     maxThreads: 3
