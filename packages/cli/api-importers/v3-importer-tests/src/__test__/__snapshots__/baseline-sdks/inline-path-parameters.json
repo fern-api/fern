@@ -1421,10 +1421,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_organizations:SearchRequestAccess"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

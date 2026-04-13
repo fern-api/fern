@@ -710,10 +710,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:GetExampleResponseMessage"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

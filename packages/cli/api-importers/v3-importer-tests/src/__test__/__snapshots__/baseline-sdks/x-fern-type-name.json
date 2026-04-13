@@ -962,12 +962,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:Object Example",
-      "type_:Enum Example",
-      "type_:AnyOf Example"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

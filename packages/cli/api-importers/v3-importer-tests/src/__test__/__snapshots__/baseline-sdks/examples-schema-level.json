@@ -1961,10 +1961,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:TreeCreateLocation"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

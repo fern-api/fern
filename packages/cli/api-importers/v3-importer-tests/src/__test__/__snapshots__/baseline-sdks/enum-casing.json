@@ -591,10 +591,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:ExampleResponseStatus"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

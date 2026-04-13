@@ -662,12 +662,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:PostTestOneOfDisplayNameRequestFieldsItemId",
-      "type_:PostTestOneOfDisplayNameRequestFieldsItemName",
-      "type_:PostTestOneOfDisplayNameRequestFieldsItem"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

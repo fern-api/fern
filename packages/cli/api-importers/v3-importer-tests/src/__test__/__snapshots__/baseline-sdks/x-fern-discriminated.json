@@ -792,11 +792,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:CircleType",
-      "type_:SquareType"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

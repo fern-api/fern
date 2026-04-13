@@ -679,11 +679,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:PaymentRequestAmount",
-      "type_:PaymentResponseAmount"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

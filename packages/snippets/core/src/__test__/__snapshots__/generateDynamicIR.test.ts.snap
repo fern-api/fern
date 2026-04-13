@@ -51,7 +51,6 @@ exports[`generateDynamicIR > go 1`] = `
   "environments": undefined,
   "generatorConfig": undefined,
   "headers": [],
-  "inlineTypes": undefined,
   "pathParameters": [],
   "types": {
     "type_:GetTestDataResponse": {

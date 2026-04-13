@@ -802,11 +802,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:NotFound",
-      "type_:GetExampleResponseMessage"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

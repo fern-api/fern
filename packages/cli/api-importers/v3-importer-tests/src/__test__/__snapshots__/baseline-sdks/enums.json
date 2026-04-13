@@ -1212,10 +1212,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:OpenEndedStatusZero"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

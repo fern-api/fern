@@ -605,11 +605,7 @@
     },
     "headers": [],
     "endpoints": {},
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:TriangleType",
-      "type_:SquareType"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

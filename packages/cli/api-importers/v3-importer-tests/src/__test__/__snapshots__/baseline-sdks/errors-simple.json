@@ -753,10 +753,7 @@
         ],
         "type": "singleBaseUrl"
       }
-    },
-    "inlineTypes": [
-      "type_:ErrorStatus"
-    ]
+    }
   },
   "apiPlayground": true,
   "casingsConfig": {

@@ -2587,11 +2587,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:CreateSucculentsRequestSucculentsItem",
-      "type_:TreeCreateLocation"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

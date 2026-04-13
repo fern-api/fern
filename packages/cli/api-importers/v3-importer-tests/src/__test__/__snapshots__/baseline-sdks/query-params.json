@@ -1221,11 +1221,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:SearchRequestFilterLocationCoordinates",
-      "type_:SearchRequestFilterLocation"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

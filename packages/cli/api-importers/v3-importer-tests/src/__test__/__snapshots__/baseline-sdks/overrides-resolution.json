@@ -1710,10 +1710,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:UserStatsAccountStatus"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

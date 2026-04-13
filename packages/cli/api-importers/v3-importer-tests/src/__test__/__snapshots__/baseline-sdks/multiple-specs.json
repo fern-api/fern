@@ -842,10 +842,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:UploadWithContentTypeRequestData"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

@@ -3030,14 +3030,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_petowners:PetownersSubscribeParamsChannel",
-      "type_petowners:PetownersSubscribeParamsData",
-      "type_petowners:PetownersSubscribeParams",
-      "type_:PetStatus",
-      "type_:OrderStatus"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

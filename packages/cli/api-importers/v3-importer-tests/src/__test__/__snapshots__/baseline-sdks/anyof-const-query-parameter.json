@@ -793,10 +793,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_link:BulkTriggerHistoricalPullRequestTeamIdOne"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {

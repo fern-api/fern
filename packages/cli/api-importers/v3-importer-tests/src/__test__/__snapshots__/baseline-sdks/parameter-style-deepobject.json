@@ -888,10 +888,7 @@
         "examples": []
       }
     },
-    "pathParameters": [],
-    "inlineTypes": [
-      "type_:ListItemsRequestFilterStatus"
-    ]
+    "pathParameters": []
   },
   "apiPlayground": true,
   "casingsConfig": {
