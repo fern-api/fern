@@ -5,17 +5,21 @@ package client
 import (
 	context "context"
 
-	client "github.com/folders/fern/a/client"
+	ab "github.com/folders/fern/ab"
+	ac "github.com/folders/fern/ac"
 	core "github.com/folders/fern/core"
-	folderclient "github.com/folders/fern/folder/client"
+	folder "github.com/folders/fern/folder"
+	folderservice "github.com/folders/fern/folderservice"
 	internal "github.com/folders/fern/internal"
 	option "github.com/folders/fern/option"
 )
 
 type Client struct {
 	WithRawResponse *RawClient
-	A               *client.Client
-	Folder          *folderclient.Client
+	Ab              *ab.Client
+	Ac              *ac.Client
+	Folder          *folder.Client
+	FolderService   *folderservice.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -25,8 +29,10 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		A:               client.NewClient(options),
-		Folder:          folderclient.NewClient(options),
+		Ab:              ab.NewClient(options),
+		Ac:              ac.NewClient(options),
+		Folder:          folder.NewClient(options),
+		FolderService:   folderservice.NewClient(options),
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,

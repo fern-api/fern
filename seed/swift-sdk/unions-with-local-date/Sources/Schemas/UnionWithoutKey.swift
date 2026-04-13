@@ -1,41 +1,30 @@
 import Foundation
 
 public enum UnionWithoutKey: Codable, Hashable, Sendable {
-    /// This is a bar field.
-    case bar(Bar)
-    case foo(Foo)
+    case unionWithoutKeyOne(UnionWithoutKeyOne)
+    case unionWithoutKeyZero(UnionWithoutKeyZero)
 
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
-        switch discriminant {
-        case "bar":
-            self = .bar(try Bar(from: decoder))
-        case "foo":
-            self = .foo(try Foo(from: decoder))
-        default:
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
-                    codingPath: decoder.codingPath,
-                    debugDescription: "Unknown shape discriminant value: \(discriminant)"
-                )
+        let container = try decoder.singleValueContainer()
+        if let value = try? container.decode(UnionWithoutKeyOne.self) {
+            self = .unionWithoutKeyOne(value)
+        } else if let value = try? container.decode(UnionWithoutKeyZero.self) {
+            self = .unionWithoutKeyZero(value)
+        } else {
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Unexpected value."
             )
         }
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         switch self {
-        case .bar(let data):
-            try container.encode("bar", forKey: .type)
-            try data.encode(to: encoder)
-        case .foo(let data):
-            try container.encode("foo", forKey: .type)
-            try data.encode(to: encoder)
+        case .unionWithoutKeyOne(let value):
+            try container.encode(value)
+        case .unionWithoutKeyZero(let value):
+            try container.encode(value)
         }
-    }
-
-    enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
     }
 }

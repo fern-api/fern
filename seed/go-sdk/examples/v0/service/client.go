@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetMovie(
+func (c *Client) Getmovie(
 	ctx context.Context,
 	movieID fern.MovieID,
 	opts ...option.RequestOption,
 ) (*fern.Movie, error) {
-	response, err := c.WithRawResponse.GetMovie(
+	response, err := c.WithRawResponse.Getmovie(
 		ctx,
 		movieID,
 		opts...,
@@ -49,12 +49,12 @@ func (c *Client) GetMovie(
 	return response.Body, nil
 }
 
-func (c *Client) CreateMovie(
+func (c *Client) Createmovie(
 	ctx context.Context,
 	request *fern.Movie,
 	opts ...option.RequestOption,
 ) (fern.MovieID, error) {
-	response, err := c.WithRawResponse.CreateMovie(
+	response, err := c.WithRawResponse.Createmovie(
 		ctx,
 		request,
 		opts...,
@@ -65,12 +65,12 @@ func (c *Client) CreateMovie(
 	return response.Body, nil
 }
 
-func (c *Client) GetMetadata(
+func (c *Client) Getmetadata(
 	ctx context.Context,
-	request *fern.GetMetadataRequest,
+	request *fern.ServiceGetMetadataRequest,
 	opts ...option.RequestOption,
 ) (*fern.Metadata, error) {
-	response, err := c.WithRawResponse.GetMetadata(
+	response, err := c.WithRawResponse.Getmetadata(
 		ctx,
 		request,
 		opts...,
@@ -81,12 +81,12 @@ func (c *Client) GetMetadata(
 	return response.Body, nil
 }
 
-func (c *Client) CreateBigEntity(
+func (c *Client) Createbigentity(
 	ctx context.Context,
 	request *fern.BigEntity,
 	opts ...option.RequestOption,
 ) (*fern.Response, error) {
-	response, err := c.WithRawResponse.CreateBigEntity(
+	response, err := c.WithRawResponse.Createbigentity(
 		ctx,
 		request,
 		opts...,
@@ -97,12 +97,12 @@ func (c *Client) CreateBigEntity(
 	return response.Body, nil
 }
 
-func (c *Client) RefreshToken(
+func (c *Client) Refreshtoken(
 	ctx context.Context,
 	request *fern.RefreshTokenRequest,
 	opts ...option.RequestOption,
 ) error {
-	_, err := c.WithRawResponse.RefreshToken(
+	_, err := c.WithRawResponse.Refreshtoken(
 		ctx,
 		request,
 		opts...,

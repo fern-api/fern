@@ -1,6 +1,6 @@
 from .conftest import get_client, verify_request_count
 
-from seed import StreamXFernStreamingUnionRequest_Message, StreamXFernStreamingUnionStreamRequest_Message
+from seed import StreamXFernStreamingUnionRequest_Message
 
 
 def test__stream_protocol_no_collision() -> None:

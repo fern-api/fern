@@ -12,7 +12,6 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Usage](#usage)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
-- [Oauth Token Override](#oauth-token-override)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -35,18 +34,18 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedOauthClientCredentials
+from seed import SeedApi
 
-client = SeedOauthClientCredentials(
-    client_id="<clientId>",
-    client_secret="<clientSecret>",
+client = SeedApi(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.get_token_with_client_credentials(
-    client_id="my_oauth_app_123",
-    client_secret="sk_live_abcdef123456789",
-    scope="read:users",
+client.auth.gettokenwithclientcredentials(
+    client_id="client_id",
+    client_secret="client_secret",
+    audience="https://api.example.com",
+    grant_type="client_credentials",
 )
 ```
 
@@ -57,20 +56,20 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedOauthClientCredentials
+from seed import AsyncSeedApi
 
-client = AsyncSeedOauthClientCredentials(
-    client_id="<clientId>",
-    client_secret="<clientSecret>",
+client = AsyncSeedApi(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.auth.get_token_with_client_credentials(
-        client_id="my_oauth_app_123",
-        client_secret="sk_live_abcdef123456789",
-        scope="read:users",
+    await client.auth.gettokenwithclientcredentials(
+        client_id="client_id",
+        client_secret="client_secret",
+        audience="https://api.example.com",
+        grant_type="client_credentials",
     )
 
 
@@ -86,31 +85,10 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.auth.get_token_with_client_credentials(...)
+    client.auth.gettokenwithclientcredentials(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
-```
-
-## Oauth Token Override
-
-This SDK supports two authentication methods: OAuth client credentials flow (automatic token management) or direct bearer token authentication. You can choose between these options when initializing the client:
-
-```python
-from seed import SeedOauthClientCredentials
-
-# Option 1: Direct bearer token (bypass OAuth flow)
-client = SeedOauthClientCredentials(
-    ...,
-    token="my-pre-generated-bearer-token",
-)
-
-# Option 2: OAuth client credentials flow (automatic token management)
-client = SeedOauthClientCredentials(
-    ...,
-    client_id="your-client-id",
-    client_secret="your-client-secret",
-)
 ```
 
 ## Advanced
@@ -121,10 +99,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedOauthClientCredentials
+from seed import SeedApi
 
-client = SeedOauthClientCredentials(...)
-response = client.auth.with_raw_response.get_token_with_client_credentials(...)
+client = SeedApi(...)
+response = client.auth.with_raw_response.gettokenwithclientcredentials(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -145,7 +123,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.auth.get_token_with_client_credentials(..., request_options={
+client.auth.gettokenwithclientcredentials(..., request_options={
     "max_retries": 1
 })
 ```
@@ -155,12 +133,12 @@ client.auth.get_token_with_client_credentials(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedOauthClientCredentials
+from seed import SeedApi
 
-client = SeedOauthClientCredentials(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.auth.get_token_with_client_credentials(..., request_options={
+client.auth.gettokenwithclientcredentials(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -172,9 +150,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedOauthClientCredentials
+from seed import SeedApi
 
-client = SeedOauthClientCredentials(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

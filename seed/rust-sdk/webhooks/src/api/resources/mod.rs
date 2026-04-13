@@ -4,11 +4,11 @@
 
 use crate::{ApiError, ClientConfig};
 
-pub struct WebhooksClient {
+pub struct ApiClient {
     pub config: ClientConfig,
 }
 
-impl WebhooksClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

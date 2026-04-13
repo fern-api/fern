@@ -55,39 +55,41 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.nullableOptional.SeedNullableOptionalClient;
-import com.seed.nullableOptional.core.OptionalNullable;
-import com.seed.nullableOptional.resources.nullableoptional.types.Address;
-import com.seed.nullableOptional.resources.nullableoptional.types.CreateUserRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.OptionalNullable;
+import com.seed.api.resources.nullableoptional.requests.CreateUserRequest;
+import com.seed.api.types.Address;
 
 public class Example {
     public static void main(String[] args) {
-        SeedNullableOptionalClient client = SeedNullableOptionalClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .build();
 
-        client.nullableOptional().createUser(
+        client.nullableoptional().createuser(
             CreateUserRequest
                 .builder()
                 .username("username")
-                .address(
-                    OptionalNullable.of(
-                        Address
-                            .builder()
-                            .street("street")
-                            .zipCode("zipCode")
-                            .country(
-                                OptionalNullable.of("country")
-                            )
-                            .city("city")
-                            .state("state")
-                            .buildingId("buildingId")
-                            .tenantId("tenantId")
-                            .build()
-                    )
+                .phone(
+                    OptionalNullable.of("phone")
                 )
                 .email("email")
-                .phone("phone")
+                .address(
+                    Address
+                        .builder()
+                        .street("street")
+                        .state(
+                            OptionalNullable.of("state")
+                        )
+                        .zipCode("zipCode")
+                        .country(
+                            OptionalNullable.of("country")
+                        )
+                        .city("city")
+                        .buildingId("buildingId")
+                        .tenantId("tenantId")
+                        .build()
+                )
                 .build()
         );
     }
@@ -102,7 +104,7 @@ For PATCH requests, the SDK uses `OptionalNullable<T>` to handle three-state nul
 - **PRESENT**: Field has a non-null value
 
 ```java
-import com.seed.nullableOptional.core.OptionalNullable;
+import com.seed.api.core.OptionalNullable;
 
 UpdateRequest request = UpdateRequest.builder()
     .fieldName(OptionalNullable.absent())    // Skip field
@@ -121,9 +123,9 @@ UpdateRequest request = UpdateRequest.builder()
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.nullableOptional.SeedNullableOptionalClient;
+import com.seed.api.SeedApiClient;
 
-SeedNullableOptionalClient client = SeedNullableOptionalClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -134,11 +136,11 @@ SeedNullableOptionalClient client = SeedNullableOptionalClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.nullableOptional.core.SeedNullableOptionalApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.nullableOptional().createUser(...);
-} catch (SeedNullableOptionalApiException e){
+    client.nullableoptional().createuser(...);
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -151,12 +153,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.nullableOptional.SeedNullableOptionalClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedNullableOptionalClient client = SeedNullableOptionalClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -179,9 +181,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.nullableOptional.SeedNullableOptionalClient;
+import com.seed.api.SeedApiClient;
 
-SeedNullableOptionalClient client = SeedNullableOptionalClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -191,17 +193,17 @@ SeedNullableOptionalClient client = SeedNullableOptionalClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.nullableOptional.SeedNullableOptionalClient;
-import com.seed.nullableOptional.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedNullableOptionalClient client = SeedNullableOptionalClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.nullableOptional().createUser(
+client.nullableoptional().createuser(
     ...,
     RequestOptions
         .builder()
@@ -215,11 +217,11 @@ client.nullableOptional().createUser(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.nullableOptional.SeedNullableOptionalClient;
-import com.seed.nullableOptional.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedNullableOptionalClient client = SeedNullableOptionalClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -227,7 +229,7 @@ SeedNullableOptionalClient client = SeedNullableOptionalClient
 ;
 
 // Request level
-client.nullableOptional().createUser(
+client.nullableoptional().createuser(
     ...,
     RequestOptions
         .builder()
@@ -243,7 +245,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedNullableOptionalHttpResponse response = client.nullableOptional().withRawResponse().createUser(...);
+SeedApiHttpResponse response = client.nullableoptional().withRawResponse().createuser(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

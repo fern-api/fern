@@ -6,15 +6,19 @@ paths:
   /api/users/{userId}:
     get:
       description: Get a user by ID
-      operationId: nullableOptional_getUser
+      operationId: nullableoptional_getuser
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters:
         - name: userId
           in: path
           required: true
           schema:
             type: string
+          example: userId
+          examples:
+            Example1:
+              value: userId
       responses:
         '200':
           description: ''
@@ -22,17 +26,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserResponse'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    username: username
+                    email: email
+                    phone: phone
+                    createdAt: '2024-01-15T09:30:00Z'
+                    updatedAt: '2024-01-15T09:30:00Z'
+                    address:
+                      street: street
+                      city: city
+                      state: state
+                      zipCode: zipCode
+                      country: country
+                      buildingId: buildingId
+                      tenantId: tenantId
     patch:
       description: Update a user (partial update)
-      operationId: nullableOptional_updateUser
+      operationId: nullableoptional_updateuser
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters:
         - name: userId
           in: path
           required: true
           schema:
             type: string
+          example: userId
+          examples:
+            Example1:
+              value: userId
       responses:
         '200':
           description: ''
@@ -40,37 +65,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserResponse'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    username: username
+                    email: email
+                    phone: phone
+                    createdAt: '2024-01-15T09:30:00Z'
+                    updatedAt: '2024-01-15T09:30:00Z'
+                    address:
+                      street: street
+                      city: city
+                      state: state
+                      zipCode: zipCode
+                      country: country
+                      buildingId: buildingId
+                      tenantId: tenantId
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateUserRequest'
+              type: object
+              properties:
+                username:
+                  type: string
+                  nullable: true
+                email:
+                  type: string
+                  nullable: true
+                phone:
+                  type: string
+                  nullable: true
+                address:
+                  $ref: '#/components/schemas/Address'
+                  nullable: true
+            examples:
+              Example1:
+                value: {}
   /api/users:
-    post:
-      description: Create a new user
-      operationId: nullableOptional_createUser
-      tags:
-        - NullableOptional
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateUserRequest'
     get:
       description: List all users
-      operationId: nullableOptional_listUsers
+      operationId: nullableoptional_listusers
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters:
         - name: limit
           in: query
@@ -105,24 +144,105 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UserResponse'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      username: username
+                      email: email
+                      phone: phone
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      address:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+    post:
+      description: Create a new user
+      operationId: nullableoptional_createuser
+      tags:
+        - Nullableoptional
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    username: username
+                    email: email
+                    phone: phone
+                    createdAt: '2024-01-15T09:30:00Z'
+                    updatedAt: '2024-01-15T09:30:00Z'
+                    address:
+                      street: street
+                      city: city
+                      state: state
+                      zipCode: zipCode
+                      country: country
+                      buildingId: buildingId
+                      tenantId: tenantId
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: username
+                email:
+                  type: string
+                  nullable: true
+                phone:
+                  type: string
+                  nullable: true
+                address:
+                  $ref: '#/components/schemas/Address'
+                  nullable: true
+              required:
+                - username
+                - email
+            examples:
+              Example1:
+                value:
+                  username: username
   /api/users/search:
     get:
       description: Search users
-      operationId: nullableOptional_searchUsers
+      operationId: nullableoptional_searchusers
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters:
         - name: query
           in: query
           required: true
           schema:
             type: string
+          example: query
+          examples:
+            Example1:
+              value: query
         - name: department
           in: query
           required: true
           schema:
             type: string
             nullable: true
+          example: department
+          examples:
+            Example1:
+              value: department
         - name: role
           in: query
           required: false
@@ -144,12 +264,29 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UserResponse'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      username: username
+                      email: email
+                      phone: phone
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      address:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
   /api/profiles/complex:
     post:
       description: Create a complex profile to test nullable enums and unions
-      operationId: nullableOptional_createComplexProfile
+      operationId: nullableoptional_createcomplexprofile
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters: []
       responses:
         '200':
@@ -158,24 +295,124 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ComplexProfile'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    nullableRole: ADMIN
+                    optionalRole: ADMIN
+                    optionalNullableRole: ADMIN
+                    nullableStatus: active
+                    optionalStatus: active
+                    optionalNullableStatus: active
+                    nullableNotification:
+                      emailAddress: emailAddress
+                      subject: subject
+                      htmlContent: htmlContent
+                      type: email
+                    optionalNotification:
+                      emailAddress: emailAddress
+                      subject: subject
+                      htmlContent: htmlContent
+                      type: email
+                    optionalNullableNotification:
+                      emailAddress: emailAddress
+                      subject: subject
+                      htmlContent: htmlContent
+                      type: email
+                    nullableSearchResult:
+                      id: id
+                      username: username
+                      email: email
+                      phone: phone
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      address:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                      type: user
+                    optionalSearchResult:
+                      id: id
+                      username: username
+                      email: email
+                      phone: phone
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      address:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                      type: user
+                    nullableArray:
+                      - nullableArray
+                    optionalArray:
+                      - optionalArray
+                    optionalNullableArray:
+                      - optionalNullableArray
+                    nullableListOfNullables:
+                      - nullableListOfNullables
+                    nullableMapOfNullables:
+                      key:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                    nullableListOfUnions:
+                      - emailAddress: emailAddress
+                        subject: subject
+                        htmlContent: htmlContent
+                        type: email
+                    optionalMapOfEnums:
+                      key: ADMIN
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ComplexProfile'
+            examples:
+              Example1:
+                value:
+                  id: id
+                  nullableRole: ADMIN
+                  nullableStatus: active
+                  nullableNotification:
+                    emailAddress: emailAddress
+                    subject: subject
+                    type: email
+                  nullableSearchResult:
+                    id: id
+                    username: username
+                    createdAt: '2024-01-15T09:30:00Z'
+                    type: user
   /api/profiles/complex/{profileId}:
     get:
       description: Get a complex profile by ID
-      operationId: nullableOptional_getComplexProfile
+      operationId: nullableoptional_getcomplexprofile
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters:
         - name: profileId
           in: path
           required: true
           schema:
             type: string
+          example: profileId
+          examples:
+            Example1:
+              value: profileId
       responses:
         '200':
           description: ''
@@ -183,17 +420,102 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ComplexProfile'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    nullableRole: ADMIN
+                    optionalRole: ADMIN
+                    optionalNullableRole: ADMIN
+                    nullableStatus: active
+                    optionalStatus: active
+                    optionalNullableStatus: active
+                    nullableNotification:
+                      emailAddress: emailAddress
+                      subject: subject
+                      htmlContent: htmlContent
+                      type: email
+                    optionalNotification:
+                      emailAddress: emailAddress
+                      subject: subject
+                      htmlContent: htmlContent
+                      type: email
+                    optionalNullableNotification:
+                      emailAddress: emailAddress
+                      subject: subject
+                      htmlContent: htmlContent
+                      type: email
+                    nullableSearchResult:
+                      id: id
+                      username: username
+                      email: email
+                      phone: phone
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      address:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                      type: user
+                    optionalSearchResult:
+                      id: id
+                      username: username
+                      email: email
+                      phone: phone
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      address:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                      type: user
+                    nullableArray:
+                      - nullableArray
+                    optionalArray:
+                      - optionalArray
+                    optionalNullableArray:
+                      - optionalNullableArray
+                    nullableListOfNullables:
+                      - nullableListOfNullables
+                    nullableMapOfNullables:
+                      key:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                    nullableListOfUnions:
+                      - emailAddress: emailAddress
+                        subject: subject
+                        htmlContent: htmlContent
+                        type: email
+                    optionalMapOfEnums:
+                      key: ADMIN
     patch:
       description: Update complex profile to test nullable field updates
-      operationId: nullableOptional_updateComplexProfile
+      operationId: nullableoptional_updatecomplexprofile
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters:
         - name: profileId
           in: path
           required: true
           schema:
             type: string
+          example: profileId
+          examples:
+            Example1:
+              value: profileId
       responses:
         '200':
           description: ''
@@ -201,6 +523,87 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ComplexProfile'
+              examples:
+                Example1:
+                  value:
+                    id: id
+                    nullableRole: ADMIN
+                    optionalRole: ADMIN
+                    optionalNullableRole: ADMIN
+                    nullableStatus: active
+                    optionalStatus: active
+                    optionalNullableStatus: active
+                    nullableNotification:
+                      emailAddress: emailAddress
+                      subject: subject
+                      htmlContent: htmlContent
+                      type: email
+                    optionalNotification:
+                      emailAddress: emailAddress
+                      subject: subject
+                      htmlContent: htmlContent
+                      type: email
+                    optionalNullableNotification:
+                      emailAddress: emailAddress
+                      subject: subject
+                      htmlContent: htmlContent
+                      type: email
+                    nullableSearchResult:
+                      id: id
+                      username: username
+                      email: email
+                      phone: phone
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      address:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                      type: user
+                    optionalSearchResult:
+                      id: id
+                      username: username
+                      email: email
+                      phone: phone
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      address:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                      type: user
+                    nullableArray:
+                      - nullableArray
+                    optionalArray:
+                      - optionalArray
+                    optionalNullableArray:
+                      - optionalNullableArray
+                    nullableListOfNullables:
+                      - nullableListOfNullables
+                    nullableMapOfNullables:
+                      key:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                    nullableListOfUnions:
+                      - emailAddress: emailAddress
+                        subject: subject
+                        htmlContent: htmlContent
+                        type: email
+                    optionalMapOfEnums:
+                      key: ADMIN
       requestBody:
         required: true
         content:
@@ -225,12 +628,15 @@ paths:
                   items:
                     type: string
                   nullable: true
+            examples:
+              Example1:
+                value: {}
   /api/test/deserialization:
     post:
       description: Test endpoint for validating null deserialization
-      operationId: nullableOptional_testDeserialization
+      operationId: nullableoptional_testdeserialization
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters: []
       responses:
         '200':
@@ -239,25 +645,86 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeserializationTestResponse'
+              examples:
+                Example1:
+                  value:
+                    echo:
+                      requiredString: requiredString
+                      nullableString: nullableString
+                      optionalString: optionalString
+                      optionalNullableString: optionalNullableString
+                      nullableEnum: ADMIN
+                      optionalEnum: active
+                      nullableUnion:
+                        emailAddress: emailAddress
+                        subject: subject
+                        htmlContent: htmlContent
+                        type: email
+                      optionalUnion:
+                        id: id
+                        username: username
+                        email: email
+                        phone: phone
+                        createdAt: '2024-01-15T09:30:00Z'
+                        updatedAt: '2024-01-15T09:30:00Z'
+                        address:
+                          street: street
+                          zipCode: zipCode
+                        type: user
+                      nullableList:
+                        - nullableList
+                      nullableMap:
+                        key: 1
+                      nullableObject:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                      optionalObject:
+                        id: id
+                        name: name
+                        domain: domain
+                        employeeCount: 1
+                    processedAt: '2024-01-15T09:30:00Z'
+                    nullCount: 1
+                    presentFieldsCount: 1
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/DeserializationTestRequest'
+            examples:
+              Example1:
+                value:
+                  requiredString: requiredString
+                  nullableEnum: ADMIN
+                  nullableUnion:
+                    emailAddress: emailAddress
+                    subject: subject
+                    type: email
+                  nullableObject:
+                    street: street
+                    zipCode: zipCode
   /api/users/filter:
     get:
       description: Filter users by role with nullable enum
-      operationId: nullableOptional_filterByRole
+      operationId: nullableoptional_filterbyrole
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters:
         - name: role
           in: query
           required: true
           schema:
             $ref: '#/components/schemas/UserRole'
-            nullable: true
+          example: ADMIN
+          examples:
+            Example1:
+              value: ADMIN
         - name: status
           in: query
           required: false
@@ -279,18 +746,39 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UserResponse'
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      username: username
+                      email: email
+                      phone: phone
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      address:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
   /api/users/{userId}/notifications:
     get:
       description: Get notification settings which may be null
-      operationId: nullableOptional_getNotificationSettings
+      operationId: nullableoptional_getnotificationsettings
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters:
         - name: userId
           in: path
           required: true
           schema:
             type: string
+          example: userId
+          examples:
+            Example1:
+              value: userId
       responses:
         '200':
           description: Nullable notification method or empty for no preference
@@ -298,19 +786,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotificationMethod'
-                nullable: true
+              examples:
+                Example1:
+                  value:
+                    emailAddress: emailAddress
+                    subject: subject
+                    htmlContent: htmlContent
+                    type: email
   /api/users/{userId}/tags:
     put:
       description: Update tags to test array handling
-      operationId: nullableOptional_updateTags
+      operationId: nullableoptional_updatetags
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters:
         - name: userId
           in: path
           required: true
           schema:
             type: string
+          example: userId
+          examples:
+            Example1:
+              value: userId
       responses:
         '200':
           description: Updated tags
@@ -320,6 +818,10 @@ paths:
                 type: array
                 items:
                   type: string
+              examples:
+                Example1:
+                  value:
+                    - string
       requestBody:
         required: true
         content:
@@ -344,12 +846,15 @@ paths:
                   nullable: true
               required:
                 - tags
+            examples:
+              Example1:
+                value: {}
   /api/search:
     post:
       description: Get search results with nullable unions
-      operationId: nullableOptional_getSearchResults
+      operationId: nullableoptional_getsearchresults
       tags:
-        - NullableOptional
+        - Nullableoptional
       parameters: []
       responses:
         '200':
@@ -361,6 +866,24 @@ paths:
                 items:
                   $ref: '#/components/schemas/SearchResult'
                 nullable: true
+              examples:
+                Example1:
+                  value:
+                    - id: id
+                      username: username
+                      email: email
+                      phone: phone
+                      createdAt: '2024-01-15T09:30:00Z'
+                      updatedAt: '2024-01-15T09:30:00Z'
+                      address:
+                        street: street
+                        city: city
+                        state: state
+                        zipCode: zipCode
+                        country: country
+                        buildingId: buildingId
+                        tenantId: tenantId
+                      type: user
       requestBody:
         required: true
         content:
@@ -370,6 +893,7 @@ paths:
               properties:
                 query:
                   type: string
+                  example: query
                 filters:
                   type: object
                   additionalProperties:
@@ -384,6 +908,10 @@ paths:
               required:
                 - query
                 - includeTypes
+            examples:
+              Example1:
+                value:
+                  query: query
 components:
   schemas:
     NullableUserId:
@@ -420,7 +948,6 @@ components:
           nullable: true
         nullableObject:
           $ref: '#/components/schemas/Address'
-          nullable: true
         nullableList:
           type: array
           items:
@@ -430,6 +957,7 @@ components:
           type: object
           additionalProperties:
             type: string
+            nullable: true
           nullable: true
         optionalString:
           type: string
@@ -456,6 +984,7 @@ components:
           type: object
           additionalProperties:
             type: string
+            nullable: true
           nullable: true
         optionalNullableString:
           type: string
@@ -493,49 +1022,16 @@ components:
           nullable: true
         buildingId:
           $ref: '#/components/schemas/NullableUserId'
+          nullable: true
         tenantId:
           $ref: '#/components/schemas/OptionalUserId'
+          nullable: true
       required:
         - street
         - city
         - zipCode
         - buildingId
         - tenantId
-    CreateUserRequest:
-      title: CreateUserRequest
-      type: object
-      properties:
-        username:
-          type: string
-        email:
-          type: string
-          nullable: true
-        phone:
-          type: string
-          nullable: true
-        address:
-          $ref: '#/components/schemas/Address'
-          nullable: true
-      required:
-        - username
-        - email
-    UpdateUserRequest:
-      title: UpdateUserRequest
-      type: object
-      description: For testing PATCH operations
-      properties:
-        username:
-          type: string
-          nullable: true
-        email:
-          type: string
-          nullable: true
-        phone:
-          type: string
-          nullable: true
-        address:
-          $ref: '#/components/schemas/Address'
-          nullable: true
     UserRole:
       title: UserRole
       type: string
@@ -554,42 +1050,57 @@ components:
         - suspended
         - deleted
       description: Test enum with values for optional enum fields
+    NotificationMethodZeroType:
+      title: NotificationMethodZeroType
+      type: string
+      enum:
+        - email
+    NotificationMethodZero:
+      title: NotificationMethodZero
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NotificationMethodZeroType'
+      required:
+        - type
+      allOf:
+        - $ref: '#/components/schemas/EmailNotification'
+    NotificationMethodOneType:
+      title: NotificationMethodOneType
+      type: string
+      enum:
+        - sms
+    NotificationMethodOne:
+      title: NotificationMethodOne
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NotificationMethodOneType'
+      required:
+        - type
+      allOf:
+        - $ref: '#/components/schemas/SmsNotification'
+    NotificationMethodTwoType:
+      title: NotificationMethodTwoType
+      type: string
+      enum:
+        - push
+    NotificationMethodTwo:
+      title: NotificationMethodTwo
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NotificationMethodTwoType'
+      required:
+        - type
+      allOf:
+        - $ref: '#/components/schemas/PushNotification'
     NotificationMethod:
       title: NotificationMethod
       oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - email
-            - $ref: '#/components/schemas/EmailNotification'
-          required:
-            - type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - sms
-            - $ref: '#/components/schemas/SmsNotification'
-          required:
-            - type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - push
-            - $ref: '#/components/schemas/PushNotification'
-          required:
-            - type
+        - $ref: '#/components/schemas/NotificationMethodZero'
+        - $ref: '#/components/schemas/NotificationMethodOne'
+        - $ref: '#/components/schemas/NotificationMethodTwo'
       description: Discriminated union for testing nullable unions
     EmailNotification:
       title: EmailNotification
@@ -636,42 +1147,57 @@ components:
         - deviceToken
         - title
         - body
+    SearchResultZeroType:
+      title: SearchResultZeroType
+      type: string
+      enum:
+        - user
+    SearchResultZero:
+      title: SearchResultZero
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/SearchResultZeroType'
+      required:
+        - type
+      allOf:
+        - $ref: '#/components/schemas/UserResponse'
+    SearchResultOneType:
+      title: SearchResultOneType
+      type: string
+      enum:
+        - organization
+    SearchResultOne:
+      title: SearchResultOne
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/SearchResultOneType'
+      required:
+        - type
+      allOf:
+        - $ref: '#/components/schemas/Organization'
+    SearchResultTwoType:
+      title: SearchResultTwoType
+      type: string
+      enum:
+        - document
+    SearchResultTwo:
+      title: SearchResultTwo
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/SearchResultTwoType'
+      required:
+        - type
+      allOf:
+        - $ref: '#/components/schemas/Document'
     SearchResult:
       title: SearchResult
       oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - user
-            - $ref: '#/components/schemas/UserResponse'
-          required:
-            - type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - organization
-            - $ref: '#/components/schemas/Organization'
-          required:
-            - type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - document
-            - $ref: '#/components/schemas/Document'
-          required:
-            - type
+        - $ref: '#/components/schemas/SearchResultZero'
+        - $ref: '#/components/schemas/SearchResultOne'
+        - $ref: '#/components/schemas/SearchResultTwo'
       description: Undiscriminated union for testing
     Organization:
       title: Organization
@@ -721,9 +1247,9 @@ components:
       properties:
         id:
           type: string
+          example: id
         nullableRole:
           $ref: '#/components/schemas/UserRole'
-          nullable: true
         optionalRole:
           $ref: '#/components/schemas/UserRole'
           nullable: true
@@ -732,7 +1258,6 @@ components:
           nullable: true
         nullableStatus:
           $ref: '#/components/schemas/UserStatus'
-          nullable: true
         optionalStatus:
           $ref: '#/components/schemas/UserStatus'
           nullable: true
@@ -741,7 +1266,6 @@ components:
           nullable: true
         nullableNotification:
           $ref: '#/components/schemas/NotificationMethod'
-          nullable: true
         optionalNotification:
           $ref: '#/components/schemas/NotificationMethod'
           nullable: true
@@ -750,7 +1274,6 @@ components:
           nullable: true
         nullableSearchResult:
           $ref: '#/components/schemas/SearchResult'
-          nullable: true
         optionalSearchResult:
           $ref: '#/components/schemas/SearchResult'
           nullable: true
@@ -790,6 +1313,7 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/UserRole'
+            nullable: true
           nullable: true
       required:
         - id
@@ -808,6 +1332,7 @@ components:
       properties:
         requiredString:
           type: string
+          example: requiredString
         nullableString:
           type: string
           nullable: true
@@ -819,13 +1344,11 @@ components:
           nullable: true
         nullableEnum:
           $ref: '#/components/schemas/UserRole'
-          nullable: true
         optionalEnum:
           $ref: '#/components/schemas/UserStatus'
           nullable: true
         nullableUnion:
           $ref: '#/components/schemas/NotificationMethod'
-          nullable: true
         optionalUnion:
           $ref: '#/components/schemas/SearchResult'
           nullable: true
@@ -838,10 +1361,10 @@ components:
           type: object
           additionalProperties:
             type: integer
+            nullable: true
           nullable: true
         nullableObject:
           $ref: '#/components/schemas/Address'
-          nullable: true
         optionalObject:
           $ref: '#/components/schemas/Organization'
           nullable: true
@@ -863,10 +1386,13 @@ components:
         processedAt:
           type: string
           format: date-time
+          example: '2024-01-15T09:30:00Z'
         nullCount:
           type: integer
+          example: 1
         presentFieldsCount:
           type: integer
+          example: 1
       required:
         - echo
         - processedAt
@@ -878,8 +1404,10 @@ components:
       properties:
         id:
           type: string
+          example: id
         username:
           type: string
+          example: username
         email:
           type: string
           nullable: true
@@ -889,6 +1417,7 @@ components:
         createdAt:
           type: string
           format: date-time
+          example: '2024-01-15T09:30:00Z'
         updatedAt:
           type: string
           format: date-time

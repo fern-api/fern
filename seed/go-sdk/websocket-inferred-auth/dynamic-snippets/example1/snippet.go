@@ -13,26 +13,20 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithXAPIKey(
-            "X-Api-Key",
-        ),
-        option.WithClientID(
-            "client_id",
-        ),
-        option.WithClientSecret(
-            "client_secret",
+        option.WithAPIKey(
+            "<X-Api-Key>",
         ),
     )
-    request := &fern.RefreshTokenRequest{
-        XAPIKey: "X-Api-Key",
+    request := &fern.AuthGetTokenWithClientCredentialsRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
-        RefreshToken: "refresh_token",
+        Audience: fern.AuthGetTokenWithClientCredentialsRequestAudienceHttpsApiExampleCom,
+        GrantType: fern.AuthGetTokenWithClientCredentialsRequestGrantTypeClientCredentials,
         Scope: fern.String(
             "scope",
         ),
     }
-    client.Auth.RefreshToken(
+    client.Auth.Gettokenwithclientcredentials(
         context.TODO(),
         request,
     )

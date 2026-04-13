@@ -71,9 +71,9 @@ func (r *RawClient) Upload(
 	}, nil
 }
 
-func (r *RawClient) UploadWithQueryParams(
+func (r *RawClient) Uploadwithqueryparams(
 	ctx context.Context,
-	request *fern.UploadWithQueryParamsRequest,
+	request *fern.ServiceUploadWithQueryParamsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)

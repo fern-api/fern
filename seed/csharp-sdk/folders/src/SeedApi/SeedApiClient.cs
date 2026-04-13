@@ -1,6 +1,4 @@
-using SeedApi.A;
 using SeedApi.Core;
-using SeedApi.Folder;
 
 namespace SeedApi;
 
@@ -28,13 +26,19 @@ public partial class SeedApiClient : ISeedApiClient
             }
         }
         _client = new RawClient(clientOptions);
-        A = new AClient(_client);
+        Ab = new AbClient(_client);
+        Ac = new AcClient(_client);
         Folder = new FolderClient(_client);
+        FolderService = new FolderServiceClient(_client);
     }
 
-    public IAClient A { get; }
+    public IAbClient Ab { get; }
+
+    public IAcClient Ac { get; }
 
     public IFolderClient Folder { get; }
+
+    public IFolderServiceClient FolderService { get; }
 
     /// <example><code>
     /// await client.FooAsync();

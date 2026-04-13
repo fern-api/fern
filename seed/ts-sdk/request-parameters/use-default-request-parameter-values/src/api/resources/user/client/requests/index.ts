@@ -1,3 +1,4 @@
-export type { CreateUsernameReferencedRequest } from "./CreateUsernameReferencedRequest.js";
-export type { CreateUsernameRequest } from "./CreateUsernameRequest.js";
-export type { GetUsersRequest } from "./GetUsersRequest.js";
+export type { CreateUsernameBody } from "./CreateUsernameBody.js";
+export type { CreateUsernameBodyOptionalProperties } from "./CreateUsernameBodyOptionalProperties.js";
+export type { UserCreateUsernameRequest } from "./UserCreateUsernameRequest.js";
+export type { UserGetUsernameRequest } from "./UserGetUsernameRequest.js";

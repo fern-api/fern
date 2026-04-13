@@ -1,8 +1,8 @@
 {
   "mappings": [
     {
-      "id": "14572309-eec3-4bd8-87b8-bb10500952b8",
-      "name": "createMovie - default",
+      "id": "bbd12186-1934-40aa-a44a-c9068752dbb2",
+      "name": "createmovie - default",
       "request": {
         "urlPathTemplate": "/movies/create-movie",
         "method": "POST"
@@ -14,7 +14,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "14572309-eec3-4bd8-87b8-bb10500952b8",
+      "uuid": "bbd12186-1934-40aa-a44a-c9068752dbb2",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -27,8 +27,8 @@
       }
     },
     {
-      "id": "53de2297-8f8c-41a3-9e07-390505254c72",
-      "name": "getMovie - default",
+      "id": "365f6102-d370-496a-a8fc-2f934ed576a0",
+      "name": "getmovie - default",
       "request": {
         "urlPathTemplate": "/movies/{movieId}",
         "method": "GET",
@@ -45,7 +45,7 @@
           "Content-Type": "application/json"
         }
       },
-      "uuid": "53de2297-8f8c-41a3-9e07-390505254c72",
+      "uuid": "365f6102-d370-496a-a8fc-2f934ed576a0",
       "persistent": true,
       "priority": 3,
       "metadata": {

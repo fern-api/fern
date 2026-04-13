@@ -1,11 +1,11 @@
-//! # PaginationUriPath SDK
+//! # pagination-uri-path SDK
 //!
-//! The official Rust SDK for the PaginationUriPath.
+//! The official Rust SDK for the pagination-uri-path.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_pagination_uri_path::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,8 +13,8 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = PaginationUriPathClient::new(config).expect("Failed to build client");
-//!     client.users.list_with_uri_pagination(None).await;
+//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     client.users.listwithuripagination(None).await;
 //! }
 //! ```
 //!

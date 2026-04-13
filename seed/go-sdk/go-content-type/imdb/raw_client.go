@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) CreateMovie(
+func (r *RawClient) Createmovie(
 	ctx context.Context,
 	request *fern.CreateMovieRequest,
 	opts ...option.RequestOption,
@@ -47,6 +47,7 @@ func (r *RawClient) CreateMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response string
 	raw, err := r.caller.Call(
 		ctx,

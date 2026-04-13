@@ -34,13 +34,15 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedVariables
+from seed import SeedApi
 
-client = SeedVariables(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.post()
+client.service.post(
+    endpoint_param="endpointParam",
+)
 ```
 
 ## Async Client
@@ -50,15 +52,17 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedVariables
+from seed import AsyncSeedApi
 
-client = AsyncSeedVariables(
+client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.service.post()
+    await client.service.post(
+        endpoint_param="endpointParam",
+    )
 
 
 asyncio.run(main())
@@ -87,9 +91,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedVariables
+from seed import SeedApi
 
-client = SeedVariables(...)
+client = SeedApi(...)
 response = client.service.with_raw_response.post(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -121,9 +125,9 @@ client.service.post(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedVariables
+from seed import SeedApi
 
-client = SeedVariables(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.service.post(..., request_options={
@@ -138,9 +142,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedVariables
+from seed import SeedApi
 
-client = SeedVariables(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

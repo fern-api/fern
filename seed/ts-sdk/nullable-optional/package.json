@@ -22,16 +22,16 @@
             },
             "default": "./dist/cjs/index.js"
         },
-        "./nullableOptional": {
+        "./nullableoptional": {
             "import": {
-                "types": "./dist/esm/api/resources/nullableOptional/exports.d.mts",
-                "default": "./dist/esm/api/resources/nullableOptional/exports.mjs"
+                "types": "./dist/esm/api/resources/nullableoptional/exports.d.mts",
+                "default": "./dist/esm/api/resources/nullableoptional/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/nullableOptional/exports.d.ts",
-                "default": "./dist/cjs/api/resources/nullableOptional/exports.js"
+                "types": "./dist/cjs/api/resources/nullableoptional/exports.d.ts",
+                "default": "./dist/cjs/api/resources/nullableoptional/exports.js"
             },
-            "default": "./dist/cjs/api/resources/nullableOptional/exports.js"
+            "default": "./dist/cjs/api/resources/nullableoptional/exports.js"
         },
         "./package.json": "./package.json"
     },

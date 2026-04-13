@@ -13,12 +13,6 @@ impl UserClient {
         })
     }
 
-    pub async fn head(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
-        self.http_client
-            .execute_request(Method::HEAD, "/users", None, None, options)
-            .await
-    }
-
     pub async fn list(
         &self,
         request: &ListQueryRequest,
@@ -27,13 +21,19 @@ impl UserClient {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users",
                 None,
                 QueryBuilder::new()
                     .int("limit", request.limit.clone())
                     .build(),
                 options,
             )
+            .await
+    }
+
+    pub async fn head(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(Method::HEAD, "users", None, None, options)
             .await
     }
 }

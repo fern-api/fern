@@ -11,9 +11,11 @@ from .core.logging import LogConfig, Logger
 if typing.TYPE_CHECKING:
     from .organization.client import AsyncOrganizationClient, OrganizationClient
     from .user.client import AsyncUserClient, UserClient
+    from .user_events.client import AsyncUserEventsClient, UserEventsClient
+    from .user_events_metadata.client import AsyncUserEventsMetadataClient, UserEventsMetadataClient
 
 
-class SeedMixedFileDirectory:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -39,9 +41,9 @@ class SeedMixedFileDirectory:
 
     Examples
     --------
-    from seed import SeedMixedFileDirectory
+    from seed import SeedApi
 
-    client = SeedMixedFileDirectory(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -72,6 +74,8 @@ class SeedMixedFileDirectory:
         )
         self._organization: typing.Optional[OrganizationClient] = None
         self._user: typing.Optional[UserClient] = None
+        self._user_events: typing.Optional[UserEventsClient] = None
+        self._user_events_metadata: typing.Optional[UserEventsMetadataClient] = None
 
     @property
     def organization(self):
@@ -88,6 +92,22 @@ class SeedMixedFileDirectory:
 
             self._user = UserClient(client_wrapper=self._client_wrapper)
         return self._user
+
+    @property
+    def user_events(self):
+        if self._user_events is None:
+            from .user_events.client import UserEventsClient  # noqa: E402
+
+            self._user_events = UserEventsClient(client_wrapper=self._client_wrapper)
+        return self._user_events
+
+    @property
+    def user_events_metadata(self):
+        if self._user_events_metadata is None:
+            from .user_events_metadata.client import UserEventsMetadataClient  # noqa: E402
+
+            self._user_events_metadata = UserEventsMetadataClient(client_wrapper=self._client_wrapper)
+        return self._user_events_metadata
 
 
 def _make_default_async_client(
@@ -108,7 +128,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedMixedFileDirectory:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -134,9 +154,9 @@ class AsyncSeedMixedFileDirectory:
 
     Examples
     --------
-    from seed import AsyncSeedMixedFileDirectory
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedMixedFileDirectory(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -165,6 +185,8 @@ class AsyncSeedMixedFileDirectory:
         )
         self._organization: typing.Optional[AsyncOrganizationClient] = None
         self._user: typing.Optional[AsyncUserClient] = None
+        self._user_events: typing.Optional[AsyncUserEventsClient] = None
+        self._user_events_metadata: typing.Optional[AsyncUserEventsMetadataClient] = None
 
     @property
     def organization(self):
@@ -181,3 +203,19 @@ class AsyncSeedMixedFileDirectory:
 
             self._user = AsyncUserClient(client_wrapper=self._client_wrapper)
         return self._user
+
+    @property
+    def user_events(self):
+        if self._user_events is None:
+            from .user_events.client import AsyncUserEventsClient  # noqa: E402
+
+            self._user_events = AsyncUserEventsClient(client_wrapper=self._client_wrapper)
+        return self._user_events
+
+    @property
+    def user_events_metadata(self):
+        if self._user_events_metadata is None:
+            from .user_events_metadata.client import AsyncUserEventsMetadataClient  # noqa: E402
+
+            self._user_events_metadata = AsyncUserEventsMetadataClient(client_wrapper=self._client_wrapper)
+        return self._user_events_metadata

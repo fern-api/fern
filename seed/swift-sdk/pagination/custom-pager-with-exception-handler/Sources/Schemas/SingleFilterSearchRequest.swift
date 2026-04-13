@@ -1,16 +1,16 @@
 import Foundation
 
 public struct SingleFilterSearchRequest: Codable, Hashable, Sendable {
-    public let field: String?
+    public let field: Nullable<String>?
     public let `operator`: SingleFilterSearchRequestOperator?
-    public let value: String?
+    public let value: Nullable<String>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        field: String? = nil,
+        field: Nullable<String>? = nil,
         operator: SingleFilterSearchRequestOperator? = nil,
-        value: String? = nil,
+        value: Nullable<String>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.field = field
@@ -21,18 +21,18 @@ public struct SingleFilterSearchRequest: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.field = try container.decodeIfPresent(String.self, forKey: .field)
+        self.field = try container.decodeNullableIfPresent(String.self, forKey: .field)
         self.operator = try container.decodeIfPresent(SingleFilterSearchRequestOperator.self, forKey: .operator)
-        self.value = try container.decodeIfPresent(String.self, forKey: .value)
+        self.value = try container.decodeNullableIfPresent(String.self, forKey: .value)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
-        try container.encodeIfPresent(self.field, forKey: .field)
+        try container.encodeNullableIfPresent(self.field, forKey: .field)
         try container.encodeIfPresent(self.operator, forKey: .operator)
-        try container.encodeIfPresent(self.value, forKey: .value)
+        try container.encodeNullableIfPresent(self.value, forKey: .value)
     }
 
     /// Keys for encoding/decoding struct properties.

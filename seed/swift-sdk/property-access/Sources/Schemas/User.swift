@@ -3,9 +3,9 @@ import Foundation
 /// User object
 public struct User: Codable, Hashable, Sendable {
     /// The unique identifier for the user.
-    public let id: String
+    public let id: String?
     /// The email address of the user.
-    public let email: String
+    public let email: String?
     /// The password for the user.
     public let password: String
     /// User profile object
@@ -14,8 +14,8 @@ public struct User: Codable, Hashable, Sendable {
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        id: String,
-        email: String,
+        id: String? = nil,
+        email: String? = nil,
         password: String,
         profile: UserProfile,
         additionalProperties: [String: JSONValue] = .init()
@@ -29,8 +29,8 @@ public struct User: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(String.self, forKey: .id)
-        self.email = try container.decode(String.self, forKey: .email)
+        self.id = try container.decodeIfPresent(String.self, forKey: .id)
+        self.email = try container.decodeIfPresent(String.self, forKey: .email)
         self.password = try container.decode(String.self, forKey: .password)
         self.profile = try container.decode(UserProfile.self, forKey: .profile)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
@@ -39,8 +39,8 @@ public struct User: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
-        try container.encode(self.id, forKey: .id)
-        try container.encode(self.email, forKey: .email)
+        try container.encodeIfPresent(self.id, forKey: .id)
+        try container.encodeIfPresent(self.email, forKey: .email)
         try container.encode(self.password, forKey: .password)
         try container.encode(self.profile, forKey: .profile)
     }

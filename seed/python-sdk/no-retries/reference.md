@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.retries.<a href="src/seed/retries/client.py">get_users</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.retries.<a href="src/seed/retries/client.py">getusers</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedNoRetries
+from seed import SeedApi
 
-client = SeedNoRetries(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.retries.get_users()
+client.retries.getusers()
 
 ```
 </dd>

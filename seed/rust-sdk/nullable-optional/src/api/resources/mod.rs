@@ -2,23 +2,23 @@
 //!
 //! This module contains client implementations for:
 //!
-//! - **NullableOptional**
+//! - **Nullableoptional**
 
 use crate::{ApiError, ClientConfig};
 
-pub mod nullable_optional;
-pub struct NullableOptionalClient {
+pub mod nullableoptional;
+pub struct ApiClient {
     pub config: ClientConfig,
-    pub nullable_optional: NullableOptionalClient2,
+    pub nullableoptional: NullableoptionalClient,
 }
 
-impl NullableOptionalClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            nullable_optional: NullableOptionalClient2::new(config.clone())?,
+            nullableoptional: NullableoptionalClient::new(config.clone())?,
         })
     }
 }
 
-pub use nullable_optional::NullableOptionalClient2;
+pub use nullableoptional::NullableoptionalClient;

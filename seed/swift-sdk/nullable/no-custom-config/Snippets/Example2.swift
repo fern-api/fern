@@ -1,10 +1,10 @@
 import Foundation
-import Nullable
+import Api
 
 private func main() async throws {
-    let client = NullableClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.nullable.deleteUser(request: .init(username: .value("xy")))
+    _ = try await client.nullable.createuser(request: .init(username: "username"))
 }
 
 try await main()

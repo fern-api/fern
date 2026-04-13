@@ -56,16 +56,22 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.simpleApi.SeedSimpleApiClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.user.requests.UserGetRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedSimpleApiClient client = SeedSimpleApiClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .build();
 
-        client.user().get("id");
+        client.user().get(
+            "id",
+            UserGetRequest
+                .builder()
+                .build()
+        );
     }
 }
 ```
@@ -75,10 +81,10 @@ public class Example {
 This SDK allows you to configure different environments for API requests.
 
 ```java
-import com.seed.simpleApi.SeedSimpleApiClient;
-import com.seed.simpleApi.core.Environment;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.Environment;
 
-SeedSimpleApiClient client = SeedSimpleApiClient
+SeedApiClient client = SeedApiClient
     .builder()
     .environment(Environment.Production)
     .build();
@@ -89,9 +95,9 @@ SeedSimpleApiClient client = SeedSimpleApiClient
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.simpleApi.SeedSimpleApiClient;
+import com.seed.api.SeedApiClient;
 
-SeedSimpleApiClient client = SeedSimpleApiClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -102,11 +108,11 @@ SeedSimpleApiClient client = SeedSimpleApiClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.simpleApi.core.SeedSimpleApiApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
     client.user().get(...);
-} catch (SeedSimpleApiApiException e){
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -119,12 +125,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.simpleApi.SeedSimpleApiClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedSimpleApiClient client = SeedSimpleApiClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -147,9 +153,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.simpleApi.SeedSimpleApiClient;
+import com.seed.api.SeedApiClient;
 
-SeedSimpleApiClient client = SeedSimpleApiClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -159,11 +165,11 @@ SeedSimpleApiClient client = SeedSimpleApiClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.simpleApi.SeedSimpleApiClient;
-import com.seed.simpleApi.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedSimpleApiClient client = SeedSimpleApiClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
@@ -183,11 +189,11 @@ client.user().get(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.simpleApi.SeedSimpleApiClient;
-import com.seed.simpleApi.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedSimpleApiClient client = SeedSimpleApiClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -211,7 +217,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedSimpleApiHttpResponse response = client.user().withRawResponse().get(...);
+SeedApiHttpResponse response = client.user().withRawResponse().get(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

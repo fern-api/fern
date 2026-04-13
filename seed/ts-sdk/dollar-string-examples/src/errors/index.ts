@@ -1,2 +1,2 @@
-export { SeedDollarStringExamplesError } from "./SeedDollarStringExamplesError.js";
-export { SeedDollarStringExamplesTimeoutError } from "./SeedDollarStringExamplesTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

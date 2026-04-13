@@ -1,6 +1,6 @@
 # Reference
-## BasicAuth
-<details><summary><code>client.basic_auth.<a href="/lib/seed/basic_auth/client.rb">get_with_basic_auth</a>() -> Internal::Types::Boolean</code></summary>
+## Basicauth
+<details><summary><code>client.basicauth.<a href="/lib/seed/basicauth/client.rb">getwithbasicauth</a>() -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```ruby
-client.basic_auth.get_with_basic_auth
+client.basicauth.getwithbasicauth
 ```
 </dd>
 </dl>
@@ -42,7 +42,7 @@ client.basic_auth.get_with_basic_auth
 <dl>
 <dd>
 
-**request_options:** `Seed::BasicAuth::RequestOptions` 
+**request_options:** `Seed::Basicauth::RequestOptions` 
     
 </dd>
 </dl>
@@ -54,7 +54,7 @@ client.basic_auth.get_with_basic_auth
 </dl>
 </details>
 
-<details><summary><code>client.basic_auth.<a href="/lib/seed/basic_auth/client.rb">post_with_basic_auth</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.basicauth.<a href="/lib/seed/basicauth/client.rb">postwithbasicauth</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -81,7 +81,7 @@ POST request with basic auth scheme
 <dd>
 
 ```ruby
-client.basic_auth.post_with_basic_auth
+client.basicauth.postwithbasicauth
 ```
 </dd>
 </dl>
@@ -104,7 +104,7 @@ client.basic_auth.post_with_basic_auth
 <dl>
 <dd>
 
-**request_options:** `Seed::BasicAuth::RequestOptions` 
+**request_options:** `Seed::Basicauth::RequestOptions` 
     
 </dd>
 </dl>

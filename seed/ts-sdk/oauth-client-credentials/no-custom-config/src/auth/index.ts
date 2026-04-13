@@ -1,1 +1,1 @@
-export { OAuthAuthProvider } from "./OAuthAuthProvider.js";
+export { BearerAuthProvider } from "./BearerAuthProvider.js";

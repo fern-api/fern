@@ -1,4 +1,4 @@
-use seed_request_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,18 +6,15 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = RequestParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .user
-        .create_username_with_referenced_type(
-            &CreateUsernameWithReferencedTypeRequest {
-                tags: vec!["tags".to_string(), "tags".to_string()],
-                body: CreateUsernameBody {
-                    username: "username".to_string(),
-                    password: "password".to_string(),
-                    name: "test".to_string(),
-                    ..Default::default()
-                },
+        .createusernamewithreferencedtype(
+            &CreateUsernameBody {
+                tags: vec![Some("tags".to_string())],
+                username: "username".to_string(),
+                password: "password".to_string(),
+                name: "name".to_string(),
             },
             None,
         )

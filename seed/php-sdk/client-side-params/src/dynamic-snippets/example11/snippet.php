@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\GetClientRequest;
+use Seed\Service\Requests\ServiceGetUserByIdRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->getClient(
-    'clientId',
-    new GetClientRequest([
+$client->service->getuserbyid(
+    'userId',
+    new ServiceGetUserByIdRequest([
         'fields' => 'fields',
         'includeFields' => true,
     ]),

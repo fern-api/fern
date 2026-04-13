@@ -34,16 +34,13 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedContentTypes
+from seed import SeedApi
 
-client = SeedContentTypes(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.patch(
-    application="application",
-    require_auth=True,
-)
+client.service.patch()
 ```
 
 ## Async Client
@@ -53,18 +50,15 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedContentTypes
+from seed import AsyncSeedApi
 
-client = AsyncSeedContentTypes(
+client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.service.patch(
-        application="application",
-        require_auth=True,
-    )
+    await client.service.patch()
 
 
 asyncio.run(main())
@@ -93,9 +87,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedContentTypes
+from seed import SeedApi
 
-client = SeedContentTypes(...)
+client = SeedApi(...)
 response = client.service.with_raw_response.patch(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -127,9 +121,9 @@ client.service.patch(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedContentTypes
+from seed import SeedApi
 
-client = SeedContentTypes(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.service.patch(..., request_options={
@@ -144,9 +138,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedContentTypes
+from seed import SeedApi
 
-client = SeedContentTypes(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

@@ -1,4 +1,4 @@
-package endpointsecurityauth
+package api
 
 import (
 	"testing"

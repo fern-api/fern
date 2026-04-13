@@ -4,14 +4,11 @@ use serde::{Deserialize, Serialize};
 pub enum CustomApiEnvironment {
     #[serde(rename = "production")]
     Production,
-    #[serde(rename = "staging")]
-    Staging,
 }
 impl CustomApiEnvironment {
     pub fn url(&self) -> &'static str {
         match self {
             Self::Production => "https://production.com/api",
-            Self::Staging => "https://staging.com/api",
         }
     }
 }

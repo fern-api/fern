@@ -7,9 +7,9 @@ public struct Movie: Codable, Hashable, Sendable {
     public let from: String
     /// The rating scale is one to five stars
     public let rating: Double
-    public let type: Movie
-    public let tag: Tag
-    public let book: String?
+    public let type: MovieType
+    public let tag: CommonsTag
+    public let book: Nullable<String>?
     public let metadata: [String: JSONValue]
     public let revenue: Int64
     /// Additional properties that are not explicitly defined in the schema
@@ -21,9 +21,9 @@ public struct Movie: Codable, Hashable, Sendable {
         title: String,
         from: String,
         rating: Double,
-        type: Movie,
-        tag: Tag,
-        book: String? = nil,
+        type: MovieType,
+        tag: CommonsTag,
+        book: Nullable<String>? = nil,
         metadata: [String: JSONValue],
         revenue: Int64,
         additionalProperties: [String: JSONValue] = .init()
@@ -48,9 +48,9 @@ public struct Movie: Codable, Hashable, Sendable {
         self.title = try container.decode(String.self, forKey: .title)
         self.from = try container.decode(String.self, forKey: .from)
         self.rating = try container.decode(Double.self, forKey: .rating)
-        self.type = try container.decode(Movie.self, forKey: .type)
-        self.tag = try container.decode(Tag.self, forKey: .tag)
-        self.book = try container.decodeIfPresent(String.self, forKey: .book)
+        self.type = try container.decode(MovieType.self, forKey: .type)
+        self.tag = try container.decode(CommonsTag.self, forKey: .tag)
+        self.book = try container.decodeNullableIfPresent(String.self, forKey: .book)
         self.metadata = try container.decode([String: JSONValue].self, forKey: .metadata)
         self.revenue = try container.decode(Int64.self, forKey: .revenue)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
@@ -66,13 +66,9 @@ public struct Movie: Codable, Hashable, Sendable {
         try container.encode(self.rating, forKey: .rating)
         try container.encode(self.type, forKey: .type)
         try container.encode(self.tag, forKey: .tag)
-        try container.encodeIfPresent(self.book, forKey: .book)
+        try container.encodeNullableIfPresent(self.book, forKey: .book)
         try container.encode(self.metadata, forKey: .metadata)
         try container.encode(self.revenue, forKey: .revenue)
-    }
-
-    public enum Movie: String, Codable, Hashable, CaseIterable, Sendable {
-        case movie
     }
 
     /// Keys for encoding/decoding struct properties.

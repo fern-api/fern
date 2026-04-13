@@ -17,11 +17,7 @@ func do() {
             "<password>",
         ),
     )
-    request := map[string]any{
-        "key": "value",
-    }
-    client.BasicAuth.PostWithBasicAuth(
+    client.Basicauth.Getwithbasicauth(
         context.TODO(),
-        request,
     )
 }

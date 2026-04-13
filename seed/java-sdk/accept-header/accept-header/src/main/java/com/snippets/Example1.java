@@ -1,10 +1,10 @@
 package com.snippets;
 
-import com.seed.accept.SeedAcceptClient;
+import com.seed.api.SeedApiClient;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedAcceptClient client = SeedAcceptClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();

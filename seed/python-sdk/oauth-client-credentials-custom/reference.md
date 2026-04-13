@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">gettokenwithclientcredentials</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,20 +13,20 @@
 <dd>
 
 ```python
-from seed import SeedOauthClientCredentials
+from seed import SeedApi
 
-client = SeedOauthClientCredentials(
-    client_id="<clientId>",
-    client_secret="<clientSecret>",
+client = SeedApi(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.get_token_with_client_credentials(
+client.auth.gettokenwithclientcredentials(
     cid="cid",
     csr="csr",
     scp="scp",
     entity_id="entity_id",
-    scope="scope",
+    audience="https://api.example.com",
+    grant_type="client_credentials",
 )
 
 ```
@@ -75,7 +75,7 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**audience:** `typing.Literal` 
+**audience:** `AuthGetTokenWithClientCredentialsRequestAudience` 
     
 </dd>
 </dl>
@@ -83,7 +83,7 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**grant_type:** `typing.Literal` 
+**grant_type:** `AuthGetTokenWithClientCredentialsRequestGrantType` 
     
 </dd>
 </dl>
@@ -111,7 +111,7 @@ client.auth.get_token_with_client_credentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refreshtoken</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -124,19 +124,19 @@ client.auth.get_token_with_client_credentials(
 <dd>
 
 ```python
-from seed import SeedOauthClientCredentials
+from seed import SeedApi
 
-client = SeedOauthClientCredentials(
-    client_id="<clientId>",
-    client_secret="<clientSecret>",
+client = SeedApi(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.auth.refresh_token(
+client.auth.refreshtoken(
     client_id="client_id",
     client_secret="client_secret",
     refresh_token="refresh_token",
-    scope="scope",
+    audience="https://api.example.com",
+    grant_type="refresh_token",
 )
 
 ```
@@ -177,7 +177,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**audience:** `typing.Literal` 
+**audience:** `AuthRefreshTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -185,7 +185,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**grant_type:** `typing.Literal` 
+**grant_type:** `AuthRefreshTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -213,8 +213,8 @@ client.auth.refresh_token(
 </dl>
 </details>
 
-## NestedNoAuth Api
-<details><summary><code>client.nested_no_auth.api.<a href="src/seed/nested_no_auth/api/client.py">get_something</a>()</code></summary>
+## NestedNoAuthApi
+<details><summary><code>client.nested_no_auth_api.<a href="src/seed/nested_no_auth_api/client.py">nested_no_auth_api_get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -227,15 +227,14 @@ client.auth.refresh_token(
 <dd>
 
 ```python
-from seed import SeedOauthClientCredentials
+from seed import SeedApi
 
-client = SeedOauthClientCredentials(
-    client_id="<clientId>",
-    client_secret="<clientSecret>",
+client = SeedApi(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nested_no_auth.api.get_something()
+client.nested_no_auth_api.nested_no_auth_api_get_something()
 
 ```
 </dd>
@@ -263,8 +262,8 @@ client.nested_no_auth.api.get_something()
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>()</code></summary>
+## NestedApi
+<details><summary><code>client.nested_api.<a href="src/seed/nested_api/client.py">nested_api_get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -277,15 +276,14 @@ client.nested_no_auth.api.get_something()
 <dd>
 
 ```python
-from seed import SeedOauthClientCredentials
+from seed import SeedApi
 
-client = SeedOauthClientCredentials(
-    client_id="<clientId>",
-    client_secret="<clientSecret>",
+client = SeedApi(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.nested.api.get_something()
+client.nested_api.nested_api_get_something()
 
 ```
 </dd>
@@ -314,7 +312,7 @@ client.nested.api.get_something()
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>()</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">getsomething</a>()</code></summary>
 <dl>
 <dd>
 
@@ -327,15 +325,14 @@ client.nested.api.get_something()
 <dd>
 
 ```python
-from seed import SeedOauthClientCredentials
+from seed import SeedApi
 
-client = SeedOauthClientCredentials(
-    client_id="<clientId>",
-    client_secret="<clientSecret>",
+client = SeedApi(
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.simple.get_something()
+client.simple.getsomething()
 
 ```
 </dd>

@@ -1,4 +1,4 @@
-package unions
+package api
 
 import (
 	"io"

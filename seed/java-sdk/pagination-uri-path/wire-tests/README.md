@@ -11,7 +11,6 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Base Url](#base-url)
-- [Pagination](#pagination)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
@@ -56,16 +55,16 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.paginationUriPath.SeedPaginationUriPathClient;
+import com.seed.api.SeedApiClient;
 
 public class Example {
     public static void main(String[] args) {
-        SeedPaginationUriPathClient client = SeedPaginationUriPathClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .build();
 
-        client.users().listWithUriPagination();
+        client.users().listwithuripagination();
     }
 }
 ```
@@ -75,52 +74,12 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.paginationUriPath.SeedPaginationUriPathClient;
+import com.seed.api.SeedApiClient;
 
-SeedPaginationUriPathClient client = SeedPaginationUriPathClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
-```
-
-## Pagination
-
-Paginated requests will return an Iterable<T>, which can be used to loop through the underlying items, or stream them. You can also call
-`nextPage` to perform the pagination manually
-
-```java
-import com.seed.paginationUriPath.SeedPaginationUriPathClient;
-import com.seed.paginationUriPath.core.SyncPagingIterable;
-import com.seed.paginationUriPath.resources.users.types.User;
-import java.util.List;
-
-SeedPaginationUriPathClient client = SeedPaginationUriPathClient
-    .builder()
-    .build();
-
-SyncPagingIterable<SyncPagingIterable<User>> response = client.users().listWithUriPagination(...);
-
-// Iterator
-for (item : response){
-    // Do something with item
-}
-
-// Streaming
-response.streamItems().map(item -> ...);
-
-// Manual pagination
-for (
-        List<SyncPagingIterable<User>> items = response.getItems;
-        response.hasNext();
-        items = items.nextPage().getItems()) {
-    // Do something with items
-}
-
-// Access pagination metadata
-response.getResponse().ifPresent(r -> {
-    String cursor = r.getNext();
-    // Use cursor for stateless pagination
-});
 ```
 
 ## Exception Handling
@@ -128,11 +87,11 @@ response.getResponse().ifPresent(r -> {
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.paginationUriPath.core.SeedPaginationUriPathApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.users().listWithUriPagination(...);
-} catch (SeedPaginationUriPathApiException e){
+    client.users().listwithuripagination(...);
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -145,12 +104,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.paginationUriPath.SeedPaginationUriPathClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedPaginationUriPathClient client = SeedPaginationUriPathClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -173,9 +132,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.paginationUriPath.SeedPaginationUriPathClient;
+import com.seed.api.SeedApiClient;
 
-SeedPaginationUriPathClient client = SeedPaginationUriPathClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -185,17 +144,17 @@ SeedPaginationUriPathClient client = SeedPaginationUriPathClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.paginationUriPath.SeedPaginationUriPathClient;
-import com.seed.paginationUriPath.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedPaginationUriPathClient client = SeedPaginationUriPathClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.users().listWithUriPagination(
+client.users().listwithuripagination(
     ...,
     RequestOptions
         .builder()
@@ -209,11 +168,11 @@ client.users().listWithUriPagination(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.paginationUriPath.SeedPaginationUriPathClient;
-import com.seed.paginationUriPath.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedPaginationUriPathClient client = SeedPaginationUriPathClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -221,7 +180,7 @@ SeedPaginationUriPathClient client = SeedPaginationUriPathClient
 ;
 
 // Request level
-client.users().listWithUriPagination(
+client.users().listwithuripagination(
     ...,
     RequestOptions
         .builder()
@@ -237,7 +196,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedPaginationUriPathHttpResponse response = client.users().withRawResponse().listWithUriPagination(...);
+SeedApiHttpResponse response = client.users().withRawResponse().listwithuripagination(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

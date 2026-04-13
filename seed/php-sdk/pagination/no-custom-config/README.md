@@ -11,7 +11,6 @@ The Seed PHP library provides convenient access to the Seed APIs from PHP.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
-- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
   - [Retries](#retries)
@@ -38,10 +37,8 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Complex\Types\SearchRequest;
-use Seed\Complex\Types\StartingAfterPaging;
-use Seed\Complex\Types\SingleFilterSearchRequest;
-use Seed\Complex\Types\SingleFilterSearchRequestOperator;
+use Seed\Complex\Requests\SearchRequest;
+use Seed\Types\SingleFilterSearchRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -49,15 +46,7 @@ $client = new SeedClient(
 $client->complex->search(
     'index',
     new SearchRequest([
-        'pagination' => new StartingAfterPaging([
-            'perPage' => 1,
-            'startingAfter' => 'starting_after',
-        ]),
-        'query' => new SingleFilterSearchRequest([
-            'field' => 'field',
-            'operator' => SingleFilterSearchRequestOperator::Equals->value,
-            'value' => 'value',
-        ]),
+        'query' => new SingleFilterSearchRequest([]),
     ]),
 );
 
@@ -80,35 +69,6 @@ try {
     // Optionally, rethrow the exception or handle accordingly.
 }
 ```
-
-## Pagination
-
-List endpoints return a `Pager<T>` which lets you loop over all items and the SDK will automatically make multiple HTTP requests for you.
-
-```php
-use Seed\SeedClient;
-
-$client = new SeedClient(
-    '<token>',
-    ['baseUrl' => 'https://api.example.com'],
-);
-
-$items = $client->complex->search(['limit' => 10]);
-
-foreach ($items as $item) {
-    var_dump($item);
-}
-```
-You can also iterate page-by-page:
-
-```php
-foreach ($items->getPages() as $page) {
-    foreach ($page->getItems() as $pageItem) {
-        var_dump($pageItem);
-    }
-}
-```
-
 
 ## Advanced
 

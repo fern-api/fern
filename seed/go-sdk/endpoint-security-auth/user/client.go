@@ -4,7 +4,6 @@ package user
 
 import (
 	context "context"
-	os "os"
 
 	fern "github.com/endpoint-security-auth/fern"
 	core "github.com/endpoint-security-auth/fern/core"
@@ -21,24 +20,6 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
-	if options.Token == "" {
-		options.Token = os.Getenv("MY_TOKEN")
-	}
-	if options.APIKey == "" {
-		options.APIKey = os.Getenv("MY_API_KEY")
-	}
-	if options.ClientID == "" {
-		options.ClientID = os.Getenv("MY_CLIENT_ID")
-	}
-	if options.ClientSecret == "" {
-		options.ClientSecret = os.Getenv("MY_CLIENT_SECRET")
-	}
-	if options.Username == "" {
-		options.Username = os.Getenv("MY_USERNAME")
-	}
-	if options.Password == "" {
-		options.Password = os.Getenv("MY_PASSWORD")
-	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
@@ -52,11 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetWithBearer(
+func (c *Client) Getwithbearer(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.GetWithBearer(
+	response, err := c.WithRawResponse.Getwithbearer(
 		ctx,
 		opts...,
 	)
@@ -66,11 +47,11 @@ func (c *Client) GetWithBearer(
 	return response.Body, nil
 }
 
-func (c *Client) GetWithAPIKey(
+func (c *Client) Getwithapikey(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.GetWithAPIKey(
+	response, err := c.WithRawResponse.Getwithapikey(
 		ctx,
 		opts...,
 	)
@@ -80,11 +61,11 @@ func (c *Client) GetWithAPIKey(
 	return response.Body, nil
 }
 
-func (c *Client) GetWithOAuth(
+func (c *Client) Getwithoauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.GetWithOAuth(
+	response, err := c.WithRawResponse.Getwithoauth(
 		ctx,
 		opts...,
 	)
@@ -94,11 +75,11 @@ func (c *Client) GetWithOAuth(
 	return response.Body, nil
 }
 
-func (c *Client) GetWithBasic(
+func (c *Client) Getwithbasic(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.GetWithBasic(
+	response, err := c.WithRawResponse.Getwithbasic(
 		ctx,
 		opts...,
 	)
@@ -108,11 +89,11 @@ func (c *Client) GetWithBasic(
 	return response.Body, nil
 }
 
-func (c *Client) GetWithInferredAuth(
+func (c *Client) Getwithinferredauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.GetWithInferredAuth(
+	response, err := c.WithRawResponse.Getwithinferredauth(
 		ctx,
 		opts...,
 	)
@@ -122,11 +103,11 @@ func (c *Client) GetWithInferredAuth(
 	return response.Body, nil
 }
 
-func (c *Client) GetWithAnyAuth(
+func (c *Client) Getwithanyauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.GetWithAnyAuth(
+	response, err := c.WithRawResponse.Getwithanyauth(
 		ctx,
 		opts...,
 	)
@@ -136,11 +117,11 @@ func (c *Client) GetWithAnyAuth(
 	return response.Body, nil
 }
 
-func (c *Client) GetWithAllAuth(
+func (c *Client) Getwithallauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
-	response, err := c.WithRawResponse.GetWithAllAuth(
+	response, err := c.WithRawResponse.Getwithallauth(
 		ctx,
 		opts...,
 	)

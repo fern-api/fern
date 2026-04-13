@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">create_movie</a>(request: CreateMovieRequest) -> Result&lt;MovieId, ApiError&gt;</code></summary>
+<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">createmovie</a>(request: CreateMovieRequest) -> Result&lt;MovieId, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -38,11 +38,10 @@ async fn main() {
     let client = CustomImdbClient::new(config).expect("Failed to build client");
     client
         .imdb
-        .create_movie(
+        .createmovie(
             &CreateMovieRequest {
                 title: "title".to_string(),
                 rating: 1.1,
-                ..Default::default()
             },
             None,
         )
@@ -54,12 +53,35 @@ async fn main() {
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rating:** `f64` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">get_movie</a>(movie_id: MovieId) -> Result&lt;Movie, ApiError&gt;</code></summary>
+<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">getmovie</a>(movie_id: MovieId) -> Result&lt;Movie, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -83,7 +105,7 @@ async fn main() {
     let client = CustomImdbClient::new(config).expect("Failed to build client");
     client
         .imdb
-        .get_movie(&MovieId("movieId".to_string()), None)
+        .getmovie(&MovieId("movieId".to_string()), None)
         .await;
 }
 ```

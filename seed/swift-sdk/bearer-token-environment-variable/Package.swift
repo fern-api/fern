@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "BearerTokenEnvironmentVariable",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "BearerTokenEnvironmentVariable",
-            targets: ["BearerTokenEnvironmentVariable"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "BearerTokenEnvironmentVariable",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "BearerTokenEnvironmentVariableTests",
-            dependencies: ["BearerTokenEnvironmentVariable"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

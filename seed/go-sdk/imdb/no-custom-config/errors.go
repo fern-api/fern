@@ -7,25 +7,25 @@ import (
 	core "github.com/imdb/fern/core"
 )
 
-type MovieDoesNotExistError struct {
+type NotFoundError struct {
 	*core.APIError
 	Body MovieID
 }
 
-func (m *MovieDoesNotExistError) UnmarshalJSON(data []byte) error {
+func (n *NotFoundError) UnmarshalJSON(data []byte) error {
 	var body MovieID
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	m.StatusCode = 404
-	m.Body = body
+	n.StatusCode = 404
+	n.Body = body
 	return nil
 }
 
-func (m *MovieDoesNotExistError) MarshalJSON() ([]byte, error) {
-	return json.Marshal(m.Body)
+func (n *NotFoundError) MarshalJSON() ([]byte, error) {
+	return json.Marshal(n.Body)
 }
 
-func (m *MovieDoesNotExistError) Unwrap() error {
-	return m.APIError
+func (n *NotFoundError) Unwrap() error {
+	return n.APIError
 }

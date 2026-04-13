@@ -63,7 +63,7 @@ public class Example {
             .builder()
             .build();
 
-        client.foo();
+        client.ab().aBFoo();
     }
 }
 ```
@@ -89,7 +89,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.foo(...);
+    client.ab().aBFoo(...);
 } catch (SeedApiApiException e){
     // Do something with the API exception...
 }
@@ -153,7 +153,7 @@ SeedApiClient client = SeedApiClient
     .build();
 
 // Request level
-client.foo(
+client.ab().aBFoo(
     ...,
     RequestOptions
         .builder()
@@ -179,7 +179,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.foo(
+client.ab().aBFoo(
     ...,
     RequestOptions
         .builder()
@@ -195,7 +195,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.withRawResponse().foo(...);
+SeedApiHttpResponse response = client.ab().withRawResponse().aBFoo(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

@@ -1,15 +1,13 @@
 import Foundation
-import Examples
+import Api
 
 private func main() async throws {
-    let client = ExamplesClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.service.refreshToken(request: RefreshTokenRequest(
-
-    ))
+    _ = try await client.echo(request: "string")
 }
 
 try await main()

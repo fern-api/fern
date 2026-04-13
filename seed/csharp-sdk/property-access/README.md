@@ -18,6 +18,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -39,19 +40,17 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedPropertyAccess;
+using SeedApi;
 
-var client = new SeedPropertyAccessClient();
+var client = new SeedApiClient();
 await client.CreateUserAsync(
     new User
     {
-        Id = "id",
-        Email = "email",
         Password = "password",
         Profile = new UserProfile
         {
             Name = "name",
-            Verification = new UserProfileVerification { Verified = "verified" },
+            Verification = new UserProfileVerification(),
             Ssn = "ssn",
         },
     }
@@ -64,11 +63,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedPropertyAccess;
+using SeedApi;
 
 try {
     var response = await client.CreateUserAsync(...);
-} catch (SeedPropertyAccessApiException e) {
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -117,7 +116,7 @@ var response = await client.CreateUserAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedPropertyAccess;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
 var result = await client.CreateUserAsync(...).WithRawResponse();
@@ -170,6 +169,35 @@ var response = await client.CreateUserAsync(
         }
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedApi;
+
+// Using a built-in value
+var userOrAdminDiscriminatedZeroType = UserOrAdminDiscriminatedZeroType.User;
+
+// Using a custom value
+var customUserOrAdminDiscriminatedZeroType = UserOrAdminDiscriminatedZeroType.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (userOrAdminDiscriminatedZeroType.Value)
+{
+    case UserOrAdminDiscriminatedZeroType.Values.User:
+        Console.WriteLine("User");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {userOrAdminDiscriminatedZeroType.Value}");
+        break;
+}
+
+// Explicit casting
+string userOrAdminDiscriminatedZeroTypeString = (string)UserOrAdminDiscriminatedZeroType.User;
+UserOrAdminDiscriminatedZeroType userOrAdminDiscriminatedZeroTypeFromString = (UserOrAdminDiscriminatedZeroType)"user";
 ```
 
 ## Contributing

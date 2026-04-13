@@ -1,4 +1,4 @@
-use seed_pagination::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,13 +7,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = PaginationClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .inline_users
-        .inline_users
-        .list_with_mixed_type_cursor_pagination(
-            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
-                cursor: Some("cursor".to_string()),
+        .inline_users_inline_users
+        .inline_users_inline_users_list_with_cursor_pagination(
+            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
                 ..Default::default()
             },
             None,

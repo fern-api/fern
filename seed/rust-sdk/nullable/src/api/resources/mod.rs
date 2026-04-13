@@ -7,18 +7,18 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod nullable;
-pub struct NullableClient {
+pub struct ApiClient {
     pub config: ClientConfig,
-    pub nullable: NullableClient2,
+    pub nullable: NullableClient,
 }
 
-impl NullableClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            nullable: NullableClient2::new(config.clone())?,
+            nullable: NullableClient::new(config.clone())?,
         })
     }
 }
 
-pub use nullable::NullableClient2;
+pub use nullable::NullableClient;

@@ -6,11 +6,11 @@
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.getToken"
+                "identifier_override": "endpoint_auth.gettoken"
             },
             "snippet": {
-                "sync_client": "from seed import SeedAnyAuth\n\nclient = SeedAnyAuth(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.get_token(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAnyAuth\n\nclient = AsyncSeedAnyAuth(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    api_key=\"YOUR_API_KEY\",\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.auth.gettoken(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    audience=\"https://api.example.com\",\n    grant_type=\"client_credentials\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    api_key=\"YOUR_API_KEY\",\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.auth.gettoken(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        audience=\"https://api.example.com\",\n        grant_type=\"client_credentials\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -22,8 +22,8 @@
                 "identifier_override": "endpoint_user.get"
             },
             "snippet": {
-                "sync_client": "from seed import SeedAnyAuth\n\nclient = SeedAnyAuth(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.user.get()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAnyAuth\n\nclient = AsyncSeedAnyAuth(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.user.get()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    api_key=\"YOUR_API_KEY\",\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    api_key=\"YOUR_API_KEY\",\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -32,11 +32,11 @@
             "id": {
                 "path": "/admins",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getAdmins"
+                "identifier_override": "endpoint_user.getadmins"
             },
             "snippet": {
-                "sync_client": "from seed import SeedAnyAuth\n\nclient = SeedAnyAuth(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.user.get_admins()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedAnyAuth\n\nclient = AsyncSeedAnyAuth(\n    base_url=\"YOUR_BASE_URL\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_admins()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi(\n    api_key=\"YOUR_API_KEY\",\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.getadmins()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    api_key=\"YOUR_API_KEY\",\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.getadmins()\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

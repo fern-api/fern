@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_custom_pager</a>(...) -> UsersListResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithcustompager</a>(...) -> UsersListResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,17 +13,14 @@
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_custom_pager(
-    limit=1,
-    starting_after="starting_after",
-)
+client.users.listwithcustompager()
 
 ```
 </dd>

@@ -11,20 +11,20 @@ use Seed\Core\Json\JsonProperty;
 class UserProfileVerification extends JsonSerializableType
 {
     /**
-     * @var string $verified User profile verification status
+     * @var ?string $verified User profile verification status
      */
     #[JsonProperty('verified')]
-    public string $verified;
+    public ?string $verified;
 
     /**
      * @param array{
-     *   verified: string,
+     *   verified?: ?string,
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
-        $this->verified = $values['verified'];
+        $this->verified = $values['verified'] ?? null;
     }
 
     /**

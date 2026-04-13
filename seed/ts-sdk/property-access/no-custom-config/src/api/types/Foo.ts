@@ -2,6 +2,6 @@
 
 export interface Foo {
     normal: string;
-    read: string;
+    read?: string | undefined;
     write: string;
 }

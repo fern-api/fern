@@ -1,19 +1,24 @@
 package com.snippets;
 
-import com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;
-import com.seed.endpointSecurityAuth.resources.auth.requests.GetTokenRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.auth.requests.AuthGetTokenRequest;
+import com.seed.api.resources.auth.types.AuthGetTokenRequestAudience;
+import com.seed.api.resources.auth.types.AuthGetTokenRequestGrantType;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
+                .apiKey("<X-API-Key>")
                 .build();
 
         client.auth()
-                .getToken(GetTokenRequest.builder()
+                .gettoken(AuthGetTokenRequest.builder()
                         .clientId("client_id")
                         .clientSecret("client_secret")
+                        .audience(AuthGetTokenRequestAudience.HTTPS_API_EXAMPLE_COM)
+                        .grantType(AuthGetTokenRequestGrantType.CLIENT_CREDENTIALS)
                         .build());
     }
 }

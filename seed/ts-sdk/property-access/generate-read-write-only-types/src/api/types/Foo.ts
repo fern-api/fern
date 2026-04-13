@@ -2,19 +2,19 @@
 
 export interface Foo {
     normal: string;
-    read: string;
+    read?: string | undefined;
     write: string;
 }
 
 export namespace Foo {
     export type Request = Omit<Foo, "normal" | "read" | "write"> & {
         normal: string;
-        read: string;
+        read: string | undefined;
         write: string;
     };
     export type Response = Omit<Foo, "normal" | "read" | "write"> & {
         normal: string;
-        read: string;
+        read: string | undefined;
         write: string;
     };
 }

@@ -4,7 +4,7 @@ namespace Seed\Payment;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Payment\Requests\CreatePaymentRequest;
+use Seed\Payment\Requests\PaymentCreateRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -50,7 +50,7 @@ class PaymentClient
     }
 
     /**
-     * @param CreatePaymentRequest $request
+     * @param PaymentCreateRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,14 +63,14 @@ class PaymentClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function create(CreatePaymentRequest $request, ?array $options = null): ?string
+    public function create(PaymentCreateRequest $request, ?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/payment",
+                    path: "payment",
                     method: HttpMethod::POST,
                     body: $request,
                 ),
@@ -116,7 +116,7 @@ class PaymentClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/payment/{$paymentId}",
+                    path: "payment/{$paymentId}",
                     method: HttpMethod::DELETE,
                 ),
                 $options,

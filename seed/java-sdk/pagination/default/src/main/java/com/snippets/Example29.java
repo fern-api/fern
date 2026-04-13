@@ -1,17 +1,18 @@
 package com.snippets;
 
-import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.users.requests.UsersListWithMixedTypeCursorPaginationRequest;
 
 public class Example29 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.users()
-                .listWithGlobalConfig(
-                        ListWithGlobalConfigRequest.builder().offset(1).build());
+                .listwithmixedtypecursorpagination(UsersListWithMixedTypeCursorPaginationRequest.builder()
+                        .cursor("cursor")
+                        .build());
     }
 }

@@ -1,15 +1,14 @@
 package com.snippets;
 
-import com.seed.oauthClientCredentialsWithVariables.SeedOauthClientCredentialsWithVariablesClient;
+import com.seed.api.SeedApiClient;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsWithVariablesClient client =
-                SeedOauthClientCredentialsWithVariablesClient.withCredentials("<clientId>", "<clientSecret>")
-                        .url("https://api.fern.com")
-                        .rootVariable("YOUR_ROOT_VARIABLE")
-                        .build();
+        SeedApiClient client = SeedApiClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.service().post();
+        client.nestedNoAuthApi().nestedNoAuthApiGetSomething();
     }
 }

@@ -4,99 +4,99 @@
             "id": {
                 "path": "/{tenant_id}/organizations/{organization_id}/",
                 "method": "GET",
-                "identifier_override": "endpoint_organizations.getOrganization"
+                "identifier_override": "endpoint_organizations.getorganization"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organizations.getOrganization(\"organization_id\");\n"
+                "client": "import { SeedApiClient } from \"@fern/path-parameters\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organizations.getorganization(\"tenant_id\", \"organization_id\");\n"
             }
         },
         {
             "id": {
                 "path": "/{tenant_id}/organizations/{organization_id}/users/{user_id}",
                 "method": "GET",
-                "identifier_override": "endpoint_organizations.getOrganizationUser"
+                "identifier_override": "endpoint_organizations.getorganizationuser"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organizations.getOrganizationUser(\"organization_id\", \"user_id\");\n"
+                "client": "import { SeedApiClient } from \"@fern/path-parameters\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organizations.getorganizationuser(\"tenant_id\", \"organization_id\", \"user_id\");\n"
             }
         },
         {
             "id": {
                 "path": "/{tenant_id}/organizations/{organization_id}/search",
                 "method": "GET",
-                "identifier_override": "endpoint_organizations.searchOrganizations"
+                "identifier_override": "endpoint_organizations.searchorganizations"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organizations.searchOrganizations(\"organization_id\", {\n    limit: 1\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/path-parameters\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.organizations.searchorganizations(\"tenant_id\", \"organization_id\");\n"
             }
         },
         {
             "id": {
                 "path": "/{tenant_id}/user/{user_id}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getUser"
+                "identifier_override": "endpoint_user.getuser"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUser(\"user_id\");\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/{tenant_id}/user/",
-                "method": "POST",
-                "identifier_override": "endpoint_user.createUser"
-            },
-            "snippet": {
-                "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUser({\n    name: \"name\",\n    tags: [\"tags\", \"tags\"]\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/path-parameters\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getuser(\"tenant_id\", \"user_id\");\n"
             }
         },
         {
             "id": {
                 "path": "/{tenant_id}/user/{user_id}",
                 "method": "PATCH",
-                "identifier_override": "endpoint_user.updateUser"
+                "identifier_override": "endpoint_user.updateuser"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.updateUser(\"user_id\", {\n    body: {\n        name: \"name\",\n        tags: [\"tags\", \"tags\"]\n    }\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/path-parameters\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.updateuser(\"tenant_id\", \"user_id\", {\n    body: {\n        name: \"name\",\n        tags: [\"tags\"]\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{tenant_id}/user/",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createuser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/path-parameters\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createuser(\"tenant_id\", {\n    body: {\n        name: \"name\",\n        tags: [\"tags\"]\n    }\n});\n"
             }
         },
         {
             "id": {
                 "path": "/{tenant_id}/user/{user_id}/search",
                 "method": "GET",
-                "identifier_override": "endpoint_user.searchUsers"
+                "identifier_override": "endpoint_user.searchusers"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.searchUsers(\"user_id\", {\n    limit: 1\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/path-parameters\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.searchusers(\"tenant_id\", \"user_id\");\n"
             }
         },
         {
             "id": {
                 "path": "/{tenant_id}/user/{user_id}/metadata/v/{version}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getUserMetadata"
+                "identifier_override": "endpoint_user.getusermetadata"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUserMetadata(\"user_id\", 1);\n"
+                "client": "import { SeedApiClient } from \"@fern/path-parameters\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getusermetadata(\"tenant_id\", \"user_id\", 1);\n"
             }
         },
         {
             "id": {
                 "path": "/{tenant_id}/user/{user_id}/specifics/{version}/{thought}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getUserSpecifics"
+                "identifier_override": "endpoint_user.getuserspecifics"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPathParametersClient } from \"@fern/path-parameters\";\n\nconst client = new SeedPathParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getUserSpecifics(\"user_id\", 1, \"thought\");\n"
+                "client": "import { SeedApiClient } from \"@fern/path-parameters\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.getuserspecifics(\"tenant_id\", \"user_id\", 1, \"thought\");\n"
             }
         }
     ],

@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: "https://api.fern.com"
 )
 
-client.file.notification.service.get_exception(notification_id: "notificationId")
+client.file_service.file_service_get_file(filename: "filename")

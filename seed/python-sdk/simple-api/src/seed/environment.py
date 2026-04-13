@@ -3,6 +3,5 @@
 import enum
 
 
-class SeedSimpleApiEnvironment(enum.Enum):
+class SeedApiEnvironment(enum.Enum):
     PRODUCTION = "https://api.example.com"
-    STAGING = "https://staging-api.example.com"

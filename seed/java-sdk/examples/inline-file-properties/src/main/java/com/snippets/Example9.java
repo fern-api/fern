@@ -1,14 +1,16 @@
 package com.snippets;
 
-import com.seed.examples.SeedExamplesClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.ServiceGetMovieRequest;
 
 public class Example9 {
     public static void main(String[] args) {
-        SeedExamplesClient client = SeedExamplesClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.health().service().check("id-3tey93i");
+        client.service()
+                .getmovie(ServiceGetMovieRequest.builder().movieId("movieId").build());
     }
 }

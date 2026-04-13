@@ -35,9 +35,9 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedFileDownload
+        from seed import SeedApi
 
-        client = SeedFileDownload(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
         client.service.simple()
@@ -45,7 +45,7 @@ class ServiceClient:
         _response = self._raw_client.simple(request_options=request_options)
         return _response.data
 
-    def download_file(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
+    def downloadfile(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
         """
         Parameters
         ----------
@@ -55,8 +55,9 @@ class ServiceClient:
         Returns
         -------
         typing.Iterator[bytes]
+
         """
-        with self._raw_client.download_file(request_options=request_options) as r:
+        with self._raw_client.downloadfile(request_options=request_options) as r:
             yield from r.data
 
 
@@ -90,9 +91,9 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedFileDownload
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedFileDownload(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -106,7 +107,7 @@ class AsyncServiceClient:
         _response = await self._raw_client.simple(request_options=request_options)
         return _response.data
 
-    async def download_file(
+    async def downloadfile(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -118,7 +119,8 @@ class AsyncServiceClient:
         Returns
         -------
         typing.AsyncIterator[bytes]
+
         """
-        async with self._raw_client.download_file(request_options=request_options) as r:
+        async with self._raw_client.downloadfile(request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk

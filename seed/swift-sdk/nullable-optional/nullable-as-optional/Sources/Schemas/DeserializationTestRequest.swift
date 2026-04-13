@@ -4,15 +4,15 @@ import Foundation
 public struct DeserializationTestRequest: Codable, Hashable, Sendable {
     public let requiredString: String
     public let nullableString: Nullable<String>
-    public let optionalString: String?
+    public let optionalString: Nullable<String>?
     public let optionalNullableString: Nullable<String>?
-    public let nullableEnum: Nullable<UserRole>
+    public let nullableEnum: UserRole
     public let optionalEnum: UserStatus?
-    public let nullableUnion: Nullable<NotificationMethod>
+    public let nullableUnion: NotificationMethod
     public let optionalUnion: SearchResult?
     public let nullableList: Nullable<[String]>
-    public let nullableMap: Nullable<[String: Int]>
-    public let nullableObject: Nullable<Address>
+    public let nullableMap: Nullable<[String: Nullable<Int>]>
+    public let nullableObject: Address
     public let optionalObject: Organization?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
@@ -20,15 +20,15 @@ public struct DeserializationTestRequest: Codable, Hashable, Sendable {
     public init(
         requiredString: String,
         nullableString: Nullable<String>,
-        optionalString: String? = nil,
+        optionalString: Nullable<String>? = nil,
         optionalNullableString: Nullable<String>? = nil,
-        nullableEnum: Nullable<UserRole>,
+        nullableEnum: UserRole,
         optionalEnum: UserStatus? = nil,
-        nullableUnion: Nullable<NotificationMethod>,
+        nullableUnion: NotificationMethod,
         optionalUnion: SearchResult? = nil,
         nullableList: Nullable<[String]>,
-        nullableMap: Nullable<[String: Int]>,
-        nullableObject: Nullable<Address>,
+        nullableMap: Nullable<[String: Nullable<Int>]>,
+        nullableObject: Address,
         optionalObject: Organization? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -51,15 +51,15 @@ public struct DeserializationTestRequest: Codable, Hashable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.requiredString = try container.decode(String.self, forKey: .requiredString)
         self.nullableString = try container.decode(Nullable<String>.self, forKey: .nullableString)
-        self.optionalString = try container.decodeIfPresent(String.self, forKey: .optionalString)
+        self.optionalString = try container.decodeNullableIfPresent(String.self, forKey: .optionalString)
         self.optionalNullableString = try container.decodeNullableIfPresent(String.self, forKey: .optionalNullableString)
-        self.nullableEnum = try container.decode(Nullable<UserRole>.self, forKey: .nullableEnum)
+        self.nullableEnum = try container.decode(UserRole.self, forKey: .nullableEnum)
         self.optionalEnum = try container.decodeIfPresent(UserStatus.self, forKey: .optionalEnum)
-        self.nullableUnion = try container.decode(Nullable<NotificationMethod>.self, forKey: .nullableUnion)
+        self.nullableUnion = try container.decode(NotificationMethod.self, forKey: .nullableUnion)
         self.optionalUnion = try container.decodeIfPresent(SearchResult.self, forKey: .optionalUnion)
         self.nullableList = try container.decode(Nullable<[String]>.self, forKey: .nullableList)
-        self.nullableMap = try container.decode(Nullable<[String: Int]>.self, forKey: .nullableMap)
-        self.nullableObject = try container.decode(Nullable<Address>.self, forKey: .nullableObject)
+        self.nullableMap = try container.decode(Nullable<[String: Nullable<Int>]>.self, forKey: .nullableMap)
+        self.nullableObject = try container.decode(Address.self, forKey: .nullableObject)
         self.optionalObject = try container.decodeIfPresent(Organization.self, forKey: .optionalObject)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
@@ -69,7 +69,7 @@ public struct DeserializationTestRequest: Codable, Hashable, Sendable {
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.requiredString, forKey: .requiredString)
         try container.encode(self.nullableString, forKey: .nullableString)
-        try container.encodeIfPresent(self.optionalString, forKey: .optionalString)
+        try container.encodeNullableIfPresent(self.optionalString, forKey: .optionalString)
         try container.encodeNullableIfPresent(self.optionalNullableString, forKey: .optionalNullableString)
         try container.encode(self.nullableEnum, forKey: .nullableEnum)
         try container.encodeIfPresent(self.optionalEnum, forKey: .optionalEnum)

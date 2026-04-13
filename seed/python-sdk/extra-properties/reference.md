@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">createuser</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,16 @@
 <dd>
 
 ```python
-from seed import SeedExtraProperties
+from seed import SeedApi
 
-client = SeedExtraProperties(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.create_user(
-    name="Alice",
+client.user.createuser(
+    type="CreateUserRequest",
+    version="v1",
+    name="name",
 )
 
 ```
@@ -37,7 +39,7 @@ client.user.create_user(
 <dl>
 <dd>
 
-**type:** `typing.Literal` 
+**type:** `UserCreateUserRequestType` 
     
 </dd>
 </dl>
@@ -45,7 +47,7 @@ client.user.create_user(
 <dl>
 <dd>
 
-**version:** `typing.Literal` 
+**version:** `UserCreateUserRequestVersion` 
     
 </dd>
 </dl>

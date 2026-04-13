@@ -1,25 +1,20 @@
-using SeedExamples;
+using SeedApi;
 
 namespace Usage;
 
 public class Example17
 {
     public async Task Do() {
-        var client = new SeedExamplesClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Service.GetMetadataAsync(
-            new GetMetadataRequest {
-                Shallow = false,
-                Tag = new List<string>(){
-                    "development",
-                }
-                ,
-                XApiVersion = "0.0.1"
+        await client.Service.RefreshtokenAsync(
+            new RefreshTokenRequest {
+                Ttl = 1
             }
         );
     }

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user</a>(user_id) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">getuser</a>(user_id) -> Seed::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.user.get_user(user_id: "userId")
+client.user.getuser(user_id: "userId")
 ```
 </dd>
 </dl>

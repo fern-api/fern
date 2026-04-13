@@ -1,6 +1,6 @@
 # Reference
-## Conversations
-<details><summary><code>client.complex.<a href="/lib/seed/complex/client.rb">search</a>(index, request) -> Seed::Complex::Types::PaginatedConversationResponse</code></summary>
+## Complex
+<details><summary><code>client.complex.<a href="/lib/seed/complex/client.rb">search</a>(index, request) -> Seed::Types::PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
 
@@ -15,15 +15,7 @@
 ```ruby
 client.complex.search(
   index: "index",
-  pagination: {
-    per_page: 1,
-    starting_after: "starting_after"
-  },
-  query: {
-    field: "field",
-    operator: "=",
-    value: "value"
-  }
+  query: {}
 )
 ```
 </dd>
@@ -47,7 +39,15 @@ client.complex.search(
 <dl>
 <dd>
 
-**request:** `Seed::Complex::Types::SearchRequest` 
+**pagination:** `Seed::Types::StartingAfterPaging` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `Seed::Types::SearchRequestQuery` 
     
 </dd>
 </dl>
@@ -67,8 +67,8 @@ client.complex.search(
 </dl>
 </details>
 
-## InlineUsers InlineUsers
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_cursor_pagination</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+## InlineUsersInlineUsers
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_cursor_pagination</a>() -> Seed::Types::InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -81,12 +81,7 @@ client.complex.search(
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(
-  page: 1,
-  per_page: 1,
-  order: "asc",
-  starting_after: "starting_after"
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_cursor_pagination
 ```
 </dd>
 </dl>
@@ -117,7 +112,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**order:** `Seed::InlineUsers::InlineUsers::Types::Order` 
+**order:** `Seed::Types::InlineUsersOrder` 
     
 </dd>
 </dl>
@@ -136,7 +131,7 @@ the next page of results.
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -148,7 +143,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_mixed_type_cursor_pagination</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_mixed_type_cursor_pagination</a>() -> Seed::Types::InlineUsersListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -161,7 +156,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
+client.inline_users_inline_users.inline_users_inline_users_list_with_mixed_type_cursor_pagination
 ```
 </dd>
 </dl>
@@ -184,7 +179,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(cursor: 
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -196,7 +191,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(cursor: 
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_body_cursor_pagination</a>(request) -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_body_cursor_pagination</a>(request) -> Seed::Types::InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -209,7 +204,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(cursor: 
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination
+client.inline_users_inline_users.inline_users_inline_users_list_with_body_cursor_pagination
 ```
 </dd>
 </dl>
@@ -224,7 +219,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination
 <dl>
 <dd>
 
-**pagination:** `Seed::InlineUsers::InlineUsers::Types::WithCursor` 
+**pagination:** `Seed::Types::InlineUsersWithCursor` 
 
 The object that contains the cursor used for pagination
 in order to fetch the next page of results.
@@ -235,7 +230,7 @@ in order to fetch the next page of results.
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -247,7 +242,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_offset_pagination</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_offset_pagination</a>() -> Seed::Types::InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -260,12 +255,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(
-  page: 1,
-  per_page: 1,
-  order: "asc",
-  starting_after: "starting_after"
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_offset_pagination
 ```
 </dd>
 </dl>
@@ -296,7 +286,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**order:** `Seed::InlineUsers::InlineUsers::Types::Order` 
+**order:** `Seed::Types::InlineUsersOrder` 
     
 </dd>
 </dl>
@@ -315,7 +305,7 @@ the next page of results.
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -327,7 +317,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_double_offset_pagination</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_double_offset_pagination</a>() -> Seed::Types::InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -340,12 +330,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(
-  page: 1.1,
-  per_page: 1.1,
-  order: "asc",
-  starting_after: "starting_after"
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_double_offset_pagination
 ```
 </dd>
 </dl>
@@ -376,7 +361,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**order:** `Seed::InlineUsers::InlineUsers::Types::Order` 
+**order:** `Seed::Types::InlineUsersOrder` 
     
 </dd>
 </dl>
@@ -395,7 +380,7 @@ the next page of results.
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -407,7 +392,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_body_offset_pagination</a>(request) -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_body_offset_pagination</a>(request) -> Seed::Types::InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -420,7 +405,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination
+client.inline_users_inline_users.inline_users_inline_users_list_with_body_offset_pagination
 ```
 </dd>
 </dl>
@@ -435,7 +420,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination
 <dl>
 <dd>
 
-**pagination:** `Seed::InlineUsers::InlineUsers::Types::WithPage` 
+**pagination:** `Seed::Types::InlineUsersWithPage` 
 
 The object that contains the offset used for pagination
 in order to fetch the next page of results.
@@ -446,7 +431,7 @@ in order to fetch the next page of results.
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -458,7 +443,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_offset_step_pagination</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_offset_step_pagination</a>() -> Seed::Types::InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -471,10 +456,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(
-  page: 1,
-  order: "asc"
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_offset_step_pagination
 ```
 </dd>
 </dl>
@@ -509,7 +491,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `Seed::InlineUsers::InlineUsers::Types::Order` 
+**order:** `Seed::Types::InlineUsersOrder` 
     
 </dd>
 </dl>
@@ -517,7 +499,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -529,7 +511,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_offset_pagination_has_next_page</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_offset_pagination_has_next_page</a>() -> Seed::Types::InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -542,10 +524,7 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(
-  page: 1,
-  order: "asc"
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_offset_pagination_has_next_page
 ```
 </dd>
 </dl>
@@ -580,7 +559,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `Seed::InlineUsers::InlineUsers::Types::Order` 
+**order:** `Seed::Types::InlineUsersOrder` 
     
 </dd>
 </dl>
@@ -588,7 +567,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -600,7 +579,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_extended_results</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_extended_results</a>() -> Seed::Types::InlineUsersListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -613,7 +592,7 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination
+client.inline_users_inline_users.inline_users_inline_users_list_with_extended_results
 ```
 </dd>
 </dl>
@@ -636,7 +615,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -648,7 +627,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_extended_results_and_optional_data</a>() -> Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_extended_results_and_optional_data</a>() -> Seed::Types::InlineUsersListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -661,7 +640,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination
+client.inline_users_inline_users.inline_users_inline_users_list_with_extended_results_and_optional_data
 ```
 </dd>
 </dl>
@@ -684,7 +663,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -696,7 +675,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_usernames</a>() -> Seed::Types::UsernameCursor</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_usernames</a>() -> Seed::Types::UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -709,7 +688,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(starting_after: "starting_after")
+client.inline_users_inline_users.inline_users_inline_users_list_usernames
 ```
 </dd>
 </dl>
@@ -735,7 +714,7 @@ the next page of results.
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -747,7 +726,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="/lib/seed/inline_users/inline_users/client.rb">list_with_global_config</a>() -> Seed::InlineUsers::InlineUsers::Types::UsernameContainer</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="/lib/seed/inline_users_inline_users/client.rb">inline_users_inline_users_list_with_global_config</a>() -> Seed::Types::InlineUsersUsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -760,7 +739,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination
+client.inline_users_inline_users.inline_users_inline_users_list_with_global_config
 ```
 </dd>
 </dl>
@@ -783,7 +762,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 <dl>
 <dd>
 
-**request_options:** `Seed::InlineUsers::InlineUsers::RequestOptions` 
+**request_options:** `Seed::InlineUsersInlineUsers::RequestOptions` 
     
 </dd>
 </dl>
@@ -796,7 +775,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_cursor_pagination</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithcursorpagination</a>() -> Seed::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -809,12 +788,7 @@ client.inline_users.inline_users.list_with_cursor_pagination
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(
-  page: 1,
-  per_page: 1,
-  order: "asc",
-  starting_after: "starting_after"
-)
+client.users.listwithcursorpagination
 ```
 </dd>
 </dl>
@@ -845,7 +819,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**order:** `Seed::Users::Types::Order` 
+**order:** `Seed::Types::Order` 
     
 </dd>
 </dl>
@@ -876,7 +850,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_mixed_type_cursor_pagination</a>() -> Seed::Users::Types::ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithmixedtypecursorpagination</a>() -> Seed::Types::ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -889,7 +863,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
+client.users.listwithmixedtypecursorpagination
 ```
 </dd>
 </dl>
@@ -924,7 +898,7 @@ client.users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_body_cursor_pagination</a>(request) -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithbodycursorpagination</a>(request) -> Seed::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -937,7 +911,7 @@ client.users.list_with_mixed_type_cursor_pagination(cursor: "cursor")
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination
+client.users.listwithbodycursorpagination
 ```
 </dd>
 </dl>
@@ -952,7 +926,7 @@ client.users.list_with_mixed_type_cursor_pagination
 <dl>
 <dd>
 
-**pagination:** `Seed::Users::Types::WithCursor` 
+**pagination:** `Seed::Types::WithCursor` 
 
 The object that contains the cursor used for pagination
 in order to fetch the next page of results.
@@ -975,7 +949,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_top_level_body_cursor_pagination</a>(request) -> Seed::Users::Types::ListUsersTopLevelCursorPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithtoplevelbodycursorpagination</a>(request) -> Seed::Types::ListUsersTopLevelCursorPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1004,10 +978,7 @@ when getNextPage() is called with a different cursor value.
 <dd>
 
 ```ruby
-client.users.list_with_top_level_body_cursor_pagination(
-  cursor: "initial_cursor",
-  filter: "active"
-)
+client.users.listwithtoplevelbodycursorpagination
 ```
 </dd>
 </dl>
@@ -1053,7 +1024,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_pagination</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithoffsetpagination</a>() -> Seed::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1066,12 +1037,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(
-  page: 1,
-  per_page: 1,
-  order: "asc",
-  starting_after: "starting_after"
-)
+client.users.listwithoffsetpagination
 ```
 </dd>
 </dl>
@@ -1102,7 +1068,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**order:** `Seed::Users::Types::Order` 
+**order:** `Seed::Types::Order` 
     
 </dd>
 </dl>
@@ -1133,7 +1099,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_double_offset_pagination</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithdoubleoffsetpagination</a>() -> Seed::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1146,12 +1112,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(
-  page: 1.1,
-  per_page: 1.1,
-  order: "asc",
-  starting_after: "starting_after"
-)
+client.users.listwithdoubleoffsetpagination
 ```
 </dd>
 </dl>
@@ -1182,7 +1143,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**order:** `Seed::Users::Types::Order` 
+**order:** `Seed::Types::Order` 
     
 </dd>
 </dl>
@@ -1213,7 +1174,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_body_offset_pagination</a>(request) -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithbodyoffsetpagination</a>(request) -> Seed::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1226,7 +1187,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination
+client.users.listwithbodyoffsetpagination
 ```
 </dd>
 </dl>
@@ -1241,7 +1202,7 @@ client.users.list_with_mixed_type_cursor_pagination
 <dl>
 <dd>
 
-**pagination:** `Seed::Users::Types::WithPage` 
+**pagination:** `Seed::Types::WithPage` 
 
 The object that contains the offset used for pagination
 in order to fetch the next page of results.
@@ -1264,7 +1225,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_step_pagination</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithoffsetsteppagination</a>() -> Seed::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1277,10 +1238,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(
-  page: 1,
-  order: "asc"
-)
+client.users.listwithoffsetsteppagination
 ```
 </dd>
 </dl>
@@ -1315,7 +1273,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `Seed::Users::Types::Order` 
+**order:** `Seed::Types::Order` 
     
 </dd>
 </dl>
@@ -1335,7 +1293,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_offset_pagination_has_next_page</a>() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithoffsetpaginationhasnextpage</a>() -> Seed::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1348,10 +1306,7 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(
-  page: 1,
-  order: "asc"
-)
+client.users.listwithoffsetpaginationhasnextpage
 ```
 </dd>
 </dl>
@@ -1386,7 +1341,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `Seed::Users::Types::Order` 
+**order:** `Seed::Types::Order` 
     
 </dd>
 </dl>
@@ -1406,7 +1361,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_extended_results</a>() -> Seed::Users::Types::ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithextendedresults</a>() -> Seed::Types::ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1419,7 +1374,7 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination
+client.users.listwithextendedresults
 ```
 </dd>
 </dl>
@@ -1454,7 +1409,7 @@ client.users.list_with_cursor_pagination
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_extended_results_and_optional_data</a>() -> Seed::Users::Types::ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithextendedresultsandoptionaldata</a>() -> Seed::Types::ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1467,7 +1422,7 @@ client.users.list_with_cursor_pagination
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination
+client.users.listwithextendedresultsandoptionaldata
 ```
 </dd>
 </dl>
@@ -1502,7 +1457,7 @@ client.users.list_with_cursor_pagination
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_usernames</a>() -> Seed::Types::UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listusernames</a>() -> Seed::Types::UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1515,7 +1470,7 @@ client.users.list_with_cursor_pagination
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(starting_after: "starting_after")
+client.users.listusernames
 ```
 </dd>
 </dl>
@@ -1553,7 +1508,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_usernames_with_optional_response</a>() -> Seed::Types::UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listusernameswithoptionalresponse</a>() -> Seed::Types::UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1566,7 +1521,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(starting_after: "starting_after")
+client.users.listusernameswithoptionalresponse
 ```
 </dd>
 </dl>
@@ -1604,7 +1559,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_global_config</a>() -> Seed::Users::Types::UsernameContainer</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithglobalconfig</a>() -> Seed::Types::UsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -1617,7 +1572,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination
+client.users.listwithglobalconfig
 ```
 </dd>
 </dl>
@@ -1652,7 +1607,7 @@ client.users.list_with_cursor_pagination
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_optional_data</a>() -> Seed::Users::Types::ListUsersOptionalDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithoptionaldata</a>() -> Seed::Types::ListUsersOptionalDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1665,7 +1620,7 @@ client.users.list_with_cursor_pagination
 <dd>
 
 ```ruby
-client.users.list_with_optional_data(page: 1)
+client.users.listwithoptionaldata
 ```
 </dd>
 </dl>
@@ -1700,7 +1655,7 @@ client.users.list_with_optional_data(page: 1)
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_with_aliased_data</a>() -> Seed::Users::Types::ListUsersAliasedDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">listwithaliaseddata</a>() -> Seed::Types::ListUsersAliasedDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1713,11 +1668,7 @@ client.users.list_with_optional_data(page: 1)
 <dd>
 
 ```ruby
-client.users.list_with_aliased_data(
-  page: 1,
-  per_page: 1,
-  starting_after: "starting_after"
-)
+client.users.listwithaliaseddata
 ```
 </dd>
 </dl>

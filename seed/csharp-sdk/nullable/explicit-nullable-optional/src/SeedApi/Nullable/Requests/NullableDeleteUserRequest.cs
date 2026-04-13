@@ -1,0 +1,21 @@
+using global::System.Text.Json.Serialization;
+using SeedApi.Core;
+
+namespace SeedApi;
+
+[Serializable]
+public record NullableDeleteUserRequest
+{
+    /// <summary>
+    /// The user to delete.
+    /// </summary>
+    [Nullable, Optional]
+    [JsonPropertyName("username")]
+    public Optional<string?> Username { get; set; }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+}

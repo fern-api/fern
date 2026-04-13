@@ -10,11 +10,11 @@ from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
     from .complex_.client import AsyncComplexClient, ComplexClient
-    from .inline_users.client import AsyncInlineUsersClient, InlineUsersClient
+    from .inline_users_inline_users.client import AsyncInlineUsersInlineUsersClient, InlineUsersInlineUsersClient
     from .users.client import AsyncUsersClient, UsersClient
 
 
-class SeedPagination:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -41,9 +41,9 @@ class SeedPagination:
 
     Examples
     --------
-    from seed import SeedPagination
+    from seed import SeedApi
 
-    client = SeedPagination(
+    client = SeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -76,7 +76,7 @@ class SeedPagination:
             logging=logging,
         )
         self._complex_: typing.Optional[ComplexClient] = None
-        self._inline_users: typing.Optional[InlineUsersClient] = None
+        self._inline_users_inline_users: typing.Optional[InlineUsersInlineUsersClient] = None
         self._users: typing.Optional[UsersClient] = None
 
     @property
@@ -88,12 +88,12 @@ class SeedPagination:
         return self._complex_
 
     @property
-    def inline_users(self):
-        if self._inline_users is None:
-            from .inline_users.client import InlineUsersClient  # noqa: E402
+    def inline_users_inline_users(self):
+        if self._inline_users_inline_users is None:
+            from .inline_users_inline_users.client import InlineUsersInlineUsersClient  # noqa: E402
 
-            self._inline_users = InlineUsersClient(client_wrapper=self._client_wrapper)
-        return self._inline_users
+            self._inline_users_inline_users = InlineUsersInlineUsersClient(client_wrapper=self._client_wrapper)
+        return self._inline_users_inline_users
 
     @property
     def users(self):
@@ -122,7 +122,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedPagination:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -152,9 +152,9 @@ class AsyncSeedPagination:
 
     Examples
     --------
-    from seed import AsyncSeedPagination
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedPagination(
+    client = AsyncSeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -187,7 +187,7 @@ class AsyncSeedPagination:
             logging=logging,
         )
         self._complex_: typing.Optional[AsyncComplexClient] = None
-        self._inline_users: typing.Optional[AsyncInlineUsersClient] = None
+        self._inline_users_inline_users: typing.Optional[AsyncInlineUsersInlineUsersClient] = None
         self._users: typing.Optional[AsyncUsersClient] = None
 
     @property
@@ -199,12 +199,12 @@ class AsyncSeedPagination:
         return self._complex_
 
     @property
-    def inline_users(self):
-        if self._inline_users is None:
-            from .inline_users.client import AsyncInlineUsersClient  # noqa: E402
+    def inline_users_inline_users(self):
+        if self._inline_users_inline_users is None:
+            from .inline_users_inline_users.client import AsyncInlineUsersInlineUsersClient  # noqa: E402
 
-            self._inline_users = AsyncInlineUsersClient(client_wrapper=self._client_wrapper)
-        return self._inline_users
+            self._inline_users_inline_users = AsyncInlineUsersInlineUsersClient(client_wrapper=self._client_wrapper)
+        return self._inline_users_inline_users
 
     @property
     def users(self):

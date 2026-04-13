@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedAccept from "../../../index.js";
+import * as SeedApi from "../../../index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -24,7 +24,7 @@ export class ServiceClient {
     /**
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedAccept.NotFoundError}
+     * @throws {@link SeedApi.NotFoundError}
      *
      * @example
      *     await client.service.endpoint()
@@ -44,7 +44,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/container/",
+                "container/",
             ),
             method: "DELETE",
             headers: _headers,
@@ -62,9 +62,9 @@ export class ServiceClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new SeedAccept.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                    throw new SeedApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 default:
-                    throw new errors.SeedAcceptError({
+                    throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                         rawResponse: _response.rawResponse,

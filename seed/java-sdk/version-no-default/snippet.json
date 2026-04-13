@@ -1,16 +1,29 @@
 {
     "endpoints": [
         {
-            "example_identifier": "6fd46b1f",
+            "example_identifier": "c271d4f4",
             "id": {
                 "method": "GET",
                 "path": "/users/{userId}",
-                "identifier_override": "endpoint_user.getUser"
+                "identifier_override": "endpoint_user.getuser"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.version.SeedVersionClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVersionClient client = SeedVersionClient\n            .builder()\n            .build();\n\n        client.user().getUser(\"userId\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.version.SeedVersionClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVersionClient client = SeedVersionClient\n            .builder()\n            .build();\n\n        client.user().getUser(\"userId\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.user.requests.UserGetUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.user().getuser(\n            \"userId\",\n            UserGetUserRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.user.requests.UserGetUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.user().getuser(\n            \"userId\",\n            UserGetUserRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "99f0d394",
+            "id": {
+                "method": "GET",
+                "path": "/users/{userId}",
+                "identifier_override": "endpoint_user.getuser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.user.requests.UserGetUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.user().getuser(\n            \"userId\",\n            UserGetUserRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.user.requests.UserGetUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.user().getuser(\n            \"userId\",\n            UserGetUserRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

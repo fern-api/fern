@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.api.core.ObjectMappers;
-import com.seed.api.resources.a.types.A;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,17 +20,17 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ImportingA.Builder.class)
 public final class ImportingA {
-    private final Optional<A> a;
+    private final Optional<RootType> a;
 
     private final Map<String, Object> additionalProperties;
 
-    private ImportingA(Optional<A> a, Map<String, Object> additionalProperties) {
+    private ImportingA(Optional<RootType> a, Map<String, Object> additionalProperties) {
         this.a = a;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("a")
-    public Optional<A> getA() {
+    public Optional<RootType> getA() {
         return a;
     }
 
@@ -66,7 +65,7 @@ public final class ImportingA {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<A> a = Optional.empty();
+        private Optional<RootType> a = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -79,12 +78,12 @@ public final class ImportingA {
         }
 
         @JsonSetter(value = "a", nulls = Nulls.SKIP)
-        public Builder a(Optional<A> a) {
+        public Builder a(Optional<RootType> a) {
             this.a = a;
             return this;
         }
 
-        public Builder a(A a) {
+        public Builder a(RootType a) {
             this.a = Optional.ofNullable(a);
             return this;
         }

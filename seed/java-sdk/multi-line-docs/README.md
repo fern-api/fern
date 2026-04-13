@@ -55,17 +55,17 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.multiLineDocs.SeedMultiLineDocsClient;
-import com.seed.multiLineDocs.resources.user.requests.CreateUserRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.user.requests.UserCreateUserRequest;
 
 public class Example {
     public static void main(String[] args) {
-        SeedMultiLineDocsClient client = SeedMultiLineDocsClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .build();
 
-        client.user().createUser(
-            CreateUserRequest
+        client.user().createuser(
+            UserCreateUserRequest
                 .builder()
                 .name("name")
                 .age(1)
@@ -80,9 +80,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.multiLineDocs.SeedMultiLineDocsClient;
+import com.seed.api.SeedApiClient;
 
-SeedMultiLineDocsClient client = SeedMultiLineDocsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
@@ -93,11 +93,11 @@ SeedMultiLineDocsClient client = SeedMultiLineDocsClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.multiLineDocs.core.SeedMultiLineDocsApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.user().createUser(...);
-} catch (SeedMultiLineDocsApiException e){
+    client.user().createuser(...);
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -110,12 +110,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.multiLineDocs.SeedMultiLineDocsClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedMultiLineDocsClient client = SeedMultiLineDocsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -138,9 +138,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.multiLineDocs.SeedMultiLineDocsClient;
+import com.seed.api.SeedApiClient;
 
-SeedMultiLineDocsClient client = SeedMultiLineDocsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -150,17 +150,17 @@ SeedMultiLineDocsClient client = SeedMultiLineDocsClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.multiLineDocs.SeedMultiLineDocsClient;
-import com.seed.multiLineDocs.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedMultiLineDocsClient client = SeedMultiLineDocsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
 
 // Request level
-client.user().createUser(
+client.user().createuser(
     ...,
     RequestOptions
         .builder()
@@ -174,11 +174,11 @@ client.user().createUser(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.multiLineDocs.SeedMultiLineDocsClient;
-import com.seed.multiLineDocs.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedMultiLineDocsClient client = SeedMultiLineDocsClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -186,7 +186,7 @@ SeedMultiLineDocsClient client = SeedMultiLineDocsClient
 ;
 
 // Request level
-client.user().createUser(
+client.user().createuser(
     ...,
     RequestOptions
         .builder()
@@ -202,7 +202,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedMultiLineDocsHttpResponse response = client.user().withRawResponse().createUser(...);
+SeedApiHttpResponse response = client.user().withRawResponse().createuser(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

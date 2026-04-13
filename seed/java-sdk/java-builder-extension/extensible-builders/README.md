@@ -56,7 +56,7 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.builderExtension.BaseClient;
+import com.seed.api.BaseClient;
 
 public class Example {
     public static void main(String[] args) {
@@ -75,8 +75,8 @@ public class Example {
 This SDK allows you to configure different environments for API requests.
 
 ```java
-import com.seed.builderExtension.BaseClient;
-import com.seed.builderExtension.core.Environment;
+import com.seed.api.BaseClient;
+import com.seed.api.core.Environment;
 
 BaseClient client = BaseClient
     .builder()
@@ -89,7 +89,7 @@ BaseClient client = BaseClient
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.builderExtension.BaseClient;
+import com.seed.api.BaseClient;
 
 BaseClient client = BaseClient
     .builder()
@@ -102,7 +102,7 @@ BaseClient client = BaseClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.builderExtension.core.BaseClientApiException;
+import com.seed.api.core.BaseClientApiException;
 
 try{
     client.service().hello(...);
@@ -119,7 +119,7 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.builderExtension.BaseClient;
+import com.seed.api.BaseClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
@@ -147,7 +147,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.builderExtension.BaseClient;
+import com.seed.api.BaseClient;
 
 BaseClient client = BaseClient
     .builder()
@@ -159,8 +159,8 @@ BaseClient client = BaseClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.builderExtension.BaseClient;
-import com.seed.builderExtension.core.RequestOptions;
+import com.seed.api.BaseClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
 BaseClient client = BaseClient
@@ -183,8 +183,8 @@ client.service().hello(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.builderExtension.BaseClient;
-import com.seed.builderExtension.core.RequestOptions;
+import com.seed.api.BaseClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
 BaseClient client = BaseClient

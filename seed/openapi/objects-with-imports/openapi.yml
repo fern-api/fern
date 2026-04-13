@@ -11,12 +11,11 @@ components:
       properties:
         id:
           type: string
-          example: node-8dvgfja2
         label:
           type: string
           nullable: true
         metadata:
-          $ref: '#/components/schemas/commonsMetadata'
+          $ref: '#/components/schemas/CommonsMetadata'
           nullable: true
       required:
         - id
@@ -29,17 +28,17 @@ components:
           items:
             $ref: '#/components/schemas/Node'
           nullable: true
-    commonsMetadata:
-      title: commonsMetadata
+    CommonsMetadata:
+      title: CommonsMetadata
       type: object
       properties:
         id:
           type: string
-          example: metadata-js8dg24b
         data:
           type: object
           additionalProperties:
             type: string
+            nullable: true
           nullable: true
       required:
         - id
@@ -49,10 +48,8 @@ components:
       properties:
         name:
           type: string
-          example: file.txt
         contents:
           type: string
-          example: ...
         info:
           $ref: '#/components/schemas/FileInfo'
       required:
@@ -65,13 +62,12 @@ components:
       enum:
         - REGULAR
         - DIRECTORY
-    fileDirectory:
-      title: fileDirectory
+    FileDirectory:
+      title: FileDirectory
       type: object
       properties:
         name:
           type: string
-          example: root
         files:
           type: array
           items:
@@ -80,7 +76,7 @@ components:
         directories:
           type: array
           items:
-            $ref: '#/components/schemas/fileDirectory'
+            $ref: '#/components/schemas/FileDirectory'
           nullable: true
       required:
         - name

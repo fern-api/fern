@@ -12,7 +12,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Usage](#usage)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
-- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
@@ -41,42 +40,13 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedPaginationClient } from "@fern/pagination";
+import { SeedApiClient } from "@fern/pagination";
 
-const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const pageableResponse = await client.complex.search("index", {
-    pagination: {
-        per_page: 1,
-        starting_after: "starting_after"
-    },
-    query: {
-        field: "field",
-        operator: "=",
-        value: "value"
-    }
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.complex.search({
+    index: "index",
+    query: {}
 });
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.complex.search("index", {
-    pagination: {
-        per_page: 1,
-        starting_after: "starting_after"
-    },
-    query: {
-        field: "field",
-        operator: "=",
-        value: "value"
-    }
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
 ```
 
 ## Request and Response Types
@@ -85,9 +55,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedPagination } from "@fern/pagination";
+import { SeedApi } from "@fern/pagination";
 
-const request: SeedPagination.ListUsersCursorPaginationRequest = {
+const request: SeedApi.SearchRequest = {
     ...
 };
 ```
@@ -98,61 +68,18 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedPaginationError } from "@fern/pagination";
+import { SeedApiError } from "@fern/pagination";
 
 try {
     await client.complex.search(...);
 } catch (err) {
-    if (err instanceof SeedPaginationError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
         console.log(err.rawResponse);
     }
 }
-```
-
-## Pagination
-
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
-
-```typescript
-import { SeedPaginationClient } from "@fern/pagination";
-
-const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-const pageableResponse = await client.complex.search("index", {
-    pagination: {
-        per_page: 1,
-        starting_after: "starting_after"
-    },
-    query: {
-        field: "field",
-        operator: "=",
-        value: "value"
-    }
-});
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.complex.search("index", {
-    pagination: {
-        per_page: 1,
-        starting_after: "starting_after"
-    },
-    query: {
-        field: "field",
-        operator: "=",
-        value: "value"
-    }
-});
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
 ```
 
 ## Advanced
@@ -172,9 +99,9 @@ const client = new ComplexClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedPaginationClient } from "@fern/pagination";
+import { SeedApiClient } from "@fern/pagination";
 
-const client = new SeedPaginationClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -259,9 +186,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedPaginationClient, logging } from "@fern/pagination";
+import { SeedApiClient, logging } from "@fern/pagination";
 
-const client = new SeedPaginationClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

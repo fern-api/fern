@@ -12,7 +12,6 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
-- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -40,17 +39,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedPagination;
+using SeedApi;
 
-var client = new SeedPaginationClient("TOKEN");
-var items = await client.Users.ListWithCustomPagerAsync(
-    new ListWithCustomPagerRequest { Limit = 1, StartingAfter = "starting_after" }
-);
-
-await foreach (var item in items)
-{
-    // do something with item
-}
+var client = new SeedApiClient("TOKEN");
+await client.Users.ListwithcustompagerAsync(new UsersListWithCustomPagerRequest());
 ```
 
 ## Exception Handling
@@ -59,31 +51,13 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedPagination;
+using SeedApi;
 
 try {
-    var response = await client.Users.ListWithCustomPagerAsync(...);
-} catch (SeedPaginationApiException e) {
+    var response = await client.Users.ListwithcustompagerAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
-}
-```
-
-## Pagination
-
-List endpoints are paginated. The SDK provides an async enumerable so that you can simply loop over the items:
-
-```csharp
-using SeedPagination;
-
-var client = new SeedPaginationClient("TOKEN");
-var items = await client.Users.ListWithCustomPagerAsync(
-    new ListWithCustomPagerRequest { Limit = 1, StartingAfter = "starting_after" }
-);
-
-await foreach (var item in items)
-{
-    // do something with item
 }
 ```
 
@@ -104,7 +78,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Users.ListWithCustomPagerAsync(
+var response = await client.Users.ListwithcustompagerAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -117,7 +91,7 @@ var response = await client.Users.ListWithCustomPagerAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Users.ListWithCustomPagerAsync(
+var response = await client.Users.ListwithcustompagerAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -130,10 +104,10 @@ var response = await client.Users.ListWithCustomPagerAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedPagination;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Users.ListWithCustomPagerAsync(...).WithRawResponse();
+var result = await client.Users.ListwithcustompagerAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -150,7 +124,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Users.ListWithCustomPagerAsync(...);
+var data = await client.Users.ListwithcustompagerAsync(...);
 ```
 
 ### Additional Headers
@@ -158,7 +132,7 @@ var data = await client.Users.ListWithCustomPagerAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Users.ListWithCustomPagerAsync(
+var response = await client.Users.ListwithcustompagerAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -174,7 +148,7 @@ var response = await client.Users.ListWithCustomPagerAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.Users.ListWithCustomPagerAsync(
+var response = await client.Users.ListwithcustompagerAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

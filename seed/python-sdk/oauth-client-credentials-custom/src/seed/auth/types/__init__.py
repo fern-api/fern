@@ -6,8 +6,20 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .token_response import TokenResponse
-_dynamic_imports: typing.Dict[str, str] = {"TokenResponse": ".token_response"}
+    from .auth_get_token_with_client_credentials_request_audience import (
+        AuthGetTokenWithClientCredentialsRequestAudience,
+    )
+    from .auth_get_token_with_client_credentials_request_grant_type import (
+        AuthGetTokenWithClientCredentialsRequestGrantType,
+    )
+    from .auth_refresh_token_request_audience import AuthRefreshTokenRequestAudience
+    from .auth_refresh_token_request_grant_type import AuthRefreshTokenRequestGrantType
+_dynamic_imports: typing.Dict[str, str] = {
+    "AuthGetTokenWithClientCredentialsRequestAudience": ".auth_get_token_with_client_credentials_request_audience",
+    "AuthGetTokenWithClientCredentialsRequestGrantType": ".auth_get_token_with_client_credentials_request_grant_type",
+    "AuthRefreshTokenRequestAudience": ".auth_refresh_token_request_audience",
+    "AuthRefreshTokenRequestGrantType": ".auth_refresh_token_request_grant_type",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +43,9 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["TokenResponse"]
+__all__ = [
+    "AuthGetTokenWithClientCredentialsRequestAudience",
+    "AuthGetTokenWithClientCredentialsRequestGrantType",
+    "AuthRefreshTokenRequestAudience",
+    "AuthRefreshTokenRequestGrantType",
+]

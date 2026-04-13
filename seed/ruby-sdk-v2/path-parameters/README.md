@@ -30,9 +30,10 @@ require "seed"
 
 client = Seed::Client.new
 
-client.user.create_user(
+client.user.createuser(
+  tenant_id: "tenant_id",
   name: "name",
-  tags: %w[tags tags]
+  tags: ["tags"]
 )
 ```
 
@@ -61,7 +62,7 @@ client = Seed::Client.new(
 )
 
 begin
-    result = client.user.create_user
+    result = client.user.createuser
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
 rescue Seed::Errors::ServiceUnavailableError
@@ -106,7 +107,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.user.create_user(
+response = client.user.createuser(
     ...,
     timeout: 30  # 30 second timeout
 )
@@ -119,7 +120,7 @@ If you would like to send additional headers as part of the request, use the `ad
 ```ruby
 require "seed"
 
-response = client.user.create_user(
+response = client.user.createuser(
     ...,
     request_options: {
         additional_headers: {
@@ -136,7 +137,7 @@ If you would like to send additional query parameters as part of the request, us
 ```ruby
 require "seed"
 
-response = client.user.create_user(
+response = client.user.createuser(
     ...,
     request_options: {
         additional_query_parameters: {

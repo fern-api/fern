@@ -5,21 +5,15 @@ package com.seed.api.resources.folder;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
-import com.seed.api.core.Suppliers;
-import com.seed.api.resources.folder.service.ServiceClient;
-import java.util.function.Supplier;
 
 public class FolderClient {
     protected final ClientOptions clientOptions;
 
     private final RawFolderClient rawClient;
 
-    protected final Supplier<ServiceClient> serviceClient;
-
     public FolderClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new RawFolderClient(clientOptions);
-        this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
     /**
@@ -35,9 +29,5 @@ public class FolderClient {
 
     public void foo(RequestOptions requestOptions) {
         this.rawClient.foo(requestOptions).body();
-    }
-
-    public ServiceClient service() {
-        return this.serviceClient.get();
     }
 }

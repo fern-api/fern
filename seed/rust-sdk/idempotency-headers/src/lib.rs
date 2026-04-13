@@ -1,11 +1,11 @@
-//! # IdempotencyHeaders SDK
+//! # idempotency-headers SDK
 //!
-//! The official Rust SDK for the IdempotencyHeaders.
+//! The official Rust SDK for the idempotency-headers.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_idempotency_headers::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,11 +13,11 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = IdempotencyHeadersClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .payment
 //!         .create(
-//!             &CreatePaymentRequest {
+//!             &PaymentCreateRequest {
 //!                 amount: 1,
 //!                 currency: Currency::Usd,
 //!             },

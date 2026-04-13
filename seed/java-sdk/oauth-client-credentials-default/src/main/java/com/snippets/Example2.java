@@ -1,14 +1,14 @@
 package com.snippets;
 
-import com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;
+import com.seed.api.SeedApiClient;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.withCredentials(
-                        "<clientId>", "<clientSecret>")
+        SeedApiClient client = SeedApiClient.builder()
+                .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.nested().api().getSomething();
+        client.nestedNoAuthApi().nestedNoAuthApiGetSomething();
     }
 }

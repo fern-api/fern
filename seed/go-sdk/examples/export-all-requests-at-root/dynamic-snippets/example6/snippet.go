@@ -17,12 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.GetFileRequest{
-        XFileAPIVersion: "X-File-API-Version",
+    request := &fern.HealthServiceCheckRequest{
+        ID: "id",
     }
-    client.File.Service.GetFile(
+    client.HealthService.HealthServiceCheck(
         context.TODO(),
-        "filename",
         request,
     )
 }

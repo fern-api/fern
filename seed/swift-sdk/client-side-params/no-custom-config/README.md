@@ -49,21 +49,21 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
 private func main() async throws {
-    let client = ClientSideParamsClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.service.searchResources(
+    _ = try await client.service.searchresources(
         limit: 1,
         offset: 1,
         request: .init(
-            query: "query",
-            filters: [
+            query: .value("query"),
+            filters: .value([
                 "filters": .object([
                     "key": .string("value")
                 ])
-            ]
+            ])
         )
     )
 }
@@ -76,14 +76,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import ClientSideParams
+import Api
 
-let client = ClientSideParamsClient(...)
+let client = ApiClient(...)
 
 do {
-    let response = try await client.service.searchResources(...)
+    let response = try await client.service.searchresources(...)
     // Handle successful response
-} catch let error as ClientSideParamsError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -106,9 +106,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import ClientSideParams
+import Api
 
-let request = Requests.SearchResourcesRequest(
+let request = Requests.ServiceSearchResourcesRequest(
     ...
 )
 ```
@@ -120,7 +120,7 @@ let request = Requests.SearchResourcesRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.service.searchResources(..., requestOptions: .init(
+try await client.service.searchresources(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -132,7 +132,7 @@ try await client.service.searchResources(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.service.searchResources(..., requestOptions: .init(
+try await client.service.searchresources(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -144,7 +144,7 @@ try await client.service.searchResources(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.service.searchResources(..., requestOptions: .init(
+try await client.service.searchresources(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -155,9 +155,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import ClientSideParams
+import Api
 
-let client = ClientSideParamsClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 
-/// Query parameters for listWithCursorPagination
+/// Query parameters for inlineUsers_inlineUsers_listWithCursorPagination
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
     /// Defaults to first page
@@ -10,7 +10,7 @@ pub struct InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub per_page: Option<i64>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub order: Option<Order>,
+    pub order: Option<InlineUsersOrder>,
     /// The cursor used for pagination in order to fetch
     /// the next page of results.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -28,7 +28,7 @@ impl InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
 pub struct InlineUsersInlineUsersListWithCursorPaginationQueryRequestBuilder {
     page: Option<i64>,
     per_page: Option<i64>,
-    order: Option<Order>,
+    order: Option<InlineUsersOrder>,
     starting_after: Option<String>,
 }
 
@@ -43,7 +43,7 @@ impl InlineUsersInlineUsersListWithCursorPaginationQueryRequestBuilder {
         self
     }
 
-    pub fn order(mut self, value: Order) -> Self {
+    pub fn order(mut self, value: InlineUsersOrder) -> Self {
         self.order = Some(value);
         self
     }

@@ -8,15 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import ec2, s3
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedMultiUrlEnvironmentNoDefault, SeedMultiUrlEnvironmentNoDefault
-    from .environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedMultiUrlEnvironmentNoDefault": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedMultiUrlEnvironmentNoDefault": ".client",
-    "SeedMultiUrlEnvironmentNoDefaultEnvironment": ".environment",
+    "SeedApi": ".client",
     "__version__": ".version",
     "ec2": ".ec2",
     "s3": ".s3",
@@ -44,13 +42,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "AsyncSeedMultiUrlEnvironmentNoDefault",
-    "DefaultAioHttpClient",
-    "DefaultAsyncHttpxClient",
-    "SeedMultiUrlEnvironmentNoDefault",
-    "SeedMultiUrlEnvironmentNoDefaultEnvironment",
-    "__version__",
-    "ec2",
-    "s3",
-]
+__all__ = ["AsyncSeedApi", "DefaultAioHttpClient", "DefaultAsyncHttpxClient", "SeedApi", "__version__", "ec2", "s3"]

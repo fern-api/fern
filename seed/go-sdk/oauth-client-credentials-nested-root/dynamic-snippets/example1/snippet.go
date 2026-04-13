@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/oauth-client-credentials-nested-root/fern"
     client "github.com/oauth-client-credentials-nested-root/fern/client"
     option "github.com/oauth-client-credentials-nested-root/fern/option"
 )
@@ -12,12 +13,21 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithClientCredentials(
-            "<clientId>",
-            "<clientSecret>",
+        option.WithToken(
+            "<token>",
         ),
     )
-    client.NestedNoAuth.API.GetSomething(
+    request := &fern.AuthGetTokenRequest{
+        ClientID: "client_id",
+        ClientSecret: "client_secret",
+        Audience: fern.AuthGetTokenRequestAudienceHttpsApiExampleCom,
+        GrantType: fern.AuthGetTokenRequestGrantTypeClientCredentials,
+        Scope: fern.String(
+            "scope",
+        ),
+    }
+    client.Auth.Gettoken(
         context.TODO(),
+        request,
     )
 }

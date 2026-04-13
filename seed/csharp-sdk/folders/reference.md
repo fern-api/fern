@@ -24,8 +24,8 @@ await client.FooAsync();
 </dl>
 </details>
 
-## A B
-<details><summary><code>client.A.B.<a href="/src/SeedApi/A/B/BClient.cs">FooAsync</a>()</code></summary>
+## Ab
+<details><summary><code>client.Ab.<a href="/src/SeedApi/Ab/AbClient.cs">ABFooAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ await client.FooAsync();
 <dd>
 
 ```csharp
-await client.A.B.FooAsync();
+await client.Ab.ABFooAsync();
 ```
 </dd>
 </dl>
@@ -50,8 +50,8 @@ await client.A.B.FooAsync();
 </dl>
 </details>
 
-## A C
-<details><summary><code>client.A.C.<a href="/src/SeedApi/A/C/CClient.cs">FooAsync</a>()</code></summary>
+## Ac
+<details><summary><code>client.Ac.<a href="/src/SeedApi/Ac/AcClient.cs">ACFooAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -64,7 +64,7 @@ await client.A.B.FooAsync();
 <dd>
 
 ```csharp
-await client.A.C.FooAsync();
+await client.Ac.ACFooAsync();
 ```
 </dd>
 </dl>
@@ -102,8 +102,8 @@ await client.Folder.FooAsync();
 </dl>
 </details>
 
-## Folder Service
-<details><summary><code>client.Folder.Service.<a href="/src/SeedApi/Folder/Service/ServiceClient.cs">EndpointAsync</a>()</code></summary>
+## FolderService
+<details><summary><code>client.FolderService.<a href="/src/SeedApi/FolderService/FolderServiceClient.cs">FolderServiceEndpointAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -116,7 +116,7 @@ await client.Folder.FooAsync();
 <dd>
 
 ```csharp
-await client.Folder.Service.EndpointAsync();
+await client.FolderService.FolderServiceEndpointAsync();
 ```
 </dd>
 </dl>
@@ -128,7 +128,7 @@ await client.Folder.Service.EndpointAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Folder.Service.<a href="/src/SeedApi/Folder/Service/ServiceClient.cs">UnknownRequestAsync</a>(object { ... })</code></summary>
+<details><summary><code>client.FolderService.<a href="/src/SeedApi/FolderService/FolderServiceClient.cs">FolderServiceUnknownRequestAsync</a>(object { ... })</code></summary>
 <dl>
 <dd>
 
@@ -141,7 +141,7 @@ await client.Folder.Service.EndpointAsync();
 <dd>
 
 ```csharp
-await client.Folder.Service.UnknownRequestAsync(
+await client.FolderService.FolderServiceUnknownRequestAsync(
     new Dictionary<object, object?>() { { "key", "value" } }
 );
 ```

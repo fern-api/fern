@@ -11,16 +11,16 @@ use Seed\Core\Json\JsonProperty;
 class User extends JsonSerializableType
 {
     /**
-     * @var string $id The unique identifier for the user.
+     * @var ?string $id The unique identifier for the user.
      */
     #[JsonProperty('id')]
-    public string $id;
+    public ?string $id;
 
     /**
-     * @var string $email The email address of the user.
+     * @var ?string $email The email address of the user.
      */
     #[JsonProperty('email')]
-    public string $email;
+    public ?string $email;
 
     /**
      * @var string $password The password for the user.
@@ -36,17 +36,17 @@ class User extends JsonSerializableType
 
     /**
      * @param array{
-     *   id: string,
-     *   email: string,
      *   password: string,
      *   profile: UserProfile,
+     *   id?: ?string,
+     *   email?: ?string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->id = $values['id'];
-        $this->email = $values['email'];
+        $this->id = $values['id'] ?? null;
+        $this->email = $values['email'] ?? null;
         $this->password = $values['password'];
         $this->profile = $values['profile'];
     }

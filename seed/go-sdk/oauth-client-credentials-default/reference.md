@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.GetToken(request) -> *fern.TokenResponse</code></summary>
+<details><summary><code>client.Auth.Gettoken(request) -> *fern.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,12 @@
 <dd>
 
 ```go
-request := &fern.GetTokenRequest{
+request := &fern.AuthGetTokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
+        GrantType: fern.AuthGetTokenRequestGrantTypeClientCredentials,
     }
-client.Auth.GetToken(
+client.Auth.Gettoken(
         context.TODO(),
         request,
     )
@@ -52,7 +53,7 @@ client.Auth.GetToken(
 <dl>
 <dd>
 
-**grantType:** `string` 
+**grantType:** `*fern.AuthGetTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -64,8 +65,8 @@ client.Auth.GetToken(
 </dl>
 </details>
 
-## NestedNoAuth API
-<details><summary><code>client.NestedNoAuth.API.GetSomething() -> error</code></summary>
+## NestedNoAuthAPI
+<details><summary><code>client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -78,7 +79,7 @@ client.Auth.GetToken(
 <dd>
 
 ```go
-client.NestedNoAuth.API.GetSomething(
+client.NestedNoAuthAPI.NestedNoAuthAPIGetSomething(
         context.TODO(),
     )
 }
@@ -93,8 +94,8 @@ client.NestedNoAuth.API.GetSomething(
 </dl>
 </details>
 
-## Nested API
-<details><summary><code>client.Nested.API.GetSomething() -> error</code></summary>
+## NestedAPI
+<details><summary><code>client.NestedAPI.NestedAPIGetSomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -107,7 +108,7 @@ client.NestedNoAuth.API.GetSomething(
 <dd>
 
 ```go
-client.Nested.API.GetSomething(
+client.NestedAPI.NestedAPIGetSomething(
         context.TODO(),
     )
 }
@@ -123,7 +124,7 @@ client.Nested.API.GetSomething(
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.GetSomething() -> error</code></summary>
+<details><summary><code>client.Simple.Getsomething() -> error</code></summary>
 <dl>
 <dd>
 
@@ -136,7 +137,7 @@ client.Nested.API.GetSomething(
 <dd>
 
 ```go
-client.Simple.GetSomething(
+client.Simple.Getsomething(
         context.TODO(),
     )
 }

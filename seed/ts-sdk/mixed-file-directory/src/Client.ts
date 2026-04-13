@@ -2,22 +2,26 @@
 
 import { OrganizationClient } from "./api/resources/organization/client/Client.js";
 import { UserClient } from "./api/resources/user/client/Client.js";
+import { UserEventsClient } from "./api/resources/userEvents/client/Client.js";
+import { UserEventsMetadataClient } from "./api/resources/userEventsMetadata/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
-export declare namespace SeedMixedFileDirectoryClient {
+export declare namespace SeedApiClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class SeedMixedFileDirectoryClient {
-    protected readonly _options: NormalizedClientOptions<SeedMixedFileDirectoryClient.Options>;
+export class SeedApiClient {
+    protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
     protected _organization: OrganizationClient | undefined;
     protected _user: UserClient | undefined;
+    protected _userEvents: UserEventsClient | undefined;
+    protected _userEventsMetadata: UserEventsMetadataClient | undefined;
 
-    constructor(options: SeedMixedFileDirectoryClient.Options) {
+    constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
@@ -27,6 +31,14 @@ export class SeedMixedFileDirectoryClient {
 
     public get user(): UserClient {
         return (this._user ??= new UserClient(this._options));
+    }
+
+    public get userEvents(): UserEventsClient {
+        return (this._userEvents ??= new UserEventsClient(this._options));
+    }
+
+    public get userEventsMetadata(): UserEventsMetadataClient {
+        return (this._userEventsMetadata ??= new UserEventsMetadataClient(this._options));
     }
 
     /**

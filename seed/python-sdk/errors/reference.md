@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_without_endpoint_error</a>(...) -> FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foowithoutendpointerror</a>(...) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedErrors
+from seed import SeedApi
 
-client = SeedErrors(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.simple.foo_without_endpoint_error(
+client.simple.foowithoutendpointerror(
     bar="bar",
 )
 
@@ -70,9 +70,9 @@ client.simple.foo_without_endpoint_error(
 <dd>
 
 ```python
-from seed import SeedErrors
+from seed import SeedApi
 
-client = SeedErrors(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -114,7 +114,7 @@ client.simple.foo(
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_with_examples</a>(...) -> FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foowithexamples</a>(...) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -127,14 +127,14 @@ client.simple.foo(
 <dd>
 
 ```python
-from seed import SeedErrors
+from seed import SeedApi
 
-client = SeedErrors(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.simple.foo_with_examples(
-    bar="hello",
+client.simple.foowithexamples(
+    bar="bar",
 )
 
 ```

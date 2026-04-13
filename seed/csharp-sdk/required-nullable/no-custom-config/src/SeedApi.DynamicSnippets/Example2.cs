@@ -11,13 +11,10 @@ public class Example2
             }
         );
 
-        await client.UpdateFooAsync(
-            "id",
+        await client._.UpdateFooAsync(
             new UpdateFooRequest {
-                XIdempotencyKey = "X-Idempotency-Key",
-                NullableText = "nullable_text",
-                NullableNumber = 1.1,
-                NonNullableText = "non_nullable_text"
+                Id = "id",
+                IdempotencyKey = "X-Idempotency-Key"
             }
         );
     }

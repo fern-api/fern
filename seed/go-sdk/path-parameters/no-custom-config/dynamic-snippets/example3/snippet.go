@@ -14,11 +14,12 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.GetUsersRequest{
+    request := &fern.OrganizationsGetOrganizationUserRequest{
         TenantID: "tenant_id",
+        OrganizationID: "organization_id",
         UserID: "user_id",
     }
-    client.User.GetUser(
+    client.Organizations.Getorganizationuser(
         context.TODO(),
         request,
     )

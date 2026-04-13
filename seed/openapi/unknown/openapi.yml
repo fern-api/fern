@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: unknown-as-any
+  title: unknown
   version: ''
 paths:
   /:
@@ -24,7 +24,7 @@ paths:
             schema: {}
   /with-object:
     post:
-      operationId: unknown_postObject
+      operationId: unknown_postobject
       tags:
         - Unknown
       parameters: []
@@ -41,16 +41,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MyObject'
+              type: object
+              properties:
+                unknown: {}
+              required:
+                - unknown
 components:
   schemas:
     MyAlias:
       title: MyAlias
-    MyObject:
-      title: MyObject
-      type: object
-      properties:
-        unknown: {}
-      required:
-        - unknown
   securitySchemes: {}

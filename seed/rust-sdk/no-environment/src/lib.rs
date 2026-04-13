@@ -1,11 +1,11 @@
-//! # NoEnvironment SDK
+//! # no-environment SDK
 //!
-//! The official Rust SDK for the NoEnvironment.
+//! The official Rust SDK for the no-environment.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_no_environment::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,8 +13,8 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = NoEnvironmentClient::new(config).expect("Failed to build client");
-//!     client.dummy.get_dummy(None).await;
+//!     let client = ApiClient::new(config).expect("Failed to build client");
+//!     client.dummy.getdummy(None).await;
 //! }
 //! ```
 //!

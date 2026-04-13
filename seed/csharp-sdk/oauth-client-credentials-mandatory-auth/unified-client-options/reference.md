@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsMandatoryAuth/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedApi/Auth/AuthClient.cs">GettokenwithclientcredentialsAsync</a>(AuthGetTokenWithClientCredentialsRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,13 @@
 <dd>
 
 ```csharp
-await client.Auth.GetTokenWithClientCredentialsAsync(
-    new GetTokenRequest
+await client.Auth.GettokenwithclientcredentialsAsync(
+    new AuthGetTokenWithClientCredentialsRequest
     {
-        ClientId = "my_oauth_app_123",
-        ClientSecret = "sk_live_abcdef123456789",
-        Audience = "https://api.example.com",
-        GrantType = "client_credentials",
-        Scope = "read:users",
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
+        Audience = AuthGetTokenWithClientCredentialsRequestAudience.HttpsApiExampleCom,
+        GrantType = AuthGetTokenWithClientCredentialsRequestGrantType.ClientCredentials,
     }
 );
 ```
@@ -37,7 +36,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 <dl>
 <dd>
 
-**request:** `GetTokenRequest` 
+**request:** `AuthGetTokenWithClientCredentialsRequest` 
     
 </dd>
 </dl>
@@ -49,7 +48,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.<a href="/src/SeedOauthClientCredentialsMandatoryAuth/Auth/AuthClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedApi/Auth/AuthClient.cs">RefreshtokenAsync</a>(AuthRefreshTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -62,15 +61,14 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 <dd>
 
 ```csharp
-await client.Auth.RefreshTokenAsync(
-    new RefreshTokenRequest
+await client.Auth.RefreshtokenAsync(
+    new AuthRefreshTokenRequest
     {
-        ClientId = "my_oauth_app_123",
-        ClientSecret = "sk_live_abcdef123456789",
+        ClientId = "client_id",
+        ClientSecret = "client_secret",
         RefreshToken = "refresh_token",
-        Audience = "https://api.example.com",
-        GrantType = "refresh_token",
-        Scope = "read:users",
+        Audience = AuthRefreshTokenRequestAudience.HttpsApiExampleCom,
+        GrantType = AuthRefreshTokenRequestGrantType.RefreshToken,
     }
 );
 ```
@@ -87,7 +85,7 @@ await client.Auth.RefreshTokenAsync(
 <dl>
 <dd>
 
-**request:** `RefreshTokenRequest` 
+**request:** `AuthRefreshTokenRequest` 
     
 </dd>
 </dl>
@@ -99,8 +97,8 @@ await client.Auth.RefreshTokenAsync(
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>client.Nested.Api.<a href="/src/SeedOauthClientCredentialsMandatoryAuth/Nested/Api/ApiClient.cs">GetSomethingAsync</a>()</code></summary>
+## NestedApi
+<details><summary><code>client.NestedApi.<a href="/src/SeedApi/NestedApi/NestedApiClient.cs">NestedApiGetSomethingAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -113,7 +111,7 @@ await client.Auth.RefreshTokenAsync(
 <dd>
 
 ```csharp
-await client.Nested.Api.GetSomethingAsync();
+await client.NestedApi.NestedApiGetSomethingAsync();
 ```
 </dd>
 </dl>
@@ -126,7 +124,7 @@ await client.Nested.Api.GetSomethingAsync();
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.<a href="/src/SeedOauthClientCredentialsMandatoryAuth/Simple/SimpleClient.cs">GetSomethingAsync</a>()</code></summary>
+<details><summary><code>client.Simple.<a href="/src/SeedApi/Simple/SimpleClient.cs">GetsomethingAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -139,7 +137,7 @@ await client.Nested.Api.GetSomethingAsync();
 <dd>
 
 ```csharp
-await client.Simple.GetSomethingAsync();
+await client.Simple.GetsomethingAsync();
 ```
 </dd>
 </dl>

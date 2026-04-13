@@ -1,6 +1,6 @@
 # Reference
-## FolderA Service
-<details><summary><code>client.FolderA.Service.GetDirectThread() -> *foldera.Response</code></summary>
+## FolderAService
+<details><summary><code>client.FolderAService.FolderAServiceGetDirectThread() -> *fern.FolderAResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,19 @@
 <dd>
 
 ```go
-request := &foldera.GetDirectThreadRequest{
-        IDs: []string{
-            "ids",
+request := &fern.FolderAServiceGetDirectThreadRequest{
+        IDs: []*string{
+            fern.String(
+                "ids",
+            ),
         },
-        Tags: []string{
-            "tags",
+        Tags: []*string{
+            fern.String(
+                "tags",
+            ),
         },
     }
-client.FolderA.Service.GetDirectThread(
+client.FolderAService.FolderAServiceGetDirectThread(
         context.TODO(),
         request,
     )
@@ -40,7 +44,7 @@ client.FolderA.Service.GetDirectThread(
 <dl>
 <dd>
 
-**ids:** `string` 
+**ids:** `*string` 
     
 </dd>
 </dl>
@@ -48,37 +52,8 @@ client.FolderA.Service.GetDirectThread(
 <dl>
 <dd>
 
-**tags:** `string` 
+**tags:** `*string` 
     
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## FolderD Service
-<details><summary><code>client.FolderD.Service.GetDirectThread() -> *folderd.Response</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-client.FolderD.Service.GetDirectThread(
-        context.TODO(),
-    )
-}
-```
 </dd>
 </dl>
 </dd>
@@ -103,17 +78,7 @@ client.FolderD.Service.GetDirectThread(
 <dd>
 
 ```go
-request := &fern.FindRequest{
-        OptionalString: fern.String(
-            "optionalString",
-        ),
-        PublicProperty: fern.String(
-            "publicProperty",
-        ),
-        PrivateProperty: fern.Int(
-            1,
-        ),
-    }
+request := &fern.FooFindRequest{}
 client.Foo.Find(
         context.TODO(),
         request,
@@ -133,7 +98,7 @@ client.Foo.Find(
 <dl>
 <dd>
 
-**optionalString:** `fern.OptionalString` 
+**optionalString:** `*fern.OptionalString` 
     
 </dd>
 </dl>
@@ -151,6 +116,35 @@ client.Foo.Find(
 
 **privateProperty:** `*int` 
     
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## FolderDService
+<details><summary><code>client.FolderDService.FolderDServiceGetDirectThread() -> *fern.FolderDResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.FolderDService.FolderDServiceGetDirectThread(
+        context.TODO(),
+    )
+}
+```
 </dd>
 </dl>
 </dd>

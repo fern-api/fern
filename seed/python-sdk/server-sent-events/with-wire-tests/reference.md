@@ -13,16 +13,7 @@
 <dd>
 
 ```python
-from seed import SeedServerSentEvents
-
-client = SeedServerSentEvents(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.completions.stream(
-    query="foo",
-)
-
+client.completions.stream(...)
 ```
 </dd>
 </dl>
@@ -57,7 +48,7 @@ client.completions.stream(
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream_without_terminator</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.completions.<a href="src/seed/completions/client.py">streamwithoutterminator</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -70,16 +61,7 @@ client.completions.stream(
 <dd>
 
 ```python
-from seed import SeedServerSentEvents
-
-client = SeedServerSentEvents(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.completions.stream_without_terminator(
-    query="query",
-)
-
+client.completions.streamwithoutterminator(...)
 ```
 </dd>
 </dl>

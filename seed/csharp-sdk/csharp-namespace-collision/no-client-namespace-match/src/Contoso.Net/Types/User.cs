@@ -11,9 +11,8 @@ public record User : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("id")]
-    public string Id { get; set; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
@@ -21,7 +20,6 @@ public record User : IJsonOnDeserialized
     [JsonPropertyName("email")]
     public required string Email { get; set; }
 
-    [JsonAccess(JsonAccessType.WriteOnly)]
     [JsonPropertyName("password")]
     public required string Password { get; set; }
 

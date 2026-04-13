@@ -1,20 +1,19 @@
 package com.snippets;
 
-import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersAliasedDataRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.users.requests.UsersListWithTopLevelBodyCursorPaginationRequest;
 
 public class Example33 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.users()
-                .listWithAliasedData(ListUsersAliasedDataRequest.builder()
-                        .page(1)
-                        .perPage(1)
-                        .startingAfter("starting_after")
+                .listwithtoplevelbodycursorpagination(UsersListWithTopLevelBodyCursorPaginationRequest.builder()
+                        .cursor("cursor")
+                        .filter("filter")
                         .build());
     }
 }

@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.user import User
 from .raw_client import AsyncRawRetriesClient, RawRetriesClient
-from .types.user import User
 
 
 class RetriesClient:
@@ -23,7 +23,7 @@ class RetriesClient:
         """
         return self._raw_client
 
-    def get_users(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    def getusers(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -34,16 +34,17 @@ class RetriesClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
-        from seed import SeedNoRetries
+        from seed import SeedApi
 
-        client = SeedNoRetries(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.retries.get_users()
+        client.retries.getusers()
         """
-        _response = self._raw_client.get_users(request_options=request_options)
+        _response = self._raw_client.getusers(request_options=request_options)
         return _response.data
 
 
@@ -62,7 +63,7 @@ class AsyncRetriesClient:
         """
         return self._raw_client
 
-    async def get_users(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+    async def getusers(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
         ----------
@@ -73,22 +74,23 @@ class AsyncRetriesClient:
         -------
         typing.List[User]
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedNoRetries
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedNoRetries(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.retries.get_users()
+            await client.retries.getusers()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get_users(request_options=request_options)
+        _response = await self._raw_client.getusers(request_options=request_options)
         return _response.data

@@ -2,9 +2,8 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.user.create_username_with_referenced_type(
-  tags: %w[tags tags],
+client.user.createusernamewithreferencedtype(
   username: "username",
   password: "password",
-  name: "test"
+  name: "name"
 )

@@ -1,4 +1,4 @@
-package headertokenenvironmentvariable
+package api
 
 import (
 	"io"

@@ -1,19 +1,18 @@
 package com.snippets;
 
-import com.seed.requestParameters.SeedRequestParametersClient;
-import com.seed.requestParameters.resources.user.types.CreateUsernameBodyOptionalProperties;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.user.requests.CreateUsernameBodyOptionalProperties;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedRequestParametersClient client = SeedRequestParametersClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
         client.user()
-                .createUsernameOptional(CreateUsernameBodyOptionalProperties.builder()
+                .createusernameoptional(CreateUsernameBodyOptionalProperties.builder()
                         .username("username")
                         .password("password")
-                        .name("test")
+                        .name("name")
                         .build());
     }
 }

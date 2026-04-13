@@ -6,83 +6,109 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        Actor,
-        Actress,
-        BigEntity,
-        CastMember,
-        CronJob,
-        Directory,
-        Entity,
-        Exception,
-        ExceptionInfo,
-        Exception_Generic,
-        Exception_Timeout,
-        ExtendedMovie,
-        File,
-        Metadata,
-        Metadata_Html,
-        Metadata_Markdown,
-        Migration,
-        MigrationStatus,
-        Moment,
-        Movie,
-        MovieId,
-        Node,
-        RefreshTokenRequest,
-        Request,
-        Response,
-        ResponseType,
-        StuntDouble,
-        Test,
-        Test_And,
-        Test_Or,
-        Tree,
-    )
-    from .errors import NotFoundError
+    from .actor import Actor
+    from .actress import Actress
     from .basic_type import BasicType
+    from .cast_member import CastMember
+    from .commons_data import CommonsData, CommonsData_Base64, CommonsData_String
+    from .commons_data_base64 import CommonsDataBase64
+    from .commons_data_string import CommonsDataString
+    from .commons_event_info import CommonsEventInfo
+    from .commons_event_info_type import CommonsEventInfoType
+    from .commons_event_info_type_type import CommonsEventInfoTypeType
+    from .commons_event_info_zero import CommonsEventInfoZero
+    from .commons_event_info_zero_type import CommonsEventInfoZeroType
+    from .commons_metadata import CommonsMetadata
+    from .commons_tag import CommonsTag
     from .complex_type import ComplexType
+    from .cron_job import CronJob
+    from .directory import Directory
+    from .entity import Entity
+    from .exception import Exception
+    from .exception_info import ExceptionInfo
+    from .exception_type import ExceptionType
+    from .exception_type_type import ExceptionTypeType
+    from .exception_zero import ExceptionZero
+    from .exception_zero_type import ExceptionZeroType
+    from .extended_movie import ExtendedMovie
+    from .file import File
+    from .file_filename import FileFilename
     from .identifier import Identifier
+    from .metadata import Metadata, Metadata_Html, Metadata_Markdown
+    from .metadata_html import MetadataHtml
+    from .metadata_markdown import MetadataMarkdown
+    from .migration import Migration
+    from .migration_status import MigrationStatus
+    from .moment import Moment
+    from .movie import Movie
+    from .movie_id import MovieId
+    from .movie_type import MovieType
+    from .node import Node
+    from .request import Request
+    from .response import Response
+    from .response_type import ResponseType
+    from .stunt_double import StuntDouble
+    from .test import Test, Test_And, Test_Or
+    from .test_and import TestAnd
+    from .test_or import TestOr
+    from .tree import Tree
     from .type import Type
     from .type_with_single_char_property_equal_to_type_starting_letter import (
         TypeWithSingleCharPropertyEqualToTypeStartingLetter,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "Actor": ".types",
-    "Actress": ".types",
+    "Actor": ".actor",
+    "Actress": ".actress",
     "BasicType": ".basic_type",
-    "BigEntity": ".types",
-    "CastMember": ".types",
+    "CastMember": ".cast_member",
+    "CommonsData": ".commons_data",
+    "CommonsDataBase64": ".commons_data_base64",
+    "CommonsDataString": ".commons_data_string",
+    "CommonsData_Base64": ".commons_data",
+    "CommonsData_String": ".commons_data",
+    "CommonsEventInfo": ".commons_event_info",
+    "CommonsEventInfoType": ".commons_event_info_type",
+    "CommonsEventInfoTypeType": ".commons_event_info_type_type",
+    "CommonsEventInfoZero": ".commons_event_info_zero",
+    "CommonsEventInfoZeroType": ".commons_event_info_zero_type",
+    "CommonsMetadata": ".commons_metadata",
+    "CommonsTag": ".commons_tag",
     "ComplexType": ".complex_type",
-    "CronJob": ".types",
-    "Directory": ".types",
-    "Entity": ".types",
-    "Exception": ".types",
-    "ExceptionInfo": ".types",
-    "Exception_Generic": ".types",
-    "Exception_Timeout": ".types",
-    "ExtendedMovie": ".types",
-    "File": ".types",
+    "CronJob": ".cron_job",
+    "Directory": ".directory",
+    "Entity": ".entity",
+    "Exception": ".exception",
+    "ExceptionInfo": ".exception_info",
+    "ExceptionType": ".exception_type",
+    "ExceptionTypeType": ".exception_type_type",
+    "ExceptionZero": ".exception_zero",
+    "ExceptionZeroType": ".exception_zero_type",
+    "ExtendedMovie": ".extended_movie",
+    "File": ".file",
+    "FileFilename": ".file_filename",
     "Identifier": ".identifier",
-    "Metadata": ".types",
-    "Metadata_Html": ".types",
-    "Metadata_Markdown": ".types",
-    "Migration": ".types",
-    "MigrationStatus": ".types",
-    "Moment": ".types",
-    "Movie": ".types",
-    "MovieId": ".types",
-    "Node": ".types",
-    "NotFoundError": ".errors",
-    "RefreshTokenRequest": ".types",
-    "Request": ".types",
-    "Response": ".types",
-    "ResponseType": ".types",
-    "StuntDouble": ".types",
-    "Test": ".types",
-    "Test_And": ".types",
-    "Test_Or": ".types",
-    "Tree": ".types",
+    "Metadata": ".metadata",
+    "MetadataHtml": ".metadata_html",
+    "MetadataMarkdown": ".metadata_markdown",
+    "Metadata_Html": ".metadata",
+    "Metadata_Markdown": ".metadata",
+    "Migration": ".migration",
+    "MigrationStatus": ".migration_status",
+    "Moment": ".moment",
+    "Movie": ".movie",
+    "MovieId": ".movie_id",
+    "MovieType": ".movie_type",
+    "Node": ".node",
+    "Request": ".request",
+    "Response": ".response",
+    "ResponseType": ".response_type",
+    "StuntDouble": ".stunt_double",
+    "Test": ".test",
+    "TestAnd": ".test_and",
+    "TestOr": ".test_or",
+    "Test_And": ".test",
+    "Test_Or": ".test",
+    "Tree": ".tree",
     "Type": ".type",
     "TypeWithSingleCharPropertyEqualToTypeStartingLetter": ".type_with_single_char_property_equal_to_type_starting_letter",
 }
@@ -113,20 +139,36 @@ __all__ = [
     "Actor",
     "Actress",
     "BasicType",
-    "BigEntity",
     "CastMember",
+    "CommonsData",
+    "CommonsDataBase64",
+    "CommonsDataString",
+    "CommonsData_Base64",
+    "CommonsData_String",
+    "CommonsEventInfo",
+    "CommonsEventInfoType",
+    "CommonsEventInfoTypeType",
+    "CommonsEventInfoZero",
+    "CommonsEventInfoZeroType",
+    "CommonsMetadata",
+    "CommonsTag",
     "ComplexType",
     "CronJob",
     "Directory",
     "Entity",
     "Exception",
     "ExceptionInfo",
-    "Exception_Generic",
-    "Exception_Timeout",
+    "ExceptionType",
+    "ExceptionTypeType",
+    "ExceptionZero",
+    "ExceptionZeroType",
     "ExtendedMovie",
     "File",
+    "FileFilename",
     "Identifier",
     "Metadata",
+    "MetadataHtml",
+    "MetadataMarkdown",
     "Metadata_Html",
     "Metadata_Markdown",
     "Migration",
@@ -134,14 +176,15 @@ __all__ = [
     "Moment",
     "Movie",
     "MovieId",
+    "MovieType",
     "Node",
-    "NotFoundError",
-    "RefreshTokenRequest",
     "Request",
     "Response",
     "ResponseType",
     "StuntDouble",
     "Test",
+    "TestAnd",
+    "TestOr",
     "Test_And",
     "Test_Or",
     "Tree",

@@ -6,8 +6,10 @@ package com.seed.api;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.Suppliers;
-import com.seed.api.resources.a.AsyncAClient;
+import com.seed.api.resources.ab.AsyncAbClient;
+import com.seed.api.resources.ac.AsyncAcClient;
 import com.seed.api.resources.folder.AsyncFolderClient;
+import com.seed.api.resources.folderservice.AsyncFolderServiceClient;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -16,15 +18,21 @@ public class AsyncSeedApiClient {
 
     private final AsyncRawSeedApiClient rawClient;
 
-    protected final Supplier<AsyncAClient> aClient;
+    protected final Supplier<AsyncAbClient> abClient;
+
+    protected final Supplier<AsyncAcClient> acClient;
 
     protected final Supplier<AsyncFolderClient> folderClient;
+
+    protected final Supplier<AsyncFolderServiceClient> folderServiceClient;
 
     public AsyncSeedApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.rawClient = new AsyncRawSeedApiClient(clientOptions);
-        this.aClient = Suppliers.memoize(() -> new AsyncAClient(clientOptions));
+        this.abClient = Suppliers.memoize(() -> new AsyncAbClient(clientOptions));
+        this.acClient = Suppliers.memoize(() -> new AsyncAcClient(clientOptions));
         this.folderClient = Suppliers.memoize(() -> new AsyncFolderClient(clientOptions));
+        this.folderServiceClient = Suppliers.memoize(() -> new AsyncFolderServiceClient(clientOptions));
     }
 
     /**
@@ -42,12 +50,20 @@ public class AsyncSeedApiClient {
         return this.rawClient.foo(requestOptions).thenApply(response -> response.body());
     }
 
-    public AsyncAClient a() {
-        return this.aClient.get();
+    public AsyncAbClient ab() {
+        return this.abClient.get();
+    }
+
+    public AsyncAcClient ac() {
+        return this.acClient.get();
     }
 
     public AsyncFolderClient folder() {
         return this.folderClient.get();
+    }
+
+    public AsyncFolderServiceClient folderService() {
+        return this.folderServiceClient.get();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

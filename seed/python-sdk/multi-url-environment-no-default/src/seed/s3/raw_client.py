@@ -19,7 +19,7 @@ class RawS3Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_presigned_url(
+    def getpresignedurl(
         self, *, s3key: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[str]:
         """
@@ -33,13 +33,16 @@ class RawS3Client:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "s3/presigned-url",
-            base_url=self._client_wrapper.get_environment().s3,
             method="POST",
             json={
                 "s3Key": s3key,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -68,7 +71,7 @@ class AsyncRawS3Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_presigned_url(
+    async def getpresignedurl(
         self, *, s3key: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[str]:
         """
@@ -82,13 +85,16 @@ class AsyncRawS3Client:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "s3/presigned-url",
-            base_url=self._client_wrapper.get_environment().s3,
             method="POST",
             json={
                 "s3Key": s3key,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

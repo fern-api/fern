@@ -1,19 +1,12 @@
 package com.snippets;
 
-import com.seed.crossPackageTypeNames.SeedCrossPackageTypeNamesClient;
-import com.seed.crossPackageTypeNames.resources.foo.requests.FindRequest;
+import com.seed.api.SeedApiClient;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedCrossPackageTypeNamesClient client = SeedCrossPackageTypeNamesClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.foo()
-                .find(FindRequest.builder()
-                        .optionalString("optionalString")
-                        .publicProperty("publicProperty")
-                        .privateProperty(1)
-                        .build());
+        client.folderDService().folderDServiceGetDirectThread();
     }
 }

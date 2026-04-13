@@ -9,7 +9,7 @@ public struct PaginatedClientResponse: Codable, Hashable, Sendable {
     /// Number of items returned
     public let length: Int
     /// Total number of items (when include_totals=true)
-    public let total: Int?
+    public let total: Nullable<Int>?
     /// List of clients
     public let clients: [Client]
     /// Additional properties that are not explicitly defined in the schema
@@ -19,7 +19,7 @@ public struct PaginatedClientResponse: Codable, Hashable, Sendable {
         start: Int,
         limit: Int,
         length: Int,
-        total: Int? = nil,
+        total: Nullable<Int>? = nil,
         clients: [Client],
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -36,7 +36,7 @@ public struct PaginatedClientResponse: Codable, Hashable, Sendable {
         self.start = try container.decode(Int.self, forKey: .start)
         self.limit = try container.decode(Int.self, forKey: .limit)
         self.length = try container.decode(Int.self, forKey: .length)
-        self.total = try container.decodeIfPresent(Int.self, forKey: .total)
+        self.total = try container.decodeNullableIfPresent(Int.self, forKey: .total)
         self.clients = try container.decode([Client].self, forKey: .clients)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
@@ -47,7 +47,7 @@ public struct PaginatedClientResponse: Codable, Hashable, Sendable {
         try container.encode(self.start, forKey: .start)
         try container.encode(self.limit, forKey: .limit)
         try container.encode(self.length, forKey: .length)
-        try container.encodeIfPresent(self.total, forKey: .total)
+        try container.encodeNullableIfPresent(self.total, forKey: .total)
         try container.encode(self.clients, forKey: .clients)
     }
 

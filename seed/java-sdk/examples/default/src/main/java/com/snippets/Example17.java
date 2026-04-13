@@ -1,21 +1,15 @@
 package com.snippets;
 
-import com.seed.examples.SeedExamplesClient;
-import com.seed.examples.resources.service.requests.GetMetadataRequest;
-import java.util.Arrays;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.service.requests.RefreshTokenRequest;
 
 public class Example17 {
     public static void main(String[] args) {
-        SeedExamplesClient client = SeedExamplesClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.service()
-                .getMetadata(GetMetadataRequest.builder()
-                        .xApiVersion("0.0.1")
-                        .tag(Arrays.asList("development"))
-                        .shallow(false)
-                        .build());
+        client.service().refreshtoken(RefreshTokenRequest.builder().ttl(1).build());
     }
 }

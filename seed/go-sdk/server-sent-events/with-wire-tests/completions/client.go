@@ -4,7 +4,7 @@ package completions
 
 import (
 	context "context"
-	http "net/http"
+	io "io"
 
 	sse "github.com/fern-api/sse-go"
 	core "github.com/fern-api/sse-go/core"
@@ -36,76 +36,32 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Stream(
 	ctx context.Context,
-	request *sse.StreamCompletionRequest,
+	request *sse.CompletionsStreamRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[sse.StreamedCompletion], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/stream"
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	headers.Add("Accept", "text/event-stream")
-	streamer := internal.NewStreamer[sse.StreamedCompletion](c.caller)
-	return streamer.Stream(
+) (io.Reader, error) {
+	response, err := c.WithRawResponse.Stream(
 		ctx,
-		&internal.StreamParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			MaxBufSize:      options.MaxBufSize,
-			Prefix:          internal.DefaultSSEDataPrefix,
-			Terminator:      "[[DONE]]",
-			Format:          core.StreamFormatSSE,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
-		},
+		request,
+		opts...,
 	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
 }
 
-func (c *Client) StreamWithoutTerminator(
+func (c *Client) Streamwithoutterminator(
 	ctx context.Context,
-	request *sse.StreamCompletionRequestWithoutTerminator,
+	request *sse.CompletionsStreamWithoutTerminatorRequest,
 	opts ...option.RequestOption,
-) (*core.Stream[sse.StreamedCompletion], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/stream-no-terminator"
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	headers.Add("Accept", "text/event-stream")
-	streamer := internal.NewStreamer[sse.StreamedCompletion](c.caller)
-	return streamer.Stream(
+) (io.Reader, error) {
+	response, err := c.WithRawResponse.Streamwithoutterminator(
 		ctx,
-		&internal.StreamParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			MaxBufSize:      options.MaxBufSize,
-			Prefix:          internal.DefaultSSEDataPrefix,
-			Terminator:      internal.DefaultSSETerminator,
-			Format:          core.StreamFormatSSE,
-			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(sse.ErrorCodes),
-		},
+		request,
+		opts...,
 	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
 }

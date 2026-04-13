@@ -9,7 +9,6 @@ import (
 	core "github.com/go-deterministic-ordering/fern/core"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	option "github.com/go-deterministic-ordering/fern/option"
-	types "github.com/go-deterministic-ordering/fern/types"
 )
 
 type Client struct {
@@ -35,12 +34,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // POST with custom object in request body, response is an object
-func (c *Client) PostWithObjectBodyandResponse(
+func (c *Client) Postwithobjectbodyandresponse(
 	ctx context.Context,
-	request *fern.PostWithObjectBody,
+	request *fern.InlinedRequestsPostWithObjectBodyandResponseRequest,
 	opts ...option.RequestOption,
-) (*types.ObjectWithOptionalField, error) {
-	response, err := c.WithRawResponse.PostWithObjectBodyandResponse(
+) (*fern.TypesObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.Postwithobjectbodyandresponse(
 		ctx,
 		request,
 		opts...,

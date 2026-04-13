@@ -1,8 +1,8 @@
 import Foundation
-import Accept
+import Api
 
 private func main() async throws {
-    let client = AcceptClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )

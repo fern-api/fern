@@ -14,12 +14,19 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.FilterByRoleRequest{
-        Role: fern.UserRoleAdmin.Ptr(),
-        Status: fern.UserStatusActive.Ptr(),
-        SecondaryRole: fern.UserRoleAdmin.Ptr(),
+    request := &fern.NullableOptionalSearchUsersRequest{
+        Query: "query",
+        Department: fern.String(
+            "department",
+        ),
+        Role: fern.String(
+            "role",
+        ),
+        IsActive: fern.Bool(
+            true,
+        ),
     }
-    client.NullableOptional.FilterByRole(
+    client.Nullableoptional.Searchusers(
         context.TODO(),
         request,
     )

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.getToken(request) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.gettoken(request) -> AuthTokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,13 @@
 <dd>
 
 ```java
-client.auth().getToken(
-    GetTokenRequest
+client.auth().gettoken(
+    AuthGetTokenRequest
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
-        .scope("scope")
+        .audience(AuthGetTokenRequestAudience.HTTPS_API_EXAMPLE_COM)
+        .grantType(AuthGetTokenRequestGrantType.CLIENT_CREDENTIALS)
         .build()
 );
 ```
@@ -51,7 +52,7 @@ client.auth().getToken(
 <dl>
 <dd>
 
-**audience:** `String` 
+**audience:** `AuthGetTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -59,7 +60,7 @@ client.auth().getToken(
 <dl>
 <dd>
 
-**grantType:** `String` 
+**grantType:** `AuthGetTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -79,8 +80,8 @@ client.auth().getToken(
 </dl>
 </details>
 
-## NestedNoAuth Api
-<details><summary><code>client.nestedNoAuth.api.getSomething()</code></summary>
+## NestedNoAuthApi
+<details><summary><code>client.nestedNoAuthApi.nestedNoAuthApiGetSomething()</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +94,7 @@ client.auth().getToken(
 <dd>
 
 ```java
-client.nestedNoAuth().api().getSomething();
+client.nestedNoAuthApi().nestedNoAuthApiGetSomething();
 ```
 </dd>
 </dl>
@@ -105,8 +106,8 @@ client.nestedNoAuth().api().getSomething();
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>client.nested.api.getSomething()</code></summary>
+## NestedApi
+<details><summary><code>client.nestedApi.nestedApiGetSomething()</code></summary>
 <dl>
 <dd>
 
@@ -119,7 +120,7 @@ client.nestedNoAuth().api().getSomething();
 <dd>
 
 ```java
-client.nested().api().getSomething();
+client.nestedApi().nestedApiGetSomething();
 ```
 </dd>
 </dl>
@@ -132,7 +133,7 @@ client.nested().api().getSomething();
 </details>
 
 ## Simple
-<details><summary><code>client.simple.getSomething()</code></summary>
+<details><summary><code>client.simple.getsomething()</code></summary>
 <dl>
 <dd>
 
@@ -145,7 +146,7 @@ client.nested().api().getSomething();
 <dd>
 
 ```java
-client.simple().getSomething();
+client.simple().getsomething();
 ```
 </dd>
 </dl>

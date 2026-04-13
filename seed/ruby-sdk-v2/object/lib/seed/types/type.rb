@@ -21,12 +21,12 @@ module Seed
       field :fifteen, -> { Internal::Types::Array[Internal::Types::Array[Integer]] }, optional: false, nullable: false
       field :sixteen, -> { Internal::Types::Array[Internal::Types::Hash[String, Integer]] }, optional: false, nullable: false
       field :seventeen, -> { Internal::Types::Array[String] }, optional: false, nullable: false
-      field :eighteen, -> { String }, optional: false, nullable: false
+      field :eighteen, -> { Seed::Types::TypeEighteen }, optional: false, nullable: false
       field :nineteen, -> { Seed::Types::Name }, optional: false, nullable: false
       field :twenty, -> { Integer }, optional: false, nullable: false
       field :twentyone, -> { Integer }, optional: false, nullable: false
       field :twentytwo, -> { Integer }, optional: false, nullable: false
-      field :twentythree, -> { String }, optional: false, nullable: false
+      field :twentythree, -> { Integer }, optional: false, nullable: false
       field :twentyfour, -> { String }, optional: true, nullable: false
       field :twentyfive, -> { String }, optional: true, nullable: false
     end

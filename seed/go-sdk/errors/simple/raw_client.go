@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) FooWithoutEndpointError(
+func (r *RawClient) Foowithoutendpointerror(
 	ctx context.Context,
 	request *fern.FooRequest,
 	opts ...option.RequestOption,
@@ -115,7 +115,7 @@ func (r *RawClient) Foo(
 	}, nil
 }
 
-func (r *RawClient) FooWithExamples(
+func (r *RawClient) Foowithexamples(
 	ctx context.Context,
 	request *fern.FooRequest,
 	opts ...option.RequestOption,

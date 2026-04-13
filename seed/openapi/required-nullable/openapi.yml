@@ -5,7 +5,7 @@ info:
 paths:
   /foo:
     get:
-      operationId: getFoo
+      operationId: _getFoo
       tags:
         - ''
       parameters:
@@ -61,7 +61,7 @@ paths:
       summary: Get foo
   /foo/{id}:
     patch:
-      operationId: updateFoo
+      operationId: _updateFoo
       tags:
         - ''
       parameters:
@@ -70,11 +70,19 @@ paths:
           required: true
           schema:
             type: string
+          example: id
+          examples:
+            Example1:
+              value: id
         - name: X-Idempotency-Key
           in: header
           required: true
           schema:
             type: string
+          example: X-Idempotency-Key
+          examples:
+            Example1:
+              value: X-Idempotency-Key
       responses:
         '200':
           description: successful operation
@@ -82,6 +90,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Foo'
+              examples:
+                Example1:
+                  value:
+                    bar: bar
+                    nullable_bar: nullable_bar
+                    nullable_required_bar: nullable_required_bar
+                    required_bar: required_bar
       summary: Update foo
       requestBody:
         required: true
@@ -103,6 +118,9 @@ paths:
                   type: string
                   nullable: true
                   description: Regular non-nullable field
+            examples:
+              Example1:
+                value: {}
 components:
   schemas:
     Foo:

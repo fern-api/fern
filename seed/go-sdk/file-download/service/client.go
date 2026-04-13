@@ -47,11 +47,11 @@ func (c *Client) Simple(
 	return nil
 }
 
-func (c *Client) DownloadFile(
+func (c *Client) Downloadfile(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (io.Reader, error) {
-	response, err := c.WithRawResponse.DownloadFile(
+	response, err := c.WithRawResponse.Downloadfile(
 		ctx,
 		opts...,
 	)

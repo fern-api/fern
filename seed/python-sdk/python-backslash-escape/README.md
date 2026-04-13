@@ -34,15 +34,14 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedPythonBackslashEscape
+from seed import SeedApi
 
-client = SeedPythonBackslashEscape(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.get(
     id="id",
-    domain="domain",
 )
 ```
 
@@ -53,9 +52,9 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedPythonBackslashEscape
+from seed import AsyncSeedApi
 
-client = AsyncSeedPythonBackslashEscape(
+client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -63,7 +62,6 @@ client = AsyncSeedPythonBackslashEscape(
 async def main() -> None:
     await client.user.get(
         id="id",
-        domain="domain",
     )
 
 
@@ -93,9 +91,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedPythonBackslashEscape
+from seed import SeedApi
 
-client = SeedPythonBackslashEscape(...)
+client = SeedApi(...)
 response = client.user.with_raw_response.get(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -127,9 +125,9 @@ client.user.get(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedPythonBackslashEscape
+from seed import SeedApi
 
-client = SeedPythonBackslashEscape(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.user.get(..., request_options={
@@ -144,9 +142,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedPythonBackslashEscape
+from seed import SeedApi
 
-client = SeedPythonBackslashEscape(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

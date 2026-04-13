@@ -1,11 +1,11 @@
-//! # ClientSideParams SDK
+//! # client-side-params SDK
 //!
-//! The official Rust SDK for the ClientSideParams.
+//! The official Rust SDK for the client-side-params.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_client_side_params::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,18 +13,18 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .service
-//!         .list_resources(
-//!             &ListResourcesQueryRequest {
+//!         .listresources(
+//!             &ListresourcesQueryRequest {
 //!                 page: 1,
 //!                 per_page: 1,
-//!                 sort: "created_at".to_string(),
-//!                 order: "desc".to_string(),
+//!                 sort: "sort".to_string(),
+//!                 order: "order".to_string(),
 //!                 include_totals: true,
-//!                 fields: Some("fields".to_string()),
-//!                 search: Some("search".to_string()),
+//!                 fields: None,
+//!                 search: None,
 //!             },
 //!             None,
 //!         )

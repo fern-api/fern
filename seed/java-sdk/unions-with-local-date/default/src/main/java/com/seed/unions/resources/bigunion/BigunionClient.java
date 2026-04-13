@@ -5,7 +5,8 @@ package com.seed.unions.resources.bigunion;
 
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.RequestOptions;
-import com.seed.unions.resources.bigunion.types.BigUnion;
+import com.seed.unions.resources.bigunion.requests.BigunionGetRequest;
+import com.seed.unions.types.BigUnion;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,14 @@ public class BigunionClient {
 
     public BigUnion get(String id, RequestOptions requestOptions) {
         return this.rawClient.get(id, requestOptions).body();
+    }
+
+    public BigUnion get(String id, BigunionGetRequest request) {
+        return this.rawClient.get(id, request).body();
+    }
+
+    public BigUnion get(String id, BigunionGetRequest request, RequestOptions requestOptions) {
+        return this.rawClient.get(id, request, requestOptions).body();
     }
 
     public boolean update(BigUnion request) {

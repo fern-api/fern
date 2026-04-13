@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token_with_client_credentials</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">gettokenwithclientcredentials</a>(request: AuthGetTokenWithClientCredentialsRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,25 +13,25 @@
 <dd>
 
 ```rust
-use seed_websocket_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = WebsocketAuthClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .auth
-        .get_token_with_client_credentials(
-            &GetTokenRequest {
+        .gettokenwithclientcredentials(
+            &AuthGetTokenWithClientCredentialsRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
-                audience: "https://api.example.com".to_string(),
-                grant_type: "client_credentials".to_string(),
-                scope: Some("scope".to_string()),
+                audience: AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom,
+                grant_type: AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials,
+                scope: None,
             },
-            Some(RequestOptions::new().additional_header("X-Api-Key", "X-Api-Key")),
+            None,
         )
         .await;
 }
@@ -65,7 +65,7 @@ async fn main() {
 <dl>
 <dd>
 
-**audience:** `String` 
+**audience:** `AuthGetTokenWithClientCredentialsRequestAudience` 
     
 </dd>
 </dl>
@@ -73,7 +73,7 @@ async fn main() {
 <dl>
 <dd>
 
-**grant_type:** `String` 
+**grant_type:** `AuthGetTokenWithClientCredentialsRequestGrantType` 
     
 </dd>
 </dl>
@@ -81,7 +81,7 @@ async fn main() {
 <dl>
 <dd>
 
-**scope:** `Option<String>` 
+**scope:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -93,7 +93,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">refresh_token</a>(request: RefreshTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">refreshtoken</a>(request: AuthRefreshTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -106,26 +106,26 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_websocket_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = WebsocketAuthClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .auth
-        .refresh_token(
-            &RefreshTokenRequest {
+        .refreshtoken(
+            &AuthRefreshTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
                 refresh_token: "refresh_token".to_string(),
-                audience: "https://api.example.com".to_string(),
-                grant_type: "refresh_token".to_string(),
-                scope: Some("scope".to_string()),
+                audience: AuthRefreshTokenRequestAudience::HttpsApiExampleCom,
+                grant_type: AuthRefreshTokenRequestGrantType::RefreshToken,
+                scope: None,
             },
-            Some(RequestOptions::new().additional_header("X-Api-Key", "X-Api-Key")),
+            None,
         )
         .await;
 }
@@ -167,7 +167,7 @@ async fn main() {
 <dl>
 <dd>
 
-**audience:** `String` 
+**audience:** `AuthRefreshTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -175,7 +175,7 @@ async fn main() {
 <dl>
 <dd>
 
-**grant_type:** `String` 
+**grant_type:** `AuthRefreshTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -183,7 +183,7 @@ async fn main() {
 <dl>
 <dd>
 
-**scope:** `Option<String>` 
+**scope:** `Option<Option<String>>` 
     
 </dd>
 </dl>

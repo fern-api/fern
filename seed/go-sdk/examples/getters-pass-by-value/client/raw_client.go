@@ -40,9 +40,9 @@ func (r *RawClient) Echo(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"",
+		"https://production.com/api",
 	)
-	endpointURL := baseURL
+	endpointURL := baseURL + "/echo"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -81,9 +81,9 @@ func (r *RawClient) CreateType(
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
 		r.baseURL,
-		"",
+		"https://production.com/api",
 	)
-	endpointURL := baseURL
+	endpointURL := baseURL + "/type"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

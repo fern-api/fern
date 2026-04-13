@@ -2,16 +2,16 @@
 
 namespace Seed;
 
-use Seed\PropertyBasedError\PropertyBasedErrorClient;
+use Seed\Propertybasederror\PropertybasederrorClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
     /**
-     * @var PropertyBasedErrorClient $propertyBasedError
+     * @var PropertybasederrorClient $propertybasederror
      */
-    public PropertyBasedErrorClient $propertyBasedError;
+    public PropertybasederrorClient $propertybasederror;
 
     /**
      * @var array{
@@ -59,6 +59,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->propertyBasedError = new PropertyBasedErrorClient($this->client, $this->options);
+        $this->propertybasederror = new PropertybasederrorClient($this->client, $this->options);
     }
 }

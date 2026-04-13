@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/PropertyAccessClient.swift">createUser</a>(request: User, requestOptions: RequestOptions?) -> User</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">createUser</a>(request: User, requestOptions: RequestOptions?) -> User</code></summary>
 <dl>
 <dd>
 
@@ -13,19 +13,17 @@
 
 ```swift
 import Foundation
-import PropertyAccess
+import Api
 
 private func main() async throws {
-    let client = PropertyAccessClient()
+    let client = ApiClient()
 
     _ = try await client.createUser(request: User(
-        id: "id",
-        email: "email",
         password: "password",
         profile: UserProfile(
             name: "name",
             verification: UserProfileVerification(
-                verified: "verified"
+
             ),
             ssn: "ssn"
         )

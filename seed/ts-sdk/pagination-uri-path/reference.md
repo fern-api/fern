@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithUriPagination</a>() -> core.Page&lt;SeedPaginationUriPath.User, SeedPaginationUriPath.ListUsersUriPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithuripagination</a>() -> SeedApi.ListUsersUriPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,19 +13,7 @@
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithUriPagination();
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithUriPagination();
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithuripagination();
 
 ```
 </dd>
@@ -53,7 +41,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithPathPagination</a>() -> core.Page&lt;SeedPaginationUriPath.User, SeedPaginationUriPath.ListUsersPathPaginationResponse&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listwithpathpagination</a>() -> SeedApi.ListUsersPathPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -66,19 +54,7 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithPathPagination();
-for await (const item of pageableResponse) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.users.listWithPathPagination();
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
-
-// You can also access the underlying response
-const response = page.response;
+await client.users.listwithpathpagination();
 
 ```
 </dd>

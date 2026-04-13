@@ -1,1 +1,2 @@
-export type { ListResourcesRequest } from "./ListResourcesRequest.js";
+export type { ServiceGetResourceRequest } from "./ServiceGetResourceRequest.js";
+export type { ServiceListResourcesRequest } from "./ServiceListResourcesRequest.js";

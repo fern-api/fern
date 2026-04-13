@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.GetFooAsync(\n    new GetFooRequest\n    {\n        RequiredBaz = \"required_baz\",\n        RequiredNullableBaz = \"required_nullable_baz\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.GetFooAsync(\n    new GetFooRequest\n    {\n        RequiredBaz = \"required_baz\",\n        RequiredNullableBaz = \"required_nullable_baz\",\n    }\n);\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.UpdateFooAsync(\n    \"id\",\n    new UpdateFooRequest\n    {\n        XIdempotencyKey = \"X-Idempotency-Key\",\n        NullableText = \"nullable_text\",\n        NullableNumber = 1.1,\n        NonNullableText = \"non_nullable_text\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.UpdateFooAsync(\n    new UpdateFooRequest { Id = \"id\", IdempotencyKey = \"X-Idempotency-Key\" }\n);\n"
             }
         }
     ]

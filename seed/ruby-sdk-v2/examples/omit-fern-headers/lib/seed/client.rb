@@ -8,21 +8,26 @@ module Seed
     # @return [void]
     def initialize(token:, base_url: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url,
+        base_url: base_url || Seed::Environment::PRODUCTION,
         headers: {
           Authorization: "Bearer #{token}"
         }
       )
     end
 
-    # @return [Seed::File::Client]
-    def file
-      @file ||= Seed::File::Client.new(client: @raw_client)
+    # @return [Seed::FileNotificationService::Client]
+    def file_notification_service
+      @file_notification_service ||= Seed::FileNotificationService::Client.new(client: @raw_client)
     end
 
-    # @return [Seed::Health::Client]
-    def health
-      @health ||= Seed::Health::Client.new(client: @raw_client)
+    # @return [Seed::FileService::Client]
+    def file_service
+      @file_service ||= Seed::FileService::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::HealthService::Client]
+    def health_service
+      @health_service ||= Seed::HealthService::Client.new(client: @raw_client)
     end
 
     # @return [Seed::Service::Client]

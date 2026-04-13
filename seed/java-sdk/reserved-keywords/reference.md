@@ -14,7 +14,7 @@
 
 ```java
 client.package_().test(
-    TestRequest
+    PackageTestRequest
         .builder()
         .for_("for")
         .build()

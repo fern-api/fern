@@ -39,7 +39,9 @@ namespace Example;
 use Seed\SeedClient;
 
 $client = new SeedClient();
-$client->service->post();
+$client->service->post(
+    'endpointParam',
+);
 
 ```
 

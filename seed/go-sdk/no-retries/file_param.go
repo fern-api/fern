@@ -1,4 +1,4 @@
-package noretries
+package api
 
 import (
 	"io"

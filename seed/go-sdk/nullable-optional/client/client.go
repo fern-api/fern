@@ -10,7 +10,7 @@ import (
 )
 
 type Client struct {
-	NullableOptional *nullableoptional.Client
+	Nullableoptional *nullableoptional.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -20,7 +20,7 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		NullableOptional: nullableoptional.NewClient(options),
+		Nullableoptional: nullableoptional.NewClient(options),
 		options:          options,
 		baseURL:          options.BaseURL,
 		caller: internal.NewCaller(

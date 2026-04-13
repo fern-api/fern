@@ -7,17 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Name(UniversalBaseModel):
-    """
-    Examples
-    --------
-    from seed import Name
-
-    Name(
-        id="name-sdfg8ajk",
-        value="name",
-    )
-    """
-
     id: str
     value: str
 

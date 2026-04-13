@@ -1,16 +1,18 @@
 import Foundation
-import InferredAuthExplicit
+import Api
 
 private func main() async throws {
-    let client = InferredAuthExplicitClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(
+        baseURL: "https://api.fern.com",
+        token: "<token>"
+    )
 
-    _ = try await client.auth.refreshToken(request: .init(
+    _ = try await client.auth.gettokenwithclientcredentials(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
-        refreshToken: "refresh_token",
         audience: .httpsApiExampleCom,
-        grantType: .refreshToken,
-        scope: "scope"
+        grantType: .clientCredentials,
+        scope: .value("scope")
     ))
 }
 

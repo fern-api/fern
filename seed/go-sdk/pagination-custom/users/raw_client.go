@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) ListWithCustomPager(
+func (r *RawClient) Listwithcustompager(
 	ctx context.Context,
-	request *fern.ListWithCustomPagerRequest,
+	request *fern.UsersListWithCustomPagerRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.UsersListResponse], error) {
 	options := core.NewRequestOptions(opts...)

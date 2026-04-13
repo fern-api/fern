@@ -26,13 +26,13 @@ export class ServiceClient {
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getWithBearerToken()
+     *     await client.service.getwithbearertoken()
      */
-    public getWithBearerToken(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__getWithBearerToken(requestOptions));
+    public getwithbearertoken(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__getwithbearertoken(requestOptions));
     }
 
-    private async __getWithBearerToken(
+    private async __getwithbearertoken(
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -61,7 +61,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedHeaderTokenError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

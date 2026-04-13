@@ -1,5 +1,5 @@
 # Reference
-## Conversations
+## Complex
 <details><summary><code>client.complex_.<a href="src/seed/complex_/client.py">search</a>(...) -> PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
@@ -13,25 +13,16 @@
 <dd>
 
 ```python
-from seed import SeedPagination
-from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
+from seed import SeedApi, SingleFilterSearchRequest
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.complex_.search(
     index="index",
-    pagination=StartingAfterPaging(
-        per_page=1,
-        starting_after="starting_after",
-    ),
-    query=SingleFilterSearchRequest(
-        field="field",
-        operator="=",
-        value="value",
-    ),
+    query=SingleFilterSearchRequest(),
 )
 
 ```
@@ -56,7 +47,15 @@ client.complex_.search(
 <dl>
 <dd>
 
-**request:** `SearchRequest` 
+**query:** `SearchRequestQuery` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pagination:** `typing.Optional[StartingAfterPaging]` 
     
 </dd>
 </dl>
@@ -76,8 +75,8 @@ client.complex_.search(
 </dl>
 </details>
 
-## InlineUsers InlineUsers
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+## InlineUsersInlineUsers
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_cursor_pagination</a>(...) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -90,19 +89,14 @@ client.complex_.search(
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="starting_after",
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_cursor_pagination()
 
 ```
 </dd>
@@ -134,7 +128,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**order:** `typing.Optional[Order]` 
+**order:** `typing.Optional[InlineUsersOrder]` 
     
 </dd>
 </dl>
@@ -165,7 +159,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_mixed_type_cursor_pagination</a>(...) -> ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_mixed_type_cursor_pagination</a>(...) -> InlineUsersListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -178,16 +172,14 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(
-    cursor="cursor",
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_mixed_type_cursor_pagination()
 
 ```
 </dd>
@@ -223,7 +215,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_body_cursor_pagination</a>(...) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -236,14 +228,14 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination()
+client.inline_users_inline_users.inline_users_inline_users_list_with_body_cursor_pagination()
 
 ```
 </dd>
@@ -259,7 +251,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination()
 <dl>
 <dd>
 
-**pagination:** `typing.Optional[WithCursor]` 
+**pagination:** `typing.Optional[InlineUsersWithCursor]` 
 
 The object that contains the cursor used for pagination
 in order to fetch the next page of results.
@@ -282,7 +274,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_offset_pagination</a>(...) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -295,19 +287,14 @@ in order to fetch the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="starting_after",
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_offset_pagination()
 
 ```
 </dd>
@@ -339,7 +326,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**order:** `typing.Optional[Order]` 
+**order:** `typing.Optional[InlineUsersOrder]` 
     
 </dd>
 </dl>
@@ -370,7 +357,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_double_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_double_offset_pagination</a>(...) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -383,19 +370,14 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_cursor_pagination(
-    page=1.1,
-    per_page=1.1,
-    order="asc",
-    starting_after="starting_after",
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_double_offset_pagination()
 
 ```
 </dd>
@@ -427,7 +409,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**order:** `typing.Optional[Order]` 
+**order:** `typing.Optional[InlineUsersOrder]` 
     
 </dd>
 </dl>
@@ -458,7 +440,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_body_offset_pagination</a>(...) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -471,14 +453,14 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination()
+client.inline_users_inline_users.inline_users_inline_users_list_with_body_offset_pagination()
 
 ```
 </dd>
@@ -494,7 +476,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination()
 <dl>
 <dd>
 
-**pagination:** `typing.Optional[WithPage]` 
+**pagination:** `typing.Optional[InlineUsersWithPage]` 
 
 The object that contains the offset used for pagination
 in order to fetch the next page of results.
@@ -517,7 +499,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_step_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_offset_step_pagination</a>(...) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -530,18 +512,14 @@ in order to fetch the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_offset_step_pagination(
-    page=1,
-    limit=1,
-    order="asc",
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_offset_step_pagination()
 
 ```
 </dd>
@@ -577,7 +555,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `typing.Optional[Order]` 
+**order:** `typing.Optional[InlineUsersOrder]` 
     
 </dd>
 </dl>
@@ -597,7 +575,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination_has_next_page</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_offset_pagination_has_next_page</a>(...) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -610,18 +588,14 @@ paginated endpoint.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_offset_step_pagination(
-    page=1,
-    limit=1,
-    order="asc",
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_offset_pagination_has_next_page()
 
 ```
 </dd>
@@ -657,7 +631,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `typing.Optional[Order]` 
+**order:** `typing.Optional[InlineUsersOrder]` 
     
 </dd>
 </dl>
@@ -677,7 +651,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results</a>(...) -> ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_extended_results</a>(...) -> InlineUsersListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -690,17 +664,14 @@ paginated endpoint.
 <dd>
 
 ```python
-from seed import SeedPagination
-import uuid
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_extended_results(
-    cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_extended_results()
 
 ```
 </dd>
@@ -716,7 +687,7 @@ client.inline_users.inline_users.list_with_extended_results(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[uuid.UUID]` 
+**cursor:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -736,7 +707,7 @@ client.inline_users.inline_users.list_with_extended_results(
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results_and_optional_data</a>(...) -> ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_extended_results_and_optional_data</a>(...) -> InlineUsersListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -749,17 +720,14 @@ client.inline_users.inline_users.list_with_extended_results(
 <dd>
 
 ```python
-from seed import SeedPagination
-import uuid
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_extended_results(
-    cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_extended_results_and_optional_data()
 
 ```
 </dd>
@@ -775,7 +743,7 @@ client.inline_users.inline_users.list_with_extended_results(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[uuid.UUID]` 
+**cursor:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -795,7 +763,7 @@ client.inline_users.inline_users.list_with_extended_results(
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_usernames</a>(...) -> UsernameCursor</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_usernames</a>(...) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -808,16 +776,14 @@ client.inline_users.inline_users.list_with_extended_results(
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_cursor_pagination(
-    starting_after="starting_after",
-)
+client.inline_users_inline_users.inline_users_inline_users_list_usernames()
 
 ```
 </dd>
@@ -856,7 +822,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_global_config</a>(...) -> UsernameContainer</code></summary>
+<details><summary><code>client.inline_users_inline_users.<a href="src/seed/inline_users_inline_users/client.py">inline_users_inline_users_list_with_global_config</a>(...) -> InlineUsersUsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -869,16 +835,14 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.inline_users.inline_users.list_with_global_config(
-    offset=1,
-)
+client.inline_users_inline_users.inline_users_inline_users_list_with_global_config()
 
 ```
 </dd>
@@ -915,7 +879,7 @@ client.inline_users.inline_users.list_with_global_config(
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithcursorpagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -928,19 +892,14 @@ client.inline_users.inline_users.list_with_global_config(
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="starting_after",
-)
+client.users.listwithcursorpagination()
 
 ```
 </dd>
@@ -1003,7 +962,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_mixed_type_cursor_pagination</a>(...) -> ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithmixedtypecursorpagination</a>(...) -> ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1016,16 +975,14 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_mixed_type_cursor_pagination(
-    cursor="cursor",
-)
+client.users.listwithmixedtypecursorpagination()
 
 ```
 </dd>
@@ -1061,7 +1018,7 @@ client.users.list_with_mixed_type_cursor_pagination(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithbodycursorpagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1074,14 +1031,14 @@ client.users.list_with_mixed_type_cursor_pagination(
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_mixed_type_cursor_pagination()
+client.users.listwithbodycursorpagination()
 
 ```
 </dd>
@@ -1120,7 +1077,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_top_level_body_cursor_pagination</a>(...) -> ListUsersTopLevelCursorPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithtoplevelbodycursorpagination</a>(...) -> ListUsersTopLevelCursorPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1149,17 +1106,14 @@ when getNextPage() is called with a different cursor value.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_top_level_body_cursor_pagination(
-    cursor="initial_cursor",
-    filter="active",
-)
+client.users.listwithtoplevelbodycursorpagination()
 
 ```
 </dd>
@@ -1206,7 +1160,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithoffsetpagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1219,19 +1173,14 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="starting_after",
-)
+client.users.listwithoffsetpagination()
 
 ```
 </dd>
@@ -1294,7 +1243,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_double_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithdoubleoffsetpagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1307,19 +1256,14 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_cursor_pagination(
-    page=1.1,
-    per_page=1.1,
-    order="asc",
-    starting_after="starting_after",
-)
+client.users.listwithdoubleoffsetpagination()
 
 ```
 </dd>
@@ -1382,7 +1326,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithbodyoffsetpagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1395,14 +1339,14 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_mixed_type_cursor_pagination()
+client.users.listwithbodyoffsetpagination()
 
 ```
 </dd>
@@ -1441,7 +1385,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_step_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithoffsetsteppagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1454,18 +1398,14 @@ in order to fetch the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_offset_step_pagination(
-    page=1,
-    limit=1,
-    order="asc",
-)
+client.users.listwithoffsetsteppagination()
 
 ```
 </dd>
@@ -1521,7 +1461,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination_has_next_page</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithoffsetpaginationhasnextpage</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1534,18 +1474,14 @@ paginated endpoint.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_offset_step_pagination(
-    page=1,
-    limit=3,
-    order="asc",
-)
+client.users.listwithoffsetpaginationhasnextpage()
 
 ```
 </dd>
@@ -1601,7 +1537,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results</a>(...) -> ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithextendedresults</a>(...) -> ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1614,17 +1550,14 @@ paginated endpoint.
 <dd>
 
 ```python
-from seed import SeedPagination
-import uuid
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_extended_results(
-    cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-)
+client.users.listwithextendedresults()
 
 ```
 </dd>
@@ -1640,7 +1573,7 @@ client.users.list_with_extended_results(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[uuid.UUID]` 
+**cursor:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -1660,7 +1593,7 @@ client.users.list_with_extended_results(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results_and_optional_data</a>(...) -> ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithextendedresultsandoptionaldata</a>(...) -> ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1673,17 +1606,14 @@ client.users.list_with_extended_results(
 <dd>
 
 ```python
-from seed import SeedPagination
-import uuid
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_extended_results(
-    cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-)
+client.users.listwithextendedresultsandoptionaldata()
 
 ```
 </dd>
@@ -1699,7 +1629,7 @@ client.users.list_with_extended_results(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[uuid.UUID]` 
+**cursor:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -1719,7 +1649,7 @@ client.users.list_with_extended_results(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames</a>(...) -> UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listusernames</a>(...) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1732,77 +1662,14 @@ client.users.list_with_extended_results(
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_cursor_pagination(
-    starting_after="starting_after",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**starting_after:** `typing.Optional[str]` 
-
-The cursor used for pagination in order to fetch
-the next page of results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_with_optional_response</a>(...) -> typing.Optional[UsernameCursor]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from seed import SeedPagination
-
-client = SeedPagination(
-    token="<token>",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.users.list_with_cursor_pagination(
-    starting_after="starting_after",
-)
+client.users.listusernames()
 
 ```
 </dd>
@@ -1841,7 +1708,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_global_config</a>(...) -> UsernameContainer</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listusernameswithoptionalresponse</a>(...) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1854,16 +1721,73 @@ the next page of results.
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_global_config(
-    offset=1,
+client.users.listusernameswithoptionalresponse()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**starting_after:** `typing.Optional[str]` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithglobalconfig</a>(...) -> UsernameContainer</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedApi
+
+client = SeedApi(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
+
+client.users.listwithglobalconfig()
 
 ```
 </dd>
@@ -1899,7 +1823,7 @@ client.users.list_with_global_config(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_optional_data</a>(...) -> ListUsersOptionalDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithoptionaldata</a>(...) -> ListUsersOptionalDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1912,16 +1836,14 @@ client.users.list_with_global_config(
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_optional_data(
-    page=1,
-)
+client.users.listwithoptionaldata()
 
 ```
 </dd>
@@ -1957,7 +1879,7 @@ client.users.list_with_optional_data(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_aliased_data</a>(...) -> ListUsersAliasedDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">listwithaliaseddata</a>(...) -> ListUsersAliasedDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1970,18 +1892,14 @@ client.users.list_with_optional_data(
 <dd>
 
 ```python
-from seed import SeedPagination
+from seed import SeedApi
 
-client = SeedPagination(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.users.list_with_aliased_data(
-    page=1,
-    per_page=1,
-    starting_after="starting_after",
-)
+client.users.listwithaliaseddata()
 
 ```
 </dd>

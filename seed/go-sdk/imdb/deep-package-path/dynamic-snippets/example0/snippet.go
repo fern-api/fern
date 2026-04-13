@@ -21,7 +21,7 @@ func do() {
         Title: "title",
         Rating: 1.1,
     }
-    client.Imdb.CreateMovie(
+    client.Imdb.Createmovie(
         context.TODO(),
         request,
     )

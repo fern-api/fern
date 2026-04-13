@@ -1,13 +1,14 @@
 package com.snippets;
 
-import com.seed.inferredAuthExplicit.SeedInferredAuthExplicitClient;
+import com.seed.api.SeedApiClient;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedInferredAuthExplicitClient client = SeedInferredAuthExplicitClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
+                .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.simple().getSomething();
+        client.nestedNoAuthApi().nestedNoAuthApiGetSomething();
     }
 }

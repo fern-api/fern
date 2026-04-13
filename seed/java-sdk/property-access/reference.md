@@ -15,8 +15,6 @@
 client.createUser(
     User
         .builder()
-        .id("id")
-        .email("email")
         .password("password")
         .profile(
             UserProfile
@@ -25,7 +23,6 @@ client.createUser(
                 .verification(
                     UserProfileVerification
                         .builder()
-                        .verified("verified")
                         .build()
                 )
                 .ssn("ssn")

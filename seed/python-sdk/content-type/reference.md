@@ -13,16 +13,13 @@
 <dd>
 
 ```python
-from seed import SeedContentTypes
+from seed import SeedApi
 
-client = SeedContentTypes(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.patch(
-    application="application",
-    require_auth=True,
-)
+client.service.patch()
 
 ```
 </dd>
@@ -66,7 +63,7 @@ client.service.patch(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">patch_complex</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">patchcomplex</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -96,31 +93,14 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```python
-from seed import SeedContentTypes
+from seed import SeedApi
 
-client = SeedContentTypes(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.patch_complex(
+client.service.patchcomplex(
     id="id",
-    name="name",
-    age=1,
-    active=True,
-    metadata={
-        "metadata": {"key": "value"}
-    },
-    tags=[
-        "tags",
-        "tags"
-    ],
-    email="email",
-    nickname="nickname",
-    bio="bio",
-    profile_image_url="profileImageUrl",
-    settings={
-        "settings": {"key": "value"}
-    },
 )
 
 ```
@@ -237,7 +217,7 @@ client.service.patch_complex(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">named_patch_with_mixed</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">namedpatchwithmixed</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -265,17 +245,14 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```python
-from seed import SeedContentTypes
+from seed import SeedApi
 
-client = SeedContentTypes(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.named_patch_with_mixed(
+client.service.namedpatchwithmixed(
     id="id",
-    app_id="appId",
-    instructions="instructions",
-    active=True,
 )
 
 ```
@@ -336,7 +313,7 @@ client.service.named_patch_with_mixed(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">optional_merge_patch_test</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">optionalmergepatchtest</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -366,18 +343,14 @@ This endpoint should:
 <dd>
 
 ```python
-from seed import SeedContentTypes
+from seed import SeedApi
 
-client = SeedContentTypes(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.optional_merge_patch_test(
+client.service.optionalmergepatchtest(
     required_field="requiredField",
-    optional_string="optionalString",
-    optional_integer=1,
-    optional_boolean=True,
-    nullable_string="nullableString",
 )
 
 ```
@@ -446,7 +419,7 @@ client.service.optional_merge_patch_test(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">regular_patch</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">regularpatch</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -473,16 +446,14 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```python
-from seed import SeedContentTypes
+from seed import SeedApi
 
-client = SeedContentTypes(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.regular_patch(
+client.service.regularpatch(
     id="id",
-    field1="field1",
-    field2=1,
 )
 
 ```

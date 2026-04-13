@@ -8,16 +8,16 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import OrderCompletedPayload, PaymentNotificationPayload, RefundProcessedPayload, UserCreatedPayload
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedWebhooks, SeedWebhooks
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedWebhooks": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "OrderCompletedPayload": ".types",
     "PaymentNotificationPayload": ".types",
     "RefundProcessedPayload": ".types",
-    "SeedWebhooks": ".client",
+    "SeedApi": ".client",
     "UserCreatedPayload": ".types",
     "__version__": ".version",
 }
@@ -45,13 +45,13 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedWebhooks",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "OrderCompletedPayload",
     "PaymentNotificationPayload",
     "RefundProcessedPayload",
-    "SeedWebhooks",
+    "SeedApi",
     "UserCreatedPayload",
     "__version__",
 ]

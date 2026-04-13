@@ -40,16 +40,13 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedStreamingClient } from "@fern/streaming-parameter";
+import { SeedApiClient } from "@fern/streaming-parameter";
 
-const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
-const response = await client.dummy.generate({
-    stream: false,
-    num_events: 5
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL" });
+await client.dummy.generate({
+    stream: true,
+    num_events: 1
 });
-for await (const item of response) {
-    console.log(item);
-}
 ```
 
 ## Request and Response Types
@@ -58,9 +55,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedStreaming } from "@fern/streaming-parameter";
+import { SeedApi } from "@fern/streaming-parameter";
 
-const request: SeedStreaming.GenerateRequest = {
+const request: SeedApi.DummyGenerateRequest = {
     ...
 };
 ```
@@ -71,12 +68,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedStreamingError } from "@fern/streaming-parameter";
+import { SeedApiError } from "@fern/streaming-parameter";
 
 try {
     await client.dummy.generate(...);
 } catch (err) {
-    if (err instanceof SeedStreamingError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -102,9 +99,9 @@ const client = new DummyClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedStreamingClient } from "@fern/streaming-parameter";
+import { SeedApiClient } from "@fern/streaming-parameter";
 
-const client = new SeedStreamingClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -189,9 +186,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedStreamingClient, logging } from "@fern/streaming-parameter";
+import { SeedApiClient, logging } from "@fern/streaming-parameter";
 
-const client = new SeedStreamingClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

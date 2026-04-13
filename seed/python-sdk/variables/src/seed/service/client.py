@@ -22,10 +22,12 @@ class ServiceClient:
         """
         return self._raw_client
 
-    def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def post(self, endpoint_param: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
+        endpoint_param : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -35,15 +37,16 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedVariables
+        from seed import SeedApi
 
-        client = SeedVariables(
-            root_variable="YOUR_ROOT_VARIABLE",
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.service.post()
+        client.service.post(
+            endpoint_param="endpointParam",
+        )
         """
-        _response = self._raw_client.post(request_options=request_options)
+        _response = self._raw_client.post(endpoint_param, request_options=request_options)
         return _response.data
 
 
@@ -62,10 +65,12 @@ class AsyncServiceClient:
         """
         return self._raw_client
 
-    async def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def post(self, endpoint_param: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
+        endpoint_param : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -77,19 +82,20 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedVariables
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedVariables(
-            root_variable="YOUR_ROOT_VARIABLE",
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.service.post()
+            await client.service.post(
+                endpoint_param="endpointParam",
+            )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.post(request_options=request_options)
+        _response = await self._raw_client.post(endpoint_param, request_options=request_options)
         return _response.data

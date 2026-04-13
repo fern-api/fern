@@ -1,6 +1,6 @@
 # Reference
-## FolderA Service
-<details><summary><code>client.folderA.service.getDirectThread() -> Response</code></summary>
+## FolderAService
+<details><summary><code>client.folderAService.folderAServiceGetDirectThread() -> FolderAResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 <dd>
 
 ```java
-client.folderA().service().getDirectThread(
-    GetDirectThreadRequest
+client.folderAService().folderAServiceGetDirectThread(
+    FolderAServiceGetDirectThreadRequest
         .builder()
         .ids(
             Arrays.asList("ids")
@@ -38,7 +38,7 @@ client.folderA().service().getDirectThread(
 <dl>
 <dd>
 
-**ids:** `String` 
+**ids:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -46,34 +46,8 @@ client.folderA().service().getDirectThread(
 <dl>
 <dd>
 
-**tags:** `String` 
+**tags:** `Optional<String>` 
     
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## FolderD Service
-<details><summary><code>client.folderD.service.getDirectThread() -> Response</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.folderD().service().getDirectThread();
-```
 </dd>
 </dl>
 </dd>
@@ -99,11 +73,8 @@ client.folderD().service().getDirectThread();
 
 ```java
 client.foo().find(
-    FindRequest
+    FooFindRequest
         .builder()
-        .optionalString("optionalString")
-        .publicProperty("publicProperty")
-        .privateProperty(1)
         .build()
 );
 ```
@@ -138,6 +109,32 @@ client.foo().find(
 
 **privateProperty:** `Optional<Integer>` 
     
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## FolderDService
+<details><summary><code>client.folderDService.folderDServiceGetDirectThread() -> FolderDResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.folderDService().folderDServiceGetDirectThread();
+```
 </dd>
 </dl>
 </dd>

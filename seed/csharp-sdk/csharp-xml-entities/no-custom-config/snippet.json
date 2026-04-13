@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCsharpXmlEntities;\n\nvar client = new SeedCsharpXmlEntitiesClient();\nawait client.GetTimeZoneAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client._.GetTimeZoneAsync();\n"
             }
         }
     ]

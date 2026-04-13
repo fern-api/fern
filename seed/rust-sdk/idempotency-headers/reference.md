@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.<a href="/src/api/resources/payment/client.rs">create</a>(request: CreatePaymentRequest) -> Result&lt;String, ApiError&gt;</code></summary>
+<details><summary><code>client.payment.<a href="/src/api/resources/payment/client.rs">create</a>(request: PaymentCreateRequest) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_idempotency_headers::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -21,11 +21,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = IdempotencyHeadersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .payment
         .create(
-            &CreatePaymentRequest {
+            &PaymentCreateRequest {
                 amount: 1,
                 currency: Currency::Usd,
             },
@@ -80,7 +80,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_idempotency_headers::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -88,7 +88,7 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = IdempotencyHeadersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client.payment.delete(&"paymentId".to_string(), None).await;
 }
 ```

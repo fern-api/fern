@@ -5,87 +5,7 @@ info:
 paths:
   /foo1:
     post:
-      operationId: simple_fooWithoutEndpointError
-      tags:
-        - Simple
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FooResponse'
-        '400':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '500':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FooRequest'
-  /foo2:
-    post:
-      operationId: simple_foo
-      tags:
-        - Simple
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FooResponse'
-        '400':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '429':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '500':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FooRequest'
-  /foo3:
-    post:
-      operationId: simple_fooWithExamples
+      operationId: simple_foowithoutendpointerror
       tags:
         - Simple
       parameters: []
@@ -99,7 +19,7 @@ paths:
               examples:
                 Example1:
                   value:
-                    bar: hello
+                    bar: bar
         '400':
           description: ''
           content:
@@ -112,17 +32,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-        '429':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-              examples:
-                Example1:
-                  value:
-                    message: Too much foo
-                    code: 1
         '500':
           description: ''
           content:
@@ -138,13 +47,109 @@ paths:
             examples:
               Example1:
                 value:
-                  bar: hello
-              Example2:
+                  bar: bar
+  /foo2:
+    post:
+      operationId: simple_foo
+      tags:
+        - Simple
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooResponse'
+              examples:
+                Example1:
+                  value:
+                    bar: bar
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FooRequest'
+            examples:
+              Example1:
                 value:
-                  bar: hello
-              Example3:
+                  bar: bar
+  /foo3:
+    post:
+      operationId: simple_foowithexamples
+      tags:
+        - Simple
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FooResponse'
+              examples:
+                Example1:
+                  value:
+                    bar: bar
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FooRequest'
+            examples:
+              Example1:
                 value:
-                  bar: hello
+                  bar: bar
 components:
   schemas:
     ErrorBody:
@@ -164,7 +169,7 @@ components:
       properties:
         bar:
           type: string
-          example: hello
+          example: bar
       required:
         - bar
     FooResponse:
@@ -173,7 +178,7 @@ components:
       properties:
         bar:
           type: string
-          example: hello
+          example: bar
       required:
         - bar
   securitySchemes: {}

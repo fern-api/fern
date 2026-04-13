@@ -3,7 +3,7 @@
 namespace Example;
 
 use Fern\SeedClient;
-use Fern\Imdb\Types\CreateMovieRequest;
+use Fern\Imdb\Requests\CreateMovieRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,7 +11,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->imdb->createMovie(
+$client->imdb->createmovie(
     new CreateMovieRequest([
         'title' => 'title',
         'rating' => 1.1,

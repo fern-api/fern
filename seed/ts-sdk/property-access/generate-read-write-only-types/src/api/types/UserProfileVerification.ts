@@ -5,14 +5,14 @@
  */
 export interface UserProfileVerification {
     /** User profile verification status */
-    verified: string;
+    verified?: string | undefined;
 }
 
 export namespace UserProfileVerification {
     export type Request = Omit<UserProfileVerification, "verified"> & {
-        verified: string;
+        verified: string | undefined;
     };
     export type Response = Omit<UserProfileVerification, "verified"> & {
-        verified: string;
+        verified: string | undefined;
     };
 }

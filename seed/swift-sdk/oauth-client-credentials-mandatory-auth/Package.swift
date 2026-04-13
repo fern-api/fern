@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "OauthClientCredentialsMandatoryAuth",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "OauthClientCredentialsMandatoryAuth",
-            targets: ["OauthClientCredentialsMandatoryAuth"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "OauthClientCredentialsMandatoryAuth",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "OauthClientCredentialsMandatoryAuthTests",
-            dependencies: ["OauthClientCredentialsMandatoryAuth"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

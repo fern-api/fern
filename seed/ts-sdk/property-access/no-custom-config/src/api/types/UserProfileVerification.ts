@@ -5,5 +5,5 @@
  */
 export interface UserProfileVerification {
     /** User profile verification status */
-    verified: string;
+    verified?: string | undefined;
 }

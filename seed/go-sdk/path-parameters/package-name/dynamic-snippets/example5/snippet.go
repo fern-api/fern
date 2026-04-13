@@ -14,18 +14,14 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &path.UpdateUserRequest{
+    request := &path.OrganizationsSearchOrganizationsRequest{
         TenantID: "tenant_id",
-        UserID: "user_id",
-        Body: &path.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-        },
+        OrganizationID: "organization_id",
+        Limit: path.Int(
+            1,
+        ),
     }
-    client.User.UpdateUser(
+    client.Organizations.Searchorganizations(
         context.TODO(),
         request,
     )

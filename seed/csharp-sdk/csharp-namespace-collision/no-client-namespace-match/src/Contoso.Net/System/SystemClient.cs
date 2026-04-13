@@ -13,8 +13,10 @@ public partial class SystemClient : ISystemClient
         _client = client;
     }
 
-    private async global::System.Threading.Tasks.Task<WithRawResponse<User>> CreateUserAsyncCore(
-        User request,
+    private async global::System.Threading.Tasks.Task<
+        WithRawResponse<SystemUser>
+    > CreateuserAsyncCore(
+        SystemUser request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -30,9 +32,10 @@ public partial class SystemClient : ISystemClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "users",
                     Body = request,
                     Headers = _headers,
+                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -45,8 +48,8 @@ public partial class SystemClient : ISystemClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
-                return new WithRawResponse<User>()
+                var responseData = JsonUtils.Deserialize<SystemUser>(responseBody)!;
+                return new WithRawResponse<SystemUser>()
                 {
                     Data = responseData,
                     RawResponse = new RawResponse()
@@ -79,8 +82,10 @@ public partial class SystemClient : ISystemClient
         }
     }
 
-    private async global::System.Threading.Tasks.Task<WithRawResponse<Task>> CreateTaskAsyncCore(
-        Task request,
+    private async global::System.Threading.Tasks.Task<
+        WithRawResponse<SystemTask>
+    > CreatetaskAsyncCore(
+        SystemTask request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -96,9 +101,10 @@ public partial class SystemClient : ISystemClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/users",
+                    Path = "users/tasks",
                     Body = request,
                     Headers = _headers,
+                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -111,8 +117,8 @@ public partial class SystemClient : ISystemClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<Task>(responseBody)!;
-                return new WithRawResponse<Task>()
+                var responseData = JsonUtils.Deserialize<SystemTask>(responseBody)!;
+                return new WithRawResponse<SystemTask>()
                 {
                     Data = responseData,
                     RawResponse = new RawResponse()
@@ -145,8 +151,8 @@ public partial class SystemClient : ISystemClient
         }
     }
 
-    private async global::System.Threading.Tasks.Task<WithRawResponse<User>> GetUserAsyncCore(
-        string userId,
+    private async global::System.Threading.Tasks.Task<WithRawResponse<SystemUser>> GetuserAsyncCore(
+        SystemGetUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -162,7 +168,10 @@ public partial class SystemClient : ISystemClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Get,
-                    Path = string.Format("/users/{0}", ValueConvert.ToPathParameterString(userId)),
+                    Path = string.Format(
+                        "users/{0}",
+                        ValueConvert.ToPathParameterString(request.UserId)
+                    ),
                     Headers = _headers,
                     Options = options,
                 },
@@ -176,8 +185,8 @@ public partial class SystemClient : ISystemClient
                 .ConfigureAwait(false);
             try
             {
-                var responseData = JsonUtils.Deserialize<User>(responseBody)!;
-                return new WithRawResponse<User>()
+                var responseData = JsonUtils.Deserialize<SystemUser>(responseBody)!;
+                return new WithRawResponse<SystemUser>()
                 {
                     Data = responseData,
                     RawResponse = new RawResponse()
@@ -211,75 +220,74 @@ public partial class SystemClient : ISystemClient
     }
 
     /// <example><code>
-    /// await client.System.CreateUserAsync(
-    ///     new Contoso.Net.System.User
+    /// await client.System.CreateuserAsync(
+    ///     new SystemUser
     ///     {
     ///         Line1 = "line1",
-    ///         Line2 = "line2",
     ///         City = "city",
     ///         State = "state",
     ///         Zip = "zip",
-    ///         Country = "USA",
+    ///         Country = SystemUserCountry.Usa,
     ///     }
     /// );
     /// </code></example>
-    public WithRawResponseTask<User> CreateUserAsync(
-        User request,
+    public WithRawResponseTask<SystemUser> CreateuserAsync(
+        SystemUser request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<User>(
-            CreateUserAsyncCore(request, options, cancellationToken)
+        return new WithRawResponseTask<SystemUser>(
+            CreateuserAsyncCore(request, options, cancellationToken)
         );
     }
 
     /// <example><code>
-    /// await client.System.CreateTaskAsync(
-    ///     new Contoso.Net.System.Task
+    /// await client.System.CreatetaskAsync(
+    ///     new SystemTask
     ///     {
     ///         Name = "name",
-    ///         User = new Contoso.Net.System.User
+    ///         User = new SystemUser
     ///         {
     ///             Line1 = "line1",
-    ///             Line2 = "line2",
     ///             City = "city",
     ///             State = "state",
     ///             Zip = "zip",
-    ///             Country = "USA",
+    ///             Country = SystemUserCountry.Usa,
     ///         },
-    ///         Owner = new Contoso.Net.System.User
+    ///         Owner = new SystemUser
     ///         {
     ///             Line1 = "line1",
-    ///             Line2 = "line2",
     ///             City = "city",
     ///             State = "state",
     ///             Zip = "zip",
-    ///             Country = "USA",
+    ///             Country = SystemUserCountry.Usa,
     ///         },
     ///     }
     /// );
     /// </code></example>
-    public WithRawResponseTask<Task> CreateTaskAsync(
-        Task request,
+    public WithRawResponseTask<SystemTask> CreatetaskAsync(
+        SystemTask request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<Task>(
-            CreateTaskAsyncCore(request, options, cancellationToken)
+        return new WithRawResponseTask<SystemTask>(
+            CreatetaskAsyncCore(request, options, cancellationToken)
         );
     }
 
     /// <example><code>
-    /// await client.System.GetUserAsync("userId");
+    /// await client.System.GetuserAsync(new SystemGetUserRequest { UserId = "userId" });
     /// </code></example>
-    public WithRawResponseTask<User> GetUserAsync(
-        string userId,
+    public WithRawResponseTask<SystemUser> GetuserAsync(
+        SystemGetUserRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        return new WithRawResponseTask<User>(GetUserAsyncCore(userId, options, cancellationToken));
+        return new WithRawResponseTask<SystemUser>(
+            GetuserAsyncCore(request, options, cancellationToken)
+        );
     }
 }

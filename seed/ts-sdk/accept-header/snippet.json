@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAcceptClient } from \"@fern/accept-header\";\n\nconst client = new SeedAcceptClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.endpoint();\n"
+                "client": "import { SeedApiClient } from \"@fern/accept-header\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.service.endpoint();\n"
             }
         }
     ],

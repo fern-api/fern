@@ -49,10 +49,10 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import Streaming
+import Api
 
 private func main() async throws {
-    let client = StreamingClient()
+    let client = ApiClient()
 
     _ = try await client.dummy.generate(request: .init(
         stream: true,
@@ -68,14 +68,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import Streaming
+import Api
 
-let client = StreamingClient(...)
+let client = ApiClient(...)
 
 do {
     let response = try await client.dummy.generate(...)
     // Handle successful response
-} catch let error as StreamingError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -98,9 +98,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import Streaming
+import Api
 
-let request = Requests.GenerateRequest(
+let request = Requests.DummyGenerateRequest(
     ...
 )
 ```
@@ -147,9 +147,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import Streaming
+import Api
 
-let client = StreamingClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

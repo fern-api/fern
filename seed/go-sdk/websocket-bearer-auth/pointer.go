@@ -1,4 +1,4 @@
-package websocketbearerauth
+package api
 
 import (
 	"time"

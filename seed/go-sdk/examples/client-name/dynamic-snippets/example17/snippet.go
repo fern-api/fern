@@ -17,18 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.GetMetadataRequest{
-        Shallow: fern.Bool(
-            false,
-        ),
-        Tag: []*string{
-            fern.String(
-                "development",
-            ),
-        },
-        XAPIVersion: "0.0.1",
+    request := &fern.RefreshTokenRequest{
+        TTL: 1,
     }
-    client.Service.GetMetadata(
+    client.Service.Refreshtoken(
         context.TODO(),
         request,
     )

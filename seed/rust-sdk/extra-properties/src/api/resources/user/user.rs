@@ -13,15 +13,15 @@ impl UserClient {
         })
     }
 
-    pub async fn create_user(
+    pub async fn createuser(
         &self,
-        request: &CreateUserRequest,
+        request: &UserCreateUserRequest,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/user",
+                "user",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

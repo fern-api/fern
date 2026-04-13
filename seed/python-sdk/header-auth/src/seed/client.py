@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .service.client import AsyncServiceClient, ServiceClient
 
 
-class SeedHeaderToken:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -21,7 +21,7 @@ class SeedHeaderToken:
     base_url : str
         The base url to use for requests from the client.
 
-    header_token_auth : str
+    api_key : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -39,10 +39,10 @@ class SeedHeaderToken:
 
     Examples
     --------
-    from seed import SeedHeaderToken
+    from seed import SeedApi
 
-    client = SeedHeaderToken(
-        header_token_auth="YOUR_HEADER_TOKEN_AUTH",
+    client = SeedApi(
+        api_key="YOUR_API_KEY",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -51,7 +51,7 @@ class SeedHeaderToken:
         self,
         *,
         base_url: str,
-        header_token_auth: str,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -63,7 +63,7 @@ class SeedHeaderToken:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
-            header_token_auth=header_token_auth,
+            api_key=api_key,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -102,7 +102,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedHeaderToken:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -111,7 +111,7 @@ class AsyncSeedHeaderToken:
     base_url : str
         The base url to use for requests from the client.
 
-    header_token_auth : str
+    api_key : str
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -129,10 +129,10 @@ class AsyncSeedHeaderToken:
 
     Examples
     --------
-    from seed import AsyncSeedHeaderToken
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedHeaderToken(
-        header_token_auth="YOUR_HEADER_TOKEN_AUTH",
+    client = AsyncSeedApi(
+        api_key="YOUR_API_KEY",
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -141,7 +141,7 @@ class AsyncSeedHeaderToken:
         self,
         *,
         base_url: str,
-        header_token_auth: str,
+        api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -153,7 +153,7 @@ class AsyncSeedHeaderToken:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
-            header_token_auth=header_token_auth,
+            api_key=api_key,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None

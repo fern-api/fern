@@ -1,4 +1,4 @@
-import Streaming
+import Api
 import Foundation
 
 final class HTTPStub {

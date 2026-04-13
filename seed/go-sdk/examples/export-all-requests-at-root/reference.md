@@ -56,7 +56,10 @@ client.Echo(
 <dd>
 
 ```go
-client.Echo(
+request := &fern.Type{
+        BasicType: fern.BasicTypePrimitive,
+    }
+client.CreateType(
         context.TODO(),
         request,
     )
@@ -87,8 +90,8 @@ client.Echo(
 </dl>
 </details>
 
-## File Notification Service
-<details><summary><code>client.File.Notification.Service.GetException(NotificationID) -> *fern.Exception</code></summary>
+## FileNotificationService
+<details><summary><code>client.FileNotificationService.FileNotificationServiceGetException(NotificationID) -> *fern.Exception</code></summary>
 <dl>
 <dd>
 
@@ -101,9 +104,12 @@ client.Echo(
 <dd>
 
 ```go
-client.File.Notification.Service.GetException(
+request := &fern.FileNotificationServiceGetExceptionRequest{
+        NotificationID: "notificationId",
+    }
+client.FileNotificationService.FileNotificationServiceGetException(
         context.TODO(),
-        "notification-hsy129x",
+        request,
     )
 }
 ```
@@ -132,8 +138,8 @@ client.File.Notification.Service.GetException(
 </dl>
 </details>
 
-## File Service
-<details><summary><code>client.File.Service.GetFile(Filename) -> *fern.File</code></summary>
+## FileService
+<details><summary><code>client.FileService.FileServiceGetFile(Filename) -> *fern.File</code></summary>
 <dl>
 <dd>
 
@@ -160,12 +166,11 @@ This endpoint returns a file by its name.
 <dd>
 
 ```go
-request := &fern.GetFileRequest{
-        XFileAPIVersion: "0.0.2",
+request := &fern.FileServiceGetFileRequest{
+        Filename: "filename",
     }
-client.File.Service.GetFile(
+client.FileService.FileServiceGetFile(
         context.TODO(),
-        "file.txt",
         request,
     )
 }
@@ -195,8 +200,8 @@ client.File.Service.GetFile(
 </dl>
 </details>
 
-## Health Service
-<details><summary><code>client.Health.Service.Check(ID) -> error</code></summary>
+## HealthService
+<details><summary><code>client.HealthService.HealthServiceCheck(ID) -> error</code></summary>
 <dl>
 <dd>
 
@@ -223,9 +228,12 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```go
-client.Health.Service.Check(
+request := &fern.HealthServiceCheckRequest{
+        ID: "id",
+    }
+client.HealthService.HealthServiceCheck(
         context.TODO(),
-        "id-2sdx82h",
+        request,
     )
 }
 ```
@@ -254,7 +262,7 @@ client.Health.Service.Check(
 </dl>
 </details>
 
-<details><summary><code>client.Health.Service.Ping() -> bool</code></summary>
+<details><summary><code>client.HealthService.HealthServicePing() -> bool</code></summary>
 <dl>
 <dd>
 
@@ -281,7 +289,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```go
-client.Health.Service.Ping(
+client.HealthService.HealthServicePing(
         context.TODO(),
     )
 }
@@ -297,7 +305,7 @@ client.Health.Service.Ping(
 </details>
 
 ## Service
-<details><summary><code>client.Service.GetMovie(MovieID) -> *fern.Movie</code></summary>
+<details><summary><code>client.Service.Getmovie(MovieID) -> *fern.Movie</code></summary>
 <dl>
 <dd>
 
@@ -310,9 +318,12 @@ client.Health.Service.Ping(
 <dd>
 
 ```go
-client.Service.GetMovie(
+request := &fern.ServiceGetMovieRequest{
+        MovieID: "movieId",
+    }
+client.Service.Getmovie(
         context.TODO(),
-        "movie-c06a4ad7",
+        request,
     )
 }
 ```
@@ -341,7 +352,7 @@ client.Service.GetMovie(
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateMovie(request) -> fern.MovieID</code></summary>
+<details><summary><code>client.Service.Createmovie(request) -> fern.MovieID</code></summary>
 <dl>
 <dd>
 
@@ -355,29 +366,18 @@ client.Service.GetMovie(
 
 ```go
 request := &fern.Movie{
-        ID: "movie-c06a4ad7",
-        Prequel: fern.String(
-            "movie-cv9b914f",
-        ),
-        Title: "The Boy and the Heron",
-        From: "Hayao Miyazaki",
-        Rating: 8,
-        Tag: "tag-wf9as23d",
+        ID: "id",
+        Title: "title",
+        From: "from",
+        Rating: 1.1,
+        Type: fern.MovieTypeMovie,
+        Tag: "tag",
         Metadata: map[string]any{
-            "actors": []any{
-                "Christian Bale",
-                "Florence Pugh",
-                "Willem Dafoe",
-            },
-            "ratings": map[string]any{
-                "imdb": 7.6,
-                "rottenTomatoes": 97,
-            },
-            "releaseDate": "2023-12-08",
+            "key": "value",
         },
         Revenue: int64(1000000),
     }
-client.Service.CreateMovie(
+client.Service.Createmovie(
         context.TODO(),
         request,
     )
@@ -408,7 +408,7 @@ client.Service.CreateMovie(
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetMetadata() -> *fern.Metadata</code></summary>
+<details><summary><code>client.Service.Getmetadata() -> *fern.Metadata</code></summary>
 <dl>
 <dd>
 
@@ -421,18 +421,10 @@ client.Service.CreateMovie(
 <dd>
 
 ```go
-request := &fern.GetMetadataRequest{
-        Shallow: fern.Bool(
-            false,
-        ),
-        Tag: []*string{
-            fern.String(
-                "development",
-            ),
-        },
-        XAPIVersion: "0.0.1",
+request := &fern.ServiceGetMetadataRequest{
+        APIVersion: "X-API-Version",
     }
-client.Service.GetMetadata(
+client.Service.Getmetadata(
         context.TODO(),
         request,
     )
@@ -467,7 +459,7 @@ client.Service.GetMetadata(
 <dl>
 <dd>
 
-**xAPIVersion:** `string` 
+**apiVersion:** `string` 
     
 </dd>
 </dl>
@@ -479,7 +471,7 @@ client.Service.GetMetadata(
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateBigEntity(request) -> *fern.Response</code></summary>
+<details><summary><code>client.Service.Createbigentity(request) -> *fern.Response</code></summary>
 <dl>
 <dd>
 
@@ -492,226 +484,8 @@ client.Service.GetMetadata(
 <dd>
 
 ```go
-request := &fern.BigEntity{
-        CastMember: &fern.CastMember{
-            Actor: &fern.Actor{
-                Name: "name",
-                ID: "id",
-            },
-        },
-        ExtendedMovie: &fern.ExtendedMovie{
-            Cast: []string{
-                "cast",
-                "cast",
-            },
-            ID: "id",
-            Prequel: fern.String(
-                "prequel",
-            ),
-            Title: "title",
-            From: "from",
-            Rating: 1.1,
-            Tag: "tag",
-            Book: fern.String(
-                "book",
-            ),
-            Metadata: map[string]any{
-                "metadata": map[string]any{
-                    "key": "value",
-                },
-            },
-            Revenue: int64(1000000),
-        },
-        Entity: &fern.Entity{
-            Type: &fern.Type{
-                BasicType: fern.BasicTypePrimitive,
-            },
-            Name: "name",
-        },
-        Metadata: &fern.Metadata{
-            Extra: map[string]string{
-                "extra": "extra",
-            },
-            Tags: []string{
-                "tags",
-            },
-        },
-        CommonMetadata: &commons.Metadata{
-            ID: "id",
-            Data: map[string]string{
-                "data": "data",
-            },
-            JSONString: fern.String(
-                "jsonString",
-            ),
-        },
-        EventInfo: &commons.EventInfo{
-            Metadata: &commons.Metadata{
-                ID: "id",
-                Data: map[string]string{
-                    "data": "data",
-                },
-                JSONString: fern.String(
-                    "jsonString",
-                ),
-            },
-        },
-        Data: &commons.Data{},
-        Migration: &fern.Migration{
-            Name: "name",
-            Status: fern.MigrationStatusRunning,
-        },
-        Exception: &fern.Exception{
-            Generic: &fern.ExceptionInfo{
-                ExceptionType: "exceptionType",
-                ExceptionMessage: "exceptionMessage",
-                ExceptionStacktrace: "exceptionStacktrace",
-            },
-        },
-        Test: &fern.Test{},
-        Node: &fern.Node{
-            Name: "name",
-            Nodes: []*fern.Node{
-                &fern.Node{
-                    Name: "name",
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                        },
-                        &fern.Node{
-                            Name: "name",
-                        },
-                    },
-                    Trees: []*fern.Tree{
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
-                    },
-                },
-                &fern.Node{
-                    Name: "name",
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                        },
-                        &fern.Node{
-                            Name: "name",
-                        },
-                    },
-                    Trees: []*fern.Tree{
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
-                        &fern.Tree{
-                            Nodes: []*fern.Node{},
-                        },
-                    },
-                },
-            },
-            Trees: []*fern.Tree{
-                &fern.Tree{
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                    },
-                },
-                &fern.Tree{
-                    Nodes: []*fern.Node{
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                        &fern.Node{
-                            Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
-                        },
-                    },
-                },
-            },
-        },
-        Directory: &fern.Directory{
-            Name: "name",
-            Files: []*fern.File{
-                &fern.File{
-                    Name: "name",
-                    Contents: "contents",
-                },
-                &fern.File{
-                    Name: "name",
-                    Contents: "contents",
-                },
-            },
-            Directories: []*fern.Directory{
-                &fern.Directory{
-                    Name: "name",
-                    Files: []*fern.File{
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                    },
-                    Directories: []*fern.Directory{
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                    },
-                },
-                &fern.Directory{
-                    Name: "name",
-                    Files: []*fern.File{
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                        &fern.File{
-                            Name: "name",
-                            Contents: "contents",
-                        },
-                    },
-                    Directories: []*fern.Directory{
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                        &fern.Directory{
-                            Name: "name",
-                        },
-                    },
-                },
-            },
-        },
-        Moment: &fern.Moment{
-            ID: uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            Date: fern.MustParseDate(
-                "2023-01-15",
-            ),
-            Datetime: fern.MustParseDateTime(
-                "2024-01-15T09:30:00Z",
-            ),
-        },
-    }
-client.Service.CreateBigEntity(
+request := &fern.BigEntity{}
+client.Service.Createbigentity(
         context.TODO(),
         request,
     )
@@ -730,7 +504,103 @@ client.Service.CreateBigEntity(
 <dl>
 <dd>
 
-**request:** `*fern.BigEntity` 
+**castMember:** `*fern.CastMember` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extendedMovie:** `*fern.ExtendedMovie` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entity:** `*fern.Entity` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `*fern.Metadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**commonMetadata:** `*fern.CommonsMetadata` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eventInfo:** `*fern.CommonsEventInfo` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**data:** `*fern.CommonsData` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**migration:** `*fern.Migration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exception:** `*fern.Exception` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**test:** `*fern.Test` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**node:** `*fern.Node` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**directory:** `*fern.Directory` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moment:** `*fern.Moment` 
     
 </dd>
 </dl>
@@ -742,7 +612,7 @@ client.Service.CreateBigEntity(
 </dl>
 </details>
 
-<details><summary><code>client.Service.RefreshToken(request) -> error</code></summary>
+<details><summary><code>client.Service.Refreshtoken(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -755,9 +625,12 @@ client.Service.CreateBigEntity(
 <dd>
 
 ```go
-client.Service.RefreshToken(
+request := &fern.RefreshTokenRequest{
+        TTL: 1,
+    }
+client.Service.Refreshtoken(
         context.TODO(),
-        nil,
+        request,
     )
 }
 ```
@@ -774,7 +647,7 @@ client.Service.RefreshToken(
 <dl>
 <dd>
 
-**request:** `*fern.RefreshTokenRequest` 
+**ttl:** `int` 
     
 </dd>
 </dl>

@@ -17,12 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ReqWithHeaders{
-        XTestServiceHeader: "X-TEST-SERVICE-HEADER",
-        XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-        Body: "string",
+    request := &fern.EndpointsPaginationListItemsRequest{
+        Cursor: fern.String(
+            "cursor",
+        ),
+        Limit: fern.Int(
+            1,
+        ),
     }
-    client.ReqWithHeaders.GetWithCustomHeader(
+    client.EndpointsPagination.EndpointsPaginationListItems(
         context.TODO(),
         request,
     )

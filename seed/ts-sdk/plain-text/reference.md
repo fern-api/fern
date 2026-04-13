@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getText</a>() -> string</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">gettext</a>() -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.service.getText();
+await client.service.gettext();
 
 ```
 </dd>

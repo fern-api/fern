@@ -6,11 +6,11 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
-                "identifier_override": "endpoint_retries.getUsers"
+                "identifier_override": "endpoint_retries.getusers"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedNoRetries;\n\nvar client = new SeedNoRetriesClient();\nawait client.Retries.GetUsersAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Retries.GetusersAsync();\n"
             }
         }
     ]

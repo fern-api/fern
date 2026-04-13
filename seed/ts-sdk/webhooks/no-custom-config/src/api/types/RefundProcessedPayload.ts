@@ -3,5 +3,5 @@
 export interface RefundProcessedPayload {
     refundId: string;
     amount: number;
-    reason?: string | undefined;
+    reason?: (string | null) | undefined;
 }

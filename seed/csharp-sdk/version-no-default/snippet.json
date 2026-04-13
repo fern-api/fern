@@ -6,11 +6,11 @@
             "id": {
                 "path": "/users/{userId}",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getUser"
+                "identifier_override": "endpoint_user.getuser"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedVersion;\n\nvar client = new SeedVersionClient();\nawait client.User.GetUserAsync(\"userId\");\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.User.GetuserAsync(new UserGetUserRequest { UserId = \"userId\" });\n"
             }
         }
     ]

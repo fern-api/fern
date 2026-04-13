@@ -4,7 +4,20 @@ package client
 
 import (
 	core "github.com/go-deterministic-ordering/fern/core"
-	client "github.com/go-deterministic-ordering/fern/endpoints/client"
+	endpointscontainer "github.com/go-deterministic-ordering/fern/endpointscontainer"
+	endpointscontenttype "github.com/go-deterministic-ordering/fern/endpointscontenttype"
+	endpointsduplicatenamesa "github.com/go-deterministic-ordering/fern/endpointsduplicatenamesa"
+	endpointsduplicatenamesb "github.com/go-deterministic-ordering/fern/endpointsduplicatenamesb"
+	endpointsduplicatenamesc "github.com/go-deterministic-ordering/fern/endpointsduplicatenamesc"
+	endpointsenum "github.com/go-deterministic-ordering/fern/endpointsenum"
+	endpointshttpmethods "github.com/go-deterministic-ordering/fern/endpointshttpmethods"
+	endpointsobject "github.com/go-deterministic-ordering/fern/endpointsobject"
+	endpointspagination "github.com/go-deterministic-ordering/fern/endpointspagination"
+	endpointsparams "github.com/go-deterministic-ordering/fern/endpointsparams"
+	endpointsprimitive "github.com/go-deterministic-ordering/fern/endpointsprimitive"
+	endpointsput "github.com/go-deterministic-ordering/fern/endpointsput"
+	endpointsunion "github.com/go-deterministic-ordering/fern/endpointsunion"
+	endpointsurls "github.com/go-deterministic-ordering/fern/endpointsurls"
 	inlinedrequests "github.com/go-deterministic-ordering/fern/inlinedrequests"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	noauth "github.com/go-deterministic-ordering/fern/noauth"
@@ -14,11 +27,24 @@ import (
 )
 
 type Client struct {
-	Endpoints       *client.Client
-	InlinedRequests *inlinedrequests.Client
-	NoAuth          *noauth.Client
-	NoReqBody       *noreqbody.Client
-	ReqWithHeaders  *reqwithheaders.Client
+	EndpointsContainer       *endpointscontainer.Client
+	EndpointsContentType     *endpointscontenttype.Client
+	EndpointsDuplicateNamesA *endpointsduplicatenamesa.Client
+	EndpointsDuplicateNamesB *endpointsduplicatenamesb.Client
+	EndpointsDuplicateNamesC *endpointsduplicatenamesc.Client
+	EndpointsEnum            *endpointsenum.Client
+	EndpointsHTTPMethods     *endpointshttpmethods.Client
+	EndpointsObject          *endpointsobject.Client
+	EndpointsPagination      *endpointspagination.Client
+	EndpointsParams          *endpointsparams.Client
+	EndpointsPrimitive       *endpointsprimitive.Client
+	EndpointsPut             *endpointsput.Client
+	EndpointsUnion           *endpointsunion.Client
+	EndpointsUrLs            *endpointsurls.Client
+	Inlinedrequests          *inlinedrequests.Client
+	Noauth                   *noauth.Client
+	Noreqbody                *noreqbody.Client
+	Reqwithheaders           *reqwithheaders.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -28,13 +54,26 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		Endpoints:       client.NewClient(options),
-		InlinedRequests: inlinedrequests.NewClient(options),
-		NoAuth:          noauth.NewClient(options),
-		NoReqBody:       noreqbody.NewClient(options),
-		ReqWithHeaders:  reqwithheaders.NewClient(options),
-		options:         options,
-		baseURL:         options.BaseURL,
+		EndpointsContainer:       endpointscontainer.NewClient(options),
+		EndpointsContentType:     endpointscontenttype.NewClient(options),
+		EndpointsDuplicateNamesA: endpointsduplicatenamesa.NewClient(options),
+		EndpointsDuplicateNamesB: endpointsduplicatenamesb.NewClient(options),
+		EndpointsDuplicateNamesC: endpointsduplicatenamesc.NewClient(options),
+		EndpointsEnum:            endpointsenum.NewClient(options),
+		EndpointsHTTPMethods:     endpointshttpmethods.NewClient(options),
+		EndpointsObject:          endpointsobject.NewClient(options),
+		EndpointsPagination:      endpointspagination.NewClient(options),
+		EndpointsParams:          endpointsparams.NewClient(options),
+		EndpointsPrimitive:       endpointsprimitive.NewClient(options),
+		EndpointsPut:             endpointsput.NewClient(options),
+		EndpointsUnion:           endpointsunion.NewClient(options),
+		EndpointsUrLs:            endpointsurls.NewClient(options),
+		Inlinedrequests:          inlinedrequests.NewClient(options),
+		Noauth:                   noauth.NewClient(options),
+		Noreqbody:                noreqbody.NewClient(options),
+		Reqwithheaders:           reqwithheaders.NewClient(options),
+		options:                  options,
+		baseURL:                  options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

@@ -1,4 +1,4 @@
-use seed_content_types::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,15 +6,12 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ContentTypesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .named_patch_with_mixed(
+        .patchcomplex(
             &"id".to_string(),
-            &NamedMixedPatchRequest {
-                app_id: Some("appId".to_string()),
-                instructions: Some("instructions".to_string()),
-                active: Some(true),
+            &ServicePatchComplexRequest {
                 ..Default::default()
             },
             None,

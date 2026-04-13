@@ -8,13 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import service
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedBearerTokenEnvironmentVariable, SeedBearerTokenEnvironmentVariable
+    from .client import AsyncSeedApi, SeedApi
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedBearerTokenEnvironmentVariable": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
-    "SeedBearerTokenEnvironmentVariable": ".client",
+    "SeedApi": ".client",
     "__version__": ".version",
     "service": ".service",
 }
@@ -41,11 +41,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "AsyncSeedBearerTokenEnvironmentVariable",
-    "DefaultAioHttpClient",
-    "DefaultAsyncHttpxClient",
-    "SeedBearerTokenEnvironmentVariable",
-    "__version__",
-    "service",
-]
+__all__ = ["AsyncSeedApi", "DefaultAioHttpClient", "DefaultAsyncHttpxClient", "SeedApi", "__version__", "service"]

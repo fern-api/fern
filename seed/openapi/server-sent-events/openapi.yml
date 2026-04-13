@@ -21,16 +21,11 @@ paths:
               properties:
                 query:
                   type: string
-                  example: foo
               required:
                 - query
-            examples:
-              Stream completions:
-                value:
-                  query: foo
   /stream-no-terminator:
     post:
-      operationId: completions_streamWithoutTerminator
+      operationId: completions_streamwithoutterminator
       tags:
         - Completions
       parameters: []
@@ -46,13 +41,8 @@ paths:
               properties:
                 query:
                   type: string
-                  example: query
               required:
                 - query
-            examples:
-              Stream without terminator:
-                value:
-                  query: query
 components:
   schemas:
     StreamedCompletion:

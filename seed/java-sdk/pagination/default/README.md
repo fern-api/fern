@@ -11,7 +11,6 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Base Url](#base-url)
-- [Pagination](#pagination)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
@@ -56,17 +55,17 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.complex.types.SearchRequest;
-import com.seed.pagination.resources.complex.types.SearchRequestQuery;
-import com.seed.pagination.resources.complex.types.SingleFilterSearchRequest;
-import com.seed.pagination.resources.complex.types.SingleFilterSearchRequestOperator;
-import com.seed.pagination.resources.complex.types.StartingAfterPaging;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.complex.requests.SearchRequest;
+import com.seed.api.types.SearchRequestQuery;
+import com.seed.api.types.SingleFilterSearchRequest;
+import com.seed.api.types.SingleFilterSearchRequestOperator;
+import com.seed.api.types.StartingAfterPaging;
 import java.util.Optional;
 
 public class Example {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient
+        SeedApiClient client = SeedApiClient
             .builder()
             .token("<token>")
             .build();
@@ -80,7 +79,7 @@ public class Example {
                         SingleFilterSearchRequest
                             .builder()
                             .field(Optional.of("field"))
-                            .operator(Optional.of(SingleFilterSearchRequestOperator.EQUALS))
+                            .operator(Optional.of(SingleFilterSearchRequestOperator.EQUAL_TO))
                             .value(Optional.of("value"))
                             .build()
                     )
@@ -103,52 +102,12 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.pagination.SeedPaginationClient;
+import com.seed.api.SeedApiClient;
 
-SeedPaginationClient client = SeedPaginationClient
+SeedApiClient client = SeedApiClient
     .builder()
     .url("https://example.com")
     .build();
-```
-
-## Pagination
-
-Paginated requests will return an Iterable<T>, which can be used to loop through the underlying items, or stream them. You can also call
-`nextPage` to perform the pagination manually
-
-```java
-import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.core.pagination.SyncPagingIterable;
-import com.seed.pagination.resources.complex.types.Conversation;
-import java.util.List;
-
-SeedPaginationClient client = SeedPaginationClient
-    .builder()
-    .build();
-
-SyncPagingIterable<SyncPagingIterable<Conversation>> response = client.complex().search(...);
-
-// Iterator
-for (item : response){
-    // Do something with item
-}
-
-// Streaming
-response.streamItems().map(item -> ...);
-
-// Manual pagination
-for (
-        List<SyncPagingIterable<Conversation>> items = response.getItems;
-        response.hasNext();
-        items = items.nextPage().getItems()) {
-    // Do something with items
-}
-
-// Access pagination metadata
-response.getResponse().ifPresent(r -> {
-    String cursor = r.getNext();
-    // Use cursor for stateless pagination
-});
 ```
 
 ## Exception Handling
@@ -156,11 +115,11 @@ response.getResponse().ifPresent(r -> {
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.pagination.core.SeedPaginationApiException;
+import com.seed.api.core.SeedApiApiException;
 
 try{
     client.complex().search(...);
-} catch (SeedPaginationApiException e){
+} catch (SeedApiApiException e){
     // Do something with the API exception...
 }
 ```
@@ -173,12 +132,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.pagination.SeedPaginationClient;
+import com.seed.api.SeedApiClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedPaginationClient client = SeedPaginationClient
+SeedApiClient client = SeedApiClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -201,9 +160,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.pagination.SeedPaginationClient;
+import com.seed.api.SeedApiClient;
 
-SeedPaginationClient client = SeedPaginationClient
+SeedApiClient client = SeedApiClient
     .builder()
     .maxRetries(1)
     .build();
@@ -213,11 +172,11 @@ SeedPaginationClient client = SeedPaginationClient
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
-import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedPaginationClient client = SeedPaginationClient
+SeedApiClient client = SeedApiClient
     .builder()
     .timeout(60)
     .build();
@@ -237,11 +196,11 @@ client.complex().search(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.core.RequestOptions;
+import com.seed.api.SeedApiClient;
+import com.seed.api.core.RequestOptions;
 
 // Client level
-SeedPaginationClient client = SeedPaginationClient
+SeedApiClient client = SeedApiClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -265,7 +224,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedPaginationHttpResponse response = client.complex().withRawResponse().search(...);
+SeedApiHttpResponse response = client.complex().withRawResponse().search(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

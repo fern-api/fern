@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetToken(
+func (r *RawClient) Gettoken(
 	ctx context.Context,
-	request *fern.GetTokenRequest,
+	request *fern.AuthGetTokenRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.TokenResponse], error) {
 	options := core.NewRequestOptions(opts...)

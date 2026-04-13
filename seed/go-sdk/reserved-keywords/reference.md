@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-request := &fern.TestRequest{
+request := &fern.PackageTestRequest{
         For: "for",
     }
 client.Package.Test(

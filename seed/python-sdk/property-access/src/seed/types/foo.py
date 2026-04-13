@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class Foo(UniversalBaseModel):
     normal: str
-    read: str
+    read: typing.Optional[str] = None
     write: str
 
     if IS_PYDANTIC_V2:

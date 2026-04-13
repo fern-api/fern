@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listResources</a>({ ...params }) -> SeedClientSideParams.Resource[]</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listresources</a>({ ...params }) -> SeedApi.Resource[]</code></summary>
 <dl>
 <dd>
 
@@ -27,14 +27,12 @@ List resources with pagination
 <dd>
 
 ```typescript
-await client.service.listResources({
+await client.service.listresources({
     page: 1,
     per_page: 1,
-    sort: "created_at",
-    order: "desc",
-    include_totals: true,
-    fields: "fields",
-    search: "search"
+    sort: "sort",
+    order: "order",
+    include_totals: true
 });
 
 ```
@@ -51,7 +49,7 @@ await client.service.listResources({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.ListResourcesRequest` 
+**request:** `SeedApi.ServiceListResourcesRequest` 
     
 </dd>
 </dl>
@@ -71,7 +69,7 @@ await client.service.listResources({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getResource</a>(resourceId, { ...params }) -> SeedClientSideParams.Resource</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getresource</a>({ ...params }) -> SeedApi.Resource</code></summary>
 <dl>
 <dd>
 
@@ -98,9 +96,10 @@ Get a single resource
 <dd>
 
 ```typescript
-await client.service.getResource("resourceId", {
+await client.service.getresource({
+    resourceId: "resourceId",
     include_metadata: true,
-    format: "json"
+    format: "format"
 });
 
 ```
@@ -117,15 +116,7 @@ await client.service.getResource("resourceId", {
 <dl>
 <dd>
 
-**resourceId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedClientSideParams.GetResourceRequest` 
+**request:** `SeedApi.ServiceGetResourceRequest` 
     
 </dd>
 </dl>
@@ -145,7 +136,7 @@ await client.service.getResource("resourceId", {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">searchResources</a>({ ...params }) -> SeedClientSideParams.SearchResponse</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">searchresources</a>({ ...params }) -> SeedApi.SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -172,15 +163,9 @@ Search resources with complex parameters
 <dd>
 
 ```typescript
-await client.service.searchResources({
+await client.service.searchresources({
     limit: 1,
-    offset: 1,
-    query: "query",
-    filters: {
-        "filters": {
-            "key": "value"
-        }
-    }
+    offset: 1
 });
 
 ```
@@ -197,7 +182,7 @@ await client.service.searchResources({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.SearchResourcesRequest` 
+**request:** `SeedApi.ServiceSearchResourcesRequest` 
     
 </dd>
 </dl>
@@ -217,7 +202,7 @@ await client.service.searchResources({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listUsers</a>({ ...params }) -> SeedClientSideParams.PaginatedUserResponse</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listusers</a>({ ...params }) -> SeedApi.PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -244,16 +229,7 @@ List or search for users
 <dd>
 
 ```typescript
-await client.service.listUsers({
-    page: 1,
-    per_page: 1,
-    include_totals: true,
-    sort: "sort",
-    connection: "connection",
-    q: "q",
-    search_engine: "search_engine",
-    fields: "fields"
-});
+await client.service.listusers();
 
 ```
 </dd>
@@ -269,7 +245,7 @@ await client.service.listUsers({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.ListUsersRequest` 
+**request:** `SeedApi.ServiceListUsersRequest` 
     
 </dd>
 </dl>
@@ -289,81 +265,7 @@ await client.service.listUsers({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getUserById</a>(userId, { ...params }) -> SeedClientSideParams.User</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a user by ID
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.service.getUserById("userId", {
-    fields: "fields",
-    include_fields: true
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**userId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedClientSideParams.GetUserRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ServiceClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">createUser</a>({ ...params }) -> SeedClientSideParams.User</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">createuser</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -390,23 +292,8 @@ Create a new user
 <dd>
 
 ```typescript
-await client.service.createUser({
+await client.service.createuser({
     email: "email",
-    email_verified: true,
-    username: "username",
-    password: "password",
-    phone_number: "phone_number",
-    phone_verified: true,
-    user_metadata: {
-        "user_metadata": {
-            "key": "value"
-        }
-    },
-    app_metadata: {
-        "app_metadata": {
-            "key": "value"
-        }
-    },
     connection: "connection"
 });
 
@@ -424,7 +311,7 @@ await client.service.createUser({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.CreateUserRequest` 
+**request:** `SeedApi.CreateUserRequest` 
     
 </dd>
 </dl>
@@ -444,7 +331,7 @@ await client.service.createUser({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">updateUser</a>(userId, { ...params }) -> SeedClientSideParams.User</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getuserbyid</a>({ ...params }) -> SeedApi.User</code></summary>
 <dl>
 <dd>
 
@@ -456,7 +343,7 @@ await client.service.createUser({
 <dl>
 <dd>
 
-Update a user
+Get a user by ID
 </dd>
 </dl>
 </dd>
@@ -471,24 +358,8 @@ Update a user
 <dd>
 
 ```typescript
-await client.service.updateUser("userId", {
-    email: "email",
-    email_verified: true,
-    username: "username",
-    phone_number: "phone_number",
-    phone_verified: true,
-    user_metadata: {
-        "user_metadata": {
-            "key": "value"
-        }
-    },
-    app_metadata: {
-        "app_metadata": {
-            "key": "value"
-        }
-    },
-    password: "password",
-    blocked: true
+await client.service.getuserbyid({
+    userId: "userId"
 });
 
 ```
@@ -505,15 +376,7 @@ await client.service.updateUser("userId", {
 <dl>
 <dd>
 
-**userId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedClientSideParams.UpdateUserRequest` 
+**request:** `SeedApi.ServiceGetUserByIdRequest` 
     
 </dd>
 </dl>
@@ -533,7 +396,7 @@ await client.service.updateUser("userId", {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">deleteUser</a>(userId) -> void</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">deleteuser</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -560,7 +423,9 @@ Delete a user
 <dd>
 
 ```typescript
-await client.service.deleteUser("userId");
+await client.service.deleteuser({
+    userId: "userId"
+});
 
 ```
 </dd>
@@ -576,7 +441,7 @@ await client.service.deleteUser("userId");
 <dl>
 <dd>
 
-**userId:** `string` 
+**request:** `SeedApi.ServiceDeleteUserRequest` 
     
 </dd>
 </dl>
@@ -596,7 +461,72 @@ await client.service.deleteUser("userId");
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listConnections</a>({ ...params }) -> SeedClientSideParams.Connection[]</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">updateuser</a>({ ...params }) -> SeedApi.User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.service.updateuser({
+    userId: "userId"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedApi.UpdateUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ServiceClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listconnections</a>({ ...params }) -> SeedApi.Connection[]</code></summary>
 <dl>
 <dd>
 
@@ -623,11 +553,7 @@ List all connections
 <dd>
 
 ```typescript
-await client.service.listConnections({
-    strategy: "strategy",
-    name: "name",
-    fields: "fields"
-});
+await client.service.listconnections();
 
 ```
 </dd>
@@ -643,7 +569,7 @@ await client.service.listConnections({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.ListConnectionsRequest` 
+**request:** `SeedApi.ServiceListConnectionsRequest` 
     
 </dd>
 </dl>
@@ -663,7 +589,7 @@ await client.service.listConnections({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getConnection</a>(connectionId, { ...params }) -> SeedClientSideParams.Connection</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getconnection</a>({ ...params }) -> SeedApi.Connection</code></summary>
 <dl>
 <dd>
 
@@ -690,8 +616,8 @@ Get a connection by ID
 <dd>
 
 ```typescript
-await client.service.getConnection("connectionId", {
-    fields: "fields"
+await client.service.getconnection({
+    connectionId: "connectionId"
 });
 
 ```
@@ -708,15 +634,7 @@ await client.service.getConnection("connectionId", {
 <dl>
 <dd>
 
-**connectionId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedClientSideParams.GetConnectionRequest` 
+**request:** `SeedApi.ServiceGetConnectionRequest` 
     
 </dd>
 </dl>
@@ -736,7 +654,7 @@ await client.service.getConnection("connectionId", {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listClients</a>({ ...params }) -> SeedClientSideParams.PaginatedClientResponse</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listclients</a>({ ...params }) -> SeedApi.PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -763,16 +681,7 @@ List all clients/applications
 <dd>
 
 ```typescript
-await client.service.listClients({
-    fields: "fields",
-    include_fields: true,
-    page: 1,
-    per_page: 1,
-    include_totals: true,
-    is_global: true,
-    is_first_party: true,
-    app_type: ["app_type", "app_type"]
-});
+await client.service.listclients();
 
 ```
 </dd>
@@ -788,7 +697,7 @@ await client.service.listClients({
 <dl>
 <dd>
 
-**request:** `SeedClientSideParams.ListClientsRequest` 
+**request:** `SeedApi.ServiceListClientsRequest` 
     
 </dd>
 </dl>
@@ -808,7 +717,7 @@ await client.service.listClients({
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getClient</a>(clientId, { ...params }) -> SeedClientSideParams.Client</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getclient</a>({ ...params }) -> SeedApi.Client</code></summary>
 <dl>
 <dd>
 
@@ -835,9 +744,8 @@ Get a client by ID
 <dd>
 
 ```typescript
-await client.service.getClient("clientId", {
-    fields: "fields",
-    include_fields: true
+await client.service.getclient({
+    clientId: "clientId"
 });
 
 ```
@@ -854,15 +762,7 @@ await client.service.getClient("clientId", {
 <dl>
 <dd>
 
-**clientId:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `SeedClientSideParams.GetClientRequest` 
+**request:** `SeedApi.ServiceGetClientRequest` 
     
 </dd>
 </dl>

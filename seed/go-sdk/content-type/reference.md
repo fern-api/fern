@@ -13,14 +13,7 @@
 <dd>
 
 ```go
-request := &fern.PatchProxyRequest{
-        Application: fern.String(
-            "application",
-        ),
-        RequireAuth: fern.Bool(
-            true,
-        ),
-    }
+request := &fern.ServicePatchRequest{}
 client.Service.Patch(
         context.TODO(),
         request,
@@ -60,7 +53,7 @@ client.Service.Patch(
 </dl>
 </details>
 
-<details><summary><code>client.Service.PatchComplex(ID, request) -> error</code></summary>
+<details><summary><code>client.Service.Patchcomplex(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -90,46 +83,11 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```go
-request := &fern.PatchComplexRequest{
-        Name: fern.String(
-            "name",
-        ),
-        Age: fern.Int(
-            1,
-        ),
-        Active: fern.Bool(
-            true,
-        ),
-        Metadata: map[string]any{
-            "metadata": map[string]any{
-                "key": "value",
-            },
-        },
-        Tags: []string{
-            "tags",
-            "tags",
-        },
-        Email: fern.String(
-            "email",
-        ),
-        Nickname: fern.String(
-            "nickname",
-        ),
-        Bio: fern.String(
-            "bio",
-        ),
-        ProfileImageURL: fern.String(
-            "profileImageUrl",
-        ),
-        Settings: map[string]any{
-            "settings": map[string]any{
-                "key": "value",
-            },
-        },
+request := &fern.ServicePatchComplexRequest{
+        ID: "id",
     }
-client.Service.PatchComplex(
+client.Service.Patchcomplex(
         context.TODO(),
-        "id",
         request,
     )
 }
@@ -239,7 +197,7 @@ client.Service.PatchComplex(
 </dl>
 </details>
 
-<details><summary><code>client.Service.NamedPatchWithMixed(ID, request) -> error</code></summary>
+<details><summary><code>client.Service.Namedpatchwithmixed(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -267,20 +225,11 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```go
-request := &fern.NamedMixedPatchRequest{
-        AppID: fern.String(
-            "appId",
-        ),
-        Instructions: fern.String(
-            "instructions",
-        ),
-        Active: fern.Bool(
-            true,
-        ),
+request := &fern.ServiceNamedPatchWithMixedRequest{
+        ID: "id",
     }
-client.Service.NamedPatchWithMixed(
+client.Service.Namedpatchwithmixed(
         context.TODO(),
-        "id",
         request,
     )
 }
@@ -334,7 +283,7 @@ client.Service.NamedPatchWithMixed(
 </dl>
 </details>
 
-<details><summary><code>client.Service.OptionalMergePatchTest(request) -> error</code></summary>
+<details><summary><code>client.Service.Optionalmergepatchtest(request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -364,22 +313,10 @@ This endpoint should:
 <dd>
 
 ```go
-request := &fern.OptionalMergePatchRequest{
+request := &fern.ServiceOptionalMergePatchTestRequest{
         RequiredField: "requiredField",
-        OptionalString: fern.String(
-            "optionalString",
-        ),
-        OptionalInteger: fern.Int(
-            1,
-        ),
-        OptionalBoolean: fern.Bool(
-            true,
-        ),
-        NullableString: fern.String(
-            "nullableString",
-        ),
     }
-client.Service.OptionalMergePatchTest(
+client.Service.Optionalmergepatchtest(
         context.TODO(),
         request,
     )
@@ -442,7 +379,7 @@ client.Service.OptionalMergePatchTest(
 </dl>
 </details>
 
-<details><summary><code>client.Service.RegularPatch(ID, request) -> error</code></summary>
+<details><summary><code>client.Service.Regularpatch(ID, request) -> error</code></summary>
 <dl>
 <dd>
 
@@ -469,17 +406,11 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```go
-request := &fern.RegularPatchRequest{
-        Field1: fern.String(
-            "field1",
-        ),
-        Field2: fern.Int(
-            1,
-        ),
+request := &fern.ServiceRegularPatchRequest{
+        ID: "id",
     }
-client.Service.RegularPatch(
+client.Service.Regularpatch(
         context.TODO(),
-        "id",
         request,
     )
 }

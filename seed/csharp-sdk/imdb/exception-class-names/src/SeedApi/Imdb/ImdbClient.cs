@@ -12,7 +12,7 @@ public partial class ImdbClient : IImdbClient
         _client = client;
     }
 
-    private async Task<WithRawResponse<string>> CreateMovieAsyncCore(
+    private async Task<WithRawResponse<string>> CreatemovieAsyncCore(
         CreateMovieRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -29,9 +29,10 @@ public partial class ImdbClient : IImdbClient
                 new JsonRequest
                 {
                     Method = HttpMethod.Post,
-                    Path = "/movies/create-movie",
+                    Path = "movies/create-movie",
                     Body = request,
                     Headers = _headers,
+                    ContentType = "application/json",
                     Options = options,
                 },
                 cancellationToken
@@ -78,8 +79,8 @@ public partial class ImdbClient : IImdbClient
         }
     }
 
-    private async Task<WithRawResponse<Movie>> GetMovieAsyncCore(
-        string movieId,
+    private async Task<WithRawResponse<Movie>> GetmovieAsyncCore(
+        ImdbGetMovieRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -96,8 +97,8 @@ public partial class ImdbClient : IImdbClient
                 {
                     Method = HttpMethod.Get,
                     Path = string.Format(
-                        "/movies/{0}",
-                        ValueConvert.ToPathParameterString(movieId)
+                        "movies/{0}",
+                        ValueConvert.ToPathParameterString(request.MovieId)
                     ),
                     Headers = _headers,
                     Options = options,
@@ -143,9 +144,7 @@ public partial class ImdbClient : IImdbClient
                 switch (response.StatusCode)
                 {
                     case 404:
-                        throw new MovieDoesNotExistError(
-                            JsonUtils.Deserialize<string>(responseBody)
-                        );
+                        throw new NotFoundError(JsonUtils.Deserialize<string>(responseBody));
                 }
             }
             catch (JsonException)
@@ -164,30 +163,30 @@ public partial class ImdbClient : IImdbClient
     /// Add a movie to the database using the movies/* /... path.
     /// </summary>
     /// <example><code>
-    /// await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
+    /// await client.Imdb.CreatemovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
     /// </code></example>
-    public WithRawResponseTask<string> CreateMovieAsync(
+    public WithRawResponseTask<string> CreatemovieAsync(
         CreateMovieRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         return new WithRawResponseTask<string>(
-            CreateMovieAsyncCore(request, options, cancellationToken)
+            CreatemovieAsyncCore(request, options, cancellationToken)
         );
     }
 
     /// <example><code>
-    /// await client.Imdb.GetMovieAsync("movieId");
+    /// await client.Imdb.GetmovieAsync(new ImdbGetMovieRequest { MovieId = "movieId" });
     /// </code></example>
-    public WithRawResponseTask<Movie> GetMovieAsync(
-        string movieId,
+    public WithRawResponseTask<Movie> GetmovieAsync(
+        ImdbGetMovieRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         return new WithRawResponseTask<Movie>(
-            GetMovieAsyncCore(movieId, options, cancellationToken)
+            GetmovieAsyncCore(request, options, cancellationToken)
         );
     }
 }

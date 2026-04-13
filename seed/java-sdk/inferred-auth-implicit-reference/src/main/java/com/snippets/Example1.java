@@ -1,19 +1,23 @@
 package com.snippets;
 
-import com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;
-import com.seed.inferredAuthImplicit.resources.auth.types.RefreshTokenRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.auth.requests.GetTokenRequest;
+import com.seed.api.resources.auth.types.GetTokenRequestAudience;
+import com.seed.api.resources.auth.types.GetTokenRequestGrantType;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
+                .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
         client.auth()
-                .refreshToken(RefreshTokenRequest.builder()
+                .gettokenwithclientcredentials(GetTokenRequest.builder()
                         .clientId("client_id")
                         .clientSecret("client_secret")
-                        .refreshToken("refresh_token")
+                        .audience(GetTokenRequestAudience.HTTPS_API_EXAMPLE_COM)
+                        .grantType(GetTokenRequestGrantType.CLIENT_CREDENTIALS)
                         .scope("scope")
                         .build());
     }

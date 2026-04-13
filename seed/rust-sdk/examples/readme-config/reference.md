@@ -12,7 +12,7 @@
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -20,10 +20,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
-    client
-        .echo(&"Hello world!\\n\\nwith\\n\\tnewlines".to_string(), None)
-        .await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.echo(&"string".to_string(), None).await;
 }
 ```
 </dd>
@@ -49,7 +47,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -57,8 +55,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
-    client.echo(&"primitive".to_string(), None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .create_type(&Type::BasicType(BasicType::Primitive), None)
+        .await;
 }
 ```
 </dd>
@@ -71,8 +71,8 @@ async fn main() {
 </dl>
 </details>
 
-## File Notification Service
-<details><summary><code>client.file().notification().service.<a href="/src/api/resources/file/notification/service/client.rs">get_exception</a>(notification_id: String) -> Result&lt;Exception, ApiError&gt;</code></summary>
+## FileNotificationService
+<details><summary><code>client.file_notification_service.<a href="/src/api/resources/file_notification_service/client.rs">file_notification_service_get_exception</a>(notification_id: String) -> Result&lt;Exception, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -85,7 +85,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -93,12 +93,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .file
-        .notification
-        .service
-        .get_exception(&"notification-hsy129x".to_string(), None)
+        .file_notification_service
+        .file_notification_service_get_exception(&"notificationId".to_string(), None)
         .await;
 }
 ```
@@ -127,8 +125,8 @@ async fn main() {
 </dl>
 </details>
 
-## File Service
-<details><summary><code>client.file().service.<a href="/src/api/resources/file/service/client.rs">get_file</a>(filename: String) -> Result&lt;File, ApiError&gt;</code></summary>
+## FileService
+<details><summary><code>client.file_service.<a href="/src/api/resources/file_service/client.rs">file_service_get_file</a>(filename: String) -> Result&lt;File, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -155,7 +153,7 @@ This endpoint returns a file by its name.
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -163,14 +161,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .file
-        .service
-        .get_file(
-            &"file.txt".to_string(),
-            Some(RequestOptions::new().additional_header("X-File-API-Version", "0.0.2")),
-        )
+        .file_service
+        .file_service_get_file(&"filename".to_string(), None)
         .await;
 }
 ```
@@ -199,8 +193,8 @@ async fn main() {
 </dl>
 </details>
 
-## Health Service
-<details><summary><code>client.health().service.<a href="/src/api/resources/health/service/client.rs">check</a>(id: String) -> Result&lt;(), ApiError&gt;</code></summary>
+## HealthService
+<details><summary><code>client.health_service.<a href="/src/api/resources/health_service/client.rs">health_service_check</a>(id: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -227,7 +221,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -235,11 +229,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .health
-        .service
-        .check(&"id-2sdx82h".to_string(), None)
+        .health_service
+        .health_service_check(&"id".to_string(), None)
         .await;
 }
 ```
@@ -268,7 +261,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.health().service.<a href="/src/api/resources/health/service/client.rs">ping</a>() -> Result&lt;bool, ApiError&gt;</code></summary>
+<details><summary><code>client.health_service.<a href="/src/api/resources/health_service/client.rs">health_service_ping</a>() -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -295,7 +288,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -303,8 +296,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
-    client.health.service.ping(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.health_service.health_service_ping(None).await;
 }
 ```
 </dd>
@@ -318,7 +311,7 @@ async fn main() {
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie</a>(movie_id: MovieId) -> Result&lt;Movie, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getmovie</a>(movie_id: MovieId) -> Result&lt;Movie, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -331,7 +324,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -339,10 +332,10 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .get_movie(&MovieId("movie-c06a4ad7".to_string()), None)
+        .getmovie(&MovieId("movieId".to_string()), None)
         .await;
 }
 ```
@@ -371,7 +364,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_movie</a>(request: Movie) -> Result&lt;MovieId, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">createmovie</a>(request: Movie) -> Result&lt;MovieId, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -384,7 +377,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -392,30 +385,20 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .create_movie(
+        .createmovie(
             &Movie {
-                id: MovieId("movie-c06a4ad7".to_string()),
-                prequel: Some(MovieId("movie-cv9b914f".to_string())),
-                title: "The Boy and the Heron".to_string(),
-                from: "Hayao Miyazaki".to_string(),
-                rating: 8.0,
-                r#type: "movie".to_string(),
-                tag: Tag("tag-wf9as23d".to_string()),
+                id: MovieId("id".to_string()),
+                prequel: None,
+                title: "title".to_string(),
+                from: "from".to_string(),
+                rating: 1.1,
+                r#type: MovieType::Movie,
+                tag: CommonsTag("tag".to_string()),
                 book: None,
-                metadata: HashMap::from([
-                    (
-                        "actors".to_string(),
-                        serde_json::json!(["Christian Bale", "Florence Pugh", "Willem Dafoe"]),
-                    ),
-                    ("releaseDate".to_string(), serde_json::json!("2023-12-08")),
-                    (
-                        "ratings".to_string(),
-                        serde_json::json!({"rottenTomatoes":97,"imdb":7.6}),
-                    ),
-                ]),
+                metadata: HashMap::from([("key".to_string(), serde_json::json!("value"))]),
                 revenue: 1000000,
             },
             None,
@@ -433,7 +416,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_metadata</a>(shallow: Option&lt;Option&lt;bool&gt;&gt;) -> Result&lt;Metadata, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">getmetadata</a>(shallow: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;) -> Result&lt;Metadata, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -446,7 +429,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -454,15 +437,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .get_metadata(
-            &GetMetadataQueryRequest {
-                shallow: Some(false),
-                tag: vec![Some("development".to_string())],
+        .getmetadata(
+            &GetmetadataQueryRequest {
+                shallow: None,
+                tag: vec![],
             },
-            Some(RequestOptions::new().additional_header("X-API-Version", "0.0.1")),
+            Some(RequestOptions::new().additional_header("X-API-Version", "X-API-Version")),
         )
         .await;
 }
@@ -480,7 +463,7 @@ async fn main() {
 <dl>
 <dd>
 
-**shallow:** `Option<bool>` 
+**shallow:** `Option<Option<bool>>` 
     
 </dd>
 </dl>
@@ -488,7 +471,7 @@ async fn main() {
 <dl>
 <dd>
 
-**tag:** `Option<String>` 
+**tag:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -500,7 +483,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_big_entity</a>(request: BigEntity) -> Result&lt;Response, ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">createbigentity</a>(request: BigEntity) -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -513,7 +496,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -521,239 +504,11 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
-        .create_big_entity(
+        .createbigentity(
             &BigEntity {
-                cast_member: Some(CastMember::Actor(Actor {
-                    name: "name".to_string(),
-                    id: "id".to_string(),
-                    ..Default::default()
-                })),
-                extended_movie: Some(ExtendedMovie {
-                    movie_fields: Movie {
-                        id: MovieId("id".to_string()),
-                        prequel: Some(MovieId("prequel".to_string())),
-                        title: "title".to_string(),
-                        from: "from".to_string(),
-                        rating: 1.1,
-                        r#type: "movie".to_string(),
-                        tag: Tag("tag".to_string()),
-                        book: Some("book".to_string()),
-                        metadata: HashMap::from([(
-                            "metadata".to_string(),
-                            serde_json::json!({"key":"value"}),
-                        )]),
-                        revenue: 1000000,
-                    },
-                    cast: vec!["cast".to_string(), "cast".to_string()],
-                }),
-                entity: Some(Entity {
-                    r#type: Type::BasicType(BasicType::Primitive),
-                    name: "name".to_string(),
-                }),
-                metadata: Some(Metadata2::Html {
-                    value: "value".to_string(),
-                    extra: HashMap::from([("extra".to_string(), "extra".to_string())]),
-                    tags: HashSet::from(["tags".to_string()]),
-                }),
-                common_metadata: Some(Metadata {
-                    id: "id".to_string(),
-                    data: Some(HashMap::from([("data".to_string(), "data".to_string())])),
-                    json_string: Some("jsonString".to_string()),
-                    ..Default::default()
-                }),
-                event_info: Some(EventInfo::Metadata {
-                    data: Metadata {
-                        id: "id".to_string(),
-                        data: Some(HashMap::from([("data".to_string(), "data".to_string())])),
-                        json_string: Some("jsonString".to_string()),
-                        ..Default::default()
-                    },
-                }),
-                data: Some(Data::r#String {
-                    value: "value".to_string(),
-                }),
-                migration: Some(Migration {
-                    name: "name".to_string(),
-                    status: MigrationStatus::Running,
-                }),
-                exception: Some(Exception::Generic {
-                    data: ExceptionInfo {
-                        exception_type: "exceptionType".to_string(),
-                        exception_message: "exceptionMessage".to_string(),
-                        exception_stacktrace: "exceptionStacktrace".to_string(),
-                        ..Default::default()
-                    },
-                }),
-                test: Some(Test::And { value: false }),
-                node: Some(Node {
-                    name: "name".to_string(),
-                    nodes: Some(vec![
-                        Node {
-                            name: "name".to_string(),
-                            nodes: Some(vec![
-                                Node {
-                                    name: "name".to_string(),
-                                    ..Default::default()
-                                },
-                                Node {
-                                    name: "name".to_string(),
-                                    ..Default::default()
-                                },
-                            ]),
-                            trees: Some(vec![
-                                Tree {
-                                    nodes: Some(vec![]),
-                                    ..Default::default()
-                                },
-                                Tree {
-                                    nodes: Some(vec![]),
-                                    ..Default::default()
-                                },
-                            ]),
-                            ..Default::default()
-                        },
-                        Node {
-                            name: "name".to_string(),
-                            nodes: Some(vec![
-                                Node {
-                                    name: "name".to_string(),
-                                    ..Default::default()
-                                },
-                                Node {
-                                    name: "name".to_string(),
-                                    ..Default::default()
-                                },
-                            ]),
-                            trees: Some(vec![
-                                Tree {
-                                    nodes: Some(vec![]),
-                                    ..Default::default()
-                                },
-                                Tree {
-                                    nodes: Some(vec![]),
-                                    ..Default::default()
-                                },
-                            ]),
-                            ..Default::default()
-                        },
-                    ]),
-                    trees: Some(vec![
-                        Tree {
-                            nodes: Some(vec![
-                                Node {
-                                    name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
-                                    ..Default::default()
-                                },
-                                Node {
-                                    name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
-                                    ..Default::default()
-                                },
-                            ]),
-                            ..Default::default()
-                        },
-                        Tree {
-                            nodes: Some(vec![
-                                Node {
-                                    name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
-                                    ..Default::default()
-                                },
-                                Node {
-                                    name: "name".to_string(),
-                                    nodes: Some(vec![]),
-                                    trees: Some(vec![]),
-                                    ..Default::default()
-                                },
-                            ]),
-                            ..Default::default()
-                        },
-                    ]),
-                    ..Default::default()
-                }),
-                directory: Some(Directory {
-                    name: "name".to_string(),
-                    files: Some(vec![
-                        File {
-                            name: "name".to_string(),
-                            contents: "contents".to_string(),
-                            ..Default::default()
-                        },
-                        File {
-                            name: "name".to_string(),
-                            contents: "contents".to_string(),
-                            ..Default::default()
-                        },
-                    ]),
-                    directories: Some(vec![
-                        Directory {
-                            name: "name".to_string(),
-                            files: Some(vec![
-                                File {
-                                    name: "name".to_string(),
-                                    contents: "contents".to_string(),
-                                    ..Default::default()
-                                },
-                                File {
-                                    name: "name".to_string(),
-                                    contents: "contents".to_string(),
-                                    ..Default::default()
-                                },
-                            ]),
-                            directories: Some(vec![
-                                Directory {
-                                    name: "name".to_string(),
-                                    ..Default::default()
-                                },
-                                Directory {
-                                    name: "name".to_string(),
-                                    ..Default::default()
-                                },
-                            ]),
-                            ..Default::default()
-                        },
-                        Directory {
-                            name: "name".to_string(),
-                            files: Some(vec![
-                                File {
-                                    name: "name".to_string(),
-                                    contents: "contents".to_string(),
-                                    ..Default::default()
-                                },
-                                File {
-                                    name: "name".to_string(),
-                                    contents: "contents".to_string(),
-                                    ..Default::default()
-                                },
-                            ]),
-                            directories: Some(vec![
-                                Directory {
-                                    name: "name".to_string(),
-                                    ..Default::default()
-                                },
-                                Directory {
-                                    name: "name".to_string(),
-                                    ..Default::default()
-                                },
-                            ]),
-                            ..Default::default()
-                        },
-                    ]),
-                    ..Default::default()
-                }),
-                moment: Some(Moment {
-                    id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
-                    date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
-                    datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                    ..Default::default()
-                }),
                 ..Default::default()
             },
             None,
@@ -766,12 +521,123 @@ async fn main() {
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cast_member:** `Option<CastMember>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extended_movie:** `Option<ExtendedMovie>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entity:** `Option<Entity>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `Option<Metadata>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**common_metadata:** `Option<CommonsMetadata>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_info:** `Option<CommonsEventInfo>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**data:** `Option<CommonsData>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**migration:** `Option<Migration>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exception:** `Option<Exception>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**test:** `Option<Test>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**node:** `Option<Node>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**directory:** `Option<Directory>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moment:** `Option<Moment>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">refresh_token</a>(request: Option&lt;RefreshTokenRequest&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">refreshtoken</a>(request: RefreshTokenRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -784,7 +650,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -792,10 +658,28 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = ExamplesClient::new(config).expect("Failed to build client");
-    client.service.refresh_token(&None, None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .service
+        .refreshtoken(&RefreshTokenRequest { ttl: 1 }, None)
+        .await;
 }
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ttl:** `i64` 
+    
 </dd>
 </dl>
 </dd>

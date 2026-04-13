@@ -5,7 +5,7 @@ info:
 paths:
   /generate-stream:
     post:
-      operationId: dummy_generate-stream
+      operationId: dummy_generateStream
       tags:
         - Dummy
       parameters: []
@@ -21,7 +21,6 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  const: true
                 num_events:
                   type: integer
               required:
@@ -41,7 +40,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/StreamResponse'
               examples:
-                Default:
+                Example1:
                   value:
                     id: id
                     name: name
@@ -54,18 +53,18 @@ paths:
               properties:
                 stream:
                   type: boolean
-                  const: false
+                  example: true
                 num_events:
                   type: integer
-                  example: 5
+                  example: 1
               required:
                 - stream
                 - num_events
             examples:
-              Default:
+              Example1:
                 value:
-                  stream: false
-                  num_events: 5
+                  stream: true
+                  num_events: 1
 components:
   schemas:
     StreamResponse:

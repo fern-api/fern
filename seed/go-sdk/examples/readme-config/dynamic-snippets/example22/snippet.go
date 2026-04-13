@@ -17,10 +17,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.RefreshTokenRequest{
-        TTL: 1,
+    request := &fern.Type{
+        BasicType: fern.BasicTypePrimitive,
     }
-    client.Service.RefreshToken(
+    client.CreateType(
         context.TODO(),
         request,
     )

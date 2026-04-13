@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedAnyAuth/Auth/AuthClient.cs">GetTokenAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedApi/Auth/AuthClient.cs">GettokenAsync</a>(AuthGetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,13 +13,13 @@
 <dd>
 
 ```csharp
-await client.Auth.GetTokenAsync(
-    new GetTokenRequest
+await client.Auth.GettokenAsync(
+    new AuthGetTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",
-        Audience = "https://api.example.com",
-        GrantType = "client_credentials",
+        Audience = AuthGetTokenRequestAudience.HttpsApiExampleCom,
+        GrantType = AuthGetTokenRequestGrantType.ClientCredentials,
     }
 );
 ```
@@ -36,7 +36,7 @@ await client.Auth.GetTokenAsync(
 <dl>
 <dd>
 
-**request:** `GetTokenRequest` 
+**request:** `AuthGetTokenRequest` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ await client.Auth.GetTokenAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -74,7 +74,7 @@ await client.User.GetAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAdminsAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
+<details><summary><code>client.User.<a href="/src/SeedApi/User/UserClient.cs">GetadminsAsync</a>() -> WithRawResponseTask&lt;IEnumerable&lt;User&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -87,7 +87,7 @@ await client.User.GetAsync();
 <dd>
 
 ```csharp
-await client.User.GetAdminsAsync();
+await client.User.GetadminsAsync();
 ```
 </dd>
 </dl>

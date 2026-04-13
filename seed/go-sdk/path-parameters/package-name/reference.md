@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.Organizations.GetOrganization(TenantID, OrganizationID) -> *path.Organization</code></summary>
+<details><summary><code>client.Organizations.Getorganization(TenantID, OrganizationID) -> *path.Organization</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,13 @@
 <dd>
 
 ```go
-client.Organizations.GetOrganization(
+request := &path.OrganizationsGetOrganizationRequest{
+        TenantID: "tenant_id",
+        OrganizationID: "organization_id",
+    }
+client.Organizations.Getorganization(
         context.TODO(),
-        "tenant_id",
-        "organization_id",
+        request,
     )
 }
 ```
@@ -53,7 +56,7 @@ client.Organizations.GetOrganization(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.GetOrganizationUser(TenantID, OrganizationID, UserID) -> *path.User</code></summary>
+<details><summary><code>client.Organizations.Getorganizationuser(TenantID, OrganizationID, UserID) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -66,12 +69,12 @@ client.Organizations.GetOrganization(
 <dd>
 
 ```go
-request := &path.GetOrganizationUserRequest{
+request := &path.OrganizationsGetOrganizationUserRequest{
         TenantID: "tenant_id",
         OrganizationID: "organization_id",
         UserID: "user_id",
     }
-client.Organizations.GetOrganizationUser(
+client.Organizations.Getorganizationuser(
         context.TODO(),
         request,
     )
@@ -118,7 +121,7 @@ client.Organizations.GetOrganizationUser(
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.SearchOrganizations(TenantID, OrganizationID) -> []*path.Organization</code></summary>
+<details><summary><code>client.Organizations.Searchorganizations(TenantID, OrganizationID) -> []*path.Organization</code></summary>
 <dl>
 <dd>
 
@@ -131,15 +134,12 @@ client.Organizations.GetOrganizationUser(
 <dd>
 
 ```go
-request := &path.SearchOrganizationsRequest{
-        Limit: path.Int(
-            1,
-        ),
+request := &path.OrganizationsSearchOrganizationsRequest{
+        TenantID: "tenant_id",
+        OrganizationID: "organization_id",
     }
-client.Organizations.SearchOrganizations(
+client.Organizations.Searchorganizations(
         context.TODO(),
-        "tenant_id",
-        "organization_id",
         request,
     )
 }
@@ -186,7 +186,7 @@ client.Organizations.SearchOrganizations(
 </details>
 
 ## User
-<details><summary><code>client.User.GetUser(TenantID, UserID) -> *path.User</code></summary>
+<details><summary><code>client.User.Getuser(TenantID, UserID) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -199,11 +199,11 @@ client.Organizations.SearchOrganizations(
 <dd>
 
 ```go
-request := &path.GetUsersRequest{
+request := &path.UserGetUserRequest{
         TenantID: "tenant_id",
         UserID: "user_id",
     }
-client.User.GetUser(
+client.User.Getuser(
         context.TODO(),
         request,
     )
@@ -242,7 +242,7 @@ client.User.GetUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.CreateUser(TenantID, request) -> *path.User</code></summary>
+<details><summary><code>client.User.Updateuser(TenantID, UserID, request) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -255,78 +255,17 @@ client.User.GetUser(
 <dd>
 
 ```go
-request := &path.User{
-        Name: "name",
-        Tags: []string{
-            "tags",
-            "tags",
-        },
-    }
-client.User.CreateUser(
-        context.TODO(),
-        "tenant_id",
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**tenantID:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `*path.User` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.User.UpdateUser(TenantID, UserID, request) -> *path.User</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &path.UpdateUserRequest{
+request := &path.UserUpdateUserRequest{
         TenantID: "tenant_id",
         UserID: "user_id",
         Body: &path.User{
             Name: "name",
             Tags: []string{
                 "tags",
-                "tags",
             },
         },
     }
-client.User.UpdateUser(
+client.User.Updateuser(
         context.TODO(),
         request,
     )
@@ -373,7 +312,7 @@ client.User.UpdateUser(
 </dl>
 </details>
 
-<details><summary><code>client.User.SearchUsers(TenantID, UserID) -> []*path.User</code></summary>
+<details><summary><code>client.User.Createuser(TenantID, request) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -386,14 +325,72 @@ client.User.UpdateUser(
 <dd>
 
 ```go
-request := &path.SearchUsersRequest{
+request := &path.UserCreateUserRequest{
+        TenantID: "tenant_id",
+        Body: &path.User{
+            Name: "name",
+            Tags: []string{
+                "tags",
+            },
+        },
+    }
+client.User.Createuser(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantID:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `*path.User` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.User.Searchusers(TenantID, UserID) -> []*path.User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &path.UserSearchUsersRequest{
         TenantID: "tenant_id",
         UserID: "user_id",
-        Limit: path.Int(
-            1,
-        ),
     }
-client.User.SearchUsers(
+client.User.Searchusers(
         context.TODO(),
         request,
     )
@@ -440,7 +437,7 @@ client.User.SearchUsers(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetUserMetadata(TenantID, UserID, Version) -> *path.User</code></summary>
+<details><summary><code>client.User.Getusermetadata(TenantID, UserID, Version) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -467,12 +464,12 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```go
-request := &path.GetUserMetadataRequest{
+request := &path.UserGetUserMetadataRequest{
         TenantID: "tenant_id",
         UserID: "user_id",
         Version: 1,
     }
-client.User.GetUserMetadata(
+client.User.Getusermetadata(
         context.TODO(),
         request,
     )
@@ -519,7 +516,7 @@ client.User.GetUserMetadata(
 </dl>
 </details>
 
-<details><summary><code>client.User.GetUserSpecifics(TenantID, UserID, Version, Thought) -> *path.User</code></summary>
+<details><summary><code>client.User.Getuserspecifics(TenantID, UserID, Version, Thought) -> *path.User</code></summary>
 <dl>
 <dd>
 
@@ -546,13 +543,13 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```go
-request := &path.GetUserSpecificsRequest{
+request := &path.UserGetUserSpecificsRequest{
         TenantID: "tenant_id",
         UserID: "user_id",
         Version: 1,
         Thought: "thought",
     }
-client.User.GetUserSpecifics(
+client.User.Getuserspecifics(
         context.TODO(),
         request,
     )

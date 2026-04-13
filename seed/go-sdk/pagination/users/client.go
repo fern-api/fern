@@ -4,11 +4,7 @@ package users
 
 import (
 	context "context"
-	fmt "fmt"
-	http "net/http"
-	strconv "strconv"
 
-	uuid "github.com/google/uuid"
 	fern "github.com/pagination/fern"
 	core "github.com/pagination/fern/core"
 	internal "github.com/pagination/fern/internal"
@@ -37,128 +33,44 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) ListWithCursorPagination(
+func (c *Client) Listwithcursorpagination(
 	ctx context.Context,
-	request *fern.ListUsersCursorPaginationRequest,
-	opts ...option.RequestOption,
-) (*core.Page[*string, *fern.User, *fern.ListUsersPaginationResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
-	if err != nil {
-		return nil, err
-	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("starting_after", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*string, *fern.User, *fern.ListUsersPaginationResponse] {
-		var zeroValue string
-		next := response.GetPage().GetNext().GetStartingAfter()
-		results := response.GetData()
-		return &core.PageResponse[*string, *fern.User, *fern.ListUsersPaginationResponse]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.StartingAfter)
-}
-
-func (c *Client) ListWithMixedTypeCursorPagination(
-	ctx context.Context,
-	request *fern.ListUsersMixedTypeCursorPaginationRequest,
-	opts ...option.RequestOption,
-) (*core.Page[*string, *fern.User, *fern.ListUsersMixedTypePaginationResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
-	if err != nil {
-		return nil, err
-	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("cursor", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	readPageResponse := func(response *fern.ListUsersMixedTypePaginationResponse) *core.PageResponse[*string, *fern.User, *fern.ListUsersMixedTypePaginationResponse] {
-		var zeroValue string
-		next := response.GetNext()
-		results := response.GetData()
-		return &core.PageResponse[*string, *fern.User, *fern.ListUsersMixedTypePaginationResponse]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.Cursor)
-}
-
-func (c *Client) ListWithBodyCursorPagination(
-	ctx context.Context,
-	request *fern.ListUsersBodyCursorPaginationRequest,
+	request *fern.UsersListWithCursorPaginationRequest,
 	opts ...option.RequestOption,
 ) (*fern.ListUsersPaginationResponse, error) {
-	response, err := c.WithRawResponse.ListWithBodyCursorPagination(
+	response, err := c.WithRawResponse.Listwithcursorpagination(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) Listwithmixedtypecursorpagination(
+	ctx context.Context,
+	request *fern.UsersListWithMixedTypeCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*fern.ListUsersMixedTypePaginationResponse, error) {
+	response, err := c.WithRawResponse.Listwithmixedtypecursorpagination(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) Listwithbodycursorpagination(
+	ctx context.Context,
+	request *fern.UsersListWithBodyCursorPaginationRequest,
+	opts ...option.RequestOption,
+) (*fern.ListUsersPaginationResponse, error) {
+	response, err := c.WithRawResponse.Listwithbodycursorpagination(
 		ctx,
 		request,
 		opts...,
@@ -172,12 +84,12 @@ func (c *Client) ListWithBodyCursorPagination(
 // Pagination endpoint with a top-level cursor field in the request body.
 // This tests that the mock server correctly ignores cursor mismatches
 // when getNextPage() is called with a different cursor value.
-func (c *Client) ListWithTopLevelBodyCursorPagination(
+func (c *Client) Listwithtoplevelbodycursorpagination(
 	ctx context.Context,
-	request *fern.ListUsersTopLevelBodyCursorPaginationRequest,
+	request *fern.UsersListWithTopLevelBodyCursorPaginationRequest,
 	opts ...option.RequestOption,
 ) (*fern.ListUsersTopLevelCursorPaginationResponse, error) {
-	response, err := c.WithRawResponse.ListWithTopLevelBodyCursorPagination(
+	response, err := c.WithRawResponse.Listwithtoplevelbodycursorpagination(
 		ctx,
 		request,
 		opts...,
@@ -188,140 +100,12 @@ func (c *Client) ListWithTopLevelBodyCursorPagination(
 	return response.Body, nil
 }
 
-func (c *Client) ListWithOffsetPagination(
+func (c *Client) Listwithoffsetpagination(
 	ctx context.Context,
-	request *fern.ListUsersOffsetPaginationRequest,
-	opts ...option.RequestOption,
-) (*core.Page[*int, *fern.User, *fern.ListUsersPaginationResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
-	if err != nil {
-		return nil, err
-	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	next := 1
-	if queryParams.Has("page") {
-		var err error
-		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
-			return nil, err
-		}
-	}
-
-	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse] {
-		next += 1
-		results := response.GetData()
-		return &core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, &next)
-}
-
-func (c *Client) ListWithDoubleOffsetPagination(
-	ctx context.Context,
-	request *fern.ListUsersDoubleOffsetPaginationRequest,
-	opts ...option.RequestOption,
-) (*core.Page[*float64, *fern.User, *fern.ListUsersPaginationResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
-	if err != nil {
-		return nil, err
-	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*float64]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	var next float64 = 1
-	if queryParams.Has("page") {
-		var err error
-		if next, err = strconv.ParseFloat(queryParams.Get("page"), 64); err != nil {
-			return nil, err
-		}
-	}
-
-	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*float64, *fern.User, *fern.ListUsersPaginationResponse] {
-		next += 1
-		results := response.GetData()
-		return &core.PageResponse[*float64, *fern.User, *fern.ListUsersPaginationResponse]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, &next)
-}
-
-func (c *Client) ListWithBodyOffsetPagination(
-	ctx context.Context,
-	request *fern.ListUsersBodyOffsetPaginationRequest,
+	request *fern.UsersListWithOffsetPaginationRequest,
 	opts ...option.RequestOption,
 ) (*fern.ListUsersPaginationResponse, error) {
-	response, err := c.WithRawResponse.ListWithBodyOffsetPagination(
+	response, err := c.WithRawResponse.Listwithoffsetpagination(
 		ctx,
 		request,
 		opts...,
@@ -332,496 +116,178 @@ func (c *Client) ListWithBodyOffsetPagination(
 	return response.Body, nil
 }
 
-func (c *Client) ListWithOffsetStepPagination(
+func (c *Client) Listwithdoubleoffsetpagination(
 	ctx context.Context,
-	request *fern.ListUsersOffsetStepPaginationRequest,
+	request *fern.UsersListWithDoubleOffsetPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *fern.User, *fern.ListUsersPaginationResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+) (*fern.ListUsersPaginationResponse, error) {
+	response, err := c.WithRawResponse.Listwithdoubleoffsetpagination(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	next := 1
-	if queryParams.Has("page") {
-		var err error
-		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
-			return nil, err
-		}
-	}
-
-	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse] {
-		next += 1
-		results := response.GetData()
-		return &core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, &next)
+	return response.Body, nil
 }
 
-func (c *Client) ListWithOffsetPaginationHasNextPage(
+func (c *Client) Listwithbodyoffsetpagination(
 	ctx context.Context,
-	request *fern.ListWithOffsetPaginationHasNextPageRequest,
+	request *fern.UsersListWithBodyOffsetPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *fern.User, *fern.ListUsersPaginationResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+) (*fern.ListUsersPaginationResponse, error) {
+	response, err := c.WithRawResponse.Listwithbodyoffsetpagination(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	next := 1
-	if queryParams.Has("page") {
-		var err error
-		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
-			return nil, err
-		}
-	}
-
-	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse] {
-		next += 1
-		results := response.GetData()
-		return &core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, &next)
+	return response.Body, nil
 }
 
-func (c *Client) ListWithExtendedResults(
+func (c *Client) Listwithoffsetsteppagination(
 	ctx context.Context,
-	request *fern.ListUsersExtendedRequest,
+	request *fern.UsersListWithOffsetStepPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*uuid.UUID, *fern.User, *fern.ListUsersExtendedResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+) (*fern.ListUsersPaginationResponse, error) {
+	response, err := c.WithRawResponse.Listwithoffsetsteppagination(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*uuid.UUID]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("cursor", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	readPageResponse := func(response *fern.ListUsersExtendedResponse) *core.PageResponse[*uuid.UUID, *fern.User, *fern.ListUsersExtendedResponse] {
-		var zeroValue *uuid.UUID
-		next := response.GetNext()
-		results := response.GetData().GetUsers()
-		return &core.PageResponse[*uuid.UUID, *fern.User, *fern.ListUsersExtendedResponse]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.Cursor)
+	return response.Body, nil
 }
 
-func (c *Client) ListWithExtendedResultsAndOptionalData(
+func (c *Client) Listwithoffsetpaginationhasnextpage(
 	ctx context.Context,
-	request *fern.ListUsersExtendedRequestForOptionalData,
+	request *fern.UsersListWithOffsetPaginationHasNextPageRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*uuid.UUID, *fern.User, *fern.ListUsersExtendedOptionalListResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+) (*fern.ListUsersPaginationResponse, error) {
+	response, err := c.WithRawResponse.Listwithoffsetpaginationhasnextpage(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*uuid.UUID]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("cursor", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	readPageResponse := func(response *fern.ListUsersExtendedOptionalListResponse) *core.PageResponse[*uuid.UUID, *fern.User, *fern.ListUsersExtendedOptionalListResponse] {
-		var zeroValue *uuid.UUID
-		next := response.GetNext()
-		results := response.GetData().GetUsers()
-		return &core.PageResponse[*uuid.UUID, *fern.User, *fern.ListUsersExtendedOptionalListResponse]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.Cursor)
+	return response.Body, nil
 }
 
-func (c *Client) ListUsernames(
+func (c *Client) Listwithextendedresults(
 	ctx context.Context,
-	request *fern.ListUsernamesRequest,
+	request *fern.UsersListWithExtendedResultsRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, string, *fern.UsernameCursor], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+) (*fern.ListUsersExtendedResponse, error) {
+	response, err := c.WithRawResponse.Listwithextendedresults(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("starting_after", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	readPageResponse := func(response *fern.UsernameCursor) *core.PageResponse[*string, string, *fern.UsernameCursor] {
-		var zeroValue *string
-		var next *string
-		if response.Cursor != nil {
-			next = response.Cursor.After
-		}
-		results := response.GetCursor().GetData()
-		return &core.PageResponse[*string, string, *fern.UsernameCursor]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.StartingAfter)
+	return response.Body, nil
 }
 
-func (c *Client) ListUsernamesWithOptionalResponse(
+func (c *Client) Listwithextendedresultsandoptionaldata(
 	ctx context.Context,
-	request *fern.ListUsernamesWithOptionalResponseRequest,
+	request *fern.UsersListWithExtendedResultsAndOptionalDataRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, string, *fern.UsernameCursor], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+) (*fern.ListUsersExtendedOptionalListResponse, error) {
+	response, err := c.WithRawResponse.Listwithextendedresultsandoptionaldata(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("starting_after", *pageRequest.Cursor)
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	readPageResponse := func(response *fern.UsernameCursor) *core.PageResponse[*string, string, *fern.UsernameCursor] {
-		var zeroValue *string
-		var next *string
-		if response.Cursor != nil {
-			next = response.Cursor.After
-		}
-		results := response.GetCursor().GetData()
-		return &core.PageResponse[*string, string, *fern.UsernameCursor]{
-			Results:  results,
-			Response: response,
-			Next:     next,
-			Done:     next == zeroValue,
-		}
-	}
-	pager := internal.NewCursorPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, request.StartingAfter)
+	return response.Body, nil
 }
 
-func (c *Client) ListWithGlobalConfig(
+func (c *Client) Listusernames(
 	ctx context.Context,
-	request *fern.ListWithGlobalConfigRequest,
+	request *fern.UsersListUsernamesRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, string, *fern.UsernameContainer], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+) (*fern.UsernameCursor, error) {
+	response, err := c.WithRawResponse.Listusernames(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("offset", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	next := 1
-	if queryParams.Has("offset") {
-		var err error
-		if next, err = strconv.Atoi(queryParams.Get("offset")); err != nil {
-			return nil, err
-		}
-	}
-
-	readPageResponse := func(response *fern.UsernameContainer) *core.PageResponse[*int, string, *fern.UsernameContainer] {
-		next += 1
-		results := response.GetResults()
-		return &core.PageResponse[*int, string, *fern.UsernameContainer]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
-	)
-	return pager.GetPage(ctx, &next)
+	return response.Body, nil
 }
 
-func (c *Client) ListWithOptionalData(
+func (c *Client) Listusernameswithoptionalresponse(
 	ctx context.Context,
-	request *fern.ListUsersOptionalDataRequest,
+	request *fern.UsersListUsernamesWithOptionalResponseRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *fern.User, *fern.ListUsersOptionalDataPaginationResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
+) (*fern.UsernameCursor, error) {
+	response, err := c.WithRawResponse.Listusernameswithoptionalresponse(
+		ctx,
+		request,
+		opts...,
 	)
-	endpointURL := baseURL + "/users/optional-data"
-	queryParams, err := internal.QueryValues(request)
 	if err != nil {
 		return nil, err
 	}
-	headers := internal.MergeHeaders(
-		c.options.ToHeader(),
-		options.ToHeader(),
-	)
-	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
-		if pageRequest.Cursor != nil {
-			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
-		}
-		nextURL := endpointURL
-		if len(queryParams) > 0 {
-			nextURL += "?" + queryParams.Encode()
-		}
-		return &internal.CallParams{
-			URL:             nextURL,
-			Method:          http.MethodGet,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        pageRequest.Response,
-		}
-	}
-	next := 1
-	if queryParams.Has("page") {
-		var err error
-		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
-			return nil, err
-		}
-	}
+	return response.Body, nil
+}
 
-	readPageResponse := func(response *fern.ListUsersOptionalDataPaginationResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersOptionalDataPaginationResponse] {
-		next += 1
-		results := response.GetData()
-		return &core.PageResponse[*int, *fern.User, *fern.ListUsersOptionalDataPaginationResponse]{
-			Results:  results,
-			Response: response,
-			Next:     &next,
-		}
-	}
-	pager := internal.NewOffsetPager(
-		c.caller,
-		prepareCall,
-		readPageResponse,
+func (c *Client) Listwithglobalconfig(
+	ctx context.Context,
+	request *fern.UsersListWithGlobalConfigRequest,
+	opts ...option.RequestOption,
+) (*fern.UsernameContainer, error) {
+	response, err := c.WithRawResponse.Listwithglobalconfig(
+		ctx,
+		request,
+		opts...,
 	)
-	return pager.GetPage(ctx, &next)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) Listwithoptionaldata(
+	ctx context.Context,
+	request *fern.UsersListWithOptionalDataRequest,
+	opts ...option.RequestOption,
+) (*fern.ListUsersOptionalDataPaginationResponse, error) {
+	response, err := c.WithRawResponse.Listwithoptionaldata(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) Listwithaliaseddata(
+	ctx context.Context,
+	request *fern.UsersListWithAliasedDataRequest,
+	opts ...option.RequestOption,
+) (*fern.ListUsersAliasedDataPaginationResponse, error) {
+	response, err := c.WithRawResponse.Listwithaliaseddata(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
 }

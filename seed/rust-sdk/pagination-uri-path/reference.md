@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_uri_pagination</a>() -> Result&lt;ListUsersUriPaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithuripagination</a>() -> Result&lt;ListUsersUriPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_pagination_uri_path::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -21,8 +21,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = PaginationUriPathClient::new(config).expect("Failed to build client");
-    client.users.list_with_uri_pagination(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.users.listwithuripagination(None).await;
 }
 ```
 </dd>
@@ -35,7 +35,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_path_pagination</a>() -> Result&lt;ListUsersPathPaginationResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">listwithpathpagination</a>() -> Result&lt;ListUsersPathPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_pagination_uri_path::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -56,8 +56,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = PaginationUriPathClient::new(config).expect("Failed to build client");
-    client.users.list_with_path_pagination(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.users.listwithpathpagination(None).await;
 }
 ```
 </dd>

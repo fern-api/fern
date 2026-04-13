@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">createusername</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -13,20 +13,19 @@
 <dd>
 
 ```python
-from seed import SeedRequestParameters
+from seed import SeedApi
 
-client = SeedRequestParameters(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.create_username(
+client.user.createusername(
     tags=[
-        "tags",
         "tags"
     ],
     username="username",
     password="password",
-    name="test",
+    name="name",
 )
 
 ```
@@ -39,14 +38,6 @@ client.user.create_username(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**tags:** `typing.List[str]` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -75,6 +66,14 @@ client.user.create_username(
 <dl>
 <dd>
 
+**tags:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -87,7 +86,7 @@ client.user.create_username(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_with_referenced_type</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">createusernamewithreferencedtype</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -100,20 +99,19 @@ client.user.create_username(
 <dd>
 
 ```python
-from seed import SeedRequestParameters
+from seed import SeedApi
 
-client = SeedRequestParameters(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.create_username_with_referenced_type(
+client.user.createusernamewithreferencedtype(
     tags=[
-        "tags",
         "tags"
     ],
     username="username",
     password="password",
-    name="test",
+    name="name",
 )
 
 ```
@@ -130,7 +128,7 @@ client.user.create_username_with_referenced_type(
 <dl>
 <dd>
 
-**tags:** `typing.List[str]` 
+**username:** `str` 
     
 </dd>
 </dl>
@@ -138,7 +136,23 @@ client.user.create_username_with_referenced_type(
 <dl>
 <dd>
 
-**request:** `CreateUsernameBody` 
+**password:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
     
 </dd>
 </dl>
@@ -158,7 +172,7 @@ client.user.create_username_with_referenced_type(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_optional</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">createusernameoptional</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -171,16 +185,13 @@ client.user.create_username_with_referenced_type(
 <dd>
 
 ```python
-from seed import SeedRequestParameters
-from seed.user import CreateUsernameBodyOptionalProperties
+from seed import SeedApi
 
-client = SeedRequestParameters(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.create_username_optional(
-    request=CreateUsernameBodyOptionalProperties(),
-)
+client.user.createusernameoptional()
 
 ```
 </dd>
@@ -196,7 +207,23 @@ client.user.create_username_optional(
 <dl>
 <dd>
 
-**request:** `typing.Optional[CreateUsernameBodyOptionalProperties]` 
+**username:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -216,7 +243,7 @@ client.user.create_username_optional(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_username</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">getusername</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -229,21 +256,19 @@ client.user.create_username_optional(
 <dd>
 
 ```python
-from seed import SeedRequestParameters
-import uuid
+from seed import SeedApi, User, NestedUser
 import datetime
-from seed.user import User, NestedUser
 
-client = SeedRequestParameters(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.user.get_username(
+client.user.getusername(
     limit=1,
-    id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    id="id",
     date=datetime.date.fromisoformat("2023-01-15"),
     deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    bytes="SGVsbG8gd29ybGQh",
+    bytes="bytes",
     user=User(
         name="name",
         tags=[
@@ -252,13 +277,6 @@ client.user.get_username(
         ],
     ),
     user_list=[
-        User(
-            name="name",
-            tags=[
-                "tags",
-                "tags"
-            ],
-        ),
         User(
             name="name",
             tags=[
@@ -302,7 +320,7 @@ client.user.get_username(
         "filter"
     ],
     long_param=1000000,
-    big_int_param="1000000",
+    big_int_param=1,
 )
 
 ```
@@ -327,7 +345,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**id:** `uuid.UUID` 
+**id:** `str` 
     
 </dd>
 </dl>
@@ -367,14 +385,6 @@ client.user.get_username(
 <dl>
 <dd>
 
-**user_list:** `typing.List[User]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **key_value:** `typing.Dict[str, str]` 
     
 </dd>
@@ -391,22 +401,6 @@ client.user.get_username(
 <dl>
 <dd>
 
-**exclude_user:** `typing.Union[User, typing.Sequence[User]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**filter:** `typing.Union[str, typing.Sequence[str]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **long_param:** `int` 
     
 </dd>
@@ -415,7 +409,15 @@ client.user.get_username(
 <dl>
 <dd>
 
-**big_int_param:** `str` 
+**big_int_param:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_list:** `typing.Optional[typing.Union[User, typing.Sequence[User]]]` 
     
 </dd>
 </dl>
@@ -440,6 +442,22 @@ client.user.get_username(
 <dd>
 
 **optional_user:** `typing.Optional[User]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exclude_user:** `typing.Optional[typing.Union[User, typing.Sequence[User]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
     
 </dd>
 </dl>

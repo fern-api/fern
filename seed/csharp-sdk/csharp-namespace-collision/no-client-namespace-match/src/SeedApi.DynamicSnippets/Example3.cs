@@ -1,5 +1,4 @@
 using Contoso.Net;
-using Contoso.Net.ScimConfiguration;
 
 namespace Usage;
 
@@ -12,16 +11,12 @@ public class Example3
             }
         );
 
-        await client.ScimConfiguration.CreateTokenAsync(
-            new ScimToken {
-                TokenId = "tokenId",
-                Token = "token",
-                Scopes = new List<string>(){
-                    "scopes",
-                    "scopes",
-                }
-                ,
-                CreatedAt = "createdAt"
+        await client._.CreateTaskAsync(
+            new Contoso.Net.Task {
+                Id = "id",
+                Name = "name",
+                Email = "email",
+                Password = "password"
             }
         );
     }

@@ -1,11 +1,11 @@
-using SeedPropertyAccess;
+using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedPropertyAccessClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
@@ -13,14 +13,10 @@ public class Example0
 
         await client.CreateUserAsync(
             new User {
-                Id = "id",
-                Email = "email",
                 Password = "password",
                 Profile = new UserProfile {
                     Name = "name",
-                    Verification = new UserProfileVerification {
-                        Verified = "verified"
-                    },
+                    Verification = new UserProfileVerification(),
                     Ssn = "ssn"
                 }
             }

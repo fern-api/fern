@@ -1,18 +1,24 @@
-using SeedUnions;
+using SeedApi;
+using OneOf;
 
 namespace Usage;
 
 public class Example4
 {
     public async Task Do() {
-        var client = new SeedUnionsClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Types.GetAsync(
-            "datetime-example"
+        await client.Bigunion.UpdateManyAsync(
+            new List<OneOf<BigUnionZero, BigUnionOne, BigUnionTwo, BigUnionThree, BigUnionFour, BigUnionFive, BigUnionSix, BigUnionSeven, BigUnionEight, BigUnionNine, BigUnionTen, BigUnionEleven, BigUnionTwelve, BigUnionThirteen, BigUnionFourteen, BigUnionFifteen, BigUnionSixteen, BigUnionSeventeen, BigUnionEighteen, BigUnionNineteen, BigUnionTwenty, BigUnionTwentyOne, BigUnionTwentyTwo, BigUnionTwentyThree, BigUnionTwentyFour, BigUnionTwentyFive, BigUnionTwentySix, BigUnionTwentySeven, BigUnionTwentyEight>>(){
+                new BigUnionZero {
+                    Value = "value",
+                    Type = BigUnionZeroType.NormalSweet
+                },
+            }
         );
     }
 

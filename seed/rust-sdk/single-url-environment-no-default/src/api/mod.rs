@@ -1,4 +1,4 @@
-//! API client and types for the SingleUrlEnvironmentNoDefault
+//! API client and types for the single-url-environment-no-default
 //!
 //! This module contains all the API definitions including request/response types
 //! and client implementations for interacting with the API.
@@ -9,4 +9,4 @@
 
 pub mod resources;
 
-pub use resources::{DummyClient, SingleUrlEnvironmentNoDefaultClient};
+pub use resources::{ApiClient, DummyClient};

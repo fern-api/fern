@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token_with_client_credentials</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">gettokenwithclientcredentials</a>(request) -> Seed::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,12 +13,11 @@
 <dd>
 
 ```ruby
-client.auth.get_token_with_client_credentials(
-  client_id: "my_oauth_app_123",
-  client_secret: "sk_live_abcdef123456789",
+client.auth.gettokenwithclientcredentials(
+  client_id: "client_id",
+  client_secret: "client_secret",
   audience: "https://api.example.com",
-  grant_type: "client_credentials",
-  scope: "read:users"
+  grant_type: "client_credentials"
 )
 ```
 </dd>
@@ -50,7 +49,7 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**audience:** `String` 
+**audience:** `Seed::Auth::Types::AuthGetTokenWithClientCredentialsRequestAudience` 
     
 </dd>
 </dl>
@@ -58,7 +57,7 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**grant_type:** `String` 
+**grant_type:** `Seed::Auth::Types::AuthGetTokenWithClientCredentialsRequestGrantType` 
     
 </dd>
 </dl>
@@ -86,7 +85,7 @@ client.auth.get_token_with_client_credentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">refresh_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">refreshtoken</a>(request) -> Seed::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -99,13 +98,12 @@ client.auth.get_token_with_client_credentials(
 <dd>
 
 ```ruby
-client.auth.refresh_token(
-  client_id: "my_oauth_app_123",
-  client_secret: "sk_live_abcdef123456789",
+client.auth.refreshtoken(
+  client_id: "client_id",
+  client_secret: "client_secret",
   refresh_token: "refresh_token",
   audience: "https://api.example.com",
-  grant_type: "refresh_token",
-  scope: "read:users"
+  grant_type: "refresh_token"
 )
 ```
 </dd>
@@ -145,7 +143,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**audience:** `String` 
+**audience:** `Seed::Auth::Types::AuthRefreshTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -153,7 +151,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**grant_type:** `String` 
+**grant_type:** `Seed::Auth::Types::AuthRefreshTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -181,8 +179,8 @@ client.auth.refresh_token(
 </dl>
 </details>
 
-## NestedNoAuth API
-<details><summary><code>client.nested_no_auth.api.<a href="/lib/seed/nested_no_auth/api/client.rb">get_something</a>() -> </code></summary>
+## NestedNoAuthAPI
+<details><summary><code>client.nested_no_auth_api.<a href="/lib/seed/nested_no_auth_api/client.rb">nested_no_auth_api_get_something</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -195,7 +193,7 @@ client.auth.refresh_token(
 <dd>
 
 ```ruby
-client.nested_no_auth.api.get_something
+client.nested_no_auth_api.nested_no_auth_api_get_something
 ```
 </dd>
 </dl>
@@ -210,7 +208,7 @@ client.nested_no_auth.api.get_something
 <dl>
 <dd>
 
-**request_options:** `Seed::NestedNoAuth::API::RequestOptions` 
+**request_options:** `Seed::NestedNoAuthAPI::RequestOptions` 
     
 </dd>
 </dl>
@@ -222,8 +220,8 @@ client.nested_no_auth.api.get_something
 </dl>
 </details>
 
-## Nested API
-<details><summary><code>client.nested.api.<a href="/lib/seed/nested/api/client.rb">get_something</a>() -> </code></summary>
+## NestedAPI
+<details><summary><code>client.nested_api.<a href="/lib/seed/nested_api/client.rb">nested_api_get_something</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -236,7 +234,7 @@ client.nested_no_auth.api.get_something
 <dd>
 
 ```ruby
-client.nested.api.get_something
+client.nested_api.nested_api_get_something
 ```
 </dd>
 </dl>
@@ -251,7 +249,7 @@ client.nested.api.get_something
 <dl>
 <dd>
 
-**request_options:** `Seed::Nested::API::RequestOptions` 
+**request_options:** `Seed::NestedAPI::RequestOptions` 
     
 </dd>
 </dl>
@@ -264,7 +262,7 @@ client.nested.api.get_something
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">get_something</a>() -> </code></summary>
+<details><summary><code>client.simple.<a href="/lib/seed/simple/client.rb">getsomething</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -277,7 +275,7 @@ client.nested.api.get_something
 <dd>
 
 ```ruby
-client.simple.get_something
+client.simple.getsomething
 ```
 </dd>
 </dl>

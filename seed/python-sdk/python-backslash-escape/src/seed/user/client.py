@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.user import User
 from .raw_client import AsyncRawUserClient, RawUserClient
-from .types.user import User
 
 
 class UserClient:
@@ -48,16 +48,16 @@ class UserClient:
         -------
         User
 
+
         Examples
         --------
-        from seed import SeedPythonBackslashEscape
+        from seed import SeedApi
 
-        client = SeedPythonBackslashEscape(
+        client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.get(
             id="id",
-            domain="domain",
         )
         """
         _response = self._raw_client.get(id, domain=domain, request_options=request_options)
@@ -104,13 +104,14 @@ class AsyncUserClient:
         -------
         User
 
+
         Examples
         --------
         import asyncio
 
-        from seed import AsyncSeedPythonBackslashEscape
+        from seed import AsyncSeedApi
 
-        client = AsyncSeedPythonBackslashEscape(
+        client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -118,7 +119,6 @@ class AsyncUserClient:
         async def main() -> None:
             await client.user.get(
                 id="id",
-                domain="domain",
             )
 
 

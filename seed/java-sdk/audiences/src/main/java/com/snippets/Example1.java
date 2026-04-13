@@ -1,12 +1,13 @@
 package com.snippets;
 
-import com.seed.audiences.SeedAudiencesClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.foo.requests.FooFindRequest;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedAudiencesClient client =
-                SeedAudiencesClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.folderD().service().getDirectThread();
+        client.foo().find(FooFindRequest.builder().build());
     }
 }

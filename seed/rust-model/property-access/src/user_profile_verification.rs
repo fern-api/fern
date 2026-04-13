@@ -4,8 +4,8 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
 pub struct UserProfileVerification {
     /// User profile verification status
-    #[serde(default)]
-    pub verified: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub verified: Option<String>,
 }
 
 impl UserProfileVerification {
@@ -27,11 +27,9 @@ impl UserProfileVerificationBuilder {
     }
 
     /// Consumes the builder and constructs a [`UserProfileVerification`].
-    /// This method will fail if any of the following fields are not set:
-    /// - [`verified`](UserProfileVerificationBuilder::verified)
     pub fn build(self) -> Result<UserProfileVerification, BuildError> {
         Ok(UserProfileVerification {
-            verified: self.verified.ok_or_else(|| BuildError::missing_field("verified"))?,
+            verified: self.verified,
         })
     }
 }

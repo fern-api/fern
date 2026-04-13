@@ -54,16 +54,16 @@ import MyCustomModule
 private func main() async throws {
     let client = MyCustomClient(token: "<token>")
 
-    _ = try await client.service.searchResources(
+    _ = try await client.service.searchresources(
         limit: 1,
         offset: 1,
         request: .init(
-            query: "query",
-            filters: [
+            query: .value("query"),
+            filters: .value([
                 "filters": .object([
                     "key": .string("value")
                 ])
-            ]
+            ])
         )
     )
 }
@@ -81,7 +81,7 @@ import MyCustomModule
 let client = MyCustomClient(...)
 
 do {
-    let response = try await client.service.searchResources(...)
+    let response = try await client.service.searchresources(...)
     // Handle successful response
 } catch let error as MyCustomModuleError {
     switch error {
@@ -108,7 +108,7 @@ The SDK exports all request types as Swift structs. Simply import the SDK module
 ```swift
 import MyCustomModule
 
-let request = Requests.SearchResourcesRequest(
+let request = Requests.ServiceSearchResourcesRequest(
     ...
 )
 ```
@@ -120,7 +120,7 @@ let request = Requests.SearchResourcesRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.service.searchResources(..., requestOptions: .init(
+try await client.service.searchresources(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -132,7 +132,7 @@ try await client.service.searchResources(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.service.searchResources(..., requestOptions: .init(
+try await client.service.searchresources(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -144,7 +144,7 @@ try await client.service.searchResources(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.service.searchResources(..., requestOptions: .init(
+try await client.service.searchresources(..., requestOptions: .init(
     timeout: 30
 ))
 ```

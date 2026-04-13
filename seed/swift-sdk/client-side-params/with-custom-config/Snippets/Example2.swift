@@ -7,17 +7,10 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.service.searchResources(
-        limit: 1,
-        offset: 1,
-        request: .init(
-            query: "query",
-            filters: [
-                "filters": .object([
-                    "key": .string("value")
-                ])
-            ]
-        )
+    _ = try await client.service.getresource(
+        resourceId: "resourceId",
+        includeMetadata: true,
+        format: "format"
     )
 }
 

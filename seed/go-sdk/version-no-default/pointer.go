@@ -1,4 +1,4 @@
-package version
+package api
 
 import (
 	"time"

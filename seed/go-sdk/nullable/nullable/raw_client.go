@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetUsers(
+func (r *RawClient) Getusers(
 	ctx context.Context,
-	request *fern.GetUsersRequest,
+	request *fern.NullableGetUsersRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -78,9 +78,9 @@ func (r *RawClient) GetUsers(
 	}, nil
 }
 
-func (r *RawClient) CreateUser(
+func (r *RawClient) Createuser(
 	ctx context.Context,
-	request *fern.CreateUserRequest,
+	request *fern.NullableCreateUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.User], error) {
 	options := core.NewRequestOptions(opts...)
@@ -94,6 +94,7 @@ func (r *RawClient) CreateUser(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *fern.User
 	raw, err := r.caller.Call(
 		ctx,
@@ -119,9 +120,9 @@ func (r *RawClient) CreateUser(
 	}, nil
 }
 
-func (r *RawClient) DeleteUser(
+func (r *RawClient) Deleteuser(
 	ctx context.Context,
-	request *fern.DeleteUserRequest,
+	request *fern.NullableDeleteUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[bool], error) {
 	options := core.NewRequestOptions(opts...)
@@ -135,6 +136,7 @@ func (r *RawClient) DeleteUser(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,

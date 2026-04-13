@@ -3,15 +3,13 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Events\Requests\ListUserEventsRequest;
+use Seed\User\Requests\UserListRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->events->listEvents(
-    new ListUserEventsRequest([
-        'limit' => 1,
-    ]),
+$client->user->list(
+    new UserListRequest([]),
 );

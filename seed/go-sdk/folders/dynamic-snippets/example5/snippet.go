@@ -13,11 +13,7 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := map[string]any{
-        "key": "value",
-    }
-    client.Folder.Service.UnknownRequest(
+    client.Folder.Foo(
         context.TODO(),
-        request,
     )
 }

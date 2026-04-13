@@ -43,19 +43,11 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.SearchResourcesRequest{
+    request := &fern.ServiceSearchResourcesRequest{
         Limit: 1,
         Offset: 1,
-        Query: fern.String(
-            "query",
-        ),
-        Filters: map[string]any{
-            "filters": map[string]any{
-                "key": "value",
-            },
-        },
     }
-    client.Service.SearchResources(
+    client.Service.Searchresources(
         context.TODO(),
         request,
     )
@@ -79,7 +71,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.Service.SearchResources(...)
+response, err := client.Service.Searchresources(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -113,7 +105,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.Service.SearchResources(
+response, err := client.Service.Searchresources(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -128,7 +120,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.Service.WithRawResponse.SearchResources(...)
+response, err := client.Service.WithRawResponse.Searchresources(...)
 if err != nil {
     return err
 }
@@ -158,7 +150,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.Service.SearchResources(
+response, err := client.Service.Searchresources(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -172,7 +164,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.Service.SearchResources(ctx, ...)
+response, err := client.Service.Searchresources(ctx, ...)
 ```
 
 ### Explicit Null
@@ -194,7 +186,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.Service.SearchResources(ctx, request, ...)
+response, err := client.Service.Searchresources(ctx, request, ...)
 ```
 
 ## Contributing

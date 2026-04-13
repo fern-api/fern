@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .retries.client import AsyncRetriesClient, RetriesClient
 
 
-class SeedNoRetries:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedNoRetries:
 
     Examples
     --------
-    from seed import SeedNoRetries
+    from seed import SeedApi
 
-    client = SeedNoRetries(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -98,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedNoRetries:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -124,9 +124,9 @@ class AsyncSeedNoRetries:
 
     Examples
     --------
-    from seed import AsyncSeedNoRetries
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedNoRetries(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """

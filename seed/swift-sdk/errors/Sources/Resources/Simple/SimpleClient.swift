@@ -7,7 +7,7 @@ public final class SimpleClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func fooWithoutEndpointError(request: FooRequest, requestOptions: RequestOptions? = nil) async throws -> FooResponse {
+    public func foowithoutendpointerror(request: FooRequest, requestOptions: RequestOptions? = nil) async throws -> FooResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/foo1",
@@ -27,7 +27,7 @@ public final class SimpleClient: Sendable {
         )
     }
 
-    public func fooWithExamples(request: FooRequest, requestOptions: RequestOptions? = nil) async throws -> FooResponse {
+    public func foowithexamples(request: FooRequest, requestOptions: RequestOptions? = nil) async throws -> FooResponse {
         return try await httpClient.performRequest(
             method: .post,
             path: "/foo3",

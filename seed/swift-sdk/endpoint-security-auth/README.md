@@ -49,12 +49,15 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import EndpointSecurityAuth
+import Api
 
 private func main() async throws {
-    let client = EndpointSecurityAuthClient(token: "<token>")
+    let client = ApiClient(
+        token: "<token>",
+        apiKey: "<X-API-Key>"
+    )
 
-    _ = try await client.auth.getToken(request: .init(
+    _ = try await client.auth.gettoken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
@@ -70,14 +73,14 @@ try await main()
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import EndpointSecurityAuth
+import Api
 
-let client = EndpointSecurityAuthClient(...)
+let client = ApiClient(...)
 
 do {
-    let response = try await client.auth.getToken(...)
+    let response = try await client.auth.gettoken(...)
     // Handle successful response
-} catch let error as EndpointSecurityAuthError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -100,9 +103,9 @@ do {
 The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
 
 ```swift
-import EndpointSecurityAuth
+import Api
 
-let request = Requests.GetTokenRequest(
+let request = Requests.AuthGetTokenRequest(
     ...
 )
 ```
@@ -114,7 +117,7 @@ let request = Requests.GetTokenRequest(
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.auth.getToken(..., requestOptions: .init(
+try await client.auth.gettoken(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -126,7 +129,7 @@ try await client.auth.getToken(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.auth.getToken(..., requestOptions: .init(
+try await client.auth.gettoken(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -138,7 +141,7 @@ try await client.auth.getToken(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.auth.getToken(..., requestOptions: .init(
+try await client.auth.gettoken(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -149,9 +152,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import EndpointSecurityAuth
+import Api
 
-let client = EndpointSecurityAuthClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

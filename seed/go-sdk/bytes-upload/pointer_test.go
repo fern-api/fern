@@ -1,4 +1,4 @@
-package bytesupload
+package api
 
 import (
 	"testing"

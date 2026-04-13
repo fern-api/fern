@@ -8,6 +8,6 @@ import java.lang.String;
 
 public final class App {
   public static void main(String[] args) {
-    // import com.seed.manyProperties.AsyncSeedManyPropertiesClient
+    // import com.seed.api.AsyncSeedApiClient
   }
 }

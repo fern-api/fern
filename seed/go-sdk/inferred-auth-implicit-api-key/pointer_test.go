@@ -1,4 +1,4 @@
-package inferredauthimplicitapikey
+package api
 
 import (
 	"testing"

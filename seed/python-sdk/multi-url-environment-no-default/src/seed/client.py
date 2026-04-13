@@ -7,21 +7,20 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
-from .environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
 if typing.TYPE_CHECKING:
     from .ec2.client import AsyncEc2Client, Ec2Client
     from .s3.client import AsyncS3Client, S3Client
 
 
-class SeedMultiUrlEnvironmentNoDefault:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
-    environment : SeedMultiUrlEnvironmentNoDefaultEnvironment
-        The environment to use for requests from the client.
+    base_url : str
+        The base url to use for requests from the client.
 
     token : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
@@ -41,19 +40,18 @@ class SeedMultiUrlEnvironmentNoDefault:
 
     Examples
     --------
-    from seed import SeedMultiUrlEnvironmentNoDefault
-    from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
+    from seed import SeedApi
 
-    client = SeedMultiUrlEnvironmentNoDefault(
+    client = SeedApi(
         token="YOUR_TOKEN",
-        environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+        base_url="https://yourhost.com/path/to/api",
     )
     """
 
     def __init__(
         self,
         *,
-        environment: SeedMultiUrlEnvironmentNoDefaultEnvironment,
+        base_url: str,
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
@@ -65,7 +63,7 @@ class SeedMultiUrlEnvironmentNoDefault:
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
         self._client_wrapper = SyncClientWrapper(
-            environment=environment,
+            base_url=base_url,
             token=token,
             headers=headers,
             httpx_client=httpx_client
@@ -114,14 +112,14 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedMultiUrlEnvironmentNoDefault:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
-    environment : SeedMultiUrlEnvironmentNoDefaultEnvironment
-        The environment to use for requests from the client.
+    base_url : str
+        The base url to use for requests from the client.
 
     token : typing.Union[str, typing.Callable[[], str]]
     headers : typing.Optional[typing.Dict[str, str]]
@@ -144,19 +142,18 @@ class AsyncSeedMultiUrlEnvironmentNoDefault:
 
     Examples
     --------
-    from seed import AsyncSeedMultiUrlEnvironmentNoDefault
-    from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedMultiUrlEnvironmentNoDefault(
+    client = AsyncSeedApi(
         token="YOUR_TOKEN",
-        environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+        base_url="https://yourhost.com/path/to/api",
     )
     """
 
     def __init__(
         self,
         *,
-        environment: SeedMultiUrlEnvironmentNoDefaultEnvironment,
+        base_url: str,
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
@@ -169,7 +166,7 @@ class AsyncSeedMultiUrlEnvironmentNoDefault:
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
         self._client_wrapper = AsyncClientWrapper(
-            environment=environment,
+            base_url=base_url,
             token=token,
             headers=headers,
             async_token=async_token,

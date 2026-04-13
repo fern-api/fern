@@ -3,18 +3,28 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\NullableOptional\Requests\ListUsersRequest;
+use Seed\Nullableoptional\Requests\UpdateUserRequest;
+use Seed\Types\Address;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->nullableOptional->listUsers(
-    new ListUsersRequest([
-        'limit' => 1,
-        'offset' => 1,
-        'includeDeleted' => true,
-        'sortBy' => 'sortBy',
+$client->nullableoptional->updateuser(
+    'userId',
+    new UpdateUserRequest([
+        'username' => 'username',
+        'email' => 'email',
+        'phone' => 'phone',
+        'address' => new Address([
+            'street' => 'street',
+            'city' => 'city',
+            'state' => 'state',
+            'zipCode' => 'zipCode',
+            'country' => 'country',
+            'buildingId' => 'buildingId',
+            'tenantId' => 'tenantId',
+        ]),
     ]),
 );

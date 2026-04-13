@@ -9,12 +9,12 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
-    from .folder_a.client import AsyncFolderAClient, FolderAClient
-    from .folder_d.client import AsyncFolderDClient, FolderDClient
+    from .folder_a_service.client import AsyncFolderAServiceClient, FolderAServiceClient
+    from .folder_d_service.client import AsyncFolderDServiceClient, FolderDServiceClient
     from .foo.client import AsyncFooClient, FooClient
 
 
-class SeedCrossPackageTypeNames:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -40,9 +40,9 @@ class SeedCrossPackageTypeNames:
 
     Examples
     --------
-    from seed import SeedCrossPackageTypeNames
+    from seed import SeedApi
 
-    client = SeedCrossPackageTypeNames(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -71,25 +71,25 @@ class SeedCrossPackageTypeNames:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._folder_a: typing.Optional[FolderAClient] = None
-        self._folder_d: typing.Optional[FolderDClient] = None
+        self._folder_a_service: typing.Optional[FolderAServiceClient] = None
+        self._folder_d_service: typing.Optional[FolderDServiceClient] = None
         self._foo: typing.Optional[FooClient] = None
 
     @property
-    def folder_a(self):
-        if self._folder_a is None:
-            from .folder_a.client import FolderAClient  # noqa: E402
+    def folder_a_service(self):
+        if self._folder_a_service is None:
+            from .folder_a_service.client import FolderAServiceClient  # noqa: E402
 
-            self._folder_a = FolderAClient(client_wrapper=self._client_wrapper)
-        return self._folder_a
+            self._folder_a_service = FolderAServiceClient(client_wrapper=self._client_wrapper)
+        return self._folder_a_service
 
     @property
-    def folder_d(self):
-        if self._folder_d is None:
-            from .folder_d.client import FolderDClient  # noqa: E402
+    def folder_d_service(self):
+        if self._folder_d_service is None:
+            from .folder_d_service.client import FolderDServiceClient  # noqa: E402
 
-            self._folder_d = FolderDClient(client_wrapper=self._client_wrapper)
-        return self._folder_d
+            self._folder_d_service = FolderDServiceClient(client_wrapper=self._client_wrapper)
+        return self._folder_d_service
 
     @property
     def foo(self):
@@ -118,7 +118,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedCrossPackageTypeNames:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -144,9 +144,9 @@ class AsyncSeedCrossPackageTypeNames:
 
     Examples
     --------
-    from seed import AsyncSeedCrossPackageTypeNames
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedCrossPackageTypeNames(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -173,25 +173,25 @@ class AsyncSeedCrossPackageTypeNames:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._folder_a: typing.Optional[AsyncFolderAClient] = None
-        self._folder_d: typing.Optional[AsyncFolderDClient] = None
+        self._folder_a_service: typing.Optional[AsyncFolderAServiceClient] = None
+        self._folder_d_service: typing.Optional[AsyncFolderDServiceClient] = None
         self._foo: typing.Optional[AsyncFooClient] = None
 
     @property
-    def folder_a(self):
-        if self._folder_a is None:
-            from .folder_a.client import AsyncFolderAClient  # noqa: E402
+    def folder_a_service(self):
+        if self._folder_a_service is None:
+            from .folder_a_service.client import AsyncFolderAServiceClient  # noqa: E402
 
-            self._folder_a = AsyncFolderAClient(client_wrapper=self._client_wrapper)
-        return self._folder_a
+            self._folder_a_service = AsyncFolderAServiceClient(client_wrapper=self._client_wrapper)
+        return self._folder_a_service
 
     @property
-    def folder_d(self):
-        if self._folder_d is None:
-            from .folder_d.client import AsyncFolderDClient  # noqa: E402
+    def folder_d_service(self):
+        if self._folder_d_service is None:
+            from .folder_d_service.client import AsyncFolderDServiceClient  # noqa: E402
 
-            self._folder_d = AsyncFolderDClient(client_wrapper=self._client_wrapper)
-        return self._folder_d
+            self._folder_d_service = AsyncFolderDServiceClient(client_wrapper=self._client_wrapper)
+        return self._folder_d_service
 
     @property
     def foo(self):

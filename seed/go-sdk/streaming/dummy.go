@@ -10,110 +10,112 @@ import (
 )
 
 var (
-	generateequestFieldNumEvents = big.NewInt(1 << 0)
+	dummyGenerateRequestFieldStream    = big.NewInt(1 << 0)
+	dummyGenerateRequestFieldNumEvents = big.NewInt(1 << 1)
 )
 
-type Generateequest struct {
-	NumEvents int `json:"num_events" url:"-"`
-	stream    bool
+type DummyGenerateRequest struct {
+	Stream    bool `json:"stream" url:"-"`
+	NumEvents int  `json:"num_events" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *Generateequest) Stream() bool {
-	return g.stream
+func (d *DummyGenerateRequest) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
-func (g *Generateequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
-	}
-	g.explicitFields.Or(g.explicitFields, field)
+// SetStream sets the Stream field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DummyGenerateRequest) SetStream(stream bool) {
+	d.Stream = stream
+	d.require(dummyGenerateRequestFieldStream)
 }
 
 // SetNumEvents sets the NumEvents field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *Generateequest) SetNumEvents(numEvents int) {
-	g.NumEvents = numEvents
-	g.require(generateequestFieldNumEvents)
+func (d *DummyGenerateRequest) SetNumEvents(numEvents int) {
+	d.NumEvents = numEvents
+	d.require(dummyGenerateRequestFieldNumEvents)
 }
 
-func (g *Generateequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler Generateequest
+func (d *DummyGenerateRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler DummyGenerateRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*g = Generateequest(body)
-	g.stream = false
+	*d = DummyGenerateRequest(body)
 	return nil
 }
 
-func (g *Generateequest) MarshalJSON() ([]byte, error) {
-	type embed Generateequest
+func (d *DummyGenerateRequest) MarshalJSON() ([]byte, error) {
+	type embed DummyGenerateRequest
 	var marshaler = struct {
 		embed
-		Stream bool `json:"stream"`
 	}{
-		embed:  embed(*g),
-		Stream: false,
+		embed: embed(*d),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
 var (
-	generateStreamRequestFieldNumEvents = big.NewInt(1 << 0)
+	dummyGenerateStreamRequestFieldStream    = big.NewInt(1 << 0)
+	dummyGenerateStreamRequestFieldNumEvents = big.NewInt(1 << 1)
 )
 
-type GenerateStreamRequest struct {
-	NumEvents int `json:"num_events" url:"-"`
-	stream    bool
+type DummyGenerateStreamRequest struct {
+	Stream    bool `json:"stream" url:"-"`
+	NumEvents int  `json:"num_events" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GenerateStreamRequest) Stream() bool {
-	return g.stream
+func (d *DummyGenerateStreamRequest) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
-func (g *GenerateStreamRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
-	}
-	g.explicitFields.Or(g.explicitFields, field)
+// SetStream sets the Stream field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DummyGenerateStreamRequest) SetStream(stream bool) {
+	d.Stream = stream
+	d.require(dummyGenerateStreamRequestFieldStream)
 }
 
 // SetNumEvents sets the NumEvents field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GenerateStreamRequest) SetNumEvents(numEvents int) {
-	g.NumEvents = numEvents
-	g.require(generateStreamRequestFieldNumEvents)
+func (d *DummyGenerateStreamRequest) SetNumEvents(numEvents int) {
+	d.NumEvents = numEvents
+	d.require(dummyGenerateStreamRequestFieldNumEvents)
 }
 
-func (g *GenerateStreamRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler GenerateStreamRequest
+func (d *DummyGenerateStreamRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler DummyGenerateStreamRequest
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*g = GenerateStreamRequest(body)
-	g.stream = true
+	*d = DummyGenerateStreamRequest(body)
 	return nil
 }
 
-func (g *GenerateStreamRequest) MarshalJSON() ([]byte, error) {
-	type embed GenerateStreamRequest
+func (d *DummyGenerateStreamRequest) MarshalJSON() ([]byte, error) {
+	type embed DummyGenerateStreamRequest
 	var marshaler = struct {
 		embed
-		Stream bool `json:"stream"`
 	}{
-		embed:  embed(*g),
-		Stream: true,
+		embed: embed(*d),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 

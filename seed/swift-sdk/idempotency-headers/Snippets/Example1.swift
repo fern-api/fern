@@ -1,13 +1,16 @@
 import Foundation
-import IdempotencyHeaders
+import Api
 
 private func main() async throws {
-    let client = IdempotencyHeadersClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.payment.delete(paymentId: "paymentId")
+    _ = try await client.payment.create(request: .init(
+        amount: 1,
+        currency: .usd
+    ))
 }
 
 try await main()

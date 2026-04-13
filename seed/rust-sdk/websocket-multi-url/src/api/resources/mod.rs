@@ -4,11 +4,11 @@
 
 use crate::{ApiError, ClientConfig};
 
-pub struct WebsocketMultiUrlClient {
+pub struct ApiClient {
     pub config: ClientConfig,
 }
 
-impl WebsocketMultiUrlClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

@@ -12,8 +12,10 @@ public class Example2
             }
         );
 
-        await client.Imdb.GetMovieAsync(
-            "movieId"
+        await client.Imdb.GetmovieAsync(
+            new ImdbGetMovieRequest {
+                MovieId = "movieId"
+            }
         );
     }
 

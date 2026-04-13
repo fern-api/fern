@@ -6,11 +6,11 @@
             "id": {
                 "path": "/basic-auth",
                 "method": "GET",
-                "identifier_override": "endpoint_basic-auth.getWithBasicAuth"
+                "identifier_override": "endpoint_basicauth.getwithbasicauth"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedBasicAuth;\n\nvar client = new SeedBasicAuthClient(\"USERNAME\", \"PASSWORD\");\nawait client.BasicAuth.GetWithBasicAuthAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"USERNAME\", \"PASSWORD\");\nawait client.Basicauth.GetwithbasicauthAsync();\n"
             }
         },
         {
@@ -18,11 +18,11 @@
             "id": {
                 "path": "/basic-auth",
                 "method": "POST",
-                "identifier_override": "endpoint_basic-auth.postWithBasicAuth"
+                "identifier_override": "endpoint_basicauth.postwithbasicauth"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedBasicAuth;\n\nvar client = new SeedBasicAuthClient(\"USERNAME\", \"PASSWORD\");\nawait client.BasicAuth.PostWithBasicAuthAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient(\"USERNAME\", \"PASSWORD\");\nawait client.Basicauth.PostwithbasicauthAsync(\n    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n);\n"
             }
         }
     ]

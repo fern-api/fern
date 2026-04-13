@@ -1,5 +1,6 @@
 # Reference
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">GetFooAsync</a>(GetFooRequest { ... }) -> WithRawResponseTask&lt;Foo&gt;</code></summary>
+## _
+<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">GetFooAsync</a>(GetFooRequest { ... }) -> WithRawResponseTask&lt;Foo&gt;</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.GetFooAsync(
+await client._.GetFooAsync(
     new GetFooRequest
     {
         RequiredBaz = "required_baz",
@@ -45,7 +46,7 @@ await client.GetFooAsync(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">UpdateFooAsync</a>(id, UpdateFooRequest { ... }) -> WithRawResponseTask&lt;Foo&gt;</code></summary>
+<details><summary><code>client._.<a href="/src/SeedApi/_/Client.cs">UpdateFooAsync</a>(UpdateFooRequest { ... }) -> WithRawResponseTask&lt;Foo&gt;</code></summary>
 <dl>
 <dd>
 
@@ -58,15 +59,8 @@ await client.GetFooAsync(
 <dd>
 
 ```csharp
-await client.UpdateFooAsync(
-    "id",
-    new UpdateFooRequest
-    {
-        XIdempotencyKey = "X-Idempotency-Key",
-        NullableText = "nullable_text",
-        NullableNumber = 1.1,
-        NonNullableText = "non_nullable_text",
-    }
+await client._.UpdateFooAsync(
+    new UpdateFooRequest { Id = "id", IdempotencyKey = "X-Idempotency-Key" }
 );
 ```
 </dd>
@@ -78,14 +72,6 @@ await client.UpdateFooAsync(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**id:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>

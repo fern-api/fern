@@ -44,14 +44,10 @@ use Seed\Types\UserProfileVerification;
 $client = new SeedClient();
 $client->createUser(
     new User([
-        'id' => 'id',
-        'email' => 'email',
         'password' => 'password',
         'profile' => new UserProfile([
             'name' => 'name',
-            'verification' => new UserProfileVerification([
-                'verified' => 'verified',
-            ]),
+            'verification' => new UserProfileVerification([]),
             'ssn' => 'ssn',
         ]),
     ]),

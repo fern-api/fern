@@ -3,13 +3,13 @@ import Foundation
 /// An OAuth token response.
 public struct TokenResponse: Codable, Hashable, Sendable {
     public let accessToken: String
-    public let refreshToken: String?
+    public let refreshToken: Nullable<String>?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         accessToken: String,
-        refreshToken: String? = nil,
+        refreshToken: Nullable<String>? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.accessToken = accessToken
@@ -20,7 +20,7 @@ public struct TokenResponse: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.accessToken = try container.decode(String.self, forKey: .accessToken)
-        self.refreshToken = try container.decodeIfPresent(String.self, forKey: .refreshToken)
+        self.refreshToken = try container.decodeNullableIfPresent(String.self, forKey: .refreshToken)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 
@@ -28,7 +28,7 @@ public struct TokenResponse: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.accessToken, forKey: .accessToken)
-        try container.encodeIfPresent(self.refreshToken, forKey: .refreshToken)
+        try container.encodeNullableIfPresent(self.refreshToken, forKey: .refreshToken)
     }
 
     /// Keys for encoding/decoding struct properties.

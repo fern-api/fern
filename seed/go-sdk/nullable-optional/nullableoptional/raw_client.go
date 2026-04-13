@@ -31,9 +31,9 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetUser(
+func (r *RawClient) Getuser(
 	ctx context.Context,
-	userID string,
+	request *fern.NullableOptionalGetUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.UserResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -44,7 +44,7 @@ func (r *RawClient) GetUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v",
-		userID,
+		request.UserID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -74,50 +74,8 @@ func (r *RawClient) GetUser(
 	}, nil
 }
 
-func (r *RawClient) CreateUser(
+func (r *RawClient) Updateuser(
 	ctx context.Context,
-	request *fern.CreateUserRequest,
-	opts ...option.RequestOption,
-) (*core.Response[*fern.UserResponse], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		r.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/api/users"
-	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
-	)
-	var response *fern.UserResponse
-	raw, err := r.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &core.Response[*fern.UserResponse]{
-		StatusCode: raw.StatusCode,
-		Header:     raw.Header,
-		Body:       response,
-	}, nil
-}
-
-func (r *RawClient) UpdateUser(
-	ctx context.Context,
-	userID string,
 	request *fern.UpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.UserResponse], error) {
@@ -129,12 +87,13 @@ func (r *RawClient) UpdateUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v",
-		userID,
+		request.UserID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *fern.UserResponse
 	raw, err := r.caller.Call(
 		ctx,
@@ -160,9 +119,9 @@ func (r *RawClient) UpdateUser(
 	}, nil
 }
 
-func (r *RawClient) ListUsers(
+func (r *RawClient) Listusers(
 	ctx context.Context,
-	request *fern.ListUsersRequest,
+	request *fern.NullableOptionalListUsersRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.UserResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -207,9 +166,51 @@ func (r *RawClient) ListUsers(
 	}, nil
 }
 
-func (r *RawClient) SearchUsers(
+func (r *RawClient) Createuser(
 	ctx context.Context,
-	request *fern.SearchUsersRequest,
+	request *fern.CreateUserRequest,
+	opts ...option.RequestOption,
+) (*core.Response[*fern.UserResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/api/users"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	var response *fern.UserResponse
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*fern.UserResponse]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) Searchusers(
+	ctx context.Context,
+	request *fern.NullableOptionalSearchUsersRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.UserResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -254,7 +255,7 @@ func (r *RawClient) SearchUsers(
 	}, nil
 }
 
-func (r *RawClient) CreateComplexProfile(
+func (r *RawClient) Createcomplexprofile(
 	ctx context.Context,
 	request *fern.ComplexProfile,
 	opts ...option.RequestOption,
@@ -295,9 +296,9 @@ func (r *RawClient) CreateComplexProfile(
 	}, nil
 }
 
-func (r *RawClient) GetComplexProfile(
+func (r *RawClient) Getcomplexprofile(
 	ctx context.Context,
-	profileID string,
+	request *fern.NullableOptionalGetComplexProfileRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.ComplexProfile], error) {
 	options := core.NewRequestOptions(opts...)
@@ -308,7 +309,7 @@ func (r *RawClient) GetComplexProfile(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/profiles/complex/%v",
-		profileID,
+		request.ProfileID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -338,10 +339,9 @@ func (r *RawClient) GetComplexProfile(
 	}, nil
 }
 
-func (r *RawClient) UpdateComplexProfile(
+func (r *RawClient) Updatecomplexprofile(
 	ctx context.Context,
-	profileID string,
-	request *fern.UpdateComplexProfileRequest,
+	request *fern.NullableOptionalUpdateComplexProfileRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.ComplexProfile], error) {
 	options := core.NewRequestOptions(opts...)
@@ -352,12 +352,13 @@ func (r *RawClient) UpdateComplexProfile(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/profiles/complex/%v",
-		profileID,
+		request.ProfileID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *fern.ComplexProfile
 	raw, err := r.caller.Call(
 		ctx,
@@ -383,7 +384,7 @@ func (r *RawClient) UpdateComplexProfile(
 	}, nil
 }
 
-func (r *RawClient) TestDeserialization(
+func (r *RawClient) Testdeserialization(
 	ctx context.Context,
 	request *fern.DeserializationTestRequest,
 	opts ...option.RequestOption,
@@ -424,9 +425,9 @@ func (r *RawClient) TestDeserialization(
 	}, nil
 }
 
-func (r *RawClient) FilterByRole(
+func (r *RawClient) Filterbyrole(
 	ctx context.Context,
-	request *fern.FilterByRoleRequest,
+	request *fern.NullableOptionalFilterByRoleRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.UserResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -471,9 +472,9 @@ func (r *RawClient) FilterByRole(
 	}, nil
 }
 
-func (r *RawClient) GetNotificationSettings(
+func (r *RawClient) Getnotificationsettings(
 	ctx context.Context,
-	userID string,
+	request *fern.NullableOptionalGetNotificationSettingsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.NotificationMethod], error) {
 	options := core.NewRequestOptions(opts...)
@@ -484,7 +485,7 @@ func (r *RawClient) GetNotificationSettings(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v/notifications",
-		userID,
+		request.UserID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
@@ -514,10 +515,9 @@ func (r *RawClient) GetNotificationSettings(
 	}, nil
 }
 
-func (r *RawClient) UpdateTags(
+func (r *RawClient) Updatetags(
 	ctx context.Context,
-	userID string,
-	request *fern.UpdateTagsRequest,
+	request *fern.NullableOptionalUpdateTagsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]string], error) {
 	options := core.NewRequestOptions(opts...)
@@ -528,12 +528,13 @@ func (r *RawClient) UpdateTags(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/api/users/%v/tags",
-		userID,
+		request.UserID,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response []string
 	raw, err := r.caller.Call(
 		ctx,
@@ -559,9 +560,9 @@ func (r *RawClient) UpdateTags(
 	}, nil
 }
 
-func (r *RawClient) GetSearchResults(
+func (r *RawClient) Getsearchresults(
 	ctx context.Context,
-	request *fern.SearchRequest,
+	request *fern.NullableOptionalGetSearchResultsRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.SearchResult], error) {
 	options := core.NewRequestOptions(opts...)
@@ -575,6 +576,7 @@ func (r *RawClient) GetSearchResults(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response []*fern.SearchResult
 	raw, err := r.caller.Call(
 		ctx,

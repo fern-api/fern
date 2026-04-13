@@ -4,20 +4,20 @@ import typing
 
 from .utilities import validate_response
 
-from seed import AsyncSeedExamples, SeedExamples
+from seed import AsyncSeedApi, SeedApi
 
 
-async def test_echo(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
-    expected_response: typing.Any = "Hello world!\\n\\nwith\\n\\tnewlines"
+async def test_echo(client: SeedApi, async_client: AsyncSeedApi) -> None:
+    expected_response: typing.Any = "string"
     expected_types: typing.Any = None
-    response = client.echo(request="Hello world!\\n\\nwith\\n\\tnewlines")
+    response = client.echo(request="string")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.echo(request="Hello world!\\n\\nwith\\n\\tnewlines")
+    async_response = await async_client.echo(request="string")
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_create_type(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
+async def test_create_type(client: SeedApi, async_client: AsyncSeedApi) -> None:
     expected_response: typing.Any = {"type": "primitive", "value": "value", "label": "label"}
     expected_types: typing.Any = {"type": None, "value": None, "label": None}
     response = client.create_type(request="primitive")

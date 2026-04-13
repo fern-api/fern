@@ -1,20 +1,18 @@
 package com.snippets;
 
-import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequestForOptionalData;
-import java.util.UUID;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.inlineusersinlineusers.requests.InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest;
 
 public class Example10 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.inlineUsers()
-                .inlineUsers()
-                .listWithExtendedResultsAndOptionalData(ListUsersExtendedRequestForOptionalData.builder()
-                        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                        .build());
+        client.inlineUsersInlineUsers()
+                .inlineUsersInlineUsersListWithDoubleOffsetPagination(
+                        InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest.builder()
+                                .build());
     }
 }

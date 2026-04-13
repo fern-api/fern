@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedPlainText/Service/ServiceClient.cs">GetTextAsync</a>() -> WithRawResponseTask&lt;string&gt;</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedApi/Service/ServiceClient.cs">GettextAsync</a>() -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Service.GetTextAsync();
+await client.Service.GettextAsync();
 ```
 </dd>
 </dl>

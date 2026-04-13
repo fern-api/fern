@@ -1,7 +1,7 @@
 //! Prelude module for convenient imports
 //!
 //! This module re-exports the most commonly used types and traits.
-//! Import it with: `use seed_object::prelude::*;`
+//! Import it with: `use seed_api::prelude::*;`
 
 // Client and configuration
 pub use crate::config::ClientConfig;
@@ -13,9 +13,7 @@ pub use crate::api::*;
 
 // Re-export commonly used external types
 pub use chrono::{DateTime, FixedOffset, NaiveDate, NaiveDateTime, Utc};
-pub use ordered_float::OrderedFloat;
 pub use serde::{Deserialize, Serialize};
 pub use serde_json::{json, Value};
 pub use std::collections::{HashMap, HashSet};
 pub use std::fmt;
-pub use uuid::Uuid;

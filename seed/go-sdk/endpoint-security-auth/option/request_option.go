@@ -79,39 +79,9 @@ func WithToken(token string) *core.TokenOption {
 	}
 }
 
-// WithAPIKey sets the apiKey auth request header.
+// WithAPIKey sets the apiKey request header.
 func WithAPIKey(apiKey string) *core.APIKeyOption {
 	return &core.APIKeyOption{
 		APIKey: apiKey,
-	}
-}
-
-// WithClientID sets the clientID auth request parameter.
-func WithClientID(clientID string) *core.ClientIDOption {
-	return &core.ClientIDOption{
-		ClientID: clientID,
-	}
-}
-
-// WithClientSecret sets the clientSecret auth request parameter.
-func WithClientSecret(clientSecret string) *core.ClientSecretOption {
-	return &core.ClientSecretOption{
-		ClientSecret: clientSecret,
-	}
-}
-
-// WithClientCredentials sets both the clientID and clientSecret auth request parameters.
-func WithClientCredentials(clientID string, clientSecret string) *core.ClientCredentialsOption {
-	return &core.ClientCredentialsOption{
-		ClientID:     clientID,
-		ClientSecret: clientSecret,
-	}
-}
-
-// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.
-func WithBasicAuth(username, password string) *core.BasicAuthOption {
-	return &core.BasicAuthOption{
-		Username: username,
-		Password: password,
 	}
 }

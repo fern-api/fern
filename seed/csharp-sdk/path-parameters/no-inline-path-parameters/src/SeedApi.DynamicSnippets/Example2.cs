@@ -1,22 +1,21 @@
-using SeedPathParameters;
+using SeedApi;
 
 namespace Usage;
 
 public class Example2
 {
     public async Task Do() {
-        var client = new SeedPathParametersClient(
+        var client = new SeedApiClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Organizations.SearchOrganizationsAsync(
+        await client.Organizations.GetorganizationuserAsync(
             "tenant_id",
             "organization_id",
-            new SearchOrganizationsRequest {
-                Limit = 1
-            }
+            "user_id",
+            new OrganizationsGetOrganizationUserRequest()
         );
     }
 

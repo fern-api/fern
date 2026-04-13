@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUnknownAsAny from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UnknownClient {
     export type Options = BaseClientOptions;
@@ -60,7 +60,7 @@ export class UnknownClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUnknownAsAnyError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -71,25 +71,25 @@ export class UnknownClient {
     }
 
     /**
-     * @param {SeedUnknownAsAny.MyObject} request
+     * @param {SeedApi.MyObject} request
      * @param {UnknownClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.unknown.postObject({
+     *     await client.unknown.postobject({
      *         unknown: {
      *             "key": "value"
      *         }
      *     })
      */
-    public postObject(
-        request: SeedUnknownAsAny.MyObject,
+    public postobject(
+        request: SeedApi.MyObject,
         requestOptions?: UnknownClient.RequestOptions,
     ): core.HttpResponsePromise<unknown[]> {
-        return core.HttpResponsePromise.fromPromise(this.__postObject(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__postobject(request, requestOptions));
     }
 
-    private async __postObject(
-        request: SeedUnknownAsAny.MyObject,
+    private async __postobject(
+        request: SeedApi.MyObject,
         requestOptions?: UnknownClient.RequestOptions,
     ): Promise<core.WithRawResponse<unknown[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -97,7 +97,7 @@ export class UnknownClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/with-object",
+                "with-object",
             ),
             method: "POST",
             headers: _headers,
@@ -116,7 +116,7 @@ export class UnknownClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedUnknownAsAnyError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

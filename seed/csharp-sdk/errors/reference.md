@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.Simple.<a href="/src/SeedErrors/Simple/SimpleClient.cs">FooWithoutEndpointErrorAsync</a>(FooRequest { ... }) -> WithRawResponseTask&lt;FooResponse&gt;</code></summary>
+<details><summary><code>client.Simple.<a href="/src/SeedApi/Simple/SimpleClient.cs">FoowithoutendpointerrorAsync</a>(FooRequest { ... }) -> WithRawResponseTask&lt;FooResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Simple.FooWithoutEndpointErrorAsync(new FooRequest { Bar = "bar" });
+await client.Simple.FoowithoutendpointerrorAsync(new FooRequest { Bar = "bar" });
 ```
 </dd>
 </dl>
@@ -40,7 +40,7 @@ await client.Simple.FooWithoutEndpointErrorAsync(new FooRequest { Bar = "bar" })
 </dl>
 </details>
 
-<details><summary><code>client.Simple.<a href="/src/SeedErrors/Simple/SimpleClient.cs">FooAsync</a>(FooRequest { ... }) -> WithRawResponseTask&lt;FooResponse&gt;</code></summary>
+<details><summary><code>client.Simple.<a href="/src/SeedApi/Simple/SimpleClient.cs">FooAsync</a>(FooRequest { ... }) -> WithRawResponseTask&lt;FooResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ await client.Simple.FooAsync(new FooRequest { Bar = "bar" });
 </dl>
 </details>
 
-<details><summary><code>client.Simple.<a href="/src/SeedErrors/Simple/SimpleClient.cs">FooWithExamplesAsync</a>(FooRequest { ... }) -> WithRawResponseTask&lt;FooResponse&gt;</code></summary>
+<details><summary><code>client.Simple.<a href="/src/SeedApi/Simple/SimpleClient.cs">FoowithexamplesAsync</a>(FooRequest { ... }) -> WithRawResponseTask&lt;FooResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ await client.Simple.FooAsync(new FooRequest { Bar = "bar" });
 <dd>
 
 ```csharp
-await client.Simple.FooWithExamplesAsync(new FooRequest { Bar = "hello" });
+await client.Simple.FoowithexamplesAsync(new FooRequest { Bar = "bar" });
 ```
 </dd>
 </dl>

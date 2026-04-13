@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client.rs">generate</a>(request: GenerateRequest) -> Result&lt;Stream&lt;Vec&lt;u8&gt;&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client.rs">generate</a>(request: DummyGenerateRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,20 +13,20 @@
 <dd>
 
 ```rust
-use seed_streaming::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = StreamingClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .dummy
         .generate(
-            &GenerateRequest {
-                stream: false,
-                num_events: 5,
+            &DummyGenerateRequest {
+                stream: true,
+                num_events: 1,
             },
             None,
         )

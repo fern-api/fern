@@ -1,7 +1,7 @@
 //! Prelude module for convenient imports
 //!
 //! This module re-exports the most commonly used types and traits.
-//! Import it with: `use seed_endpoint_security_auth::prelude::*;`
+//! Import it with: `use seed_api::prelude::*;`
 
 // Client and configuration
 pub use crate::config::ClientConfig;

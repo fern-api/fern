@@ -1,11 +1,11 @@
-//! # Examples SDK
+//! # examples SDK
 //!
-//! The official Rust SDK for the Examples.
+//! The official Rust SDK for the examples.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_examples::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -13,9 +13,10 @@
 //!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = ExamplesClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
-//!         .echo(&"Hello world!\\n\\nwith\\n\\tnewlines".to_string(), None)
+//!         .file_notification_service
+//!         .file_notification_service_get_exception(&"notificationId".to_string(), None)
 //!         .await;
 //! }
 //! ```

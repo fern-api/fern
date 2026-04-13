@@ -1,22 +1,21 @@
-using SeedClientSideParams;
+using SeedApi;
 
 namespace Usage;
 
 public class Example8
 {
     public async Task Do() {
-        var client = new SeedClientSideParamsClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Service.ListConnectionsAsync(
-            new ListConnectionsRequest {
-                Strategy = "strategy",
-                Name = "name",
-                Fields = "fields"
+        await client.Service.CreateuserAsync(
+            new CreateUserRequest {
+                Email = "email",
+                Connection = "connection"
             }
         );
     }

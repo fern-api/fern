@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    fern "github.com/audiences/fern"
     client "github.com/audiences/fern/client"
     option "github.com/audiences/fern/option"
 )
@@ -13,7 +14,9 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.FolderD.Service.GetDirectThread(
+    request := &fern.FooFindRequest{}
+    client.Foo.Find(
         context.TODO(),
+        request,
     )
 }

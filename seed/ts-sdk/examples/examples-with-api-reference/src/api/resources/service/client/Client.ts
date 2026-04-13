@@ -4,9 +4,10 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedExamples from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -17,34 +18,38 @@ export declare namespace ServiceClient {
 export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
 
-    constructor(options: ServiceClient.Options) {
+    constructor(options: ServiceClient.Options = {}) {
         this._options = normalizeClientOptions(options);
     }
 
     /**
-     * @param {SeedExamples.MovieId} movieId
+     * @param {SeedApi.ServiceGetMovieRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getMovie("movie-c06a4ad7")
+     *     await client.service.getmovie({
+     *         movieId: "movieId"
+     *     })
      */
-    public getMovie(
-        movieId: SeedExamples.MovieId,
+    public getmovie(
+        request: SeedApi.ServiceGetMovieRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.Movie> {
-        return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.Movie> {
+        return core.HttpResponsePromise.fromPromise(this.__getmovie(request, requestOptions));
     }
 
-    private async __getMovie(
-        movieId: SeedExamples.MovieId,
+    private async __getmovie(
+        request: SeedApi.ServiceGetMovieRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Movie>> {
+    ): Promise<core.WithRawResponse<SeedApi.Movie>> {
+        const { movieId } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/movie/${core.url.encodePathParam(movieId)}`,
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedApiEnvironment.Production,
+                `movie/${core.url.encodePathParam(movieId)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -56,11 +61,11 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExamples.Movie, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.Movie, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExamplesError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -71,50 +76,41 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedExamples.Movie} request
+     * @param {SeedApi.Movie} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.createMovie({
-     *         id: "movie-c06a4ad7",
-     *         prequel: "movie-cv9b914f",
-     *         title: "The Boy and the Heron",
-     *         from: "Hayao Miyazaki",
-     *         rating: 8,
+     *     await client.service.createmovie({
+     *         id: "id",
+     *         title: "title",
+     *         from: "from",
+     *         rating: 1.1,
      *         type: "movie",
-     *         tag: "tag-wf9as23d",
+     *         tag: "tag",
      *         metadata: {
-     *             "actors": [
-     *                 "Christian Bale",
-     *                 "Florence Pugh",
-     *                 "Willem Dafoe"
-     *             ],
-     *             "releaseDate": "2023-12-08",
-     *             "ratings": {
-     *                 "rottenTomatoes": 97,
-     *                 "imdb": 7.6
-     *             }
+     *             "key": "value"
      *         },
      *         revenue: 1000000
      *     })
      */
-    public createMovie(
-        request: SeedExamples.Movie,
+    public createmovie(
+        request: SeedApi.Movie,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.MovieId> {
-        return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.MovieId> {
+        return core.HttpResponsePromise.fromPromise(this.__createmovie(request, requestOptions));
     }
 
-    private async __createMovie(
-        request: SeedExamples.Movie,
+    private async __createmovie(
+        request: SeedApi.Movie,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.MovieId>> {
+    ): Promise<core.WithRawResponse<SeedApi.MovieId>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/movie",
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedApiEnvironment.Production,
+                "movie",
             ),
             method: "POST",
             headers: _headers,
@@ -129,11 +125,11 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExamples.MovieId, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.MovieId, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExamplesError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -144,42 +140,41 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedExamples.GetMetadataRequest} request
+     * @param {SeedApi.ServiceGetMetadataRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.getMetadata({
-     *         "X-API-Version": "0.0.1",
-     *         shallow: false,
-     *         tag: "development"
+     *     await client.service.getmetadata({
+     *         "X-API-Version": "X-API-Version"
      *     })
      */
-    public getMetadata(
-        request: SeedExamples.GetMetadataRequest,
+    public getmetadata(
+        request: SeedApi.ServiceGetMetadataRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.Metadata> {
-        return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.Metadata> {
+        return core.HttpResponsePromise.fromPromise(this.__getmetadata(request, requestOptions));
     }
 
-    private async __getMetadata(
-        request: SeedExamples.GetMetadataRequest,
+    private async __getmetadata(
+        request: SeedApi.ServiceGetMetadataRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Metadata>> {
-        const { shallow, tag, "X-API-Version": xApiVersion } = request;
+    ): Promise<core.WithRawResponse<SeedApi.Metadata>> {
+        const { shallow, tag, "X-API-Version": apiVersion } = request;
         const _queryParams: Record<string, unknown> = {
             shallow,
             tag,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-API-Version": xApiVersion }),
+            mergeOnlyDefinedHeaders({ "X-API-Version": apiVersion }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/metadata",
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedApiEnvironment.Production,
+                "metadata",
             ),
             method: "GET",
             headers: _headers,
@@ -191,11 +186,11 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExamples.Metadata, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.Metadata, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExamplesError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -206,189 +201,30 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedExamples.BigEntity} request
+     * @param {SeedApi.BigEntity} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.createBigEntity({
-     *         castMember: {
-     *             name: "name",
-     *             id: "id"
-     *         },
-     *         extendedMovie: {
-     *             cast: ["cast", "cast"],
-     *             id: "id",
-     *             prequel: "prequel",
-     *             title: "title",
-     *             from: "from",
-     *             rating: 1.1,
-     *             type: "movie",
-     *             tag: "tag",
-     *             book: "book",
-     *             metadata: {
-     *                 "metadata": {
-     *                     "key": "value"
-     *                 }
-     *             },
-     *             revenue: 1000000
-     *         },
-     *         entity: {
-     *             type: "primitive",
-     *             name: "name"
-     *         },
-     *         metadata: {
-     *             type: "html",
-     *             extra: {
-     *                 "extra": "extra"
-     *             },
-     *             tags: ["tags"],
-     *             value: "metadata"
-     *         },
-     *         commonMetadata: {
-     *             id: "id",
-     *             data: {
-     *                 "data": "data"
-     *             },
-     *             jsonString: "jsonString"
-     *         },
-     *         eventInfo: {
-     *             type: "metadata",
-     *             id: "id",
-     *             data: {
-     *                 "data": "data"
-     *             },
-     *             jsonString: "jsonString"
-     *         },
-     *         data: {
-     *             type: "string",
-     *             value: "data"
-     *         },
-     *         migration: {
-     *             name: "name",
-     *             status: "RUNNING"
-     *         },
-     *         exception: {
-     *             type: "generic",
-     *             exceptionType: "exceptionType",
-     *             exceptionMessage: "exceptionMessage",
-     *             exceptionStacktrace: "exceptionStacktrace"
-     *         },
-     *         test: {
-     *             type: "and",
-     *             value: true
-     *         },
-     *         node: {
-     *             name: "name",
-     *             nodes: [{
-     *                     name: "name",
-     *                     nodes: [{
-     *                             name: "name"
-     *                         }, {
-     *                             name: "name"
-     *                         }],
-     *                     trees: [{
-     *                             nodes: []
-     *                         }, {
-     *                             nodes: []
-     *                         }]
-     *                 }, {
-     *                     name: "name",
-     *                     nodes: [{
-     *                             name: "name"
-     *                         }, {
-     *                             name: "name"
-     *                         }],
-     *                     trees: [{
-     *                             nodes: []
-     *                         }, {
-     *                             nodes: []
-     *                         }]
-     *                 }],
-     *             trees: [{
-     *                     nodes: [{
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }, {
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }]
-     *                 }, {
-     *                     nodes: [{
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }, {
-     *                             name: "name",
-     *                             nodes: [],
-     *                             trees: []
-     *                         }]
-     *                 }]
-     *         },
-     *         directory: {
-     *             name: "name",
-     *             files: [{
-     *                     name: "name",
-     *                     contents: "contents"
-     *                 }, {
-     *                     name: "name",
-     *                     contents: "contents"
-     *                 }],
-     *             directories: [{
-     *                     name: "name",
-     *                     files: [{
-     *                             name: "name",
-     *                             contents: "contents"
-     *                         }, {
-     *                             name: "name",
-     *                             contents: "contents"
-     *                         }],
-     *                     directories: [{
-     *                             name: "name"
-     *                         }, {
-     *                             name: "name"
-     *                         }]
-     *                 }, {
-     *                     name: "name",
-     *                     files: [{
-     *                             name: "name",
-     *                             contents: "contents"
-     *                         }, {
-     *                             name: "name",
-     *                             contents: "contents"
-     *                         }],
-     *                     directories: [{
-     *                             name: "name"
-     *                         }, {
-     *                             name: "name"
-     *                         }]
-     *                 }]
-     *         },
-     *         moment: {
-     *             id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-     *             date: "2023-01-15",
-     *             datetime: "2024-01-15T09:30:00Z"
-     *         }
-     *     })
+     *     await client.service.createbigentity()
      */
-    public createBigEntity(
-        request: SeedExamples.BigEntity,
+    public createbigentity(
+        request: SeedApi.BigEntity = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.Response> {
-        return core.HttpResponsePromise.fromPromise(this.__createBigEntity(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__createbigentity(request, requestOptions));
     }
 
-    private async __createBigEntity(
-        request: SeedExamples.BigEntity,
+    private async __createbigentity(
+        request: SeedApi.BigEntity = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Response>> {
+    ): Promise<core.WithRawResponse<SeedApi.Response>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/big-entity",
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedApiEnvironment.Production,
+                "big-entity",
             ),
             method: "POST",
             headers: _headers,
@@ -403,11 +239,11 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExamples.Response, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExamplesError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -418,34 +254,32 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedExamples.RefreshTokenRequest} request
+     * @param {SeedApi.RefreshTokenRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.service.refreshToken(undefined)
-     *
-     * @example
-     *     await client.service.refreshToken({
-     *         ttl: 420
+     *     await client.service.refreshtoken({
+     *         ttl: 1
      *     })
      */
-    public refreshToken(
-        request?: SeedExamples.RefreshTokenRequest,
+    public refreshtoken(
+        request: SeedApi.RefreshTokenRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__refreshToken(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__refreshtoken(request, requestOptions));
     }
 
-    private async __refreshToken(
-        request?: SeedExamples.RefreshTokenRequest,
+    private async __refreshtoken(
+        request: SeedApi.RefreshTokenRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/refresh-token",
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.SeedApiEnvironment.Production,
+                "refresh-token",
             ),
             method: "POST",
             headers: _headers,
@@ -464,7 +298,7 @@ export class ServiceClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedExamplesError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

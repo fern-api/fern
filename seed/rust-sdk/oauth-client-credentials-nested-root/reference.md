@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">gettoken</a>(request: AuthGetTokenRequest) -> Result&lt;AuthTokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,23 +13,24 @@
 <dd>
 
 ```rust
-use seed_oauth_client_credentials::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
+        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = OauthClientCredentialsClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .auth
-        .get_token(
-            &GetTokenRequest {
+        .gettoken(
+            &AuthGetTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
-                audience: "https://api.example.com".to_string(),
-                grant_type: "client_credentials".to_string(),
-                scope: Some("scope".to_string()),
+                audience: AuthGetTokenRequestAudience::HttpsApiExampleCom,
+                grant_type: AuthGetTokenRequestGrantType::ClientCredentials,
+                scope: None,
             },
             None,
         )
@@ -65,7 +66,7 @@ async fn main() {
 <dl>
 <dd>
 
-**audience:** `String` 
+**audience:** `AuthGetTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -73,7 +74,7 @@ async fn main() {
 <dl>
 <dd>
 
-**grant_type:** `String` 
+**grant_type:** `AuthGetTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -81,7 +82,7 @@ async fn main() {
 <dl>
 <dd>
 
-**scope:** `Option<String>` 
+**scope:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -93,8 +94,8 @@ async fn main() {
 </dl>
 </details>
 
-## NestedNoAuth Api
-<details><summary><code>client.nested_no_auth().api.<a href="/src/api/resources/nested_no_auth/api/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+## NestedNoAuthApi
+<details><summary><code>client.nested_no_auth_api.<a href="/src/api/resources/nested_no_auth_api/client.rs">nested_no_auth_api_get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -107,15 +108,19 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
+        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = OauthClientCredentialsClient::new(config).expect("Failed to build client");
-    client.nested_no_auth.api.get_something(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .nested_no_auth_api
+        .nested_no_auth_api_get_something(None)
+        .await;
 }
 ```
 </dd>
@@ -128,8 +133,8 @@ async fn main() {
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>client.nested().api.<a href="/src/api/resources/nested/api/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+## NestedApi
+<details><summary><code>client.nested_api.<a href="/src/api/resources/nested_api/client.rs">nested_api_get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -142,15 +147,16 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
+        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = OauthClientCredentialsClient::new(config).expect("Failed to build client");
-    client.nested.api.get_something(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.nested_api.nested_api_get_something(None).await;
 }
 ```
 </dd>
@@ -164,7 +170,7 @@ async fn main() {
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">get_something</a>() -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">getsomething</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -177,15 +183,16 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_oauth_client_credentials::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
+        token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = OauthClientCredentialsClient::new(config).expect("Failed to build client");
-    client.simple.get_something(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.simple.getsomething(None).await;
 }
 ```
 </dd>

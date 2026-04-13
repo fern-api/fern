@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> SeedWebsocketAuth.TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">gettokenwithclientcredentials</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,11 +13,11 @@
 <dd>
 
 ```typescript
-await client.auth.getTokenWithClientCredentials({
-    "X-Api-Key": "X-Api-Key",
+await client.auth.gettokenwithclientcredentials({
     client_id: "client_id",
     client_secret: "client_secret",
-    scope: "scope"
+    audience: "https://api.example.com",
+    grant_type: "client_credentials"
 });
 
 ```
@@ -34,7 +34,7 @@ await client.auth.getTokenWithClientCredentials({
 <dl>
 <dd>
 
-**request:** `SeedWebsocketAuth.GetTokenRequest` 
+**request:** `SeedApi.AuthGetTokenWithClientCredentialsRequest` 
     
 </dd>
 </dl>
@@ -54,7 +54,7 @@ await client.auth.getTokenWithClientCredentials({
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">refreshToken</a>({ ...params }) -> SeedWebsocketAuth.TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">refreshtoken</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -67,12 +67,12 @@ await client.auth.getTokenWithClientCredentials({
 <dd>
 
 ```typescript
-await client.auth.refreshToken({
-    "X-Api-Key": "X-Api-Key",
+await client.auth.refreshtoken({
     client_id: "client_id",
     client_secret: "client_secret",
     refresh_token: "refresh_token",
-    scope: "scope"
+    audience: "https://api.example.com",
+    grant_type: "refresh_token"
 });
 
 ```
@@ -89,7 +89,7 @@ await client.auth.refreshToken({
 <dl>
 <dd>
 
-**request:** `SeedWebsocketAuth.RefreshTokenRequest` 
+**request:** `SeedApi.AuthRefreshTokenRequest` 
     
 </dd>
 </dl>

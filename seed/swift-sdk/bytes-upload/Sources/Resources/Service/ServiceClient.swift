@@ -17,14 +17,14 @@ public final class ServiceClient: Sendable {
         )
     }
 
-    public func uploadWithQueryParams(model: String, language: String? = nil, request: Data, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func uploadwithqueryparams(model: String, language: Nullable<String>? = nil, request: Data, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/upload-content-with-query-params",
             contentType: .applicationOctetStream,
             queryParams: [
                 "model": .string(model), 
-                "language": language.map { .string($0) }
+                "language": language?.wrappedValue.map { .string($0) }
             ],
             body: request,
             requestOptions: requestOptions

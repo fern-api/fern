@@ -1,4 +1,4 @@
-use seed_content_types::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,13 +6,11 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = ContentTypesClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .service
         .patch(
-            &PatchProxyRequest {
-                application: Some("application".to_string()),
-                require_auth: Some(true),
+            &ServicePatchRequest {
                 ..Default::default()
             },
             None,

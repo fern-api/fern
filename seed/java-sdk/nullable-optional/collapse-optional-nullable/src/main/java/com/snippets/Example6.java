@@ -1,12 +1,14 @@
 package com.snippets;
 
-import com.seed.nullableOptional.SeedNullableOptionalClient;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.nullableoptional.requests.CreateUserRequest;
 
 public class Example6 {
     public static void main(String[] args) {
-        SeedNullableOptionalClient client =
-                SeedNullableOptionalClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.nullableOptional().getComplexProfile("profileId");
+        client.nullableoptional()
+                .createuser(CreateUserRequest.builder().username("username").build());
     }
 }

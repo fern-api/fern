@@ -18,6 +18,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -39,19 +40,18 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedOauthClientCredentials;
+using SeedApi;
 
-var client = new SeedOauthClientCredentialsClient("client_id", "client_secret", "entityId", "scp");
-await client.Auth.GetTokenWithClientCredentialsAsync(
-    new GetTokenRequest
+var client = new SeedApiClient("TOKEN");
+await client.Auth.GettokenwithclientcredentialsAsync(
+    new AuthGetTokenWithClientCredentialsRequest
     {
         Cid = "cid",
         Csr = "csr",
         Scp = "scp",
         EntityId = "entity_id",
-        Audience = "https://api.example.com",
-        GrantType = "client_credentials",
-        Scope = "scope",
+        Audience = AuthGetTokenWithClientCredentialsRequestAudience.HttpsApiExampleCom,
+        GrantType = AuthGetTokenWithClientCredentialsRequestGrantType.ClientCredentials,
     }
 );
 ```
@@ -62,11 +62,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedOauthClientCredentials;
+using SeedApi;
 
 try {
-    var response = await client.Auth.GetTokenWithClientCredentialsAsync(...);
-} catch (SeedOauthClientCredentialsApiException e) {
+    var response = await client.Auth.GettokenwithclientcredentialsAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -89,7 +89,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Auth.GetTokenWithClientCredentialsAsync(
+var response = await client.Auth.GettokenwithclientcredentialsAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -102,7 +102,7 @@ var response = await client.Auth.GetTokenWithClientCredentialsAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Auth.GetTokenWithClientCredentialsAsync(
+var response = await client.Auth.GettokenwithclientcredentialsAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -115,10 +115,10 @@ var response = await client.Auth.GetTokenWithClientCredentialsAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedOauthClientCredentials;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Auth.GetTokenWithClientCredentialsAsync(...).WithRawResponse();
+var result = await client.Auth.GettokenwithclientcredentialsAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -135,7 +135,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Auth.GetTokenWithClientCredentialsAsync(...);
+var data = await client.Auth.GettokenwithclientcredentialsAsync(...);
 ```
 
 ### Additional Headers
@@ -143,7 +143,7 @@ var data = await client.Auth.GetTokenWithClientCredentialsAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Auth.GetTokenWithClientCredentialsAsync(
+var response = await client.Auth.GettokenwithclientcredentialsAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -159,7 +159,7 @@ var response = await client.Auth.GetTokenWithClientCredentialsAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.Auth.GetTokenWithClientCredentialsAsync(
+var response = await client.Auth.GettokenwithclientcredentialsAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>
@@ -168,6 +168,35 @@ var response = await client.Auth.GetTokenWithClientCredentialsAsync(
         }
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedApi;
+
+// Using a built-in value
+var authGetTokenWithClientCredentialsRequestAudience = AuthGetTokenWithClientCredentialsRequestAudience.HttpsApiExampleCom;
+
+// Using a custom value
+var customAuthGetTokenWithClientCredentialsRequestAudience = AuthGetTokenWithClientCredentialsRequestAudience.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (authGetTokenWithClientCredentialsRequestAudience.Value)
+{
+    case AuthGetTokenWithClientCredentialsRequestAudience.Values.HttpsApiExampleCom:
+        Console.WriteLine("HttpsApiExampleCom");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {authGetTokenWithClientCredentialsRequestAudience.Value}");
+        break;
+}
+
+// Explicit casting
+string authGetTokenWithClientCredentialsRequestAudienceString = (string)AuthGetTokenWithClientCredentialsRequestAudience.HttpsApiExampleCom;
+AuthGetTokenWithClientCredentialsRequestAudience authGetTokenWithClientCredentialsRequestAudienceFromString = (AuthGetTokenWithClientCredentialsRequestAudience)"https://api.example.com";
 ```
 
 ## Contributing

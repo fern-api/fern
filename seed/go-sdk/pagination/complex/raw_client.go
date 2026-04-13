@@ -33,7 +33,6 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 
 func (r *RawClient) Search(
 	ctx context.Context,
-	index string,
 	request *fern.SearchRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*fern.PaginatedConversationResponse], error) {
@@ -45,12 +44,13 @@ func (r *RawClient) Search(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/conversations/search",
-		index,
+		request.Index,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *fern.PaginatedConversationResponse
 	raw, err := r.caller.Call(
 		ctx,

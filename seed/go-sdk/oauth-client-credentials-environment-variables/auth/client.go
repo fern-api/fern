@@ -4,7 +4,6 @@ package auth
 
 import (
 	context "context"
-	os "os"
 
 	fern "github.com/oauth-client-credentials-environment-variables/fern"
 	core "github.com/oauth-client-credentials-environment-variables/fern/core"
@@ -21,12 +20,6 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
-	if options.ClientID == "" {
-		options.ClientID = os.Getenv("CLIENT_ID")
-	}
-	if options.ClientSecret == "" {
-		options.ClientSecret = os.Getenv("CLIENT_SECRET")
-	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
@@ -40,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetTokenWithClientCredentials(
+func (c *Client) Gettokenwithclientcredentials(
 	ctx context.Context,
-	request *fern.GetTokenRequest,
+	request *fern.AuthGetTokenWithClientCredentialsRequest,
 	opts ...option.RequestOption,
 ) (*fern.TokenResponse, error) {
-	response, err := c.WithRawResponse.GetTokenWithClientCredentials(
+	response, err := c.WithRawResponse.Gettokenwithclientcredentials(
 		ctx,
 		request,
 		opts...,
@@ -56,12 +49,12 @@ func (c *Client) GetTokenWithClientCredentials(
 	return response.Body, nil
 }
 
-func (c *Client) RefreshToken(
+func (c *Client) Refreshtoken(
 	ctx context.Context,
-	request *fern.RefreshTokenRequest,
+	request *fern.AuthRefreshTokenRequest,
 	opts ...option.RequestOption,
 ) (*fern.TokenResponse, error) {
-	response, err := c.WithRawResponse.RefreshToken(
+	response, err := c.WithRawResponse.Refreshtoken(
 		ctx,
 		request,
 		opts...,

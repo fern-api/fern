@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "SingleUrlEnvironmentNoDefault",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "SingleUrlEnvironmentNoDefault",
-            targets: ["SingleUrlEnvironmentNoDefault"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "SingleUrlEnvironmentNoDefault",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "SingleUrlEnvironmentNoDefaultTests",
-            dependencies: ["SingleUrlEnvironmentNoDefault"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

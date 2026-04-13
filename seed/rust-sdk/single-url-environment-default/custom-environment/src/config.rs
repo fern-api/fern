@@ -36,7 +36,7 @@ impl Default for ClientConfig {
                 ),
                 ("X-Fern-SDK-Version".to_string(), "0.2.0".to_string()),
             ]),
-            user_agent: "SingleUrlEnvironmentDefault Rust SDK".to_string(),
+            user_agent: "Api Rust SDK".to_string(),
         }
     }
 }

@@ -38,12 +38,25 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Types\Movie;
+use Seed\Types\MovieType;
 
 $client = new SeedClient(
     token: '<token>',
 );
-$client->echo_(
-    'Hello world!\n\nwith\n\tnewlines',
+$client->service->createmovie(
+    new Movie([
+        'id' => 'id',
+        'title' => 'title',
+        'from' => 'from',
+        'rating' => 1.1,
+        'type' => MovieType::Movie->value,
+        'tag' => 'tag',
+        'metadata' => [
+            'key' => "value",
+        ],
+        'revenue' => 1000000,
+    ]),
 );
 
 ```
@@ -69,7 +82,6 @@ $client = new SeedClient(
 
 Available environments:
 - `Environments::Production`
-- `Environments::Staging`
 ```
 
 ## Exception Handling
@@ -81,7 +93,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->echo_(...);
+    $response = $client->service->createmovie(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -135,7 +147,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->echo_(
+$response = $client->service->createmovie(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -148,7 +160,7 @@ $response = $client->echo_(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->echo_(
+$response = $client->service->createmovie(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

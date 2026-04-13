@@ -2,14 +2,14 @@ import Foundation
 
 public struct Foo: Codable, Hashable, Sendable {
     public let normal: String
-    public let read: String
+    public let read: String?
     public let write: String
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
         normal: String,
-        read: String,
+        read: String? = nil,
         write: String,
         additionalProperties: [String: JSONValue] = .init()
     ) {
@@ -22,7 +22,7 @@ public struct Foo: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.normal = try container.decode(String.self, forKey: .normal)
-        self.read = try container.decode(String.self, forKey: .read)
+        self.read = try container.decodeIfPresent(String.self, forKey: .read)
         self.write = try container.decode(String.self, forKey: .write)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
@@ -31,7 +31,7 @@ public struct Foo: Codable, Hashable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try encoder.encodeAdditionalProperties(self.additionalProperties)
         try container.encode(self.normal, forKey: .normal)
-        try container.encode(self.read, forKey: .read)
+        try container.encodeIfPresent(self.read, forKey: .read)
         try container.encode(self.write, forKey: .write)
     }
 

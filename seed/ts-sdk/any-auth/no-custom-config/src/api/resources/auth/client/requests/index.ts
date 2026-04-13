@@ -1,1 +1,1 @@
-export type { GetTokenRequest } from "./GetTokenRequest.js";
+export { AuthGetTokenRequest } from "./AuthGetTokenRequest.js";

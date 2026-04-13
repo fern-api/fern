@@ -3,8 +3,8 @@ package example
 import (
     context "context"
 
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
     client "github.com/examples/fern/pleaseinhere/client"
-    file "github.com/examples/fern/pleaseinhere/file"
     option "github.com/examples/fern/pleaseinhere/option"
 )
 
@@ -17,12 +17,11 @@ func do() {
             "<token>",
         ),
     )
-    request := &file.GetFileRequest{
-        XFileAPIVersion: "X-File-API-Version",
+    request := &pleaseinhere.HealthServiceCheckRequest{
+        ID: "id",
     }
-    client.File.Service.GetFile(
+    client.HealthService.HealthServiceCheck(
         context.TODO(),
-        "filename",
         request,
     )
 }

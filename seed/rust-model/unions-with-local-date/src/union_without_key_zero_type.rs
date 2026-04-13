@@ -1,0 +1,15 @@
+pub use crate::prelude::*;
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub enum UnionWithoutKeyZeroType {
+    #[serde(rename = "foo")]
+    Foo,
+}
+impl fmt::Display for UnionWithoutKeyZeroType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let s = match self {
+            Self::Foo => "foo",
+        };
+        write!(f, "{}", s)
+    }
+}

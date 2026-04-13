@@ -11,7 +11,7 @@ public class Example3
             }
         );
 
-        await client.Folder.FooAsync();
+        await client.Ac.ACFooAsync();
     }
 
 }

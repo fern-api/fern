@@ -29,6 +29,7 @@ class RawServiceClient:
         Returns
         -------
         typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
+
         """
         with self._client_wrapper.httpx_client.stream(
             "helloworld.txt",
@@ -78,6 +79,7 @@ class AsyncRawServiceClient:
         Returns
         -------
         typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
+
         """
         async with self._client_wrapper.httpx_client.stream(
             "helloworld.txt",

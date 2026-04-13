@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 
 /// An OAuth token response.
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
-pub struct TokenResponse {
+pub struct AuthTokenResponse {
     #[serde(default)]
     pub access_token: String,
     #[serde(default)]
@@ -11,21 +11,21 @@ pub struct TokenResponse {
     pub refresh_token: Option<String>,
 }
 
-impl TokenResponse {
-    pub fn builder() -> TokenResponseBuilder {
-        <TokenResponseBuilder as Default>::default()
+impl AuthTokenResponse {
+    pub fn builder() -> AuthTokenResponseBuilder {
+        <AuthTokenResponseBuilder as Default>::default()
     }
 }
 
 #[derive(Clone, PartialEq, Default, Debug)]
 #[non_exhaustive]
-pub struct TokenResponseBuilder {
+pub struct AuthTokenResponseBuilder {
     access_token: Option<String>,
     expires_in: Option<i64>,
     refresh_token: Option<String>,
 }
 
-impl TokenResponseBuilder {
+impl AuthTokenResponseBuilder {
     pub fn access_token(mut self, value: impl Into<String>) -> Self {
         self.access_token = Some(value.into());
         self
@@ -41,12 +41,12 @@ impl TokenResponseBuilder {
         self
     }
 
-    /// Consumes the builder and constructs a [`TokenResponse`].
+    /// Consumes the builder and constructs a [`AuthTokenResponse`].
     /// This method will fail if any of the following fields are not set:
-    /// - [`access_token`](TokenResponseBuilder::access_token)
-    /// - [`expires_in`](TokenResponseBuilder::expires_in)
-    pub fn build(self) -> Result<TokenResponse, BuildError> {
-        Ok(TokenResponse {
+    /// - [`access_token`](AuthTokenResponseBuilder::access_token)
+    /// - [`expires_in`](AuthTokenResponseBuilder::expires_in)
+    pub fn build(self) -> Result<AuthTokenResponse, BuildError> {
+        Ok(AuthTokenResponse {
             access_token: self
                 .access_token
                 .ok_or_else(|| BuildError::missing_field("access_token"))?,

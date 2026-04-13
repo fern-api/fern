@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .nullable.client import AsyncNullableClient, NullableClient
 
 
-class SeedNullable:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedNullable:
 
     Examples
     --------
-    from seed import SeedNullable
+    from seed import SeedApi
 
-    client = SeedNullable(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -98,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedNullable:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -124,9 +124,9 @@ class AsyncSeedNullable:
 
     Examples
     --------
-    from seed import AsyncSeedNullable
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedNullable(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """

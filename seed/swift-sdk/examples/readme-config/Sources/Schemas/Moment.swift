@@ -1,14 +1,14 @@
 import Foundation
 
 public struct Moment: Codable, Hashable, Sendable {
-    public let id: UUID
+    public let id: String
     public let date: CalendarDate
     public let datetime: Date
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
     public init(
-        id: UUID,
+        id: String,
         date: CalendarDate,
         datetime: Date,
         additionalProperties: [String: JSONValue] = .init()
@@ -21,7 +21,7 @@ public struct Moment: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(UUID.self, forKey: .id)
+        self.id = try container.decode(String.self, forKey: .id)
         self.date = try container.decode(CalendarDate.self, forKey: .date)
         self.datetime = try container.decode(Date.self, forKey: .datetime)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)

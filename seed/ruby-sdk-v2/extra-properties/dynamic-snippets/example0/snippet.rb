@@ -2,8 +2,8 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.user.create_user(
-  name: "Alice",
+client.user.createuser(
   type: "CreateUserRequest",
-  version: "v1"
+  version: "v1",
+  name: "name"
 )

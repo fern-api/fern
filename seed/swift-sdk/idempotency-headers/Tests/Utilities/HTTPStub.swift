@@ -1,4 +1,4 @@
-import IdempotencyHeaders
+import Api
 import Foundation
 
 final class HTTPStub {

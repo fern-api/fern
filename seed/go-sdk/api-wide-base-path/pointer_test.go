@@ -1,4 +1,4 @@
-package apiwidebasepath
+package api
 
 import (
 	"testing"

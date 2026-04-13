@@ -33,59 +33,18 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) ListWithCustomPager(
+func (c *Client) Listwithcustompager(
 	ctx context.Context,
-	request *fern.ListWithCustomPagerRequest,
+	request *fern.UsersListWithCustomPagerRequest,
 	opts ...option.RequestOption,
-) (*core.PayrocPager[*fern.UsersListResponse, []string, *fern.Link], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
-	if err != nil {
-		return nil, err
-	}
-	if len(queryParams) > 0 {
-		endpointURL += "?" + queryParams.Encode()
-	}
-	response, callErr := c.WithRawResponse.ListWithCustomPager(
+) (*fern.UsersListResponse, error) {
+	response, err := c.WithRawResponse.Listwithcustompager(
 		ctx,
 		request,
 		opts...,
 	)
-	if callErr != nil {
-		return nil, callErr
+	if err != nil {
+		return nil, err
 	}
-	var responseBody *fern.UsersListResponse = response.Body
-	fetcher := func(
-		ctx context.Context,
-		href string,
-	) (*fern.UsersListResponse, error) {
-		options := core.NewRequestOptions(opts...)
-		headers := internal.MergeHeaders(
-			c.options.ToHeader(),
-			options.ToHeader(),
-		)
-		var pageResponse *fern.UsersListResponse
-		_, err := c.caller.Call(ctx, &internal.CallParams{
-			URL:             href,
-			Method:          "GET",
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Response:        &pageResponse,
-		})
-		if err != nil {
-			return nil, err
-		}
-		return pageResponse, nil
-	}
-	pager := core.NewPayrocPager(responseBody, fetcher)
-	return pager, nil
+	return response.Body, nil
 }

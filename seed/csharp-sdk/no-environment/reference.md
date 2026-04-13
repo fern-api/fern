@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.Dummy.<a href="/src/SeedNoEnvironment/Dummy/DummyClient.cs">GetDummyAsync</a>() -> WithRawResponseTask&lt;string&gt;</code></summary>
+<details><summary><code>client.Dummy.<a href="/src/SeedApi/Dummy/DummyClient.cs">GetdummyAsync</a>() -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Dummy.GetDummyAsync();
+await client.Dummy.GetdummyAsync();
 ```
 </dd>
 </dl>

@@ -13,14 +13,10 @@
 
 ```go
 request := &fern.User{
-        ID: "id",
-        Email: "email",
         Password: "password",
         Profile: &fern.UserProfile{
             Name: "name",
-            Verification: &fern.UserProfileVerification{
-                Verified: "verified",
-            },
+            Verification: &fern.UserProfileVerification{},
             Ssn: "ssn",
         },
     }

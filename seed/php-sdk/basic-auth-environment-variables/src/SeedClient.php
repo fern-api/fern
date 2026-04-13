@@ -2,17 +2,16 @@
 
 namespace Seed;
 
-use Seed\BasicAuth\BasicAuthClient;
+use Seed\Basicauth\BasicauthClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Exception;
 
 class SeedClient
 {
     /**
-     * @var BasicAuthClient $basicAuth
+     * @var BasicauthClient $basicauth
      */
-    public BasicAuthClient $basicAuth;
+    public BasicauthClient $basicauth;
 
     /**
      * @var array{
@@ -31,8 +30,8 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?string $username The username to use for authentication.
-     * @param ?string $accessToken The accessToken to use for authentication.
+     * @param string $username The username to use for authentication.
+     * @param string $password The password to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -42,19 +41,17 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        ?string $username = null,
-        ?string $accessToken = null,
+        string $username,
+        string $password,
         ?array $options = null,
     ) {
-        $username ??= $this->getFromEnvOrThrow('USERNAME', 'Please pass in username or set the environment variable USERNAME.');
-        $accessToken ??= $this->getFromEnvOrThrow('PASSWORD', 'Please pass in accessToken or set the environment variable PASSWORD.');
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        $defaultHeaders['Authorization'] = "Basic " . base64_encode($username . ":" . $accessToken);
+        $defaultHeaders['Authorization'] = "Basic " . base64_encode($username . ":" . $password);
 
         $this->options = $options ?? [];
 
@@ -67,17 +64,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->basicAuth = new BasicAuthClient($this->client, $this->options);
-    }
-
-    /**
-     * @param string $env
-     * @param string $message
-     * @return string
-     */
-    private function getFromEnvOrThrow(string $env, string $message): string
-    {
-        $value = getenv($env);
-        return $value ? (string) $value : throw new Exception($message);
+        $this->basicauth = new BasicauthClient($this->client, $this->options);
     }
 }

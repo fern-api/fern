@@ -1,17 +1,17 @@
 import Foundation
 
 public enum Test: Codable, Hashable, Sendable {
-    case and(Bool)
-    case or(Bool)
+    case and(TestAnd)
+    case or(TestOr)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "and":
-            self = .and(try container.decode(Bool.self, forKey: .value))
+            self = .and(try TestAnd(from: decoder))
         case "or":
-            self = .or(try container.decode(Bool.self, forKey: .value))
+            self = .or(try TestOr(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -27,15 +27,14 @@ public enum Test: Codable, Hashable, Sendable {
         switch self {
         case .and(let data):
             try container.encode("and", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         case .or(let data):
             try container.encode("or", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
-        case value
     }
 }

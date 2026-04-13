@@ -5,10 +5,10 @@ package noreqbody
 import (
 	context "context"
 
+	fern "github.com/go-deterministic-ordering/fern"
 	core "github.com/go-deterministic-ordering/fern/core"
 	internal "github.com/go-deterministic-ordering/fern/internal"
 	option "github.com/go-deterministic-ordering/fern/option"
-	types "github.com/go-deterministic-ordering/fern/types"
 )
 
 type Client struct {
@@ -33,11 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetWithNoRequestBody(
+func (c *Client) Getwithnorequestbody(
 	ctx context.Context,
 	opts ...option.RequestOption,
-) (*types.ObjectWithOptionalField, error) {
-	response, err := c.WithRawResponse.GetWithNoRequestBody(
+) (*fern.TypesObjectWithOptionalField, error) {
+	response, err := c.WithRawResponse.Getwithnorequestbody(
 		ctx,
 		opts...,
 	)
@@ -47,11 +47,11 @@ func (c *Client) GetWithNoRequestBody(
 	return response.Body, nil
 }
 
-func (c *Client) PostWithNoRequestBody(
+func (c *Client) Postwithnorequestbody(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (string, error) {
-	response, err := c.WithRawResponse.PostWithNoRequestBody(
+	response, err := c.WithRawResponse.Postwithnorequestbody(
 		ctx,
 		opts...,
 	)

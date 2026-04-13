@@ -9,10 +9,11 @@ import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.MediaTypes;
 import com.seed.unions.core.ObjectMappers;
 import com.seed.unions.core.RequestOptions;
-import com.seed.unions.core.SeedUnionsApiException;
-import com.seed.unions.core.SeedUnionsException;
-import com.seed.unions.core.SeedUnionsHttpResponse;
-import com.seed.unions.resources.bigunion.types.BigUnion;
+import com.seed.unions.core.SeedApiApiException;
+import com.seed.unions.core.SeedApiException;
+import com.seed.unions.core.SeedApiHttpResponse;
+import com.seed.unions.resources.bigunion.requests.BigunionGetRequest;
+import com.seed.unions.types.BigUnion;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -35,65 +36,75 @@ public class AsyncRawBigunionClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<SeedUnionsHttpResponse<BigUnion>> get(String id) {
-        return get(id, null);
+    public CompletableFuture<SeedApiHttpResponse<BigUnion>> get(String id) {
+        return get(id, BigunionGetRequest.builder().build());
     }
 
-    public CompletableFuture<SeedUnionsHttpResponse<BigUnion>> get(String id, RequestOptions requestOptions) {
+    public CompletableFuture<SeedApiHttpResponse<BigUnion>> get(String id, RequestOptions requestOptions) {
+        return get(id, BigunionGetRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<BigUnion>> get(String id, BigunionGetRequest request) {
+        return get(id, request, null);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<BigUnion>> get(
+            String id, BigunionGetRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("bigunion")
                 .addPathSegment(id);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
             });
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedUnionsHttpResponse<BigUnion>> future = new CompletableFuture<>();
+        CompletableFuture<SeedApiHttpResponse<BigUnion>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        future.complete(new SeedUnionsHttpResponse<>(
+                        future.complete(new SeedApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, BigUnion.class), response));
                         return;
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new SeedUnionsApiException(
+                    future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
-                    future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
         });
         return future;
     }
 
-    public CompletableFuture<SeedUnionsHttpResponse<Boolean>> update(BigUnion request) {
+    public CompletableFuture<SeedApiHttpResponse<Boolean>> update(BigUnion request) {
         return update(request, null);
     }
 
-    public CompletableFuture<SeedUnionsHttpResponse<Boolean>> update(BigUnion request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl =
-                HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
-
+    public CompletableFuture<SeedApiHttpResponse<Boolean>> update(BigUnion request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("bigunion");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -104,7 +115,7 @@ public class AsyncRawBigunionClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedUnionsException("Failed to serialize request", e);
+            throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
@@ -117,43 +128,43 @@ public class AsyncRawBigunionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedUnionsHttpResponse<Boolean>> future = new CompletableFuture<>();
+        CompletableFuture<SeedApiHttpResponse<Boolean>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        future.complete(new SeedUnionsHttpResponse<>(
+                        future.complete(new SeedApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, boolean.class), response));
                         return;
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new SeedUnionsApiException(
+                    future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
-                    future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
         });
         return future;
     }
 
-    public CompletableFuture<SeedUnionsHttpResponse<Map<String, Boolean>>> updateMany(List<BigUnion> request) {
+    public CompletableFuture<SeedApiHttpResponse<Map<String, Boolean>>> updateMany(List<BigUnion> request) {
         return updateMany(request, null);
     }
 
-    public CompletableFuture<SeedUnionsHttpResponse<Map<String, Boolean>>> updateMany(
+    public CompletableFuture<SeedApiHttpResponse<Map<String, Boolean>>> updateMany(
             List<BigUnion> request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("many");
+                .addPathSegments("bigunion/many");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -164,7 +175,7 @@ public class AsyncRawBigunionClient {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
-            throw new SeedUnionsException("Failed to serialize request", e);
+            throw new SeedApiException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
@@ -177,31 +188,31 @@ public class AsyncRawBigunionClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedUnionsHttpResponse<Map<String, Boolean>>> future = new CompletableFuture<>();
+        CompletableFuture<SeedApiHttpResponse<Map<String, Boolean>>> future = new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        future.complete(new SeedUnionsHttpResponse<>(
+                        future.complete(new SeedApiHttpResponse<>(
                                 ObjectMappers.JSON_MAPPER.readValue(
                                         responseBodyString, new TypeReference<Map<String, Boolean>>() {}),
                                 response));
                         return;
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
-                    future.completeExceptionally(new SeedUnionsApiException(
+                    future.completeExceptionally(new SeedApiApiException(
                             "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
-                    future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
+                    future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
+                future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
         });
         return future;

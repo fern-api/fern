@@ -38,17 +38,7 @@ import (
 
 func do() {
     client := client.NewClient()
-    request := &fern.FindRequest{
-        OptionalString: fern.String(
-            "optionalString",
-        ),
-        PublicProperty: fern.String(
-            "publicProperty",
-        ),
-        PrivateProperty: fern.Int(
-            1,
-        ),
-    }
+    request := &fern.FooFindRequest{}
     client.Foo.Find(
         context.TODO(),
         request,
@@ -63,7 +53,7 @@ URL, which is particularly useful in test environments.
 
 ```go
 client := client.NewClient(
-    option.WithBaseURL(audiences.Environments.EnvironmentA),
+    option.WithBaseURL(api.Environments.Default),
 )
 ```
 

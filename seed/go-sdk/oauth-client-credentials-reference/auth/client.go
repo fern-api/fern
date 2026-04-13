@@ -33,12 +33,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetToken(
+func (c *Client) Gettoken(
 	ctx context.Context,
 	request *fern.GetTokenRequest,
 	opts ...option.RequestOption,
 ) (*fern.TokenResponse, error) {
-	response, err := c.WithRawResponse.GetToken(
+	response, err := c.WithRawResponse.Gettoken(
 		ctx,
 		request,
 		opts...,

@@ -1,20 +1,19 @@
 package com.snippets;
 
-import com.seed.nullableOptional.SeedNullableOptionalClient;
-import com.seed.nullableOptional.resources.nullableoptional.requests.FilterByRoleRequest;
-import com.seed.nullableOptional.resources.nullableoptional.types.UserRole;
-import com.seed.nullableOptional.resources.nullableoptional.types.UserStatus;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.nullableoptional.requests.NullableOptionalSearchUsersRequest;
 
 public class Example9 {
     public static void main(String[] args) {
-        SeedNullableOptionalClient client =
-                SeedNullableOptionalClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.nullableOptional()
-                .filterByRole(FilterByRoleRequest.builder()
-                        .role(UserRole.ADMIN)
-                        .status(UserStatus.ACTIVE)
-                        .secondaryRole(UserRole.ADMIN)
+        client.nullableoptional()
+                .searchusers(NullableOptionalSearchUsersRequest.builder()
+                        .query("query")
+                        .department("department")
+                        .role("role")
+                        .isActive(true)
                         .build());
     }
 }

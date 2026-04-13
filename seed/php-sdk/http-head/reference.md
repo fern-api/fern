@@ -1,30 +1,5 @@
 # Reference
 ## User
-<details><summary><code>$client-&gt;user-&gt;head()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->user->head();
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>$client-&gt;user-&gt;list($request) -> ?array</code></summary>
 <dl>
 <dd>
@@ -39,7 +14,7 @@ $client->user->head();
 
 ```php
 $client->user->list(
-    new ListUsersRequest([
+    new UserListRequest([
         'limit' => 1,
     ]),
 );
@@ -59,6 +34,31 @@ $client->user->list(
 
 **$limit:** `int` 
     
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;user-&gt;head()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->user->head();
+```
 </dd>
 </dl>
 </dd>

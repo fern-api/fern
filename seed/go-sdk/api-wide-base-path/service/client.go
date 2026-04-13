@@ -5,6 +5,7 @@ package service
 import (
 	context "context"
 
+	fern "github.com/api-wide-base-path/fern"
 	core "github.com/api-wide-base-path/fern/core"
 	internal "github.com/api-wide-base-path/fern/internal"
 	option "github.com/api-wide-base-path/fern/option"
@@ -34,18 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Post(
 	ctx context.Context,
-	pathParam string,
-	serviceParam string,
-	endpointParam int,
-	resourceParam string,
+	request *fern.ServicePostRequest,
 	opts ...option.RequestOption,
 ) error {
 	_, err := c.WithRawResponse.Post(
 		ctx,
-		pathParam,
-		serviceParam,
-		endpointParam,
-		resourceParam,
+		request,
 		opts...,
 	)
 	if err != nil {

@@ -6,11 +6,11 @@
             "id": {
                 "path": "/text",
                 "method": "POST",
-                "identifier_override": "endpoint_service.getText"
+                "identifier_override": "endpoint_service.gettext"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPlainText;\n\nvar client = new SeedPlainTextClient();\nawait client.Service.GetTextAsync();\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Service.GettextAsync();\n"
             }
         }
     ]

@@ -1,4 +1,4 @@
-package literalsunions
+package api
 
 import (
 	"io"

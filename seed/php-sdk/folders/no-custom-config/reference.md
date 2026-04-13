@@ -24,8 +24,8 @@ $client->foo();
 </dl>
 </details>
 
-## A B
-<details><summary><code>$client-&gt;a-&gt;b-&gt;foo()</code></summary>
+## Ab
+<details><summary><code>$client-&gt;ab-&gt;aBFoo()</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ $client->foo();
 <dd>
 
 ```php
-$client->foo();
+$client->ab->aBFoo();
 ```
 </dd>
 </dl>
@@ -50,8 +50,8 @@ $client->foo();
 </dl>
 </details>
 
-## A C
-<details><summary><code>$client-&gt;a-&gt;c-&gt;foo()</code></summary>
+## Ac
+<details><summary><code>$client-&gt;ac-&gt;aCFoo()</code></summary>
 <dl>
 <dd>
 
@@ -64,7 +64,7 @@ $client->foo();
 <dd>
 
 ```php
-$client->foo();
+$client->ac->aCFoo();
 ```
 </dd>
 </dl>
@@ -90,7 +90,7 @@ $client->foo();
 <dd>
 
 ```php
-$client->foo();
+$client->folder->foo();
 ```
 </dd>
 </dl>
@@ -102,8 +102,8 @@ $client->foo();
 </dl>
 </details>
 
-## Folder Service
-<details><summary><code>$client-&gt;folder-&gt;service-&gt;endpoint()</code></summary>
+## FolderService
+<details><summary><code>$client-&gt;folderService-&gt;folderServiceEndpoint()</code></summary>
 <dl>
 <dd>
 
@@ -116,7 +116,7 @@ $client->foo();
 <dd>
 
 ```php
-$client->folder->service->endpoint();
+$client->folderService->folderServiceEndpoint();
 ```
 </dd>
 </dl>
@@ -128,7 +128,7 @@ $client->folder->service->endpoint();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;folder-&gt;service-&gt;unknownRequest($request)</code></summary>
+<details><summary><code>$client-&gt;folderService-&gt;folderServiceUnknownRequest($request)</code></summary>
 <dl>
 <dd>
 
@@ -141,7 +141,7 @@ $client->folder->service->endpoint();
 <dd>
 
 ```php
-$client->folder->service->unknownRequest(
+$client->folderService->folderServiceUnknownRequest(
     [
         'key' => "value",
     ],

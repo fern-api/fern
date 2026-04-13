@@ -2,16 +2,16 @@
 
 namespace Seed;
 
-use Seed\BasicAuth\BasicAuthClient;
+use Seed\Basicauth\BasicauthClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
     /**
-     * @var BasicAuthClient $basicAuth
+     * @var BasicauthClient $basicauth
      */
-    public BasicAuthClient $basicAuth;
+    public BasicauthClient $basicauth;
 
     /**
      * @var array{
@@ -31,6 +31,7 @@ class SeedClient
 
     /**
      * @param string $username The username to use for authentication.
+     * @param string $password The password to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -41,6 +42,7 @@ class SeedClient
      */
     public function __construct(
         string $username,
+        string $password,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -49,7 +51,7 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        $defaultHeaders['Authorization'] = "Basic " . base64_encode($username . ":");
+        $defaultHeaders['Authorization'] = "Basic " . base64_encode($username . ":" . $password);
 
         $this->options = $options ?? [];
 
@@ -62,6 +64,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->basicAuth = new BasicAuthClient($this->client, $this->options);
+        $this->basicauth = new BasicauthClient($this->client, $this->options);
     }
 }

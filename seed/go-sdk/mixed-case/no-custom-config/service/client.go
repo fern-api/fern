@@ -33,14 +33,14 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-func (c *Client) GetResource(
+func (c *Client) Getresource(
 	ctx context.Context,
-	resourceID string,
+	request *fern.ServiceGetResourceRequest,
 	opts ...option.RequestOption,
 ) (*fern.Resource, error) {
-	response, err := c.WithRawResponse.GetResource(
+	response, err := c.WithRawResponse.Getresource(
 		ctx,
-		resourceID,
+		request,
 		opts...,
 	)
 	if err != nil {
@@ -49,12 +49,12 @@ func (c *Client) GetResource(
 	return response.Body, nil
 }
 
-func (c *Client) ListResources(
+func (c *Client) Listresources(
 	ctx context.Context,
-	request *fern.ListResourcesRequest,
+	request *fern.ServiceListResourcesRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.Resource, error) {
-	response, err := c.WithRawResponse.ListResources(
+	response, err := c.WithRawResponse.Listresources(
 		ctx,
 		request,
 		opts...,

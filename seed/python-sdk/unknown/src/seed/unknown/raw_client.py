@@ -33,10 +33,14 @@ class RawUnknownClient:
         Returns
         -------
         HttpResponse[typing.List[typing.Any]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -59,7 +63,7 @@ class RawUnknownClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def post_object(
+    def postobject(
         self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[typing.Any]]:
         """
@@ -73,12 +77,16 @@ class RawUnknownClient:
         Returns
         -------
         HttpResponse[typing.List[typing.Any]]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "with-object",
             method="POST",
             json={
                 "unknown": unknown,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -121,10 +129,14 @@ class AsyncRawUnknownClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[typing.Any]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -147,7 +159,7 @@ class AsyncRawUnknownClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def post_object(
+    async def postobject(
         self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[typing.Any]]:
         """
@@ -161,12 +173,16 @@ class AsyncRawUnknownClient:
         Returns
         -------
         AsyncHttpResponse[typing.List[typing.Any]]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "with-object",
             method="POST",
             json={
                 "unknown": unknown,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

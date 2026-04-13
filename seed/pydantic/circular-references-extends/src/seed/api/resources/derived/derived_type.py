@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
-from ..common.base_type import BaseType
 
 
 class DerivedType(BaseType):

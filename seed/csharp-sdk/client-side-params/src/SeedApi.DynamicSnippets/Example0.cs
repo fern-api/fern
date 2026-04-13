@@ -1,26 +1,24 @@
-using SeedClientSideParams;
+using SeedApi;
 
 namespace Usage;
 
 public class Example0
 {
     public async Task Do() {
-        var client = new SeedClientSideParamsClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.Service.ListResourcesAsync(
-            new ListResourcesRequest {
+        await client.Service.ListresourcesAsync(
+            new ServiceListResourcesRequest {
                 Page = 1,
                 PerPage = 1,
-                Sort = "created_at",
-                Order = "desc",
-                IncludeTotals = true,
-                Fields = "fields",
-                Search = "search"
+                Sort = "sort",
+                Order = "order",
+                IncludeTotals = true
             }
         );
     }

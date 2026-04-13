@@ -1,1 +1,1 @@
-package apiwidebasepath
+package api

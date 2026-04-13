@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Simple\Types\FooRequest;
+use Seed\Types\FooRequest;
 
 $client = new SeedClient(
     options: [

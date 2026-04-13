@@ -1,2 +1,2 @@
-export { SeedHeaderTokenEnvironmentVariableError } from "./SeedHeaderTokenEnvironmentVariableError.js";
-export { SeedHeaderTokenEnvironmentVariableTimeoutError } from "./SeedHeaderTokenEnvironmentVariableTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

@@ -3,7 +3,9 @@
 package dummy
 
 import (
+	bytes "bytes"
 	context "context"
+	io "io"
 	http "net/http"
 
 	stream "github.com/fern-api/stream-go/v2"
@@ -31,9 +33,51 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
+func (r *RawClient) GenerateStream(
+	ctx context.Context,
+	request *stream.DummyGenerateStreamRequest,
+	opts ...option.RequestOption,
+) (*core.Response[io.Reader], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/generate-stream"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Content-Type", "application/json")
+	response := bytes.NewBuffer(nil)
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[io.Reader]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
 func (r *RawClient) Generate(
 	ctx context.Context,
-	request *stream.Generateequest,
+	request *stream.DummyGenerateRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[*stream.StreamResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,6 +91,7 @@ func (r *RawClient) Generate(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response *stream.StreamResponse
 	raw, err := r.caller.Call(
 		ctx,

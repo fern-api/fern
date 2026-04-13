@@ -6,18 +6,18 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
-export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
+export declare namespace SeedApiClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class SeedMultiUrlEnvironmentNoDefaultClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<SeedMultiUrlEnvironmentNoDefaultClient.Options>;
+export class SeedApiClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedApiClient.Options>;
     protected _ec2: Ec2Client | undefined;
     protected _s3: S3Client | undefined;
 
-    constructor(options: SeedMultiUrlEnvironmentNoDefaultClient.Options) {
+    constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
@@ -48,12 +48,7 @@ export class SeedMultiUrlEnvironmentNoDefaultClient {
             input,
             init,
             {
-                baseUrl:
-                    this._options.baseUrl ??
-                    (async () => {
-                        const env = await core.Supplier.get(this._options.environment);
-                        return typeof env === "string" ? env : (env as Record<string, string>)?.ec2;
-                    }),
+                baseUrl: this._options.baseUrl ?? this._options.environment,
                 headers: this._options.headers,
                 timeoutInSeconds: this._options.timeoutInSeconds,
                 maxRetries: this._options.maxRetries,

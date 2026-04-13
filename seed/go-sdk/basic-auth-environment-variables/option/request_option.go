@@ -73,9 +73,9 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 }
 
 // WithBasicAuth sets the 'Authorization: Basic <base64>' request header.
-func WithBasicAuth(username, accessToken string) *core.BasicAuthOption {
+func WithBasicAuth(username, password string) *core.BasicAuthOption {
 	return &core.BasicAuthOption{
-		Username:    username,
-		AccessToken: accessToken,
+		Username: username,
+		Password: password,
 	}
 }

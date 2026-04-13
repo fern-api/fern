@@ -10,19 +10,19 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCsharpSystemCollision;\n\nvar client = new SeedCsharpSystemCollision.System();\nawait client.CreateUserAsync(\n    new User\n    {\n        Line1 = \"line1\",\n        Line2 = \"line2\",\n        City = \"city\",\n        State = \"state\",\n        Zip = \"zip\",\n        Country = \"USA\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApi.System();\nawait client._.CreateUserAsync(\n    new User\n    {\n        Line1 = \"line1\",\n        City = \"city\",\n        State = \"state\",\n        Zip = \"zip\",\n        Country = UserCountry.Usa,\n    }\n);\n"
             }
         },
         {
             "example_identifier": null,
             "id": {
-                "path": "/users",
+                "path": "/users/tasks",
                 "method": "POST",
                 "identifier_override": "endpoint_.createTask"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCsharpSystemCollision;\n\nvar client = new SeedCsharpSystemCollision.System();\nawait client.CreateTaskAsync(\n    new SeedCsharpSystemCollision.Task\n    {\n        Name = \"name\",\n        User = new User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApi.System();\nawait client._.CreateTaskAsync(\n    new SeedApi.Task\n    {\n        Name = \"name\",\n        User = new User\n        {\n            Line1 = \"line1\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = UserCountry.Usa,\n        },\n    }\n);\n"
             }
         },
         {
@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedCsharpSystemCollision;\n\nvar client = new SeedCsharpSystemCollision.System();\nawait client.EmptyResponseAsync(\n    new SeedCsharpSystemCollision.Task\n    {\n        Name = \"name\",\n        User = new User\n        {\n            Line1 = \"line1\",\n            Line2 = \"line2\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = \"USA\",\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApi.System();\nawait client._.EmptyResponseAsync(\n    new SeedApi.Task\n    {\n        Name = \"name\",\n        User = new User\n        {\n            Line1 = \"line1\",\n            City = \"city\",\n            State = \"state\",\n            Zip = \"zip\",\n            Country = UserCountry.Usa,\n        },\n    }\n);\n"
             }
         }
     ]

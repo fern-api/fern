@@ -21,18 +21,18 @@ class Admin extends JsonSerializableType
 
     /**
      * @param array{
-     *   id: string,
-     *   email: string,
      *   password: string,
      *   profile: UserProfile,
      *   adminLevel: string,
+     *   id?: ?string,
+     *   email?: ?string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->id = $values['id'];
-        $this->email = $values['email'];
+        $this->id = $values['id'] ?? null;
+        $this->email = $values['email'] ?? null;
         $this->password = $values['password'];
         $this->profile = $values['profile'];
         $this->adminLevel = $values['adminLevel'];

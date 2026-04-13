@@ -13,13 +13,15 @@
 <dd>
 
 ```python
-from seed import SeedVariables
+from seed import SeedApi
 
-client = SeedVariables(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.post()
+client.service.post(
+    endpoint_param="endpointParam",
+)
 
 ```
 </dd>

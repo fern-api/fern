@@ -1,29 +1,68 @@
 {
     "endpoints": [
         {
-            "example_identifier": "6de97fd4",
+            "example_identifier": "650ed69f",
             "id": {
                 "method": "POST",
                 "path": "/token",
-                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+                "identifier_override": "endpoint_auth.gettokenwithclientcredentials"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;\nimport com.seed.inferredAuthImplicit.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient\n            .builder()\n            .build();\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;\nimport com.seed.inferredAuthImplicit.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient\n            .builder()\n            .build();\n\n        client.auth().getTokenWithClientCredentials(\n            GetTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().gettokenwithclientcredentials(\n            AuthGetTokenWithClientCredentialsRequest\n                .builder()\n                .apiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().gettokenwithclientcredentials(\n            AuthGetTokenWithClientCredentialsRequest\n                .builder()\n                .apiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
-            "example_identifier": "1076a6cc",
+            "example_identifier": "5cb1a880",
             "id": {
                 "method": "POST",
-                "path": "/token/refresh",
-                "identifier_override": "endpoint_auth.refreshToken"
+                "path": "/token",
+                "identifier_override": "endpoint_auth.gettokenwithclientcredentials"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;\nimport com.seed.inferredAuthImplicit.resources.auth.requests.RefreshTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient\n            .builder()\n            .build();\n\n        client.auth().refreshToken(\n            RefreshTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;\nimport com.seed.inferredAuthImplicit.resources.auth.requests.RefreshTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient\n            .builder()\n            .build();\n\n        client.auth().refreshToken(\n            RefreshTokenRequest\n                .builder()\n                .xApiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().gettokenwithclientcredentials(\n            AuthGetTokenWithClientCredentialsRequest\n                .builder()\n                .apiKey(\"apiKey\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthGetTokenWithClientCredentialsRequest;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestAudience;\nimport com.seed.api.resources.auth.types.AuthGetTokenWithClientCredentialsRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().gettokenwithclientcredentials(\n            AuthGetTokenWithClientCredentialsRequest\n                .builder()\n                .apiKey(\"apiKey\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(AuthGetTokenWithClientCredentialsRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthGetTokenWithClientCredentialsRequestGrantType.CLIENT_CREDENTIALS)\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "56a344f2",
+            "id": {
+                "method": "POST",
+                "path": "/token/refresh",
+                "identifier_override": "endpoint_auth.refreshtoken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthRefreshTokenRequest;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().refreshtoken(\n            AuthRefreshTokenRequest\n                .builder()\n                .apiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(AuthRefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthRefreshTokenRequestGrantType.REFRESH_TOKEN)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthRefreshTokenRequest;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().refreshtoken(\n            AuthRefreshTokenRequest\n                .builder()\n                .apiKey(\"X-Api-Key\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(AuthRefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthRefreshTokenRequestGrantType.REFRESH_TOKEN)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "51c49456",
+            "id": {
+                "method": "POST",
+                "path": "/token/refresh",
+                "identifier_override": "endpoint_auth.refreshtoken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthRefreshTokenRequest;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().refreshtoken(\n            AuthRefreshTokenRequest\n                .builder()\n                .apiKey(\"apiKey\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(AuthRefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthRefreshTokenRequestGrantType.REFRESH_TOKEN)\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.auth.requests.AuthRefreshTokenRequest;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestAudience;\nimport com.seed.api.resources.auth.types.AuthRefreshTokenRequestGrantType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.auth().refreshtoken(\n            AuthRefreshTokenRequest\n                .builder()\n                .apiKey(\"apiKey\")\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .refreshToken(\"refresh_token\")\n                .audience(AuthRefreshTokenRequestAudience.HTTPS_API_EXAMPLE_COM)\n                .grantType(AuthRefreshTokenRequestGrantType.REFRESH_TOKEN)\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5465b825",
+            "id": {
+                "method": "GET",
+                "path": "/nested-no-auth/get-something",
+                "identifier_override": "endpoint_nestedNoAuthApi.nestedNoAuth_api_getSomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.nestedNoAuthApi().nestedNoAuthApiGetSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.nestedNoAuthApi().nestedNoAuthApiGetSomething();\n    }\n}\n"
             }
         },
         {
@@ -31,12 +70,25 @@
             "id": {
                 "method": "GET",
                 "path": "/nested-no-auth/get-something",
-                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+                "identifier_override": "endpoint_nestedNoAuthApi.nestedNoAuth_api_getSomething"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient\n            .builder()\n            .build();\n\n        client.nestedNoAuth().api().getSomething();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient\n            .builder()\n            .build();\n\n        client.nestedNoAuth().api().getSomething();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.nestedNoAuthApi().nestedNoAuthApiGetSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.nestedNoAuthApi().nestedNoAuthApiGetSomething();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5465b825",
+            "id": {
+                "method": "GET",
+                "path": "/nested/get-something",
+                "identifier_override": "endpoint_nestedApi.nested_api_getSomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.nestedApi().nestedApiGetSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.nestedApi().nestedApiGetSomething();\n    }\n}\n"
             }
         },
         {
@@ -44,12 +96,25 @@
             "id": {
                 "method": "GET",
                 "path": "/nested/get-something",
-                "identifier_override": "endpoint_nested/api.getSomething"
+                "identifier_override": "endpoint_nestedApi.nested_api_getSomething"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient\n            .builder()\n            .build();\n\n        client.nested().api().getSomething();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient\n            .builder()\n            .build();\n\n        client.nested().api().getSomething();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.nestedApi().nestedApiGetSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.nestedApi().nestedApiGetSomething();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5465b825",
+            "id": {
+                "method": "GET",
+                "path": "/get-something",
+                "identifier_override": "endpoint_simple.getsomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.simple().getsomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.simple().getsomething();\n    }\n}\n"
             }
         },
         {
@@ -57,12 +122,12 @@
             "id": {
                 "method": "GET",
                 "path": "/get-something",
-                "identifier_override": "endpoint_simple.getSomething"
+                "identifier_override": "endpoint_simple.getsomething"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient\n            .builder()\n            .build();\n\n        client.simple().getSomething();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.inferredAuthImplicit.SeedInferredAuthImplicitClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedInferredAuthImplicitClient client = SeedInferredAuthImplicitClient\n            .builder()\n            .build();\n\n        client.simple().getSomething();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.simple().getsomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.simple().getsomething();\n    }\n}\n"
             }
         }
     ],

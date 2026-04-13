@@ -14,10 +14,10 @@
 
 ```swift
 import Foundation
-import UnknownAsAny
+import Api
 
 private func main() async throws {
-    let client = UnknownAsAnyClient()
+    let client = ApiClient()
 
     _ = try await client.unknown.post(request: .object([
         "key": .string("value")
@@ -59,7 +59,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.unknown.<a href="/Sources/Resources/Unknown/UnknownClient.swift">postObject</a>(request: MyObject, requestOptions: RequestOptions?) -> [JSONValue]</code></summary>
+<details><summary><code>client.unknown.<a href="/Sources/Resources/Unknown/UnknownClient.swift">postobject</a>(request: Requests.MyObject, requestOptions: RequestOptions?) -> [JSONValue]</code></summary>
 <dl>
 <dd>
 
@@ -73,16 +73,14 @@ try await main()
 
 ```swift
 import Foundation
-import UnknownAsAny
+import Api
 
 private func main() async throws {
-    let client = UnknownAsAnyClient()
+    let client = ApiClient()
 
-    _ = try await client.unknown.postObject(request: MyObject(
-        unknown: .object([
-            "key": .string("value")
-        ])
-    ))
+    _ = try await client.unknown.postobject(request: .init(unknown: .object([
+        "key": .string("value")
+    ])))
 }
 
 try await main()
@@ -100,7 +98,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `MyObject` 
+**request:** `Requests.MyObject` 
     
 </dd>
 </dl>

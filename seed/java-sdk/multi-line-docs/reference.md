@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.getUser(userId)</code></summary>
+<details><summary><code>client.user.getuser(userId)</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,12 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```java
-client.user().getUser("userId");
+client.user().getuser(
+    "userId",
+    UserGetUserRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -58,7 +63,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.user.createUser(request) -> User</code></summary>
+<details><summary><code>client.user.createuser(request) -> User</code></summary>
 <dl>
 <dd>
 
@@ -86,11 +91,10 @@ This endpoint is used to create a new user.
 <dd>
 
 ```java
-client.user().createUser(
-    CreateUserRequest
+client.user().createuser(
+    UserCreateUserRequest
         .builder()
         .name("name")
-        .age(1)
         .build()
 );
 ```

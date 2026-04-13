@@ -38,10 +38,12 @@ import (
 
 func do() {
     client := client.NewClient()
-    request := &fern.CreateUserRequest{
-        Name: "Alice",
+    request := &fern.UserCreateUserRequest{
+        Type: fern.UserCreateUserRequestTypeCreateUserRequest,
+        Version: fern.UserCreateUserRequestVersionV1,
+        Name: "name",
     }
-    client.User.CreateUser(
+    client.User.Createuser(
         context.TODO(),
         request,
     )
@@ -65,7 +67,7 @@ Structured error types are returned from API calls that return non-success statu
 with the `errors.Is` and `errors.As` APIs, so you can access the error like so:
 
 ```go
-response, err := client.User.CreateUser(...)
+response, err := client.User.Createuser(...)
 if err != nil {
     var apiError *core.APIError
     if errors.As(err, apiError) {
@@ -99,7 +101,7 @@ client := client.NewClient(
 )
 
 // Specify options for an individual request.
-response, err := client.User.CreateUser(
+response, err := client.User.Createuser(
     ...,
     option.WithToken("<YOUR_API_KEY>"),
 )
@@ -114,7 +116,7 @@ when you need to examine the response headers received from the API call. (When 
 the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
-response, err := client.User.WithRawResponse.CreateUser(...)
+response, err := client.User.WithRawResponse.Createuser(...)
 if err != nil {
     return err
 }
@@ -144,7 +146,7 @@ client := client.NewClient(
     option.WithMaxAttempts(1),
 )
 
-response, err := client.User.CreateUser(
+response, err := client.User.Createuser(
     ...,
     option.WithMaxAttempts(1),
 )
@@ -158,7 +160,7 @@ Setting a timeout for each individual request is as simple as using the standard
 ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
-response, err := client.User.CreateUser(ctx, ...)
+response, err := client.User.Createuser(ctx, ...)
 ```
 
 ### Explicit Null
@@ -180,7 +182,7 @@ type ExampleRequest struct {
 request := &ExampleRequest{}
 request.SetName(nil)
 
-response, err := client.User.CreateUser(ctx, request, ...)
+response, err := client.User.Createuser(ctx, request, ...)
 ```
 
 ## Contributing

@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Types\RefreshTokenRequest;
+use Seed\Types\BasicType;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,8 +11,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->refreshToken(
-    new RefreshTokenRequest([
-        'ttl' => 420,
-    ]),
+$client->createType(
+    BasicType::Primitive->value,
 );

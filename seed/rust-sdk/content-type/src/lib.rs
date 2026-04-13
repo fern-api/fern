@@ -1,24 +1,22 @@
-//! # ContentTypes SDK
+//! # content-type SDK
 //!
-//! The official Rust SDK for the ContentTypes.
+//! The official Rust SDK for the content-type.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_content_types::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
 //!         ..Default::default()
 //!     };
-//!     let client = ContentTypesClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .service
 //!         .patch(
-//!             &PatchProxyRequest {
-//!                 application: Some("application".to_string()),
-//!                 require_auth: Some(true),
+//!             &ServicePatchRequest {
 //!                 ..Default::default()
 //!             },
 //!             None,

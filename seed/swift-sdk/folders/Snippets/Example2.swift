@@ -4,7 +4,7 @@ import Api
 private func main() async throws {
     let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.a.c.foo()
+    _ = try await client.ac.aCFoo()
 }
 
 try await main()

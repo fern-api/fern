@@ -1,17 +1,13 @@
 package com.snippets;
 
-import com.seed.mixedFileDirectory.SeedMixedFileDirectoryClient;
-import com.seed.mixedFileDirectory.resources.user.events.metadata.requests.GetEventMetadataRequest;
+import com.seed.api.SeedApiClient;
+import com.seed.api.resources.user.requests.UserListRequest;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedApiClient client =
+                SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.user()
-                .events()
-                .metadata()
-                .getMetadata(GetEventMetadataRequest.builder().id("id").build());
+        client.user().list(UserListRequest.builder().limit(1).build());
     }
 }

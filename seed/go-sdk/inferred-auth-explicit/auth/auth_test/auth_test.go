@@ -63,7 +63,7 @@ func VerifyRequestCount(
 	require.Equal(t, expected, len(result.Requests))
 }
 
-func TestAuthGetTokenWithClientCredentialsWithWireMock(
+func TestAuthGettokenwithclientcredentialsWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -73,27 +73,26 @@ func TestAuthGetTokenWithClientCredentialsWithWireMock(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := &fern.GetTokenRequest{
-		XAPIKey:      "X-Api-Key",
+	request := &fern.AuthGetTokenWithClientCredentialsRequest{
+		APIKey:       "X-Api-Key",
 		ClientID:     "client_id",
 		ClientSecret: "client_secret",
-		Scope: fern.String(
-			"scope",
-		),
+		Audience:     fern.AuthGetTokenWithClientCredentialsRequestAudienceHttpsApiExampleCom,
+		GrantType:    fern.AuthGetTokenWithClientCredentialsRequestGrantTypeClientCredentials,
 	}
-	_, invocationErr := client.Auth.GetTokenWithClientCredentials(
+	_, invocationErr := client.Auth.Gettokenwithclientcredentials(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestAuthGetTokenWithClientCredentialsWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestAuthGettokenwithclientcredentialsWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestAuthGetTokenWithClientCredentialsWithWireMock", "POST", "/token", nil, 1)
+	VerifyRequestCount(t, "TestAuthGettokenwithclientcredentialsWithWireMock", "POST", "/token", nil, 1)
 }
 
-func TestAuthRefreshTokenWithWireMock(
+func TestAuthRefreshtokenWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -103,23 +102,22 @@ func TestAuthRefreshTokenWithWireMock(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := &fern.RefreshTokenRequest{
-		XAPIKey:      "X-Api-Key",
+	request := &fern.AuthRefreshTokenRequest{
+		APIKey:       "X-Api-Key",
 		ClientID:     "client_id",
 		ClientSecret: "client_secret",
 		RefreshToken: "refresh_token",
-		Scope: fern.String(
-			"scope",
-		),
+		Audience:     fern.AuthRefreshTokenRequestAudienceHttpsApiExampleCom,
+		GrantType:    fern.AuthRefreshTokenRequestGrantTypeRefreshToken,
 	}
-	_, invocationErr := client.Auth.RefreshToken(
+	_, invocationErr := client.Auth.Refreshtoken(
 		context.TODO(),
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestAuthRefreshTokenWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestAuthRefreshtokenWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestAuthRefreshTokenWithWireMock", "POST", "/token/refresh", nil, 1)
+	VerifyRequestCount(t, "TestAuthRefreshtokenWithWireMock", "POST", "/token/refresh", nil, 1)
 }

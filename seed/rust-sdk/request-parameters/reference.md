@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username</a>(request: CreateUsernameRequest, tags: Option&lt;Vec&lt;String&gt;&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">createusername</a>(request: UserCreateUsernameRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,22 +13,22 @@
 <dd>
 
 ```rust
-use seed_request_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = RequestParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .user
-        .create_username(
-            &CreateUsernameRequest {
-                tags: vec!["tags".to_string(), "tags".to_string()],
+        .createusername(
+            &UserCreateUsernameRequest {
+                tags: vec![Some("tags".to_string())],
                 username: "username".to_string(),
                 password: "password".to_string(),
-                name: "test".to_string(),
+                name: "name".to_string(),
             },
             None,
         )
@@ -72,7 +72,7 @@ async fn main() {
 <dl>
 <dd>
 
-**tags:** `Vec<String>` 
+**tags:** `Option<String>` 
     
 </dd>
 </dl>
@@ -84,7 +84,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_with_referenced_type</a>(request: CreateUsernameBody, tags: Option&lt;Vec&lt;String&gt;&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">createusernamewithreferencedtype</a>(request: CreateUsernameBody) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -97,25 +97,22 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_request_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = RequestParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .user
-        .create_username_with_referenced_type(
-            &CreateUsernameWithReferencedTypeRequest {
-                tags: vec!["tags".to_string(), "tags".to_string()],
-                body: CreateUsernameBody {
-                    username: "username".to_string(),
-                    password: "password".to_string(),
-                    name: "test".to_string(),
-                    ..Default::default()
-                },
+        .createusernamewithreferencedtype(
+            &CreateUsernameBody {
+                tags: vec![Some("tags".to_string())],
+                username: "username".to_string(),
+                password: "password".to_string(),
+                name: "name".to_string(),
             },
             None,
         )
@@ -135,7 +132,31 @@ async fn main() {
 <dl>
 <dd>
 
-**tags:** `Vec<String>` 
+**username:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `Option<String>` 
     
 </dd>
 </dl>
@@ -147,7 +168,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_optional</a>(request: Option&lt;Option&lt;CreateUsernameBodyOptionalProperties&gt;&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">createusernameoptional</a>(request: CreateUsernameBodyOptionalProperties) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -160,20 +181,20 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_request_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = RequestParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .user
-        .create_username_optional(
-            &Some(CreateUsernameBodyOptionalProperties {
+        .createusernameoptional(
+            &CreateUsernameBodyOptionalProperties {
                 ..Default::default()
-            }),
+            },
             None,
         )
         .await;
@@ -184,12 +205,43 @@ async fn main() {
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**username:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**password:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `Option<Option<String>>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_username</a>(limit: Option&lt;i64&gt;, id: Option&lt;String&gt;, date: Option&lt;String&gt;, deadline: Option&lt;String&gt;, bytes: Option&lt;String&gt;, user: Option&lt;User&gt;, user_list: Option&lt;Vec&lt;User&gt;&gt;, optional_deadline: Option&lt;Option&lt;String&gt;&gt;, key_value: Option&lt;std::collections::HashMap&lt;String, String&gt;&gt;, optional_string: Option&lt;Option&lt;String&gt;&gt;, nested_user: Option&lt;NestedUser&gt;, optional_user: Option&lt;Option&lt;User&gt;&gt;, long_param: Option&lt;String&gt;, big_int_param: Option&lt;String&gt;) -> Result&lt;User, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getusername</a>(limit: Option&lt;i64&gt;, id: Option&lt;String&gt;, date: Option&lt;String&gt;, deadline: Option&lt;String&gt;, bytes: Option&lt;String&gt;, user: Option&lt;User&gt;, optional_deadline: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, key_value: Option&lt;std::collections::HashMap&lt;String, String&gt;&gt;, optional_string: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;, nested_user: Option&lt;NestedUser&gt;, optional_user: Option&lt;Option&lt;User&gt;&gt;, long_param: Option&lt;String&gt;, big_int_param: Option&lt;i64&gt;) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -202,42 +254,33 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_request_parameters::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = RequestParametersClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .user
-        .get_username(
-            &GetUsernameQueryRequest {
+        .getusername(
+            &GetusernameQueryRequest {
                 limit: 1,
-                id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
+                id: "id".to_string(),
                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
                 deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                bytes: base64::engine::general_purpose::STANDARD
-                    .decode("SGVsbG8gd29ybGQh")
-                    .unwrap(),
+                bytes: "bytes".to_string(),
                 user: User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
                     ..Default::default()
                 },
-                user_list: vec![
-                    User {
-                        name: "name".to_string(),
-                        tags: vec!["tags".to_string(), "tags".to_string()],
-                        ..Default::default()
-                    },
-                    User {
-                        name: "name".to_string(),
-                        tags: vec!["tags".to_string(), "tags".to_string()],
-                        ..Default::default()
-                    },
-                ],
+                user_list: vec![Some(User {
+                    name: "name".to_string(),
+                    tags: vec!["tags".to_string(), "tags".to_string()],
+                    ..Default::default()
+                })],
                 optional_deadline: Some(
                     DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 ),
@@ -257,14 +300,14 @@ async fn main() {
                     tags: vec!["tags".to_string(), "tags".to_string()],
                     ..Default::default()
                 }),
-                exclude_user: vec![User {
+                exclude_user: vec![Some(User {
                     name: "name".to_string(),
                     tags: vec!["tags".to_string(), "tags".to_string()],
                     ..Default::default()
-                }],
-                filter: vec!["filter".to_string()],
+                })],
+                filter: vec![Some("filter".to_string())],
                 long_param: 1000000,
-                big_int_param: BigInt::parse_bytes("1000000".as_bytes(), 10).unwrap(),
+                big_int_param: 1,
             },
             None,
         )
@@ -332,7 +375,7 @@ async fn main() {
 <dl>
 <dd>
 
-**user_list:** `Vec<User>` 
+**user_list:** `Option<User>` 
     
 </dd>
 </dl>
@@ -340,7 +383,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_deadline:** `Option<String>` 
+**optional_deadline:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -356,7 +399,7 @@ async fn main() {
 <dl>
 <dd>
 
-**optional_string:** `Option<String>` 
+**optional_string:** `Option<Option<String>>` 
     
 </dd>
 </dl>
@@ -380,7 +423,7 @@ async fn main() {
 <dl>
 <dd>
 
-**exclude_user:** `User` 
+**exclude_user:** `Option<User>` 
     
 </dd>
 </dl>
@@ -388,7 +431,7 @@ async fn main() {
 <dl>
 <dd>
 
-**filter:** `String` 
+**filter:** `Option<String>` 
     
 </dd>
 </dl>
@@ -404,7 +447,7 @@ async fn main() {
 <dl>
 <dd>
 
-**big_int_param:** `String` 
+**big_int_param:** `i64` 
     
 </dd>
 </dl>

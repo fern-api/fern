@@ -31,7 +31,7 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetWithBearer(
+func (r *RawClient) Getwithbearer(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -41,7 +41,7 @@ func (r *RawClient) GetWithBearer(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/bearer"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -70,7 +70,7 @@ func (r *RawClient) GetWithBearer(
 	}, nil
 }
 
-func (r *RawClient) GetWithAPIKey(
+func (r *RawClient) Getwithapikey(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -80,7 +80,7 @@ func (r *RawClient) GetWithAPIKey(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/api-key"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -109,7 +109,7 @@ func (r *RawClient) GetWithAPIKey(
 	}, nil
 }
 
-func (r *RawClient) GetWithOAuth(
+func (r *RawClient) Getwithoauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -119,7 +119,7 @@ func (r *RawClient) GetWithOAuth(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/oauth"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -148,7 +148,7 @@ func (r *RawClient) GetWithOAuth(
 	}, nil
 }
 
-func (r *RawClient) GetWithBasic(
+func (r *RawClient) Getwithbasic(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -158,7 +158,7 @@ func (r *RawClient) GetWithBasic(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/basic"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -187,7 +187,7 @@ func (r *RawClient) GetWithBasic(
 	}, nil
 }
 
-func (r *RawClient) GetWithInferredAuth(
+func (r *RawClient) Getwithinferredauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -197,7 +197,7 @@ func (r *RawClient) GetWithInferredAuth(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/inferred"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -226,7 +226,7 @@ func (r *RawClient) GetWithInferredAuth(
 	}, nil
 }
 
-func (r *RawClient) GetWithAnyAuth(
+func (r *RawClient) Getwithanyauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -236,7 +236,7 @@ func (r *RawClient) GetWithAnyAuth(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/any"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
@@ -265,7 +265,7 @@ func (r *RawClient) GetWithAnyAuth(
 	}, nil
 }
 
-func (r *RawClient) GetWithAllAuth(
+func (r *RawClient) Getwithallauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (*core.Response[[]*fern.User], error) {
@@ -275,7 +275,7 @@ func (r *RawClient) GetWithAllAuth(
 		r.baseURL,
 		"",
 	)
-	endpointURL := baseURL + "/users"
+	endpointURL := baseURL + "/users/all"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),

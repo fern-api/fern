@@ -18,6 +18,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -39,10 +40,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedErrorProperty;
+using SeedApi;
 
-var client = new SeedErrorPropertyClient();
-await client.PropertyBasedError.ThrowErrorAsync();
+var client = new SeedApiClient();
+await client.Propertybasederror.ThrowerrorAsync();
 ```
 
 ## Exception Handling
@@ -51,11 +52,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedErrorProperty;
+using SeedApi;
 
 try {
-    var response = await client.PropertyBasedError.ThrowErrorAsync(...);
-} catch (SeedErrorPropertyApiException e) {
+    var response = await client.Propertybasederror.ThrowerrorAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -78,7 +79,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.PropertyBasedError.ThrowErrorAsync(
+var response = await client.Propertybasederror.ThrowerrorAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -91,7 +92,7 @@ var response = await client.PropertyBasedError.ThrowErrorAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.PropertyBasedError.ThrowErrorAsync(
+var response = await client.Propertybasederror.ThrowerrorAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -104,10 +105,10 @@ var response = await client.PropertyBasedError.ThrowErrorAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedErrorProperty;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.PropertyBasedError.ThrowErrorAsync(...).WithRawResponse();
+var result = await client.Propertybasederror.ThrowerrorAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -124,7 +125,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.PropertyBasedError.ThrowErrorAsync(...);
+var data = await client.Propertybasederror.ThrowerrorAsync(...);
 ```
 
 ### Additional Headers
@@ -132,7 +133,7 @@ var data = await client.PropertyBasedError.ThrowErrorAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.PropertyBasedError.ThrowErrorAsync(
+var response = await client.Propertybasederror.ThrowerrorAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -148,7 +149,7 @@ var response = await client.PropertyBasedError.ThrowErrorAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.PropertyBasedError.ThrowErrorAsync(
+var response = await client.Propertybasederror.ThrowerrorAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>
@@ -157,6 +158,35 @@ var response = await client.PropertyBasedError.ThrowErrorAsync(
         }
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using SeedApi;
+
+// Using a built-in value
+var badRequestErrorBodyErrorName = BadRequestErrorBodyErrorName.PropertyBasedErrorTest;
+
+// Using a custom value
+var customBadRequestErrorBodyErrorName = BadRequestErrorBodyErrorName.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (badRequestErrorBodyErrorName.Value)
+{
+    case BadRequestErrorBodyErrorName.Values.PropertyBasedErrorTest:
+        Console.WriteLine("PropertyBasedErrorTest");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {badRequestErrorBodyErrorName.Value}");
+        break;
+}
+
+// Explicit casting
+string badRequestErrorBodyErrorNameString = (string)BadRequestErrorBodyErrorName.PropertyBasedErrorTest;
+BadRequestErrorBodyErrorName badRequestErrorBodyErrorNameFromString = (BadRequestErrorBodyErrorName)"PropertyBasedErrorTest";
 ```
 
 ## Contributing

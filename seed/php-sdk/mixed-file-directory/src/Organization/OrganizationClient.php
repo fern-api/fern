@@ -4,8 +4,8 @@ namespace Seed\Organization;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Organization\Types\CreateOrganizationRequest;
-use Seed\Organization\Types\Organization;
+use Seed\Organization\Requests\CreateOrganizationRequest;
+use Seed\Types\Organization;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -72,7 +72,7 @@ class OrganizationClient
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
                     baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
-                    path: "/organizations/",
+                    path: "organizations/",
                     method: HttpMethod::POST,
                     body: $request,
                 ),

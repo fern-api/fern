@@ -27,6 +27,7 @@ class StreamXFernStreamingUnionStreamRequest_Message(Base):
 
     type: typing.Literal["message"] = "message"
     message: str
+    stream_response: typing.Optional[bool] = None
     prompt: str
 
     if IS_PYDANTIC_V2:
@@ -43,6 +44,7 @@ class StreamXFernStreamingUnionStreamRequest_Interrupt(Base):
     """
 
     type: typing.Literal["interrupt"] = "interrupt"
+    stream_response: typing.Optional[bool] = None
     prompt: str
 
     if IS_PYDANTIC_V2:
@@ -60,6 +62,7 @@ class StreamXFernStreamingUnionStreamRequest_Compact(Base):
 
     type: typing.Literal["compact"] = "compact"
     data: str
+    stream_response: typing.Optional[bool] = None
     prompt: str
 
     if IS_PYDANTIC_V2:

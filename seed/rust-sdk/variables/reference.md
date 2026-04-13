@@ -13,15 +13,18 @@
 <dd>
 
 ```rust
-use seed_variables::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         ..Default::default()
     };
-    let client = VariablesClient::new(config).expect("Failed to build client");
-    client.service.post(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client
+        .service
+        .post(&"endpointParam".to_string(), None)
+        .await;
 }
 ```
 </dd>

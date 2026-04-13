@@ -3,12 +3,22 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Auth\Requests\AuthRefreshTokenRequest;
+use Seed\Auth\Types\AuthRefreshTokenRequestAudience;
+use Seed\Auth\Types\AuthRefreshTokenRequestGrantType;
 
 $client = new SeedClient(
-    clientId: '<clientId>',
-    clientSecret: '<clientSecret>',
+    token: '<token>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->nestedNoAuth->api->getSomething();
+$client->auth->refreshtoken(
+    new AuthRefreshTokenRequest([
+        'clientId' => 'client_id',
+        'clientSecret' => 'client_secret',
+        'refreshToken' => 'refresh_token',
+        'audience' => AuthRefreshTokenRequestAudience::HttpsApiExampleCom->value,
+        'grantType' => AuthRefreshTokenRequestGrantType::RefreshToken->value,
+    ]),
+);

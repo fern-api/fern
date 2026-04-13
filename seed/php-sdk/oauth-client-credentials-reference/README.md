@@ -37,13 +37,12 @@ Instantiate and use the client with the following:
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Auth\Types\GetTokenRequest;
+use Seed\Auth\Requests\GetTokenRequest;
 
 $client = new SeedClient(
-    clientId: '<clientId>',
-    clientSecret: '<clientSecret>',
+    token: '<token>',
 );
-$client->auth->getToken(
+$client->auth->gettoken(
     new GetTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
@@ -61,7 +60,7 @@ use Seed\Exceptions\SeedApiException;
 use Seed\Exceptions\SeedException;
 
 try {
-    $response = $client->auth->getToken(...);
+    $response = $client->auth->gettoken(...);
 } catch (SeedApiException $e) {
     echo 'API Exception occurred: ' . $e->getMessage() . "\n";
     echo 'Status Code: ' . $e->getCode() . "\n";
@@ -115,7 +114,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```php
-$response = $client->auth->getToken(
+$response = $client->auth->gettoken(
     ...,
     options: [
         'maxRetries' => 0 // Override maxRetries at the request level
@@ -128,7 +127,7 @@ $response = $client->auth->getToken(
 The SDK defaults to a 30 second timeout. Use the `timeout` option to configure this behavior.
 
 ```php
-$response = $client->auth->getToken(
+$response = $client->auth->gettoken(
     ...,
     options: [
         'timeout' => 3.0 // Override timeout at the request level

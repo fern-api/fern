@@ -11,8 +11,10 @@ from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 
 if typing.TYPE_CHECKING:
-    from .a.client import AClient, AsyncAClient
+    from .ab.client import AbClient, AsyncAbClient
+    from .ac.client import AcClient, AsyncAcClient
     from .folder.client import AsyncFolderClient, FolderClient
+    from .folder_service.client import AsyncFolderServiceClient, FolderServiceClient
 
 
 class SeedApi:
@@ -73,8 +75,10 @@ class SeedApi:
             logging=logging,
         )
         self._raw_client = RawSeedApi(client_wrapper=self._client_wrapper)
-        self._a: typing.Optional[AClient] = None
+        self._ab: typing.Optional[AbClient] = None
+        self._ac: typing.Optional[AcClient] = None
         self._folder: typing.Optional[FolderClient] = None
+        self._folder_service: typing.Optional[FolderServiceClient] = None
 
     @property
     def with_raw_response(self) -> RawSeedApi:
@@ -111,12 +115,20 @@ class SeedApi:
         return _response.data
 
     @property
-    def a(self):
-        if self._a is None:
-            from .a.client import AClient  # noqa: E402
+    def ab(self):
+        if self._ab is None:
+            from .ab.client import AbClient  # noqa: E402
 
-            self._a = AClient(client_wrapper=self._client_wrapper)
-        return self._a
+            self._ab = AbClient(client_wrapper=self._client_wrapper)
+        return self._ab
+
+    @property
+    def ac(self):
+        if self._ac is None:
+            from .ac.client import AcClient  # noqa: E402
+
+            self._ac = AcClient(client_wrapper=self._client_wrapper)
+        return self._ac
 
     @property
     def folder(self):
@@ -125,6 +137,14 @@ class SeedApi:
 
             self._folder = FolderClient(client_wrapper=self._client_wrapper)
         return self._folder
+
+    @property
+    def folder_service(self):
+        if self._folder_service is None:
+            from .folder_service.client import FolderServiceClient  # noqa: E402
+
+            self._folder_service = FolderServiceClient(client_wrapper=self._client_wrapper)
+        return self._folder_service
 
 
 def _make_default_async_client(
@@ -201,8 +221,10 @@ class AsyncSeedApi:
             logging=logging,
         )
         self._raw_client = AsyncRawSeedApi(client_wrapper=self._client_wrapper)
-        self._a: typing.Optional[AsyncAClient] = None
+        self._ab: typing.Optional[AsyncAbClient] = None
+        self._ac: typing.Optional[AsyncAcClient] = None
         self._folder: typing.Optional[AsyncFolderClient] = None
+        self._folder_service: typing.Optional[AsyncFolderServiceClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawSeedApi:
@@ -247,12 +269,20 @@ class AsyncSeedApi:
         return _response.data
 
     @property
-    def a(self):
-        if self._a is None:
-            from .a.client import AsyncAClient  # noqa: E402
+    def ab(self):
+        if self._ab is None:
+            from .ab.client import AsyncAbClient  # noqa: E402
 
-            self._a = AsyncAClient(client_wrapper=self._client_wrapper)
-        return self._a
+            self._ab = AsyncAbClient(client_wrapper=self._client_wrapper)
+        return self._ab
+
+    @property
+    def ac(self):
+        if self._ac is None:
+            from .ac.client import AsyncAcClient  # noqa: E402
+
+            self._ac = AsyncAcClient(client_wrapper=self._client_wrapper)
+        return self._ac
 
     @property
     def folder(self):
@@ -261,3 +291,11 @@ class AsyncSeedApi:
 
             self._folder = AsyncFolderClient(client_wrapper=self._client_wrapper)
         return self._folder
+
+    @property
+    def folder_service(self):
+        if self._folder_service is None:
+            from .folder_service.client import AsyncFolderServiceClient  # noqa: E402
+
+            self._folder_service = AsyncFolderServiceClient(client_wrapper=self._client_wrapper)
+        return self._folder_service

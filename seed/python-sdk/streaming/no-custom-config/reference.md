@@ -13,16 +13,7 @@
 <dd>
 
 ```python
-from seed import SeedStreaming
-
-client = SeedStreaming(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-client.dummy.generate_stream(
-    num_events=1,
-)
-
+client.dummy.generate_stream(...)
 ```
 </dd>
 </dl>
@@ -37,7 +28,7 @@ client.dummy.generate_stream(
 <dl>
 <dd>
 
-**stream:** `typing.Literal` 
+**stream:** `bool` 
     
 </dd>
 </dl>
@@ -78,14 +69,15 @@ client.dummy.generate_stream(
 <dd>
 
 ```python
-from seed import SeedStreaming
+from seed import SeedApi
 
-client = SeedStreaming(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.dummy.generate(
-    num_events=5,
+    stream=True,
+    num_events=1,
 )
 
 ```
@@ -102,7 +94,7 @@ client.dummy.generate(
 <dl>
 <dd>
 
-**stream:** `typing.Literal` 
+**stream:** `bool` 
     
 </dd>
 </dl>

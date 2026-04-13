@@ -1,24 +1,18 @@
-using SeedExamples;
-using SeedExamples.File_;
+using SeedApi;
 
 namespace Usage;
 
 public class Example7
 {
     public async Task Do() {
-        var client = new SeedExamplesClient(
+        var client = new SeedApiClient(
             token: "<token>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
         );
 
-        await client.File.Service.GetFileAsync(
-            "filename",
-            new GetFileRequest {
-                XFileApiVersion = "X-File-API-Version"
-            }
-        );
+        await client.HealthService.HealthServicePingAsync();
     }
 
 }

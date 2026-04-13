@@ -1,4 +1,4 @@
-import Unions
+import Api
 import Foundation
 import Testing
 
@@ -14,7 +14,7 @@ import Testing
             ),
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -41,7 +41,7 @@ import Testing
             ),
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -68,7 +68,7 @@ import Testing
             ),
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -94,7 +94,7 @@ import Testing
             ),
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -119,7 +119,7 @@ import Testing
             )
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -145,7 +145,7 @@ import Testing
             )
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -171,7 +171,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data()),
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -201,7 +201,7 @@ import Testing
             ),
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -242,7 +242,7 @@ import Testing
             ),
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -279,7 +279,7 @@ import Testing
             ),
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -328,7 +328,7 @@ import Testing
             ),
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -350,7 +350,7 @@ import Testing
             (statusCode: 500, headers: ["Content-Type": "application/json"], body: Data())
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
@@ -376,7 +376,7 @@ import Testing
             )
         ])
 
-        let client = UnionsClient(
+        let client = ApiClient(
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )

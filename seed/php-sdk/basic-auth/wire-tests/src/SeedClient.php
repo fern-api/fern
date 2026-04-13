@@ -2,16 +2,16 @@
 
 namespace Seed;
 
-use Seed\BasicAuth\BasicAuthClient;
+use Seed\Basicauth\BasicauthClient;
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient
 {
     /**
-     * @var BasicAuthClient $basicAuth
+     * @var BasicauthClient $basicauth
      */
-    public BasicAuthClient $basicAuth;
+    public BasicauthClient $basicauth;
 
     /**
      * @var array{
@@ -64,6 +64,6 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->basicAuth = new BasicAuthClient($this->client, $this->options);
+        $this->basicauth = new BasicauthClient($this->client, $this->options);
     }
 }

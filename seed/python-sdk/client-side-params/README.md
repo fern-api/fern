@@ -34,20 +34,16 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedClientSideParams
+from seed import SeedApi
 
-client = SeedClientSideParams(
+client = SeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
-client.service.search_resources(
+client.service.searchresources(
     limit=1,
     offset=1,
-    query="query",
-    filters={
-        "filters": {"key": "value"}
-    },
 )
 ```
 
@@ -58,22 +54,18 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedClientSideParams
+from seed import AsyncSeedApi
 
-client = AsyncSeedClientSideParams(
+client = AsyncSeedApi(
     token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
-    await client.service.search_resources(
+    await client.service.searchresources(
         limit=1,
         offset=1,
-        query="query",
-        filters={
-            "filters": {"key": "value"}
-        },
     )
 
 
@@ -89,7 +81,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.service.search_resources(...)
+    client.service.searchresources(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -103,10 +95,10 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedClientSideParams
+from seed import SeedApi
 
-client = SeedClientSideParams(...)
-response = client.service.with_raw_response.search_resources(...)
+client = SeedApi(...)
+response = client.service.with_raw_response.searchresources(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -127,7 +119,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.search_resources(..., request_options={
+client.service.searchresources(..., request_options={
     "max_retries": 1
 })
 ```
@@ -137,12 +129,12 @@ client.service.search_resources(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-from seed import SeedClientSideParams
+from seed import SeedApi
 
-client = SeedClientSideParams(..., timeout=20.0)
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.service.search_resources(..., request_options={
+client.service.searchresources(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -154,9 +146,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedClientSideParams
+from seed import SeedApi
 
-client = SeedClientSideParams(
+client = SeedApi(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

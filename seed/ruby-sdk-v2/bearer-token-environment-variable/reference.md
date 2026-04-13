@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_with_bearer_token</a>() -> String</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">getwithbearertoken</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```ruby
-client.service.get_with_bearer_token
+client.service.getwithbearertoken
 ```
 </dd>
 </dl>

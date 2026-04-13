@@ -1,14 +1,25 @@
 import Foundation
-import NullableOptional
+import Api
 
 private func main() async throws {
-    let client = NullableOptionalClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.nullableOptional.listUsers(
-        limit: 1,
-        offset: 1,
-        includeDeleted: true,
-        sortBy: .value("sortBy")
+    _ = try await client.nullableoptional.updateuser(
+        userId: "userId",
+        request: .init(
+            username: .value("username"),
+            email: .value("email"),
+            phone: .value("phone"),
+            address: Address(
+                street: "street",
+                city: .value("city"),
+                state: .value("state"),
+                zipCode: "zipCode",
+                country: .value("country"),
+                buildingId: .value(.value("buildingId")),
+                tenantId: .value(.value("tenantId"))
+            )
+        )
     )
 }
 

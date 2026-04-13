@@ -21,7 +21,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer, nil] :limit
       #
-      # @return [Array[Seed::User::Types::User]]
+      # @return [Array[Seed::Types::User]]
       def list(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit]
@@ -32,7 +32,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/users/",
+          path: "users/",
           query: query_params,
           request_options: request_options
         )
@@ -46,11 +46,6 @@ module Seed
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
         raise error_class.new(response.body, code: code)
-      end
-
-      # @return [Seed::Events::Client]
-      def events
-        @events ||= Seed::User::Events::Client.new(client: @client)
       end
     end
   end

@@ -3,16 +3,12 @@
 module Seed
   class Client
     # @param base_url [String, nil]
-    # @param environment [Hash[Symbol, String], nil]
     # @param token [String]
     #
     # @return [void]
-    def initialize(token:, base_url: nil, environment: nil)
-      @base_url = base_url
-      @environment = environment
-
+    def initialize(token:, base_url: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url || environment&.dig(:ec2),
+        base_url: base_url,
         headers: {
           "User-Agent" => "fern_multi-url-environment-no-default/0.0.1",
           "X-Fern-Language" => "Ruby",
@@ -23,12 +19,12 @@ module Seed
 
     # @return [Seed::Ec2::Client]
     def ec2
-      @ec2 ||= Seed::Ec2::Client.new(client: @raw_client, base_url: @base_url, environment: @environment)
+      @ec2 ||= Seed::Ec2::Client.new(client: @raw_client)
     end
 
     # @return [Seed::S3::Client]
     def s3
-      @s3 ||= Seed::S3::Client.new(client: @raw_client, base_url: @base_url, environment: @environment)
+      @s3 ||= Seed::S3::Client.new(client: @raw_client)
     end
   end
 end

@@ -13,9 +13,7 @@
 <dd>
 
 ```php
-$client->service->upload(
-    ,
-);
+$client->service->upload();
 ```
 </dd>
 </dl>
@@ -27,7 +25,7 @@ $client->service->upload(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;uploadWithQueryParams($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;uploadwithqueryparams($request)</code></summary>
 <dl>
 <dd>
 
@@ -40,11 +38,7 @@ $client->service->upload(
 <dd>
 
 ```php
-$client->service->uploadWithQueryParams(
-    new UploadWithQueryParamsRequest([
-        'model' => 'nova-2',
-    ]),
-);
+$client->service->uploadwithqueryparams($request);
 ```
 </dd>
 </dl>

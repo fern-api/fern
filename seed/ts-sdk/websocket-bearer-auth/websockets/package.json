@@ -22,28 +22,6 @@
             },
             "default": "./dist/cjs/index.js"
         },
-        "./realtimeNoAuth": {
-            "import": {
-                "types": "./dist/esm/api/resources/realtimeNoAuth/exports.d.mts",
-                "default": "./dist/esm/api/resources/realtimeNoAuth/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/realtimeNoAuth/exports.d.ts",
-                "default": "./dist/cjs/api/resources/realtimeNoAuth/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/realtimeNoAuth/exports.js"
-        },
-        "./realtime": {
-            "import": {
-                "types": "./dist/esm/api/resources/realtime/exports.d.mts",
-                "default": "./dist/esm/api/resources/realtime/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/realtime/exports.d.ts",
-                "default": "./dist/cjs/api/resources/realtime/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/realtime/exports.js"
-        },
         "./package.json": "./package.json"
     },
     "files": [
@@ -66,13 +44,10 @@
         "test:unit": "vitest --project unit",
         "test:wire": "vitest --project wire"
     },
-    "dependencies": {
-        "ws": "^8.20.0"
-    },
+    "dependencies": {},
     "devDependencies": {
         "webpack": "^5.105.4",
         "ts-loader": "^9.5.4",
-        "@types/ws": "^8.18.1",
         "vitest": "^4.1.1",
         "msw": "2.11.2",
         "@types/node": "^18.19.70",

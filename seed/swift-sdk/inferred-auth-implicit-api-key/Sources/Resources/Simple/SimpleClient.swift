@@ -7,7 +7,7 @@ public final class SimpleClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func getSomething(requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func getsomething(requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .get,
             path: "/get-something",

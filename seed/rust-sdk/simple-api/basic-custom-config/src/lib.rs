@@ -1,6 +1,6 @@
-//! # SimpleApi SDK
+//! # simple-api SDK
 //!
-//! The official Rust SDK for the SimpleApi.
+//! The official Rust SDK for the simple-api.
 //!
 //! ## Getting Started
 //!

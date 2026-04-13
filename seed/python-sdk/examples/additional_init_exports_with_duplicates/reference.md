@@ -12,16 +12,16 @@
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
 client.echo(
-    request="Hello world!\\n\\nwith\\n\\tnewlines",
+    request="string",
 )
 
 ```
@@ -71,15 +71,15 @@ client.echo(
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
-client.echo(
+client.create_type(
     request="primitive",
 )
 
@@ -117,8 +117,8 @@ client.echo(
 </dl>
 </details>
 
-## File Notification Service
-<details><summary><code>client.file.notification.service.<a href="src/seed/file/notification/service/client.py">get_exception</a>(...) -> Exception</code></summary>
+## FileNotificationService
+<details><summary><code>client.file_notification_service.<a href="src/seed/file_notification_service/client.py">file_notification_service_get_exception</a>(...) -> Exception</code></summary>
 <dl>
 <dd>
 
@@ -131,16 +131,16 @@ client.echo(
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
-client.file.notification.service.get_exception(
-    notification_id="notification-hsy129x",
+client.file_notification_service.file_notification_service_get_exception(
+    notification_id="notificationId",
 )
 
 ```
@@ -177,8 +177,8 @@ client.file.notification.service.get_exception(
 </dl>
 </details>
 
-## File Service
-<details><summary><code>client.file.service.<a href="src/seed/file/service/client.py">get_file</a>(...) -> File</code></summary>
+## FileService
+<details><summary><code>client.file_service.<a href="src/seed/file_service/client.py">file_service_get_file</a>(...) -> File</code></summary>
 <dl>
 <dd>
 
@@ -205,17 +205,16 @@ This endpoint returns a file by its name.
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
-client.file.service.get_file(
-    filename="file.txt",
-    x_file_api_version="0.0.2",
+client.file_service.file_service_get_file(
+    filename="filename",
 )
 
 ```
@@ -252,8 +251,8 @@ client.file.service.get_file(
 </dl>
 </details>
 
-## Health Service
-<details><summary><code>client.health.service.<a href="src/seed/health/service/client.py">check</a>(...)</code></summary>
+## HealthService
+<details><summary><code>client.health_service.<a href="src/seed/health_service/client.py">health_service_check</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -280,16 +279,16 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
-client.health.service.check(
-    id="id-2sdx82h",
+client.health_service.health_service_check(
+    id="id",
 )
 
 ```
@@ -326,7 +325,7 @@ client.health.service.check(
 </dl>
 </details>
 
-<details><summary><code>client.health.service.<a href="src/seed/health/service/client.py">ping</a>() -> bool</code></summary>
+<details><summary><code>client.health_service.<a href="src/seed/health_service/client.py">health_service_ping</a>() -> bool</code></summary>
 <dl>
 <dd>
 
@@ -353,15 +352,15 @@ This endpoint checks the health of the service.
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
-client.health.service.ping()
+client.health_service.health_service_ping()
 
 ```
 </dd>
@@ -390,7 +389,7 @@ client.health.service.ping()
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie</a>(...) -> Movie</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">getmovie</a>(...) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -403,16 +402,16 @@ client.health.service.ping()
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
-client.service.get_movie(
-    movie_id="movie-c06a4ad7",
+client.service.getmovie(
+    movie_id="movieId",
 )
 
 ```
@@ -449,7 +448,7 @@ client.service.get_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">create_movie</a>(...) -> MovieId</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">createmovie</a>(...) -> MovieId</code></summary>
 <dl>
 <dd>
 
@@ -462,25 +461,23 @@ client.service.get_movie(
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
-client.service.create_movie(
-    id="movie-c06a4ad7",
-    prequel="movie-cv9b914f",
-    title="The Boy and the Heron",
-    from_="Hayao Miyazaki",
-    rating=8,
-    tag="tag-wf9as23d",
+client.service.createmovie(
+    id="id",
+    title="title",
+    from_="from",
+    rating=1.1,
+    type="movie",
+    tag="tag",
     metadata={
-        "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-        "releaseDate": "2023-12-08",
-        "ratings": {"rottenTomatoes": 97, "imdb": 7.6}
+        "key": "value"
     },
     revenue=1000000,
 )
@@ -519,7 +516,7 @@ client.service.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_metadata</a>(...) -> Metadata</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">getmetadata</a>(...) -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -532,20 +529,16 @@ client.service.create_movie(
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
-client.service.get_metadata(
-    shallow=False,
-    tag=[
-        "development"
-    ],
-    x_api_version="0.0.1",
+client.service.getmetadata(
+    api_version="X-API-Version",
 )
 
 ```
@@ -562,7 +555,7 @@ client.service.get_metadata(
 <dl>
 <dd>
 
-**x_api_version:** `str` 
+**api_version:** `str` 
     
 </dd>
 </dl>
@@ -578,7 +571,7 @@ client.service.get_metadata(
 <dl>
 <dd>
 
-**tag:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**tag:** `typing.Optional[typing.Union[typing.Optional[str], typing.Sequence[typing.Optional[str]]]]` 
     
 </dd>
 </dl>
@@ -598,7 +591,7 @@ client.service.get_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">create_big_entity</a>(...) -> Response</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">createbigentity</a>(...) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -611,219 +604,15 @@ client.service.get_metadata(
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
-from seed.types import Actor, ExtendedMovie, Entity, Metadata_Html, Migration, Exception_Generic, Test_And, Node, Tree, Directory, File, Moment
-from seed.commons.types import Metadata, EventInfo_Metadata, Data_String
-import uuid
-import datetime
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
-client.service.create_big_entity(
-    cast_member=Actor(
-        name="name",
-        id="id",
-    ),
-    extended_movie=ExtendedMovie(
-        cast=[
-            "cast",
-            "cast"
-        ],
-        id="id",
-        prequel="prequel",
-        title="title",
-        from_="from",
-        rating=1.1,
-        type="movie",
-        tag="tag",
-        book="book",
-        metadata={
-            "metadata": {"key": "value"}
-        },
-        revenue=1000000,
-    ),
-    entity=Entity(
-        type="primitive",
-        name="name",
-    ),
-    metadata=Metadata_Html(
-        extra={
-            "extra": "extra"
-        },
-        tags=[
-            "tags"
-        ],
-        html=,
-    ),
-    common_metadata=Metadata(
-        id="id",
-        data={
-            "data": "data"
-        },
-        json_string="jsonString",
-    ),
-    event_info=EventInfo_Metadata(
-        id="id",
-        data={
-            "data": "data"
-        },
-        json_string="jsonString",
-    ),
-    data=Data_String(
-        string=,
-    ),
-    migration=Migration(
-        name="name",
-        status="RUNNING",
-    ),
-    exception=Exception_Generic(
-        exception_type="exceptionType",
-        exception_message="exceptionMessage",
-        exception_stacktrace="exceptionStacktrace",
-    ),
-    test=Test_And(
-        and_=,
-    ),
-    node=Node(
-        name="name",
-        nodes=[
-            Node(
-                name="name",
-                nodes=[
-                    Node(
-                        name="name",
-                    ),
-                    Node(
-                        name="name",
-                    )
-                ],
-                trees=[
-                    Tree(
-                        nodes=[],
-                    ),
-                    Tree(
-                        nodes=[],
-                    )
-                ],
-            ),
-            Node(
-                name="name",
-                nodes=[
-                    Node(
-                        name="name",
-                    ),
-                    Node(
-                        name="name",
-                    )
-                ],
-                trees=[
-                    Tree(
-                        nodes=[],
-                    ),
-                    Tree(
-                        nodes=[],
-                    )
-                ],
-            )
-        ],
-        trees=[
-            Tree(
-                nodes=[
-                    Node(
-                        name="name",
-                        nodes=[],
-                        trees=[],
-                    ),
-                    Node(
-                        name="name",
-                        nodes=[],
-                        trees=[],
-                    )
-                ],
-            ),
-            Tree(
-                nodes=[
-                    Node(
-                        name="name",
-                        nodes=[],
-                        trees=[],
-                    ),
-                    Node(
-                        name="name",
-                        nodes=[],
-                        trees=[],
-                    )
-                ],
-            )
-        ],
-    ),
-    directory=Directory(
-        name="name",
-        files=[
-            File(
-                name="name",
-                contents="contents",
-            ),
-            File(
-                name="name",
-                contents="contents",
-            )
-        ],
-        directories=[
-            Directory(
-                name="name",
-                files=[
-                    File(
-                        name="name",
-                        contents="contents",
-                    ),
-                    File(
-                        name="name",
-                        contents="contents",
-                    )
-                ],
-                directories=[
-                    Directory(
-                        name="name",
-                    ),
-                    Directory(
-                        name="name",
-                    )
-                ],
-            ),
-            Directory(
-                name="name",
-                files=[
-                    File(
-                        name="name",
-                        contents="contents",
-                    ),
-                    File(
-                        name="name",
-                        contents="contents",
-                    )
-                ],
-                directories=[
-                    Directory(
-                        name="name",
-                    ),
-                    Directory(
-                        name="name",
-                    )
-                ],
-            )
-        ],
-    ),
-    moment=Moment(
-        id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        date=datetime.date.fromisoformat("2023-01-15"),
-        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    ),
-)
+client.service.createbigentity()
 
 ```
 </dd>
@@ -839,7 +628,103 @@ client.service.create_big_entity(
 <dl>
 <dd>
 
-**request:** `BigEntity` 
+**cast_member:** `typing.Optional[CastMember]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extended_movie:** `typing.Optional[ExtendedMovie]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entity:** `typing.Optional[Entity]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `typing.Optional[Metadata]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**common_metadata:** `typing.Optional[CommonsMetadata]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_info:** `typing.Optional[CommonsEventInfo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**data:** `typing.Optional[CommonsData]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**migration:** `typing.Optional[Migration]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exception:** `typing.Optional[Exception]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**test:** `typing.Optional[Test]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**node:** `typing.Optional[Node]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**directory:** `typing.Optional[Directory]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moment:** `typing.Optional[Moment]` 
     
 </dd>
 </dl>
@@ -859,7 +744,7 @@ client.service.create_big_entity(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">refresh_token</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">refreshtoken</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -872,15 +757,17 @@ client.service.create_big_entity(
 <dd>
 
 ```python
-from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
+from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedExamples(
+client = SeedApi(
     token="<token>",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    environment=SeedApiEnvironment.PRODUCTION,
 )
 
-client.service.refresh_token()
+client.service.refreshtoken(
+    ttl=1,
+)
 
 ```
 </dd>
@@ -896,7 +783,7 @@ client.service.refresh_token()
 <dl>
 <dd>
 
-**request:** `typing.Optional[RefreshTokenRequest]` 
+**ttl:** `int` 
     
 </dd>
 </dl>

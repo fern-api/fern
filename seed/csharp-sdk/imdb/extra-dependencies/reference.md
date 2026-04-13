@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">CreateMovieAsync</a>(CreateMovieRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
+<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">CreatemovieAsync</a>(CreateMovieRequest { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```csharp
-await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
+await client.Imdb.CreatemovieAsync(new CreateMovieRequest { Title = "title", Rating = 1.1 });
 ```
 </dd>
 </dl>
@@ -54,7 +54,7 @@ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rat
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">GetMovieAsync</a>(movieId) -> WithRawResponseTask&lt;Movie&gt;</code></summary>
+<details><summary><code>client.Imdb.<a href="/src/SeedApi/Imdb/ImdbClient.cs">GetmovieAsync</a>(ImdbGetMovieRequest { ... }) -> WithRawResponseTask&lt;Movie&gt;</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "title", Rat
 <dd>
 
 ```csharp
-await client.Imdb.GetMovieAsync("movieId");
+await client.Imdb.GetmovieAsync(new ImdbGetMovieRequest { MovieId = "movieId" });
 ```
 </dd>
 </dl>
@@ -82,7 +82,7 @@ await client.Imdb.GetMovieAsync("movieId");
 <dl>
 <dd>
 
-**movieId:** `string` 
+**request:** `ImdbGetMovieRequest` 
     
 </dd>
 </dl>

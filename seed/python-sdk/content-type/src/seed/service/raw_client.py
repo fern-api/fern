@@ -47,7 +47,7 @@ class RawServiceClient:
                 "require_auth": require_auth,
             },
             headers={
-                "content-type": "application/merge-patch+json",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -64,7 +64,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def patch_complex(
+    def patchcomplex(
         self,
         id: str,
         *,
@@ -133,7 +133,7 @@ class RawServiceClient:
                 "settings": settings,
             },
             headers={
-                "content-type": "application/merge-patch+json",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -150,7 +150,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def named_patch_with_mixed(
+    def namedpatchwithmixed(
         self,
         id: str,
         *,
@@ -189,7 +189,7 @@ class RawServiceClient:
                 "active": active,
             },
             headers={
-                "content-type": "application/merge-patch+json",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -206,7 +206,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def optional_merge_patch_test(
+    def optionalmergepatchtest(
         self,
         *,
         required_field: str,
@@ -252,7 +252,7 @@ class RawServiceClient:
                 "nullableString": nullable_string,
             },
             headers={
-                "content-type": "application/merge-patch+json",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -269,7 +269,7 @@ class RawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def regular_patch(
+    def regularpatch(
         self,
         id: str,
         *,
@@ -301,6 +301,9 @@ class RawServiceClient:
             json={
                 "field1": field1,
                 "field2": field2,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -350,7 +353,7 @@ class AsyncRawServiceClient:
                 "require_auth": require_auth,
             },
             headers={
-                "content-type": "application/merge-patch+json",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -367,7 +370,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def patch_complex(
+    async def patchcomplex(
         self,
         id: str,
         *,
@@ -436,7 +439,7 @@ class AsyncRawServiceClient:
                 "settings": settings,
             },
             headers={
-                "content-type": "application/merge-patch+json",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -453,7 +456,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def named_patch_with_mixed(
+    async def namedpatchwithmixed(
         self,
         id: str,
         *,
@@ -492,7 +495,7 @@ class AsyncRawServiceClient:
                 "active": active,
             },
             headers={
-                "content-type": "application/merge-patch+json",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -509,7 +512,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def optional_merge_patch_test(
+    async def optionalmergepatchtest(
         self,
         *,
         required_field: str,
@@ -555,7 +558,7 @@ class AsyncRawServiceClient:
                 "nullableString": nullable_string,
             },
             headers={
-                "content-type": "application/merge-patch+json",
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -572,7 +575,7 @@ class AsyncRawServiceClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def regular_patch(
+    async def regularpatch(
         self,
         id: str,
         *,
@@ -604,6 +607,9 @@ class AsyncRawServiceClient:
             json={
                 "field1": field1,
                 "field2": field2,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

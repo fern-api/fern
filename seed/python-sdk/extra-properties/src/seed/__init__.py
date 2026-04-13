@@ -6,19 +6,22 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Failure
+    from .types import Failure, FailureStatus, User
     from . import user
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
-    from .client import AsyncSeedExtraProperties, SeedExtraProperties
-    from .user import User
+    from .client import AsyncSeedApi, SeedApi
+    from .user import UserCreateUserRequestType, UserCreateUserRequestVersion
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedExtraProperties": ".client",
+    "AsyncSeedApi": ".client",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "Failure": ".types",
-    "SeedExtraProperties": ".client",
-    "User": ".user",
+    "FailureStatus": ".types",
+    "SeedApi": ".client",
+    "User": ".types",
+    "UserCreateUserRequestType": ".user",
+    "UserCreateUserRequestVersion": ".user",
     "__version__": ".version",
     "user": ".user",
 }
@@ -46,12 +49,15 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedExtraProperties",
+    "AsyncSeedApi",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "Failure",
-    "SeedExtraProperties",
+    "FailureStatus",
+    "SeedApi",
     "User",
+    "UserCreateUserRequestType",
+    "UserCreateUserRequestVersion",
     "__version__",
     "user",
 ]

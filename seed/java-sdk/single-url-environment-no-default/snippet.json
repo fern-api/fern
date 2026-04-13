@@ -1,16 +1,29 @@
 {
     "endpoints": [
         {
+            "example_identifier": "23d7767",
+            "id": {
+                "method": "GET",
+                "path": "/dummy",
+                "identifier_override": "endpoint_dummy.getdummy"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.dummy().getdummy();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.dummy().getdummy();\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "34d92e75",
             "id": {
                 "method": "GET",
                 "path": "/dummy",
-                "identifier_override": "endpoint_dummy.getDummy"
+                "identifier_override": "endpoint_dummy.getdummy"
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.singleUrlEnvironmentNoDefault.SeedSingleUrlEnvironmentNoDefaultClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedSingleUrlEnvironmentNoDefaultClient client = SeedSingleUrlEnvironmentNoDefaultClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.dummy().getDummy();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.singleUrlEnvironmentNoDefault.SeedSingleUrlEnvironmentNoDefaultClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedSingleUrlEnvironmentNoDefaultClient client = SeedSingleUrlEnvironmentNoDefaultClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.dummy().getDummy();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.dummy().getdummy();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.dummy().getdummy();\n    }\n}\n"
             }
         }
     ],

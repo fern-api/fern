@@ -7,7 +7,7 @@ import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedRequestParameters from "../../../index.js";
+import type * as SeedApi from "../../../index.js";
 
 export declare namespace UserClient {
     export type Options = BaseClientOptions;
@@ -23,38 +23,38 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedRequestParameters.CreateUsernameRequest} request
+     * @param {SeedApi.UserCreateUsernameRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.createUsername({
-     *         tags: ["tags", "tags"],
+     *     await client.user.createusername({
+     *         tags: "tags",
      *         username: "username",
      *         password: "password",
-     *         name: "test"
+     *         name: "name"
      *     })
      */
-    public createUsername(
-        request: SeedRequestParameters.CreateUsernameRequest,
+    public createusername(
+        request: SeedApi.UserCreateUsernameRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__createUsername(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__createusername(request, requestOptions));
     }
 
-    private async __createUsername(
-        request: SeedRequestParameters.CreateUsernameRequest,
+    private async __createusername(
+        request: SeedApi.UserCreateUsernameRequest,
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
         const _queryParams: Record<string, unknown> = {
-            tags: toJson(tags),
+            tags,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/user/username",
+                "user/username",
             ),
             method: "POST",
             headers: _headers,
@@ -73,7 +73,7 @@ export class UserClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedRequestParametersError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -84,38 +84,38 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedRequestParameters.CreateUsernameReferencedRequest} request
+     * @param {SeedApi.CreateUsernameBody} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.createUsernameWithReferencedType({
-     *         tags: ["tags", "tags"],
+     *     await client.user.createusernamewithreferencedtype({
+     *         tags: "tags",
      *         username: "username",
      *         password: "password",
-     *         name: "test"
+     *         name: "name"
      *     })
      */
-    public createUsernameWithReferencedType(
-        request: SeedRequestParameters.CreateUsernameReferencedRequest,
+    public createusernamewithreferencedtype(
+        request: SeedApi.CreateUsernameBody,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__createUsernameWithReferencedType(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__createusernamewithreferencedtype(request, requestOptions));
     }
 
-    private async __createUsernameWithReferencedType(
-        request: SeedRequestParameters.CreateUsernameReferencedRequest,
+    private async __createusernamewithreferencedtype(
+        request: SeedApi.CreateUsernameBody,
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
         const _queryParams: Record<string, unknown> = {
-            tags: toJson(tags),
+            tags,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/user/username-referenced",
+                "user/username-referenced",
             ),
             method: "POST",
             headers: _headers,
@@ -134,7 +134,7 @@ export class UserClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedRequestParametersError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -145,21 +145,21 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedRequestParameters.CreateUsernameBodyOptionalProperties | null} request
+     * @param {SeedApi.CreateUsernameBodyOptionalProperties} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.createUsernameOptional()
+     *     await client.user.createusernameoptional()
      */
-    public createUsernameOptional(
-        request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null,
+    public createusernameoptional(
+        request: SeedApi.CreateUsernameBodyOptionalProperties = {},
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__createUsernameOptional(request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__createusernameoptional(request, requestOptions));
     }
 
-    private async __createUsernameOptional(
-        request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null,
+    private async __createusernameoptional(
+        request: SeedApi.CreateUsernameBodyOptionalProperties = {},
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -167,7 +167,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/user/username-optional",
+                "user/username-optional",
             ),
             method: "POST",
             headers: _headers,
@@ -186,7 +186,7 @@ export class UserClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedRequestParametersError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,
@@ -197,27 +197,24 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedRequestParameters.GetUsersRequest} request
+     * @param {SeedApi.UserGetUsernameRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.user.getUsername({
+     *     await client.user.getusername({
      *         limit: 1,
-     *         id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         id: "id",
      *         date: "2023-01-15",
      *         deadline: "2024-01-15T09:30:00Z",
-     *         bytes: "SGVsbG8gd29ybGQh",
+     *         bytes: "bytes",
      *         user: {
      *             name: "name",
      *             tags: ["tags", "tags"]
      *         },
-     *         userList: [{
-     *                 name: "name",
-     *                 tags: ["tags", "tags"]
-     *             }, {
-     *                 name: "name",
-     *                 tags: ["tags", "tags"]
-     *             }],
+     *         userList: {
+     *             name: "name",
+     *             tags: ["tags", "tags"]
+     *         },
      *         optionalDeadline: "2024-01-15T09:30:00Z",
      *         keyValue: {
      *             "keyValue": "keyValue"
@@ -240,20 +237,20 @@ export class UserClient {
      *         },
      *         filter: "filter",
      *         longParam: 1000000,
-     *         bigIntParam: "1000000"
+     *         bigIntParam: 1
      *     })
      */
-    public getUsername(
-        request: SeedRequestParameters.GetUsersRequest,
+    public getusername(
+        request: SeedApi.UserGetUsernameRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedRequestParameters.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
+    ): core.HttpResponsePromise<SeedApi.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getusername(request, requestOptions));
     }
 
-    private async __getUsername(
-        request: SeedRequestParameters.GetUsersRequest,
+    private async __getusername(
+        request: SeedApi.UserGetUsernameRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedRequestParameters.User>> {
+    ): Promise<core.WithRawResponse<SeedApi.User>> {
         const {
             limit,
             id,
@@ -279,8 +276,8 @@ export class UserClient {
             deadline,
             bytes,
             user,
-            userList: toJson(userList),
-            optionalDeadline: optionalDeadline != null ? optionalDeadline : undefined,
+            userList,
+            optionalDeadline: optionalDeadline !== undefined ? optionalDeadline : undefined,
             keyValue: toJson(keyValue),
             optionalString,
             nestedUser,
@@ -295,7 +292,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "/user",
+                "user",
             ),
             method: "GET",
             headers: _headers,
@@ -307,11 +304,11 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedRequestParameters.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedRequestParametersError({
+            throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
                 rawResponse: _response.rawResponse,

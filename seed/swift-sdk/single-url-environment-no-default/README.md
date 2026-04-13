@@ -49,12 +49,12 @@ Instantiate and use the client with the following:
 
 ```swift
 import Foundation
-import SingleUrlEnvironmentNoDefault
+import Api
 
 private func main() async throws {
-    let client = SingleUrlEnvironmentNoDefaultClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.dummy.getDummy()
+    _ = try await client.dummy.getdummy()
 }
 
 try await main()
@@ -65,9 +65,9 @@ try await main()
 This SDK allows you to configure different environments for API requests.
 
 ```swift
-import SingleUrlEnvironmentNoDefault
+import Api
 
-let client = SingleUrlEnvironmentNoDefaultClient(
+let client = ApiClient(
     ...,
     environment: .production
 )
@@ -78,14 +78,14 @@ let client = SingleUrlEnvironmentNoDefaultClient(
 The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
 
 ```swift
-import SingleUrlEnvironmentNoDefault
+import Api
 
-let client = SingleUrlEnvironmentNoDefaultClient(...)
+let client = ApiClient(...)
 
 do {
-    let response = try await client.dummy.getDummy(...)
+    let response = try await client.dummy.getdummy(...)
     // Handle successful response
-} catch let error as SingleUrlEnvironmentNoDefaultError {
+} catch let error as ApiError {
     switch error {
     case .httpError(let httpError):
         print("Status code:", httpError.statusCode)
@@ -110,7 +110,7 @@ do {
 If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
 
 ```swift
-try await client.dummy.getDummy(..., requestOptions: .init(
+try await client.dummy.getdummy(..., requestOptions: .init(
     additionalHeaders: [
         "X-Custom-Header": "custom value"
     ]
@@ -122,7 +122,7 @@ try await client.dummy.getDummy(..., requestOptions: .init(
 If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
 
 ```swift
-try await client.dummy.getDummy(..., requestOptions: .init(
+try await client.dummy.getdummy(..., requestOptions: .init(
     additionalQueryParameters: [
         "custom_query_param_key": "custom_query_param_value"
     ]
@@ -134,7 +134,7 @@ try await client.dummy.getDummy(..., requestOptions: .init(
 The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
 
 ```swift
-try await client.dummy.getDummy(..., requestOptions: .init(
+try await client.dummy.getdummy(..., requestOptions: .init(
     timeout: 30
 ))
 ```
@@ -145,9 +145,9 @@ The SDK allows you to customize the underlying `URLSession` used for HTTP reques
 
 ```swift
 import Foundation
-import SingleUrlEnvironmentNoDefault
+import Api
 
-let client = SingleUrlEnvironmentNoDefaultClient(
+let client = ApiClient(
     ...,
     urlSession: // Provide your implementation here
 )

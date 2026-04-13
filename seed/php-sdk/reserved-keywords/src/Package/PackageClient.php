@@ -4,7 +4,7 @@ namespace Seed\Package;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Package\Requests\TestRequest;
+use Seed\Package\Requests\PackageTestRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -48,7 +48,7 @@ class PackageClient
     }
 
     /**
-     * @param TestRequest $request
+     * @param PackageTestRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -60,7 +60,7 @@ class PackageClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function test(TestRequest $request, ?array $options = null): void
+    public function test(PackageTestRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];

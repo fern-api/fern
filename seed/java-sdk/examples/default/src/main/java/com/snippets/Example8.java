@@ -1,14 +1,14 @@
 package com.snippets;
 
-import com.seed.examples.SeedExamplesClient;
+import com.seed.api.SeedApiClient;
 
 public class Example8 {
     public static void main(String[] args) {
-        SeedExamplesClient client = SeedExamplesClient.builder()
+        SeedApiClient client = SeedApiClient.builder()
                 .token("<token>")
                 .url("https://api.fern.com")
                 .build();
 
-        client.health().service().check("id-2sdx82h");
+        client.healthService().healthServicePing();
     }
 }

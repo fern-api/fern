@@ -1,6 +1,6 @@
-//! # Api SDK
+//! # folders SDK
 //!
-//! The official Rust SDK for the Api.
+//! The official Rust SDK for the folders.
 //!
 //! ## Getting Started
 //!
@@ -13,7 +13,7 @@
 //!         ..Default::default()
 //!     };
 //!     let client = ApiClient::new(config).expect("Failed to build client");
-//!     client.foo(None).await;
+//!     client.ab.a_b_foo(None).await;
 //! }
 //! ```
 //!

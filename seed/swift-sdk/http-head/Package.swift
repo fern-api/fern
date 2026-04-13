@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "HttpHead",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "HttpHead",
-            targets: ["HttpHead"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "HttpHead",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "HttpHeadTests",
-            dependencies: ["HttpHead"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

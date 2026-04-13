@@ -3,6 +3,7 @@ package example
 import (
     context "context"
 
+    pleaseinhere "github.com/examples/fern/pleaseinhere"
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
 )
@@ -16,7 +17,28 @@ func do() {
             "<token>",
         ),
     )
-    client.Health.Service.Ping(
+    request := &pleaseinhere.Movie{
+        ID: "id",
+        Prequel: pleaseinhere.String(
+            "prequel",
+        ),
+        Title: "title",
+        From: "from",
+        Rating: 1.1,
+        Type: pleaseinhere.MovieTypeMovie,
+        Tag: "tag",
+        Book: pleaseinhere.String(
+            "book",
+        ),
+        Metadata: map[string]any{
+            "metadata": map[string]any{
+                "key": "value",
+            },
+        },
+        Revenue: int64(1000000),
+    }
+    client.Service.Createmovie(
         context.TODO(),
+        request,
     )
 }

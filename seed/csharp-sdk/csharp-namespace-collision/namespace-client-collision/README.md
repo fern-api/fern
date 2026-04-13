@@ -18,6 +18,7 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
   - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
   - [Additional Query Parameters](#additional-query-parameters)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -39,11 +40,11 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-
+using global::Contoso.Net;
 
 var client = new global::Contoso.Net.Contoso();
-await client.CreateUserAsync(
-    new global::Contoso.Net.User
+await client._.CreateUserAsync(
+    new User
     {
         Id = "id",
         Name = "name",
@@ -62,7 +63,7 @@ will be thrown.
 using Contoso.Net;
 
 try {
-    var response = await client.CreateUserAsync(...);
+    var response = await client._.CreateUserAsync(...);
 } catch (ContosoApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -86,7 +87,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.CreateUserAsync(
+var response = await client._.CreateUserAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -99,7 +100,7 @@ var response = await client.CreateUserAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.CreateUserAsync(
+var response = await client._.CreateUserAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -115,7 +116,7 @@ Access raw HTTP response data (status code, headers, URL) alongside parsed respo
 using Contoso.Net;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.CreateUserAsync(...).WithRawResponse();
+var result = await client._.CreateUserAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -132,7 +133,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.CreateUserAsync(...);
+var data = await client._.CreateUserAsync(...);
 ```
 
 ### Additional Headers
@@ -140,7 +141,7 @@ var data = await client.CreateUserAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.CreateUserAsync(
+var response = await client._.CreateUserAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -156,7 +157,7 @@ var response = await client.CreateUserAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.CreateUserAsync(
+var response = await client._.CreateUserAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>
@@ -165,6 +166,35 @@ var response = await client.CreateUserAsync(
         }
     }
 );
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
+
+```csharp
+using Contoso.Net;
+
+// Using a built-in value
+var systemUserCountry = SystemUserCountry.Usa;
+
+// Using a custom value
+var customSystemUserCountry = SystemUserCountry.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (systemUserCountry.Value)
+{
+    case SystemUserCountry.Values.Usa:
+        Console.WriteLine("Usa");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {systemUserCountry.Value}");
+        break;
+}
+
+// Explicit casting
+string systemUserCountryString = (string)SystemUserCountry.Usa;
+SystemUserCountry systemUserCountryFromString = (SystemUserCountry)"USA";
 ```
 
 ## Contributing

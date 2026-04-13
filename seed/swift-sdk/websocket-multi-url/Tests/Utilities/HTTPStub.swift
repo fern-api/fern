@@ -1,4 +1,4 @@
-import WebsocketMultiUrl
+import Api
 import Foundation
 
 final class HTTPStub {

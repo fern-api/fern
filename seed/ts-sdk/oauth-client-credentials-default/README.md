@@ -10,7 +10,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Authentication](#authentication)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -41,43 +40,13 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedOauthClientCredentialsDefaultClient } from "@fern/oauth-client-credentials-default";
+import { SeedApiClient } from "@fern/oauth-client-credentials-default";
 
-const client = new SeedOauthClientCredentialsDefaultClient({ environment: "YOUR_BASE_URL", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" });
-await client.auth.getToken({
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.auth.gettoken({
     client_id: "client_id",
-    client_secret: "client_secret"
-});
-```
-
-## Authentication
-
-The SDK supports OAuth authentication with two options:
-
-**Option 1: OAuth Client Credentials Flow**
-
-Use this when you want the SDK to automatically handle OAuth token retrieval and refreshing:
-
-```typescript
-import { SeedOauthClientCredentialsDefaultClient } from "@fern/oauth-client-credentials-default";
-
-const client = new SeedOauthClientCredentialsDefaultClient({
-    clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET",
-    ...
-});
-```
-
-**Option 2: Token Override**
-
-Use this when you already have a valid bearer token and want to skip the OAuth flow:
-
-```typescript
-import { SeedOauthClientCredentialsDefaultClient } from "@fern/oauth-client-credentials-default";
-
-const client = new SeedOauthClientCredentialsDefaultClient({
-    token: "my-pre-generated-bearer-token",
-    ...
+    client_secret: "client_secret",
+    grant_type: "client_credentials"
 });
 ```
 
@@ -87,9 +56,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedOauthClientCredentialsDefault } from "@fern/oauth-client-credentials-default";
+import { SeedApi } from "@fern/oauth-client-credentials-default";
 
-const request: SeedOauthClientCredentialsDefault.GetTokenRequest = {
+const request: SeedApi.AuthGetTokenRequest = {
     ...
 };
 ```
@@ -100,12 +69,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedOauthClientCredentialsDefaultError } from "@fern/oauth-client-credentials-default";
+import { SeedApiError } from "@fern/oauth-client-credentials-default";
 
 try {
-    await client.auth.getToken(...);
+    await client.auth.gettoken(...);
 } catch (err) {
-    if (err instanceof SeedOauthClientCredentialsDefaultError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -131,16 +100,16 @@ const client = new AuthClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedOauthClientCredentialsDefaultClient } from "@fern/oauth-client-credentials-default";
+import { SeedApiClient } from "@fern/oauth-client-credentials-default";
 
-const client = new SeedOauthClientCredentialsDefaultClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.auth.getToken(..., {
+const response = await client.auth.gettoken(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -152,7 +121,7 @@ const response = await client.auth.getToken(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.auth.getToken(..., {
+const response = await client.auth.gettoken(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -174,7 +143,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.auth.getToken(..., {
+const response = await client.auth.gettoken(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -184,7 +153,7 @@ const response = await client.auth.getToken(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.auth.getToken(..., {
+const response = await client.auth.gettoken(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -195,7 +164,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.auth.getToken(..., {
+const response = await client.auth.gettoken(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -207,7 +176,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.auth.getToken(...).withRawResponse();
+const { data, rawResponse } = await client.auth.gettoken(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -218,9 +187,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedOauthClientCredentialsDefaultClient, logging } from "@fern/oauth-client-credentials-default";
+import { SeedApiClient, logging } from "@fern/oauth-client-credentials-default";
 
-const client = new SeedOauthClientCredentialsDefaultClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

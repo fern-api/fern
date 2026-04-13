@@ -3,7 +3,8 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Types\Types\UnionWithTime;
+use Seed\Types\UnionWithTime;
+use Seed\Types\UnionWithTimeValue;
 
 $client = new SeedClient(
     options: [
@@ -11,5 +12,5 @@ $client = new SeedClient(
     ],
 );
 $client->types->update(
-    UnionWithTime::value(),
+    UnionWithTime::value(new UnionWithTimeValue([])),
 );

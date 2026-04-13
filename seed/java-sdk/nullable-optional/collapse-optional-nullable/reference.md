@@ -1,6 +1,6 @@
 # Reference
-## NullableOptional
-<details><summary><code>client.nullableOptional.getUser(userId) -> UserResponse</code></summary>
+## Nullableoptional
+<details><summary><code>client.nullableoptional.getuser(userId) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,12 @@ Get a user by ID
 <dd>
 
 ```java
-client.nullableOptional().getUser("userId");
+client.nullableoptional().getuser(
+    "userId",
+    NullableOptionalGetUserRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -54,84 +59,7 @@ client.nullableOptional().getUser("userId");
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.createUser(request) -> UserResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new user
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.nullableOptional().createUser(
-    CreateUserRequest
-        .builder()
-        .username("username")
-        .address(
-            OptionalNullable.of(
-                Address
-                    .builder()
-                    .street("street")
-                    .zipCode("zipCode")
-                    .country(
-                        OptionalNullable.of("country")
-                    )
-                    .city("city")
-                    .state("state")
-                    .buildingId("buildingId")
-                    .tenantId("tenantId")
-                    .build()
-            )
-        )
-        .email("email")
-        .phone("phone")
-        .build()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `CreateUserRequest` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.nullableOptional.updateUser(userId, request) -> UserResponse</code></summary>
+<details><summary><code>client.nullableoptional.updateuser(userId, request) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -158,31 +86,10 @@ Update a user (partial update)
 <dd>
 
 ```java
-client.nullableOptional().updateUser(
+client.nullableoptional().updateuser(
     "userId",
     UpdateUserRequest
         .builder()
-        .email(
-            OptionalNullable.of("email")
-        )
-        .address(
-            OptionalNullable.of(
-                Address
-                    .builder()
-                    .street("street")
-                    .zipCode("zipCode")
-                    .country(
-                        OptionalNullable.of("country")
-                    )
-                    .city("city")
-                    .state("state")
-                    .buildingId("buildingId")
-                    .tenantId("tenantId")
-                    .build()
-            )
-        )
-        .username("username")
-        .phone("phone")
         .build()
 );
 ```
@@ -207,7 +114,31 @@ client.nullableOptional().updateUser(
 <dl>
 <dd>
 
-**request:** `UpdateUserRequest` 
+**username:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**address:** `Optional<Address>` 
     
 </dd>
 </dl>
@@ -219,7 +150,7 @@ client.nullableOptional().updateUser(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.listUsers() -> List&amp;lt;UserResponse&amp;gt;</code></summary>
+<details><summary><code>client.nullableoptional.listusers() -> List&amp;lt;UserResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -246,15 +177,9 @@ List all users
 <dd>
 
 ```java
-client.nullableOptional().listUsers(
-    ListUsersRequest
+client.nullableoptional().listusers(
+    NullableOptionalListUsersRequest
         .builder()
-        .sortBy(
-            OptionalNullable.of("sortBy")
-        )
-        .limit(1)
-        .offset(1)
-        .includeDeleted(true)
         .build()
 );
 ```
@@ -307,7 +232,90 @@ client.nullableOptional().listUsers(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.searchUsers() -> List&amp;lt;UserResponse&amp;gt;</code></summary>
+<details><summary><code>client.nullableoptional.createuser(request) -> UserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new user
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.nullableoptional().createuser(
+    CreateUserRequest
+        .builder()
+        .username("username")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**username:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone:** `Optional<String>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**address:** `Optional<Address>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.nullableoptional.searchusers() -> List&amp;lt;UserResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -334,15 +342,11 @@ Search users
 <dd>
 
 ```java
-client.nullableOptional().searchUsers(
-    SearchUsersRequest
+client.nullableoptional().searchusers(
+    NullableOptionalSearchUsersRequest
         .builder()
         .query("query")
-        .isActive(
-            OptionalNullable.of(true)
-        )
         .department("department")
-        .role("role")
         .build()
 );
 ```
@@ -395,7 +399,7 @@ client.nullableOptional().searchUsers(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.createComplexProfile(request) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullableoptional.createcomplexprofile(request) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -422,170 +426,33 @@ Create a complex profile to test nullable enums and unions
 <dd>
 
 ```java
-client.nullableOptional().createComplexProfile(
+client.nullableoptional().createcomplexprofile(
     ComplexProfile
         .builder()
         .id("id")
-        .optionalNullableRole(
-            OptionalNullable.of(UserRole.ADMIN)
-        )
-        .optionalNullableStatus(
-            OptionalNullable.of(UserStatus.ACTIVE)
-        )
-        .optionalNullableNotification(
-            OptionalNullable.of(
-                NotificationMethod.email(
-                    EmailNotification
-                        .builder()
-                        .emailAddress("emailAddress")
-                        .subject("subject")
-                        .htmlContent("htmlContent")
-                        .build()
-                )
-            )
-        )
-        .optionalNullableArray(
-            OptionalNullable.of(
-                Arrays.asList("optionalNullableArray", "optionalNullableArray")
-            )
-        )
         .nullableRole(UserRole.ADMIN)
-        .optionalRole(UserRole.ADMIN)
         .nullableStatus(UserStatus.ACTIVE)
-        .optionalStatus(UserStatus.ACTIVE)
         .nullableNotification(
-            NotificationMethod.email(
-                EmailNotification
+            NotificationMethod.of(
+                NotificationMethodZero
                     .builder()
                     .emailAddress("emailAddress")
                     .subject("subject")
-                    .htmlContent("htmlContent")
-                    .build()
-            )
-        )
-        .optionalNotification(
-            NotificationMethod.email(
-                EmailNotification
-                    .builder()
-                    .emailAddress("emailAddress")
-                    .subject("subject")
-                    .htmlContent("htmlContent")
-                    .build()
-            )
-        )
-        .nullableSearchResult(
-            SearchResult.user(
-                UserResponse
-                    .builder()
-                    .id("id")
-                    .username("username")
-                    .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                    .email("email")
-                    .phone("phone")
-                    .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                    .address(
-                        Address
-                            .builder()
-                            .street("street")
-                            .zipCode("zipCode")
-                            .country(
-                                OptionalNullable.of("country")
-                            )
-                            .city("city")
-                            .state("state")
-                            .buildingId("buildingId")
-                            .tenantId("tenantId")
-                            .build()
-                    )
-                    .build()
-            )
-        )
-        .optionalSearchResult(
-            SearchResult.user(
-                UserResponse
-                    .builder()
-                    .id("id")
-                    .username("username")
-                    .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                    .email("email")
-                    .phone("phone")
-                    .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                    .address(
-                        Address
-                            .builder()
-                            .street("street")
-                            .zipCode("zipCode")
-                            .country(
-                                OptionalNullable.of("country")
-                            )
-                            .city("city")
-                            .state("state")
-                            .buildingId("buildingId")
-                            .tenantId("tenantId")
-                            .build()
-                    )
+                    .type(NotificationMethodZeroType.EMAIL)
                     .build()
             )
         )
         .nullableArray(
-            Optional.of(
-                Arrays.asList("nullableArray", "nullableArray")
-            )
-        )
-        .optionalArray(
-            Optional.of(
-                Arrays.asList("optionalArray", "optionalArray")
-            )
+            Nullable.ofNull()
         )
         .nullableListOfNullables(
-            Optional.of(
-                Arrays.asList(Optional.of("nullableListOfNullables"), Optional.of("nullableListOfNullables"))
-            )
+            Nullable.ofNull()
         )
         .nullableMapOfNullables(
-            new HashMap<String, Optional<Address>>() {{
-                put("nullableMapOfNullables", Optional.of(
-                    Address
-                        .builder()
-                        .street("street")
-                        .zipCode("zipCode")
-                        .country(
-                            OptionalNullable.of("country")
-                        )
-                        .city(Optional.of("city"))
-                        .state(Optional.of("state"))
-                        .buildingId(Optional.of("buildingId"))
-                        .tenantId(Optional.of("tenantId"))
-                        .build()
-                ));
-            }}
+            Nullable.ofNull()
         )
         .nullableListOfUnions(
-            Optional.of(
-                Arrays.asList(
-                    NotificationMethod.email(
-                        EmailNotification
-                            .builder()
-                            .emailAddress("emailAddress")
-                            .subject("subject")
-                            .htmlContent("htmlContent")
-                            .build()
-                    ),
-                    NotificationMethod.email(
-                        EmailNotification
-                            .builder()
-                            .emailAddress("emailAddress")
-                            .subject("subject")
-                            .htmlContent("htmlContent")
-                            .build()
-                    )
-                )
-            )
-        )
-        .optionalMapOfEnums(
-            new HashMap<String, UserRole>() {{
-                put("optionalMapOfEnums", UserRole.ADMIN);
-            }}
+            Nullable.ofNull()
         )
         .build()
 );
@@ -615,7 +482,7 @@ client.nullableOptional().createComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.getComplexProfile(profileId) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullableoptional.getcomplexprofile(profileId) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -642,7 +509,12 @@ Get a complex profile by ID
 <dd>
 
 ```java
-client.nullableOptional().getComplexProfile("profileId");
+client.nullableoptional().getcomplexprofile(
+    "profileId",
+    NullableOptionalGetComplexProfileRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -669,7 +541,7 @@ client.nullableOptional().getComplexProfile("profileId");
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.updateComplexProfile(profileId, request) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullableoptional.updatecomplexprofile(profileId, request) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -696,62 +568,10 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```java
-client.nullableOptional().updateComplexProfile(
+client.nullableoptional().updatecomplexprofile(
     "profileId",
-    UpdateComplexProfileRequest
+    NullableOptionalUpdateComplexProfileRequest
         .builder()
-        .nullableRole(
-            OptionalNullable.of(UserRole.ADMIN)
-        )
-        .nullableStatus(
-            OptionalNullable.of(UserStatus.ACTIVE)
-        )
-        .nullableNotification(
-            OptionalNullable.of(
-                NotificationMethod.email(
-                    EmailNotification
-                        .builder()
-                        .emailAddress("emailAddress")
-                        .subject("subject")
-                        .htmlContent("htmlContent")
-                        .build()
-                )
-            )
-        )
-        .nullableSearchResult(
-            OptionalNullable.of(
-                SearchResult.user(
-                    UserResponse
-                        .builder()
-                        .id("id")
-                        .username("username")
-                        .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .email("email")
-                        .phone("phone")
-                        .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                        .address(
-                            Address
-                                .builder()
-                                .street("street")
-                                .zipCode("zipCode")
-                                .country(
-                                    OptionalNullable.of("country")
-                                )
-                                .city("city")
-                                .state("state")
-                                .buildingId("buildingId")
-                                .tenantId("tenantId")
-                                .build()
-                        )
-                        .build()
-                )
-            )
-        )
-        .nullableArray(
-            OptionalNullable.of(
-                Arrays.asList("nullableArray", "nullableArray")
-            )
-        )
         .build()
 );
 ```
@@ -820,7 +640,7 @@ client.nullableOptional().updateComplexProfile(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.testDeserialization(request) -> DeserializationTestResponse</code></summary>
+<details><summary><code>client.nullableoptional.testdeserialization(request) -> DeserializationTestResponse</code></summary>
 <dl>
 <dd>
 
@@ -847,85 +667,38 @@ Test endpoint for validating null deserialization
 <dd>
 
 ```java
-client.nullableOptional().testDeserialization(
+client.nullableoptional().testdeserialization(
     DeserializationTestRequest
         .builder()
         .requiredString("requiredString")
-        .optionalNullableString(
-            OptionalNullable.of("optionalNullableString")
+        .nullableString(
+            Nullable.ofNull()
         )
-        .nullableString("nullableString")
-        .optionalString("optionalString")
         .nullableEnum(UserRole.ADMIN)
-        .optionalEnum(UserStatus.ACTIVE)
         .nullableUnion(
-            NotificationMethod.email(
-                EmailNotification
+            NotificationMethod.of(
+                NotificationMethodZero
                     .builder()
                     .emailAddress("emailAddress")
                     .subject("subject")
-                    .htmlContent("htmlContent")
-                    .build()
-            )
-        )
-        .optionalUnion(
-            SearchResult.user(
-                UserResponse
-                    .builder()
-                    .id("id")
-                    .username("username")
-                    .createdAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                    .email("email")
-                    .phone("phone")
-                    .updatedAt(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                    .address(
-                        Address
-                            .builder()
-                            .street("street")
-                            .zipCode("zipCode")
-                            .country(
-                                OptionalNullable.of("country")
-                            )
-                            .city("city")
-                            .state("state")
-                            .buildingId("buildingId")
-                            .tenantId("tenantId")
-                            .build()
-                    )
+                    .type(NotificationMethodZeroType.EMAIL)
                     .build()
             )
         )
         .nullableList(
-            Optional.of(
-                Arrays.asList("nullableList", "nullableList")
-            )
+            Nullable.ofNull()
         )
         .nullableMap(
-            new HashMap<String, Integer>() {{
-                put("nullableMap", 1);
-            }}
+            Nullable.ofNull()
         )
         .nullableObject(
             Address
                 .builder()
                 .street("street")
-                .zipCode("zipCode")
-                .country(
-                    OptionalNullable.of("country")
+                .city(
+                    Nullable.ofNull()
                 )
-                .city("city")
-                .state("state")
-                .buildingId("buildingId")
-                .tenantId("tenantId")
-                .build()
-        )
-        .optionalObject(
-            Organization
-                .builder()
-                .id("id")
-                .name("name")
-                .domain("domain")
-                .employeeCount(1)
+                .zipCode("zipCode")
                 .build()
         )
         .build()
@@ -956,7 +729,7 @@ client.nullableOptional().testDeserialization(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.filterByRole() -> List&amp;lt;UserResponse&amp;gt;</code></summary>
+<details><summary><code>client.nullableoptional.filterbyrole() -> List&amp;lt;UserResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -983,14 +756,10 @@ Filter users by role with nullable enum
 <dd>
 
 ```java
-client.nullableOptional().filterByRole(
-    FilterByRoleRequest
+client.nullableoptional().filterbyrole(
+    NullableOptionalFilterByRoleRequest
         .builder()
-        .secondaryRole(
-            OptionalNullable.of(UserRole.ADMIN)
-        )
         .role(UserRole.ADMIN)
-        .status(UserStatus.ACTIVE)
         .build()
 );
 ```
@@ -1007,7 +776,7 @@ client.nullableOptional().filterByRole(
 <dl>
 <dd>
 
-**role:** `Optional<UserRole>` 
+**role:** `UserRole` 
     
 </dd>
 </dl>
@@ -1035,7 +804,7 @@ client.nullableOptional().filterByRole(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.getNotificationSettings(userId) -> Optional&amp;lt;NotificationMethod&amp;gt;</code></summary>
+<details><summary><code>client.nullableoptional.getnotificationsettings(userId) -> NotificationMethod</code></summary>
 <dl>
 <dd>
 
@@ -1062,7 +831,12 @@ Get notification settings which may be null
 <dd>
 
 ```java
-client.nullableOptional().getNotificationSettings("userId");
+client.nullableoptional().getnotificationsettings(
+    "userId",
+    NullableOptionalGetNotificationSettingsRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>
@@ -1089,7 +863,7 @@ client.nullableOptional().getNotificationSettings("userId");
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.updateTags(userId, request) -> List&amp;lt;String&amp;gt;</code></summary>
+<details><summary><code>client.nullableoptional.updatetags(userId, request) -> List&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1116,25 +890,10 @@ Update tags to test array handling
 <dd>
 
 ```java
-client.nullableOptional().updateTags(
+client.nullableoptional().updatetags(
     "userId",
-    UpdateTagsRequest
+    NullableOptionalUpdateTagsRequest
         .builder()
-        .labels(
-            OptionalNullable.of(
-                Arrays.asList("labels", "labels")
-            )
-        )
-        .tags(
-            Optional.of(
-                Arrays.asList("tags", "tags")
-            )
-        )
-        .categories(
-            Optional.of(
-                Arrays.asList("categories", "categories")
-            )
-        )
         .build()
 );
 ```
@@ -1187,7 +946,7 @@ client.nullableOptional().updateTags(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.getSearchResults(request) -> Optional&amp;lt;List&amp;lt;SearchResult&amp;gt;&amp;gt;</code></summary>
+<details><summary><code>client.nullableoptional.getsearchresults(request) -> Optional&amp;lt;List&amp;lt;SearchResult&amp;gt;&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1214,20 +973,10 @@ Get search results with nullable unions
 <dd>
 
 ```java
-client.nullableOptional().getSearchResults(
-    SearchRequest
+client.nullableoptional().getsearchresults(
+    NullableOptionalGetSearchResultsRequest
         .builder()
         .query("query")
-        .includeTypes(
-            Optional.of(
-                Arrays.asList("includeTypes", "includeTypes")
-            )
-        )
-        .filters(
-            new HashMap<String, Optional<String>>() {{
-                put("filters", Optional.of("filters"));
-            }}
-        )
         .build()
 );
 ```

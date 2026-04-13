@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedBytesDownloadClient } from \"@fern/bytes-download\";\n\nconst client = new SeedBytesDownloadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.simple();\n"
+                "client": "import { SeedApiClient } from \"@fern/bytes-download\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.simple();\n"
             }
         }
     ],

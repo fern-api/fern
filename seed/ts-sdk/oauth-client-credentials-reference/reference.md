@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> SeedOauthClientCredentialsReference.TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">gettoken</a>({ ...params }) -> SeedApi.TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```typescript
-await client.auth.getToken({
+await client.auth.gettoken({
     client_id: "client_id",
     client_secret: "client_secret"
 });
@@ -32,7 +32,7 @@ await client.auth.getToken({
 <dl>
 <dd>
 
-**request:** `SeedOauthClientCredentialsReference.GetTokenRequest` 
+**request:** `SeedApi.GetTokenRequest` 
     
 </dd>
 </dl>
@@ -53,7 +53,7 @@ await client.auth.getToken({
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getSomething</a>() -> void</code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getsomething</a>() -> void</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ await client.auth.getToken({
 <dd>
 
 ```typescript
-await client.simple.getSomething();
+await client.simple.getsomething();
 
 ```
 </dd>

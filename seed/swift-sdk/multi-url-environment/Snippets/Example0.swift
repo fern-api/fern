@@ -1,10 +1,13 @@
 import Foundation
-import MultiUrlEnvironment
+import Api
 
 private func main() async throws {
-    let client = MultiUrlEnvironmentClient(token: "<token>")
+    let client = ApiClient(
+        baseURL: "https://api.fern.com",
+        token: "<token>"
+    )
 
-    _ = try await client.ec2.bootInstance(request: .init(size: "size"))
+    _ = try await client.ec2.bootinstance(request: .init(size: "size"))
 }
 
 try await main()

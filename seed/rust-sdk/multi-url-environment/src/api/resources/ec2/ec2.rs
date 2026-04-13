@@ -13,22 +13,15 @@ impl Ec2Client {
         })
     }
 
-    pub async fn boot_instance(
+    pub async fn bootinstance(
         &self,
-        request: &BootInstanceRequest,
+        request: &Ec2BootInstanceRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
-        let base_url = self
-            .http_client
-            .config()
-            .environment
-            .as_ref()
-            .map_or(self.http_client.base_url(), |env| env.ec2_url());
         self.http_client
-            .execute_request_with_base_url(
-                base_url,
+            .execute_request(
                 Method::POST,
-                "/ec2/boot",
+                "ec2/boot",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,

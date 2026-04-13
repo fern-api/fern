@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.Auth.<a href="/src/SeedInferredAuthImplicit/Auth/AuthClient.cs">GetTokenWithClientCredentialsAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedApi/Auth/AuthClient.cs">GettokenwithclientcredentialsAsync</a>(GetTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,13 @@
 <dd>
 
 ```csharp
-await client.Auth.GetTokenWithClientCredentialsAsync(
+await client.Auth.GettokenwithclientcredentialsAsync(
     new GetTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",
-        Audience = "https://api.example.com",
-        GrantType = "client_credentials",
-        Scope = "scope",
+        Audience = GetTokenRequestAudience.HttpsApiExampleCom,
+        GrantType = GetTokenRequestGrantType.ClientCredentials,
     }
 );
 ```
@@ -49,7 +48,7 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Auth.<a href="/src/SeedInferredAuthImplicit/Auth/AuthClient.cs">RefreshTokenAsync</a>(RefreshTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
+<details><summary><code>client.Auth.<a href="/src/SeedApi/Auth/AuthClient.cs">RefreshtokenAsync</a>(RefreshTokenRequest { ... }) -> WithRawResponseTask&lt;TokenResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -62,15 +61,14 @@ await client.Auth.GetTokenWithClientCredentialsAsync(
 <dd>
 
 ```csharp
-await client.Auth.RefreshTokenAsync(
+await client.Auth.RefreshtokenAsync(
     new RefreshTokenRequest
     {
         ClientId = "client_id",
         ClientSecret = "client_secret",
         RefreshToken = "refresh_token",
-        Audience = "https://api.example.com",
-        GrantType = "refresh_token",
-        Scope = "scope",
+        Audience = RefreshTokenRequestAudience.HttpsApiExampleCom,
+        GrantType = RefreshTokenRequestGrantType.RefreshToken,
     }
 );
 ```
@@ -99,8 +97,8 @@ await client.Auth.RefreshTokenAsync(
 </dl>
 </details>
 
-## NestedNoAuth Api
-<details><summary><code>client.NestedNoAuth.Api.<a href="/src/SeedInferredAuthImplicit/NestedNoAuth/Api/ApiClient.cs">GetSomethingAsync</a>()</code></summary>
+## NestedNoAuthApi
+<details><summary><code>client.NestedNoAuthApi.<a href="/src/SeedApi/NestedNoAuthApi/NestedNoAuthApiClient.cs">NestedNoAuthApiGetSomethingAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -113,7 +111,7 @@ await client.Auth.RefreshTokenAsync(
 <dd>
 
 ```csharp
-await client.NestedNoAuth.Api.GetSomethingAsync();
+await client.NestedNoAuthApi.NestedNoAuthApiGetSomethingAsync();
 ```
 </dd>
 </dl>
@@ -125,8 +123,8 @@ await client.NestedNoAuth.Api.GetSomethingAsync();
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>client.Nested.Api.<a href="/src/SeedInferredAuthImplicit/Nested/Api/ApiClient.cs">GetSomethingAsync</a>()</code></summary>
+## NestedApi
+<details><summary><code>client.NestedApi.<a href="/src/SeedApi/NestedApi/NestedApiClient.cs">NestedApiGetSomethingAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -139,7 +137,7 @@ await client.NestedNoAuth.Api.GetSomethingAsync();
 <dd>
 
 ```csharp
-await client.Nested.Api.GetSomethingAsync();
+await client.NestedApi.NestedApiGetSomethingAsync();
 ```
 </dd>
 </dl>
@@ -152,7 +150,7 @@ await client.Nested.Api.GetSomethingAsync();
 </details>
 
 ## Simple
-<details><summary><code>client.Simple.<a href="/src/SeedInferredAuthImplicit/Simple/SimpleClient.cs">GetSomethingAsync</a>()</code></summary>
+<details><summary><code>client.Simple.<a href="/src/SeedApi/Simple/SimpleClient.cs">GetsomethingAsync</a>()</code></summary>
 <dl>
 <dd>
 
@@ -165,7 +163,7 @@ await client.Nested.Api.GetSomethingAsync();
 <dd>
 
 ```csharp
-await client.Simple.GetSomethingAsync();
+await client.Simple.GetsomethingAsync();
 ```
 </dd>
 </dl>

@@ -1,16 +1,13 @@
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(
+    let client = ApiClient(
         baseURL: "https://api.fern.com",
         token: "<token>"
     )
 
-    _ = try await client.users.listWithTopLevelBodyCursorPagination(request: .init(
-        cursor: "initial_cursor",
-        filter: "active"
-    ))
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetPaginationHasNextPage()
 }
 
 try await main()

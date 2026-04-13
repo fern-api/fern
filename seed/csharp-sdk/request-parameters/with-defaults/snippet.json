@@ -6,11 +6,11 @@
             "id": {
                 "path": "/user/username",
                 "method": "POST",
-                "identifier_override": "endpoint_user.createUsername"
+                "identifier_override": "endpoint_user.createusername"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedRequestParameters;\n\nvar client = new SeedRequestParametersClient();\nawait client.User.CreateUsernameAsync(\n    new CreateUsernameRequest\n    {\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Username = \"username\",\n        Password = \"password\",\n        Name = \"test\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.User.CreateusernameAsync(\n    new UserCreateUsernameRequest\n    {\n        Tags = [\"tags\"],\n        Username = \"username\",\n        Password = \"password\",\n        Name = \"name\",\n    }\n);\n"
             }
         },
         {
@@ -18,23 +18,23 @@
             "id": {
                 "path": "/user/username-referenced",
                 "method": "POST",
-                "identifier_override": "endpoint_user.createUsernameWithReferencedType"
+                "identifier_override": "endpoint_user.createusernamewithreferencedtype"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedRequestParameters;\n\nvar client = new SeedRequestParametersClient();\nawait client.User.CreateUsernameWithReferencedTypeAsync(\n    new CreateUsernameReferencedRequest\n    {\n        Tags = new List<string>() { \"tags\", \"tags\" },\n        Body = new CreateUsernameBody\n        {\n            Username = \"username\",\n            Password = \"password\",\n            Name = \"test\",\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.User.CreateusernamewithreferencedtypeAsync(\n    new CreateUsernameBody\n    {\n        Tags = [\"tags\"],\n        Username = \"username\",\n        Password = \"password\",\n        Name = \"name\",\n    }\n);\n"
             }
         },
         {
-            "example_identifier": "empty-object",
+            "example_identifier": null,
             "id": {
                 "path": "/user/username-optional",
                 "method": "POST",
-                "identifier_override": "endpoint_user.createUsernameOptional"
+                "identifier_override": "endpoint_user.createusernameoptional"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedRequestParameters;\n\nvar client = new SeedRequestParametersClient();\nawait client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProperties());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.User.CreateusernameoptionalAsync(new CreateUsernameBodyOptionalProperties());\n"
             }
         },
         {
@@ -42,11 +42,11 @@
             "id": {
                 "path": "/user",
                 "method": "GET",
-                "identifier_override": "endpoint_user.getUsername"
+                "identifier_override": "endpoint_user.getusername"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedRequestParameters;\n\nvar client = new SeedRequestParametersClient();\nawait client.User.GetUsernameAsync(\n    new GetUsersRequest\n    {\n        Limit = 1,\n        Id = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        Date = new DateOnly(2023, 1, 15),\n        Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Bytes = \"SGVsbG8gd29ybGQh\",\n        User = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n        UserList = new List<User>()\n        {\n            new User\n            {\n                Name = \"name\",\n                Tags = new List<string>() { \"tags\", \"tags\" },\n            },\n            new User\n            {\n                Name = \"name\",\n                Tags = new List<string>() { \"tags\", \"tags\" },\n            },\n        },\n        OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        KeyValue = new Dictionary<string, string>() { { \"keyValue\", \"keyValue\" } },\n        OptionalString = \"optionalString\",\n        NestedUser = new NestedUser\n        {\n            Name = \"name\",\n            User = new User\n            {\n                Name = \"name\",\n                Tags = new List<string>() { \"tags\", \"tags\" },\n            },\n        },\n        OptionalUser = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n        ExcludeUser =\n        [\n            new User\n            {\n                Name = \"name\",\n                Tags = new List<string>() { \"tags\", \"tags\" },\n            },\n        ],\n        Filter = [\"filter\"],\n        LongParam = 1000000,\n        BigIntParam = \"1000000\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.User.GetusernameAsync(\n    new UserGetUsernameRequest\n    {\n        Limit = 1,\n        Id = \"id\",\n        Date = new DateOnly(2023, 1, 15),\n        Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Bytes = \"bytes\",\n        User = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n        UserList =\n        [\n            new User\n            {\n                Name = \"name\",\n                Tags = new List<string>() { \"tags\", \"tags\" },\n            },\n        ],\n        OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        KeyValue = new Dictionary<string, string>() { { \"keyValue\", \"keyValue\" } },\n        OptionalString = \"optionalString\",\n        NestedUser = new NestedUser\n        {\n            Name = \"name\",\n            User = new User\n            {\n                Name = \"name\",\n                Tags = new List<string>() { \"tags\", \"tags\" },\n            },\n        },\n        OptionalUser = new User\n        {\n            Name = \"name\",\n            Tags = new List<string>() { \"tags\", \"tags\" },\n        },\n        ExcludeUser =\n        [\n            new User\n            {\n                Name = \"name\",\n                Tags = new List<string>() { \"tags\", \"tags\" },\n            },\n        ],\n        Filter = [\"filter\"],\n        LongParam = 1000000,\n        BigIntParam = 1,\n    }\n);\n"
             }
         }
     ]

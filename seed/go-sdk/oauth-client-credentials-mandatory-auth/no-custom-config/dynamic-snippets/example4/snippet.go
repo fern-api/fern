@@ -12,12 +12,11 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        option.WithClientCredentials(
-            "<clientId>",
-            "<clientSecret>",
+        option.WithToken(
+            "<token>",
         ),
     )
-    client.Nested.API.GetSomething(
+    client.NestedAPI.NestedAPIGetSomething(
         context.TODO(),
     )
 }

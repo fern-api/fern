@@ -1,20 +1,20 @@
 import Foundation
 
 public enum UnionWithSameStringTypes: Codable, Hashable, Sendable {
-    case customFormat(String)
-    case patternString(String)
-    case regularString(String)
+    case customFormat(UnionWithSameStringTypesCustomFormat)
+    case patternString(UnionWithSameStringTypesPatternString)
+    case regularString(UnionWithSameStringTypesRegularString)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "customFormat":
-            self = .customFormat(try container.decode(String.self, forKey: .value))
+            self = .customFormat(try UnionWithSameStringTypesCustomFormat(from: decoder))
         case "patternString":
-            self = .patternString(try container.decode(String.self, forKey: .value))
+            self = .patternString(try UnionWithSameStringTypesPatternString(from: decoder))
         case "regularString":
-            self = .regularString(try container.decode(String.self, forKey: .value))
+            self = .regularString(try UnionWithSameStringTypesRegularString(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -30,18 +30,17 @@ public enum UnionWithSameStringTypes: Codable, Hashable, Sendable {
         switch self {
         case .customFormat(let data):
             try container.encode("customFormat", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         case .patternString(let data):
             try container.encode("patternString", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         case .regularString(let data):
             try container.encode("regularString", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
-        case value
     }
 }

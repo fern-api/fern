@@ -4,55 +4,55 @@
             "id": {
                 "path": "/token",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+                "identifier_override": "endpoint_auth.gettokenwithclientcredentials"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedInferredAuthExplicitClient } from \"@fern/inferred-auth-explicit\";\n\nconst client = new SeedInferredAuthExplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.getTokenWithClientCredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/inferred-auth-explicit\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.auth.gettokenwithclientcredentials({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    audience: \"https://api.example.com\",\n    grant_type: \"client_credentials\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/token/refresh",
                 "method": "POST",
-                "identifier_override": "endpoint_auth.refreshToken"
+                "identifier_override": "endpoint_auth.refreshtoken"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedInferredAuthExplicitClient } from \"@fern/inferred-auth-explicit\";\n\nconst client = new SeedInferredAuthExplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.auth.refreshToken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/inferred-auth-explicit\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.auth.refreshtoken({\n    \"X-Api-Key\": \"X-Api-Key\",\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    refresh_token: \"refresh_token\",\n    audience: \"https://api.example.com\",\n    grant_type: \"refresh_token\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/nested-no-auth/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_nested-no-auth/api.getSomething"
+                "identifier_override": "endpoint_nestedNoAuthApi.nestedNoAuth_api_getSomething"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedInferredAuthExplicitClient } from \"@fern/inferred-auth-explicit\";\n\nconst client = new SeedInferredAuthExplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nestedNoAuth.api.getSomething();\n"
+                "client": "import { SeedApiClient } from \"@fern/inferred-auth-explicit\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.nestedNoAuthApi.nestedNoAuthApiGetSomething();\n"
             }
         },
         {
             "id": {
                 "path": "/nested/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_nested/api.getSomething"
+                "identifier_override": "endpoint_nestedApi.nested_api_getSomething"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedInferredAuthExplicitClient } from \"@fern/inferred-auth-explicit\";\n\nconst client = new SeedInferredAuthExplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.nested.api.getSomething();\n"
+                "client": "import { SeedApiClient } from \"@fern/inferred-auth-explicit\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.nestedApi.nestedApiGetSomething();\n"
             }
         },
         {
             "id": {
                 "path": "/get-something",
                 "method": "GET",
-                "identifier_override": "endpoint_simple.getSomething"
+                "identifier_override": "endpoint_simple.getsomething"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedInferredAuthExplicitClient } from \"@fern/inferred-auth-explicit\";\n\nconst client = new SeedInferredAuthExplicitClient({ environment: \"YOUR_BASE_URL\" });\nawait client.simple.getSomething();\n"
+                "client": "import { SeedApiClient } from \"@fern/inferred-auth-explicit\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.simple.getsomething();\n"
             }
         }
     ],

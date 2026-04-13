@@ -13,54 +13,54 @@ impl UsersClient {
         })
     }
 
-    pub async fn list_with_cursor_pagination(
+    pub async fn listwithcursorpagination(
         &self,
-        request: &UsersListWithCursorPaginationQueryRequest,
+        request: &ListwithcursorpaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ListUsersPaginationResponse2, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users/cursor",
                 None,
                 QueryBuilder::new()
-                    .int("page", request.page.clone())
-                    .int("per_page", request.per_page.clone())
+                    .serialize("page", request.page.clone())
+                    .serialize("per_page", request.per_page.clone())
                     .serialize("order", request.order.clone())
-                    .string("starting_after", request.starting_after.clone())
+                    .serialize("starting_after", request.starting_after.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn list_with_mixed_type_cursor_pagination(
+    pub async fn listwithmixedtypecursorpagination(
         &self,
-        request: &UsersListWithMixedTypeCursorPaginationQueryRequest,
+        request: &ListwithmixedtypecursorpaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ListUsersMixedTypePaginationResponse2, ApiError> {
+    ) -> Result<ListUsersMixedTypePaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/users",
+                "users/mixed-type-cursor",
                 None,
                 QueryBuilder::new()
-                    .string("cursor", request.cursor.clone())
+                    .serialize("cursor", request.cursor.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn list_with_body_cursor_pagination(
+    pub async fn listwithbodycursorpagination(
         &self,
-        request: &ListUsersBodyCursorPaginationRequest,
+        request: &UsersListWithBodyCursorPaginationRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ListUsersPaginationResponse2, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/users",
+                "users/body-cursor",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -79,15 +79,15 @@ impl UsersClient {
     /// # Returns
     ///
     /// JSON response from the API
-    pub async fn list_with_top_level_body_cursor_pagination(
+    pub async fn listwithtoplevelbodycursorpagination(
         &self,
-        request: &ListUsersTopLevelBodyCursorPaginationRequest,
+        request: &UsersListWithTopLevelBodyCursorPaginationRequest,
         options: Option<RequestOptions>,
     ) -> Result<ListUsersTopLevelCursorPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/users/top-level-cursor",
+                "users/top-level-cursor",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -95,57 +95,57 @@ impl UsersClient {
             .await
     }
 
-    pub async fn list_with_offset_pagination(
+    pub async fn listwithoffsetpagination(
         &self,
-        request: &UsersListWithOffsetPaginationQueryRequest,
+        request: &ListwithoffsetpaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ListUsersPaginationResponse2, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users/offset",
                 None,
                 QueryBuilder::new()
-                    .int("page", request.page.clone())
-                    .int("per_page", request.per_page.clone())
+                    .serialize("page", request.page.clone())
+                    .serialize("per_page", request.per_page.clone())
                     .serialize("order", request.order.clone())
-                    .string("starting_after", request.starting_after.clone())
+                    .serialize("starting_after", request.starting_after.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn list_with_double_offset_pagination(
+    pub async fn listwithdoubleoffsetpagination(
         &self,
-        request: &UsersListWithDoubleOffsetPaginationQueryRequest,
+        request: &ListwithdoubleoffsetpaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ListUsersPaginationResponse2, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users/double-offset",
                 None,
                 QueryBuilder::new()
-                    .float("page", request.page.clone())
-                    .float("per_page", request.per_page.clone())
+                    .serialize("page", request.page.clone())
+                    .serialize("per_page", request.per_page.clone())
                     .serialize("order", request.order.clone())
-                    .string("starting_after", request.starting_after.clone())
+                    .serialize("starting_after", request.starting_after.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn list_with_body_offset_pagination(
+    pub async fn listwithbodyoffsetpagination(
         &self,
-        request: &ListUsersBodyOffsetPaginationRequest,
+        request: &UsersListWithBodyOffsetPaginationRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ListUsersPaginationResponse2, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
-                "/users",
+                "users/body-offset",
                 Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
                 None,
                 options,
@@ -153,19 +153,19 @@ impl UsersClient {
             .await
     }
 
-    pub async fn list_with_offset_step_pagination(
+    pub async fn listwithoffsetsteppagination(
         &self,
-        request: &UsersListWithOffsetStepPaginationQueryRequest,
+        request: &ListwithoffsetsteppaginationQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ListUsersPaginationResponse2, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users/offset-step",
                 None,
                 QueryBuilder::new()
-                    .int("page", request.page.clone())
-                    .int("limit", request.limit.clone())
+                    .serialize("page", request.page.clone())
+                    .serialize("limit", request.limit.clone())
                     .serialize("order", request.order.clone())
                     .build(),
                 options,
@@ -173,19 +173,19 @@ impl UsersClient {
             .await
     }
 
-    pub async fn list_with_offset_pagination_has_next_page(
+    pub async fn listwithoffsetpaginationhasnextpage(
         &self,
-        request: &UsersListWithOffsetPaginationHasNextPageQueryRequest,
+        request: &ListwithoffsetpaginationhasnextpageQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ListUsersPaginationResponse2, ApiError> {
+    ) -> Result<ListUsersPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users/offset-has-next-page",
                 None,
                 QueryBuilder::new()
-                    .int("page", request.page.clone())
-                    .int("limit", request.limit.clone())
+                    .serialize("page", request.page.clone())
+                    .serialize("limit", request.limit.clone())
                     .serialize("order", request.order.clone())
                     .build(),
                 options,
@@ -193,128 +193,128 @@ impl UsersClient {
             .await
     }
 
-    pub async fn list_with_extended_results(
+    pub async fn listwithextendedresults(
         &self,
-        request: &UsersListWithExtendedResultsQueryRequest,
+        request: &ListwithextendedresultsQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ListUsersExtendedResponse2, ApiError> {
+    ) -> Result<ListUsersExtendedResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users/extended",
                 None,
                 QueryBuilder::new()
-                    .uuid("cursor", request.cursor.clone())
+                    .serialize("cursor", request.cursor.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn list_with_extended_results_and_optional_data(
+    pub async fn listwithextendedresultsandoptionaldata(
         &self,
-        request: &UsersListWithExtendedResultsAndOptionalDataQueryRequest,
+        request: &ListwithextendedresultsandoptionaldataQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<ListUsersExtendedOptionalListResponse2, ApiError> {
+    ) -> Result<ListUsersExtendedOptionalListResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users/extended-optional",
                 None,
                 QueryBuilder::new()
-                    .uuid("cursor", request.cursor.clone())
+                    .serialize("cursor", request.cursor.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn list_usernames(
+    pub async fn listusernames(
         &self,
-        request: &UsersListUsernamesQueryRequest,
+        request: &ListusernamesQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<UsernameCursor, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users/usernames",
                 None,
                 QueryBuilder::new()
-                    .string("starting_after", request.starting_after.clone())
+                    .serialize("starting_after", request.starting_after.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn list_usernames_with_optional_response(
+    pub async fn listusernameswithoptionalresponse(
         &self,
-        request: &ListUsernamesWithOptionalResponseQueryRequest,
+        request: &ListusernameswithoptionalresponseQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<Option<UsernameCursor>, ApiError> {
+    ) -> Result<UsernameCursor, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users/usernames-optional",
                 None,
                 QueryBuilder::new()
-                    .string("starting_after", request.starting_after.clone())
+                    .serialize("starting_after", request.starting_after.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn list_with_global_config(
+    pub async fn listwithglobalconfig(
         &self,
-        request: &UsersListWithGlobalConfigQueryRequest,
+        request: &ListwithglobalconfigQueryRequest,
         options: Option<RequestOptions>,
-    ) -> Result<UsernameContainer2, ApiError> {
+    ) -> Result<UsernameContainer, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users",
+                "users/global-config",
                 None,
                 QueryBuilder::new()
-                    .int("offset", request.offset.clone())
+                    .serialize("offset", request.offset.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn list_with_optional_data(
+    pub async fn listwithoptionaldata(
         &self,
-        request: &ListWithOptionalDataQueryRequest,
+        request: &ListwithoptionaldataQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<ListUsersOptionalDataPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users/optional-data",
+                "users/optional-data",
                 None,
                 QueryBuilder::new()
-                    .int("page", request.page.clone())
+                    .serialize("page", request.page.clone())
                     .build(),
                 options,
             )
             .await
     }
 
-    pub async fn list_with_aliased_data(
+    pub async fn listwithaliaseddata(
         &self,
-        request: &ListWithAliasedDataQueryRequest,
+        request: &ListwithaliaseddataQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<ListUsersAliasedDataPaginationResponse, ApiError> {
         self.http_client
             .execute_request(
                 Method::GET,
-                "/users/aliased-data",
+                "users/aliased-data",
                 None,
                 QueryBuilder::new()
-                    .int("page", request.page.clone())
-                    .int("per_page", request.per_page.clone())
-                    .string("starting_after", request.starting_after.clone())
+                    .serialize("page", request.page.clone())
+                    .serialize("per_page", request.per_page.clone())
+                    .serialize("starting_after", request.starting_after.clone())
                     .build(),
                 options,
             )

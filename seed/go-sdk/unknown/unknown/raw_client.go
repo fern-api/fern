@@ -72,7 +72,7 @@ func (r *RawClient) Post(
 	}, nil
 }
 
-func (r *RawClient) PostObject(
+func (r *RawClient) Postobject(
 	ctx context.Context,
 	request *fern.MyObject,
 	opts ...option.RequestOption,
@@ -88,6 +88,7 @@ func (r *RawClient) PostObject(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response []any
 	raw, err := r.caller.Call(
 		ctx,

@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .service.client import AsyncServiceClient, ServiceClient
 
 
-class SeedApiWideBasePath:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedApiWideBasePath:
 
     Examples
     --------
-    from seed import SeedApiWideBasePath
+    from seed import SeedApi
 
-    client = SeedApiWideBasePath(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -98,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedApiWideBasePath:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -124,9 +124,9 @@ class AsyncSeedApiWideBasePath:
 
     Examples
     --------
-    from seed import AsyncSeedApiWideBasePath
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedApiWideBasePath(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """

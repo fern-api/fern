@@ -1,8 +1,8 @@
 import Foundation
-import UnknownAsAny
+import Api
 
 private func main() async throws {
-    let client = UnknownAsAnyClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
     _ = try await client.unknown.post(request: .object([
         "key": .string("value")

@@ -10,7 +10,6 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
-- [Environments](#environments)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -41,23 +40,11 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
+import { SeedApiClient } from "@fern/multi-url-environment";
 
-const client = new SeedMultiUrlEnvironmentClient({ token: "YOUR_TOKEN" });
-await client.ec2.bootInstance({
+const client = new SeedApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+await client.ec2.bootinstance({
     size: "size"
-});
-```
-
-## Environments
-
-This SDK allows you to configure different environments for API requests.
-
-```typescript
-import { SeedMultiUrlEnvironmentClient, SeedMultiUrlEnvironmentEnvironment } from "@fern/multi-url-environment";
-
-const client = new SeedMultiUrlEnvironmentClient({
-    environment: SeedMultiUrlEnvironmentEnvironment.Production,
 });
 ```
 
@@ -67,9 +54,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { SeedMultiUrlEnvironment } from "@fern/multi-url-environment";
+import { SeedApi } from "@fern/multi-url-environment";
 
-const request: SeedMultiUrlEnvironment.BootInstanceRequest = {
+const request: SeedApi.Ec2BootInstanceRequest = {
     ...
 };
 ```
@@ -80,12 +67,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { SeedMultiUrlEnvironmentError } from "@fern/multi-url-environment";
+import { SeedApiError } from "@fern/multi-url-environment";
 
 try {
-    await client.ec2.bootInstance(...);
+    await client.ec2.bootinstance(...);
 } catch (err) {
-    if (err instanceof SeedMultiUrlEnvironmentError) {
+    if (err instanceof SeedApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -111,16 +98,16 @@ const client = new Ec2Client({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { SeedMultiUrlEnvironmentClient } from "@fern/multi-url-environment";
+import { SeedApiClient } from "@fern/multi-url-environment";
 
-const client = new SeedMultiUrlEnvironmentClient({
+const client = new SeedApiClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 
-const response = await client.ec2.bootInstance(..., {
+const response = await client.ec2.bootinstance(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -132,7 +119,7 @@ const response = await client.ec2.bootInstance(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.ec2.bootInstance(..., {
+const response = await client.ec2.bootinstance(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -154,7 +141,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.ec2.bootInstance(..., {
+const response = await client.ec2.bootinstance(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -164,7 +151,7 @@ const response = await client.ec2.bootInstance(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.ec2.bootInstance(..., {
+const response = await client.ec2.bootinstance(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -175,7 +162,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.ec2.bootInstance(..., {
+const response = await client.ec2.bootinstance(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -187,7 +174,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.ec2.bootInstance(...).withRawResponse();
+const { data, rawResponse } = await client.ec2.bootinstance(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);
@@ -198,9 +185,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { SeedMultiUrlEnvironmentClient, logging } from "@fern/multi-url-environment";
+import { SeedApiClient, logging } from "@fern/multi-url-environment";
 
-const client = new SeedMultiUrlEnvironmentClient({
+const client = new SeedApiClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info

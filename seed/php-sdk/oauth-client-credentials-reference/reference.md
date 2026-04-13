@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-&gt;auth-&gt;getToken($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;gettoken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```php
-$client->auth->getToken(
+$client->auth->gettoken(
     new GetTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
@@ -33,7 +33,15 @@ $client->auth->getToken(
 <dl>
 <dd>
 
-**$request:** `GetTokenRequest` 
+**$clientId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$clientSecret:** `string` 
     
 </dd>
 </dl>
@@ -46,7 +54,7 @@ $client->auth->getToken(
 </details>
 
 ## Simple
-<details><summary><code>$client-&gt;simple-&gt;getSomething()</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;getsomething()</code></summary>
 <dl>
 <dd>
 
@@ -59,7 +67,7 @@ $client->auth->getToken(
 <dd>
 
 ```php
-$client->simple->getSomething();
+$client->simple->getsomething();
 ```
 </dd>
 </dl>

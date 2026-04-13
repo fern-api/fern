@@ -1,6 +1,6 @@
 # Reference
-## Conversations
-<details><summary><code>client.complex.<a href="/Sources/Resources/Complex/ComplexClient.swift">search</a>(index: String, request: SearchRequest, requestOptions: RequestOptions?) -> PaginatedConversationResponse</code></summary>
+## Complex
+<details><summary><code>client.complex.<a href="/Sources/Resources/Complex/ComplexClient.swift">search</a>(index: String, request: Requests.SearchRequest, requestOptions: RequestOptions?) -> PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,26 +14,18 @@
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
     _ = try await client.complex.search(
         index: "index",
-        request: SearchRequest(
-            pagination: StartingAfterPaging(
-                perPage: 1,
-                startingAfter: "starting_after"
-            ),
-            query: SearchRequestQuery.singleFilterSearchRequest(
-                SingleFilterSearchRequest(
-                    field: "field",
-                    operator: .equals,
-                    value: "value"
-                )
+        request: .init(query: SearchRequestQuery.singleFilterSearchRequest(
+            SingleFilterSearchRequest(
+
             )
-        )
+        ))
     )
 }
 
@@ -60,7 +52,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `SearchRequest` 
+**request:** `Requests.SearchRequest` 
     
 </dd>
 </dl>
@@ -80,8 +72,8 @@ try await main()
 </dl>
 </details>
 
-## InlineUsers InlineUsers
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithCursorPagination</a>(page: Int?, perPage: Int?, order: Order?, startingAfter: String?, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
+## InlineUsersInlineUsers
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithCursorPagination</a>(page: Nullable&lt;Int&gt;?, perPage: Nullable&lt;Int&gt;?, order: InlineUsersOrder?, startingAfter: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -95,17 +87,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
-        page: 1,
-        perPage: 1,
-        order: .asc,
-        startingAfter: "starting_after"
-    )
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithCursorPagination()
 }
 
 try await main()
@@ -123,7 +110,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Defaults to first page
+**page:** `Nullable<Int>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -131,7 +118,7 @@ try await main()
 <dl>
 <dd>
 
-**perPage:** `Int?` — Defaults to per page
+**perPage:** `Nullable<Int>?` — Defaults to per page
     
 </dd>
 </dl>
@@ -139,7 +126,7 @@ try await main()
 <dl>
 <dd>
 
-**order:** `Order?` 
+**order:** `InlineUsersOrder?` 
     
 </dd>
 </dl>
@@ -147,7 +134,7 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**startingAfter:** `Nullable<String>?` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -170,7 +157,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithMixedTypeCursorPagination</a>(cursor: String?, requestOptions: RequestOptions?) -> ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithMixedTypeCursorPagination</a>(cursor: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> InlineUsersListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -184,12 +171,12 @@ the next page of results.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination(cursor: "cursor")
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithMixedTypeCursorPagination()
 }
 
 try await main()
@@ -207,7 +194,7 @@ try await main()
 <dl>
 <dd>
 
-**cursor:** `String?` 
+**cursor:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -227,7 +214,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithBodyCursorPagination</a>(request: Requests.ListUsersBodyCursorPaginationRequest, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithBodyCursorPagination</a>(request: Requests.InlineUsersInlineUsersListWithBodyCursorPaginationRequest, requestOptions: RequestOptions?) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -241,12 +228,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination()
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithBodyCursorPagination(request: .init())
 }
 
 try await main()
@@ -264,7 +251,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ListUsersBodyCursorPaginationRequest` 
+**request:** `Requests.InlineUsersInlineUsersListWithBodyCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -284,7 +271,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithOffsetPagination</a>(page: Int?, perPage: Int?, order: Order?, startingAfter: String?, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithOffsetPagination</a>(page: Nullable&lt;Int&gt;?, perPage: Nullable&lt;Int&gt;?, order: InlineUsersOrder?, startingAfter: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -298,17 +285,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
-        page: 1,
-        perPage: 1,
-        order: .asc,
-        startingAfter: "starting_after"
-    )
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetPagination()
 }
 
 try await main()
@@ -326,7 +308,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Defaults to first page
+**page:** `Nullable<Int>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -334,7 +316,7 @@ try await main()
 <dl>
 <dd>
 
-**perPage:** `Int?` — Defaults to per page
+**perPage:** `Nullable<Int>?` — Defaults to per page
     
 </dd>
 </dl>
@@ -342,7 +324,7 @@ try await main()
 <dl>
 <dd>
 
-**order:** `Order?` 
+**order:** `InlineUsersOrder?` 
     
 </dd>
 </dl>
@@ -350,7 +332,7 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**startingAfter:** `Nullable<String>?` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -373,7 +355,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithDoubleOffsetPagination</a>(page: Double?, perPage: Double?, order: Order?, startingAfter: String?, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithDoubleOffsetPagination</a>(page: Nullable&lt;Double&gt;?, perPage: Nullable&lt;Double&gt;?, order: InlineUsersOrder?, startingAfter: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -387,17 +369,12 @@ the next page of results.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
-        page: 1.1,
-        perPage: 1.1,
-        order: .asc,
-        startingAfter: "starting_after"
-    )
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithDoubleOffsetPagination()
 }
 
 try await main()
@@ -415,7 +392,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Double?` — Defaults to first page
+**page:** `Nullable<Double>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -423,7 +400,7 @@ try await main()
 <dl>
 <dd>
 
-**perPage:** `Double?` — Defaults to per page
+**perPage:** `Nullable<Double>?` — Defaults to per page
     
 </dd>
 </dl>
@@ -431,7 +408,7 @@ try await main()
 <dl>
 <dd>
 
-**order:** `Order?` 
+**order:** `InlineUsersOrder?` 
     
 </dd>
 </dl>
@@ -439,7 +416,7 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**startingAfter:** `Nullable<String>?` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -462,7 +439,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithBodyOffsetPagination</a>(request: Requests.ListUsersBodyOffsetPaginationRequest, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithBodyOffsetPagination</a>(request: Requests.InlineUsersInlineUsersListWithBodyOffsetPaginationRequest, requestOptions: RequestOptions?) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -476,12 +453,12 @@ the next page of results.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination()
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithBodyOffsetPagination(request: .init())
 }
 
 try await main()
@@ -499,7 +476,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ListUsersBodyOffsetPaginationRequest` 
+**request:** `Requests.InlineUsersInlineUsersListWithBodyOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -519,7 +496,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithOffsetStepPagination</a>(page: Int?, limit: Int?, order: Order?, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithOffsetStepPagination</a>(page: Nullable&lt;Int&gt;?, limit: Nullable&lt;Int&gt;?, order: InlineUsersOrder?, requestOptions: RequestOptions?) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -533,15 +510,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
-        page: 1,
-        order: .asc
-    )
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetStepPagination()
 }
 
 try await main()
@@ -559,7 +533,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Defaults to first page
+**page:** `Nullable<Int>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -567,7 +541,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `Int?` 
+**limit:** `Nullable<Int>?` 
 
 The maximum number of elements to return.
 This is also used as the step size in this
@@ -579,7 +553,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `Order?` 
+**order:** `InlineUsersOrder?` 
     
 </dd>
 </dl>
@@ -599,7 +573,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithOffsetPaginationHasNextPage</a>(page: Int?, limit: Int?, order: Order?, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithOffsetPaginationHasNextPage</a>(page: Nullable&lt;Int&gt;?, limit: Nullable&lt;Int&gt;?, order: InlineUsersOrder?, requestOptions: RequestOptions?) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -613,15 +587,12 @@ paginated endpoint.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(
-        page: 1,
-        order: .asc
-    )
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetPaginationHasNextPage()
 }
 
 try await main()
@@ -639,7 +610,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Defaults to first page
+**page:** `Nullable<Int>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -647,7 +618,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `Int?` 
+**limit:** `Nullable<Int>?` 
 
 The maximum number of elements to return.
 This is also used as the step size in this
@@ -659,7 +630,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `Order?` 
+**order:** `InlineUsersOrder?` 
     
 </dd>
 </dl>
@@ -679,7 +650,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithExtendedResults</a>(cursor: UUID?, requestOptions: RequestOptions?) -> ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithExtendedResults</a>(cursor: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> InlineUsersListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -693,12 +664,12 @@ paginated endpoint.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination()
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithExtendedResults()
 }
 
 try await main()
@@ -716,7 +687,7 @@ try await main()
 <dl>
 <dd>
 
-**cursor:** `UUID?` 
+**cursor:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -736,7 +707,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithExtendedResultsAndOptionalData</a>(cursor: UUID?, requestOptions: RequestOptions?) -> ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithExtendedResultsAndOptionalData</a>(cursor: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> InlineUsersListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -750,12 +721,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination()
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithExtendedResultsAndOptionalData()
 }
 
 try await main()
@@ -773,7 +744,7 @@ try await main()
 <dl>
 <dd>
 
-**cursor:** `UUID?` 
+**cursor:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -793,7 +764,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listUsernames</a>(startingAfter: String?, requestOptions: RequestOptions?) -> UsernameCursor</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListUsernames</a>(startingAfter: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -807,12 +778,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination(startingAfter: "starting_after")
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListUsernames()
 }
 
 try await main()
@@ -830,7 +801,7 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**startingAfter:** `Nullable<String>?` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -853,7 +824,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.<a href="/Sources/Resources/InlineUsers/InlineUsers/InlineUsersInlineUsersClient.swift">listWithGlobalConfig</a>(offset: Int?, requestOptions: RequestOptions?) -> UsernameContainer</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.<a href="/Sources/Resources/InlineUsersInlineUsers/InlineUsersInlineUsersClient.swift">inlineUsersInlineUsersListWithGlobalConfig</a>(offset: Nullable&lt;Int&gt;?, requestOptions: RequestOptions?) -> InlineUsersUsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -867,12 +838,12 @@ the next page of results.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.inlineUsers.inlineUsers.listWithCursorPagination()
+    _ = try await client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithGlobalConfig()
 }
 
 try await main()
@@ -890,7 +861,7 @@ try await main()
 <dl>
 <dd>
 
-**offset:** `Int?` 
+**offset:** `Nullable<Int>?` 
     
 </dd>
 </dl>
@@ -911,7 +882,7 @@ try await main()
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithCursorPagination</a>(page: Int?, perPage: Int?, order: OrderType?, startingAfter: String?, requestOptions: RequestOptions?) -> ListUsersPaginationResponseType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithcursorpagination</a>(page: Nullable&lt;Int&gt;?, perPage: Nullable&lt;Int&gt;?, order: Order?, startingAfter: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -925,17 +896,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(
-        page: 1,
-        perPage: 1,
-        order: .asc,
-        startingAfter: "starting_after"
-    )
+    _ = try await client.users.listwithcursorpagination()
 }
 
 try await main()
@@ -953,7 +919,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Defaults to first page
+**page:** `Nullable<Int>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -961,7 +927,7 @@ try await main()
 <dl>
 <dd>
 
-**perPage:** `Int?` — Defaults to per page
+**perPage:** `Nullable<Int>?` — Defaults to per page
     
 </dd>
 </dl>
@@ -969,7 +935,7 @@ try await main()
 <dl>
 <dd>
 
-**order:** `OrderType?` 
+**order:** `Order?` 
     
 </dd>
 </dl>
@@ -977,7 +943,7 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**startingAfter:** `Nullable<String>?` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -1000,7 +966,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithMixedTypeCursorPagination</a>(cursor: String?, requestOptions: RequestOptions?) -> ListUsersMixedTypePaginationResponseType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithmixedtypecursorpagination</a>(cursor: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1014,12 +980,12 @@ the next page of results.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithMixedTypeCursorPagination(cursor: "cursor")
+    _ = try await client.users.listwithmixedtypecursorpagination()
 }
 
 try await main()
@@ -1037,7 +1003,7 @@ try await main()
 <dl>
 <dd>
 
-**cursor:** `String?` 
+**cursor:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -1057,7 +1023,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithBodyCursorPagination</a>(request: Requests.ListUsersBodyCursorPaginationRequestType, requestOptions: RequestOptions?) -> ListUsersPaginationResponseType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithbodycursorpagination</a>(request: Requests.UsersListWithBodyCursorPaginationRequest, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1071,12 +1037,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithMixedTypeCursorPagination()
+    _ = try await client.users.listwithbodycursorpagination(request: .init())
 }
 
 try await main()
@@ -1094,7 +1060,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ListUsersBodyCursorPaginationRequestType` 
+**request:** `Requests.UsersListWithBodyCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -1114,7 +1080,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithTopLevelBodyCursorPagination</a>(request: Requests.ListUsersTopLevelBodyCursorPaginationRequest, requestOptions: RequestOptions?) -> ListUsersTopLevelCursorPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithtoplevelbodycursorpagination</a>(request: Requests.UsersListWithTopLevelBodyCursorPaginationRequest, requestOptions: RequestOptions?) -> ListUsersTopLevelCursorPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1144,15 +1110,12 @@ when getNextPage() is called with a different cursor value.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithTopLevelBodyCursorPagination(request: .init(
-        cursor: "initial_cursor",
-        filter: "active"
-    ))
+    _ = try await client.users.listwithtoplevelbodycursorpagination(request: .init())
 }
 
 try await main()
@@ -1170,7 +1133,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ListUsersTopLevelBodyCursorPaginationRequest` 
+**request:** `Requests.UsersListWithTopLevelBodyCursorPaginationRequest` 
     
 </dd>
 </dl>
@@ -1190,7 +1153,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithOffsetPagination</a>(page: Int?, perPage: Int?, order: OrderType?, startingAfter: String?, requestOptions: RequestOptions?) -> ListUsersPaginationResponseType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithoffsetpagination</a>(page: Nullable&lt;Int&gt;?, perPage: Nullable&lt;Int&gt;?, order: Order?, startingAfter: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1204,17 +1167,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(
-        page: 1,
-        perPage: 1,
-        order: .asc,
-        startingAfter: "starting_after"
-    )
+    _ = try await client.users.listwithoffsetpagination()
 }
 
 try await main()
@@ -1232,7 +1190,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Defaults to first page
+**page:** `Nullable<Int>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -1240,7 +1198,7 @@ try await main()
 <dl>
 <dd>
 
-**perPage:** `Int?` — Defaults to per page
+**perPage:** `Nullable<Int>?` — Defaults to per page
     
 </dd>
 </dl>
@@ -1248,7 +1206,7 @@ try await main()
 <dl>
 <dd>
 
-**order:** `OrderType?` 
+**order:** `Order?` 
     
 </dd>
 </dl>
@@ -1256,7 +1214,7 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**startingAfter:** `Nullable<String>?` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -1279,7 +1237,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithDoubleOffsetPagination</a>(page: Double?, perPage: Double?, order: OrderType?, startingAfter: String?, requestOptions: RequestOptions?) -> ListUsersPaginationResponseType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithdoubleoffsetpagination</a>(page: Nullable&lt;Double&gt;?, perPage: Nullable&lt;Double&gt;?, order: Order?, startingAfter: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1293,17 +1251,12 @@ the next page of results.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(
-        page: 1.1,
-        perPage: 1.1,
-        order: .asc,
-        startingAfter: "starting_after"
-    )
+    _ = try await client.users.listwithdoubleoffsetpagination()
 }
 
 try await main()
@@ -1321,7 +1274,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Double?` — Defaults to first page
+**page:** `Nullable<Double>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -1329,7 +1282,7 @@ try await main()
 <dl>
 <dd>
 
-**perPage:** `Double?` — Defaults to per page
+**perPage:** `Nullable<Double>?` — Defaults to per page
     
 </dd>
 </dl>
@@ -1337,7 +1290,7 @@ try await main()
 <dl>
 <dd>
 
-**order:** `OrderType?` 
+**order:** `Order?` 
     
 </dd>
 </dl>
@@ -1345,7 +1298,7 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**startingAfter:** `Nullable<String>?` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -1368,7 +1321,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithBodyOffsetPagination</a>(request: Requests.ListUsersBodyOffsetPaginationRequestType, requestOptions: RequestOptions?) -> ListUsersPaginationResponseType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithbodyoffsetpagination</a>(request: Requests.UsersListWithBodyOffsetPaginationRequest, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1382,12 +1335,12 @@ the next page of results.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithMixedTypeCursorPagination()
+    _ = try await client.users.listwithbodyoffsetpagination(request: .init())
 }
 
 try await main()
@@ -1405,7 +1358,7 @@ try await main()
 <dl>
 <dd>
 
-**request:** `Requests.ListUsersBodyOffsetPaginationRequestType` 
+**request:** `Requests.UsersListWithBodyOffsetPaginationRequest` 
     
 </dd>
 </dl>
@@ -1425,7 +1378,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithOffsetStepPagination</a>(page: Int?, limit: Int?, order: OrderType?, requestOptions: RequestOptions?) -> ListUsersPaginationResponseType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithoffsetsteppagination</a>(page: Nullable&lt;Int&gt;?, limit: Nullable&lt;Int&gt;?, order: Order?, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1439,15 +1392,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(
-        page: 1,
-        order: .asc
-    )
+    _ = try await client.users.listwithoffsetsteppagination()
 }
 
 try await main()
@@ -1465,7 +1415,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Defaults to first page
+**page:** `Nullable<Int>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -1473,7 +1423,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `Int?` 
+**limit:** `Nullable<Int>?` 
 
 The maximum number of elements to return.
 This is also used as the step size in this
@@ -1485,7 +1435,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `OrderType?` 
+**order:** `Order?` 
     
 </dd>
 </dl>
@@ -1505,7 +1455,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithOffsetPaginationHasNextPage</a>(page: Int?, limit: Int?, order: OrderType?, requestOptions: RequestOptions?) -> ListUsersPaginationResponseType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithoffsetpaginationhasnextpage</a>(page: Nullable&lt;Int&gt;?, limit: Nullable&lt;Int&gt;?, order: Order?, requestOptions: RequestOptions?) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1519,15 +1469,12 @@ paginated endpoint.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(
-        page: 1,
-        order: .asc
-    )
+    _ = try await client.users.listwithoffsetpaginationhasnextpage()
 }
 
 try await main()
@@ -1545,7 +1492,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Defaults to first page
+**page:** `Nullable<Int>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -1553,7 +1500,7 @@ try await main()
 <dl>
 <dd>
 
-**limit:** `Int?` 
+**limit:** `Nullable<Int>?` 
 
 The maximum number of elements to return.
 This is also used as the step size in this
@@ -1565,7 +1512,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `OrderType?` 
+**order:** `Order?` 
     
 </dd>
 </dl>
@@ -1585,7 +1532,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithExtendedResults</a>(cursor: UUID?, requestOptions: RequestOptions?) -> ListUsersExtendedResponseType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithextendedresults</a>(cursor: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1599,12 +1546,12 @@ paginated endpoint.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination()
+    _ = try await client.users.listwithextendedresults()
 }
 
 try await main()
@@ -1622,7 +1569,7 @@ try await main()
 <dl>
 <dd>
 
-**cursor:** `UUID?` 
+**cursor:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -1642,7 +1589,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithExtendedResultsAndOptionalData</a>(cursor: UUID?, requestOptions: RequestOptions?) -> ListUsersExtendedOptionalListResponseType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithextendedresultsandoptionaldata</a>(cursor: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1656,12 +1603,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination()
+    _ = try await client.users.listwithextendedresultsandoptionaldata()
 }
 
 try await main()
@@ -1679,7 +1626,7 @@ try await main()
 <dl>
 <dd>
 
-**cursor:** `UUID?` 
+**cursor:** `Nullable<String>?` 
     
 </dd>
 </dl>
@@ -1699,7 +1646,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listUsernames</a>(startingAfter: String?, requestOptions: RequestOptions?) -> UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listusernames</a>(startingAfter: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1713,12 +1660,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(startingAfter: "starting_after")
+    _ = try await client.users.listusernames()
 }
 
 try await main()
@@ -1736,7 +1683,7 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**startingAfter:** `Nullable<String>?` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -1759,7 +1706,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listUsernamesWithOptionalResponse</a>(startingAfter: String?, requestOptions: RequestOptions?) -> UsernameCursor?</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listusernameswithoptionalresponse</a>(startingAfter: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1773,12 +1720,12 @@ the next page of results.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination(startingAfter: "starting_after")
+    _ = try await client.users.listusernameswithoptionalresponse()
 }
 
 try await main()
@@ -1796,7 +1743,7 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**startingAfter:** `Nullable<String>?` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -1819,7 +1766,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithGlobalConfig</a>(offset: Int?, requestOptions: RequestOptions?) -> UsernameContainerType</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithglobalconfig</a>(offset: Nullable&lt;Int&gt;?, requestOptions: RequestOptions?) -> UsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -1833,12 +1780,12 @@ the next page of results.
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithCursorPagination()
+    _ = try await client.users.listwithglobalconfig()
 }
 
 try await main()
@@ -1856,7 +1803,7 @@ try await main()
 <dl>
 <dd>
 
-**offset:** `Int?` 
+**offset:** `Nullable<Int>?` 
     
 </dd>
 </dl>
@@ -1876,7 +1823,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithOptionalData</a>(page: Int?, requestOptions: RequestOptions?) -> ListUsersOptionalDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithoptionaldata</a>(page: Nullable&lt;Int&gt;?, requestOptions: RequestOptions?) -> ListUsersOptionalDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1890,12 +1837,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithOptionalData(page: 1)
+    _ = try await client.users.listwithoptionaldata()
 }
 
 try await main()
@@ -1913,7 +1860,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Defaults to first page
+**page:** `Nullable<Int>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -1933,7 +1880,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithAliasedData</a>(page: Int?, perPage: Int?, startingAfter: String?, requestOptions: RequestOptions?) -> ListUsersAliasedDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listwithaliaseddata</a>(page: Nullable&lt;Int&gt;?, perPage: Nullable&lt;Int&gt;?, startingAfter: Nullable&lt;String&gt;?, requestOptions: RequestOptions?) -> ListUsersAliasedDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1947,16 +1894,12 @@ try await main()
 
 ```swift
 import Foundation
-import Pagination
+import Api
 
 private func main() async throws {
-    let client = PaginationClient(token: "<token>")
+    let client = ApiClient(token: "<token>")
 
-    _ = try await client.users.listWithAliasedData(
-        page: 1,
-        perPage: 1,
-        startingAfter: "starting_after"
-    )
+    _ = try await client.users.listwithaliaseddata()
 }
 
 try await main()
@@ -1974,7 +1917,7 @@ try await main()
 <dl>
 <dd>
 
-**page:** `Int?` — Defaults to first page
+**page:** `Nullable<Int>?` — Defaults to first page
     
 </dd>
 </dl>
@@ -1982,7 +1925,7 @@ try await main()
 <dl>
 <dd>
 
-**perPage:** `Int?` — Defaults to per page
+**perPage:** `Nullable<Int>?` — Defaults to per page
     
 </dd>
 </dl>
@@ -1990,7 +1933,7 @@ try await main()
 <dl>
 <dd>
 
-**startingAfter:** `String?` 
+**startingAfter:** `Nullable<String>?` 
 
 The cursor used for pagination in order to fetch
 the next page of results.

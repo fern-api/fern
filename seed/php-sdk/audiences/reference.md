@@ -1,6 +1,6 @@
 # Reference
-## FolderA Service
-<details><summary><code>$client-&gt;folderA-&gt;service-&gt;getDirectThread($request) -> ?Response</code></summary>
+## FolderAService
+<details><summary><code>$client-&gt;folderAService-&gt;folderAServiceGetDirectThread($request) -> ?FolderAResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,8 @@
 <dd>
 
 ```php
-$client->folderA->service->getDirectThread(
-    new GetDirectThreadRequest([
+$client->folderAService->folderAServiceGetDirectThread(
+    new FolderAServiceGetDirectThreadRequest([
         'ids' => [
             'ids',
         ],
@@ -37,7 +37,7 @@ $client->folderA->service->getDirectThread(
 <dl>
 <dd>
 
-**$ids:** `string` 
+**$ids:** `?string` 
     
 </dd>
 </dl>
@@ -45,34 +45,8 @@ $client->folderA->service->getDirectThread(
 <dl>
 <dd>
 
-**$tags:** `string` 
+**$tags:** `?string` 
     
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## FolderD Service
-<details><summary><code>$client-&gt;folderD-&gt;service-&gt;getDirectThread() -> ?Response</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```php
-$client->folderD->service->getDirectThread();
-```
 </dd>
 </dl>
 </dd>
@@ -98,11 +72,7 @@ $client->folderD->service->getDirectThread();
 
 ```php
 $client->foo->find(
-    new FindRequest([
-        'optionalString' => 'optionalString',
-        'publicProperty' => 'publicProperty',
-        'privateProperty' => 1,
-    ]),
+    new FooFindRequest([]),
 );
 ```
 </dd>
@@ -136,6 +106,32 @@ $client->foo->find(
 
 **$privateProperty:** `?int` 
     
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## FolderDService
+<details><summary><code>$client-&gt;folderDService-&gt;folderDServiceGetDirectThread() -> ?FolderDResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->folderDService->folderDServiceGetDirectThread();
+```
 </dd>
 </dl>
 </dd>

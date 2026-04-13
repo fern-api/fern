@@ -16,10 +16,14 @@ class RawServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def post(
+        self, endpoint_param: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
         """
         Parameters
         ----------
+        endpoint_param : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -28,7 +32,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(self._client_wrapper._root_variable)}",
+            f"{encode_path_param(endpoint_param)}",
             method="POST",
             request_options=request_options,
         )
@@ -49,10 +53,14 @@ class AsyncRawServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def post(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[None]:
+    async def post(
+        self, endpoint_param: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
+        endpoint_param : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -61,7 +69,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{encode_path_param(self._client_wrapper._root_variable)}",
+            f"{encode_path_param(endpoint_param)}",
             method="POST",
             request_options=request_options,
         )

@@ -1,4 +1,4 @@
-use crate::api::resources::NullableClient2;
+use crate::api::resources::NullableClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -99,8 +99,8 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<NullableClient2, ApiError> {
-        NullableClient2::new(self.config)
+    pub fn build(self) -> Result<NullableClient, ApiError> {
+        NullableClient::new(self.config)
     }
 }
 #[cfg(test)]

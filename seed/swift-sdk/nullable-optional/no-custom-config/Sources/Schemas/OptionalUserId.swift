@@ -1,4 +1,4 @@
 import Foundation
 
 /// An alias for an optional user ID
-public typealias OptionalUserId = String?
+public typealias OptionalUserId = Nullable<String>

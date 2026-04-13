@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Nullable",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "Nullable",
-            targets: ["Nullable"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Nullable",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "NullableTests",
-            dependencies: ["Nullable"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .dummy.client import AsyncDummyClient, DummyClient
 
 
-class SeedStreaming:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedStreaming:
 
     Examples
     --------
-    from seed import SeedStreaming
+    from seed import SeedApi
 
-    client = SeedStreaming(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -98,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedStreaming:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -124,9 +124,9 @@ class AsyncSeedStreaming:
 
     Examples
     --------
-    from seed import AsyncSeedStreaming
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedStreaming(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """

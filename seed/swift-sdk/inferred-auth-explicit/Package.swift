@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "InferredAuthExplicit",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "InferredAuthExplicit",
-            targets: ["InferredAuthExplicit"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "InferredAuthExplicit",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "InferredAuthExplicitTests",
-            dependencies: ["InferredAuthExplicit"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

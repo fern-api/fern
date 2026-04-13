@@ -13,7 +13,12 @@
 <dd>
 
 ```java
-client.user().get("id");
+client.user().get(
+    "id",
+    UserGetRequest
+        .builder()
+        .build()
+);
 ```
 </dd>
 </dl>

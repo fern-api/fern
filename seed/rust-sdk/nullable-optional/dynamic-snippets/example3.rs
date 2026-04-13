@@ -1,4 +1,4 @@
-use seed_nullable_optional::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -6,15 +6,25 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
         ..Default::default()
     };
-    let client = NullableOptionalClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .nullable_optional
-        .list_users(
-            &ListUsersQueryRequest {
-                limit: Some(1),
-                offset: Some(1),
-                include_deleted: Some(true),
-                sort_by: Some("sortBy".to_string()),
+        .nullableoptional
+        .updateuser(
+            &"userId".to_string(),
+            &UpdateUserRequest {
+                username: Some("username".to_string()),
+                email: Some("email".to_string()),
+                phone: Some("phone".to_string()),
+                address: Some(Address {
+                    street: "street".to_string(),
+                    city: Some("city".to_string()),
+                    state: Some("state".to_string()),
+                    zip_code: "zipCode".to_string(),
+                    country: Some("country".to_string()),
+                    building_id: Some(NullableUserId(Some("buildingId".to_string()))),
+                    tenant_id: Some(OptionalUserId(Some("tenantId".to_string()))),
+                    ..Default::default()
+                }),
                 ..Default::default()
             },
             None,

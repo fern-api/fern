@@ -12,14 +12,14 @@ class HealthServiceWireTest < WireMockTestCase
     )
   end
 
-  def test_health_service_check_with_wiremock
-    test_id = "health.service.check.0"
+  def test_health_service_health_service_check_with_wiremock
+    test_id = "health_service.health_service_check.0"
 
-    @client.health.service.check(
-      id: "id-2sdx82h",
+    @client.health_service.health_service_check(
+      id: "id",
       request_options: {
         additional_headers: {
-          "X-Test-Id" => "health.service.check.0"
+          "X-Test-Id" => "health_service.health_service_check.0"
         }
       }
     )
@@ -27,20 +27,20 @@ class HealthServiceWireTest < WireMockTestCase
     verify_request_count(
       test_id: test_id,
       method: "GET",
-      url_path: "/check/id-2sdx82h",
+      url_path: "/check/id",
       query_params: nil,
       expected: 1
     )
   end
 
-  def test_health_service_ping_with_wiremock
-    test_id = "health.service.ping.0"
+  def test_health_service_health_service_ping_with_wiremock
+    test_id = "health_service.health_service_ping.0"
 
-    @client.health.service.ping(request_options: {
-                                  additional_headers: {
-                                    "X-Test-Id" => "health.service.ping.0"
-                                  }
-                                })
+    @client.health_service.health_service_ping(request_options: {
+                                                 additional_headers: {
+                                                   "X-Test-Id" => "health_service.health_service_ping.0"
+                                                 }
+                                               })
 
     verify_request_count(
       test_id: test_id,

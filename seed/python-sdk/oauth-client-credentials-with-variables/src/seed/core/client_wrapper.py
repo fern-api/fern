@@ -11,14 +11,12 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
-        root_variable: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        self._root_variable = root_variable
         self._token = token
         self._headers = headers
         self._base_url = base_url
@@ -62,7 +60,6 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        root_variable: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
@@ -70,14 +67,7 @@ class SyncClientWrapper(BaseClientWrapper):
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(
-            root_variable=root_variable,
-            token=token,
-            headers=headers,
-            base_url=base_url,
-            timeout=timeout,
-            logging=logging,
-        )
+        super().__init__(token=token, headers=headers, base_url=base_url, timeout=timeout, logging=logging)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -91,7 +81,6 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        root_variable: str,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
@@ -100,14 +89,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(
-            root_variable=root_variable,
-            token=token,
-            headers=headers,
-            base_url=base_url,
-            timeout=timeout,
-            logging=logging,
-        )
+        super().__init__(token=token, headers=headers, base_url=base_url, timeout=timeout, logging=logging)
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,

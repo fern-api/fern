@@ -7,5 +7,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.folder.foo(None).await;
+    client.ac.a_c_foo(None).await;
 }

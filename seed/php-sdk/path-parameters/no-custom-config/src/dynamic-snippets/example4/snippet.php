@@ -3,20 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\User\Types\User;
+use Seed\Organizations\Requests\OrganizationsSearchOrganizationsRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->user->createUser(
+$client->organizations->searchorganizations(
     'tenant_id',
-    new User([
-        'name' => 'name',
-        'tags' => [
-            'tags',
-            'tags',
-        ],
-    ]),
+    'organization_id',
+    new OrganizationsSearchOrganizationsRequest([]),
 );

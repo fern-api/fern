@@ -15,9 +15,9 @@ module Seed
       )
     end
 
-    # @return [Seed::PropertyBasedError::Client]
-    def property_based_error
-      @property_based_error ||= Seed::PropertyBasedError::Client.new(client: @raw_client)
+    # @return [Seed::Propertybasederror::Client]
+    def propertybasederror
+      @propertybasederror ||= Seed::Propertybasederror::Client.new(client: @raw_client)
     end
   end
 end

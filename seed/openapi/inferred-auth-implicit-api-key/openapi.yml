@@ -5,7 +5,7 @@ info:
 paths:
   /token:
     post:
-      operationId: auth_getToken
+      operationId: auth_gettoken
       tags:
         - Auth
       parameters:
@@ -14,6 +14,10 @@ paths:
           required: true
           schema:
             type: string
+          example: X-Api-Key
+          examples:
+            Example1:
+              value: X-Api-Key
       responses:
         '200':
           description: ''
@@ -21,9 +25,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    token_type: token_type
+                    expires_in: 1
+                    scope: scope
   /nested-no-auth/get-something:
     get:
-      operationId: nestedNoAuth_api_getSomething
+      operationId: nestedNoAuthAPI_nestedNoAuth_api_getSomething
       tags:
         - NestedNoAuthAPI
       parameters: []
@@ -32,7 +43,7 @@ paths:
           description: ''
   /nested/get-something:
     get:
-      operationId: nested_api_getSomething
+      operationId: nestedAPI_nested_api_getSomething
       tags:
         - NestedAPI
       parameters: []
@@ -40,10 +51,10 @@ paths:
         '204':
           description: ''
       security:
-        - InferredAuthScheme: []
+        - InferredAuth: []
   /get-something:
     get:
-      operationId: simple_getSomething
+      operationId: simple_getsomething
       tags:
         - Simple
       parameters: []
@@ -51,7 +62,7 @@ paths:
         '204':
           description: ''
       security:
-        - InferredAuthScheme: []
+        - InferredAuth: []
 components:
   schemas:
     TokenResponse:
@@ -61,10 +72,13 @@ components:
       properties:
         access_token:
           type: string
+          example: access_token
         token_type:
           type: string
+          example: token_type
         expires_in:
           type: integer
+          example: 1
         scope:
           type: string
           nullable: true
@@ -73,6 +87,6 @@ components:
         - token_type
         - expires_in
   securitySchemes:
-    InferredAuthScheme:
+    InferredAuth:
       type: http
       scheme: bearer

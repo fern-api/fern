@@ -14,10 +14,10 @@ class Foo extends JsonSerializableType
     public string $normal;
 
     /**
-     * @var string $read
+     * @var ?string $read
      */
     #[JsonProperty('read')]
-    public string $read;
+    public ?string $read;
 
     /**
      * @var string $write
@@ -28,15 +28,15 @@ class Foo extends JsonSerializableType
     /**
      * @param array{
      *   normal: string,
-     *   read: string,
      *   write: string,
+     *   read?: ?string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
         $this->normal = $values['normal'];
-        $this->read = $values['read'];
+        $this->read = $values['read'] ?? null;
         $this->write = $values['write'];
     }
 

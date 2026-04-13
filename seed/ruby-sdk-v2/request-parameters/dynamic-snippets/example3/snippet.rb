@@ -2,8 +2,8 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.user.create_username_optional(request: {
+client.user.createusernameoptional(
   username: "username",
   password: "password",
-  name: "test"
-})
+  name: "name"
+)

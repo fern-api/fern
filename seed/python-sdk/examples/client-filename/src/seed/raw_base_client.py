@@ -34,10 +34,15 @@ class RawBaseSeedExhaustive:
         Returns
         -------
         HttpResponse[str]
+
         """
         _response = self._client_wrapper.httpx_client.request(
+            "echo",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -74,10 +79,15 @@ class RawBaseSeedExhaustive:
         Returns
         -------
         HttpResponse[Identifier]
+
         """
         _response = self._client_wrapper.httpx_client.request(
+            "type",
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=Type, direction="write"),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -119,10 +129,15 @@ class AsyncRawBaseSeedExhaustive:
         Returns
         -------
         AsyncHttpResponse[str]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "echo",
             method="POST",
             json=request,
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -159,10 +174,15 @@ class AsyncRawBaseSeedExhaustive:
         Returns
         -------
         AsyncHttpResponse[Identifier]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "type",
             method="POST",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=Type, direction="write"),
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )

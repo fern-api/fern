@@ -1,20 +1,20 @@
 import Foundation
 
 public enum UnionWithSameNumberTypes: Codable, Hashable, Sendable {
-    case anyNumber(Double)
-    case negativeInt(Int)
-    case positiveInt(Int)
+    case anyNumber(UnionWithSameNumberTypesAnyNumber)
+    case negativeInt(UnionWithSameNumberTypesNegativeInt)
+    case positiveInt(UnionWithSameNumberTypesPositiveInt)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "anyNumber":
-            self = .anyNumber(try container.decode(Double.self, forKey: .value))
+            self = .anyNumber(try UnionWithSameNumberTypesAnyNumber(from: decoder))
         case "negativeInt":
-            self = .negativeInt(try container.decode(Int.self, forKey: .value))
+            self = .negativeInt(try UnionWithSameNumberTypesNegativeInt(from: decoder))
         case "positiveInt":
-            self = .positiveInt(try container.decode(Int.self, forKey: .value))
+            self = .positiveInt(try UnionWithSameNumberTypesPositiveInt(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -30,18 +30,17 @@ public enum UnionWithSameNumberTypes: Codable, Hashable, Sendable {
         switch self {
         case .anyNumber(let data):
             try container.encode("anyNumber", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         case .negativeInt(let data):
             try container.encode("negativeInt", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         case .positiveInt(let data):
             try container.encode("positiveInt", forKey: .type)
-            try container.encode(data, forKey: .value)
+            try data.encode(to: encoder)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
-        case value
     }
 }

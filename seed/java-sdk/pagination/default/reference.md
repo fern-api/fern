@@ -1,6 +1,6 @@
 # Reference
-## Conversations
-<details><summary><code>client.complex.search(index, request) -> SyncPagingIterable&amp;lt;Conversation&amp;gt;</code></summary>
+## Complex
+<details><summary><code>client.complex.search(index, request) -> PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
 
@@ -21,18 +21,8 @@ client.complex().search(
             SearchRequestQuery.of(
                 SingleFilterSearchRequest
                     .builder()
-                    .field(Optional.of("field"))
-                    .operator(Optional.of(SingleFilterSearchRequestOperator.EQUALS))
-                    .value(Optional.of("value"))
                     .build()
             )
-        )
-        .pagination(
-            StartingAfterPaging
-                .builder()
-                .perPage(1)
-                .startingAfter("starting_after")
-                .build()
         )
         .build()
 );
@@ -58,7 +48,15 @@ client.complex().search(
 <dl>
 <dd>
 
-**request:** `SearchRequest` 
+**pagination:** `Optional<StartingAfterPaging>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `SearchRequestQuery` 
     
 </dd>
 </dl>
@@ -70,8 +68,8 @@ client.complex().search(
 </dl>
 </details>
 
-## InlineUsers InlineUsers
-<details><summary><code>client.inlineUsers.inlineUsers.listWithCursorPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+## InlineUsersInlineUsers
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithCursorPagination() -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -84,13 +82,9 @@ client.complex().search(
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithCursorPagination(
-    ListUsersCursorPaginationRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithCursorPagination(
+    InlineUsersInlineUsersListWithCursorPaginationRequest
         .builder()
-        .page(1)
-        .perPage(1)
-        .order(Order.ASC)
-        .startingAfter("starting_after")
         .build()
 );
 ```
@@ -123,7 +117,7 @@ client.inlineUsers().inlineUsers().listWithCursorPagination(
 <dl>
 <dd>
 
-**order:** `Optional<Order>` 
+**order:** `Optional<InlineUsersOrder>` 
     
 </dd>
 </dl>
@@ -146,7 +140,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithMixedTypeCursorPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithMixedTypeCursorPagination() -> InlineUsersListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -159,10 +153,9 @@ the next page of results.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
-    ListUsersMixedTypeCursorPaginationRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithMixedTypeCursorPagination(
+    InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest
         .builder()
-        .cursor("cursor")
         .build()
 );
 ```
@@ -191,7 +184,7 @@ client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithBodyCursorPagination(request) -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithBodyCursorPagination(request) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -204,8 +197,8 @@ client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
-    ListUsersMixedTypeCursorPaginationRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithBodyCursorPagination(
+    InlineUsersInlineUsersListWithBodyCursorPaginationRequest
         .builder()
         .build()
 );
@@ -223,7 +216,7 @@ client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
 <dl>
 <dd>
 
-**pagination:** `Optional<WithCursor>` 
+**pagination:** `Optional<InlineUsersWithCursor>` 
 
 The object that contains the cursor used for pagination
 in order to fetch the next page of results.
@@ -238,7 +231,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithOffsetPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetPagination() -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -251,13 +244,9 @@ in order to fetch the next page of results.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithCursorPagination(
-    ListUsersCursorPaginationRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetPagination(
+    InlineUsersInlineUsersListWithOffsetPaginationRequest
         .builder()
-        .page(1)
-        .perPage(1)
-        .order(Order.ASC)
-        .startingAfter("starting_after")
         .build()
 );
 ```
@@ -290,7 +279,7 @@ client.inlineUsers().inlineUsers().listWithCursorPagination(
 <dl>
 <dd>
 
-**order:** `Optional<Order>` 
+**order:** `Optional<InlineUsersOrder>` 
     
 </dd>
 </dl>
@@ -313,7 +302,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithDoubleOffsetPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithDoubleOffsetPagination() -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -326,13 +315,9 @@ the next page of results.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithCursorPagination(
-    ListUsersCursorPaginationRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithDoubleOffsetPagination(
+    InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest
         .builder()
-        .page(1)
-        .perPage(1)
-        .order(Order.ASC)
-        .startingAfter("starting_after")
         .build()
 );
 ```
@@ -365,7 +350,7 @@ client.inlineUsers().inlineUsers().listWithCursorPagination(
 <dl>
 <dd>
 
-**order:** `Optional<Order>` 
+**order:** `Optional<InlineUsersOrder>` 
     
 </dd>
 </dl>
@@ -388,7 +373,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithBodyOffsetPagination(request) -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithBodyOffsetPagination(request) -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -401,8 +386,8 @@ the next page of results.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
-    ListUsersMixedTypeCursorPaginationRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithBodyOffsetPagination(
+    InlineUsersInlineUsersListWithBodyOffsetPaginationRequest
         .builder()
         .build()
 );
@@ -420,7 +405,7 @@ client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
 <dl>
 <dd>
 
-**pagination:** `Optional<WithPage>` 
+**pagination:** `Optional<InlineUsersWithPage>` 
 
 The object that contains the offset used for pagination
 in order to fetch the next page of results.
@@ -435,7 +420,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithOffsetStepPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetStepPagination() -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -448,12 +433,9 @@ in order to fetch the next page of results.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithOffsetStepPagination(
-    ListUsersOffsetStepPaginationRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetStepPagination(
+    InlineUsersInlineUsersListWithOffsetStepPaginationRequest
         .builder()
-        .page(1)
-        .limit(1)
-        .order(Order.ASC)
         .build()
 );
 ```
@@ -490,7 +472,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `Optional<Order>` 
+**order:** `Optional<InlineUsersOrder>` 
     
 </dd>
 </dl>
@@ -502,7 +484,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithOffsetPaginationHasNextPage() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithOffsetPaginationHasNextPage() -> InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -515,12 +497,9 @@ paginated endpoint.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithOffsetStepPagination(
-    ListUsersOffsetStepPaginationRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithOffsetPaginationHasNextPage(
+    InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest
         .builder()
-        .page(1)
-        .limit(1)
-        .order(Order.ASC)
         .build()
 );
 ```
@@ -557,7 +536,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `Optional<Order>` 
+**order:** `Optional<InlineUsersOrder>` 
     
 </dd>
 </dl>
@@ -569,7 +548,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithExtendedResults() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithExtendedResults() -> InlineUsersListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -582,10 +561,9 @@ paginated endpoint.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithExtendedResults(
-    ListUsersExtendedRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithExtendedResults(
+    InlineUsersInlineUsersListWithExtendedResultsRequest
         .builder()
-        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .build()
 );
 ```
@@ -602,7 +580,7 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `Optional<UUID>` 
+**cursor:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -614,7 +592,7 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithExtendedResultsAndOptionalData() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithExtendedResultsAndOptionalData() -> InlineUsersListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -627,10 +605,9 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithExtendedResults(
-    ListUsersExtendedRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithExtendedResultsAndOptionalData(
+    InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest
         .builder()
-        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .build()
 );
 ```
@@ -647,7 +624,7 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `Optional<UUID>` 
+**cursor:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -659,7 +636,7 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listUsernames() -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListUsernames() -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -672,10 +649,9 @@ client.inlineUsers().inlineUsers().listWithExtendedResults(
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithCursorPagination(
-    ListUsersCursorPaginationRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListUsernames(
+    InlineUsersInlineUsersListUsernamesRequest
         .builder()
-        .startingAfter("starting_after")
         .build()
 );
 ```
@@ -707,7 +683,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inlineUsers.inlineUsers.listWithGlobalConfig() -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
+<details><summary><code>client.inlineUsersInlineUsers.inlineUsersInlineUsersListWithGlobalConfig() -> InlineUsersUsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -720,10 +696,9 @@ the next page of results.
 <dd>
 
 ```java
-client.inlineUsers().inlineUsers().listWithGlobalConfig(
-    ListWithGlobalConfigRequest
+client.inlineUsersInlineUsers().inlineUsersInlineUsersListWithGlobalConfig(
+    InlineUsersInlineUsersListWithGlobalConfigRequest
         .builder()
-        .offset(1)
         .build()
 );
 ```
@@ -753,7 +728,7 @@ client.inlineUsers().inlineUsers().listWithGlobalConfig(
 </details>
 
 ## Users
-<details><summary><code>client.users.listWithCursorPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithcursorpagination() -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -766,13 +741,9 @@ client.inlineUsers().inlineUsers().listWithGlobalConfig(
 <dd>
 
 ```java
-client.users().listWithCursorPagination(
-    ListUsersCursorPaginationRequest
+client.users().listwithcursorpagination(
+    UsersListWithCursorPaginationRequest
         .builder()
-        .page(1)
-        .perPage(1)
-        .order(Order.ASC)
-        .startingAfter("starting_after")
         .build()
 );
 ```
@@ -828,7 +799,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithMixedTypeCursorPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithmixedtypecursorpagination() -> ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -841,10 +812,9 @@ the next page of results.
 <dd>
 
 ```java
-client.users().listWithMixedTypeCursorPagination(
-    ListUsersMixedTypeCursorPaginationRequest
+client.users().listwithmixedtypecursorpagination(
+    UsersListWithMixedTypeCursorPaginationRequest
         .builder()
-        .cursor("cursor")
         .build()
 );
 ```
@@ -873,7 +843,7 @@ client.users().listWithMixedTypeCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithBodyCursorPagination(request) -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithbodycursorpagination(request) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -886,8 +856,8 @@ client.users().listWithMixedTypeCursorPagination(
 <dd>
 
 ```java
-client.users().listWithMixedTypeCursorPagination(
-    ListUsersMixedTypeCursorPaginationRequest
+client.users().listwithbodycursorpagination(
+    UsersListWithBodyCursorPaginationRequest
         .builder()
         .build()
 );
@@ -920,7 +890,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithTopLevelBodyCursorPagination(request) -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithtoplevelbodycursorpagination(request) -> ListUsersTopLevelCursorPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -949,11 +919,9 @@ when getNextPage() is called with a different cursor value.
 <dd>
 
 ```java
-client.users().listWithTopLevelBodyCursorPagination(
-    ListUsersTopLevelBodyCursorPaginationRequest
+client.users().listwithtoplevelbodycursorpagination(
+    UsersListWithTopLevelBodyCursorPaginationRequest
         .builder()
-        .cursor("initial_cursor")
-        .filter("active")
         .build()
 );
 ```
@@ -993,7 +961,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithOffsetPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithoffsetpagination() -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1006,13 +974,9 @@ the next page of results.
 <dd>
 
 ```java
-client.users().listWithCursorPagination(
-    ListUsersCursorPaginationRequest
+client.users().listwithoffsetpagination(
+    UsersListWithOffsetPaginationRequest
         .builder()
-        .page(1)
-        .perPage(1)
-        .order(Order.ASC)
-        .startingAfter("starting_after")
         .build()
 );
 ```
@@ -1068,7 +1032,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithDoubleOffsetPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithdoubleoffsetpagination() -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1081,13 +1045,9 @@ the next page of results.
 <dd>
 
 ```java
-client.users().listWithCursorPagination(
-    ListUsersCursorPaginationRequest
+client.users().listwithdoubleoffsetpagination(
+    UsersListWithDoubleOffsetPaginationRequest
         .builder()
-        .page(1)
-        .perPage(1)
-        .order(Order.ASC)
-        .startingAfter("starting_after")
         .build()
 );
 ```
@@ -1143,7 +1103,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithBodyOffsetPagination(request) -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithbodyoffsetpagination(request) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1156,8 +1116,8 @@ the next page of results.
 <dd>
 
 ```java
-client.users().listWithMixedTypeCursorPagination(
-    ListUsersMixedTypeCursorPaginationRequest
+client.users().listwithbodyoffsetpagination(
+    UsersListWithBodyOffsetPaginationRequest
         .builder()
         .build()
 );
@@ -1190,7 +1150,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithOffsetStepPagination() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithoffsetsteppagination() -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1203,12 +1163,9 @@ in order to fetch the next page of results.
 <dd>
 
 ```java
-client.users().listWithOffsetStepPagination(
-    ListUsersOffsetStepPaginationRequest
+client.users().listwithoffsetsteppagination(
+    UsersListWithOffsetStepPaginationRequest
         .builder()
-        .page(1)
-        .limit(1)
-        .order(Order.ASC)
         .build()
 );
 ```
@@ -1257,7 +1214,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithOffsetPaginationHasNextPage() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithoffsetpaginationhasnextpage() -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1270,12 +1227,9 @@ paginated endpoint.
 <dd>
 
 ```java
-client.users().listWithOffsetStepPagination(
-    ListUsersOffsetStepPaginationRequest
+client.users().listwithoffsetpaginationhasnextpage(
+    UsersListWithOffsetPaginationHasNextPageRequest
         .builder()
-        .page(1)
-        .limit(3)
-        .order(Order.ASC)
         .build()
 );
 ```
@@ -1324,7 +1278,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithExtendedResults() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithextendedresults() -> ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1337,10 +1291,9 @@ paginated endpoint.
 <dd>
 
 ```java
-client.users().listWithExtendedResults(
-    ListUsersExtendedRequest
+client.users().listwithextendedresults(
+    UsersListWithExtendedResultsRequest
         .builder()
-        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .build()
 );
 ```
@@ -1357,7 +1310,7 @@ client.users().listWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `Optional<UUID>` 
+**cursor:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -1369,7 +1322,7 @@ client.users().listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithExtendedResultsAndOptionalData() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithextendedresultsandoptionaldata() -> ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1382,10 +1335,9 @@ client.users().listWithExtendedResults(
 <dd>
 
 ```java
-client.users().listWithExtendedResults(
-    ListUsersExtendedRequest
+client.users().listwithextendedresultsandoptionaldata(
+    UsersListWithExtendedResultsAndOptionalDataRequest
         .builder()
-        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .build()
 );
 ```
@@ -1402,7 +1354,7 @@ client.users().listWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `Optional<UUID>` 
+**cursor:** `Optional<String>` 
     
 </dd>
 </dl>
@@ -1414,7 +1366,7 @@ client.users().listWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.users.listUsernames() -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
+<details><summary><code>client.users.listusernames() -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1427,58 +1379,9 @@ client.users().listWithExtendedResults(
 <dd>
 
 ```java
-client.users().listWithCursorPagination(
-    ListUsersCursorPaginationRequest
+client.users().listusernames(
+    UsersListUsernamesRequest
         .builder()
-        .startingAfter("starting_after")
-        .build()
-);
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**startingAfter:** `Optional<String>` 
-
-The cursor used for pagination in order to fetch
-the next page of results.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.users.listUsernamesWithOptionalResponse() -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.users().listWithCursorPagination(
-    ListUsersCursorPaginationRequest
-        .builder()
-        .startingAfter("starting_after")
         .build()
 );
 ```
@@ -1510,7 +1413,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithGlobalConfig() -> SyncPagingIterable&amp;lt;String&amp;gt;</code></summary>
+<details><summary><code>client.users.listusernameswithoptionalresponse() -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1523,10 +1426,56 @@ the next page of results.
 <dd>
 
 ```java
-client.users().listWithGlobalConfig(
-    ListWithGlobalConfigRequest
+client.users().listusernameswithoptionalresponse(
+    UsersListUsernamesWithOptionalResponseRequest
         .builder()
-        .offset(1)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**startingAfter:** `Optional<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.listwithglobalconfig() -> UsernameContainer</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().listwithglobalconfig(
+    UsersListWithGlobalConfigRequest
+        .builder()
         .build()
 );
 ```
@@ -1555,7 +1504,7 @@ client.users().listWithGlobalConfig(
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithOptionalData() -> SyncPagingIterable&amp;lt;User&amp;gt;</code></summary>
+<details><summary><code>client.users.listwithoptionaldata() -> ListUsersOptionalDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1568,10 +1517,9 @@ client.users().listWithGlobalConfig(
 <dd>
 
 ```java
-client.users().listWithOptionalData(
-    ListUsersOptionalDataRequest
+client.users().listwithoptionaldata(
+    UsersListWithOptionalDataRequest
         .builder()
-        .page(1)
         .build()
 );
 ```
@@ -1600,7 +1548,7 @@ client.users().listWithOptionalData(
 </dl>
 </details>
 
-<details><summary><code>client.users.listWithAliasedData() -> ListUsersAliasedDataPaginationResponse</code></summary>
+<details><summary><code>client.users.listwithaliaseddata() -> ListUsersAliasedDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1613,12 +1561,9 @@ client.users().listWithOptionalData(
 <dd>
 
 ```java
-client.users().listWithAliasedData(
-    ListUsersAliasedDataRequest
+client.users().listwithaliaseddata(
+    UsersListWithAliasedDataRequest
         .builder()
-        .page(1)
-        .perPage(1)
-        .startingAfter("starting_after")
         .build()
 );
 ```

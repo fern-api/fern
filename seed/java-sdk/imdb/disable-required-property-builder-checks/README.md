@@ -56,7 +56,7 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.api.SeedApiClient;
-import com.seed.api.resources.imdb.types.CreateMovieRequest;
+import com.seed.api.resources.imdb.requests.CreateMovieRequest;
 
 public class Example {
     public static void main(String[] args) {
@@ -65,7 +65,7 @@ public class Example {
             .token("<token>")
             .build();
 
-        client.imdb().createMovie(
+        client.imdb().createmovie(
             CreateMovieRequest
                 .builder()
                 .title("title")
@@ -97,7 +97,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.api.core.SeedApiApiException;
 
 try{
-    client.imdb().createMovie(...);
+    client.imdb().createmovie(...);
 } catch (SeedApiApiException e){
     // Do something with the API exception...
 }
@@ -161,7 +161,7 @@ SeedApiClient client = SeedApiClient
     .build();
 
 // Request level
-client.imdb().createMovie(
+client.imdb().createmovie(
     ...,
     RequestOptions
         .builder()
@@ -187,7 +187,7 @@ SeedApiClient client = SeedApiClient
 ;
 
 // Request level
-client.imdb().createMovie(
+client.imdb().createmovie(
     ...,
     RequestOptions
         .builder()
@@ -203,7 +203,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-SeedApiHttpResponse response = client.imdb().withRawResponse().createMovie(...);
+SeedApiHttpResponse response = client.imdb().withRawResponse().createmovie(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));

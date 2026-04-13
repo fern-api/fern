@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client-&gt;auth-&gt;getTokenWithClientCredentials($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;gettokenwithclientcredentials($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,12 @@
 <dd>
 
 ```php
-$client->auth->getTokenWithClientCredentials(
-    new GetTokenRequest([
-        'xApiKey' => 'X-Api-Key',
+$client->auth->gettokenwithclientcredentials(
+    new AuthGetTokenWithClientCredentialsRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
-        'audience' => 'https://api.example.com',
-        'grantType' => 'client_credentials',
-        'scope' => 'scope',
+        'audience' => AuthGetTokenWithClientCredentialsRequestAudience::HttpsApiExampleCom->value,
+        'grantType' => AuthGetTokenWithClientCredentialsRequestGrantType::ClientCredentials->value,
     ]),
 );
 ```
@@ -33,14 +31,6 @@ $client->auth->getTokenWithClientCredentials(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**$xApiKey:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -89,7 +79,7 @@ $client->auth->getTokenWithClientCredentials(
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;auth-&gt;refreshToken($request) -> ?TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;refreshtoken($request) -> ?TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -102,15 +92,13 @@ $client->auth->getTokenWithClientCredentials(
 <dd>
 
 ```php
-$client->auth->refreshToken(
-    new RefreshTokenRequest([
-        'xApiKey' => 'X-Api-Key',
+$client->auth->refreshtoken(
+    new AuthRefreshTokenRequest([
         'clientId' => 'client_id',
         'clientSecret' => 'client_secret',
         'refreshToken' => 'refresh_token',
-        'audience' => 'https://api.example.com',
-        'grantType' => 'refresh_token',
-        'scope' => 'scope',
+        'audience' => AuthRefreshTokenRequestAudience::HttpsApiExampleCom->value,
+        'grantType' => AuthRefreshTokenRequestGrantType::RefreshToken->value,
     ]),
 );
 ```
@@ -123,14 +111,6 @@ $client->auth->refreshToken(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**$xApiKey:** `string` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>

@@ -4,7 +4,7 @@ namespace Seed\Dummy;
 
 use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Dummy\Requests\GenerateRequest;
+use Seed\Dummy\Requests\DummyGenerateRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
 use Seed\Core\Json\JsonApiRequest;
@@ -48,7 +48,7 @@ class DummyClient
     }
 
     /**
-     * @param GenerateRequest $request
+     * @param DummyGenerateRequest $request
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -60,7 +60,7 @@ class DummyClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function generate(GenerateRequest $request, ?array $options = null): void
+    public function generate(DummyGenerateRequest $request, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {
@@ -74,6 +74,9 @@ class DummyClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                return;
+            }
         } catch (ClientExceptionInterface $e) {
             throw new SeedException(message: $e->getMessage(), previous: $e);
         }

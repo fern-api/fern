@@ -1,25 +1,26 @@
-//! # OauthClientCredentialsDefault SDK
+//! # oauth-client-credentials-default SDK
 //!
-//! The official Rust SDK for the OauthClientCredentialsDefault.
+//! The official Rust SDK for the oauth-client-credentials-default.
 //!
 //! ## Getting Started
 //!
 //! ```rust
-//! use seed_oauth_client_credentials_default::prelude::*;
+//! use seed_api::prelude::*;
 //!
 //! #[tokio::main]
 //! async fn main() {
 //!     let config = ClientConfig {
+//!         token: Some("<token>".to_string()),
 //!         ..Default::default()
 //!     };
-//!     let client = OauthClientCredentialsDefaultClient::new(config).expect("Failed to build client");
+//!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
 //!         .auth
-//!         .get_token(
-//!             &GetTokenRequest {
+//!         .gettoken(
+//!             &AuthGetTokenRequest {
 //!                 client_id: "client_id".to_string(),
 //!                 client_secret: "client_secret".to_string(),
-//!                 grant_type: "client_credentials".to_string(),
+//!                 grant_type: AuthGetTokenRequestGrantType::ClientCredentials,
 //!             },
 //!             None,
 //!         )

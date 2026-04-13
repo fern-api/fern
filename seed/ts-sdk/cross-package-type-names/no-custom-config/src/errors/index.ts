@@ -1,2 +1,2 @@
-export { SeedCrossPackageTypeNamesError } from "./SeedCrossPackageTypeNamesError.js";
-export { SeedCrossPackageTypeNamesTimeoutError } from "./SeedCrossPackageTypeNamesTimeoutError.js";
+export { SeedApiError } from "./SeedApiError.js";
+export { SeedApiTimeoutError } from "./SeedApiTimeoutError.js";

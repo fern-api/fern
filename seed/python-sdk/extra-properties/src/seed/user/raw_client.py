@@ -9,7 +9,9 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.user import User
+from ..types.user import User
+from .types.user_create_user_request_type import UserCreateUserRequestType
+from .types.user_create_user_request_version import UserCreateUserRequestVersion
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -20,10 +22,21 @@ class RawUserClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create_user(self, *, name: str, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[User]:
+    def createuser(
+        self,
+        *,
+        type: UserCreateUserRequestType,
+        version: UserCreateUserRequestVersion,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[User]:
         """
         Parameters
         ----------
+        type : UserCreateUserRequestType
+
+        version : UserCreateUserRequestVersion
+
         name : str
 
         request_options : typing.Optional[RequestOptions]
@@ -32,14 +45,18 @@ class RawUserClient:
         Returns
         -------
         HttpResponse[User]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             "user",
             method="POST",
             json={
+                "_type": type,
+                "_version": version,
                 "name": name,
-                "_type": "CreateUserRequest",
-                "_version": "v1",
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -68,12 +85,21 @@ class AsyncRawUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create_user(
-        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
+    async def createuser(
+        self,
+        *,
+        type: UserCreateUserRequestType,
+        version: UserCreateUserRequestVersion,
+        name: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[User]:
         """
         Parameters
         ----------
+        type : UserCreateUserRequestType
+
+        version : UserCreateUserRequestVersion
+
         name : str
 
         request_options : typing.Optional[RequestOptions]
@@ -82,14 +108,18 @@ class AsyncRawUserClient:
         Returns
         -------
         AsyncHttpResponse[User]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             "user",
             method="POST",
             json={
+                "_type": type,
+                "_version": version,
                 "name": name,
-                "_type": "CreateUserRequest",
-                "_version": "v1",
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

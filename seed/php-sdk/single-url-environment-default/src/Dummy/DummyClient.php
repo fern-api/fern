@@ -62,7 +62,7 @@ class DummyClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getDummy(?array $options = null): ?string
+    public function getdummy(?array $options = null): ?string
     {
         $options = array_merge($this->options, $options ?? []);
         try {

@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.Payment.Create(request) -> uuid.UUID</code></summary>
+<details><summary><code>client.Payment.Create(request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-request := &fern.CreatePaymentRequest{
+request := &fern.PaymentCreateRequest{
         Amount: 1,
         Currency: fern.CurrencyUsd,
     }
@@ -69,9 +69,12 @@ client.Payment.Create(
 <dd>
 
 ```go
+request := &fern.PaymentDeleteRequest{
+        PaymentID: "paymentId",
+    }
 client.Payment.Delete(
         context.TODO(),
-        "paymentId",
+        request,
     )
 }
 ```

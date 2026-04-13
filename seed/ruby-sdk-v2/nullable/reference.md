@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">get_users</a>() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">getusers</a>() -> Internal::Types::Array[Seed::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -13,10 +13,7 @@
 <dd>
 
 ```ruby
-client.nullable.get_users(
-  avatar: "avatar",
-  extra: true
-)
+client.nullable.getusers
 ```
 </dd>
 </dl>
@@ -83,7 +80,7 @@ client.nullable.get_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">create_user</a>(request) -> Seed::Nullable::Types::User</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">createuser</a>(request) -> Seed::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -96,21 +93,7 @@ client.nullable.get_users(
 <dd>
 
 ```ruby
-client.nullable.create_user(
-  username: "username",
-  tags: %w[tags tags],
-  metadata: {
-    created_at: "2024-01-15T09:30:00Z",
-    updated_at: "2024-01-15T09:30:00Z",
-    avatar: "avatar",
-    activated: true,
-    status: {},
-    values: {
-      values: "values"
-    }
-  },
-  avatar: "avatar"
-)
+client.nullable.createuser(username: "username")
 ```
 </dd>
 </dl>
@@ -141,7 +124,7 @@ client.nullable.create_user(
 <dl>
 <dd>
 
-**metadata:** `Seed::Nullable::Types::Metadata` 
+**metadata:** `Seed::Types::Metadata` 
     
 </dd>
 </dl>
@@ -169,7 +152,7 @@ client.nullable.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">delete_user</a>(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">deleteuser</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -182,7 +165,7 @@ client.nullable.create_user(
 <dd>
 
 ```ruby
-client.nullable.delete_user(username: "xy")
+client.nullable.deleteuser
 ```
 </dd>
 </dl>

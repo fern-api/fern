@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "MixedCase",
+    name: "Api",
     platforms: [
         .iOS(.v15),
         .macOS(.v12),
@@ -12,19 +12,19 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "MixedCase",
-            targets: ["MixedCase"]
+            name: "Api",
+            targets: ["Api"]
         )
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "MixedCase",
+            name: "Api",
             path: "Sources"
         ),
         .testTarget(
-            name: "MixedCaseTests",
-            dependencies: ["MixedCase"],
+            name: "ApiTests",
+            dependencies: ["Api"],
             path: "Tests"
         )
     ]

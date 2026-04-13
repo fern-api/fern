@@ -8,18 +8,18 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnknownAsAnyClient } from \"@fern/unknown\";\n\nconst client = new SeedUnknownAsAnyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.unknown.post({\n    \"key\": \"value\"\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/unknown\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.unknown.post({\n    \"key\": \"value\"\n});\n"
             }
         },
         {
             "id": {
                 "path": "/with-object",
                 "method": "POST",
-                "identifier_override": "endpoint_unknown.postObject"
+                "identifier_override": "endpoint_unknown.postobject"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedUnknownAsAnyClient } from \"@fern/unknown\";\n\nconst client = new SeedUnknownAsAnyClient({ environment: \"YOUR_BASE_URL\" });\nawait client.unknown.postObject({\n    unknown: {\n        \"key\": \"value\"\n    }\n});\n"
+                "client": "import { SeedApiClient } from \"@fern/unknown\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.unknown.postobject({\n    unknown: {\n        \"key\": \"value\"\n    }\n});\n"
             }
         }
     ],

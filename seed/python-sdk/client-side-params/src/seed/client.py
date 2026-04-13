@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .service.client import AsyncServiceClient, ServiceClient
 
 
-class SeedClientSideParams:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -39,9 +39,9 @@ class SeedClientSideParams:
 
     Examples
     --------
-    from seed import SeedClientSideParams
+    from seed import SeedApi
 
-    client = SeedClientSideParams(
+    client = SeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -102,7 +102,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedClientSideParams:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -132,9 +132,9 @@ class AsyncSeedClientSideParams:
 
     Examples
     --------
-    from seed import AsyncSeedClientSideParams
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedClientSideParams(
+    client = AsyncSeedApi(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )

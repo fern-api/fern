@@ -31,30 +31,23 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	}
 }
 
-func (r *RawClient) GetPresignedURL(
+func (r *RawClient) Getpresignedurl(
 	ctx context.Context,
-	request *fern.GetPresignedURLRequest,
+	request *fern.S3GetPresignedURLRequest,
 	opts ...option.RequestOption,
 ) (*core.Response[string], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
-		internal.ResolveEnvironmentBaseURL(
-			options.Environment,
-			"S3",
-		),
 		r.baseURL,
-		internal.ResolveEnvironmentBaseURL(
-			r.options.Environment,
-			"S3",
-		),
-		"https://s3.aws.com",
+		"",
 	)
 	endpointURL := baseURL + "/s3/presigned-url"
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/json")
 	var response string
 	raw, err := r.caller.Call(
 		ctx,

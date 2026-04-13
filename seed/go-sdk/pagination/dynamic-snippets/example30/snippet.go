@@ -17,12 +17,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersOptionalDataRequest{
-        Page: fern.Int(
-            1,
-        ),
-    }
-    client.Users.ListWithOptionalData(
+    request := &fern.UsersListWithBodyCursorPaginationRequest{}
+    client.Users.Listwithbodycursorpagination(
         context.TODO(),
         request,
     )

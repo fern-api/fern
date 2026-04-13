@@ -2,26 +2,23 @@
 //!
 //! This module contains client implementations for:
 //!
-//! - **Errors**
-//! - **PropertyBasedError**
+//! - **Propertybasederror**
 
 use crate::{ApiError, ClientConfig};
 
-pub mod errors;
-pub mod property_based_error;
-pub struct ErrorPropertyClient {
+pub mod propertybasederror;
+pub struct ApiClient {
     pub config: ClientConfig,
-    pub property_based_error: PropertyBasedErrorClient,
+    pub propertybasederror: PropertybasederrorClient,
 }
 
-impl ErrorPropertyClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            property_based_error: PropertyBasedErrorClient::new(config.clone())?,
+            propertybasederror: PropertybasederrorClient::new(config.clone())?,
         })
     }
 }
 
-pub use errors::ErrorsClient;
-pub use property_based_error::PropertyBasedErrorClient;
+pub use propertybasederror::PropertybasederrorClient;

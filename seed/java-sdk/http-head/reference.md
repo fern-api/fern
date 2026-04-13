@@ -1,30 +1,5 @@
 # Reference
 ## User
-<details><summary><code>client.user.head()</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```java
-client.user().head();
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.user.list() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
@@ -39,7 +14,7 @@ client.user().head();
 
 ```java
 client.user().list(
-    ListUsersRequest
+    UserListRequest
         .builder()
         .limit(1)
         .build()
@@ -60,6 +35,31 @@ client.user().list(
 
 **limit:** `Integer` 
     
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.head()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.user().head();
+```
 </dd>
 </dl>
 </dd>

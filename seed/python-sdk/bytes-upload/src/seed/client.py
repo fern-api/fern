@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .service.client import AsyncServiceClient, ServiceClient
 
 
-class SeedBytesUpload:
+class SeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedBytesUpload:
 
     Examples
     --------
-    from seed import SeedBytesUpload
+    from seed import SeedApi
 
-    client = SeedBytesUpload(
+    client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -98,7 +98,7 @@ def _make_default_async_client(
     return httpx.AsyncClient(timeout=timeout)
 
 
-class AsyncSeedBytesUpload:
+class AsyncSeedApi:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -124,9 +124,9 @@ class AsyncSeedBytesUpload:
 
     Examples
     --------
-    from seed import AsyncSeedBytesUpload
+    from seed import AsyncSeedApi
 
-    client = AsyncSeedBytesUpload(
+    client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
     )
     """

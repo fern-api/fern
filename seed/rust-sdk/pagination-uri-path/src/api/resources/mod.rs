@@ -7,12 +7,12 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod users;
-pub struct PaginationUriPathClient {
+pub struct ApiClient {
     pub config: ClientConfig,
     pub users: UsersClient,
 }
 
-impl PaginationUriPathClient {
+impl ApiClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),

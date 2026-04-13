@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">getTokenWithClientCredentials</a>(xApiKey: String, request: Requests.GetTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">gettokenwithclientcredentials</a>(request: Requests.AuthGetTokenWithClientCredentialsRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,17 +14,16 @@
 
 ```swift
 import Foundation
-import WebsocketAuth
+import Api
 
 private func main() async throws {
-    let client = WebsocketAuthClient()
+    let client = ApiClient(apiKey: "<X-Api-Key>")
 
-    _ = try await client.auth.getTokenWithClientCredentials(request: .init(
+    _ = try await client.auth.gettokenwithclientcredentials(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
-        grantType: .clientCredentials,
-        scope: "scope"
+        grantType: .clientCredentials
     ))
 }
 
@@ -43,15 +42,7 @@ try await main()
 <dl>
 <dd>
 
-**xApiKey:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `Requests.GetTokenRequest` 
+**request:** `Requests.AuthGetTokenWithClientCredentialsRequest` 
     
 </dd>
 </dl>
@@ -71,7 +62,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">refreshToken</a>(xApiKey: String, request: Requests.RefreshTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/Sources/Resources/Auth/AuthClient.swift">refreshtoken</a>(request: Requests.AuthRefreshTokenRequest, requestOptions: RequestOptions?) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -85,18 +76,17 @@ try await main()
 
 ```swift
 import Foundation
-import WebsocketAuth
+import Api
 
 private func main() async throws {
-    let client = WebsocketAuthClient()
+    let client = ApiClient(apiKey: "<X-Api-Key>")
 
-    _ = try await client.auth.refreshToken(request: .init(
+    _ = try await client.auth.refreshtoken(request: .init(
         clientId: "client_id",
         clientSecret: "client_secret",
         refreshToken: "refresh_token",
         audience: .httpsApiExampleCom,
-        grantType: .refreshToken,
-        scope: "scope"
+        grantType: .refreshToken
     ))
 }
 
@@ -115,15 +105,7 @@ try await main()
 <dl>
 <dd>
 
-**xApiKey:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `Requests.RefreshTokenRequest` 
+**request:** `Requests.AuthRefreshTokenRequest` 
     
 </dd>
 </dl>

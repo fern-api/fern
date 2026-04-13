@@ -3,15 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Simple\Types\FooRequest;
+use Seed\Types\FooRequest;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->simple->fooWithExamples(
+$client->simple->foo(
     new FooRequest([
-        'bar' => 'hello',
+        'bar' => 'bar',
     ]),
 );

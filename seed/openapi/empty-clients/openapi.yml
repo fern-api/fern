@@ -5,19 +5,24 @@ info:
 paths: {}
 components:
   schemas:
-    level1level2Person:
-      title: level1level2Person
+    Level1Level2Person:
+      title: Level1Level2Person
       type: object
       properties:
         name:
           type: string
         address:
-          $ref: '#/components/schemas/level1level2Address'
+          $ref: '#/components/schemas/Level1Level2Address'
       required:
         - name
         - address
-    level1level2Address:
-      title: level1level2Address
+    Level1Level2AddressCountry:
+      title: Level1Level2AddressCountry
+      type: string
+      enum:
+        - USA
+    Level1Level2Address:
+      title: Level1Level2Address
       type: object
       properties:
         line1:
@@ -32,27 +37,31 @@ components:
         zip:
           type: string
         country:
-          type: string
-          const: USA
+          $ref: '#/components/schemas/Level1Level2AddressCountry'
       required:
         - line1
         - city
         - state
         - zip
         - country
-    level1Person:
-      title: level1Person
+    Level1Person:
+      title: Level1Person
       type: object
       properties:
         name:
           type: string
         address:
-          $ref: '#/components/schemas/level1Address'
+          $ref: '#/components/schemas/Level1Address'
       required:
         - name
         - address
-    level1Address:
-      title: level1Address
+    Level1AddressCountry:
+      title: Level1AddressCountry
+      type: string
+      enum:
+        - USA
+    Level1Address:
+      title: Level1Address
       type: object
       properties:
         line1:
@@ -67,8 +76,7 @@ components:
         zip:
           type: string
         country:
-          type: string
-          const: USA
+          $ref: '#/components/schemas/Level1AddressCountry'
       required:
         - line1
         - city

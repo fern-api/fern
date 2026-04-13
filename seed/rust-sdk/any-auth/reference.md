@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">get_token</a>(request: GetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
+<details><summary><code>client.auth.<a href="/src/api/resources/auth/client.rs">gettoken</a>(request: AuthGetTokenRequest) -> Result&lt;TokenResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_any_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -21,15 +21,15 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = AnyAuthClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client
         .auth
-        .get_token(
-            &GetTokenRequest {
+        .gettoken(
+            &AuthGetTokenRequest {
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
-                audience: "https://api.example.com".to_string(),
-                grant_type: "client_credentials".to_string(),
+                audience: AuthGetTokenRequestAudience::HttpsApiExampleCom,
+                grant_type: AuthGetTokenRequestGrantType::ClientCredentials,
             },
             None,
         )
@@ -65,7 +65,7 @@ async fn main() {
 <dl>
 <dd>
 
-**audience:** `String` 
+**audience:** `AuthGetTokenRequestAudience` 
     
 </dd>
 </dl>
@@ -73,7 +73,7 @@ async fn main() {
 <dl>
 <dd>
 
-**grant_type:** `String` 
+**grant_type:** `AuthGetTokenRequestGrantType` 
     
 </dd>
 </dl>
@@ -99,7 +99,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_any_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -107,7 +107,7 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = AnyAuthClient::new(config).expect("Failed to build client");
+    let client = ApiClient::new(config).expect("Failed to build client");
     client.user.get(None).await;
 }
 ```
@@ -121,7 +121,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_admins</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">getadmins</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_any_auth::prelude::*;
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -142,8 +142,8 @@ async fn main() {
         token: Some("<token>".to_string()),
         ..Default::default()
     };
-    let client = AnyAuthClient::new(config).expect("Failed to build client");
-    client.user.get_admins(None).await;
+    let client = ApiClient::new(config).expect("Failed to build client");
+    client.user.getadmins(None).await;
 }
 ```
 </dd>

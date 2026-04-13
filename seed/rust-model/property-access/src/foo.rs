@@ -4,8 +4,8 @@ pub use crate::prelude::*;
 pub struct Foo {
     #[serde(default)]
     pub normal: String,
-    #[serde(default)]
-    pub read: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub read: Option<String>,
     #[serde(default)]
     pub write: String,
 }
@@ -43,12 +43,11 @@ impl FooBuilder {
     /// Consumes the builder and constructs a [`Foo`].
     /// This method will fail if any of the following fields are not set:
     /// - [`normal`](FooBuilder::normal)
-    /// - [`read`](FooBuilder::read)
     /// - [`write`](FooBuilder::write)
     pub fn build(self) -> Result<Foo, BuildError> {
         Ok(Foo {
             normal: self.normal.ok_or_else(|| BuildError::missing_field("normal"))?,
-            read: self.read.ok_or_else(|| BuildError::missing_field("read"))?,
+            read: self.read,
             write: self.write.ok_or_else(|| BuildError::missing_field("write"))?,
         })
     }

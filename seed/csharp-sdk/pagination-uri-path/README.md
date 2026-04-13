@@ -12,7 +12,6 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Reference](#reference)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
-- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
@@ -40,15 +39,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedPaginationUriPath;
+using SeedApi;
 
-var client = new SeedPaginationUriPathClient("TOKEN");
-var items = await client.Users.ListWithUriPaginationAsync();
-
-await foreach (var item in items)
-{
-    // do something with item
-}
+var client = new SeedApiClient("TOKEN");
+await client.Users.ListwithuripaginationAsync();
 ```
 
 ## Exception Handling
@@ -57,29 +51,13 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedPaginationUriPath;
+using SeedApi;
 
 try {
-    var response = await client.Users.ListWithUriPaginationAsync(...);
-} catch (SeedPaginationUriPathApiException e) {
+    var response = await client.Users.ListwithuripaginationAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
-}
-```
-
-## Pagination
-
-List endpoints are paginated. The SDK provides an async enumerable so that you can simply loop over the items:
-
-```csharp
-using SeedPaginationUriPath;
-
-var client = new SeedPaginationUriPathClient("TOKEN");
-var items = await client.Users.ListWithUriPaginationAsync();
-
-await foreach (var item in items)
-{
-    // do something with item
 }
 ```
 
@@ -100,7 +78,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Users.ListWithUriPaginationAsync(
+var response = await client.Users.ListwithuripaginationAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -113,7 +91,7 @@ var response = await client.Users.ListWithUriPaginationAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Users.ListWithUriPaginationAsync(
+var response = await client.Users.ListwithuripaginationAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -126,10 +104,10 @@ var response = await client.Users.ListWithUriPaginationAsync(
 Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
 ```csharp
-using SeedPaginationUriPath;
+using SeedApi;
 
 // Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Users.ListWithUriPaginationAsync(...).WithRawResponse();
+var result = await client.Users.ListwithuripaginationAsync(...).WithRawResponse();
 
 // Access the parsed data
 var data = result.Data;
@@ -146,7 +124,7 @@ if (headers.TryGetValue("X-Request-Id", out var requestId))
 }
 
 // For the default behavior, simply await without .WithRawResponse()
-var data = await client.Users.ListWithUriPaginationAsync(...);
+var data = await client.Users.ListwithuripaginationAsync(...);
 ```
 
 ### Additional Headers
@@ -154,7 +132,7 @@ var data = await client.Users.ListWithUriPaginationAsync(...);
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Users.ListWithUriPaginationAsync(
+var response = await client.Users.ListwithuripaginationAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>
@@ -170,7 +148,7 @@ var response = await client.Users.ListWithUriPaginationAsync(
 If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
 
 ```csharp
-var response = await client.Users.ListWithUriPaginationAsync(
+var response = await client.Users.ListwithuripaginationAsync(
     ...,
     new RequestOptions {
         AdditionalQueryParameters = new Dictionary<string, string>

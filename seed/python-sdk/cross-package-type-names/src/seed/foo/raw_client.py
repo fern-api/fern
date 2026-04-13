@@ -9,8 +9,8 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
-from .types.importing_type import ImportingType
-from .types.optional_string import OptionalString
+from ..types.importing_type import ImportingType
+from ..types.optional_string import OptionalString
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -24,7 +24,7 @@ class RawFooClient:
     def find(
         self,
         *,
-        optional_string: OptionalString,
+        optional_string: typing.Optional[OptionalString] = None,
         public_property: typing.Optional[str] = OMIT,
         private_property: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -32,7 +32,7 @@ class RawFooClient:
         """
         Parameters
         ----------
-        optional_string : OptionalString
+        optional_string : typing.Optional[OptionalString]
 
         public_property : typing.Optional[str]
 
@@ -44,6 +44,7 @@ class RawFooClient:
         Returns
         -------
         HttpResponse[ImportingType]
+
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -53,6 +54,9 @@ class RawFooClient:
             json={
                 "publicProperty": public_property,
                 "privateProperty": private_property,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -84,7 +88,7 @@ class AsyncRawFooClient:
     async def find(
         self,
         *,
-        optional_string: OptionalString,
+        optional_string: typing.Optional[OptionalString] = None,
         public_property: typing.Optional[str] = OMIT,
         private_property: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -92,7 +96,7 @@ class AsyncRawFooClient:
         """
         Parameters
         ----------
-        optional_string : OptionalString
+        optional_string : typing.Optional[OptionalString]
 
         public_property : typing.Optional[str]
 
@@ -104,6 +108,7 @@ class AsyncRawFooClient:
         Returns
         -------
         AsyncHttpResponse[ImportingType]
+
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -113,6 +118,9 @@ class AsyncRawFooClient:
             json={
                 "publicProperty": public_property,
                 "privateProperty": private_property,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

@@ -35,13 +35,11 @@ func NewClient(options *core.RequestOptions) *Client {
 
 func (c *Client) Search(
 	ctx context.Context,
-	index string,
 	request *fern.SearchRequest,
 	opts ...option.RequestOption,
 ) (*fern.PaginatedConversationResponse, error) {
 	response, err := c.WithRawResponse.Search(
 		ctx,
-		index,
 		request,
 		opts...,
 	)

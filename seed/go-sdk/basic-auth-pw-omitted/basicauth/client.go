@@ -33,11 +33,11 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // GET request with basic auth scheme
-func (c *Client) GetWithBasicAuth(
+func (c *Client) Getwithbasicauth(
 	ctx context.Context,
 	opts ...option.RequestOption,
 ) (bool, error) {
-	response, err := c.WithRawResponse.GetWithBasicAuth(
+	response, err := c.WithRawResponse.Getwithbasicauth(
 		ctx,
 		opts...,
 	)
@@ -48,12 +48,12 @@ func (c *Client) GetWithBasicAuth(
 }
 
 // POST request with basic auth scheme
-func (c *Client) PostWithBasicAuth(
+func (c *Client) Postwithbasicauth(
 	ctx context.Context,
 	request any,
 	opts ...option.RequestOption,
 ) (bool, error) {
-	response, err := c.WithRawResponse.PostWithBasicAuth(
+	response, err := c.WithRawResponse.Postwithbasicauth(
 		ctx,
 		request,
 		opts...,

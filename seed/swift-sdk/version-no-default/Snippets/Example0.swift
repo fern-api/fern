@@ -1,10 +1,10 @@
 import Foundation
-import Version
+import Api
 
 private func main() async throws {
-    let client = VersionClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.user.getUser(userId: "userId")
+    _ = try await client.user.getuser(userId: "userId")
 }
 
 try await main()

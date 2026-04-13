@@ -1,5 +1,5 @@
 # Reference
-## Conversations
+## Complex
 <details><summary><code>client.Complex.Search(Index, request) -> *fern.PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
@@ -14,27 +14,13 @@
 
 ```go
 request := &fern.SearchRequest{
-        Pagination: &fern.StartingAfterPaging{
-            PerPage: 1,
-            StartingAfter: fern.String(
-                "starting_after",
-            ),
-        },
+        Index: "index",
         Query: &fern.SearchRequestQuery{
-            SingleFilterSearchRequest: &fern.SingleFilterSearchRequest{
-                Field: fern.String(
-                    "field",
-                ),
-                Operator: fern.SingleFilterSearchRequestOperatorEquals.Ptr(),
-                Value: fern.String(
-                    "value",
-                ),
-            },
+            SingleFilterSearchRequest: &fern.SingleFilterSearchRequest{},
         },
     }
 client.Complex.Search(
         context.TODO(),
-        "index",
         request,
     )
 }
@@ -60,7 +46,15 @@ client.Complex.Search(
 <dl>
 <dd>
 
-**request:** `*fern.SearchRequest` 
+**pagination:** `*fern.StartingAfterPaging` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**query:** `*fern.SearchRequestQuery` 
     
 </dd>
 </dl>
@@ -72,8 +66,8 @@ client.Complex.Search(
 </dl>
 </details>
 
-## InlineUsers InlineUsers
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithCursorPagination() -> *inlineusers.ListUsersPaginationResponse</code></summary>
+## InlineUsersInlineUsers
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithCursorPagination() -> *fern.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -86,19 +80,8 @@ client.Complex.Search(
 <dd>
 
 ```go
-request := &inlineusers.ListUsersCursorPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        PerPage: fern.Int(
-            1,
-        ),
-        Order: inlineusers.OrderAsc.Ptr(),
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-client.InlineUsers.InlineUsers.ListWithCursorPagination(
+request := &fern.InlineUsersInlineUsersListWithCursorPaginationRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithCursorPagination(
         context.TODO(),
         request,
     )
@@ -133,7 +116,7 @@ client.InlineUsers.InlineUsers.ListWithCursorPagination(
 <dl>
 <dd>
 
-**order:** `*inlineusers.Order` 
+**order:** `*fern.InlineUsersOrder` 
     
 </dd>
 </dl>
@@ -156,7 +139,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination() -> *inlineusers.ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithMixedTypeCursorPagination() -> *fern.InlineUsersListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -169,12 +152,8 @@ the next page of results.
 <dd>
 
 ```go
-request := &inlineusers.ListUsersMixedTypeCursorPaginationRequest{
-        Cursor: fern.String(
-            "cursor",
-        ),
-    }
-client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
+request := &fern.InlineUsersInlineUsersListWithMixedTypeCursorPaginationRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithMixedTypeCursorPagination(
         context.TODO(),
         request,
     )
@@ -205,7 +184,7 @@ client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithBodyCursorPagination(request) -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyCursorPagination(request) -> *fern.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -218,8 +197,8 @@ client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
 <dd>
 
 ```go
-request := &inlineusers.ListUsersMixedTypeCursorPaginationRequest{}
-client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
+request := &fern.InlineUsersInlineUsersListWithBodyCursorPaginationRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyCursorPagination(
         context.TODO(),
         request,
     )
@@ -238,7 +217,7 @@ client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
 <dl>
 <dd>
 
-**pagination:** `*inlineusers.WithCursor` 
+**pagination:** `*fern.InlineUsersWithCursor` 
 
 The object that contains the cursor used for pagination
 in order to fetch the next page of results.
@@ -253,7 +232,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithOffsetPagination() -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPagination() -> *fern.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -266,19 +245,8 @@ in order to fetch the next page of results.
 <dd>
 
 ```go
-request := &inlineusers.ListUsersCursorPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        PerPage: fern.Int(
-            1,
-        ),
-        Order: inlineusers.OrderAsc.Ptr(),
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-client.InlineUsers.InlineUsers.ListWithCursorPagination(
+request := &fern.InlineUsersInlineUsersListWithOffsetPaginationRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPagination(
         context.TODO(),
         request,
     )
@@ -313,7 +281,7 @@ client.InlineUsers.InlineUsers.ListWithCursorPagination(
 <dl>
 <dd>
 
-**order:** `*inlineusers.Order` 
+**order:** `*fern.InlineUsersOrder` 
     
 </dd>
 </dl>
@@ -336,7 +304,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithDoubleOffsetPagination() -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithDoubleOffsetPagination() -> *fern.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -349,19 +317,8 @@ the next page of results.
 <dd>
 
 ```go
-request := &inlineusers.ListUsersCursorPaginationRequest{
-        Page: fern.Int(
-            1.1,
-        ),
-        PerPage: fern.Int(
-            1.1,
-        ),
-        Order: inlineusers.OrderAsc.Ptr(),
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-client.InlineUsers.InlineUsers.ListWithCursorPagination(
+request := &fern.InlineUsersInlineUsersListWithDoubleOffsetPaginationRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithDoubleOffsetPagination(
         context.TODO(),
         request,
     )
@@ -396,7 +353,7 @@ client.InlineUsers.InlineUsers.ListWithCursorPagination(
 <dl>
 <dd>
 
-**order:** `*inlineusers.Order` 
+**order:** `*fern.InlineUsersOrder` 
     
 </dd>
 </dl>
@@ -419,7 +376,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithBodyOffsetPagination(request) -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyOffsetPagination(request) -> *fern.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -432,8 +389,8 @@ the next page of results.
 <dd>
 
 ```go
-request := &inlineusers.ListUsersMixedTypeCursorPaginationRequest{}
-client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
+request := &fern.InlineUsersInlineUsersListWithBodyOffsetPaginationRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithBodyOffsetPagination(
         context.TODO(),
         request,
     )
@@ -452,7 +409,7 @@ client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
 <dl>
 <dd>
 
-**pagination:** `*inlineusers.WithPage` 
+**pagination:** `*fern.InlineUsersWithPage` 
 
 The object that contains the offset used for pagination
 in order to fetch the next page of results.
@@ -467,7 +424,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithOffsetStepPagination() -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetStepPagination() -> *fern.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -480,16 +437,8 @@ in order to fetch the next page of results.
 <dd>
 
 ```go
-request := &inlineusers.ListUsersOffsetStepPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        Limit: fern.Int(
-            1,
-        ),
-        Order: inlineusers.OrderAsc.Ptr(),
-    }
-client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
+request := &fern.InlineUsersInlineUsersListWithOffsetStepPaginationRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetStepPagination(
         context.TODO(),
         request,
     )
@@ -528,7 +477,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `*inlineusers.Order` 
+**order:** `*fern.InlineUsersOrder` 
     
 </dd>
 </dl>
@@ -540,7 +489,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage() -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginationHasNextPage() -> *fern.InlineUsersListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -553,16 +502,8 @@ paginated endpoint.
 <dd>
 
 ```go
-request := &inlineusers.ListUsersOffsetStepPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        Limit: fern.Int(
-            1,
-        ),
-        Order: inlineusers.OrderAsc.Ptr(),
-    }
-client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
+request := &fern.InlineUsersInlineUsersListWithOffsetPaginationHasNextPageRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithOffsetPaginationHasNextPage(
         context.TODO(),
         request,
     )
@@ -601,7 +542,7 @@ paginated endpoint.
 <dl>
 <dd>
 
-**order:** `*inlineusers.Order` 
+**order:** `*fern.InlineUsersOrder` 
     
 </dd>
 </dl>
@@ -613,7 +554,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithExtendedResults() -> *inlineusers.ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResults() -> *fern.InlineUsersListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -626,14 +567,8 @@ paginated endpoint.
 <dd>
 
 ```go
-request := &inlineusers.ListUsersExtendedRequest{
-        Cursor: fern.UUID(
-            uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        ),
-    }
-client.InlineUsers.InlineUsers.ListWithExtendedResults(
+request := &fern.InlineUsersInlineUsersListWithExtendedResultsRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResults(
         context.TODO(),
         request,
     )
@@ -652,7 +587,7 @@ client.InlineUsers.InlineUsers.ListWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `*uuid.UUID` 
+**cursor:** `*string` 
     
 </dd>
 </dl>
@@ -664,7 +599,7 @@ client.InlineUsers.InlineUsers.ListWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalData() -> *inlineusers.ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResultsAndOptionalData() -> *fern.InlineUsersListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -677,14 +612,8 @@ client.InlineUsers.InlineUsers.ListWithExtendedResults(
 <dd>
 
 ```go
-request := &inlineusers.ListUsersExtendedRequest{
-        Cursor: fern.UUID(
-            uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        ),
-    }
-client.InlineUsers.InlineUsers.ListWithExtendedResults(
+request := &fern.InlineUsersInlineUsersListWithExtendedResultsAndOptionalDataRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithExtendedResultsAndOptionalData(
         context.TODO(),
         request,
     )
@@ -703,7 +632,7 @@ client.InlineUsers.InlineUsers.ListWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `*uuid.UUID` 
+**cursor:** `*string` 
     
 </dd>
 </dl>
@@ -715,7 +644,7 @@ client.InlineUsers.InlineUsers.ListWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListUsernames() -> *fern.UsernameCursor</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListUsernames() -> *fern.UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -728,12 +657,8 @@ client.InlineUsers.InlineUsers.ListWithExtendedResults(
 <dd>
 
 ```go
-request := &inlineusers.ListUsersCursorPaginationRequest{
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-client.InlineUsers.InlineUsers.ListWithCursorPagination(
+request := &fern.InlineUsersInlineUsersListUsernamesRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListUsernames(
         context.TODO(),
         request,
     )
@@ -767,7 +692,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithGlobalConfig() -> *inlineusers.UsernameContainer</code></summary>
+<details><summary><code>client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithGlobalConfig() -> *fern.InlineUsersUsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -780,12 +705,8 @@ the next page of results.
 <dd>
 
 ```go
-request := &inlineusers.ListWithGlobalConfigRequest{
-        Offset: fern.Int(
-            1,
-        ),
-    }
-client.InlineUsers.InlineUsers.ListWithGlobalConfig(
+request := &fern.InlineUsersInlineUsersListWithGlobalConfigRequest{}
+client.InlineUsersInlineUsers.InlineUsersInlineUsersListWithGlobalConfig(
         context.TODO(),
         request,
     )
@@ -817,7 +738,7 @@ client.InlineUsers.InlineUsers.ListWithGlobalConfig(
 </details>
 
 ## Users
-<details><summary><code>client.Users.ListWithCursorPagination() -> *fern.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithcursorpagination() -> *fern.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -830,19 +751,8 @@ client.InlineUsers.InlineUsers.ListWithGlobalConfig(
 <dd>
 
 ```go
-request := &fern.ListUsersCursorPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        PerPage: fern.Int(
-            1,
-        ),
-        Order: fern.OrderAsc.Ptr(),
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-client.Users.ListWithCursorPagination(
+request := &fern.UsersListWithCursorPaginationRequest{}
+client.Users.Listwithcursorpagination(
         context.TODO(),
         request,
     )
@@ -900,7 +810,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithMixedTypeCursorPagination() -> *fern.ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithmixedtypecursorpagination() -> *fern.ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -913,12 +823,8 @@ the next page of results.
 <dd>
 
 ```go
-request := &fern.ListUsersMixedTypeCursorPaginationRequest{
-        Cursor: fern.String(
-            "cursor",
-        ),
-    }
-client.Users.ListWithMixedTypeCursorPagination(
+request := &fern.UsersListWithMixedTypeCursorPaginationRequest{}
+client.Users.Listwithmixedtypecursorpagination(
         context.TODO(),
         request,
     )
@@ -949,7 +855,7 @@ client.Users.ListWithMixedTypeCursorPagination(
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithBodyCursorPagination(request) -> *fern.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithbodycursorpagination(request) -> *fern.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -962,8 +868,8 @@ client.Users.ListWithMixedTypeCursorPagination(
 <dd>
 
 ```go
-request := &fern.ListUsersMixedTypeCursorPaginationRequest{}
-client.Users.ListWithMixedTypeCursorPagination(
+request := &fern.UsersListWithBodyCursorPaginationRequest{}
+client.Users.Listwithbodycursorpagination(
         context.TODO(),
         request,
     )
@@ -997,7 +903,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithTopLevelBodyCursorPagination(request) -> *fern.ListUsersTopLevelCursorPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithtoplevelbodycursorpagination(request) -> *fern.ListUsersTopLevelCursorPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1026,15 +932,8 @@ when getNextPage() is called with a different cursor value.
 <dd>
 
 ```go
-request := &fern.ListUsersTopLevelBodyCursorPaginationRequest{
-        Cursor: fern.String(
-            "initial_cursor",
-        ),
-        Filter: fern.String(
-            "active",
-        ),
-    }
-client.Users.ListWithTopLevelBodyCursorPagination(
+request := &fern.UsersListWithTopLevelBodyCursorPaginationRequest{}
+client.Users.Listwithtoplevelbodycursorpagination(
         context.TODO(),
         request,
     )
@@ -1076,7 +975,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithOffsetPagination() -> *fern.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithoffsetpagination() -> *fern.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1089,19 +988,8 @@ the next page of results.
 <dd>
 
 ```go
-request := &fern.ListUsersCursorPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        PerPage: fern.Int(
-            1,
-        ),
-        Order: fern.OrderAsc.Ptr(),
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-client.Users.ListWithCursorPagination(
+request := &fern.UsersListWithOffsetPaginationRequest{}
+client.Users.Listwithoffsetpagination(
         context.TODO(),
         request,
     )
@@ -1159,7 +1047,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithDoubleOffsetPagination() -> *fern.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithdoubleoffsetpagination() -> *fern.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1172,19 +1060,8 @@ the next page of results.
 <dd>
 
 ```go
-request := &fern.ListUsersCursorPaginationRequest{
-        Page: fern.Int(
-            1.1,
-        ),
-        PerPage: fern.Int(
-            1.1,
-        ),
-        Order: fern.OrderAsc.Ptr(),
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-client.Users.ListWithCursorPagination(
+request := &fern.UsersListWithDoubleOffsetPaginationRequest{}
+client.Users.Listwithdoubleoffsetpagination(
         context.TODO(),
         request,
     )
@@ -1242,7 +1119,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithBodyOffsetPagination(request) -> *fern.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithbodyoffsetpagination(request) -> *fern.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1255,8 +1132,8 @@ the next page of results.
 <dd>
 
 ```go
-request := &fern.ListUsersMixedTypeCursorPaginationRequest{}
-client.Users.ListWithMixedTypeCursorPagination(
+request := &fern.UsersListWithBodyOffsetPaginationRequest{}
+client.Users.Listwithbodyoffsetpagination(
         context.TODO(),
         request,
     )
@@ -1290,7 +1167,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithOffsetStepPagination() -> *fern.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithoffsetsteppagination() -> *fern.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1303,16 +1180,8 @@ in order to fetch the next page of results.
 <dd>
 
 ```go
-request := &fern.ListUsersOffsetStepPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        Limit: fern.Int(
-            1,
-        ),
-        Order: fern.OrderAsc.Ptr(),
-    }
-client.Users.ListWithOffsetStepPagination(
+request := &fern.UsersListWithOffsetStepPaginationRequest{}
+client.Users.Listwithoffsetsteppagination(
         context.TODO(),
         request,
     )
@@ -1363,7 +1232,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithOffsetPaginationHasNextPage() -> *fern.ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithoffsetpaginationhasnextpage() -> *fern.ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1376,16 +1245,8 @@ paginated endpoint.
 <dd>
 
 ```go
-request := &fern.ListUsersOffsetStepPaginationRequest{
-        Page: fern.Int(
-            1,
-        ),
-        Limit: fern.Int(
-            3,
-        ),
-        Order: fern.OrderAsc.Ptr(),
-    }
-client.Users.ListWithOffsetStepPagination(
+request := &fern.UsersListWithOffsetPaginationHasNextPageRequest{}
+client.Users.Listwithoffsetpaginationhasnextpage(
         context.TODO(),
         request,
     )
@@ -1436,7 +1297,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithExtendedResults() -> *fern.ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.Users.Listwithextendedresults() -> *fern.ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1449,14 +1310,8 @@ paginated endpoint.
 <dd>
 
 ```go
-request := &fern.ListUsersExtendedRequest{
-        Cursor: fern.UUID(
-            uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        ),
-    }
-client.Users.ListWithExtendedResults(
+request := &fern.UsersListWithExtendedResultsRequest{}
+client.Users.Listwithextendedresults(
         context.TODO(),
         request,
     )
@@ -1475,7 +1330,7 @@ client.Users.ListWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `*uuid.UUID` 
+**cursor:** `*string` 
     
 </dd>
 </dl>
@@ -1487,7 +1342,7 @@ client.Users.ListWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithExtendedResultsAndOptionalData() -> *fern.ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.Users.Listwithextendedresultsandoptionaldata() -> *fern.ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1500,14 +1355,8 @@ client.Users.ListWithExtendedResults(
 <dd>
 
 ```go
-request := &fern.ListUsersExtendedRequest{
-        Cursor: fern.UUID(
-            uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-        ),
-    }
-client.Users.ListWithExtendedResults(
+request := &fern.UsersListWithExtendedResultsAndOptionalDataRequest{}
+client.Users.Listwithextendedresultsandoptionaldata(
         context.TODO(),
         request,
     )
@@ -1526,7 +1375,7 @@ client.Users.ListWithExtendedResults(
 <dl>
 <dd>
 
-**cursor:** `*uuid.UUID` 
+**cursor:** `*string` 
     
 </dd>
 </dl>
@@ -1538,7 +1387,7 @@ client.Users.ListWithExtendedResults(
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListUsernames() -> *fern.UsernameCursor</code></summary>
+<details><summary><code>client.Users.Listusernames() -> *fern.UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1551,64 +1400,8 @@ client.Users.ListWithExtendedResults(
 <dd>
 
 ```go
-request := &fern.ListUsersCursorPaginationRequest{
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-client.Users.ListWithCursorPagination(
-        context.TODO(),
-        request,
-    )
-}
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**startingAfter:** `*string` 
-
-The cursor used for pagination in order to fetch
-the next page of results.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Users.ListUsernamesWithOptionalResponse() -> *fern.UsernameCursor</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &fern.ListUsersCursorPaginationRequest{
-        StartingAfter: fern.String(
-            "starting_after",
-        ),
-    }
-client.Users.ListWithCursorPagination(
+request := &fern.UsersListUsernamesRequest{}
+client.Users.Listusernames(
         context.TODO(),
         request,
     )
@@ -1642,7 +1435,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithGlobalConfig() -> *fern.UsernameContainer</code></summary>
+<details><summary><code>client.Users.Listusernameswithoptionalresponse() -> *fern.UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1655,12 +1448,56 @@ the next page of results.
 <dd>
 
 ```go
-request := &fern.ListWithGlobalConfigRequest{
-        Offset: fern.Int(
-            1,
-        ),
-    }
-client.Users.ListWithGlobalConfig(
+request := &fern.UsersListUsernamesWithOptionalResponseRequest{}
+client.Users.Listusernameswithoptionalresponse(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**startingAfter:** `*string` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.Listwithglobalconfig() -> *fern.UsernameContainer</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.UsersListWithGlobalConfigRequest{}
+client.Users.Listwithglobalconfig(
         context.TODO(),
         request,
     )
@@ -1691,7 +1528,7 @@ client.Users.ListWithGlobalConfig(
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithOptionalData() -> *fern.ListUsersOptionalDataPaginationResponse</code></summary>
+<details><summary><code>client.Users.Listwithoptionaldata() -> *fern.ListUsersOptionalDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1704,12 +1541,8 @@ client.Users.ListWithGlobalConfig(
 <dd>
 
 ```go
-request := &fern.ListUsersOptionalDataRequest{
-        Page: fern.Int(
-            1,
-        ),
-    }
-client.Users.ListWithOptionalData(
+request := &fern.UsersListWithOptionalDataRequest{}
+client.Users.Listwithoptionaldata(
         context.TODO(),
         request,
     )
@@ -1729,6 +1562,70 @@ client.Users.ListWithOptionalData(
 <dd>
 
 **page:** `*int` — Defaults to first page
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.Listwithaliaseddata() -> *fern.ListUsersAliasedDataPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.UsersListWithAliasedDataRequest{}
+client.Users.Listwithaliaseddata(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**startingAfter:** `*string` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
     
 </dd>
 </dl>

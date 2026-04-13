@@ -5,7 +5,7 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ImdbClient", () => {
-    test("create_movie", async () => {
+    test("createMovie", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { id: "id", movie_title: "movie_title", movie_rating: 1.1 };
@@ -28,7 +28,7 @@ describe("ImdbClient", () => {
         expect(response).toEqual(rawResponseBody);
     });
 
-    test("get_movie (1)", async () => {
+    test("getMovie (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
@@ -36,11 +36,13 @@ describe("ImdbClient", () => {
 
         server.mockEndpoint().get("/movies/movie_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.imdb.getMovie("movie_id");
+        const response = await client.imdb.getMovie({
+            movie_id: "movie_id",
+        });
         expect(response).toEqual(rawResponseBody);
     });
 
-    test("get_movie (2)", async () => {
+    test("getMovie (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
@@ -49,7 +51,9 @@ describe("ImdbClient", () => {
         server.mockEndpoint().get("/movies/movie_id").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
-            return await client.imdb.getMovie("movie_id");
-        }).rejects.toThrow(SeedApi.MovieDoesNotExistError);
+            return await client.imdb.getMovie({
+                movie_id: "movie_id",
+            });
+        }).rejects.toThrow(SeedApi.NotFoundError);
     });
 });

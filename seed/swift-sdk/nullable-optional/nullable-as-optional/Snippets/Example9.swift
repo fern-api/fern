@@ -1,13 +1,14 @@
 import Foundation
-import NullableOptional
+import Api
 
 private func main() async throws {
-    let client = NullableOptionalClient(baseURL: "https://api.fern.com")
+    let client = ApiClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.nullableOptional.filterByRole(
-        role: .value(.admin),
-        status: .active,
-        secondaryRole: .value(.admin)
+    _ = try await client.nullableoptional.searchusers(
+        query: "query",
+        department: .value("department"),
+        role: .value("role"),
+        isActive: .value(true)
     )
 }
 

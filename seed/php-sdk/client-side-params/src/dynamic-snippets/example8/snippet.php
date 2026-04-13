@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Service\Requests\ListConnectionsRequest;
+use Seed\Service\Requests\CreateUserRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,10 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->listConnections(
-    new ListConnectionsRequest([
-        'strategy' => 'strategy',
-        'name' => 'name',
-        'fields' => 'fields',
+$client->service->createuser(
+    new CreateUserRequest([
+        'email' => 'email',
+        'connection' => 'connection',
     ]),
 );
