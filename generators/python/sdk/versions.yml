@@ -19,7 +19,7 @@
 
         remain at the top of the file.
       type: fix
-  createdAt: 2026-04-13
+  createdAt: "2026-04-13"
   irVersion: 65
 # For unreleased changes, use unreleased.yml
 - version: 5.3.12
